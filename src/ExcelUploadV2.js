@@ -5,7 +5,7 @@ sap.ui.define(
 
 		ExcelLibrary : XLSX;
 
-		return Controller.extend("ui5.customControl.excelUpload.ExcelUpload", {
+		return Controller.extend("cc.excelUpload.ExcelUpload", {
 
 			ExcelLibrary : XLSX,
 

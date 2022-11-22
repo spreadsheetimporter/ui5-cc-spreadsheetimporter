@@ -21,11 +21,11 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+      
+      - name: Build
+        run: npm run build
 
-      - name: Publish to NPM
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-          echo ":::: Publishing as $(npm whoami)"
-          npm publish
+      - name: Publish package on NPM 📦
+        run: npm publish
         env:
-          NPM_TOKEN: ${{ secrets.NPM_RELEASE_AUTH_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -1,13 +1,12 @@
-# UI5 custom control `ui5.customControl.excelUpload`
+# UI5 custom control `ui5-cc-excelupload`
 
 A UI5 Module to integrate a Excel Upload for Fiori Element Apps
 
 ## Install
 
---> i guess you need to login before or something???
 
 ```bash
-npm install ui5.customControl.excelUpload
+npm install ui5-cc-excelupload
 ```
 
 ## Usage
@@ -19,7 +18,7 @@ npm install ui5.customControl.excelUpload
    "ui5": {
      "dependencies": [
        // ...
-       "ui5.customControl.excelUpload",
+       "ui5-cc-excelupload"
        // ...
      ]
    }
@@ -46,24 +45,36 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "thirdparty/customControl/excelUplo
 3. create a button to call custom controller (example for object page)  
 **adjust your namespace in `press` property**
 ```json
-"header": {
-      "actions": {
-          "excelUpload": {
-              "id": "excelUploadButton",
-              "text": "Excel Upload",
-              "enabled": "{ui>/isEditable}",
-              "press": "ui5.isu.msb.createmeterread.ext.controller.ObjectPageExtController.openExcelUploadDialog",
-              "requiresSelection": false
+        "PersonObjectPage": {
+          "type": "Component",
+          "id": "PersonObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "entitySet": "Person",
+              "content": {
+                "header": {
+                  "actions": {
+                    "excelUpload": {
+                      "id": "excelUploadButton",
+                      "text": "Excel Upload",
+                      "enabled": "{ui>/isEditable}",
+                      "press": "sap.ui.eventregistration.admin.ext.controller.ObjectPageExtController.openExcelUploadDialog",
+                      "requiresSelection": false
+                    }
+                  }
+                }
+              }
+            }
           }
-      }
-  }
+        }
 ```
 
 4. in `manifest.json` add under `sap.ui5` this:
 ```json
-"resourceRoots": {  
-    "thirdparty.customControl.excelUpload": "./thirdparty/customControl/excelUpload/",
-    "thirdparty.customControl.excelUpload.xlsx": "./thirdparty/xlsx/"
+"resourceRoots": {
+      "thirdparty.customControl.excelUpload": "./thirdparty/customControl/excelUpload/dist/",
+      "xlsx": "./thirdparty/customControl/excelUpload/dist/resources/xlsx"
 },
 ```
 
@@ -71,12 +82,14 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "thirdparty/customControl/excelUplo
 ```js
 openExcelUploadDialog: async function (oEvent) {    
     this._options = {
-        context: this
+                    context: this,
+                    columns: ["ID", "Birthday","FirstName","LastName"],
+                    excelFileName: "User.xlsx"
     }
     this._view.setBusyIndicatorDelay(0)
     this._view.setBusy(true)
     if(!this.excelUploadController){
-        this.excelUploadController = await Controller.create({ name:"ui5.customControl.excelUpload.ExcelUpload"})
+        this.excelUploadController = await Controller.create({ name:"cc.excelUpload.ExcelUpload"})
         this.excelUploadController.setContext(this._options)  
     }                    
     this.excelSheetsData = [];
@@ -113,9 +126,9 @@ In case of error, the OData Type can be specified.
 
 ## Build time (in apps)
 
-Use `ui5 build --all` to produce a deployable version of your app including `ui5.customControl.excelUpload` and its’ control(s).
+Use `ui5 build --all` to produce a deployable version of your app including `ui5-cc-excelupload` and its’ control(s).
 
-Other than that, nothing specific to note for using `ui5.customControl.excelUpload` in builds in UI5 apps.
+Other than that, nothing specific to note for using `ui5-cc-excelupload` in builds in UI5 apps.
 
 
 ## Commit Message

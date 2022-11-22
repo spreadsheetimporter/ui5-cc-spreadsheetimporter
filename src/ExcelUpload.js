@@ -3,7 +3,7 @@ sap.ui.define(
 	function (Controller, Fragment, MessageToast, Button, ToolbarSpacer, MessageBox, JSONModel, XLSX) {
 		"use strict";
 
-		return Controller.extend("ui5.customControl.excelUpload.ExcelUpload", {
+		return Controller.extend("cc.excelUpload.ExcelUpload", {
 			constructor: function () {
 				this.excelSheetsData = [];
 				this.pDialog = null;
