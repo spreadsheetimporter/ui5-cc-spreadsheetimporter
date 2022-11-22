@@ -1,0 +1,27 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core"  xmlns:upload="sap.ui.unified">
+	<Dialog title="Excel Upload" contentWidth="34vw" contentHeight="100px">
+        <subHeader>
+            <Bar>
+                <contentLeft>
+                    <Button press="onTempDownload" text="Template" icon="sap-icon://download-from-cloud" type="Emphasized"/>
+                </contentLeft>
+            </Bar>
+        </subHeader>
+        <content>
+            <upload:FileUploader
+            width="90%"
+			id="fileUploader"
+            placeholder="Exceldatei auswählen"
+            fileType="xlsx, xls"
+			change="onUploadSetComplete"
+            class="sapUiMediumMargin"/>
+        </content>
+        <buttons>        
+            <Button text="Upload" press="onUploadSet" icon="sap-icon://upload-to-cloud" type="Emphasized"/>
+            <Button press="onCloseDialog" text="Cancel" icon="sap-icon://cancel"/>
+        </buttons>
+        <endButton>
+            <Button press=".onCloseDialog" text="Ok"/>
+        </endButton>    
+	</Dialog>
+</core:FragmentDefinition>
