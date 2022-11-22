@@ -1,0 +1,5 @@
+# Exclude folders
+node_modules
+
+# Include all JS files
+!*.js

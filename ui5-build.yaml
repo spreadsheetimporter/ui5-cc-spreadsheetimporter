@@ -1,0 +1,12 @@
+specVersion: "2.6"
+type: application
+metadata:
+  name: ui5.customControl.excelUpload
+resources:
+  configuration:
+    paths:
+      webapp: src
+builder:
+  customTasks:
+    - name: ui5-tooling-modules-task
+      afterTask: replaceVersion

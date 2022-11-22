@@ -1,0 +1,30 @@
+specVersion: "2.6"
+type: module
+metadata:
+  name: ui5.customControl.excelUpload
+---
+specVersion: "2.6"
+kind: extension
+type: project-shim
+metadata:
+  name: thirdparty
+shims:
+  configurations:
+    ui5.customControl.excelUpload:
+      specVersion: "2.6"
+      type: module
+      metadata:
+        name: ui5.customControl.excelUpload
+      resources:
+        configuration:
+          paths:
+            "/thirdparty/customControl/excelUpload/": "./"
+    # xlsx:
+    #   specVersion: "2.6"
+    #   type: module
+    #   metadata:
+    #     name: xlsx
+    #   resources:
+    #     configuration:
+    #       paths:
+    #         "/thirdparty/customControl/excelUpload/": "./dist/"
