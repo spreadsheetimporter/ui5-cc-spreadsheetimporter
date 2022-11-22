@@ -246,6 +246,9 @@ sap.ui.define(
 					if (propertyLabel) {
 						listObject[property] = {};
 						listObject[property].label = propertyLabel["@com.sap.vocabularies.Common.v1.Label"];
+						if(!listObject[property].label){
+							listObject[property].label = property;
+						}
 						listObject[property].type = propertyType.$Type;
 					}
 				}

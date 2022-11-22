@@ -1,7 +1,7 @@
 specVersion: "2.6"
 type: module
 metadata:
-  name: ui5.customControl.excelUpload
+  name: ui5-cc-excelupload
 ---
 specVersion: "2.6"
 kind: extension
@@ -10,11 +10,11 @@ metadata:
   name: thirdparty
 shims:
   configurations:
-    ui5.customControl.excelUpload:
+    ui5-cc-excelupload:
       specVersion: "2.6"
       type: module
       metadata:
-        name: ui5.customControl.excelUpload
+        name: ui5-cc-excelupload
       resources:
         configuration:
           paths:
