@@ -1,0 +1,17 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "globals": {
+    "sap": true
+  },
+  "extends": ["eslint:recommended"],
+  "rules": {
+    "prefer-const": "warn",
+    "no-unused-vars": "warn"
+  },
+  "parserOptions": {
+    "ecmaVersion": 8
+  }
+}

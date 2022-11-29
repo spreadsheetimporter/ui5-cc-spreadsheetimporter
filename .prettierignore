@@ -1,0 +1,12 @@
+# Ignore specific files
+package-lock.json
+
+# Ignore build output folders
+/docs/**
+/webapp/**
+
+# Ignore files by extension
+/**/*.svg
+/**/*.png
+/**/*.md
+

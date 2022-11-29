@@ -1,0 +1,21 @@
+specVersion: "2.6"
+type: application
+metadata:
+  name: ui5-cc-excelupload
+resources:
+  configuration:
+    paths:
+      webapp: src
+builder:
+  customTasks:
+    - name: rollUp
+      afterTask: uglify
+---
+# Task extension as part of your project
+specVersion: "2.6"
+kind: extension
+type: task
+metadata:
+  name: rollUp
+task:
+  path: node_modules/ui5-tooling-modules/lib/task.js
