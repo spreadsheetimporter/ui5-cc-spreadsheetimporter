@@ -12,9 +12,24 @@ sap.ui.define(
 			setContext: function (options) {
 				this._options = options;
 				this.context = this._options["context"];
+				this.isODataV4 = this._checkIfODataIsV4();
+				if (this.isODataV4) {
+					this.view = this.context._view;
+				} else {
+					this.view = this.context.getView();
+				}
+
+				if (this.isODataV4) {
+					this._setContextV4();
+				} else {
+					this._setContextV2();
+				}
+			},
+
+			_setContextV4: function () {
 				// try get object page table
 				if (!this._options.tableId) {
-					const domRef = this.context._view.getContent()[0].getDomRef();
+					const domRef = this.view.getContent()[0].getDomRef();
 					let tables = domRef.querySelectorAll("[id$='::LineItem-innerTable']");
 					if (tables.length > 1) {
 						console.error("Found more than one table on Object Page.\n Please specify table in option 'tableId'");
@@ -36,7 +51,32 @@ sap.ui.define(
 						console.error("No OData Type found. Please specify 'odataType' in options");
 					}
 				}
-				this.typeLabelList = this._createLabelList(this._options["columns"]);
+
+				this.typeLabelList = this._createLabelListV4(this._options["columns"]);
+			},
+
+			_setContextV2: function () {
+				// try get object page table
+				if (!this._options.tableId) {
+					const domRef = this.view.getContent()[0].getDomRef();
+					// list report v2 responsive Table
+					const tables = domRef.querySelectorAll("[id$='responsiveTable']");
+					if (tables.length > 1) {
+						console.error("Found more than one table on Object Page.\n Please specify table in option 'tableId'");
+					} else {
+						this._options.tableId = tables[0].getAttribute("id");
+					}
+				}
+				// try get odata type from table
+				const table = this.context.byId(this._options.tableId);
+				if (!this._options.odataType) {
+					this._options.odataType = table.getBinding("items")._getEntityType().entityType;
+					if (!this._options.odataType) {
+						console.error("No OData Type found. Please specify 'odataType' in options");
+					}
+				}
+
+				this.typeLabelList = this._createLabelListV2(this._options["columns"]);
 			},
 
 			openExcelUploadDialog: async function () {
@@ -162,7 +202,11 @@ sap.ui.define(
 					sActionLabel: "Uploading Excel File",
 				};
 				// calling the oData service using extension api
-				await this.context.editFlow.securedExecution(fnAddMessage, mParameters);
+				if (this.isODataV4) {
+					await this.context.editFlow.securedExecution(fnAddMessage, mParameters);
+				} else {
+					await this.context.extensionAPI.securedExecution(fnAddMessage, mParameters);
+				}
 
 				oSource.getParent().setBusy(false);
 				this.onCloseDialog();
@@ -183,21 +227,21 @@ sap.ui.define(
 					for (const row of this.excelSheetsData) {
 						var payload = {};
 						// check each specified column if availalble in excel data
-						for (const column of this._options["columns"]) {
-							var metadataColumn = this.typeLabelList[column];
+						for (const [columnKey, metadataColumn] of Object.entries(this.typeLabelList)) {
 							// depending on data type
 							if (row[metadataColumn.label]) {
 								if (metadataColumn.type === "Edm.Boolean") {
-									payload[column] = `${row[metadataColumn.label] || ""}`;
+									payload[columnKey] = `${row[metadataColumn.label] || ""}`;
 								} else if (metadataColumn.type === "Edm.Date") {
 									var excelDate = new Date(Math.round((row[metadataColumn.label] - 25569) * 86400 * 1000));
-									payload[column] = `${excelDate.getFullYear()}-${("0" + (excelDate.getMonth() + 1)).slice(-2)}-${("0" + excelDate.getDate()).slice(-2)}`;
+									payload[columnKey] = `${excelDate.getFullYear()}-${("0" + (excelDate.getMonth() + 1)).slice(-2)}-${("0" + excelDate.getDate()).slice(-2)}`;
+								} else if (metadataColumn.type === "Edm.Double'" || metadataColumn.type === "Edm.Int32") {
+									payload[columnKey] = row[metadataColumn.label];
 								} else {
-									payload[column] = `${row[metadataColumn.label] || ""}`;
+									payload[columnKey] = `${row[metadataColumn.label] || ""}`;
 								}
 							}
 						}
-						payload["isUpdatable"] = true;
 						// extension method to manipulate payload
 						payload = this._changeBeforeCreate(payload);
 						binding.create(payload);
@@ -231,26 +275,136 @@ sap.ui.define(
 				MessageToast.show("Template File Downloading...");
 			},
 
-			_createLabelList(colums) {
+			_createLabelListV2(colums) {
+				var listObject = {};
+
+				// get the property list of the entity for which we need to download the template
+				const oDataEntityType = this._options.context.byId(this._options.tableId).getModel().getMetaModel().getODataEntityType(this._options.odataType);
+				const properties = oDataEntityType.property;
+				const entityTypeLabel = oDataEntityType["sap:label"];
+
+				// check if file name is not set
+				if (!this._options["excelFileName"] && entityTypeLabel) {
+					this._options["excelFileName"] = `${entityTypeLabel}.xlsx`;
+				} else if (!this._options["excelFileName"] && !entityTypeLabel) {
+					this._options["excelFileName"] = `Template.xlsx`;
+				}
+
+				if (colums) {
+					for (const propertyName of colums) {
+						const property = properties.find((property) => property.name === propertyName);
+						if (property) {
+							listObject[propertyName] = {};
+							listObject[propertyName].label = this._getLabelV2(oDataEntityType, properties, property, propertyName, this._options);
+							if (!listObject[propertyName].label) {
+								listObject[propertyName].label = propertyName;
+							}
+							listObject[propertyName].type = property["type"];
+						} else {
+							console.error(`ExcelUpload: Property ${propertyName} not found`);
+						}
+					}
+				} else {
+					for (const property of properties) {
+						let hiddenProperty = false;
+						try {
+							hiddenProperty = property["com.sap.vocabularies.UI.v1.Hidden"].Bool === "true";
+						} catch (error) {
+							console.debug(`No hidden property on ${property.name}`);
+						}
+						if (!hiddenProperty) {
+							const propertyName = property.name;
+							listObject[propertyName] = {};
+							listObject[propertyName].label = this._getLabelV2(oDataEntityType, properties, property, propertyName, this._options);
+							listObject[propertyName].type = property["type"];
+						}
+					}
+				}
+
+				return listObject;
+			},
+
+			_getLabelV2(oDataEntityType, properties, property, propertyName, options) {
+				if (property["sap:label"]) {
+					return property["sap:label"];
+				}
+				try {
+					const lineItemsAnnotations = oDataEntityType["com.sap.vocabularies.UI.v1.LineItem"];
+					return lineItemsAnnotations.find((dataField) => dataField.Value.Path === propertyName).Label.String;
+				} catch (error) {
+					console.debug(`${propertyName} not found as a LineItem Label`);
+				}
+				return propertyName;
+			},
+
+			_createLabelListV4(colums) {
 				var listObject = {};
 
 				// get the property list of the entity for which we need to download the template
 				var annotations = this.context.getModel().getMetaModel().getData()["$Annotations"];
 				const properties = this.context.getModel().getMetaModel().getData()[this._options["odataType"]];
 
-				for (const property of colums) {
-					let propertyLabel = annotations[`${this._options["odataType"]}/${property}`];
-					let propertyType = properties[property];
-					if (propertyLabel) {
-						listObject[property] = {};
-						listObject[property].label = propertyLabel["@com.sap.vocabularies.Common.v1.Label"];
-						if(!listObject[property].label){
-							listObject[property].label = property;
+				// check if file name is not set
+				// if (!this._options["excelFileName"] && entityTypeLabel) {
+				// 	this._options["excelFileName"] = `${entityTypeLabel}.xlsx`
+				// } else if(!this._options["excelFileName"] && !entityTypeLabel){
+				// 	this._options["excelFileName"] = `Template.xlsx`
+				// }
+
+				if (colums) {
+					for (const propertyName of colums) {
+						const property = properties[propertyName];
+						if (property) {
+							const propertyLabel = annotations[`${this._options["odataType"]}/${propertyName}`];
+							listObject[propertyName] = {};
+							listObject[propertyName].label = this._getLabelV4(annotations, properties, propertyName, propertyLabel, this._options);
+							if (!listObject[propertyName].label) {
+								listObject[propertyName].label = propertyName;
+							}
+							listObject[propertyName].type = property.$Type;
+						} else {
+							console.error(`ExcelUpload: Property ${propertyName} not found`);
 						}
-						listObject[property].type = propertyType.$Type;
+					}
+				} else {
+					const propertiesFiltered = Object.entries(properties).filter(([propertyName, propertyValue]) => propertyValue["$kind"] === "Property");
+					for (const [propertyName, propertyValue] of propertiesFiltered) {
+						const propertyLabel = annotations[`${this._options["odataType"]}/${propertyName}`];
+						if (!propertyLabel["@com.sap.vocabularies.UI.v1.Hidden"]) {
+							listObject[propertyName] = {};
+							listObject[propertyName].label = this._getLabelV4(annotations, properties, propertyName, propertyLabel, this._options);
+							if (!listObject[propertyName].label) {
+								listObject[propertyName].label = propertyName;
+							}
+							listObject[propertyName].type = propertyValue.$Type;
+						}
 					}
 				}
+
 				return listObject;
+			},
+
+			_getLabelV4(annotations, properties, propertyName, propertyLabel, options) {
+				if (propertyLabel["@com.sap.vocabularies.Common.v1.Label"]) {
+					return propertyLabel["@com.sap.vocabularies.Common.v1.Label"];
+				}
+				try {
+					const lineItemsAnnotations = annotations[this._options["odataType"]]["@com.sap.vocabularies.UI.v1.LineItem"];
+					return lineItemsAnnotations.find((dataField) => dataField.Value.$Path === propertyName).Label;
+				} catch (error) {
+					console.debug(`${propertyName} not found as a LineItem Label`);
+				}
+				return propertyName;
+			},
+
+			_checkIfODataIsV4: function () {
+				try {
+					if (this.context.getModel().getODataVersion() === "4.0") {
+						return true;
+					}
+				} catch (error) {
+					return false;
+				}
 			},
 
 			_sleep: function (ms) {
