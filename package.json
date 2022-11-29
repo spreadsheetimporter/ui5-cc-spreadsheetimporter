@@ -1,6 +1,6 @@
 {
   "name": "ui5-cc-excelupload",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "(add custom control description here)",
   "scripts": {
     "prepare": "node ./.husky/skip.js || husky install",
