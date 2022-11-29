@@ -44,7 +44,6 @@ sap.ui.define(
 				this.excelSheetsData = [];
 				if (!this.pDialog || this.pDialog.isDestroyed()) {
 					this.pDialog = await Fragment.load({
-						id: "excel_upload",
 						name: "thirdparty.customControl.excelUpload.fragment.ExcelUpload",
 						type: "XML",
 						controller: this,
@@ -52,7 +51,6 @@ sap.ui.define(
 				}
 				if (!this.errorDialog || this.errorDialog.isDestroyed()) {
 					this.errorDialog = await Fragment.load({
-						id: "error_dialog",
 						name: "thirdparty.customControl.excelUpload.fragment.ErrorDialog",
 						type: "XML",
 						controller: this,
@@ -113,7 +111,7 @@ sap.ui.define(
 					this.excelSheetsData = await filePromise;
 					MessageToast.show("Upload Successful");
 				} catch (error) {
-					var fileUploader = Fragment.byId("excel_upload", "fileUploader");
+					var fileUploader = this.pDialog.getContent()[0];
 					fileUploader.setValue();
 					this.errorDialog.getModel("errorData").setData(error);
 					this.errorDialog.open();
