@@ -8,14 +8,5 @@ resources:
       webapp: src
 builder:
   customTasks:
-    - name: rollUp
-      afterTask: uglify
----
-# Task extension as part of your project
-specVersion: "2.6"
-kind: extension
-type: task
-metadata:
-  name: rollUp
-task:
-  path: node_modules/ui5-tooling-modules/lib/task.js
+    - name: ui5-tooling-modules-task
+      afterTask: replaceVersion
