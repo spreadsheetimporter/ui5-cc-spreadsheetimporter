@@ -1,6 +1,8 @@
 # UI5 custom control `ui5-cc-excelupload`
 
-A UI5 Module to integrate a Excel Upload for Fiori Element Apps
+A UI5 Module to integrate a Excel Upload for Fiori Element Apps.  
+The module focuses on making integration into existing Fiori element apps as easy as possible, with as little code and configuration as possible.
+![Excel Upload Dialog](/images/ExcelUploadDialog.png "Excel Upload Dialog")
 
 ## Install
 
@@ -156,3 +158,12 @@ A few examples:
 3. push commit and tags to repo: `npm run version:publish`
 4. GitHub Workflow will be triggered and npm package published
 
+## Develop
+
+To develop, `npm link` to your UI5 App, and replace the `resourceRoots` with the `src` folder instead of `dist` folder, otherwise you have to build this module after every change.  
+```json
+"resourceRoots": {
+      "thirdparty.customControl.excelUpload": "./thirdparty/customControl/excelUpload/src/",
+      "xlsx": "./thirdparty/customControl/excelUpload/dist/resources/xlsx"
+},
+```
