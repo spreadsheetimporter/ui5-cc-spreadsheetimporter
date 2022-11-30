@@ -236,7 +236,7 @@ sap.ui.define(
 								} else if (metadataColumn.type === "Edm.Date") {
 									var excelDate = new Date(Math.round((row[metadataColumn.label] - 25569) * 86400 * 1000));
 									payload[columnKey] = `${excelDate.getFullYear()}-${("0" + (excelDate.getMonth() + 1)).slice(-2)}-${("0" + excelDate.getDate()).slice(-2)}`;
-								} else if (metadataColumn.type === "Edm.Double'" || metadataColumn.type === "Edm.Int32") {
+								} else if (metadataColumn.type === "Edm.Double" || metadataColumn.type === "Edm.Int32") {
 									payload[columnKey] = row[metadataColumn.label];
 								} else {
 									payload[columnKey] = `${row[metadataColumn.label] || ""}`;
