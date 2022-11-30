@@ -340,17 +340,24 @@ sap.ui.define(
 
 			_createLabelListV4(colums) {
 				var listObject = {};
+				let entityTypeLabel;
 
 				// get the property list of the entity for which we need to download the template
 				var annotations = this.context.getModel().getMetaModel().getData()["$Annotations"];
 				const properties = this.context.getModel().getMetaModel().getData()[this._options["odataType"]];
+				// try get facet label
+				try {
+					entityTypeLabel = annotations[this._options["odataType"]]["@com.sap.vocabularies.UI.v1.Facets"][0].Label;
+				} catch (error) {
+					console.debug("Facet Label not found");
+				}
 
 				// check if file name is not set
-				// if (!this._options["excelFileName"] && entityTypeLabel) {
-				// 	this._options["excelFileName"] = `${entityTypeLabel}.xlsx`
-				// } else if(!this._options["excelFileName"] && !entityTypeLabel){
-				// 	this._options["excelFileName"] = `Template.xlsx`
-				// }
+				if (!this._options["excelFileName"] && entityTypeLabel) {
+					this._options["excelFileName"] = `${entityTypeLabel}.xlsx`;
+				} else if (!this._options["excelFileName"] && !entityTypeLabel) {
+					this._options["excelFileName"] = `Template.xlsx`;
+				}
 
 				if (colums) {
 					for (const propertyName of colums) {
