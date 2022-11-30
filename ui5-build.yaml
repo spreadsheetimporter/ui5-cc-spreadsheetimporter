@@ -8,5 +8,13 @@ resources:
       webapp: src
 builder:
   customTasks:
-    - name: ui5-tooling-modules-task
+    - name: createBundle
       afterTask: replaceVersion
+---
+specVersion: "2.6"
+kind: extension
+type: task
+metadata:
+  name: createBundle
+task:
+  path: node_modules/ui5-tooling-modules/lib/task.js
