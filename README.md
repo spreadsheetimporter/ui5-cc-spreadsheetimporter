@@ -30,8 +30,8 @@ create a folder `ext` and in it a folder `controller`
 create js file `ObjectPageExtController.js`, so `webapp/ext/controller/ObjectPageExtController.js`
 
 ```js
-sap.ui.define(["sap/ui/core/mvc/Controller", "thirdparty/customControl/excelUpload/ExcelUpload"],
-    function (Controller, ExcelUpload) {
+sap.ui.define(["sap/ui/core/mvc/Controller"],
+    function (Controller) {
         "use strict";
         return {
             /**
@@ -95,8 +95,8 @@ openExcelUploadDialog: async function (oEvent) {
     this._view.setBusyIndicatorDelay(0)
     this._view.setBusy(true)
     if(!this.excelUploadController){
-        this.excelUploadController = await Controller.create({ name:"cc.excelUpload.ExcelUpload"})
-        this.excelUploadController.setContext(this._options)  
+        this.excelUploadController = await Controller.create({ name:"thirdparty.customControl.excelUpload.ExcelUpload"})
+        this.excelUploadController.setContext(this._options)
     }          
     this.excelUploadController.openExcelUploadDialog()          
     this.excelSheetsData = [];
