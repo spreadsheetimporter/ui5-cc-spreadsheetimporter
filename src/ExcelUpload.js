@@ -131,6 +131,7 @@ sap.ui.define(
 							}
 							// check if data is ok in extension method
 							let errorArray = this._checkBeforeRead(firstSheet);
+							errorArray = this._checkMandatoryFields(firstSheet, errorArray);
 							if (errorArray.some((error) => error.counter > 0)) {
 								// error found in excel
 								// remove those errors not found
@@ -418,10 +419,38 @@ sap.ui.define(
 				// error cases
 				let errorArray = [
 					{
-						title: "Feld ist nicht valide",
+						title: "Test",
 						counter: 0,
 					},
 				];
+				for (const row of data) {
+					// check for invalid date
+					// if (row[this.typeLabelList["Date"].label] && new Date(Math.round((row[this.typeLabelList["Date"].label] - 25569) * 86400 * 1000)).toString() === "Invalid Date") {
+					// 	errorArray[0]["counter"] = errorArray[0]["counter"] + 1;
+					// }
+				}
+				return errorArray;
+			},
+
+			_checkMandatoryFields: function (data, errorArray) {
+				// error cases
+				if (this._options["mandatoryFields"]) {
+					for (const mandatoryField of this._options["mandatoryFields"]) {
+						const errorMessage = {
+							title: `Pflichtfeld ${this.typeLabelList[mandatoryField].label} ist nicht gefüllt`,
+							counter: 0,
+						};
+						for (const row of data) {
+							if (
+								!Object.prototype.hasOwnProperty.call(row, this.typeLabelList[mandatoryField].label) &&
+								(row[this.typeLabelList[mandatoryField].label] === "" || row[this.typeLabelList[mandatoryField].label] === undefined)
+							) {
+								errorMessage.counter = errorMessage.counter + 1;
+							}
+						}
+						errorArray.push(errorMessage);
+					}
+				}
 
 				return errorArray;
 			},
