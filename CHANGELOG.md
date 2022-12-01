@@ -1,3 +1,12 @@
+## [0.2.2](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.2.1...v0.2.2) (2022-12-01)
+
+
+### Bug Fixes
+
+* change path, only dist folder for app build ([300e2c5](https://github.com/marianfoo/ui5-cc-excelUpload/commit/300e2c59734802baf8dc6b5e6fcd59544ec57adc))
+
+
+
 ## [0.2.1](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.2.0...v0.2.1) (2022-12-01)
 
 
