@@ -1,7 +1,25 @@
 {
   "name": "ui5-cc-excelupload",
   "version": "0.2.0",
-  "description": "(add custom control description here)",
+  "description": "A UI5 Module to integrate a Excel Upload for Fiori Element Apps.",
+  "main": "ExcelUpload.controller.js",
+  "keywords": [
+    "ui5",
+    "custom control",
+    "xlsx",
+    "Excel"
+  ],
+  "author": "Marian Zeis",
+  "homepage": "https://github.com/marianfoo/ui5-cc-excelUpload#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marianfoo/ui5-cc-excelUpload.git"
+  },
+  "files": [
+    "dist",
+    "ui5.yaml"
+  ],
+  "license": "Apache-2.0",
   "scripts": {
     "prepare": "node ./.husky/skip.js || husky install",
     "lint": "eslint .",
@@ -16,21 +34,9 @@
     "version:publish": "git push && git push --tags",
     "build": "ui5 build --config=ui5-build.yaml --all --clean-dest --dest dist"
   },
-  "keywords": [
-    "ui5",
-    "custom control",
-    "notepad control"
-  ],
-  "author": "(you)",
-  "repository": {
-    "type": "git",
-    "url": "cc.excelUpload.git"
+  "dependencies": {
+    "xlsx": "^0.18.5"
   },
-  "files": [
-    "dist",
-    "ui5.yaml"
-  ],
-  "license": "Apache-2.0",
   "devDependencies": {
     "ui5-tooling-modules": "^0.7.0",
     "@commitlint/cli": "^17.2.0",
@@ -44,7 +50,8 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^2.7.1",
     "prettier-plugin-properties": "^0.2.0",
-    "pretty-quick": "^3.1.3",
-    "xlsx": "^0.18.5"
+    "pretty-quick": "^3.1.3"
+    
   }
 }
+
