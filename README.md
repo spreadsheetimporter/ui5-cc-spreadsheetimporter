@@ -78,8 +78,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller"],
 
 ```json
 "resourceRoots": {
-      "thirdparty.customControl.excelUpload": "./thirdparty/customControl/excelUpload/dist/",
-      "xlsx": "./thirdparty/customControl/excelUpload/dist/resources/xlsx"
+      "thirdparty.customControl.excelUpload": "./thirdparty/customControl/excelUpload/",
+      "xlsx": "./thirdparty/customControl/excelUpload/resources/xlsx"
 },
 ```
 

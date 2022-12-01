@@ -18,13 +18,4 @@ shims:
       resources:
         configuration:
           paths:
-            "/thirdparty/customControl/excelUpload/": "./"
-    # xlsx:
-    #   specVersion: "2.6"
-    #   type: module
-    #   metadata:
-    #     name: xlsx
-    #   resources:
-    #     configuration:
-    #       paths:
-    #         "/thirdparty/customControl/excelUpload/": "./dist/"
+            "/thirdparty/customControl/excelUpload/": "./dist/"
