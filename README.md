@@ -180,12 +180,5 @@ A few examples:
 
 ### Develop
 
-To develop, `npm link` to your UI5 App, and replace the `resourceRoots` with the `src` folder instead of `dist` folder, otherwise you have to build this module after every change.  
-You need to build just once for the `xlsx` module.  
-
-```json
-"resourceRoots": {
-      "thirdparty.customControl.excelUpload": "./thirdparty/customControl/excelUpload/src/",
-      "xlsx": "./thirdparty/customControl/excelUpload/dist/resources/xlsx"
-},
-```
+To develop, `npm link` this folder, and `npm link` in your test app.  
+You need to run `npm run build:watch` to have always the latest changes in the `dist` folder.
