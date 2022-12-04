@@ -1,104 +1,63 @@
 {
-    "_version": "1.37.0",
-    "sap.app": {
-      "id": "cc",
-      "type": "application",
-      "i18n": "i18n/i18n.properties",
-      "applicationVersion": {
-        "version": "0.0.1"
-      },
-      "title": "{{appTitle}}",
-      "description": "{{appDescription}}",
-      "resources": "resources.json"
-    },
-    "sap.ui": {
-      "technology": "UI5",
-      "icons": {
-        "icon": "",
-        "favIcon": "",
-        "phone": "",
-        "phone@2": "",
-        "tablet": "",
-        "tablet@2": ""
-      },
-      "deviceTypes": {
-        "desktop": true,
-        "tablet": true,
-        "phone": true
-      }
-    },
-    "sap.ui5": {
-      "flexEnabled": true,
-      "dependencies": {
-        "minUI5Version": "1.96.12",
-        "libs": {
+  "_version": "1.9.0",
 
-        }
-      },
-      "contentDensities": {
-        "compact": true,
-        "cozy": true
-      },
-      "models": {
-        "i18n": {
-          "type": "sap.ui.model.resource.ResourceModel",
-          "settings": {
-            "bundleName": "ui5.isu.msb.impexcelupload.i18n.i18n"
-          }
-        },
-        "@i18n": {
-          "type": "sap.ui.model.resource.ResourceModel",
-          "uri": "i18n/i18n.properties"
-        }
-      },
-      "resources": {
-        "css": []
-      },
-      "routing": {
-        "config": {},
-        "routes": [],
-        "targets": {}
-      }
+  "sap.app": {
+    "id": "cc.excelUpload",
+    "type": "component",
+    "embeddedBy": "../../../../../",
+    "i18n": "i18n/i18n.properties",
+    "title": "{{compTitle}}",
+    "description": "{{compDescription}}",
+    "resources": "resources.json",
+    "applicationVersion": {
+      "version": "1.0.0"
+    }
+  },
+
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
     },
-    "sap.ui.generic.app": {
-      "_version": "1.3.0",
-      "settings": {
-        "forceGlobalRefresh": false,
-        "objectPageHeaderType": "Dynamic",
-        "considerAnalyticalParameters": true,
-        "showDraftToggle": false
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    },
+    "supportedThemes": ["sap_hcb", "sap_belize"]
+  },
+
+  "sap.ui5": {
+    "componentName": "cc.excelUpload",
+    "dependencies": {
+      "minUI5Version": "1.44.0",
+      "libs": {
+        "sap.ui.core": {},
+        "sap.m": {}
       },
-      "pages": {
-        "ListReport|Import": {
-          "entitySet": "Import",
-          "component": {
-            "name": "sap.suite.ui.generic.template.ListReport",
-            "list": true,
-            "settings": {
-              "condensedTableLayout": true,
-              "smartVariantManagement": true,
-              "enableTableFilterInPageVariant": true,
-              "filterSettings": {
-                "dateSettings": {
-                  "useDateRange": true
-                }
-              }
-            }
-          },
-          "pages": {
-            "ObjectPage|Import": {
-              "entitySet": "Import",
-              "defaultLayoutTypeIfExternalNavigation": "MidColumnFullScreen",
-              "component": {
-                "name": "sap.suite.ui.generic.template.ObjectPage"
-              }
-            }
-          }
+      "components": {}
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "handleValidation": true,
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "nabi.demo.comp.reuse.northwind.customer.selection.i18n.i18n"
         }
       }
     },
-    "sap.fiori": {
-      "registrationIds": [],
-      "archeType": "transactional"
+    "resources": {
+      "css": [],
+      "js": []
     }
   }
+}

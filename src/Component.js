@@ -23,6 +23,7 @@ sap.ui.define(
 					tableId: { type: "string" },
 					odataType: { type: "string" },
 					mandatoryFields: { type: "string[]" },
+					errorResults: { type: "object" },
 				},
 				aggregations: {
 					rootControl: {
@@ -33,10 +34,18 @@ sap.ui.define(
 				},
 				events: {
 					checkBeforeRead: {
-						parameters: {},
+						parameters: {
+							type: "string",
+							level: "string",
+							data: {
+								type: "object",
+							},
+						},
 					},
 					changeBeforeCreate: {
-						parameters: {},
+						parameters: {
+							payload: { type: "object" },
+						},
 					},
 				},
 			},
@@ -75,9 +84,6 @@ sap.ui.define(
 		// Component.prototype.setContextPublic = function(options) {
 		//     this.excelUpload.setContext(options)
 		// };
-		Component.prototype.openExcelUploadDialog = function () {
-			this.excelUpload.openExcelUploadDialog();
-		};
 
 		Component.prototype.createContent = function () {
 			this.excelUpload = new ExcelUpload(this);
@@ -98,17 +104,21 @@ sap.ui.define(
 		//OVERRIDE SETTERS
 		//=============================================================================
 
-		/**
-		 * Overrides method <code>setText</code> of the component to set this text in the button.
-		 * @override
-		 */
-		Component.prototype.setText = function (sText) {
-			if (this.getRenderButton()) {
-				this._getOpenButton().setText(sText);
-			}
-			this.setProperty("text", sText);
-			return this;
-		};
+		// /**
+		//  * Overrides method <code>getErrorResults</code> of the component to set this text in the button.
+		//  * @override
+		//  */
+		// Component.prototype.getErrorResults = function (array) {
+		// 	return this.excelUpload.getErrorResults();
+		// };
+		// /**
+		//  * Overrides method <code>setErrorResults</code> of the component to set this text in the button.
+		//  * @override
+		//  */
+		// Component.prototype.setErrorResults = function (array) {
+		// 	this.excelUpload.setErrorResults(array)
+		// 	return this;
+		// };
 
 		//=============================================================================
 		//PUBLIC APIS
@@ -118,38 +128,19 @@ sap.ui.define(
 		 * Opens the dialog for selecting a customer.
 		 * @public
 		 */
-		Component.prototype.open = function () {
-			this.onShowCustomerSelectDialog();
+		Component.prototype.openExcelUploadDialog = function () {
+			this.excelUpload.openExcelUploadDialog();
 		};
 
 		//=============================================================================
 		//EVENT HANDLERS
 		//=============================================================================
 
-		Component.prototype.onShowCustomerSelectDialog = function () {
-			var oTSD = this._getCustomerSelectDialog();
-			//oTSD.getBinding("items").filter();	//reset not needed here (done in onCustomerSearch which is also triggered if dialog closes)
-			oTSD.open();
-		};
+		// Component.prototype.onCheckBeforeRead = function (firstSheet) {
+		// 		this.fireCheckBeforeRead({sheetData:firstSheet})
+		// };
 
-		Component.prototype.onCustomerSearch = function (oEvent) {
-			// var oFilter, sQuery, oBinding, oTSD;
-			// oTSD = this._getCustomerSelectDialog();
-			// oBinding = oTSD.getBinding("items");
-			// if (!oBinding) {
-			// 	return;
-			// }
-			// sQuery = $.trim(oEvent.getParameter("value"));
-			// if (sQuery) {
-			// 	oFilter = new Filter({
-			// 		filters: [new Filter("CustomerID", FilterOperator.Contains, sQuery), new Filter("CompanyName", FilterOperator.Contains, sQuery)],
-			// 		and: false,
-			// 	});
-			// }
-			// oBinding.filter(oFilter);
-		};
-
-		Component.prototype.onCustomerSelected = function (oEvent) {
+		Component.prototype.onChangeBeforeCreate = function (oEvent) {
 			var aContexts, oCustomer;
 
 			aContexts = oEvent.getParameter("selectedContexts");
@@ -161,43 +152,9 @@ sap.ui.define(
 			}
 		};
 
-		Component.prototype.onCustomerSelectDialogCancelled = function (oEvent) {
-			//oEvent.getSource().unbindItems();		//we don't want this
-		};
-
 		//=============================================================================
 		//PRIVATE APIS
 		//=============================================================================
-
-		/**
-		 * Returns the singleton Button which allows to open a dialog for selecting a customer. If the button
-		 * does not exist it will be instantiated automatically.
-		 * @private
-		 * @return {sap.m.Button} the button (sigleton)
-		 */
-		Component.prototype._getOpenButton = function () {
-			if (!this._oBtn) {
-				this._oBtn = new Button(this.createId("openSelectDialogBtn"), {
-					text: this.getText(),
-					press: this.onShowCustomerSelectDialog.bind(this),
-				});
-			}
-			return this._oBtn;
-		};
-
-		/**
-		 * Returns the singleton TableSelectDialog which allows to select a customer. If the TableSelectDialog
-		 * does not exist it will be instantiated automatically.
-		 * @private
-		 * @return {sap.m.TableSelectDialog} the dialog (sigleton)
-		 */
-		Component.prototype._getCustomerSelectDialog = function () {
-			if (!this._oTSD) {
-				this._oTSD = sap.ui.xmlfragment(this.getId(), "nabi.demo.comp.reuse.northwind.customer.selection.fragment.CustomerTableSelectDialog", this);
-				this._oTSD.addStyleClass(this.getContentDensityClass());
-			}
-			return this._oTSD;
-		};
 
 		/**
 		 * This method can be called to determine whether the sapUiSizeCompact or sapUiSizeCozy

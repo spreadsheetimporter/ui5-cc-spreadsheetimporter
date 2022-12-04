@@ -5,93 +5,94 @@ sap.ui.define(
 
 		return Controller.extend("cc.excelUpload.ExcelUpload", {
 			constructor: function (component) {
-				this.excelSheetsData = [];
-				this.pDialog = null;
-				this.component = component;
+				this._excelSheetsData = [];
+				this._pDialog = null;
+				this._component = component;
+				this._component.setErrorResults([]);
 				this.setContext();
 			},
 
 			setContext: function () {
-				this.context = this.component.getContext();
-				if (this.context.base) {
-					this.context = this.context.base;
+				this._context = this._component.getContext();
+				if (this._context.base) {
+					this._context = this._context.base;
 				}
-				this.isODataV4 = this._checkIfODataIsV4();
-				if (this.isODataV4) {
-					this.view = this.context._view;
-					if (!this.view) {
-						this.view = this.context.getView();
+				this._isODataV4 = this._checkIfODataIsV4();
+				if (this._isODataV4) {
+					this._view = this._context._view;
+					if (!this._view) {
+						this._view = this._context.getView();
 					}
 					this._setContextV4();
 				} else {
-					this.view = this.context.getView();
+					this._view = this._context.getView();
 					this._setContextV2();
 				}
 			},
 
 			_setContextV4: function () {
 				// try get object page table
-				if (!this.component.getTableId()) {
-					const domRef = this.view.getContent()[0].getDomRef();
+				if (!this._component.getTableId()) {
+					const domRef = this._view.getContent()[0].getDomRef();
 					let tables = domRef.querySelectorAll("[id$='::LineItem-innerTable']");
 					if (tables.length > 1) {
 						console.error("Found more than one table on Object Page.\n Please specify table in option 'tableId'");
 					} else {
-						this.component.setTableId(tables[0].getAttribute("id"));
+						this._component.setTableId(tables[0].getAttribute("id"));
 					}
 				}
 				// try get odata type from table
-				const table = this.context.byId(this.component.getTableId());
+				const table = this._context.byId(this._component.getTableId());
 				const tableBindingPath = table.getBindingPath("items");
 				const metaModel = table.getModel().getMetaModel().getData();
-				if (!this.component.getOdataType()) {
+				if (!this._component.getOdataType()) {
 					for (const [key, value] of Object.entries(metaModel)) {
 						if (value["$kind"] === "EntityType" && value[tableBindingPath]) {
-							this.component.setOdataType(value[tableBindingPath]["$Type"]);
+							this._component.setOdataType(value[tableBindingPath]["$Type"]);
 						}
 					}
-					if (!this.component.getOdataType()) {
+					if (!this._component.getOdataType()) {
 						console.error("No OData Type found. Please specify 'odataType' in options");
 					}
 				}
 
-				this.typeLabelList = this._createLabelListV4(this.component.getColumns());
+				this.typeLabelList = this._createLabelListV4(this._component.getColumns());
 			},
 
 			_setContextV2: function () {
 				// try get object page table
-				if (!this.component.getTableId()) {
-					const domRef = this.view.getContent()[0].getDomRef();
+				if (!this._component.getTableId()) {
+					const domRef = this._view.getContent()[0].getDomRef();
 					// list report v2 responsive Table
 					const tables = domRef.querySelectorAll("[id$='responsiveTable']");
 					if (tables.length > 1) {
 						console.error("Found more than one table on Object Page.\n Please specify table in option 'tableId'");
 					} else {
-						this.component.setTableId(tables[0].getAttribute("id"));
+						this._component.setTableId(tables[0].getAttribute("id"));
 					}
 				}
 				// try get odata type from table
-				const table = this.context.byId(this.component.getTableId());
-				if (!this.component.getOdataType()) {
-					this.component.setOdataType(table.getBinding("items")._getEntityType().entityType);
-					if (!this.component.getOdataType()) {
+				const table = this._context.byId(this._component.getTableId());
+				if (!this._component.getOdataType()) {
+					this._component.setOdataType(table.getBinding("items")._getEntityType().entityType);
+					if (!this._component.getOdataType()) {
 						console.error("No OData Type found. Please specify 'odataType' in options");
 					}
 				}
 
-				this.typeLabelList = this._createLabelListV2(this.component.getColumns());
+				this.typeLabelList = this._createLabelListV2(this._component.getColumns());
 			},
 
 			openExcelUploadDialog: async function () {
-				this.excelSheetsData = [];
-				if (!this.pDialog || this.pDialog.isDestroyed()) {
-					this.pDialog = await Fragment.load({
+				this._excelSheetsData = [];
+				if (!this._pDialog || this._pDialog.isDestroyed()) {
+					this._pDialog = await Fragment.load({
 						name: "thirdparty.customControl.excelUpload.fragment.ExcelUpload",
 						type: "XML",
 						controller: this,
 					});
 				}
-				this.pDialog.open();
+				this._pDialog.open();
 			},
 
 			/**
@@ -99,6 +100,7 @@ sap.ui.define(
 			 * @param {*} oEvent
 			 */
 			onUploadSetComplete: async function (oEvent) {
+				this._component.setErrorResults([]);
 				let filePromise = new Promise((resolve, reject) => {
 					var reader = new FileReader();
 					reader.onload = async (e) => {
@@ -124,12 +126,13 @@ sap.ui.define(
 								}
 							}
 							// check if data is ok in extension method
-							let errorArray = this._checkBeforeRead(firstSheet);
-							errorArray = this._checkMandatoryFields(firstSheet, errorArray);
-							if (errorArray.some((error) => error.counter > 0)) {
+							// let errorArray = this._checkBeforeRead(firstSheet);
+							this._component.fireCheckBeforeRead({ sheetData: firstSheet });
+							this._component.setErrorResults(this._checkMandatoryFields(firstSheet, this._component.getErrorResults()));
+							if (this._component.getErrorResults((error) => error.counter > 0)) {
 								// error found in excel
 								// remove those errors not found
-								errorArray = errorArray.filter((error) => error.counter !== 0);
+								const errorArray = this._component.getErrorResults((error) => error.counter !== 0);
 								reject(errorArray);
 							} else {
 								resolve(firstSheet);
@@ -143,7 +146,7 @@ sap.ui.define(
 
 				// Wait for all promises to be resolved
 				try {
-					this.excelSheetsData = await filePromise;
+					this._excelSheetsData = await filePromise;
 					MessageToast.show("Upload Successful");
 				} catch (error) {
 					this.errorDialog = await Fragment.load({
@@ -152,7 +155,7 @@ sap.ui.define(
 						controller: this,
 					});
 					this.errorDialog.setModel(new JSONModel(), "errorData");
-					var fileUploader = this.pDialog.getContent()[0];
+					var fileUploader = this._pDialog.getContent()[0];
 					fileUploader.setValue();
 					this.errorDialog.getModel("errorData").setData(error);
 					this.errorDialog.open();
@@ -160,7 +163,7 @@ sap.ui.define(
 			},
 
 			onCloseDialog: function (oEvent) {
-				this.pDialog.destroy();
+				this._pDialog.destroy();
 			},
 			onCloseErrorDialog: function (oEvent) {
 				this.errorDialog.close();
@@ -172,7 +175,7 @@ sap.ui.define(
 			 */
 			onUploadSet: async function (oEvent) {
 				// checking if excel file contains data or not
-				if (!this.excelSheetsData.length) {
+				if (!this._excelSheetsData.length) {
 					MessageToast.show("Select file to Upload");
 					return;
 				}
@@ -203,10 +206,10 @@ sap.ui.define(
 					sActionLabel: "Uploading Excel File",
 				};
 				// calling the oData service using extension api
-				if (this.isODataV4) {
-					await this.context.editFlow.securedExecution(fnAddMessage, mParameters);
+				if (this._isODataV4) {
+					await this._context.editFlow.securedExecution(fnAddMessage, mParameters);
 				} else {
-					await this.context.extensionAPI.securedExecution(fnAddMessage, mParameters);
+					await this._context.extensionAPI.securedExecution(fnAddMessage, mParameters);
 				}
 
 				oSource.getParent().setBusy(false);
@@ -222,10 +225,10 @@ sap.ui.define(
 				// intializing the message manager for displaying the odata response messages
 				try {
 					// get binding of table to create rows
-					const binding = this.context.byId(this.component.getTableId()).getBinding("items");
+					const binding = this._context.byId(this._component.getTableId()).getBinding("items");
 
 					// loop over data from excel files
-					for (const row of this.excelSheetsData) {
+					for (const row of this._excelSheetsData) {
 						var payload = {};
 						// check each specified column if availalble in excel data
 						for (const [columnKey, metadataColumn] of Object.entries(this.typeLabelList)) {
@@ -243,8 +246,10 @@ sap.ui.define(
 								}
 							}
 						}
+
 						// extension method to manipulate payload
 						payload = this._changeBeforeCreate(payload);
+						payload = this._component.fireChangeBeforeCreate({ payload: payload });
 						binding.create(payload);
 					}
 
@@ -271,7 +276,7 @@ sap.ui.define(
 				// set the file value
 				XLSX.utils.book_append_sheet(wb, ws, "Tabelle1");
 				// download the created excel file
-				XLSX.writeFile(wb, this.component.getExcelFileName());
+				XLSX.writeFile(wb, this._component.getExcelFileName());
 
 				MessageToast.show("Template File Downloading...");
 			},
@@ -280,15 +285,15 @@ sap.ui.define(
 				var listObject = {};
 
 				// get the property list of the entity for which we need to download the template
-				const oDataEntityType = this.component.context.byId(this.component.getTableId()).getModel().getMetaModel().getODataEntityType(this.component.getOdataType());
+				const oDataEntityType = this._component.context.byId(this._component.getTableId()).getModel().getMetaModel().getODataEntityType(this._component.getOdataType());
 				const properties = oDataEntityType.property;
 				const entityTypeLabel = oDataEntityType["sap:label"];
 
 				// check if file name is not set
-				if (!this.component.getExcelFileName() && entityTypeLabel) {
-					this.component.setExcelFileName(`${entityTypeLabel}.xlsx`);
-				} else if (!this.component.getExcelFileName() && !entityTypeLabel) {
-					this.component.setExcelFileName(`Template.xlsx`);
+				if (!this._component.getExcelFileName() && entityTypeLabel) {
+					this._component.setExcelFileName(`${entityTypeLabel}.xlsx`);
+				} else if (!this._component.getExcelFileName() && !entityTypeLabel) {
+					this._component.setExcelFileName(`Template.xlsx`);
 				}
 
 				if (colums) {
@@ -343,27 +348,27 @@ sap.ui.define(
 				let entityTypeLabel;
 
 				// get the property list of the entity for which we need to download the template
-				var annotations = this.context.getModel().getMetaModel().getData()["$Annotations"];
-				const properties = this.context.getModel().getMetaModel().getData()[this.component.getOdataType()];
+				var annotations = this._context.getModel().getMetaModel().getData()["$Annotations"];
+				const properties = this._context.getModel().getMetaModel().getData()[this._component.getOdataType()];
 				// try get facet label
 				try {
-					entityTypeLabel = annotations[this.component.getOdataType()]["@com.sap.vocabularies.UI.v1.Facets"][0].Label;
+					entityTypeLabel = annotations[this._component.getOdataType()]["@com.sap.vocabularies.UI.v1.Facets"][0].Label;
 				} catch (error) {
 					console.debug("Facet Label not found");
 				}
 
 				// check if file name is not set
-				if (!this.component.getExcelFileName() && entityTypeLabel) {
-					this.component.setExcelFileName(`${entityTypeLabel}.xlsx`);
-				} else if (!this.component.getExcelFileName() && !entityTypeLabel) {
-					this.component.setExcelFileName(`Template.xlsx`);
+				if (!this._component.getExcelFileName() && entityTypeLabel) {
+					this._component.setExcelFileName(`${entityTypeLabel}.xlsx`);
+				} else if (!this._component.getExcelFileName() && !entityTypeLabel) {
+					this._component.setExcelFileName(`Template.xlsx`);
 				}
 
 				if (colums) {
 					for (const propertyName of colums) {
 						const property = properties[propertyName];
 						if (property) {
-							const propertyLabel = annotations[`${this.component.getOdataType()}/${propertyName}`];
+							const propertyLabel = annotations[`${this._component.getOdataType()}/${propertyName}`];
 							listObject[propertyName] = {};
 							listObject[propertyName].label = this._getLabelV4(annotations, properties, propertyName, propertyLabel, this._options);
 							if (!listObject[propertyName].label) {
@@ -377,7 +382,7 @@ sap.ui.define(
 				} else {
 					const propertiesFiltered = Object.entries(properties).filter(([propertyName, propertyValue]) => propertyValue["$kind"] === "Property");
 					for (const [propertyName, propertyValue] of propertiesFiltered) {
-						const propertyLabel = annotations[`${this.component.getOdataType()}/${propertyName}`];
+						const propertyLabel = annotations[`${this._component.getOdataType()}/${propertyName}`];
 						if (!propertyLabel["@com.sap.vocabularies.UI.v1.Hidden"]) {
 							listObject[propertyName] = {};
 							listObject[propertyName].label = this._getLabelV4(annotations, properties, propertyName, propertyLabel, this._options);
@@ -397,7 +402,7 @@ sap.ui.define(
 					return propertyLabel["@com.sap.vocabularies.Common.v1.Label"];
 				}
 				try {
-					const lineItemsAnnotations = annotations[this.component.getOdataType()]["@com.sap.vocabularies.UI.v1.LineItem"];
+					const lineItemsAnnotations = annotations[this._component.getOdataType()]["@com.sap.vocabularies.UI.v1.LineItem"];
 					return lineItemsAnnotations.find((dataField) => dataField.Value.$Path === propertyName).Label;
 				} catch (error) {
 					console.debug(`${propertyName} not found as a LineItem Label`);
@@ -407,7 +412,7 @@ sap.ui.define(
 
 			_checkIfODataIsV4: function () {
 				try {
-					if (this.context.getModel().getODataVersion() === "4.0") {
+					if (this._context.getModel().getODataVersion() === "4.0") {
 						return true;
 					}
 				} catch (error) {
@@ -441,8 +446,8 @@ sap.ui.define(
 
 			_checkMandatoryFields: function (data, errorArray) {
 				// error cases
-				if (this.component.getMandatoryFields()) {
-					for (const mandatoryField of this.component.getMandatoryFields()) {
+				if (this._component.getMandatoryFields()) {
+					for (const mandatoryField of this._component.getMandatoryFields()) {
 						const errorMessage = {
 							title: `Pflichtfeld ${this.typeLabelList[mandatoryField].label} ist nicht gefüllt`,
 							counter: 0,
