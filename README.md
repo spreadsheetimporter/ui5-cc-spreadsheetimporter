@@ -1,5 +1,7 @@
 # UI5 custom control `ui5-cc-excelupload`
 
+> :warning: **This control is still in beta**: It fundamently works, but the APIs are still changing and lot of bugs still be there!
+
 A UI5 Module to integrate a Excel Upload for Fiori Element Apps.  
 The module focuses on making integration into existing Fiori element apps as easy as possible, with as little code and configuration as possible.
 ![Excel Upload Dialog](/images/ExcelUploadDialog.png "Excel Upload Dialog")
@@ -12,26 +14,28 @@ npm install ui5-cc-excelupload
 
 ## Usage
 
+> :warning: **This example is for OData V4**
+
 1. define the dependeny in `$yourapp/package.json`
 
-   ```json
-   // it is already in "dependencies" after installation
-   "ui5": {
-     "dependencies": [
-       // ...
-       "ui5-cc-excelupload"
-       // ...
-     ]
-   }
-   ```
+```json
+// it is already in "dependencies" after installation
+"ui5": {
+  "dependencies": [
+    // ...
+    "ui5-cc-excelupload"
+    // ...
+  ]
+}
+```
 
 2. create a custom controller (exampel for object page)  
 create a folder `ext` and in it a folder `controller`  
 create js file `ObjectPageExtController.js`, so `webapp/ext/controller/ObjectPageExtController.js`
 
 ```js
-sap.ui.define(["sap/ui/core/mvc/Controller"],
-    function (Controller) {
+sap.ui.define([],
+    function () {
         "use strict";
         return {
             /**
@@ -49,57 +53,91 @@ sap.ui.define(["sap/ui/core/mvc/Controller"],
 **adjust your namespace in `press` property**
 
 ```json
-        "PersonObjectPage": {
-          "type": "Component",
-          "id": "PersonObjectPage",
-          "name": "sap.fe.templates.ObjectPage",
-          "options": {
-            "settings": {
-              "entitySet": "Person",
-              "content": {
-                "header": {
-                  "actions": {
-                    "excelUpload": {
-                      "id": "excelUploadButton",
-                      "text": "Excel Upload",
-                      "enabled": "{ui>/isEditable}",
-                      "press": "sap.ui.eventregistration.admin.ext.controller.ObjectPageExtController.openExcelUploadDialog",
-                      "requiresSelection": false
-                    }
-                  }
-                }
-              }
+"PersonObjectPage": {
+  "type": "Component",
+  "id": "PersonObjectPage",
+  "name": "sap.fe.templates.ObjectPage",
+  "options": {
+    "settings": {
+      "entitySet": "Person",
+      "content": {
+        "header": {
+          "actions": {
+            "excelUpload": {
+              "id": "excelUploadButton",
+              "text": "Excel Upload",
+              "enabled": "{ui>/isEditable}",
+              "press": "my.namespace.ext.controller.ObjectPageExtController.openExcelUploadDialog",
+              "requiresSelection": false
             }
           }
         }
+      }
+    }
+  }
+}
 ```
 
 4. in `manifest.json` add under `sap.ui5` this:
 
 ```json
 "resourceRoots": {
-      "thirdparty.customControl.excelUpload": "./thirdparty/customControl/excelUpload/",
-      "xlsx": "./thirdparty/customControl/excelUpload/resources/xlsx"
+            "thirdparty.customControl.excelUpload": "./thirdparty/customControl/excelUpload/",
+            "cc.excelUpload": "./thirdparty/customControl/excelUpload/"
 },
 ```
 
 5. Call the custom control with your own properties. replace the `openExcelUploadDialog` in the `ObjectPageExtController.js` function with the following code
 
 ```js
-openExcelUploadDialog: async function (oEvent) {    
-    this._options = {
-                    context: this,
-                    columns: ["ID", "Birthday","FirstName","LastName"],
-                    excelFileName: "User.xlsx"
-    }
+openExcelUploadDialog: async function (oEvent) {
+
     this._view.setBusyIndicatorDelay(0)
     this._view.setBusy(true)
-    if(!this.excelUploadController){
-        this.excelUploadController = await Controller.create({ name:"thirdparty.customControl.excelUpload.ExcelUpload"})
-        this.excelUploadController.setContext(this._options)
-    }          
-    this.excelUploadController.openExcelUploadDialog()          
-    this.excelSheetsData = [];
+    if (!this.excelUpload) {
+        this.excelUpload = await sap.ui.getCore().createComponent({
+            name: "thirdparty.customControl.excelUpload",
+            async: false,
+            componentData: {
+                context: this,
+                columns: ["product_ID", "quantity", "title", "price"],
+                mandatoryFields: ["product_ID", "quantity"],
+                excelFileName: "Test.xlsx"
+            }
+        });
+
+        // event to check before uploaded to app
+        this.excelUpload.attachCheckBeforeRead(function(oEvent) {
+            // example
+            const sheetData = oEvent.getParameter("sheetData");
+            let errorArray = [
+                {
+                  title: "Price to high (max 100)",
+                  counter: 0,
+                },
+              ];
+              for (const row of sheetData) {
+                //check for invalid date
+                if (row.UnitPrice) {
+                  if(row.UnitPrice > 100){
+                            errorArray[0].counter = errorArray[0].counter + 1
+                        }
+                }
+              }
+            oEvent.getSource().addToErrorsResults(errorArray)
+        }, this)
+
+        // event to change data before send to backend
+        this.excelUpload.attachChangeBeforeCreate(function(oEvent) {
+            oEvent.getSource().setPayload({
+                "product_ID": "123",
+                "quantity": 1,
+                "title": "Test",
+                "price": 25
+            })
+        }, this)
+    }
+    this.excelUpload.openExcelUploadDialog()
     this._view.setBusy(false)
 }
 ```
@@ -179,6 +217,8 @@ A few examples:
 4. GitHub Workflow will be triggered and npm package published
 
 ### Develop
+
+You can start with this dev enviroment: https://github.com/marianfoo/ui5-cc-excelUpload-dev-env
 
 To develop, `npm link` this folder, and `npm link` in your test app.  
 You need to run `npm run build:watch` to have always the latest changes in the `dist` folder.
