@@ -83,8 +83,9 @@ sap.ui.define([],
 ```json
 "resourceRoots": {
             "thirdparty.customControl.excelUpload": "./thirdparty/customControl/excelUpload/",
+            "xlsx": "./thirdparty/customControl/excelUpload/resources/xlsx",
             "cc.excelUpload": "./thirdparty/customControl/excelUpload/"
-},
+        },
 ```
 
 5. Call the custom control with your own properties. replace the `openExcelUploadDialog` in the `ObjectPageExtController.js` function with the following code
