@@ -1,3 +1,12 @@
+## [0.3.1](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.3.0...v0.3.1) (2022-12-06)
+
+
+### Bug Fixes
+
+* xlsx not in build ([e3296c0](https://github.com/marianfoo/ui5-cc-excelUpload/commit/e3296c07c31eb17f7ead0e1e5c38a8c78e8a8b02))
+
+
+
 # [0.3.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.2.2...v0.3.0) (2022-12-06)
 
 ### Breaking Changes
