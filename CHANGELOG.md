@@ -1,3 +1,7 @@
+# [0.3.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.2.2...v0.3.0) (2022-12-06)
+
+
+
 ## [0.2.2](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.2.1...v0.2.2) (2022-12-01)
 
 
