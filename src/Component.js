@@ -35,11 +35,8 @@ sap.ui.define(
 				events: {
 					checkBeforeRead: {
 						parameters: {
-							type: "string",
-							level: "string",
-							data: {
-								type: "object",
-							},
+							sheetData: { type: "object" },
+							errorResults: { type: "object" },
 						},
 					},
 					changeBeforeCreate: {
@@ -130,6 +127,22 @@ sap.ui.define(
 		 */
 		Component.prototype.openExcelUploadDialog = function () {
 			this.excelUpload.openExcelUploadDialog();
+		};
+
+		/**
+		 * Set Payload for Event
+		 * @public
+		 */
+		Component.prototype.setPayload = function (payload) {
+			this.excelUpload._setPayload(payload);
+		};
+
+		/**
+		 * add to error array
+		 * @public
+		 */
+		Component.prototype.addToErrorsResults = function (errorArray) {
+			this.excelUpload._addToErrorsResults(errorArray);
 		};
 
 		//=============================================================================

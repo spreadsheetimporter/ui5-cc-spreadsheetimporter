@@ -1,6 +1,6 @@
 sap.ui.define(
-	["sap/ui/core/mvc/Controller", "sap/ui/core/Fragment", "sap/m/MessageToast", "sap/ui/model/json/JSONModel", "xlsx", "sap/ui/core/mvc/OverrideExecution"],
-	function (Controller, Fragment, MessageToast, JSONModel, XLSX, OverrideExecution) {
+	["sap/ui/core/mvc/Controller", "sap/ui/core/Fragment", "sap/m/MessageToast", "sap/ui/model/json/JSONModel", "cc/excelUpload/resources/xlsx"],
+	function (Controller, Fragment, MessageToast, JSONModel, XLSX) {
 		"use strict";
 
 		return Controller.extend("cc.excelUpload.ExcelUpload", {
@@ -87,7 +87,7 @@ sap.ui.define(
 				this._excelSheetsData = [];
 				if (!this._pDialog || this._pDialog.isDestroyed()) {
 					this._pDialog = await Fragment.load({
-						name: "thirdparty.customControl.excelUpload.fragment.ExcelUpload",
+						name: "cc.excelUpload.fragment.ExcelUpload",
 						type: "XML",
 						controller: this,
 					});
@@ -126,13 +126,12 @@ sap.ui.define(
 								}
 							}
 							// check if data is ok in extension method
-							// let errorArray = this._checkBeforeRead(firstSheet);
+							this._checkMandatoryFields(firstSheet, this._component.getErrorResults());
 							this._component.fireCheckBeforeRead({ sheetData: firstSheet });
-							this._component.setErrorResults(this._checkMandatoryFields(firstSheet, this._component.getErrorResults()));
-							if (this._component.getErrorResults((error) => error.counter > 0)) {
+							if (this._component.getErrorResults().some((error) => error.counter > 0)) {
 								// error found in excel
 								// remove those errors not found
-								const errorArray = this._component.getErrorResults((error) => error.counter !== 0);
+								const errorArray = this._component.getErrorResults().filter((error) => error.counter !== 0);
 								reject(errorArray);
 							} else {
 								resolve(firstSheet);
@@ -150,7 +149,7 @@ sap.ui.define(
 					MessageToast.show("Upload Successful");
 				} catch (error) {
 					this.errorDialog = await Fragment.load({
-						name: "thirdparty.customControl.excelUpload.fragment.ErrorDialog",
+						name: "cc.excelUpload.fragment.ErrorDialog",
 						type: "XML",
 						controller: this,
 					});
@@ -247,10 +246,10 @@ sap.ui.define(
 							}
 						}
 
+						this._payload = payload;
 						// extension method to manipulate payload
-						payload = this._changeBeforeCreate(payload);
-						payload = this._component.fireChangeBeforeCreate({ payload: payload });
-						binding.create(payload);
+						this._component.fireChangeBeforeCreate({ payload: this._payload });
+						binding.create(this._payload);
 					}
 
 					fnResolve();
@@ -285,7 +284,7 @@ sap.ui.define(
 				var listObject = {};
 
 				// get the property list of the entity for which we need to download the template
-				const oDataEntityType = this._component.context.byId(this._component.getTableId()).getModel().getMetaModel().getODataEntityType(this._component.getOdataType());
+				const oDataEntityType = this._context.byId(this._component.getTableId()).getModel().getMetaModel().getODataEntityType(this._component.getOdataType());
 				const properties = oDataEntityType.property;
 				const entityTypeLabel = oDataEntityType["sap:label"];
 
@@ -424,24 +423,12 @@ sap.ui.define(
 				return new Promise((resolve) => setTimeout(resolve, ms));
 			},
 
-			changeBeforeCreate: function (payload) {
-				return payload;
+			_setPayload: function (payload) {
+				this._payload = payload;
 			},
-			checkBeforeRead: function (data) {
-				// error cases
-				let errorArray = [
-					{
-						title: "Test",
-						counter: 0,
-					},
-				];
-				for (const row of data) {
-					// check for invalid date
-					// if (row[this.typeLabelList["Date"].label] && new Date(Math.round((row[this.typeLabelList["Date"].label] - 25569) * 86400 * 1000)).toString() === "Invalid Date") {
-					// 	errorArray[0]["counter"] = errorArray[0]["counter"] + 1;
-					// }
-				}
-				return errorArray;
+
+			_addToErrorsResults: function (errorResults) {
+				this._component.setErrorResults(this._component.getErrorResults().concat(errorResults));
 			},
 
 			_checkMandatoryFields: function (data, errorArray) {
