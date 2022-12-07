@@ -229,17 +229,19 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/Fragment", "sap/m/Mess
 					var payload = {};
 					// check each specified column if availalble in excel data
 					for (const [columnKey, metadataColumn] of Object.entries(this.typeLabelList)) {
+						// depending on parse type
+						const value = this._getValueFromRow(row, metadataColumn.label, columnKey);
 						// depending on data type
-						if (row[metadataColumn.label]) {
+						if (value) {
 							if (metadataColumn.type === "Edm.Boolean") {
-								payload[columnKey] = `${row[metadataColumn.label] || ""}`;
+								payload[columnKey] = `${value || ""}`;
 							} else if (metadataColumn.type === "Edm.Date") {
-								var excelDate = new Date(Math.round((row[metadataColumn.label] - 25569) * 86400 * 1000));
+								var excelDate = new Date(Math.round((value - 25569) * 86400 * 1000));
 								payload[columnKey] = `${excelDate.getFullYear()}-${("0" + (excelDate.getMonth() + 1)).slice(-2)}-${("0" + excelDate.getDate()).slice(-2)}`;
 							} else if (metadataColumn.type === "Edm.Double" || metadataColumn.type === "Edm.Int32") {
-								payload[columnKey] = row[metadataColumn.label];
+								payload[columnKey] = value;
 							} else {
-								payload[columnKey] = `${row[metadataColumn.label] || ""}`;
+								payload[columnKey] = `${value || ""}`;
 							}
 						}
 					}
@@ -261,9 +263,15 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/Fragment", "sap/m/Mess
 		 */
 		onTempDownload: function () {
 			// create excel column list
+			let fieldMatchType = this._component.getFieldMatchType();
 			var excelColumnList = [{}];
 			for (let [key, value] of Object.entries(this.typeLabelList)) {
-				excelColumnList[0][value.label] = "";
+				if (fieldMatchType === "label") {
+					excelColumnList[0][value.label] = "";
+				}
+				if (fieldMatchType === "labelTypeBrackets") {
+					excelColumnList[0][`${value.label}[${key}]`] = "";
+				}
 			}
 
 			// initialising the excel work sheet
@@ -438,10 +446,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/Fragment", "sap/m/Mess
 						counter: 0,
 					};
 					for (const row of data) {
-						if (
-							!Object.prototype.hasOwnProperty.call(row, this.typeLabelList[mandatoryField].label) &&
-							(row[this.typeLabelList[mandatoryField].label] === "" || row[this.typeLabelList[mandatoryField].label] === undefined)
-						) {
+						const value = this._getValueFromRow(row, undefined, mandatoryField);
+						if (value === "" || value === undefined) {
 							errorMessage.counter = errorMessage.counter + 1;
 						}
 					}
@@ -450,6 +456,22 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/Fragment", "sap/m/Mess
 			}
 
 			return errorArray;
+		},
+
+		_getValueFromRow: function (row, label, type) {
+			const fieldMatchType = this._component.getFieldMatchType();
+			let value;
+			if (fieldMatchType === "label") {
+				value = row[label];
+			}
+			if (fieldMatchType === "labelTypeBrackets") {
+				try {
+					value = Object.entries(row).find(([key]) => key.includes(`[${type}]`))[1];
+				} catch (error) {
+					console.error(`Not found ${type}`);
+				}
+			}
+			return value;
 		},
 	});
 });

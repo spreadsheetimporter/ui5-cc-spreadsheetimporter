@@ -24,6 +24,7 @@ sap.ui.define(
 					odataType: { type: "string" },
 					mandatoryFields: { type: "string[]" },
 					errorResults: { type: "object" },
+					fieldMatchType: { type: "string", defaultValue: "label" },
 				},
 				aggregations: {
 					rootControl: {
@@ -64,6 +65,7 @@ sap.ui.define(
 			this.setTableId(oCompData.tableId);
 			this.setOdataType(oCompData.odataType);
 			this.setMandatoryFields(oCompData.mandatoryFields);
+			this.setFieldMatchType(oCompData.fieldMatchType);
 
 			// // call the init function of the parent - ATTENTION: this triggers createContent()
 			UIComponent.prototype.init.apply(this, arguments);

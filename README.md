@@ -184,6 +184,20 @@ The selected fields are checked to see if they are present in Excel.
 If not defined, they will not be checked.  
 **example:** `mandatoryFields: ["product_ID", "quantity"]`
 
+#### `fieldMatchType`
+
+Options:
+- `label`
+- `labelTypeBrackets`
+
+**default:** `label`
+
+It is possible that the labels of different attributes have the same label.  
+In order to assign the correct labels and types, there is an option to make the type visible in the header.  
+This way a correct assignment can be made.
+
+Default (with `label`) the header would like this: `ID, Birthday, First Name, Last Name`  
+With `labelTypeBrackets` the header would look like this: `ID[ID], Birthday[birth_day], First Name[FirstName], Last Name[LastName]`
 ## Build time (in apps)
 
 Use `ui5 build --all` to produce a deployable version of your app including `ui5-cc-excelupload` and its’ control(s).  
