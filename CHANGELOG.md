@@ -1,3 +1,17 @@
+## [0.3.3](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.3.2...v0.3.3) (2022-12-07)
+
+
+### Bug Fixes
+
+* check did not work with fieldMatchType:label ([dde0bf9](https://github.com/marianfoo/ui5-cc-excelUpload/commit/dde0bf9a83ee159c3e70616d25e288a288b19c4e))
+
+
+### Features
+
+* convertion for date/time types before creation ([65823aa](https://github.com/marianfoo/ui5-cc-excelUpload/commit/65823aa3921a272fdd206b2fca2b9837006eef7d))
+
+
+
 ## [0.3.2](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.3.1...v0.3.2) (2022-12-07)
 
 
