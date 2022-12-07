@@ -1,3 +1,12 @@
+## [0.3.2](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.3.1...v0.3.2) (2022-12-07)
+
+
+### Features
+
+* new parsing type of excel column header ([713e8a1](https://github.com/marianfoo/ui5-cc-excelUpload/commit/713e8a118334f76e62b21deb9ab9aba625f53cd9))
+
+
+
 ## [0.3.1](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.3.0...v0.3.1) (2022-12-06)
 
 
