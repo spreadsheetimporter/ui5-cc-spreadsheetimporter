@@ -33,8 +33,7 @@
     "version": "npm run changelog && git add --all",
     "version:publish": "git push && git push --tags",
     "build": "ui5 build --config=ui5-build.yaml --all --clean-dest --dest dist",
-    "build:watch": "node ./dev/chokidar.js",
-    "build:watchAll": "node ./dev/chokidarFull.js"
+    "build:watch": "node ./dev/chokidar.js"
   },
   "dependencies": {
     "xlsx": "^0.18.5"
@@ -55,10 +54,5 @@
     "ui5-tooling-modules": "^0.7.0",
     "chokidar": "^3.5.3",
     "shelljs": "^0.8.5"
-  },
-  "ui5": {
-    "dependencies": [
-      "ui5-tooling-modules"
-    ]
   }
 }
