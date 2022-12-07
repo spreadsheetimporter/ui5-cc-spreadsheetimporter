@@ -226,7 +226,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/Fragment", "sap/m/Mess
 
 				// loop over data from excel files
 				for (const row of this._excelSheetsData) {
-					var payload = {};
+					let payload = {};
 					// check each specified column if availalble in excel data
 					for (const [columnKey, metadataColumn] of Object.entries(this.typeLabelList)) {
 						// depending on parse type
@@ -235,9 +235,16 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/Fragment", "sap/m/Mess
 						if (value) {
 							if (metadataColumn.type === "Edm.Boolean") {
 								payload[columnKey] = `${value || ""}`;
-							} else if (metadataColumn.type === "Edm.Date") {
-								var excelDate = new Date(Math.round((value - 25569) * 86400 * 1000));
+							} else if (metadataColumn.type === "Edm.Date" || metadataColumn.type === "Edm.DateTime") {
+								let excelDate = new Date(Math.round((value - 25569) * 86400 * 1000));
 								payload[columnKey] = `${excelDate.getFullYear()}-${("0" + (excelDate.getMonth() + 1)).slice(-2)}-${("0" + excelDate.getDate()).slice(-2)}`;
+							} else if (metadataColumn.type === "Edm.DateTimeOffset") {
+								payload[columnKey] = new Date(Math.round((value - 25569) * 86400 * 1000));
+							} else if (metadataColumn.type === "Edm.TimeOfDay" || metadataColumn.type === "Edm.Time") {
+								//convert to hh:mm:ss
+								const secondsInADay = 24 * 60 * 60;
+								const timeInSeconds = value * secondsInADay;
+								payload[columnKey] = new Date(timeInSeconds * 1000).toISOString().substring(11, 16);
 							} else if (metadataColumn.type === "Edm.Double" || metadataColumn.type === "Edm.Int32") {
 								payload[columnKey] = value;
 							} else {
