@@ -1,6 +1,6 @@
 sap.ui.define(
 	[
-		"jquery.sap.global",
+		"sap/ui/thirdparty/jquery",
 		"sap/m/Button",
 		"sap/ui/core/UIComponent",
 		"sap/ui/model/json/JSONModel",
@@ -72,7 +72,7 @@ sap.ui.define(
 
 			// this.excelUpload = await sap.ui.core.mvc.Controller.create({ name:"cc.excelUpload.ExcelUpload"})
 			// //now this here would work:
-			// //var oRoot = this.getRootControl();
+			// //var oRoot = this.getRootControl(); → won't work with visibility: "hidden", no getters/setters generated
 
 			// // we could create a device model and use it
 			oModel = new JSONModel(Device);
@@ -160,6 +160,7 @@ sap.ui.define(
 
 			aContexts = oEvent.getParameter("selectedContexts");
 			if (aContexts.length) {
+				// can this `extend` call be replaced with `Object.assign` or is a deep clone required?
 				oCustomer = jQuery.extend({}, aContexts[0].getObject()); //clone
 				this.fireCustomerSelected({
 					customer: oCustomer,
@@ -180,7 +181,7 @@ sap.ui.define(
 		Component.prototype.getContentDensityClass = function () {
 			if (this._sContentDensityClass === undefined) {
 				// check whether FLP has already set the content density class; do nothing in this case
-				if (jQuery(document.body).hasClass("sapUiSizeCozy") || jQuery(document.body).hasClass("sapUiSizeCompact")) {
+				if (document.body.classList.contains("sapUiSizeCozy") || document.body.classList.contains("sapUiSizeCompact")) {
 					this._sContentDensityClass = "";
 				} else if (!Device.support.touch) {
 					// apply "compact" mode if touch is not supported
