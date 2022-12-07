@@ -481,7 +481,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/Fragment", "sap/m/Mess
 				try {
 					value = Object.entries(row).find(([key]) => key.includes(`[${type}]`))[1];
 				} catch (error) {
-					console.error(`Not found ${type}`);
+					console.debug(`Not found ${type}`);
 				}
 			}
 			return value;
