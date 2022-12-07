@@ -446,7 +446,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/Fragment", "sap/m/Mess
 						counter: 0,
 					};
 					for (const row of data) {
-						const value = this._getValueFromRow(row, undefined, mandatoryField);
+						let label;
+						if (typeof this.typeLabelList[mandatoryField] !== "undefined" && mandatoryField in this.typeLabelList) {
+							label = this.typeLabelList[mandatoryField]["label"];
+						} else {
+							console.error(`Mandatory Field ${mandatoryField} not found for checking mandatory fields`);
+						}
+						const value = this._getValueFromRow(row, label, mandatoryField);
 						if (value === "" || value === undefined) {
 							errorMessage.counter = errorMessage.counter + 1;
 						}
