@@ -239,3 +239,10 @@ To develop, `npm link` this folder, and `npm link` in your test app.
 Then run `npm run build`.  
 For developing, you need to run `npm run build:watch` to have always the latest changes in the `dist` folder.  
 Otherwise, you would always have to change the resourceRoots in manifest.json in the consuming app.
+
+#### Docs
+
+To run the docs locally:
+
+- `docker build . -t mkdocs`
+- `docker run --rm -it -p 8000:8000 -v ${PWD}:/docs mkdocs`
