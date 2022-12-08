@@ -34,24 +34,34 @@ npm install ui5-cc-excelupload
 },
 ````
 
+4\. Add `--all` to your build script in the package.json
+````json
+"scripts": {
+// ...
+"build": "ui5 build --config=ui5.yaml --all --clean-dest --dest dist",
+// ...
+},
+````
+
+
 !!! warning 
         There are different implementations for Fiori Elements depending on the OData Version
 
 ## Starting with Fiori Elements
 
-To start the Excel Upload, you need in your Fiori Elements App a Button.  
+To start the Excel Upload Dialog, you need in your Fiori Elements App a Button.  
 The best way is start with the [Guided Development](https://blogs.sap.com/2021/08/16/getting-up-to-speed-with-sap-fiori-tools-guided-development-overview/) Extension to add a custom action:  
 
 ![Guided Development](./../images/guided_development.png){ loading=lazy }
 
-If you have done that, you can continue with the implementation of your Custom Code.
+If you have done that, you can continue with the implementation of your Custom Code either with [V2](#custom-code_1) or [V4](#custom-code).
 
 ## Starting with Fiori Elements (OData V4)
 
 ### Extension in manifest.json
 
 As a example, here is how you custom action can look like.  
-This example is from the [sample app](https://github.com/marianfoo/ui5-cc-excelUpload-sampleapp/blob/744f008b1b052a3df5594215d8d11811a8e646b7/packages/orders/webapp/manifest.json#L145-L157)
+This example is from the [sample app](https://github.com/marianfoo/ui5-cc-excelUpload-sampleapp/blob/744f008b1b052a3df5594215d8d11811a8e646b7/packages/orders/webapp/manifest.json#L145-L157) for the object page.
 
 ````json
 "OrdersObjectPage": {
@@ -106,7 +116,7 @@ openExcelUploadDialog: async function (oEvent) {
 ### Extension in manifest.json
 
 As a example, here is how you custom action can look like.  
-This example is from the [sample app](https://github.com/marianfoo/ui5-cc-excelUpload-sampleapp/blob/744f008b1b052a3df5594215d8d11811a8e646b7/packages/orders/webapp/manifest.json#L145-L157)
+This example is from the [sample app](https://github.com/marianfoo/ui5-cc-excelUpload-sampleapp/blob/744f008b1b052a3df5594215d8d11811a8e646b7/packages/ordersv2/webapp/manifest.json#L110-L134) for the object page.
 
 ````json
 "extends": {
