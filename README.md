@@ -16,7 +16,7 @@ npm install ui5-cc-excelupload
 
 You can find the official documentation here:
 
-https://marianfoo.github.io/ui5-cc-excelUpload-docs/
+https://marianfoo.github.io/ui5-cc-excelUpload/
 
 ## Development
 
