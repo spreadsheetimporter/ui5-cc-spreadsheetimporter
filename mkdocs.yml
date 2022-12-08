@@ -9,8 +9,8 @@ nav:
   - Getting Started: pages/GettingStarted.md
   # - Configuration: pages/Configuration.md
   # - UI5 CLI: pages/CLI.md
-  - Development:
-      - Overview: pages/Overview.md
+  # - Development:
+  #     - Overview: pages/Overview.md
   #   - OpenUI5: pages/OpenUI5.md
   #   - SAPUI5: pages/SAPUI5.md
   # - Extensibility:
@@ -33,8 +33,8 @@ theme:
   palette:
     primary: "blue"
     accent: "blue"
-  logo: "images/logo.svg"
-  favicon: "images/favicon.png"
+  # logo: "images/logo.svg"
+  # favicon: "images/favicon.png"
   font: false
   features:
     - navigation.expand
@@ -69,3 +69,8 @@ markdown_extensions:
       custom_checkbox: true
   - pymdownx.tilde
   - pymdownx.caret
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+
+dev_addr: "localhost:8000"

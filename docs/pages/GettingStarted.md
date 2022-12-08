@@ -1,99 +1,157 @@
 # Getting Started
-## Installing the UI5 CLI
+## Installing the UI5 Custom Controll
 ### Requirements
-- [Node.js](https://nodejs.org/) Version 10 or later
+- [Node.js](https://nodejs.org/) Version 14 or later
 
-### Installation
+### General Setup
+
+1\. Install from npm
+
 ```sh
-# Global installation to have the command available
-npm install --global @ui5/cli
-
-# Additional local install in your project
-npm install --save-dev @ui5/cli
-
-# Verify installation
-ui5 --help
+npm install ui5-cc-excelupload
 ```
 
-The globally installed UI5 CLI will always try to invoke a locally installed version of the UI5 CLI (if present). This way you can use different versions of the UI5 Tooling across your projects. Please see the [UI5 CLI documentation](./CLI.md#local-vs-global-installation) for details.
+2\.  Add to your `package.json`:  
+> :information_source: This step is not necessary from UI5 Tooling V3
 
-## ⚡️ Quick Start: OpenUI5 Sample App
-Check out the [OpenUI5 Sample App](https://github.com/SAP/openui5-sample-app) featuring a full blown [How-to](https://github.com/SAP/openui5-sample-app/#openui5-sample-app) to play around with UI5 Tooling!
+````json
+"ui5": {
+  "dependencies": [
+    // ...
+    "ui5-cc-excelupload"
+    // ...
+  ]
+}
+````
 
-## Starting a New Project
-The easiest way to start a new UI5 project is to use a template generator like [**generator-easy-ui5**](https://github.com/SAP/generator-easy-ui5).
-
-Choose a template that is designed for the type of project you want to create and the target environment where you want to deploy it to.
-Make sure that the template already uses UI5 Tooling. A good indicator for that is the presence of a `ui5.yaml` file in the generated project.
-
-When working with SAP Business Application Studio, there are several templates available to you. Check out the tutorial on creating a basic SAPUI5 application and deploying it to Cloud Foundry from within SAP Business Application Studio: [Create an SAP Fiori App Using SAP Business Application Studio](https://developers.sap.com/tutorials/appstudio-fioriapps-create.html)
-
-You can find many guides on UI5 development with SAP Business Application Studio in the [Tutorial Navigator](https://developers.sap.com/tutorial-navigator.html?tag=topic:sapui5&tag=products:technology-platform/sap-business-application-studio).
-
-## Enabling an Existing Project
-You can easily check whether or not a project (application or library) can already be used with the UI5 Tooling by looking for a `ui5.yaml` file in the project's root directory.  
-This file (with some exceptions) is required for all projects and their dependencies (e.g. reuse libraries) to use them in the UI5 Tooling.
-
-### Setup
-If your project is not set up for use with the UI5 Tooling yet, follow these steps:
-
-1. If your project does not have a `package.json` file, let npm generate it:
-    ```sh
-    npm init --yes
-    ```
-
-1. Generate the `ui5.yaml` file:
-    ```sh
-    ui5 init
-    ```
-
-1. Define the framework you want to use
-
-    === "OpenUI5"
-
-        ```sh
-        ui5 use openui5@latest
-        ```
-
-    === "SAPUI5"
-
-        ```sh
-        ui5 use sapui5@latest
-        ```
-
-    You can choose between the OpenUI5 and the SAPUI5 framework.
-
-    Don't know which one to choose? Check out our [documentation on the differences between OpenUI5 and SAPUI5](./FAQ.md##whats-the-difference-between-openui5-and-sapui5).
-
-1. Add required libraries
-    ```sh
-    ui5 add sap.ui.core sap.m sap.ui.table themelib_sap_fiori_3 # [...]
-    ```
-
-    You can find a documentation of all libraries, including samples and more, in the Demo Kit:
+3\. Add `resourceRoots` to you `manifest.json`
    
-    - [**OpenUI5** Demo Kit](https://openui5.hana.ondemand.com/api)
-    - [**SAPUI5** Demo Kit](https://ui5.sap.com/#/api)
-    
-1. Start the server and work on your project! 🎉
-    ```sh
-    ui5 serve
-    ```
+````json
+"resourceRoots": {
+    "thirdparty.customControl.excelUpload": "./thirdparty/customControl/excelUpload/",
+    "xlsx": "./thirdparty/customControl/excelUpload/resources/xlsx",
+    "cc.excelUpload": "./thirdparty/customControl/excelUpload/"
+},
+````
 
-    !!! tip
-        Use `ui5 serve` to start a local development server and `ui5 build --all` to produce an optimized, static version of your project, which you can then deploy to your production environment.
+!!! warning 
+        There are different implementations for Fiori Elements depending on the OData Version
 
-        Find more information here:
+## Starting with Fiori Elements
 
-        - [Server](./Server.md)
-        - [Builder](./Builder.md)
-        - [CLI](./CLI.md)
+To start the Excel Upload, you need in your Fiori Elements App a Button.  
+The best way is start with the [Guided Development](https://blogs.sap.com/2021/08/16/getting-up-to-speed-with-sap-fiori-tools-guided-development-overview/) Extension to add a custom action:  
 
-1. If you are using Git or similar version control, commit `package.json` and `ui5.yaml` to your repository.
-    ```sh
-    git add package.json ui5.yaml
-    git commit -m "Enable use with UI5 Tooling"
-    ```
+![Guided Development](./../images/guided_development.png){ loading=lazy }
 
-**Hooray! You can now use UI5 Tooling in your project!**
-{: .sap-icon-ui5-after }
+If you have done that, you can continue with the implementation of your Custom Code.
+
+## Starting with Fiori Elements (OData V4)
+
+### Extension in manifest.json
+
+As a example, here is how you custom action can look like.  
+This example is from the [sample app](https://github.com/marianfoo/ui5-cc-excelUpload-sampleapp/blob/744f008b1b052a3df5594215d8d11811a8e646b7/packages/orders/webapp/manifest.json#L145-L157)
+
+````json
+"OrdersObjectPage": {
+    "type": "Component",
+    "id": "OrdersObjectPage",
+    "name": "sap.fe.templates.ObjectPage",
+    "options": {
+        "settings": {
+            "editableHeaderContent": false,
+            "entitySet": "Orders",
+            "content": {
+                "header": {
+                    "actions": {
+                        "excelUpload": {
+                            "id": "excelUploadButton",
+                            "text": "Excel Upload",
+                            "enabled": "{ui>/isEditable}",
+                            "press": "ui.v4.orders.ext.ObjectPageExtController.openExcelUploadDialog",
+                            "requiresSelection": false
+                        }
+                    }
+                }
+            }
+        }
+    }
+},
+````
+
+### Custom Code
+
+````javascript
+openExcelUploadDialog: async function (oEvent) {
+    this._view.setBusyIndicatorDelay(0)
+    this._view.setBusy(true)
+    if (!this.excelUpload) {
+        this.excelUpload = await sap.ui.getCore().createComponent({
+            name: "thirdparty.customControl.excelUpload",
+            async: false,
+            componentData: {
+                context: this
+            }
+        });
+    }
+    this.excelUpload.openExcelUploadDialog()
+    this._view.setBusy(false)
+}
+````
+
+
+## Starting with Fiori Elements (OData V2)
+
+### Extension in manifest.json
+
+As a example, here is how you custom action can look like.  
+This example is from the [sample app](https://github.com/marianfoo/ui5-cc-excelUpload-sampleapp/blob/744f008b1b052a3df5594215d8d11811a8e646b7/packages/orders/webapp/manifest.json#L145-L157)
+
+````json
+"extends": {
+    "extensions": {
+        "sap.ui.controllerExtensions": {
+            "sap.suite.ui.generic.template.ObjectPage.view.Details": {
+                "controllerName": "ui.v2.ordersv2.ext.controller.ObjectPageExt",
+                "sap.ui.generic.app": {
+                    "Orders": {
+                        "EntitySet": "Orders",
+                        "Header": {
+                            "Actions": {
+                                "excelUpload": {
+                                    "id": "excelUploadButton",
+                                    "text": "Excel Upload",
+                                    "applicablePath": "ui>/editable",
+                                    "press": "openExcelUploadDialog",
+                                    "requiresSelection": false
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+````
+
+### Custom Code
+
+````javascript
+openExcelUploadDialog: async function (oEvent) {
+    this.getView().setBusyIndicatorDelay(0)
+    this.getView().setBusy(true)
+    if (!this.excelUpload) {
+        this.excelUpload = await sap.ui.getCore().createComponent({
+            name: "thirdparty.customControl.excelUpload",
+            async: false,
+            componentData: {
+                context: this
+            }
+        });
+    }
+    this.excelUpload.openExcelUploadDialog()
+    this.getView().setBusy(false)
+}
+````
