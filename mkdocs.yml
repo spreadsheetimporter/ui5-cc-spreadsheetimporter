@@ -2,6 +2,7 @@ site_name: UI5 Custom Control Excel Upload
 site_url: "https://marianfoo.github.io/ui5-cc-excelUpload/" # required for working 404 page
 repo_name: "marianfoo/ui5-cc-excelUpload"
 repo_url: "https://github.com/marianfoo/ui5-cc-excelUpload"
+edit_uri: tree/main/docs/
 docs_dir: "docs" # default
 site_dir: "site" # default
 nav:
