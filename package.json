@@ -31,7 +31,7 @@
     "hooks:pre-commit": "npm-run-all --sequential prettier:staged lint:staged",
     "hooks:pre-push": "npm-run-all --sequential lint:commit",
     "version": "npm run changelog && git add --all",
-    "version:puHast dblish": "git push && git push --tags",
+    "version:publish": "git push && git push --tags",
     "build": "ui5 build --config=ui5-build.yaml --all --clean-dest --dest dist",
     "build:watch": "node ./dev/chokidar.js"
   },

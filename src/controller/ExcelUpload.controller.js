@@ -235,10 +235,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/Fragment", "sap/m/Mess
 						if (value) {
 							if (metadataColumn.type === "Edm.Boolean") {
 								payload[columnKey] = `${value || ""}`;
-							} else if (metadataColumn.type === "Edm.Date" || metadataColumn.type === "Edm.DateTime") {
+							} else if (metadataColumn.type === "Edm.Date") {
 								let excelDate = new Date(Math.round((value - 25569) * 86400 * 1000));
 								payload[columnKey] = `${excelDate.getFullYear()}-${("0" + (excelDate.getMonth() + 1)).slice(-2)}-${("0" + excelDate.getDate()).slice(-2)}`;
-							} else if (metadataColumn.type === "Edm.DateTimeOffset") {
+							} else if (metadataColumn.type === "Edm.DateTimeOffset" || metadataColumn.type === "Edm.DateTime") {
 								payload[columnKey] = new Date(Math.round((value - 25569) * 86400 * 1000));
 							} else if (metadataColumn.type === "Edm.TimeOfDay" || metadataColumn.type === "Edm.Time") {
 								//convert to hh:mm:ss
