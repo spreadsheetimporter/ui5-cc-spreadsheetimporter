@@ -1,3 +1,18 @@
+## [0.3.4](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.3.3...v0.3.4) (2022-12-09)
+
+
+### Bug Fixes
+
+* change console output statement to debug ([cd19150](https://github.com/marianfoo/ui5-cc-excelUpload/commit/cd19150f7b0f816f8b624a9f52eb572b12b15598))
+* Type "Edm.DateTime parsed in false format ([8fb6541](https://github.com/marianfoo/ui5-cc-excelUpload/commit/8fb6541d1fd2a90fc4a40aaf742f7bda14b0eb6e))
+
+
+### Features
+
+* add dedicated docs with mkdocs ([#3](https://github.com/marianfoo/ui5-cc-excelUpload/issues/3)) ([77a6e06](https://github.com/marianfoo/ui5-cc-excelUpload/commit/77a6e065eb1f41adf7cdeccfdd241d513a943451))
+
+
+
 ## [0.3.3](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.3.2...v0.3.3) (2022-12-07)
 
 
