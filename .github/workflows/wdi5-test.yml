@@ -1,0 +1,93 @@
+name: wdi5 tests
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-wdi5:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: update chrome
+        run: |
+          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
+          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+          sudo apt-get update
+          sudo apt-get --only-upgrade install google-chrome-stable
+          # check chrome version
+          google-chrome --version
+
+      - name: checkout excelUpload Repo
+        uses: actions/checkout@v3
+        with:
+          path: control
+
+      - name: Checkout excelUpload Sample Repo
+        uses: actions/checkout@v3
+        with:
+          repository: marianfoo/ui5-cc-excelUpload-sampleapp
+          path: sample
+
+      - name: use node 16
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
+
+      - name: install pnpm
+        working-directory: sample
+        run: |
+          npm install -g pnpm
+
+      # we need this for workspace mgmt
+      - name: check npm version >= 7
+        working-directory: sample
+        run: npm --version
+      - name: update npm
+        working-directory: sample
+        run: |
+          npm i -g npm@latest
+          npm --version
+
+      - name: setup excelUpload control
+        working-directory: control
+        run: |
+          npm install
+          npm run build
+          npm link
+
+      # install both module + sample app(s) deps
+      - name: install packages
+        working-directory: sample
+        run: |
+          pnpm i
+          npm run link
+
+      # update chromedriver
+      - name: update chromedriver to latest
+        working-directory: sample
+        run: |
+          pnpm add chromedriver@latest --save-dev -w
+
+      - name: install @sap/cds-dk
+        working-directory: sample
+        run: |
+          npm i -g @sap/cds-dk
+
+      # run app
+      - name: run app
+        working-directory: sample
+        run: npm run start&
+
+      # run wdi5 tests
+      - name: test wdi5 v2
+        working-directory: sample
+        run: npm run testv2 -- --headless
+
+      # run wdi5 tests
+      - name: test wdi5 v4
+        working-directory: sample
+        run: npm run testv4 -- --headless
