@@ -21,6 +21,8 @@ jobs:
 
       - name: check out repo
         uses: actions/checkout@v3
+        with:
+          path: control
 
       - name: Checkout tools repo
         uses: actions/checkout@v3
@@ -30,9 +32,12 @@ jobs:
 
       - name: setup excelUpload control
         run: |
+          cd control
           npm install
           npm run build
           npm link
+          cd ..
+          cd sample
 
       - name: use node 16
         uses: actions/setup-node@v2
