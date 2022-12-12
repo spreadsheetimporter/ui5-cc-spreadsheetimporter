@@ -1,0 +1,81 @@
+name: tests
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-wdi5:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: update chrome
+        run: |
+          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
+          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+          sudo apt-get update
+          sudo apt-get --only-upgrade install google-chrome-stable
+          # check chrome version
+          google-chrome --version
+
+      - name: check out repo
+        uses: actions/checkout@v3
+
+      - name: Checkout tools repo
+        uses: actions/checkout@v3
+        with:
+          repository: marianfoo/wdi5-test
+          path: sample
+
+      - name: setup excelUpload control
+        run: |
+          npm install
+          npm run build
+          npm link
+
+      - name: use node 16
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
+
+      # we need this for workspace mgmt
+      - name: check npm version >= 7
+        run: npm --version
+      - name: update npm
+        run: |
+          npm i -g npm@latest
+          npm --version
+
+      - name: install pnpm
+        run: |
+          npm install -g pnpm
+
+      # install both module + sample app(s) deps
+      - name: install packages
+        run: |
+          pnpm i
+          npm run link
+
+      # update chromedriver
+      - name: update chromedriver to latest
+        run: |
+          pnpm add chromedriver@latest --save-dev -w
+
+      - name: install @sap/cds-dk
+        run: |
+          npm i -g @sap/cds-dk
+
+      # run app
+      - name: run app
+        run: npm run start&
+
+      # run wdi5 tests
+      - name: test wdi5 v2
+        run: npm run testv2 -- --headless
+
+      # run wdi5 tests
+      - name: test wdi5 v4
+        run: npm run testv4 -- --headless
