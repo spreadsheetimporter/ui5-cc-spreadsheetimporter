@@ -252,8 +252,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/Fragment", "sap/m/Mess
 							}
 						}
 					}
-					this._payload = payload;
 
+					this._payload = payload;
 					// extension method to manipulate payload
 					this._component.fireChangeBeforeCreate({ payload: this._payload });
 					binding.create(this._payload);
