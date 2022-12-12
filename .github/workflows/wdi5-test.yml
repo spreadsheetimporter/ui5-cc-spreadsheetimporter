@@ -31,15 +31,14 @@ jobs:
           path: sample
 
       - name: setup excelUpload control
+        working-directory: control
         run: |
-          cd control
           npm install
           npm run build
           npm link
-          cd ..
-          cd sample
 
       - name: use node 16
+        working-directory: sample
         uses: actions/setup-node@v2
         with:
           node-version: 16
@@ -48,39 +47,48 @@ jobs:
 
       # we need this for workspace mgmt
       - name: check npm version >= 7
+        working-directory: sample
         run: npm --version
       - name: update npm
+        working-directory: sample
         run: |
           npm i -g npm@latest
           npm --version
 
       - name: install pnpm
+        working-directory: sample
         run: |
           npm install -g pnpm
 
       # install both module + sample app(s) deps
       - name: install packages
+        working-directory: sample
         run: |
           pnpm i
           npm run link
 
       # update chromedriver
       - name: update chromedriver to latest
+        working-directory: sample
         run: |
           pnpm add chromedriver@latest --save-dev -w
 
       - name: install @sap/cds-dk
+        working-directory: sample
         run: |
           npm i -g @sap/cds-dk
 
       # run app
       - name: run app
+        working-directory: sample
         run: npm run start&
 
       # run wdi5 tests
       - name: test wdi5 v2
+        working-directory: sample
         run: npm run testv2 -- --headless
 
       # run wdi5 tests
       - name: test wdi5 v4
+        working-directory: sample
         run: npm run testv4 -- --headless
