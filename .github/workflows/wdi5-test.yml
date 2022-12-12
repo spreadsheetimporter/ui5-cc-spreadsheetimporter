@@ -1,4 +1,4 @@
-name: tests
+name: wdi5 tests
 
 on:
   pull_request:
@@ -27,7 +27,7 @@ jobs:
       - name: Checkout excelUpload Sample Repo
         uses: actions/checkout@v3
         with:
-          repository: marianfoo/wdi5-test
+          repository: marianfoo/ui5-cc-excelUpload-sampleapp
           path: sample
 
       - name: use node 16
@@ -36,7 +36,7 @@ jobs:
           node-version: 16
           cache: "npm"
           cache-dependency-path: "**/package-lock.json"
-          
+
       - name: install pnpm
         working-directory: sample
         run: |
