@@ -25,6 +25,15 @@ function copyDirectorySync(src, dest) {
 
 copyDirectorySync("src", "webapp");
 
+// Read the contents of the package.json file
+const packageJson = fs.readFileSync("package.json", "utf8");
+
+// Parse the JSON content
+const packageData = JSON.parse(packageJson);
+
+// Get the version from the parsed data
+const version = packageData.version;
+
 // replace strings
 const options = {
 	// files: [
