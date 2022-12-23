@@ -30,6 +30,8 @@
     "ncu-u": "for d in ./packages/*/ ; do (cd \"$d\" && ncu -u); done",
     "testv2": "wdio run ./test/wdioV2.conf.js",
     "testv4": "wdio run ./test/wdioV4.conf.js",
+    "testv2Headless": "wdio run ./test/wdioV2.conf.js --headless",
+    "testv4Headless": "wdio run ./test/wdioV4.conf.js --headless",
     "link": "run-p link:orders link:ordersv2",
     "link:orders": "cd ./packages/orders/ && npm link ui5-cc-excelupload",
     "link:ordersv2": "cd ./packages/ordersv2/ && npm link ui5-cc-excelupload"
