@@ -1,3 +1,12 @@
+# [0.4.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.3.4...v0.4.0) (2022-12-23)
+
+
+### Features
+
+* multiversion support ([#6](https://github.com/marianfoo/ui5-cc-excelUpload/issues/6)) ([68aa9ca](https://github.com/marianfoo/ui5-cc-excelUpload/commit/68aa9ca2dab84bac0bcd81406636d87038fc1b2e))
+
+
+
 ## [0.3.4](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.3.3...v0.3.4) (2022-12-09)
 
 
