@@ -13,7 +13,7 @@
     "ui5-cc-excelupload": "./../../../"
   },
   "devDependencies": {
-    "@ui5/cli": "^2.14.1",
+    "@ui5/cli": "^3.0.0-rc.0",
     "@sap/ux-ui5-tooling": "1",
     "@sap/ux-specification": "UI5-1.108",
     "@sap-ux/ui5-middleware-fe-mockserver": "2"
