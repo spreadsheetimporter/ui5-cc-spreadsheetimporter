@@ -2,7 +2,7 @@
   "_version": "1.9.0",
 
   "sap.app": {
-    "id": "cc.excelUpload.$namespace$",
+    "id": "cc.excelUpload.XXXnamespaceXXX",
     "type": "component",
     "embeddedBy": "../../../../../",
     "i18n": "i18n/i18n.properties",
@@ -33,7 +33,7 @@
   },
 
   "sap.ui5": {
-    "componentName": "cc.excelUpload.$namespace$",
+    "componentName": "cc.excelUpload.XXXnamespaceXXX",
     "dependencies": {
       "minUI5Version": "1.44.0",
       "libs": {
