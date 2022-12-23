@@ -10,7 +10,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
 			// this.getView().setBusy(true)
 			if (!this.excelUpload) {
 				this.excelUpload = await sap.ui.getCore().createComponent({
-					name: "thirdparty.customControl.excelUpload",
+					name: "cc.excelUpload",
 					async: false,
 					componentData: {
 						context: this,

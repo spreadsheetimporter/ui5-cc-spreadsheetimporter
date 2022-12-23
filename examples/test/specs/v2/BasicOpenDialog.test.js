@@ -1,27 +1,5 @@
 describe("Open Excel Upload dialog", () => {
-	before(async () => {
-		FioriElementsFacade = await browser.fe.initialize({
-			onTheMainPage: {
-				ListReport: {
-					appId: "ui.v4.orders",
-					componentId: "OrdersList",
-					entitySet: "Orders"
-				}
-			},
-			onTheDetailPage: {
-				ObjectPage: {
-					appId: "ui.v4.orders",
-					componentId: "OrdersObjectPage",
-					entitySet: "Orders"
-				}
-			},
-			onTheShell: {
-				Shell: {}
-			}
-		});
-	});
-
-	it("Open ExcelUpload Dialog V4", async () => {
+	it("Open ExcelUpload Dialog V2", async () => {
 		// open Object Page
 		await browser.$('//*[@id="ui.v2.ordersv2::sap.suite.ui.generic.template.ListReport.view.ListReport::Orders--template:::ListReportTable:::ColumnListItem-__clone2"]').click();
 		// Open Edit Mode
