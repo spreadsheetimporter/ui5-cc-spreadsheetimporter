@@ -44,8 +44,6 @@ jobs:
 
       - name: setup excelUpload control
         run: |
-          pnpm i
-          npm install
           npm run setupExamplespnpm
           npm run build
 
