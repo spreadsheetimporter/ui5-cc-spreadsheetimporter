@@ -32,14 +32,14 @@ const packageJson = fs.readFileSync("package.json", "utf8");
 const packageData = JSON.parse(packageJson);
 
 // Get the version from the parsed data
-const version = packageData.version;
+const version = `v${packageData.version}`;
 const versionSlash = version.replaceAll(".", "/");
 
 // replace strings in publish folder
 const options = {
 	files: ["**/webapp/**"],
 	from: [/XXXnamespaceXXX/g, /XXXnamespaceSlashXXX/g],
-	to: [`v${version}`, `v${versionSlash}`],
+	to: [version, versionSlash],
 };
 replace.sync(options);
 
@@ -48,7 +48,7 @@ fs.copyFileSync("ui5-publish.yaml", "ui5.yaml");
 const optionsYaml = {
 	files: ["**/ui5.yaml"],
 	from: [/XXXnamespaceSlashXXX/g],
-	to: [`v${versionSlash}`],
+	to: [versionSlash],
 };
 replace.sync(optionsYaml);
 
