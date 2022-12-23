@@ -38,7 +38,8 @@
     "build": "npm run replaceString  && ui5 build --config=ui5-build.yaml --all --clean-dest --dest dist",
     "buildtest": "ui5 build --config=ui5-build.yaml --all --clean-dest --dest dist",
     "replaceString": "node ./dev/replace-string.js",
-    "build:watch": "node ./dev/chokidar.js"
+    "build:watch": "node ./dev/chokidar.js",
+    "setupExamplespnpm": "cd examples && pnpm i"
   },
   "dependencies": {
     "xlsx": "^0.18.5"

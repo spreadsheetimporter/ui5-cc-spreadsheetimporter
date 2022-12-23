@@ -46,6 +46,7 @@ jobs:
         run: |
           pnpm i
           npm install
+          npm run setupExamplespnpm
           npm run build
 
       # update chromedriver
