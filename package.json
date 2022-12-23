@@ -35,7 +35,7 @@
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "hooks:pre-commit": "npm-run-all --sequential prettier:staged lint:staged",
     "hooks:pre-push": "npm-run-all --sequential lint:commit",
-    "version": "npm run changelog && git add --all",
+    "version": "npm run replaceString",
     "version:publish": "git push && git push --tags",
     "build": "npm run replaceString  && ui5 build --config=ui5-build.yaml --all --clean-dest --dest dist",
     "buildtest": "ui5 build --config=ui5-build.yaml --all --clean-dest --dest dist",
