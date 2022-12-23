@@ -9,7 +9,21 @@ resources:
 builder:
   customTasks:
     - name: createBundle
-      afterTask: replaceVersion
+      afterTask: replaceCopyright
+      configuration:
+        addToNamespace: true
+    - name: ui5-task-stringreplacer
+      beforeTask: replaceCopyright
+      configuration:
+        debug: true
+        files:
+          - "**/*.html"
+          - "**/*.json"
+          - "**/*.js"
+          - "**/*.xml"
+        replace:
+          - placeholder: $namespace$
+            value: v0.3.4
 ---
 specVersion: "2.6"
 kind: extension

@@ -6,3 +6,26 @@ resources:
   configuration:
     paths:
       webapp: src
+
+builder:
+  customTasks:
+    - name: replaceStrings
+      beforeTask: replaceCopyright
+      configuration:
+        debug: true
+        files:
+          - "**/*.html"
+          - "**/*.json"
+          - "**/*.js"
+          - "**/*.xml"
+        replace:
+          - placeholder: $namespace$
+            value: v0.3.4
+---
+specVersion: "2.6"
+kind: extension
+type: task
+metadata:
+  name: replaceStrings
+task:
+  path: node_modules/ui5-task-stringreplacer/lib/stringreplacer.js

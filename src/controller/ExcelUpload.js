@@ -1,7 +1,7 @@
-sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/Fragment", "sap/m/MessageToast", "sap/ui/model/json/JSONModel", "xlsx"], function (Controller, Fragment, MessageToast, JSONModel, XLSX) {
+sap.ui.define(["sap/ui/base/ManagedObject", "sap/ui/core/Fragment", "sap/m/MessageToast", "sap/ui/model/json/JSONModel", "xlsx"], function (ManagedObject, Fragment, MessageToast, JSONModel, XLSX) {
 	"use strict";
 
-	return Controller.extend("cc.excelUpload.ExcelUpload", {
+	return ManagedObject.extend("cc.excelUpload.$namespace$.controller.ExcelUpload", {
 		constructor: function (component) {
 			this._excelSheetsData = [];
 			this._pDialog = null;
@@ -85,7 +85,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/Fragment", "sap/m/Mess
 			this._excelSheetsData = [];
 			if (!this._pDialog || this._pDialog.isDestroyed()) {
 				this._pDialog = await Fragment.load({
-					name: "cc.excelUpload.fragment.ExcelUpload",
+					name: "cc.excelUpload.$namespace$.fragment.ExcelUpload",
 					type: "XML",
 					controller: this,
 				});
@@ -147,7 +147,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/Fragment", "sap/m/Mess
 				MessageToast.show("Upload Successful");
 			} catch (error) {
 				this.errorDialog = await Fragment.load({
-					name: "cc.excelUpload.fragment.ErrorDialog",
+					name: "cc.excelUpload.$namespace$.fragment.ErrorDialog",
 					type: "XML",
 					controller: this,
 				});

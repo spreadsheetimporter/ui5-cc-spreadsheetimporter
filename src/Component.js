@@ -8,12 +8,13 @@ sap.ui.define(
 		"sap/ui/model/Filter",
 		"sap/ui/model/FilterOperator",
 		"sap/ui/core/Fragment",
-		"cc/excelUpload/controller/ExcelUpload.controller",
+		"sap/ui/core/mvc/Controller",
+		"cc/excelUpload/controller/ExcelUpload",
 	],
-	function (jQuery, Button, UIComponent, JSONModel, Device, Filter, FilterOperator, Fragment, ExcelUpload) {
+	function (jQuery, Button, UIComponent, JSONModel, Device, Filter, FilterOperator, Fragment, Controller, ExcelUpload) {
 		"use strict";
 
-		var Component = UIComponent.extend("cc.excelUpload.Component", {
+		var Component = UIComponent.extend("cc.excelUpload.$namespace$.Component", {
 			metadata: {
 				manifest: "json",
 				properties: {
@@ -70,7 +71,7 @@ sap.ui.define(
 			// // call the init function of the parent - ATTENTION: this triggers createContent()
 			UIComponent.prototype.init.apply(this, arguments);
 
-			// this.excelUpload = await sap.ui.core.mvc.Controller.create({ name:"cc.excelUpload.ExcelUpload"})
+			// this.excelUpload = await sap.ui.core.mvc.Controller.create({ name:"cc.excelUpload.$namespace$.ExcelUpload"})
 			// //now this here would work:
 			// //var oRoot = this.getRootControl(); → won't work with visibility: "hidden", no getters/setters generated
 
@@ -86,6 +87,7 @@ sap.ui.define(
 
 		Component.prototype.createContent = function () {
 			this.excelUpload = new ExcelUpload(this);
+			// this.excelUpload = await Controller.create({ name:"cc.excelUpload.$namespace$.controller.ExcelUpload"})
 
 			// var oBtn, oTSD;
 
