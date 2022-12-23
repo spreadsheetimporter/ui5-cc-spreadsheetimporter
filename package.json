@@ -41,7 +41,8 @@
     "buildtest": "ui5 build --config=ui5-build.yaml --all --clean-dest --dest dist",
     "replaceString": "node ./dev/replace-string.js",
     "build:watch": "node ./dev/chokidar.js",
-    "setupExamplespnpm": "cd examples && pnpm install"
+    "setupExamplespnpm": "cd examples && pnpm install",
+    "updateChromedriver": "cd examples && pnpm add chromedriver@latest --save-dev -w"
   },
   "dependencies": {
     "xlsx": "^0.18.5"

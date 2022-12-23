@@ -51,7 +51,7 @@ jobs:
       # update chromedriver
       - name: update chromedriver to latest
         run: |
-          pnpm add chromedriver@latest --save-dev -w
+          npm run updateChromedriver
 
       - name: install @sap/cds-dk
         run: |
