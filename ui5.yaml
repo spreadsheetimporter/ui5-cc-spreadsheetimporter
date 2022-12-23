@@ -18,4 +18,4 @@ shims:
       resources:
         configuration:
           paths:
-            "/thirdparty/customControl/excelUpload/": "./dist/"
+            "/thirdparty/customControl/excelUpload/v0/3/4/": "./dist/"

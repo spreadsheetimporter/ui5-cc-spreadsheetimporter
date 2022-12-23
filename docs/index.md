@@ -15,6 +15,7 @@ The module focuses on making integration into existing Fiori element apps as eas
  - Upload with or without draft
  - Check for mandatory fields
  - Extension Points for uploading to App or sending to backend
+ - Multiversion support in Fiori Launchpad (no central deployment necessary anymore)
 
 
 ### Install

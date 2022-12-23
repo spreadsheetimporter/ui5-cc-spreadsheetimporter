@@ -2,14 +2,12 @@ specVersion: "2.6"
 type: application
 metadata:
   name: ui5-cc-excelupload
-resources:
-  configuration:
-    paths:
-      webapp: src
 builder:
   customTasks:
     - name: createBundle
-      afterTask: replaceVersion
+      afterTask: replaceCopyright
+      configuration:
+        addToNamespace: true
 ---
 specVersion: "2.6"
 kind: extension

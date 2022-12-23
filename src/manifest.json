@@ -2,7 +2,7 @@
   "_version": "1.9.0",
 
   "sap.app": {
-    "id": "cc.excelUpload",
+    "id": "cc.excelUpload.XXXnamespaceXXX",
     "type": "component",
     "embeddedBy": "../../../../../",
     "i18n": "i18n/i18n.properties",
@@ -33,7 +33,7 @@
   },
 
   "sap.ui5": {
-    "componentName": "cc.excelUpload",
+    "componentName": "cc.excelUpload.XXXnamespaceXXX",
     "dependencies": {
       "minUI5Version": "1.44.0",
       "libs": {
@@ -51,7 +51,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "nabi.demo.comp.reuse.northwind.customer.selection.i18n.i18n"
+          "bundleName": "cc.excelUpload.XXXnamespaceXXX.i18n.i18n"
         }
       }
     },

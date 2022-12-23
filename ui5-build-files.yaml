@@ -2,7 +2,11 @@ specVersion: "2.6"
 type: application
 metadata:
   name: ui5-cc-excelupload
-resources:
-  configuration:
-    paths:
-      webapp: src
+---
+specVersion: "2.6"
+kind: extension
+type: task
+metadata:
+  name: replaceStrings
+task:
+  path: node_modules/ui5-task-stringreplacer/lib/stringreplacer.js
