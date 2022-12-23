@@ -12,7 +12,7 @@ npm install ui5-cc-excelupload
 ```
 
 2\.  Add to your `package.json`:  
-> :information_source: This step is not necessary from UI5 Tooling V3
+:information_source: This step is not necessary from UI5 Tooling V3
 
 ````json
 "ui5": {
@@ -26,11 +26,11 @@ npm install ui5-cc-excelupload
 
 3\. Add `resourceRoots` to you `manifest.json`
    
+⚠️ You must always keep your ui5-cc-excelUpload version up to date here when updating the module.
+
 ````json
 "resourceRoots": {
-    "thirdparty.customControl.excelUpload": "./thirdparty/customControl/excelUpload/",
-    "xlsx": "./thirdparty/customControl/excelUpload/resources/xlsx",
-    "cc.excelUpload": "./thirdparty/customControl/excelUpload/"
+    "cc.excelUpload": "./thirdparty/customControl/excelUpload/v0/3/5"
 },
 ````
 
@@ -98,7 +98,7 @@ openExcelUploadDialog: async function (oEvent) {
     this._view.setBusy(true)
     if (!this.excelUpload) {
         this.excelUpload = await sap.ui.getCore().createComponent({
-            name: "thirdparty.customControl.excelUpload",
+            name: "cc.excelUpload",
             async: false,
             componentData: {
                 context: this
@@ -154,7 +154,7 @@ openExcelUploadDialog: async function (oEvent) {
     this.getView().setBusy(true)
     if (!this.excelUpload) {
         this.excelUpload = await sap.ui.getCore().createComponent({
-            name: "thirdparty.customControl.excelUpload",
+            name: "cc.excelUpload",
             async: false,
             componentData: {
                 context: this
