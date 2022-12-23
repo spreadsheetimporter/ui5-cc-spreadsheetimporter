@@ -1,6 +1,6 @@
 node_modules
 dist
-webapp
+/webapp/
 
 .vscode
 .DS_Store

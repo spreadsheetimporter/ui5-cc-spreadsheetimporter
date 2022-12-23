@@ -1,0 +1,22 @@
+# node_modules
+node_modules
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# build results
+
+dist
+src-gen
+test-gen
+
+# server db
+server/db.json
+
+# Mac files
+.DS_Store
+

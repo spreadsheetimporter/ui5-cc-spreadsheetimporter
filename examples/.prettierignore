@@ -1,0 +1,14 @@
+# Ignore files
+pnpm-lock.yaml
+package-lock.json
+.yo-rc.json
+
+# Ignore build output folders
+/packages/*/dist/**
+/packages/*/webapp/**
+/packages/*/*-gen/**
+
+# Ignore files by extension
+/**/*.svg
+/**/*.png
+/**/*.md

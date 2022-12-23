@@ -3,6 +3,9 @@ const replace = require("replace-in-file");
 const fs = require("fs");
 
 // copy result to webapp folder
+if (!fs.existsSync("webapp")) {
+	fs.mkdirSync("webapp");
+}
 
 function copyDirectorySync(src, dest) {
 	const files = fs.readdirSync(src);

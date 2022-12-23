@@ -22,6 +22,9 @@
   "license": "Apache-2.0",
   "scripts": {
     "prepare": "node ./.husky/skip.js || husky install",
+    "start:sample": "cd examples && npm run start",
+    "testv2": "cd examples && npm run testv2",
+    "testv4": "cd examples && npm run testv4",
     "lint": "eslint .",
     "lint:staged": "lint-staged",
     "lint:commit": "commitlint -e",
@@ -44,7 +47,7 @@
     "@commitlint/cli": "^17.2.0",
     "@commitlint/config-conventional": "^17.2.0",
     "@prettier/plugin-xml": "^2.2.0",
-    "@ui5/cli": "3.0.0-beta.5",
+    "@ui5/cli": "3.0.0-beta.2",
     "conventional-changelog-cli": "^2.2.2",
     "eslint": "^8.27.0",
     "husky": "^8.0.2",
