@@ -2,11 +2,12 @@ sap.ui.define(["sap/ui/base/ManagedObject", "sap/ui/core/Fragment", "sap/m/Messa
 	"use strict";
 
 	return ManagedObject.extend("cc.excelUpload.XXXnamespaceXXX.controller.ExcelUpload", {
-		constructor: function (component) {
+		constructor: function (component,componentI18n) {
 			this._excelSheetsData = [];
 			this._pDialog = null;
 			this._component = component;
 			this._component.setErrorResults([]);
+			this._componentI18n = componentI18n;
 			this.setContext();
 		},
 
@@ -89,6 +90,7 @@ sap.ui.define(["sap/ui/base/ManagedObject", "sap/ui/core/Fragment", "sap/m/Messa
 					type: "XML",
 					controller: this,
 				});
+				this._pDialog.setModel(this._componentI18n,"i18n")
 			}
 			this._pDialog.open();
 		},
@@ -151,6 +153,7 @@ sap.ui.define(["sap/ui/base/ManagedObject", "sap/ui/core/Fragment", "sap/m/Messa
 					type: "XML",
 					controller: this,
 				});
+				this._pDialog.setModel(this._componentI18n,"i18n")
 				this.errorDialog.setModel(new JSONModel(), "errorData");
 				var fileUploader = this._pDialog.getContent()[0];
 				fileUploader.setValue();

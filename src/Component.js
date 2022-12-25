@@ -86,7 +86,7 @@ sap.ui.define(
 		// };
 
 		Component.prototype.createContent = function () {
-			this.excelUpload = new ExcelUpload(this);
+			this.excelUpload = new ExcelUpload(this,this.getModel("i18n"));
 			// this.excelUpload = await Controller.create({ name:"cc.excelUpload.XXXnamespaceXXX.controller.ExcelUpload"})
 
 			// var oBtn, oTSD;

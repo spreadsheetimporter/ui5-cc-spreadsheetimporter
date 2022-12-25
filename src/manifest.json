@@ -51,7 +51,9 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "cc.excelUpload.XXXnamespaceXXX.i18n.i18n"
+          "bundleName": "cc.excelUpload.XXXnamespaceXXX.i18n.i18n",
+          "supportedLocales": ["en", "de"],
+					"fallbackLocale": "en"
         }
       }
     },
