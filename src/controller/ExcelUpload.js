@@ -146,7 +146,7 @@ sap.ui.define(["sap/ui/base/ManagedObject", "sap/ui/core/Fragment", "sap/m/Messa
 			// Wait for all promises to be resolved
 			try {
 				this._excelSheetsData = await filePromise;
-				MessageToast.show("Upload Successful");
+				MessageToast.show(this._geti18nText("uploadSuccessful")); 
 			} catch (error) {
 				this.errorDialog = await Fragment.load({
 					name: "cc.excelUpload.XXXnamespaceXXX.fragment.ErrorDialog",
@@ -176,7 +176,7 @@ sap.ui.define(["sap/ui/base/ManagedObject", "sap/ui/core/Fragment", "sap/m/Messa
 		onUploadSet: async function (oEvent) {
 			// checking if excel file contains data or not
 			if (!this._excelSheetsData.length) {
-				MessageToast.show("Select file to Upload");
+				MessageToast.show(this._geti18nText("selectFileUpload"));
 				return;
 			}
 
@@ -203,7 +203,7 @@ sap.ui.define(["sap/ui/base/ManagedObject", "sap/ui/core/Fragment", "sap/m/Messa
 					popup: true,
 					navigation: false,
 				},
-				sActionLabel: "Uploading Excel File",
+				sActionLabel: this._geti18nText("uploadingFile"),
 			};
 			// calling the oData service using extension api
 			if (this._isODataV4) {
@@ -293,7 +293,7 @@ sap.ui.define(["sap/ui/base/ManagedObject", "sap/ui/core/Fragment", "sap/m/Messa
 			// download the created excel file
 			XLSX.writeFile(wb, this._component.getExcelFileName());
 
-			MessageToast.show("Template File Downloading...");
+			MessageToast.show(this._geti18nText("downloadingTemplate"));
 		},
 
 		_createLabelListV2(colums) {
@@ -452,7 +452,7 @@ sap.ui.define(["sap/ui/base/ManagedObject", "sap/ui/core/Fragment", "sap/m/Messa
 			if (this._component.getMandatoryFields()) {
 				for (const mandatoryField of this._component.getMandatoryFields()) {
 					const errorMessage = {
-						title: `Pflichtfeld ${this.typeLabelList[mandatoryField].label} ist nicht gefüllt`,
+						title: this._geti18nText("mandatoryFieldNotFilled",[this.typeLabelList[mandatoryField].label]),
 						counter: 0,
 					};
 					for (const row of data) {
@@ -489,5 +489,9 @@ sap.ui.define(["sap/ui/base/ManagedObject", "sap/ui/core/Fragment", "sap/m/Messa
 			}
 			return value;
 		},
+
+		_geti18nText(text, array){
+			return this._componentI18n.getResourceBundle().getText(text, array)
+		}
 	});
 });
