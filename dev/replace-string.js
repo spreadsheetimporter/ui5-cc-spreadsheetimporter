@@ -24,6 +24,7 @@ function copyDirectorySync(src, dest) {
 }
 
 copyDirectorySync("src", "webapp");
+fs.copyFileSync("webapp/i18n/i18n_en.properties", "webapp/i18n/i18n.properties");
 
 // Read the contents of the package.json file
 const packageJson = fs.readFileSync("package.json", "utf8");
@@ -69,3 +70,6 @@ manifestV2Data = JSON.stringify(manifestV2Data, null, 2);
 
 fs.writeFileSync("examples/packages/orders/webapp/manifest.json", manifestV4Data, "utf8");
 fs.writeFileSync("examples/packages/ordersv2/webapp/manifest.json", manifestV2Data, "utf8");
+
+
+
