@@ -21,17 +21,36 @@ describe("Open Excel Upload dialog", () => {
 		});
 	});
 
+	it("should trigger search on ListReport page", async () => {
+		await FioriElementsFacade.execute((Given, When, Then) => {
+			Given.onTheMainPage.onFilterBar().iExecuteSearch();
+			Then.onTheMainPage.onTable().iCheckRows(2);
+			Then.onTheMainPage.onTable().iCheckRows({ OrderNo: "2", buyer: "jane.doe@test.com" });
+			When.onTheMainPage.onTable().iPressRow({ OrderNo: "2" });
+		});
+	});
+
+	it("should see an object page", async () => {
+		await FioriElementsFacade.execute((Given, When, Then) => {
+			Then.onTheDetailPage.onHeader().iCheckEdit();
+			When.onTheDetailPage.onHeader().iExecuteEdit();
+			Then.onTheDetailPage.iSeeThisPage().and.iSeeObjectPageInEditMode();
+			// Then.onTheDetailPage.onFooter().iCheckDraftStateSaved()
+			// When.onTheDetailPage.onFooter().iExecuteSave()
+		});
+	});
+
 	it("Open ExcelUpload Dialog V4", async () => {
 		// open Object Page
-		await browser.$('//*[@id="ui.v4.orders::OrdersList--fe::table::Orders::LineItem-innerTableRow-__clone6_cell1"]').click();
-		// Open Edit Mode
-		await browser
-			.asControl({
-				selector: {
-					id: "ui.v4.orders::OrdersObjectPage--fe::StandardAction::Edit"
-				}
-			})
-			.press();
+		// await browser.$('//*[@id="ui.v4.orders::OrdersList--fe::table::Orders::LineItem-innerTableRow-__clone6_cell1"]').click();
+		// // Open Edit Mode
+		// await browser
+		// 	.asControl({
+		// 		selector: {
+		// 			id: "ui.v4.orders::OrdersObjectPage--fe::StandardAction::Edit"
+		// 		}
+		// 	})
+		// 	.press();
 		// open Excel Dialog
 		await browser
 			.asControl({
