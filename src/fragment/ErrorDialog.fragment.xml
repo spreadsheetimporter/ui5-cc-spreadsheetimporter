@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-  <Dialog title="Fehler beim Upload" resizable="true" state="Error" verticalScrolling="false" contentHeight="50%" contentWidth="50%">
+  <Dialog title="{i18n>exceluploadPlaceholder}" resizable="true" state="Error" verticalScrolling="false" contentHeight="50%" contentWidth="50%">
     <content>
       <MessageView items="{errorData>/}">
         <MessageItem title="{errorData>title}" type="{errorData>type}" counter="{errorData>counter}" subtitle="{errorData>subtitle}" />
