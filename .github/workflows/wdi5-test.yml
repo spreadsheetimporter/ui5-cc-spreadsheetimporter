@@ -61,12 +61,17 @@ jobs:
       - name: run app
         run: npm run start:sample&
       
-      - name: run ps
-        run: ps aux
-
       # run wdi5 tests
       - name: test wdi5 v2
         run: npm run testv2Headless
+
+      - name: restart CAP Server
+        run: pkill -f "@sap/cds-dk/bin/watch.js"
+
+      - name: restart CAP Server
+        run: |
+          pkill -f "@sap/cds-dk/bin/watch.js"
+          npm run start:server&
 
       # run wdi5 tests
       - name: test wdi5 v4
