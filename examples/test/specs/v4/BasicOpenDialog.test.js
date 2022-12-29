@@ -103,7 +103,21 @@ describe("Open Excel Upload dialog", () => {
 			Then.onTheDetailPage.onTable({ property: "Items" }).iCheckRows({ ID: "254" });
 			When.onTheDetailPage.onTable({ property: "Items" }).iPressRow({ ID: "254" });
 		});
+	});
 
+	it("log", async () => {
+		const selector = {
+			selector: {
+			  controlType: "sap.m.Text"
+			}
+		  }
+		  const texts = await browser.allControls(selector)
+		  for (let index = 0; index < texts.length; index++) {
+			const element = texts[index];
+			const text = await element.getText()
+			console.log(text)
+			
+		  }
 	});
 
 	it("check Field: Quantity", async () => {
@@ -111,15 +125,6 @@ describe("Open Excel Upload dialog", () => {
 			Then.onTheSubDetailPage.iSeeThisPage();
 			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "quantity" }, { value: "3"});
 		});
-		const elem = await $('#__text52')
-		const text = await elem.getText()
-		console.log("validfrom__text52 " +text)
-		const elem2 = await $('#__text53')
-		const text2 = await elem2.getText()
-		console.log("timestamp__text53 " +text2)
-		const elem3 = await $('#__text54')
-		const text3 = await elem3.getText()
-		console.log("date__text54 " +text3)
 	});
 
 	it("check Field: Product", async () => {
