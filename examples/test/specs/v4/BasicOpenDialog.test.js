@@ -37,74 +37,75 @@ describe("Open Excel Upload dialog", () => {
 		});
 	});
 
-	it("should see an object page", async () => {
-		await FioriElementsFacade.execute((Given, When, Then) => {
-			Then.onTheDetailPage.onHeader().iCheckEdit();
-			When.onTheDetailPage.onHeader().iExecuteEdit();
-			Then.onTheDetailPage.iSeeThisPage().and.iSeeObjectPageInEditMode();
-			// Then.onTheDetailPage.onFooter().iCheckDraftStateSaved()
-			// When.onTheDetailPage.onFooter().iExecuteSave()
-		});
-	});
+	// it("should see an object page", async () => {
+	// 	await FioriElementsFacade.execute((Given, When, Then) => {
+	// 		Then.onTheDetailPage.onHeader().iCheckEdit();
+	// 		When.onTheDetailPage.onHeader().iExecuteEdit();
+	// 		Then.onTheDetailPage.iSeeThisPage().and.iSeeObjectPageInEditMode();
+	// 		// Then.onTheDetailPage.onFooter().iCheckDraftStateSaved()
+	// 		// When.onTheDetailPage.onFooter().iExecuteSave()
+	// 	});
+	// });
 
-	it("Open ExcelUpload Dialog V4", async () => {
-		await browser
-			.asControl({
-				selector: {
-					id: "ui.v4.orders::OrdersObjectPage--fe::CustomAction::excelUpload"
-				}
-			})
-			.press();
-		const excelUploadDialog = await browser.asControl({
-			selector: {
-				controlType: "sap.m.Dialog",
-				properties: {
-					title: "Excel Upload"
-				},
-				searchOpenDialogs: true
-			}
-		});
-		expect(excelUploadDialog.isOpen()).toBeTruthy();
-	});
+	// it("Open ExcelUpload Dialog V4", async () => {
+	// 	await browser
+	// 		.asControl({
+	// 			selector: {
+	// 				id: "ui.v4.orders::OrdersObjectPage--fe::CustomAction::excelUpload"
+	// 			}
+	// 		})
+	// 		.press();
+	// 	const excelUploadDialog = await browser.asControl({
+	// 		selector: {
+	// 			controlType: "sap.m.Dialog",
+	// 			properties: {
+	// 				title: "Excel Upload"
+	// 			},
+	// 			searchOpenDialogs: true
+	// 		}
+	// 	});
+	// 	expect(excelUploadDialog.isOpen()).toBeTruthy();
+	// });
 
-	it("Upload file", async () => {
-		const uploader = await browser
-		.asControl({
-			forceSelect: true,
+	// it("Upload file", async () => {
+	// 	const uploader = await browser
+	// 	.asControl({
+	// 		forceSelect: true,
 			
-			selector: {
-				interaction: "root",
-				controlType: "sap.ui.unified.FileUploader",
-				id: "__uploader0"
-			}
-		});
-		const fileName = "test/TwoRowsNoErrors.xlsx" // relative to wdio.conf.(j|t)s
-		const remoteFilePath = await browser.uploadFile(fileName) // this also works in CI senarios!
-		// transition from wdi5 api -> wdio api
-		const $uploader = await uploader.getWebElement() // wdi5
-		const $fileInput = await $uploader.$("input[type=file]") // wdio
-		await $fileInput.setValue(remoteFilePath) // wdio
-		await browser.asControl({
-			selector: {
-				controlType: "sap.m.Button",
-				properties: {
-					text: "Upload"
-				}
-			}
-		}).press();
-	});
+	// 		selector: {
+	// 			interaction: "root",
+	// 			controlType: "sap.ui.unified.FileUploader",
+	// 			id: "__uploader0"
+	// 		}
+	// 	});
+	// 	const fileName = "test/TwoRowsNoErrors.xlsx" // relative to wdio.conf.(j|t)s
+	// 	const remoteFilePath = await browser.uploadFile(fileName) // this also works in CI senarios!
+	// 	// transition from wdi5 api -> wdio api
+	// 	const $uploader = await uploader.getWebElement() // wdi5
+	// 	const $fileInput = await $uploader.$("input[type=file]") // wdio
+	// 	await $fileInput.setValue(remoteFilePath) // wdio
+	// 	await browser.asControl({
+	// 		selector: {
+	// 			controlType: "sap.m.Button",
+	// 			properties: {
+	// 				text: "Upload"
+	// 			}
+	// 		}
+	// 	}).press();
+	// });
 
-	it("execute save", async () => {
-		await FioriElementsFacade.execute((Given, When, Then) => {
-			When.onTheDetailPage.onFooter().iExecuteSave()
-		});
-	});
+	// it("execute save", async () => {
+	// 	await FioriElementsFacade.execute((Given, When, Then) => {
+	// 		When.onTheDetailPage.onFooter().iExecuteSave()
+	// 	});
+	// });
 
 	it("go to Sub Detail Page", async () => {
 		await FioriElementsFacade.execute((Given, When, Then) => {
 			Then.onTheDetailPage.onTable({ property: "Items" }).iCheckRows({ ID: "254" });
 			When.onTheDetailPage.onTable({ property: "Items" }).iPressRow({ ID: "254" });
 		});
+
 	});
 
 	it("check Field: Quantity", async () => {
@@ -112,6 +113,9 @@ describe("Open Excel Upload dialog", () => {
 			Then.onTheSubDetailPage.iSeeThisPage();
 			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "quantity" }, { value: "3"});
 		});
+		const elem = await $('#__text55')
+		const text = await elem.getText()
+		console.log(text)
 	});
 
 	it("check Field: Product", async () => {
@@ -128,7 +132,7 @@ describe("Open Excel Upload dialog", () => {
 
 	it("check Field: validFrom", async () => {
 		await FioriElementsFacade.execute((Given, When, Then) => {
-			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "validFrom" }, { value: '25.11.2024, 01:00:00'});
+			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "validFrom" }, { value: 'Nov 25, 2024, 1:00:00 AM'});
 		});
 	});
 
