@@ -128,7 +128,7 @@ describe("Open Excel Upload dialog", () => {
 
 	it("check Field: validFrom", async () => {
 		await FioriElementsFacade.execute((Given, When, Then) => {
-			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "validFrom" }, { value: 'Nov 25, 2024, 1:00:00 AM'});
+			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "validFrom" }, { value: '25.11.2024, 01:00:00'});
 		});
 	});
 
