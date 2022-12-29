@@ -60,6 +60,9 @@ jobs:
       # run app
       - name: run app
         run: npm run start:sample&
+      
+      - name: run ps
+        run: ps aux
 
       # run wdi5 tests
       - name: test wdi5 v2
