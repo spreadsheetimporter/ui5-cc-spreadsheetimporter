@@ -154,43 +154,43 @@ describe("Open Excel Upload dialog", () => {
 
 
 
-	after(async () => {
-		it("should see an object page", async () => {
-			await FioriElementsFacade.execute((Given, When, Then) => {
-				When.onTheShell.iNavigateBack()
-				Then.onTheMainPage.iSeeThisPage()
-				Given.onTheMainPage.onFilterBar().iExecuteSearch()
-				Then.onTheMainPage.onTable().iCheckRows({ identifier: "inc_0002", title: "Password obliteration" })
-			})
-		})
-		await browser
-			.asControl({
-				selector: {
-					controlType: "sap.m.Button",
-					properties: {
-						text: "Cancel"
-					},
-					searchOpenDialogs: true
-				}
-			})
-			.press();
-		await browser
-			.asControl({
-				selector: {
-					id: "ui.v4.orders::OrdersObjectPage--fe::FooterBar::StandardAction::Cancel"
-				}
-			})
-			.press();
-		// Get the current time
-		const startTime = Date.now();
+	// after(async () => {
+	// 	it("should see an object page", async () => {
+	// 		await FioriElementsFacade.execute((Given, When, Then) => {
+	// 			When.onTheShell.iNavigateBack()
+	// 			Then.onTheMainPage.iSeeThisPage()
+	// 			Given.onTheMainPage.onFilterBar().iExecuteSearch()
+	// 			Then.onTheMainPage.onTable().iCheckRows({ identifier: "inc_0002", title: "Password obliteration" })
+	// 		})
+	// 	})
+	// 	await browser
+	// 		.asControl({
+	// 			selector: {
+	// 				controlType: "sap.m.Button",
+	// 				properties: {
+	// 					text: "Cancel"
+	// 				},
+	// 				searchOpenDialogs: true
+	// 			}
+	// 		})
+	// 		.press();
+	// 	await browser
+	// 		.asControl({
+	// 			selector: {
+	// 				id: "ui.v4.orders::OrdersObjectPage--fe::FooterBar::StandardAction::Cancel"
+	// 			}
+	// 		})
+	// 		.press();
+	// 	// Get the current time
+	// 	const startTime = Date.now();
 
-		// Wait until the specified amount of time has elapsed
-		await browser.waitUntil(() => {
-			// Get the current time
-			const currentTime = Date.now();
+	// 	// Wait until the specified amount of time has elapsed
+	// 	await browser.waitUntil(() => {
+	// 		// Get the current time
+	// 		const currentTime = Date.now();
 
-			// Return true if the difference between the start time and the current time is greater than or equal to the desired wait time
-			return currentTime - startTime >= 1000;
-		});
-	});
+	// 		// Return true if the difference between the start time and the current time is greater than or equal to the desired wait time
+	// 		return currentTime - startTime >= 1000;
+	// 	});
+	// });
 });
