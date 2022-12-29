@@ -122,31 +122,31 @@ describe("Open Excel Upload dialog", () => {
 
 	it("check Field: UnitPrice", async () => {
 		await FioriElementsFacade.execute((Given, When, Then) => {
-			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "price" }, { value: '13,7'});
+			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "price" }, { value: '13.7'});
 		});
 	});
 
 	it("check Field: validFrom", async () => {
 		await FioriElementsFacade.execute((Given, When, Then) => {
-			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "validFrom" }, { value: '25.11.2024, 01:00:00'});
+			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "validFrom" }, { value: 'Nov 25, 2024, 1:00:00 AM'});
 		});
 	});
 
 	it("check Field: timestamp", async () => {
 		await FioriElementsFacade.execute((Given, When, Then) => {
-			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "timestamp" }, { value: '24.11.2024, 01:00:00'});
+			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "timestamp" }, { value: 'Nov 24, 2024, 1:00:00 AM'});
 		});
 	});
 
 	it("check Field: date", async () => {
 		await FioriElementsFacade.execute((Given, When, Then) => {
-			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "date" }, { value: '23.11.2024'});
+			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "date" }, { value: 'Nov 23, 2024'});
 		});
 	});
 
 	it("check Field: time", async () => {
 		await FioriElementsFacade.execute((Given, When, Then) => {
-			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "time" }, { value: '16:00:00'});
+			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "time" }, { value: '4:00:00 PM'});
 		});
 	});
 
