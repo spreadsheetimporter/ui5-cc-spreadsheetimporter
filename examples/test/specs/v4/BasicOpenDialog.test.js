@@ -111,15 +111,15 @@ describe("Open Excel Upload dialog", () => {
 			Then.onTheSubDetailPage.iSeeThisPage();
 			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "quantity" }, { value: "3"});
 		});
-		const elem = await $('#__text55')
+		const elem = await $('#__text52')
 		const text = await elem.getText()
-		console.log("__text55 " +text)
-		const elem2 = await $('#__text52')
+		console.log("validfrom__text52 " +text)
+		const elem2 = await $('#__text53')
 		const text2 = await elem2.getText()
-		console.log("__text52 " +text2)
+		console.log("timestamp__text53 " +text2)
 		const elem3 = await $('#__text54')
 		const text3 = await elem3.getText()
-		console.log("__text54 " +text3)
+		console.log("date__text54 " +text3)
 	});
 
 	it("check Field: Product", async () => {
