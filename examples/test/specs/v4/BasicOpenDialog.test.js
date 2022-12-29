@@ -37,68 +37,66 @@ describe("Open Excel Upload dialog", () => {
 		});
 	});
 
-	// it("should see an object page", async () => {
-	// 	await FioriElementsFacade.execute((Given, When, Then) => {
-	// 		Then.onTheDetailPage.onHeader().iCheckEdit();
-	// 		When.onTheDetailPage.onHeader().iExecuteEdit();
-	// 		Then.onTheDetailPage.iSeeThisPage().and.iSeeObjectPageInEditMode();
-	// 		// Then.onTheDetailPage.onFooter().iCheckDraftStateSaved()
-	// 		// When.onTheDetailPage.onFooter().iExecuteSave()
-	// 	});
-	// });
+	it("should see an object page", async () => {
+		await FioriElementsFacade.execute((Given, When, Then) => {
+			Then.onTheDetailPage.onHeader().iCheckEdit();
+			When.onTheDetailPage.onHeader().iExecuteEdit();
+			Then.onTheDetailPage.iSeeThisPage().and.iSeeObjectPageInEditMode();
+		});
+	});
 
-	// it("Open ExcelUpload Dialog V4", async () => {
-	// 	await browser
-	// 		.asControl({
-	// 			selector: {
-	// 				id: "ui.v4.orders::OrdersObjectPage--fe::CustomAction::excelUpload"
-	// 			}
-	// 		})
-	// 		.press();
-	// 	const excelUploadDialog = await browser.asControl({
-	// 		selector: {
-	// 			controlType: "sap.m.Dialog",
-	// 			properties: {
-	// 				title: "Excel Upload"
-	// 			},
-	// 			searchOpenDialogs: true
-	// 		}
-	// 	});
-	// 	expect(excelUploadDialog.isOpen()).toBeTruthy();
-	// });
+	it("Open ExcelUpload Dialog V4", async () => {
+		await browser
+			.asControl({
+				selector: {
+					id: "ui.v4.orders::OrdersObjectPage--fe::CustomAction::excelUpload"
+				}
+			})
+			.press();
+		const excelUploadDialog = await browser.asControl({
+			selector: {
+				controlType: "sap.m.Dialog",
+				properties: {
+					title: "Excel Upload"
+				},
+				searchOpenDialogs: true
+			}
+		});
+		expect(excelUploadDialog.isOpen()).toBeTruthy();
+	});
 
-	// it("Upload file", async () => {
-	// 	const uploader = await browser
-	// 	.asControl({
-	// 		forceSelect: true,
+	it("Upload file", async () => {
+		const uploader = await browser
+		.asControl({
+			forceSelect: true,
 			
-	// 		selector: {
-	// 			interaction: "root",
-	// 			controlType: "sap.ui.unified.FileUploader",
-	// 			id: "__uploader0"
-	// 		}
-	// 	});
-	// 	const fileName = "test/TwoRowsNoErrors.xlsx" // relative to wdio.conf.(j|t)s
-	// 	const remoteFilePath = await browser.uploadFile(fileName) // this also works in CI senarios!
-	// 	// transition from wdi5 api -> wdio api
-	// 	const $uploader = await uploader.getWebElement() // wdi5
-	// 	const $fileInput = await $uploader.$("input[type=file]") // wdio
-	// 	await $fileInput.setValue(remoteFilePath) // wdio
-	// 	await browser.asControl({
-	// 		selector: {
-	// 			controlType: "sap.m.Button",
-	// 			properties: {
-	// 				text: "Upload"
-	// 			}
-	// 		}
-	// 	}).press();
-	// });
+			selector: {
+				interaction: "root",
+				controlType: "sap.ui.unified.FileUploader",
+				id: "__uploader0"
+			}
+		});
+		const fileName = "test/TwoRowsNoErrors.xlsx" // relative to wdio.conf.(j|t)s
+		const remoteFilePath = await browser.uploadFile(fileName) // this also works in CI senarios!
+		// transition from wdi5 api -> wdio api
+		const $uploader = await uploader.getWebElement() // wdi5
+		const $fileInput = await $uploader.$("input[type=file]") // wdio
+		await $fileInput.setValue(remoteFilePath) // wdio
+		await browser.asControl({
+			selector: {
+				controlType: "sap.m.Button",
+				properties: {
+					text: "Upload"
+				}
+			}
+		}).press();
+	});
 
-	// it("execute save", async () => {
-	// 	await FioriElementsFacade.execute((Given, When, Then) => {
-	// 		When.onTheDetailPage.onFooter().iExecuteSave()
-	// 	});
-	// });
+	it("execute save", async () => {
+		await FioriElementsFacade.execute((Given, When, Then) => {
+			When.onTheDetailPage.onFooter().iExecuteSave()
+		});
+	});
 
 	it("go to Sub Detail Page", async () => {
 		await FioriElementsFacade.execute((Given, When, Then) => {
@@ -115,7 +113,13 @@ describe("Open Excel Upload dialog", () => {
 		});
 		const elem = await $('#__text55')
 		const text = await elem.getText()
-		console.log(text)
+		console.log("__text55 " +text)
+		const elem2 = await $('#__text52')
+		const text2 = await elem2.getText()
+		console.log("__text52 " +text2)
+		const elem3 = await $('#__text54')
+		const text3 = await elem3.getText()
+		console.log("__text54 " +text3)
 	});
 
 	it("check Field: Product", async () => {
