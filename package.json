@@ -25,6 +25,7 @@
     "start:sample": "cd examples && npm run start",
     "testv2": "cd examples && npm run testv2",
     "testv4": "cd examples && npm run testv4",
+    "start:server": "cd examples && npm run watch:server",
     "testv2Headless": "cd examples && npm run testv2Headless",
     "testv4Headless": "cd examples && npm run testv4Headless",
     "lint": "eslint .",

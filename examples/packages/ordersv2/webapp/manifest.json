@@ -169,7 +169,7 @@
             "pages": {
               "ObjectPage|Items": {
                 "navigationProperty": "Items",
-                "entitySet": "Orders_Items",
+                "entitySet": "OrderItems",
                 "defaultLayoutTypeIfExternalNavigation": "MidColumnFullScreen",
                 "component": {
                   "name": "sap.suite.ui.generic.template.ObjectPage"

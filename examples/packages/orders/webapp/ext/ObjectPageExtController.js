@@ -14,7 +14,7 @@ sap.ui.define([], function () {
 					async: false,
 					componentData: {
 						context: this,
-						columns: ["product_ID", "quantity", "title", "price"],
+						columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time"],
 						mandatoryFields: ["product_ID", "quantity"],
 						excelFileName: "Test.xlsx"
 					}
@@ -43,12 +43,12 @@ sap.ui.define([], function () {
 
 				// event to change data before send to backend
 				this.excelUpload.attachChangeBeforeCreate(function (oEvent) {
-					oEvent.getSource().setPayload({
-						product_ID: "123",
-						quantity: 1,
-						title: "Test",
-						price: 25
-					});
+					let payload = oEvent.getParameter("payload");
+					// round number from 12,56 to 12,6
+					if (payload.price) {
+						payload.price = Number(payload.price.toFixed(1));
+					}
+					oEvent.getSource().setPayload(payload);
 				}, this);
 			}
 			this.excelUpload.openExcelUploadDialog();
