@@ -14,7 +14,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
 					async: false,
 					componentData: {
 						context: this,
-						columns: ["product_ID", "quantity", "title", "price"],
+						columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time"],
 						mandatoryFields: ["product_ID", "quantity"],
 						excelFileName: "Test.xlsx"
 					}

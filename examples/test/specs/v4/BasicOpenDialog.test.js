@@ -90,7 +90,7 @@ describe("Open Excel Upload dialog", () => {
 				id: "__uploader0"
 			}
 		});
-		const fileName = "test/TwoRowsNoErrors.xlsx" // relative to wdio.conf.(j|t)s
+		const fileName = "test/testFiles/TwoRowsNoErrors.xlsx" // relative to wdio.conf.(j|t)s
 		const remoteFilePath = await browser.uploadFile(fileName) // this also works in CI senarios!
 		// transition from wdi5 api -> wdio api
 		const $uploader = await uploader.getWebElement() // wdi5
@@ -218,48 +218,4 @@ describe("Open Excel Upload dialog", () => {
 			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "time" }, { value: '4:00:00 PM'});
 		});
 	});
-
-	
-
-
-
-	// after(async () => {
-	// 	it("should see an object page", async () => {
-	// 		await FioriElementsFacade.execute((Given, When, Then) => {
-	// 			When.onTheShell.iNavigateBack()
-	// 			Then.onTheMainPage.iSeeThisPage()
-	// 			Given.onTheMainPage.onFilterBar().iExecuteSearch()
-	// 			Then.onTheMainPage.onTable().iCheckRows({ identifier: "inc_0002", title: "Password obliteration" })
-	// 		})
-	// 	})
-	// 	await browser
-	// 		.asControl({
-	// 			selector: {
-	// 				controlType: "sap.m.Button",
-	// 				properties: {
-	// 					text: "Cancel"
-	// 				},
-	// 				searchOpenDialogs: true
-	// 			}
-	// 		})
-	// 		.press();
-	// 	await browser
-	// 		.asControl({
-	// 			selector: {
-	// 				id: "ui.v4.orders::OrdersObjectPage--fe::FooterBar::StandardAction::Cancel"
-	// 			}
-	// 		})
-	// 		.press();
-	// 	// Get the current time
-	// 	const startTime = Date.now();
-
-	// 	// Wait until the specified amount of time has elapsed
-	// 	await browser.waitUntil(() => {
-	// 		// Get the current time
-	// 		const currentTime = Date.now();
-
-	// 		// Return true if the difference between the start time and the current time is greater than or equal to the desired wait time
-	// 		return currentTime - startTime >= 1000;
-	// 	});
-	// });
 });
