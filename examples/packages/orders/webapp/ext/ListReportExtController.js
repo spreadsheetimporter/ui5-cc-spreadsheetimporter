@@ -50,6 +50,11 @@ sap.ui.define([], function () {
 			}
 			this.excelUpload.openExcelUploadDialog();
 			this._view.setBusy(false);
+		},
+
+		submit: function(){
+			const model = this._view.getModel();
+			model.submitBatch(model.getUpdateGroupId())
 		}
 	};
 });

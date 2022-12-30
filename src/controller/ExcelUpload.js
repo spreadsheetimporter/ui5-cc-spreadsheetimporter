@@ -232,7 +232,7 @@ sap.ui.define(["sap/ui/base/ManagedObject", "sap/ui/core/Fragment", "sap/m/Messa
 		 * @param {*} fnResolve
 		 * @param {*} fnReject
 		 */
-		callOdata: function (fnResolve, fnReject) {
+		callOdata: async function (fnResolve, fnReject) {
 			// intializing the message manager for displaying the odata response messages
 			try {
 				// get binding of table to create rows
@@ -271,11 +271,12 @@ sap.ui.define(["sap/ui/base/ManagedObject", "sap/ui/core/Fragment", "sap/m/Messa
 					this._payload = payload;
 					// extension method to manipulate payload
 					this._component.fireChangeBeforeCreate({ payload: this._payload });
-					binding.create(this._payload);
-					model.submitBatch(model.getUpdateGroupId())
+					const context = binding.create(this._payload);
+				
 					
 				}
 				// NEW OPTION TO SAVE DRAFT
+				await model.submitBatch(model.getUpdateGroupId())
 				
 
 				fnResolve();

@@ -138,6 +138,12 @@
                       "text": "Excel Upload",
                       "press": "ui.v4.orders.ext.ListReportExtController.openExcelUploadDialog",
                       "requiresSelection": false
+                    },
+                    "submit": {
+                      "id": "excelUploadListReportButton",
+                      "text": "Submit",
+                      "press": "ui.v4.orders.ext.ListReportExtController.submit",
+                      "requiresSelection": false
                     }
                   }
                 }
