@@ -60,7 +60,7 @@ jobs:
       # run app
       - name: run app
         run: npm run start:sample&
-      
+
       # run wdi5 tests
       - name: test wdi5 v2
         run: npm run testv2Headless
