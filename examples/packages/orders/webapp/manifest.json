@@ -129,7 +129,19 @@
                   }
                 }
               },
-              "initialLoad": "Enabled"
+              "initialLoad": "Enabled",
+              "content": {
+                "header": {
+                  "actions": {
+                    "excelUploadListReport": {
+                      "id": "excelUploadListReportButton",
+                      "text": "Excel Upload",
+                      "press": "ui.v4.orders.ext.ListReportExtController.openExcelUploadDialog",
+                      "requiresSelection": false
+                    }
+                  }
+                }
+              }
             }
           }
         },

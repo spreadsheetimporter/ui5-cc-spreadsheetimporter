@@ -43,11 +43,22 @@ sap.ui.define(["sap/ui/base/ManagedObject", "sap/ui/core/Fragment", "sap/m/Messa
 			// try get odata type from table
 			const table = this._context.byId(this._component.getTableId());
 			const tableBindingPath = table.getBindingPath("items");
-			const metaModel = table.getModel().getMetaModel().getData();
+			const metaModel = table.getModel().getMetaModel();
+			const metaModelData = table.getModel().getMetaModel().getData();
 			if (!this._component.getOdataType()) {
-				for (const [key, value] of Object.entries(metaModel)) {
-					if (value["$kind"] === "EntityType" && value[tableBindingPath]) {
-						this._component.setOdataType(value[tableBindingPath]["$Type"]);
+				// for list report
+				try {
+					const metaDataObject = metaModel.getObject(tableBindingPath)
+					this._component.setOdataType(metaDataObject["$Type"]);
+				} catch (error) {
+					console.debug()
+				}
+				// for object page
+				if (!this._component.getOdataType()) {
+					for (const [key, value] of Object.entries(metaModel)) {
+						if (value["$kind"] === "EntityType" && value[tableBindingPath]) {
+							this._component.setOdataType(value[tableBindingPath]["$Type"]);
+						}
 					}
 				}
 				if (!this._component.getOdataType()) {
@@ -225,6 +236,7 @@ sap.ui.define(["sap/ui/base/ManagedObject", "sap/ui/core/Fragment", "sap/m/Messa
 			// intializing the message manager for displaying the odata response messages
 			try {
 				// get binding of table to create rows
+				const model = this._context.byId(this._component.getTableId()).getModel();
 				const binding = this._context.byId(this._component.getTableId()).getBinding("items");
 
 				// loop over data from excel files
@@ -260,7 +272,11 @@ sap.ui.define(["sap/ui/base/ManagedObject", "sap/ui/core/Fragment", "sap/m/Messa
 					// extension method to manipulate payload
 					this._component.fireChangeBeforeCreate({ payload: this._payload });
 					binding.create(this._payload);
+					model.submitBatch(model.getUpdateGroupId())
+					
 				}
+				// NEW OPTION TO SAVE DRAFT
+				
 
 				fnResolve();
 			} catch (error) {
