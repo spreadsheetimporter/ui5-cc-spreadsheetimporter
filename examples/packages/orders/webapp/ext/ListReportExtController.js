@@ -52,9 +52,24 @@ sap.ui.define([], function () {
 			this._view.setBusy(false);
 		},
 
-		submit: function(){
+		submit: async function () {
+			const type = "OrdersService.Orders";
+			const payload = {
+				OrderNo: "3",
+				buyer: "test@test.de"
+			};
 			const model = this._view.getModel();
-			model.submitBatch(model.getUpdateGroupId())
+			const binding = this.byId("ui.v4.orders::OrdersList--fe::table::Orders::LineItem-innerTable").getBinding("items");
+			const context = binding.create(payload);
+			const context2 = binding.create(payload);
+			await context.created();
+			await context2.created();
+			await model.submitBatch(model.getUpdateGroupId());
+			const operation = context.getModel().bindContext("OrdersService.draftActivate" + "(...)", context, { $$inheritExpandSelect: true });
+			const operation2 = context2.getModel().bindContext("OrdersService.draftActivate" + "(...)", context2, { $$inheritExpandSelect: true });
+			operation.execute("$auto", false, null, /*bReplaceWithRVC*/ true);
+			operation2.execute("$auto", false, null, /*bReplaceWithRVC*/ true);
+			console.log(context);
 		}
 	};
 });

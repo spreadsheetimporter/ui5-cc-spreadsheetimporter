@@ -2,7 +2,7 @@ sap.ui.define(["sap/ui/base/ManagedObject", "sap/ui/core/Fragment", "sap/m/Messa
 	"use strict";
 
 	return ManagedObject.extend("cc.excelUpload.XXXnamespaceXXX.controller.ExcelUpload", {
-		constructor: function (component,componentI18n) {
+		constructor: function (component, componentI18n) {
 			this._excelSheetsData = [];
 			this._pDialog = null;
 			this._component = component;
@@ -48,10 +48,10 @@ sap.ui.define(["sap/ui/base/ManagedObject", "sap/ui/core/Fragment", "sap/m/Messa
 			if (!this._component.getOdataType()) {
 				// for list report
 				try {
-					const metaDataObject = metaModel.getObject(tableBindingPath)
+					const metaDataObject = metaModel.getObject(tableBindingPath);
 					this._component.setOdataType(metaDataObject["$Type"]);
 				} catch (error) {
-					console.debug()
+					console.debug();
 				}
 				// for object page
 				if (!this._component.getOdataType()) {
@@ -65,6 +65,14 @@ sap.ui.define(["sap/ui/base/ManagedObject", "sap/ui/core/Fragment", "sap/m/Messa
 					console.error("No OData Type found. Please specify 'odataType' in options");
 				}
 			}
+
+			//get draft activate action
+			const path = this._context.byId(this._component.getTableId()).getBinding("items").getPath();
+			const entityContainerPath = this._context.byId(this._component.getTableId()).getModel().getMetaModel().getData()["$EntityContainer"];
+			const metaDataAnnoation = `${entityContainerPath}${path}`;
+			this._activateActionName = this._context.byId(this._component.getTableId()).getModel().getMetaModel().getData()["$Annotations"][metaDataAnnoation][
+				"@com.sap.vocabularies.Common.v1.DraftRoot"
+			]["ActivationAction"];
 
 			this.typeLabelList = this._createLabelListV4(this._component.getColumns());
 		},
@@ -101,7 +109,7 @@ sap.ui.define(["sap/ui/base/ManagedObject", "sap/ui/core/Fragment", "sap/m/Messa
 					type: "XML",
 					controller: this,
 				});
-				this._pDialog.setModel(this._componentI18n,"i18n")
+				this._pDialog.setModel(this._componentI18n, "i18n");
 			}
 			this._pDialog.open();
 		},
@@ -157,14 +165,14 @@ sap.ui.define(["sap/ui/base/ManagedObject", "sap/ui/core/Fragment", "sap/m/Messa
 			// Wait for all promises to be resolved
 			try {
 				this._excelSheetsData = await filePromise;
-				MessageToast.show(this._geti18nText("uploadSuccessful")); 
+				MessageToast.show(this._geti18nText("uploadSuccessful"));
 			} catch (error) {
 				this.errorDialog = await Fragment.load({
 					name: "cc.excelUpload.XXXnamespaceXXX.fragment.ErrorDialog",
 					type: "XML",
 					controller: this,
 				});
-				this._pDialog.setModel(this._componentI18n,"i18n")
+				this._pDialog.setModel(this._componentI18n, "i18n");
 				this.errorDialog.setModel(new JSONModel(), "errorData");
 				var fileUploader = this._pDialog.getContent()[0];
 				fileUploader.setValue();
@@ -227,12 +235,13 @@ sap.ui.define(["sap/ui/base/ManagedObject", "sap/ui/core/Fragment", "sap/m/Messa
 			this.onCloseDialog();
 		},
 
-		test: async function(event){
-			console.log(event)
-			const bindingContext = event.getParameter("context")
-			await event.getParameter("context").created()
-			console.log(event)
-			bindingContext.getModel().submitBatch(bindingContext.getModel().getUpdateGroupId())
+		test: async function (event) {
+			console.log(event);
+			const bindingContext = event.getParameter("context");
+			await event.getParameter("context").created();
+			console.log(event);
+
+			// bindingContext.getModel().submitBatch(bindingContext.getModel().getUpdateGroupId());
 			// this._context.editFlow.saveDocument(bindingContext)
 		},
 
@@ -247,7 +256,12 @@ sap.ui.define(["sap/ui/base/ManagedObject", "sap/ui/core/Fragment", "sap/m/Messa
 				// get binding of table to create rows
 				const model = this._context.byId(this._component.getTableId()).getModel();
 				const binding = this._context.byId(this._component.getTableId()).getBinding("items");
-				binding.attachCreateCompleted(this.test,this)
+				let createPromises = [];
+				let createContexts = [];
+				let activateActions = [];
+				let activateActionsPromises = [];
+
+				// binding.attachCreateCompleted(this.test, this);
 
 				// loop over data from excel files
 				for (const row of this._excelSheetsData) {
@@ -282,15 +296,26 @@ sap.ui.define(["sap/ui/base/ManagedObject", "sap/ui/core/Fragment", "sap/m/Messa
 					// extension method to manipulate payload
 					this._component.fireChangeBeforeCreate({ payload: this._payload });
 					const context = binding.create(this._payload);
-					await context.created()
-					// this._context.editFlow.saveDocument(context)
-				
-					
+					createContexts.push(context);
+					createPromises.push(context.created());
 				}
-				// NEW OPTION TO SAVE DRAFT
-				await model.submitBatch(model.getUpdateGroupId())
+				// wait for all drafts to be created
+				const resultsCreation = await Promise.all(createPromises);
+				await model.submitBatch(model.getUpdateGroupId());
+				// activate all drafts
+				if (this._activateActionName) {
+					for (let index = 0; index < createContexts.length; index++) {
+						const element = createContexts[index];
+						const operation = element.getModel().bindContext(this._activateActionName + "(...)", element, { $$inheritExpandSelect: true });
+						activateActionsPromises.push(operation.execute("$auto", false, null, /*bReplaceWithRVC*/ true));
+					}
+					// wait for all draft to be created
+					const resultsActivations = await Promise.all(activateActionsPromises);
+				}
+
 				fnResolve();
 			} catch (error) {
+				console.log(error);
 				fnReject();
 			}
 		},
@@ -327,6 +352,7 @@ sap.ui.define(["sap/ui/base/ManagedObject", "sap/ui/core/Fragment", "sap/m/Messa
 			var listObject = {};
 
 			// get the property list of the entity for which we need to download the template
+			// binding.getModel().getMetaModel().getObject("/Orders")
 			const oDataEntityType = this._context.byId(this._component.getTableId()).getModel().getMetaModel().getODataEntityType(this._component.getOdataType());
 			const properties = oDataEntityType.property;
 			const entityTypeLabel = oDataEntityType["sap:label"];
@@ -479,7 +505,7 @@ sap.ui.define(["sap/ui/base/ManagedObject", "sap/ui/core/Fragment", "sap/m/Messa
 			if (this._component.getMandatoryFields()) {
 				for (const mandatoryField of this._component.getMandatoryFields()) {
 					const errorMessage = {
-						title: this._geti18nText("mandatoryFieldNotFilled",[this.typeLabelList[mandatoryField].label]),
+						title: this._geti18nText("mandatoryFieldNotFilled", [this.typeLabelList[mandatoryField].label]),
 						counter: 0,
 					};
 					for (const row of data) {
@@ -517,8 +543,8 @@ sap.ui.define(["sap/ui/base/ManagedObject", "sap/ui/core/Fragment", "sap/m/Messa
 			return value;
 		},
 
-		_geti18nText(text, array){
-			return this._componentI18n.getResourceBundle().getText(text, array)
-		}
+		_geti18nText(text, array) {
+			return this._componentI18n.getResourceBundle().getText(text, array);
+		},
 	});
 });
