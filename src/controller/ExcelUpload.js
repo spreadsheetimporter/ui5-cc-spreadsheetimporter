@@ -227,6 +227,15 @@ sap.ui.define(["sap/ui/base/ManagedObject", "sap/ui/core/Fragment", "sap/m/Messa
 			this.onCloseDialog();
 		},
 
+		test: async function(event){
+			console.log(event)
+			const bindingContext = event.getParameter("context")
+			await event.getParameter("context").created()
+			console.log(event)
+			bindingContext.getModel().submitBatch(bindingContext.getModel().getUpdateGroupId())
+			// this._context.editFlow.saveDocument(bindingContext)
+		},
+
 		/**
 		 * helper method to call OData
 		 * @param {*} fnResolve
@@ -238,6 +247,7 @@ sap.ui.define(["sap/ui/base/ManagedObject", "sap/ui/core/Fragment", "sap/m/Messa
 				// get binding of table to create rows
 				const model = this._context.byId(this._component.getTableId()).getModel();
 				const binding = this._context.byId(this._component.getTableId()).getBinding("items");
+				binding.attachCreateCompleted(this.test,this)
 
 				// loop over data from excel files
 				for (const row of this._excelSheetsData) {
@@ -272,13 +282,13 @@ sap.ui.define(["sap/ui/base/ManagedObject", "sap/ui/core/Fragment", "sap/m/Messa
 					// extension method to manipulate payload
 					this._component.fireChangeBeforeCreate({ payload: this._payload });
 					const context = binding.create(this._payload);
+					await context.created()
+					// this._context.editFlow.saveDocument(context)
 				
 					
 				}
 				// NEW OPTION TO SAVE DRAFT
 				await model.submitBatch(model.getUpdateGroupId())
-				
-
 				fnResolve();
 			} catch (error) {
 				fnReject();
