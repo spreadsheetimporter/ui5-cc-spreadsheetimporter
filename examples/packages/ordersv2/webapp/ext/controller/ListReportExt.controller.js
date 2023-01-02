@@ -1,13 +1,9 @@
 sap.ui.define([], function () {
 	"use strict";
 	return {
-		/**
-		 * Create Dialog to Upload Excel and open it
-		 * @param {*} oEvent
-		 */
-		openExcelUploadDialog: async function (oEvent) {
-			this._view.setBusyIndicatorDelay(0);
-			this._view.setBusy(true);
+		openExcelUpload: async function (oEvent) {
+			this.getView().setBusyIndicatorDelay(0);
+			this.getView().setBusy(true);
 			if (!this.excelUpload) {
 				this.excelUpload = await sap.ui.getCore().createComponent({
 					name: "cc.excelUpload",
@@ -50,27 +46,7 @@ sap.ui.define([], function () {
 				}, this);
 			}
 			this.excelUpload.openExcelUploadDialog();
-			this._view.setBusy(false);
-		},
-
-		submit: async function () {
-			const type = "OrdersService.Orders";
-			const payload = {
-				OrderNo: "3",
-				buyer: "test@test.de"
-			};
-			const model = this._view.getModel();
-			const binding = this.byId("ui.v4.orders::OrdersList--fe::table::Orders::LineItem-innerTable").getBinding("items");
-			const context = binding.create(payload);
-			const context2 = binding.create(payload);
-			await context.created();
-			await context2.created();
-			await model.submitBatch(model.getUpdateGroupId());
-			const operation = context.getModel().bindContext("OrdersService.draftActivate" + "(...)", context, { $$inheritExpandSelect: true });
-			const operation2 = context2.getModel().bindContext("OrdersService.draftActivate" + "(...)", context2, { $$inheritExpandSelect: true });
-			operation.execute("$auto", false, null, /*bReplaceWithRVC*/ true);
-			operation2.execute("$auto", false, null, /*bReplaceWithRVC*/ true);
-			console.log(context);
+			this.getView().setBusy(false);
 		}
 	};
 });

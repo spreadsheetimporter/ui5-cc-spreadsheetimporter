@@ -26,6 +26,7 @@ sap.ui.define(
 					mandatoryFields: { type: "string[]" },
 					errorResults: { type: "object" },
 					fieldMatchType: { type: "string", defaultValue: "label" },
+					activateDraft: { type: "boolean", defaultValue: false },
 				},
 				aggregations: {
 					rootControl: {
@@ -67,6 +68,7 @@ sap.ui.define(
 			this.setOdataType(oCompData.odataType);
 			this.setMandatoryFields(oCompData.mandatoryFields);
 			this.setFieldMatchType(oCompData.fieldMatchType);
+			this.setActivateDraft(oCompData.activateDraft);
 
 			// // call the init function of the parent - ATTENTION: this triggers createContent()
 			UIComponent.prototype.init.apply(this, arguments);
@@ -86,7 +88,7 @@ sap.ui.define(
 		// };
 
 		Component.prototype.createContent = function () {
-			this.excelUpload = new ExcelUpload(this,this.getModel("i18n"));
+			this.excelUpload = new ExcelUpload(this, this.getModel("i18n"));
 			// this.excelUpload = await Controller.create({ name:"cc.excelUpload.XXXnamespaceXXX.controller.ExcelUpload"})
 
 			// var oBtn, oTSD;

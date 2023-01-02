@@ -20,9 +20,7 @@
         "uri": "/v2/orders/",
         "type": "OData",
         "settings": {
-          "annotations": [
-            "annotation"
-          ],
+          "annotations": ["annotation"],
           "localUri": "localService/metadata.xml",
           "odataVersion": "2.0"
         }
@@ -122,6 +120,22 @@
                       "press": "openExcelUploadDialog",
                       "requiresSelection": false
                     }
+                  }
+                }
+              }
+            }
+          },
+          "sap.suite.ui.generic.template.ListReport.view.ListReport": {
+            "controllerName": "ui.v2.ordersv2.ext.controller.ListReportExt",
+            "sap.ui.generic.app": {
+              "Orders": {
+                "EntitySet": "Orders",
+                "Actions": {
+                  "excelUpload": {
+                    "id": "excelUploadButton",
+                    "text": "Excel Upload",
+                    "press": "openExcelUpload",
+                    "global": true
                   }
                 }
               }
