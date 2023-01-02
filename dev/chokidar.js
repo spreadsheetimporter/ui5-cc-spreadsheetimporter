@@ -12,5 +12,6 @@ chokidar
 	})
 	.on("change", (event, path) => {
 		console.log(event, path);
-		shell.exec("npm run build");
+		shell.exec("node ./dev/replace-string.js --develop");
+		shell.exec("ui5 build --config=ui5-build.yaml --all --clean-dest --dest dist  --exclude-task=replaceCopyright replaceVersion generateFlexChangesBundle generateVersionInfo minify escapeNonAsciiCharacters ");
 	});

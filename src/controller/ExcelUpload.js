@@ -1,6 +1,14 @@
 sap.ui.define(
-	["sap/ui/base/ManagedObject", "sap/ui/core/Fragment", "sap/m/MessageToast", "sap/ui/model/json/JSONModel", "xlsx", "cc/excelUpload/XXXnamespaceSlashXXX/controller/MetadataHandler"],
-	function (ManagedObject, Fragment, MessageToast, JSONModel, XLSX, MetadataHandler) {
+	[
+		"sap/ui/base/ManagedObject",
+		"sap/ui/core/Fragment",
+		"sap/m/MessageToast",
+		"sap/ui/model/json/JSONModel",
+		"xlsx",
+		"cc/excelUpload/XXXnamespaceSlashXXX/controller/MetadataHandler",
+		"sap/ui/generic/app/transaction/DraftController",
+	],
+	function (ManagedObject, Fragment, MessageToast, JSONModel, XLSX, MetadataHandler, DraftController) {
 		"use strict";
 
 		return ManagedObject.extend("cc.excelUpload.XXXnamespaceXXX.controller.ExcelUpload", {
@@ -30,6 +38,8 @@ sap.ui.define(
 					this._view = this._context.getView();
 					this._setContextV2();
 				}
+				this._model = this._tableObject.getModel();
+				this._draftController = new DraftController(this._model);
 			},
 
 			_setContextV4: function () {
@@ -69,20 +79,6 @@ sap.ui.define(
 					}
 				}
 
-				//get draft activate action
-				if (this._component.getActivateDraft()) {
-					try {
-						const path = this._context.byId(this._component.getTableId()).getBinding("items").getPath();
-						const entityContainerPath = this._context.byId(this._component.getTableId()).getModel().getMetaModel().getData()["$EntityContainer"];
-						const metaDataAnnoation = `${entityContainerPath}${path}`;
-						this._activateActionName = this._context.byId(this._component.getTableId()).getModel().getMetaModel().getData()["$Annotations"][metaDataAnnoation][
-							"@com.sap.vocabularies.Common.v1.DraftRoot"
-						]["ActivationAction"];
-					} catch (error) {
-						console.error(`No Draft Activation Activation found`);
-					}
-				}
-
 				this.typeLabelList = this._metadataHandler._createLabelListV4(this._component.getColumns());
 			},
 
@@ -99,24 +95,13 @@ sap.ui.define(
 					}
 				}
 				// try get odata type from table
-				const table = this._context.byId(this._component.getTableId());
+				this._tableObject = this._context.byId(this._component.getTableId());
 				if (!this._component.getOdataType()) {
-					this._component.setOdataType(table.getBinding("items")._getEntityType().entityType);
+					this._component.setOdataType(this._tableObject.getBinding("items")._getEntityType().entityType);
 					if (!this._component.getOdataType()) {
 						console.error("No OData Type found. Please specify 'odataType' in options");
 					}
 					this._oDataEntityType = this._context.byId(this._component.getTableId()).getModel().getMetaModel().getODataEntityType(this._component.getOdataType());
-				}
-
-				//get draft activate action
-				if (this._component.getActivateDraft()) {
-					try {
-						const entityTypeName = this._context.byId(this._component.getTableId()).getBinding("items")._getEntityType().name;
-						const entityContainerPath = this._context.byId(this._component.getTableId()).getModel().getMetaModel().getODataEntitySet(entityTypeName);
-						this._activateActionName = entityContainerPath["com.sap.vocabularies.Common.v1.DraftRoot"].ActivationAction.String;
-					} catch (error) {
-						console.error(`No Draft Activation Activation found`);
-					}
 				}
 
 				this.typeLabelList = this._metadataHandler._createLabelListV2(this._component.getColumns());
@@ -158,7 +143,6 @@ sap.ui.define(
 							});
 							// use only first sheet
 							var firstSheet = excelSheetsData[0];
-							console.log("Excel Sheets Data", firstSheet);
 							//remove empty spaces before and after every value
 							for (const object of firstSheet) {
 								for (const key in object) {
@@ -316,27 +300,60 @@ sap.ui.define(
 						this._payload = payload;
 						// extension method to manipulate payload
 						this._component.fireChangeBeforeCreate({ payload: this._payload });
-						const context = binding.create(this._payload);
-						createContexts.push(context);
-						createPromises.push(context.created());
+						if (this._isODataV4) {
+							const context = binding.create(this._payload);
+							createContexts.push(context);
+							createPromises.push(context.created());
+						} else {
+							const context = binding.create(this._payload, /*bAtEnd*/ true, { inactive: false, expand: "" });
+							createContexts.push(context);
+							createPromises.push(context.created());
+						}
 					}
 					// wait for all drafts to be created
 					if (this._isODataV4) {
 						await model.submitBatch(model.getUpdateGroupId());
-
+						const resultsCreation = await Promise.all(createPromises);
+					} else {
+						await model.submitChanges();
 						const resultsCreation = await Promise.all(createPromises);
 					}
-					// activate all drafts
-					if (this._activateActionName) {
+
+					// check for and activate all drafts
+					if (this._isODataV4) {
 						for (let index = 0; index < createContexts.length; index++) {
 							const element = createContexts[index];
-							const operation = element.getModel().bindContext(this._activateActionName + "(...)", element, { $$inheritExpandSelect: true });
-							activateActionsPromises.push(operation.execute("$auto", false, null, /*bReplaceWithRVC*/ true));
+							// const operation = element.getModel().bindContext(this._activateActionName + "(...)", element, { $$inheritExpandSelect: true });
+							const operationName = this._getActionName(element, "ActivationAction");
+							if (operationName) {
+								const operation = element.getModel().bindContext(`${operationName}(...)`, element, { $$inheritExpandSelect: true });
+								activateActionsPromises.push(operation.execute("$auto", false, null, /*bReplaceWithRVC*/ true));
+							}
 						}
-						// wait for all draft to be created
-						const resultsActivations = await Promise.all(activateActionsPromises);
+					} else {
+						for (let index = 0; index < createContexts.length; index++) {
+							const element = createContexts[index];
+							if (this._draftController.getDraftContext().hasDraft(element)) {
+								// this will fail i.e. in a Object Page Table, maybe better way to check, hasDraft is still true
+								try {
+									const checkImport = this._draftController.getDraftContext().getODataDraftFunctionImportName(element, "ActivationAction");
+									if(checkImport !== null){
+										const activationPromise = this._draftController.activateDraftEntity(element, true)
+										activateActionsPromises.push(activationPromise);
+									}
+								} catch (error) {
+									console.debug("Activate Draft failed")
+								}
+							}
+						}
 					}
-
+					// wait for all draft to be created
+					const resultsActivations = await Promise.all(activateActionsPromises);
+					try {
+						binding.refresh();
+					} catch (error) {
+						console.debug(error);
+					}
 					fnResolve();
 				} catch (error) {
 					console.log(error);
@@ -439,6 +456,13 @@ sap.ui.define(
 
 			_geti18nText(text, array) {
 				return this._componentI18n.getResourceBundle().getText(text, array);
+			},
+
+			_getActionName(oContext, sOperation) {
+				var oModel = oContext.getModel(),
+					oMetaModel = oModel.getMetaModel(),
+					sEntitySetPath = oMetaModel.getMetaPath(oContext.getPath());
+				return oMetaModel.getObject("".concat(sEntitySetPath, "@com.sap.vocabularies.Common.v1.DraftRoot/").concat(sOperation));
 			},
 		});
 	}
