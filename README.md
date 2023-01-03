@@ -46,9 +46,9 @@ A few examples:
 
 ### Develop
 
-Run `npm install` and `cd examples && pnpm install`.  
+Run `pnpm install`.  
 For developing, you need to run `npm run build:watch` to have always the latest changes in the `dist` folder.  
-Run the test app with `npm run start:sample`
+Run the test app (CAP and UI5 Apps) with `npm run start:sample`
 
 #### Docs
 

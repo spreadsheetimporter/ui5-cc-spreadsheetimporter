@@ -66,5 +66,9 @@
     "shelljs": "^0.8.5",
     "ui5-task-stringreplacer": "^0.7.1",
     "replace-in-file": "^6.3.5"
-  }
+  },
+  "workspaces": [
+    "examples/*",
+    "package.json"
+  ]
 }
