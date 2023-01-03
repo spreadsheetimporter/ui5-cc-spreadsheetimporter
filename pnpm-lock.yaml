@@ -6,7 +6,7 @@ importers:
       "@commitlint/cli": ^17.2.0
       "@commitlint/config-conventional": ^17.2.0
       "@prettier/plugin-xml": ^2.2.0
-      "@ui5/cli": 3.0.0-beta.2
+      "@ui5/cli": 3.0.0-rc.0
       chokidar: ^3.5.3
       conventional-changelog-cli: ^2.2.2
       eslint: ^8.27.0
@@ -27,7 +27,7 @@ importers:
       "@commitlint/cli": 17.3.0
       "@commitlint/config-conventional": 17.3.0
       "@prettier/plugin-xml": 2.2.0
-      "@ui5/cli": 3.0.0-beta.2
+      "@ui5/cli": 3.0.0-rc.0
       chokidar: 3.5.3
       conventional-changelog-cli: 2.2.2
       eslint: 8.31.0
@@ -78,11 +78,14 @@ importers:
       "@sap/ux-ui5-tooling": 1.8.4
       "@ui5/cli": 2.14.17
 
-  examples/packages/orderv2freestyle:
+  examples/packages/ordersv2freestyle:
     specifiers:
       "@sap-ux/ui5-middleware-fe-mockserver": "2"
       "@sap/ux-ui5-tooling": "1"
       "@ui5/cli": ^2.14.1
+      ui5-cc-excelupload: ./../../../
+    dependencies:
+      ui5-cc-excelupload: link:../../..
     devDependencies:
       "@sap-ux/ui5-middleware-fe-mockserver": 2.1.47
       "@sap/ux-ui5-tooling": 1.8.4
@@ -940,8 +943,8 @@ packages:
       - supports-color
     dev: true
 
-  /@ui5/cli/3.0.0-beta.2:
-    resolution: { integrity: sha512-NUjPLsorNCcEcNFkxvc/83O3fSS/Kgc0xjqzxrqeeNpT9TPlbCdQFhB3eFcpqiOZPQy5DoFpHaNJ27sJw9R65w== }
+  /@ui5/cli/3.0.0-rc.0:
+    resolution: { integrity: sha512-N/PfMua7CHFuxHls172HP+GW1GgzD0TkGY9SBPWB4xlvgJjgB7tXkBriRujfJngN6vcIca9XW7vB1l5jt37PNw== }
     engines: { node: ^16.18.0 || >=18.0.0, npm: ">= 8" }
     hasBin: true
     dependencies:

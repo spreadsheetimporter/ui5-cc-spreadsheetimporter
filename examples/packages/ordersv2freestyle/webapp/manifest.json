@@ -78,6 +78,9 @@
     "resources": {
       "css": []
     },
+    "resourceRoots": {
+      "cc.excelUpload": "./thirdparty/customControl/excelUpload/v0/4/0"
+    },
     "routing": {
       "config": {
         "routerClass": "sap.f.routing.Router",

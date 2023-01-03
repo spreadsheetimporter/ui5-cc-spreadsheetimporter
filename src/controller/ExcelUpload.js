@@ -22,7 +22,7 @@ sap.ui.define(
 				this.setContext();
 			},
 
-			setContext: function () {
+			setContext: async function () {
 				this._context = this._component.getContext();
 				if (this._context.base) {
 					this._context = this._context.base;
@@ -36,7 +36,7 @@ sap.ui.define(
 					this._setContextV4();
 				} else {
 					this._view = this._context.getView();
-					this._setContextV2();
+					await this._setContextV2();
 				}
 				this._model = this._tableObject.getModel();
 				this._draftController = new DraftController(this._model);
@@ -82,7 +82,7 @@ sap.ui.define(
 				this.typeLabelList = this._metadataHandler._createLabelListV4(this._component.getColumns());
 			},
 
-			_setContextV2: function () {
+			_setContextV2: async function () {
 				// try get object page table
 				if (!this._component.getTableId()) {
 					const domRef = this._view.getContent()[0].getDomRef();
@@ -101,7 +101,9 @@ sap.ui.define(
 					if (!this._component.getOdataType()) {
 						console.error("No OData Type found. Please specify 'odataType' in options");
 					}
-					this._oDataEntityType = this._context.byId(this._component.getTableId()).getModel().getMetaModel().getODataEntityType(this._component.getOdataType());
+					const metaModel = this._context.byId(this._component.getTableId()).getModel().getMetaModel();
+					await metaModel.loaded();
+					this._oDataEntityType = metaModel.getODataEntityType(this._component.getOdataType());
 				}
 
 				this.typeLabelList = this._metadataHandler._createLabelListV2(this._component.getColumns());
@@ -233,7 +235,11 @@ sap.ui.define(
 				if (this._isODataV4) {
 					await this._context.editFlow.securedExecution(fnAddMessage, mParameters);
 				} else {
-					await this._context.extensionAPI.securedExecution(fnAddMessage, mParameters);
+					if (this._context.extensionAPI) {
+						await this._context.extensionAPI.securedExecution(fnAddMessage, mParameters);
+					} else {
+						await fnAddMessage();
+					}
 				}
 
 				oSource.getParent().setBusy(false);
@@ -337,12 +343,12 @@ sap.ui.define(
 								// this will fail i.e. in a Object Page Table, maybe better way to check, hasDraft is still true
 								try {
 									const checkImport = this._draftController.getDraftContext().getODataDraftFunctionImportName(element, "ActivationAction");
-									if(checkImport !== null){
-										const activationPromise = this._draftController.activateDraftEntity(element, true)
+									if (checkImport !== null) {
+										const activationPromise = this._draftController.activateDraftEntity(element, true);
 										activateActionsPromises.push(activationPromise);
 									}
 								} catch (error) {
-									console.debug("Activate Draft failed")
+									console.debug("Activate Draft failed");
 								}
 							}
 						}
