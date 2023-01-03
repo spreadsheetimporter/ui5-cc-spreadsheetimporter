@@ -62,23 +62,21 @@ function replaceWebappFolder(version, versionSlash) {
 
 // replace version in examples folder
 function replaceVersionInExamples(versionSlash) {
-	// Read the contents of the package.json file
-	const manifestV4 = fs.readFileSync("examples/packages/orders/webapp/manifest.json", "utf8");
-	// Parse the JSON content
-	let manifestV4Data = JSON.parse(manifestV4);
-	// Read the contents of the package.json file
-	const manifestV2 = fs.readFileSync("examples/packages/ordersv2/webapp/manifest.json", "utf8");
-	// Parse the JSON content
-	let manifestV2Data = JSON.parse(manifestV2);
-
-	manifestV4Data["sap.ui5"].resourceRoots["cc.excelUpload"] = `./thirdparty/customControl/excelUpload/${versionSlash}`;
-	manifestV2Data["sap.ui5"].resourceRoots["cc.excelUpload"] = `./thirdparty/customControl/excelUpload/${versionSlash}`;
-
-	manifestV4Data = JSON.stringify(manifestV4Data, null, 2);
-	manifestV2Data = JSON.stringify(manifestV2Data, null, 2);
-
-	fs.writeFileSync("examples/packages/orders/webapp/manifest.json", manifestV4Data, "utf8");
-	fs.writeFileSync("examples/packages/ordersv2/webapp/manifest.json", manifestV2Data, "utf8");
+	let ui5Apps = ["ordersv2fe", "ordersv2fenondraft", "ordersv2freestyle", "ordersv4fe", "ordersv4fpm"];
+	let manifests = [];
+	ui5Apps.forEach((app) => {
+		let path = "examples/packages/" + app + "/webapp/manifest.json";
+		// Read the contents of the package.json file
+		let manifest = fs.readFileSync(path, "utf8");
+		// Parse the JSON content
+		let manifestData = JSON.parse(manifest);
+		// Replace with current version
+		manifestData["sap.ui5"].resourceRoots["cc.excelUpload"] = `./thirdparty/customControl/excelUpload/${versionSlash}`;
+		// Stringify manifest data back to string
+		manifestData = JSON.stringify(manifestData, null, 2);
+		// Write back manifest file
+		fs.writeFileSync(path, manifestData, "utf8");
+	});
 }
 
 if (!develop) {
