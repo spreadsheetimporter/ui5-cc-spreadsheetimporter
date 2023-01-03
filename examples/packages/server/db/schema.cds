@@ -26,5 +26,27 @@ entity Products @(cds.persistence.skip:'always') {
 }
 
 
-// this is to ensure we have filled-in currencies
+entity OrdersND : cuid, managed {
+  OrderNo  : String(22) @title:'Order Number'; //> readable key
+  Items    : Composition of many OrderItemsND on Items.order = $self;
+  buyer    : User;
+  currency : Currency;
+}
+
+entity OrderItemsND : cuid {
+    order     : Association to OrdersND;
+    product   : Association to ProductsND;
+    quantity  : Integer;
+    title     : String; //> intentionally replicated as snapshot from product.title
+    price     : Double; //> materialized calculated field
+    validFrom : DateTime;
+    timestamp : Timestamp;
+    date      : Date;
+    time      : Time;
+}
+
+/** This is a stand-in for arbitrary ordered Products */
+entity ProductsND @(cds.persistence.skip:'always') {
+  key ID : String;
+}
 
