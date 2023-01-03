@@ -15,10 +15,10 @@
   "packageManager": "pnpm@7.1.7",
   "scripts": {
     "build": "pnpm -r build ",
-    "start": "run-p watch:server start:ui start:uiv2 start:uiv2freestyle start:uiv2fenondraft",
-    "start:ui": "pnpm --filter orders start",
+    "start": "run-p watch:server start:uiv4fe start:uiv2fe start:uiv2freestyle start:uiv2fenondraft",
+    "start:uiv4fe": "pnpm --filter ordersv4fe start",
     "start:uiv2fenondraft": "pnpm --filter ordersv2fenondraft start",
-    "start:uiv2": "pnpm --filter ordersv2 start",
+    "start:uiv2fe": "pnpm --filter ordersv2fe start",
     "start:uiv2freestyle": "pnpm --filter ordersv2freestyle start",
     "watch:server": "pnpm --filter @capire/orders watch",
     "lint": "pnpm --workspace-concurrency 1 -r lint",
