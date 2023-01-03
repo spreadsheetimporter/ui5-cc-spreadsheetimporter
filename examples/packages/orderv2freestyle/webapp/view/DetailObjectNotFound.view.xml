@@ -1,3 +1,0 @@
-<mvc:View controllerName="ui.v2.orderv2freestyle.controller.DetailObjectNotFound" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc">
-  <MessagePage id="page" title="{i18n>detailTitle}" text="{i18n>noObjectFoundText}" icon="sap-icon://product" description="" />
-</mvc:View>

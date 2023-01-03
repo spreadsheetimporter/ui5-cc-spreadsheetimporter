@@ -15,9 +15,10 @@
   "packageManager": "pnpm@7.1.7",
   "scripts": {
     "build": "pnpm -r build ",
-    "start": "run-p watch:server start:ui start:uiv2",
+    "start": "run-p watch:server start:ui start:uiv2 start:uiv2freestyle",
     "start:ui": "pnpm --filter orders start",
     "start:uiv2": "pnpm --filter ordersv2 start",
+    "start:uiv2freestyle": "pnpm --filter ordersv2freestyle start",
     "watch:server": "pnpm --filter @capire/orders watch",
     "lint": "pnpm --workspace-concurrency 1 -r lint",
     "lint:staged": "pnpm -r lint:staged",
