@@ -11,6 +11,7 @@ These options are available:
 | `odataType` | OData Type of specified table | string |
 | `mandatoryFields`  | The selected fields are checked to see if they are present | string[] |
 | `fieldMatchType` | Defines what type of strategy is executed when matching excel columns | string |
+| `activateDraft` | Determines whether a draft should be activated immediately  | boolean |
 
 ### `columns`
 
@@ -51,11 +52,17 @@ Options:
 - `label`  
 - `labelTypeBrackets`
 
-
-
 It is possible that the labels of different attributes have the same label.  
 In order to assign the correct labels and types, there is an option to make the type visible in the header.  
 This way a correct assignment can be made.
 
 Default (with `label`) the header columns would like this: `ID, Birthday, First Name, Last Name`  
 With `labelTypeBrackets` the header columns would look like this: `ID[ID], Birthday[birth_day], First Name[FirstName], Last Name[LastName]`
+
+### `activateDraft`
+
+**default:** `false`
+
+This option defines in draft scenarios whether a draft should be activated immediately or not.  
+The option only defines whether the attempt should be started. If a draft activation is basically not possible, it will not be executed and may lead to errors.  
+This is useful e.g. in a list report. If this option is set to `false`, all uploaded units have to be activated manually.

@@ -326,29 +326,31 @@ sap.ui.define(
 					}
 
 					// check for and activate all drafts
-					if (this._isODataV4) {
-						for (let index = 0; index < createContexts.length; index++) {
-							const element = createContexts[index];
-							// const operation = element.getModel().bindContext(this._activateActionName + "(...)", element, { $$inheritExpandSelect: true });
-							const operationName = this._getActionName(element, "ActivationAction");
-							if (operationName) {
-								const operation = element.getModel().bindContext(`${operationName}(...)`, element, { $$inheritExpandSelect: true });
-								activateActionsPromises.push(operation.execute("$auto", false, null, /*bReplaceWithRVC*/ true));
+					if (this._component.getActivateDraft()) {
+						if (this._isODataV4) {
+							for (let index = 0; index < createContexts.length; index++) {
+								const element = createContexts[index];
+								// const operation = element.getModel().bindContext(this._activateActionName + "(...)", element, { $$inheritExpandSelect: true });
+								const operationName = this._getActionName(element, "ActivationAction");
+								if (operationName) {
+									const operation = element.getModel().bindContext(`${operationName}(...)`, element, { $$inheritExpandSelect: true });
+									activateActionsPromises.push(operation.execute("$auto", false, null, /*bReplaceWithRVC*/ true));
+								}
 							}
-						}
-					} else {
-						for (let index = 0; index < createContexts.length; index++) {
-							const element = createContexts[index];
-							if (this._draftController.getDraftContext().hasDraft(element)) {
-								// this will fail i.e. in a Object Page Table, maybe better way to check, hasDraft is still true
-								try {
-									const checkImport = this._draftController.getDraftContext().getODataDraftFunctionImportName(element, "ActivationAction");
-									if (checkImport !== null) {
-										const activationPromise = this._draftController.activateDraftEntity(element, true);
-										activateActionsPromises.push(activationPromise);
+						} else {
+							for (let index = 0; index < createContexts.length; index++) {
+								const element = createContexts[index];
+								if (this._draftController.getDraftContext().hasDraft(element)) {
+									// this will fail i.e. in a Object Page Table, maybe better way to check, hasDraft is still true
+									try {
+										const checkImport = this._draftController.getDraftContext().getODataDraftFunctionImportName(element, "ActivationAction");
+										if (checkImport !== null) {
+											const activationPromise = this._draftController.activateDraftEntity(element, true);
+											activateActionsPromises.push(activationPromise);
+										}
+									} catch (error) {
+										console.debug("Activate Draft failed");
 									}
-								} catch (error) {
-									console.debug("Activate Draft failed");
 								}
 							}
 						}
