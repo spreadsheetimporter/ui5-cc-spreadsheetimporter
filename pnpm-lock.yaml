@@ -48,22 +48,7 @@ importers:
     dependencies:
       "@sap/cds": 6.4.0
 
-  examples/packages/orders:
-    specifiers:
-      "@sap-ux/ui5-middleware-fe-mockserver": "2"
-      "@sap/ux-specification": UI5-1.108
-      "@sap/ux-ui5-tooling": "1"
-      "@ui5/cli": ^2.14.1
-      ui5-cc-excelupload: ./../../../
-    dependencies:
-      ui5-cc-excelupload: link:../../..
-    devDependencies:
-      "@sap-ux/ui5-middleware-fe-mockserver": 2.1.47
-      "@sap/ux-specification": 1.102.14
-      "@sap/ux-ui5-tooling": 1.8.4
-      "@ui5/cli": 2.14.17
-
-  examples/packages/ordersv2:
+  examples/packages/ordersv2fe:
     specifiers:
       "@sap-ux/ui5-middleware-fe-mockserver": "2"
       "@sap/ux-specification": UI5-1.108
@@ -103,6 +88,36 @@ importers:
       ui5-cc-excelupload: link:../../..
     devDependencies:
       "@sap-ux/ui5-middleware-fe-mockserver": 2.1.47
+      "@sap/ux-ui5-tooling": 1.8.4
+      "@ui5/cli": 2.14.17
+
+  examples/packages/ordersv4fe:
+    specifiers:
+      "@sap-ux/ui5-middleware-fe-mockserver": "2"
+      "@sap/ux-specification": UI5-1.108
+      "@sap/ux-ui5-tooling": "1"
+      "@ui5/cli": ^2.14.1
+      ui5-cc-excelupload: ./../../../
+    dependencies:
+      ui5-cc-excelupload: link:../../..
+    devDependencies:
+      "@sap-ux/ui5-middleware-fe-mockserver": 2.1.47
+      "@sap/ux-specification": 1.102.14
+      "@sap/ux-ui5-tooling": 1.8.4
+      "@ui5/cli": 2.14.17
+
+  examples/packages/ordersv4fpm:
+    specifiers:
+      "@sap-ux/ui5-middleware-fe-mockserver": "2"
+      "@sap/ux-specification": UI5-1.108
+      "@sap/ux-ui5-tooling": "1"
+      "@ui5/cli": ^2.14.1
+      ui5-cc-excelupload: ./../../../
+    dependencies:
+      ui5-cc-excelupload: link:../../..
+    devDependencies:
+      "@sap-ux/ui5-middleware-fe-mockserver": 2.1.47
+      "@sap/ux-specification": 1.102.14
       "@sap/ux-ui5-tooling": 1.8.4
       "@ui5/cli": 2.14.17
 
