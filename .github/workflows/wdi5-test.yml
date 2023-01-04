@@ -44,7 +44,7 @@ jobs:
 
       - name: setup excelUpload control
         run: |
-          ünpm install
+          pnpm install
           npm run build
 
       # update chromedriver
