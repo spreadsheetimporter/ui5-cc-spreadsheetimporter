@@ -89,7 +89,9 @@
         "controlId": "layout",
         "controlAggregation": "beginColumnPages",
         "bypassed": {
-          "target": ["notFound"]
+          "target": [
+            "notFound"
+          ]
         },
         "async": true
       },
@@ -102,7 +104,10 @@
         {
           "pattern": "Orders/{objectId}",
           "name": "object",
-          "target": ["list", "object"]
+          "target": [
+            "list",
+            "object"
+          ]
         }
       ],
       "targets": {
