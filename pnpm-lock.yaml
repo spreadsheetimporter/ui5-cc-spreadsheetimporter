@@ -6,7 +6,7 @@ importers:
       "@commitlint/cli": ^17.2.0
       "@commitlint/config-conventional": ^17.2.0
       "@prettier/plugin-xml": ^2.2.0
-      "@ui5/cli": 3.0.0-rc.0
+      "@ui5/cli": 3.0.0-rc.1
       chokidar: ^3.5.3
       conventional-changelog-cli: ^2.2.2
       eslint: ^8.27.0
@@ -27,7 +27,7 @@ importers:
       "@commitlint/cli": 17.3.0
       "@commitlint/config-conventional": 17.3.0
       "@prettier/plugin-xml": 2.2.0
-      "@ui5/cli": 3.0.0-rc.0
+      "@ui5/cli": 3.0.0-rc.1
       chokidar: 3.5.3
       conventional-changelog-cli: 2.2.2
       eslint: 8.31.0
@@ -934,7 +934,7 @@ packages:
     engines: { node: ^16.18.0 || >=18.0.0, npm: ">= 8" }
     dependencies:
       "@jridgewell/sourcemap-codec": 1.4.14
-      "@ui5/fs": 3.0.0-rc.0
+      "@ui5/fs": 3.0.0-rc.1
       "@ui5/logger": 3.0.1-rc.0
       cheerio: 1.0.0-rc.12
       escape-unicode: 0.2.0
@@ -975,15 +975,15 @@ packages:
       - supports-color
     dev: true
 
-  /@ui5/cli/3.0.0-rc.0:
-    resolution: { integrity: sha512-N/PfMua7CHFuxHls172HP+GW1GgzD0TkGY9SBPWB4xlvgJjgB7tXkBriRujfJngN6vcIca9XW7vB1l5jt37PNw== }
+  /@ui5/cli/3.0.0-rc.1:
+    resolution: { integrity: sha512-b3buh27g9kMNsSsvv1/OLLp3sz/Wg4aS0p5i4sWzDQPnU+jjP4sRluFNI4/ZzzkXV4NXdfcF5CsSy6WKEaA+AA== }
     engines: { node: ^16.18.0 || >=18.0.0, npm: ">= 8" }
     hasBin: true
     dependencies:
       "@ui5/builder": 3.0.0-rc.0
-      "@ui5/fs": 3.0.0-rc.0
+      "@ui5/fs": 3.0.0-rc.1
       "@ui5/logger": 3.0.1-rc.0
-      "@ui5/project": 3.0.0-rc.0
+      "@ui5/project": 3.0.0-rc.1
       "@ui5/server": 3.0.0-rc.0
       chalk: 5.2.0
       data-with-position: 0.5.0
@@ -1014,8 +1014,8 @@ packages:
       random-int: 2.0.1
     dev: true
 
-  /@ui5/fs/3.0.0-rc.0:
-    resolution: { integrity: sha512-CZ1jx8laDnkUbjhmlG3McE9jxSDjC8uCkf5NbjWXP2//KnrQOjnH1/8sYCx4y2FKPBhicEP7rdEb9BUrdrazpA== }
+  /@ui5/fs/3.0.0-rc.1:
+    resolution: { integrity: sha512-vRJIh+XoGJVkNvmZjL6dVo0M8hnFpJwybYRlNTN6GyfGHH7ovkRW+/zNnLflfhj3/pPFlEru1Wq5Yye/0uM8iw== }
     engines: { node: ^16.18.0 || >=18.0.0, npm: ">= 8" }
     dependencies:
       "@ui5/logger": 3.0.1-rc.0
@@ -1071,12 +1071,12 @@ packages:
       - supports-color
     dev: true
 
-  /@ui5/project/3.0.0-rc.0:
-    resolution: { integrity: sha512-O2FjNKdW4FBtXsE+dDPR7D3b/99yO4PXINdwabSZSw5Q1ds+8WzV1cGYq7bzDDlZ/fiGnTrXbiHbd8bWsBSWTQ== }
+  /@ui5/project/3.0.0-rc.1:
+    resolution: { integrity: sha512-iAgG46N2fm5KBwdQQo9Eg4Ipdb6ub56rF/j2Jp09YXdlpjGx7s2QjPcwjN87KHDGZJ/3uk8LbWKKe/r9T6l3+w== }
     engines: { node: ^16.18.0 || >=18.0.0, npm: ">= 8" }
     dependencies:
       "@ui5/builder": 3.0.0-rc.0
-      "@ui5/fs": 3.0.0-rc.0
+      "@ui5/fs": 3.0.0-rc.1
       "@ui5/logger": 3.0.1-rc.0
       ajv: 6.12.6
       ajv-errors: 1.0.1_ajv@6.12.6
@@ -1135,7 +1135,7 @@ packages:
     engines: { node: ^16.18.0 || >=18.0.0, npm: ">= 8" }
     dependencies:
       "@ui5/builder": 3.0.0-rc.0
-      "@ui5/fs": 3.0.0-rc.0
+      "@ui5/fs": 3.0.0-rc.1
       "@ui5/logger": 3.0.1-rc.0
       body-parser: 1.20.1
       compression: 1.7.4
