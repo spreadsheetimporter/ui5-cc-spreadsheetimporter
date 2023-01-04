@@ -22,7 +22,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "prepare": "chmod +x ./node_modules/husky/lib/bin.js && node ./.husky/skip.js || husky install",
-    "start:sample": "pnpm --filter ui5-cc-excelupload-sample start",
+    "start": "pnpm --filter ui5-cc-excelupload-sample start",
     "testv2": "pnpm --filter ui5-cc-excelupload-sample testv2",
     "testv4": "pnpm --filter ui5-cc-excelupload-sample testv4",
     "start:server": "pnpm --filter ui5-cc-excelupload-sample watch:server",
