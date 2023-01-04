@@ -46,12 +46,9 @@ A few examples:
 
 ### Develop
 
-You can start with this dev enviroment: https://github.com/marianfoo/ui5-cc-excelUpload-dev-env
-
-To develop, `npm link` this folder, and `npm link` in your test app.  
-Then run `npm run build`.  
+Run `pnpm install`.  
 For developing, you need to run `npm run build:watch` to have always the latest changes in the `dist` folder.  
-Otherwise, you would always have to change the resourceRoots in manifest.json in the consuming app.
+Run the test app (CAP and UI5 Apps) with `npm run start:sample`
 
 #### Docs
 

@@ -44,8 +44,7 @@ jobs:
 
       - name: setup excelUpload control
         run: |
-          npm install
-          npm run setupExamplespnpm
+          pnpm install
           npm run build
 
       # update chromedriver
@@ -59,7 +58,7 @@ jobs:
 
       # run app
       - name: run app
-        run: npm run start:sample&
+        run: npm start&
 
       # run wdi5 tests
       - name: test wdi5 v2
