@@ -1,3 +1,14 @@
+# [0.5.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.3.4...v0.5.0) (2023-01-04)
+
+
+### Features
+
+* init i18n ([#8](https://github.com/marianfoo/ui5-cc-excelUpload/issues/8)) ([593b009](https://github.com/marianfoo/ui5-cc-excelUpload/commit/593b009298bfc61c2bedce1e23573e96e8ff9e3a))
+* multiversion support ([#6](https://github.com/marianfoo/ui5-cc-excelUpload/issues/6)) ([68aa9ca](https://github.com/marianfoo/ui5-cc-excelUpload/commit/68aa9ca2dab84bac0bcd81406636d87038fc1b2e))
+* works in ListReport/ObjectPage V4/V2 and Freestyle V2([#10](https://github.com/marianfoo/ui5-cc-excelUpload/issues/10)) ([d9432d2](https://github.com/marianfoo/ui5-cc-excelUpload/commit/d9432d25142addd8ff7fbe804f9a832692588ef4))
+
+
+
 # [0.4.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.3.4...v0.4.0) (2022-12-23)
 
 **Breaking Changes**
