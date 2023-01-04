@@ -19,7 +19,7 @@ describe("Open Excel Upload dialog", () => {
 			.asControl({
 				selector: {
 					controlType: "sap.m.ColumnListItem",
-					viewId: "ui.v2.ordersv2::sap.suite.ui.generic.template.ListReport.view.ListReport::Orders",
+					viewId: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ListReport.view.ListReport::Orders",
 					bindingPath: {
 						path: "/Orders(ID=guid'64e718c9-ff99-47f1-8ca3-950c850777d4',IsActiveEntity=true)",
 						propertyPath: "IsActiveEntity"
@@ -30,19 +30,23 @@ describe("Open Excel Upload dialog", () => {
 	});
 
 	it("should see an object page", async () => {
-		await browser.asControl({
-			selector: {
-				id: "ui.v2.ordersv2::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders--edit",
-			}
-		}).press();
+		await browser
+			.asControl({
+				selector: {
+					id: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders--edit"
+				}
+			})
+			.press();
 	});
 
-	it("Open ExcelUpload Dialog V4", async () => {
-		await browser.asControl({
-			selector: {
-				id: "ui.v2.ordersv2::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders--action::excelUploadButton",
-			}
-		}).press();
+	it("Open ExcelUpload Dialog V2", async () => {
+		await browser
+			.asControl({
+				selector: {
+					id: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders--action::excelUploadButton"
+				}
+			})
+			.press();
 		const excelUploadDialog = await browser.asControl({
 			selector: {
 				controlType: "sap.m.Dialog",
@@ -56,8 +60,7 @@ describe("Open Excel Upload dialog", () => {
 	});
 
 	it("Upload file", async () => {
-		const uploader = await browser
-		.asControl({
+		const uploader = await browser.asControl({
 			forceSelect: true,
 
 			selector: {
@@ -66,28 +69,32 @@ describe("Open Excel Upload dialog", () => {
 				id: "__uploader0"
 			}
 		});
-		const fileName = "test/testFiles/TwoRowsNoErrors.xlsx" // relative to wdio.conf.(j|t)s
-		const remoteFilePath = await browser.uploadFile(fileName) // this also works in CI senarios!
+		const fileName = "test/testFiles/TwoRowsNoErrors.xlsx"; // relative to wdio.conf.(j|t)s
+		const remoteFilePath = await browser.uploadFile(fileName); // this also works in CI senarios!
 		// transition from wdi5 api -> wdio api
-		const $uploader = await uploader.getWebElement() // wdi5
-		const $fileInput = await $uploader.$("input[type=file]") // wdio
-		await $fileInput.setValue(remoteFilePath) // wdio
-		await browser.asControl({
-			selector: {
-				controlType: "sap.m.Button",
-				properties: {
-					text: "Upload"
+		const $uploader = await uploader.getWebElement(); // wdi5
+		const $fileInput = await $uploader.$("input[type=file]"); // wdio
+		await $fileInput.setValue(remoteFilePath); // wdio
+		await browser
+			.asControl({
+				selector: {
+					controlType: "sap.m.Button",
+					properties: {
+						text: "Upload"
+					}
 				}
-			}
-		}).press();
+			})
+			.press();
 	});
 
 	it("execute save", async () => {
-		await browser.asControl({
-			selector: {
-				id: "ui.v2.ordersv2::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders--activate",
-			}
-		}).press();
+		await browser
+			.asControl({
+				selector: {
+					id: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders--activate"
+				}
+			})
+			.press();
 	});
 
 	it("go to Sub Detail Page", async () => {
@@ -95,7 +102,7 @@ describe("Open Excel Upload dialog", () => {
 			forceSelect: true,
 			selector: {
 				controlType: "sap.m.Text",
-				viewId: "ui.v2.ordersv2::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders",
+				viewId: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders",
 				properties: {
 					text: "254"
 				}
@@ -110,7 +117,7 @@ describe("Open Excel Upload dialog", () => {
 	it("check Field: Quantity", async () => {
 		const field = await browser.asControl({
 			selector: {
-				id: "ui.v2.ordersv2::sap.suite.ui.generic.template.ObjectPage.view.Details::OrderItems--com.sap.vocabularies.UI.v1.Identification::quantity::Field"
+				id: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::OrderItems--com.sap.vocabularies.UI.v1.Identification::quantity::Field"
 			}
 		});
 		const value = await field.getText();
@@ -120,7 +127,7 @@ describe("Open Excel Upload dialog", () => {
 	it("check Field: Product", async () => {
 		const field = await browser.asControl({
 			selector: {
-				id: "ui.v2.ordersv2::sap.suite.ui.generic.template.ObjectPage.view.Details::OrderItems--com.sap.vocabularies.UI.v1.Identification::title::Field"
+				id: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::OrderItems--com.sap.vocabularies.UI.v1.Identification::title::Field"
 			}
 		});
 		const value = await field.getText();
@@ -130,7 +137,7 @@ describe("Open Excel Upload dialog", () => {
 	it("check Field: UnitPrice", async () => {
 		const field = await browser.asControl({
 			selector: {
-				id: "ui.v2.ordersv2::sap.suite.ui.generic.template.ObjectPage.view.Details::OrderItems--com.sap.vocabularies.UI.v1.Identification::price::Field"
+				id: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::OrderItems--com.sap.vocabularies.UI.v1.Identification::price::Field"
 			}
 		});
 		const value = await field.getText();
@@ -206,7 +213,7 @@ describe("Open Excel Upload dialog", () => {
 	it("check Field: time", async () => {
 		const field = await browser.asControl({
 			selector: {
-				id: "ui.v2.ordersv2::sap.suite.ui.generic.template.ObjectPage.view.Details::OrderItems--com.sap.vocabularies.UI.v1.Identification::time::Field"
+				id: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::OrderItems--com.sap.vocabularies.UI.v1.Identification::time::Field"
 			}
 		});
 		const value = await field.getText();

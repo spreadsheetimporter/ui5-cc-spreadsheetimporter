@@ -4,7 +4,7 @@ metadata:
   name: ui5-cc-excelupload
 builder:
   customTasks:
-    - name: createBundle
+    - name: ui5-tooling-modules-task
       afterTask: replaceCopyright
       configuration:
         addToNamespace: true

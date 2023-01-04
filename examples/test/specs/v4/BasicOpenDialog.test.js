@@ -1,37 +1,37 @@
 describe("Open Excel Upload dialog", () => {
 	const optionsLong = {
-		year: 'numeric',
-		month: 'short',
-		day: 'numeric',
-		hour: 'numeric',
-		minute: 'numeric',
-		second: 'numeric',
+		year: "numeric",
+		month: "short",
+		day: "numeric",
+		hour: "numeric",
+		minute: "numeric",
+		second: "numeric",
 		hour12: true
-	  };
-	  const optionsShort = {
-		month: 'short',
-		day: 'numeric',
-		year: 'numeric'
-	  };
+	};
+	const optionsShort = {
+		month: "short",
+		day: "numeric",
+		year: "numeric"
+	};
 	before(async () => {
 		FioriElementsFacade = await browser.fe.initialize({
 			onTheMainPage: {
 				ListReport: {
-					appId: "ui.v4.orders",
+					appId: "ui.v4.ordersv4fe",
 					componentId: "OrdersList",
 					entitySet: "Orders"
 				}
 			},
 			onTheDetailPage: {
 				ObjectPage: {
-					appId: "ui.v4.orders",
+					appId: "ui.v4.ordersv4fe",
 					componentId: "OrdersObjectPage",
 					entitySet: "Orders"
 				}
 			},
 			onTheSubDetailPage: {
 				ObjectPage: {
-					appId: "ui.v4.orders",
+					appId: "ui.v4.ordersv4fe",
 					componentId: "Orders_ItemsObjectPage",
 					entitySet: "Orders_Items"
 				}
@@ -63,7 +63,7 @@ describe("Open Excel Upload dialog", () => {
 		await browser
 			.asControl({
 				selector: {
-					id: "ui.v4.orders::OrdersObjectPage--fe::CustomAction::excelUpload"
+					id: "ui.v4.ordersv4fe::OrdersObjectPage--fe::CustomAction::excelUpload"
 				}
 			})
 			.press();
@@ -80,35 +80,36 @@ describe("Open Excel Upload dialog", () => {
 	});
 
 	it("Upload file", async () => {
-		const uploader = await browser
-		.asControl({
+		const uploader = await browser.asControl({
 			forceSelect: true,
-			
+
 			selector: {
 				interaction: "root",
 				controlType: "sap.ui.unified.FileUploader",
 				id: "__uploader0"
 			}
 		});
-		const fileName = "test/testFiles/TwoRowsNoErrors.xlsx" // relative to wdio.conf.(j|t)s
-		const remoteFilePath = await browser.uploadFile(fileName) // this also works in CI senarios!
+		const fileName = "test/testFiles/TwoRowsNoErrors.xlsx"; // relative to wdio.conf.(j|t)s
+		const remoteFilePath = await browser.uploadFile(fileName); // this also works in CI senarios!
 		// transition from wdi5 api -> wdio api
-		const $uploader = await uploader.getWebElement() // wdi5
-		const $fileInput = await $uploader.$("input[type=file]") // wdio
-		await $fileInput.setValue(remoteFilePath) // wdio
-		await browser.asControl({
-			selector: {
-				controlType: "sap.m.Button",
-				properties: {
-					text: "Upload"
+		const $uploader = await uploader.getWebElement(); // wdi5
+		const $fileInput = await $uploader.$("input[type=file]"); // wdio
+		await $fileInput.setValue(remoteFilePath); // wdio
+		await browser
+			.asControl({
+				selector: {
+					controlType: "sap.m.Button",
+					properties: {
+						text: "Upload"
+					}
 				}
-			}
-		}).press();
+			})
+			.press();
 	});
 
 	it("execute save", async () => {
 		await FioriElementsFacade.execute((Given, When, Then) => {
-			When.onTheDetailPage.onFooter().iExecuteSave()
+			When.onTheDetailPage.onFooter().iExecuteSave();
 		});
 	});
 
@@ -122,100 +123,100 @@ describe("Open Excel Upload dialog", () => {
 	it("check Field: Quantity", async () => {
 		await FioriElementsFacade.execute((Given, When, Then) => {
 			Then.onTheSubDetailPage.iSeeThisPage();
-			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "quantity" }, { value: "3"});
+			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "quantity" }, { value: "3" });
 		});
 	});
 
 	it("check Field: Product", async () => {
 		await FioriElementsFacade.execute((Given, When, Then) => {
-			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "title" }, { value: 'Product Test 2'});
+			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "title" }, { value: "Product Test 2" });
 		});
 	});
 
 	it("check Field: UnitPrice", async () => {
 		await FioriElementsFacade.execute((Given, When, Then) => {
-			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "price" }, { value: '13.7'});
+			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "price" }, { value: "13.7" });
 		});
 	});
 
 	it("check Field: validFrom", async () => {
 		const selector = {
 			selector: {
-			  controlType: "sap.ui.layout.form.FormElement",
-			  descendant: {
-				controlType: "sap.m.Label",
-				properties: {
-					text: "validFrom"
-				  }
-			  }
+				controlType: "sap.ui.layout.form.FormElement",
+				descendant: {
+					controlType: "sap.m.Label",
+					properties: {
+						text: "validFrom"
+					}
+				}
 			}
-		  }
-		  const formElement = await browser.asControl(selector)
-		  const fields = await formElement.getFields()
-		  const field = fields[0]
-		  const content = await field.getContentDisplay()
-		  const binding = await content.getBinding("text")
-		  const value =  await binding.getValue()
-		  const date = new Date(value);
-		  const formattedDate = date.toLocaleString('en-US', optionsLong);
+		};
+		const formElement = await browser.asControl(selector);
+		const fields = await formElement.getFields();
+		const field = fields[0];
+		const content = await field.getContentDisplay();
+		const binding = await content.getBinding("text");
+		const value = await binding.getValue();
+		const date = new Date(value);
+		const formattedDate = date.toLocaleString("en-US", optionsLong);
 		await FioriElementsFacade.execute((Given, When, Then) => {
-			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "validFrom" }, { value: formattedDate});
+			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "validFrom" }, { value: formattedDate });
 		});
 	});
 
 	it("check Field: timestamp", async () => {
 		const selector = {
 			selector: {
-			  controlType: "sap.ui.layout.form.FormElement",
-			  descendant: {
-				controlType: "sap.m.Label",
-				properties: {
-					text: "timestamp"
-				  }
-			  }
+				controlType: "sap.ui.layout.form.FormElement",
+				descendant: {
+					controlType: "sap.m.Label",
+					properties: {
+						text: "timestamp"
+					}
+				}
 			}
-		  }
-		  const formElement = await browser.asControl(selector)
-		  const fields = await formElement.getFields()
-		  const field = fields[0]
-		  const content = await field.getContentDisplay()
-		  const binding = await content.getBinding("text")
-		  const value =  await binding.getValue()
-		  const date = new Date(value);
-		  const formattedDate = date.toLocaleString('en-US', optionsLong);
+		};
+		const formElement = await browser.asControl(selector);
+		const fields = await formElement.getFields();
+		const field = fields[0];
+		const content = await field.getContentDisplay();
+		const binding = await content.getBinding("text");
+		const value = await binding.getValue();
+		const date = new Date(value);
+		const formattedDate = date.toLocaleString("en-US", optionsLong);
 		await FioriElementsFacade.execute((Given, When, Then) => {
-			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "timestamp" }, { value: formattedDate});
+			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "timestamp" }, { value: formattedDate });
 		});
 	});
 
 	it("check Field: date", async () => {
 		const selector = {
 			selector: {
-			  controlType: "sap.ui.layout.form.FormElement",
-			  descendant: {
-				controlType: "sap.m.Label",
-				properties: {
-					text: "date"
-				  }
-			  }
+				controlType: "sap.ui.layout.form.FormElement",
+				descendant: {
+					controlType: "sap.m.Label",
+					properties: {
+						text: "date"
+					}
+				}
 			}
-		  }
-		  const formElement = await browser.asControl(selector)
-		  const fields = await formElement.getFields()
-		  const field = fields[0]
-		  const content = await field.getContentDisplay()
-		  const binding = await content.getBinding("text")
-		  const value =  await binding.getValue()
-		  const date = new Date(value);
-		  const formattedDate = date.toLocaleString('en-US', optionsShort);
+		};
+		const formElement = await browser.asControl(selector);
+		const fields = await formElement.getFields();
+		const field = fields[0];
+		const content = await field.getContentDisplay();
+		const binding = await content.getBinding("text");
+		const value = await binding.getValue();
+		const date = new Date(value);
+		const formattedDate = date.toLocaleString("en-US", optionsShort);
 		await FioriElementsFacade.execute((Given, When, Then) => {
-			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "date" }, { value: formattedDate});
+			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "date" }, { value: formattedDate });
 		});
 	});
 
 	it("check Field: time", async () => {
 		await FioriElementsFacade.execute((Given, When, Then) => {
-			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "time" }, { value: '4:00:00 PM'});
+			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "time" }, { value: "4:00:00 PM" });
 		});
 	});
 });
