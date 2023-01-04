@@ -9,6 +9,8 @@ The module focuses on making integration into existing Fiori element apps as eas
 
 [**Get Started**](./pages/GettingStarted.md){: .md-button .md-button--primary .sap-icon-initiative }
 
+See all currently supported OData and UI5 Versions [here](./pages/SupportVersions.md).
+
 ## Main Features
 
  - Upload from List Report/Object Page

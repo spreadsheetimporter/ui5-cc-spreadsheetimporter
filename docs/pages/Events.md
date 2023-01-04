@@ -42,12 +42,12 @@ This sample is from the [sample app](https://github.com/marianfoo/ui5-cc-excelUp
 This is a sample to overwrite the payload.  
 
 ````javascript
-this.excelUpload.attachChangeBeforeCreate(function(oEvent) {
-    oEvent.getSource().setPayload({
-        "product_ID": "123",
-        "quantity": 1,
-        "title": "Test",
-        "price": 25
-    })
-}, this)
+this.excelUpload.attachChangeBeforeCreate(function (oEvent) {
+    let payload = oEvent.getParameter("payload");
+    // round number from 12,56 to 12,6
+    if (payload.price) {
+        payload.price = Number(payload.price.toFixed(1));
+    }
+    oEvent.getSource().setPayload(payload);
+}, this);
 ````

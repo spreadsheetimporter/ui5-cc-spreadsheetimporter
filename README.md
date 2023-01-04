@@ -4,7 +4,12 @@
 
 A UI5 Module to integrate a Excel Upload for Fiori Element Apps.  
 The module focuses on making integration into existing Fiori element apps as easy as possible, with as little code and configuration as possible.
+
+The aim is to support as many Fiori Scenarios and UI5 Versions as possibile.  
+See here for all currently [supported Versions](https://marianfoo.github.io/ui5-cc-excelUpload/pages/SupportVersions/).
+
 ![Excel Upload Dialog](/images/ExcelUploadDialog.png "Excel Upload Dialog")
+
 
 ## Install
 
