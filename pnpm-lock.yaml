@@ -19,7 +19,7 @@ importers:
       replace-in-file: ^6.3.5
       shelljs: ^0.8.5
       ui5-task-stringreplacer: ^0.7.1
-      ui5-tooling-modules: ^0.7.0
+      ui5-tooling-modules: ^0.7.2
       xlsx: ^0.18.5
     dependencies:
       xlsx: 0.18.5
