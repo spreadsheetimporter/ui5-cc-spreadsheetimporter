@@ -42,10 +42,12 @@ jobs:
           npm i -g npm@latest
           npm --version
 
-      - name: setup excelUpload control
+      - name: pnpm install
         run: |
           pnpm install
-          npm run build
+
+      - name: Run Build
+        run:  npm run build
 
       # update chromedriver
       - name: update chromedriver to latest
