@@ -15,15 +15,15 @@ export default class MetadataHandler {
 
 		// get the property list of the entity for which we need to download the template
 		// binding.getModel().getMetaModel().getObject("/Orders")
-		const oDataEntityType = this.excelUploadController._oDataEntityType;
+		const oDataEntityType = this.excelUploadController.oDataEntityType;
 		const properties: PropertyArray = oDataEntityType.property;
 		const entityTypeLabel: string = oDataEntityType["sap:label"];
 
 		// check if file name is not set
-		if (!this.excelUploadController._component.getExcelFileName() && entityTypeLabel) {
-			this.excelUploadController._component.setExcelFileName(`${entityTypeLabel}.xlsx`);
-		} else if (!this.excelUploadController._component.getExcelFileName() && !entityTypeLabel) {
-			this.excelUploadController._component.setExcelFileName(`Template.xlsx`);
+		if (!this.excelUploadController.component.getExcelFileName() && entityTypeLabel) {
+			this.excelUploadController.component.setExcelFileName(`${entityTypeLabel}.xlsx`);
+		} else if (!this.excelUploadController.component.getExcelFileName() && !entityTypeLabel) {
+			this.excelUploadController.component.setExcelFileName(`Template.xlsx`);
 		}
 
 		if (colums) {
@@ -73,32 +73,32 @@ export default class MetadataHandler {
 		return propertyName;
 	}
 
-	_createLabelListV4(colums: Columns): ListObject {
+	public createLabelListV4(colums: Columns): ListObject {
 		let listObject: ListObject = {};
 		let entityTypeLabel;
 
 		// get the property list of the entity for which we need to download the template
 		var annotations = this.excelUploadController._context.getModel().getMetaModel().getData()["$Annotations"];
-		const properties = this.excelUploadController._context.getModel().getMetaModel().getData()[this.excelUploadController._component.getOdataType()];
+		const properties = this.excelUploadController._context.getModel().getMetaModel().getData()[this.excelUploadController.component.getOdataType()];
 		// try get facet label
 		try {
-			entityTypeLabel = annotations[this.excelUploadController._component.getOdataType()]["@com.sap.vocabularies.UI.v1.Facets"][0].Label;
+			entityTypeLabel = annotations[this.excelUploadController.component.getOdataType()]["@com.sap.vocabularies.UI.v1.Facets"][0].Label;
 		} catch (error) {
 			console.debug("Facet Label not found");
 		}
 
 		// check if file name is not set
-		if (!this.excelUploadController._component.getExcelFileName() && entityTypeLabel) {
-			this.excelUploadController._component.setExcelFileName(`${entityTypeLabel}.xlsx`);
-		} else if (!this.excelUploadController._component.getExcelFileName() && !entityTypeLabel) {
-			this.excelUploadController._component.setExcelFileName(`Template.xlsx`);
+		if (!this.excelUploadController.component.getExcelFileName() && entityTypeLabel) {
+			this.excelUploadController.component.setExcelFileName(`${entityTypeLabel}.xlsx`);
+		} else if (!this.excelUploadController.component.getExcelFileName() && !entityTypeLabel) {
+			this.excelUploadController.component.setExcelFileName(`Template.xlsx`);
 		}
 
 		if (colums) {
 			for (const propertyName of colums) {
 				const property = properties[propertyName];
 				if (property) {
-					const propertyLabel = annotations[`${this.excelUploadController._component.getOdataType()}/${propertyName}`];
+					const propertyLabel = annotations[`${this.excelUploadController.component.getOdataType()}/${propertyName}`];
 					listObject[propertyName] = {} as Property;
 					listObject[propertyName].label = this._getLabelV4(annotations, properties, propertyName, propertyLabel, this._options);
 					if (!listObject[propertyName].label) {
@@ -112,7 +112,7 @@ export default class MetadataHandler {
 		} else {
 			const propertiesFiltered = Object.entries(properties).filter(([propertyName, propertyValue]) => propertyValue["$kind"] === "Property");
 			for (const [propertyName, propertyValue] of propertiesFiltered) {
-				const propertyLabel = annotations[`${this.excelUploadController._component.getOdataType()}/${propertyName}`];
+				const propertyLabel = annotations[`${this.excelUploadController.component.getOdataType()}/${propertyName}`];
 				if (!propertyLabel["@com.sap.vocabularies.UI.v1.Hidden"]) {
 					listObject[propertyName] = {} as Property;
 					listObject[propertyName].label = this._getLabelV4(annotations, properties, propertyName, propertyLabel, this._options);
@@ -132,7 +132,7 @@ export default class MetadataHandler {
 			return propertyLabel["@com.sap.vocabularies.Common.v1.Label"];
 		}
 		try {
-			const lineItemsAnnotations = annotations[this.excelUploadController._component.getOdataType()]["@com.sap.vocabularies.UI.v1.LineItem"];
+			const lineItemsAnnotations = annotations[this.excelUploadController.component.getOdataType()]["@com.sap.vocabularies.UI.v1.LineItem"];
 			return lineItemsAnnotations.find((dataField: { Value: { $Path: any } }) => dataField.Value.$Path === propertyName).Label;
 		} catch (error) {
 			console.debug(`${propertyName} not found as a LineItem Label`);

@@ -5,182 +5,183 @@ import JSONModel from "sap/ui/model/json/JSONModel";
 import * as XLSX from "xlsx";
 import MetadataHandler from "./MetadataHandler";
 import DraftController from "sap/ui/generic/app/transaction/DraftController";
+import Component from "../Component";
+import XMLView from "sap/ui/core/mvc/XMLView";
+import { ListObject } from "../types";
+import Dialog from "sap/m/Dialog";
+import Event from "sap/ui/base/Event";
+import ResourceModel from "sap/ui/model/resource/ResourceModel";
+import ResourceBundle from "sap/base/i18n/ResourceBundle";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
 export default class ExcelUpload {
-	public _oDataEntityType: any;
+	public oDataEntityType: any;
+	public component: Component;
+	public context: any;
+	private isODataV4: boolean;
+	private view: XMLView;
+	private tableObject: any;
+	private metadataHandler: MetadataHandler;
+	private draftController: DraftController;
+	private model: any;
+	private typeLabelList: ListObject;
+	private dialog: Dialog;
+	private errorDialog: Dialog;
+	private componentI18n : ResourceModel;
 
-	constructor(component, componentI18n) {
+	constructor(component: Component, componentI18n: ResourceModel) {
 		this._excelSheetsData = [];
-		this._pDialog = null;
-		this._component = component;
-		this._component.setErrorResults([]);
-		this._componentI18n = componentI18n;
-		this._metadataHandler = new MetadataHandler(this);
+		this.dialog = null;
+		this.component = component;
+		this.component.setErrorResults([]);
+		this.componentI18n = componentI18n;
+		this.metadataHandler = new MetadataHandler(this);
 		this.setContext();
 	}
 
 	async setContext() {
-		this._context = this._component.getContext();
-		if (this._context.base) {
-			this._context = this._context.base;
+		this.context = this.component.getContext();
+		if (this.context.base) {
+			this.context = this.context.base;
 		}
-		this._isODataV4 = this._checkIfODataIsV4();
-		if (this._isODataV4) {
-			this._view = this._context._view;
-			if (!this._view) {
-				this._view = this._context.getView();
+		this.isODataV4 = this._checkIfODataIsV4();
+		if (this.isODataV4) {
+			this.view = this.context._view;
+			if (!this.view) {
+				this.view = this.context.getView();
 			}
 			this._setContextV4();
 		} else {
-			this._view = this._context.getView();
+			this.view = this.context.getView();
 			await this._setContextV2();
 		}
-		this._model = this._tableObject.getModel();
-		this._draftController = new DraftController(this._model);
+		this.model = this.tableObject.getModel();
+		this.draftController = new DraftController(this.model, undefined);
 	}
 
 	async _setContextV4() {
 		// try get object page table
-		if (!this._component.getTableId()) {
-			const domRef = this._view.getContent()[0].getDomRef();
+		if (!this.component.getTableId()) {
+			const domRef = this.view.getContent()[0].getDomRef();
 			let tables = domRef.querySelectorAll("[id$='::LineItem-innerTable']");
 			if (tables.length > 1) {
 				console.error("Found more than one table on Object Page.\n Please specify table in option 'tableId'");
 			} else {
-				this._component.setTableId(tables[0].getAttribute("id"));
+				this.component.setTableId(tables[0].getAttribute("id"));
 			}
 		}
 		// try get odata type from table
-		this._tableObject = this._context.byId(this._component.getTableId());
-		const tableBindingPath = this._tableObject.getBindingPath("items");
-		const metaModel = this._tableObject.getModel().getMetaModel();
-		const metaModelData = this._tableObject.getModel().getMetaModel().getData();
-		if (!this._component.getOdataType()) {
+		this.tableObject = this.context.byId(this.component.getTableId());
+		const tableBindingPath = this.tableObject.getBindingPath("items");
+		const metaModel = this.tableObject.getModel().getMetaModel();
+		const metaModelData = this.tableObject.getModel().getMetaModel().getData();
+		if (!this.component.getOdataType()) {
 			// for list report
 			try {
 				const metaDataObject = metaModel.getObject(tableBindingPath);
-				this._component.setOdataType(metaDataObject["$Type"]);
+				this.component.setOdataType(metaDataObject["$Type"]);
 			} catch (error) {
 				console.debug();
 			}
 			// for object page
-			if (!this._component.getOdataType()) {
+			if (!this.component.getOdataType()) {
 				for (const [key, value] of Object.entries(metaModelData)) {
 					if (value["$kind"] === "EntityType" && value[tableBindingPath]) {
-						this._component.setOdataType(value[tableBindingPath]["$Type"]);
+						this.component.setOdataType(value[tableBindingPath]["$Type"]);
 					}
 				}
 			}
-			if (!this._component.getOdataType()) {
+			if (!this.component.getOdataType()) {
 				console.error("No OData Type found. Please specify 'odataType' in options");
 			}
 		}
 
-		this.typeLabelList = this._metadataHandler._createLabelListV4(this._component.getColumns());
+		this.typeLabelList = this.metadataHandler.createLabelListV4(this.component.getColumns());
 	}
 
 	async _setContextV2() {
 		// try get object page table
-		if (!this._component.getTableId()) {
-			const domRef = this._view.getContent()[0].getDomRef();
+		if (!this.component.getTableId()) {
+			const domRef = this.view.getContent()[0].getDomRef();
 			// list report v2 responsive Table
 			const tables = domRef.querySelectorAll("[id$='responsiveTable']");
 			if (tables.length > 1) {
 				console.error("Found more than one table on Object Page.\n Please specify table in option 'tableId'");
 			} else {
-				this._component.setTableId(tables[0].getAttribute("id"));
+				this.component.setTableId(tables[0].getAttribute("id"));
 			}
 		}
 		// try get odata type from table
-		this._tableObject = this._context.byId(this._component.getTableId());
-		if (!this._component.getOdataType()) {
-			this._component.setOdataType(this._tableObject.getBinding("items")._getEntityType().entityType);
-			if (!this._component.getOdataType()) {
+		this.tableObject = this.context.byId(this.component.getTableId());
+		if (!this.component.getOdataType()) {
+			this.component.setOdataType(this.tableObject.getBinding("items")._getEntityType().entityType);
+			if (!this.component.getOdataType()) {
 				console.error("No OData Type found. Please specify 'odataType' in options");
 			}
-			const metaModel = this._context.byId(this._component.getTableId()).getModel().getMetaModel();
+			const metaModel = this.context.byId(this.component.getTableId()).getModel().getMetaModel();
 			await metaModel.loaded();
-			this._oDataEntityType = metaModel.getODataEntityType(this._component.getOdataType());
+			this.oDataEntityType = metaModel.getODataEntityType(this.component.getOdataType());
 		}
 
-		this.typeLabelList = this._metadataHandler.createLabelListV2(this._component.getColumns());
+		this.typeLabelList = this.metadataHandler.createLabelListV2(this.component.getColumns());
 	}
 
 	async openExcelUploadDialog() {
 		this._excelSheetsData = [];
-		if (!this._pDialog || this._pDialog.isDestroyed()) {
-			this._pDialog = await Fragment.load({
+		if (!this.dialog || this.dialog.isDestroyed()) {
+			this.dialog = await Fragment.load({
 				name: "cc.excelUpload.XXXnamespaceXXX.fragment.ExcelUpload",
 				type: "XML",
 				controller: this,
-			});
-			this._pDialog.setModel(this._componentI18n, "i18n");
+			}) as Dialog;
+			this.dialog.setModel(this.componentI18n, "i18n");
 		}
-		this._pDialog.open();
+		this.dialog.open();
 	}
 
-	/**
-	 * Uploading Excel File to the app and extracting data from excel file
-	 * @param {*} oEvent
-	 */
-	async onUploadSetComplete(oEvent) {
-		this._component.setErrorResults([]);
-		let filePromise = new Promise((resolve, reject) => {
-			var reader = new FileReader();
-			reader.onload = async (e) => {
-				try {
-					var excelSheetsData = [];
-					// getting the binary excel file content
-					let xlsx_content = e.currentTarget.result;
-
-					let workbook = XLSX.read(xlsx_content, { type: "binary" });
-
-					// reading all sheets
-					workbook.SheetNames.forEach(function (sheetName) {
-						// appending the excel file data to the global variable
-						excelSheetsData.push(XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]));
-					});
-					// use only first sheet
-					var firstSheet = excelSheetsData[0];
-					//remove empty spaces before and after every value
-					for (const object of firstSheet) {
-						for (const key in object) {
-							object[key] = typeof object[key] === "string" ? object[key].trim() : object[key];
-						}
-					}
-					// check if data is ok in extension method
-					this._checkMandatoryFields(firstSheet, this._component.getErrorResults());
-					this._component.fireCheckBeforeRead({ sheetData: firstSheet });
-					if (this._component.getErrorResults().some((error) => error.counter > 0)) {
-						// error found in excel
-						// remove those errors not found
-						const errorArray = this._component.getErrorResults().filter((error) => error.counter !== 0);
-						reject(errorArray);
-					} else {
-						resolve(firstSheet);
-					}
-				} catch (error) {
-					reject(error);
-				}
-			};
-			reader.readAsBinaryString(oEvent.getParameter("files")[0]);
+	async onFileUpload(oEvent: Event) {
+		var excelSheetsData = [];
+		const stream:ReadableStream = oEvent.getParameter("files")[0].stream();
+		const data = await this.buffer_RS(stream);
+		const workbook = XLSX.read(data);
+		this.component.setErrorResults([]);
+		// reading all sheets
+		workbook.SheetNames.forEach(function (sheetName) {
+			// appending the excel file data to the global variable
+			excelSheetsData.push(XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]));
 		});
+		// use only first sheet
+		var firstSheet = excelSheetsData[0];
+		//remove empty spaces before and after every value
+		for (const object of firstSheet) {
+			for (const key in object) {
+				object[key] = typeof object[key] === "string" ? object[key].trim() : object[key];
+			}
+		}
+		// check if data is ok in extension method
+		this._checkMandatoryFields(firstSheet, this.component.getErrorResults());
+		this.component.fireCheckBeforeRead({ sheetData: firstSheet });
+		if (this.component.getErrorResults().some((error) => error.counter > 0)) {
+			// error found in excel
+			// remove those errors not found
+			const errorArray = this.component.getErrorResults().filter((error) => error.counter !== 0);
+			throw errorArray;
+		}
 
 		// Wait for all promises to be resolved
 		try {
-			this._excelSheetsData = await filePromise;
+			this._excelSheetsData = firstSheet;
 			MessageToast.show(this._geti18nText("uploadSuccessful"));
 		} catch (error) {
 			this.errorDialog = await Fragment.load({
 				name: "cc.excelUpload.XXXnamespaceXXX.fragment.ErrorDialog",
 				type: "XML",
 				controller: this,
-			});
-			this._pDialog.setModel(this._componentI18n, "i18n");
+			}) as Dialog;
+			this.dialog.setModel(this.componentI18n, "i18n");
 			this.errorDialog.setModel(new JSONModel(), "errorData");
-			var fileUploader = this._pDialog.getContent()[0];
+			var fileUploader = this.dialog.getContent()[0];
 			fileUploader.setValue();
 			this.errorDialog.getModel("errorData").setData(error);
 			this.errorDialog.open();
@@ -188,7 +189,7 @@ export default class ExcelUpload {
 	}
 
 	onCloseDialog(oEvent) {
-		this._pDialog.destroy();
+		this.dialog.destroy();
 	}
 	onCloseErrorDialog(oEvent) {
 		this.errorDialog.close();
@@ -231,11 +232,11 @@ export default class ExcelUpload {
 			sActionLabel: this._geti18nText("uploadingFile"),
 		};
 		// calling the oData service using extension api
-		if (this._isODataV4) {
-			await this._context.editFlow.securedExecution(fnAddMessage, mParameters);
+		if (this.isODataV4) {
+			await this.context.editFlow.securedExecution(fnAddMessage, mParameters);
 		} else {
-			if (this._context.extensionAPI) {
-				await this._context.extensionAPI.securedExecution(fnAddMessage, mParameters);
+			if (this.context.extensionAPI) {
+				await this.context.extensionAPI.securedExecution(fnAddMessage, mParameters);
 			} else {
 				await fnAddMessage();
 			}
@@ -254,8 +255,8 @@ export default class ExcelUpload {
 		// intializing the message manager for displaying the odata response messages
 		try {
 			// get binding of table to create rows
-			const model = this._context.byId(this._component.getTableId()).getModel();
-			const binding = this._context.byId(this._component.getTableId()).getBinding("items");
+			const model = this.context.byId(this.component.getTableId()).getModel();
+			const binding = this.context.byId(this.component.getTableId()).getBinding("items");
 			let createPromises = [];
 			let createContexts = [];
 			let activateActions = [];
@@ -294,8 +295,8 @@ export default class ExcelUpload {
 
 				this._payload = payload;
 				// extension method to manipulate payload
-				this._component.fireChangeBeforeCreate({ payload: this._payload });
-				if (this._isODataV4) {
+				this.component.fireChangeBeforeCreate({ payload: this._payload });
+				if (this.isODataV4) {
 					const context = binding.create(this._payload);
 					createContexts.push(context);
 					createPromises.push(context.created());
@@ -306,7 +307,7 @@ export default class ExcelUpload {
 				}
 			}
 			// wait for all drafts to be created
-			if (this._isODataV4) {
+			if (this.isODataV4) {
 				await model.submitBatch(model.getUpdateGroupId());
 				const resultsCreation = await Promise.all(createPromises);
 			} else {
@@ -315,8 +316,8 @@ export default class ExcelUpload {
 			}
 
 			// check for and activate all drafts
-			if (this._component.getActivateDraft()) {
-				if (this._isODataV4) {
+			if (this.component.getActivateDraft()) {
+				if (this.isODataV4) {
 					for (let index = 0; index < createContexts.length; index++) {
 						const element = createContexts[index];
 						// const operation = element.getModel().bindContext(this._activateActionName + "(...)", element, { $$inheritExpandSelect: true });
@@ -329,12 +330,12 @@ export default class ExcelUpload {
 				} else {
 					for (let index = 0; index < createContexts.length; index++) {
 						const element = createContexts[index];
-						if (this._draftController.getDraftContext().hasDraft(element)) {
+						if (this.draftController.getDraftContext().hasDraft(element)) {
 							// this will fail i.e. in a Object Page Table, maybe better way to check, hasDraft is still true
 							try {
-								const checkImport = this._draftController.getDraftContext().getODataDraftFunctionImportName(element, "ActivationAction");
+								const checkImport = this.draftController.getDraftContext().getODataDraftFunctionImportName(element, "ActivationAction");
 								if (checkImport !== null) {
-									const activationPromise = this._draftController.activateDraftEntity(element, true);
+									const activationPromise = this.draftController.activateDraftEntity(element, true);
 									activateActionsPromises.push(activationPromise);
 								}
 							} catch (error) {
@@ -363,7 +364,7 @@ export default class ExcelUpload {
 	 */
 	onTempDownload() {
 		// create excel column list
-		let fieldMatchType = this._component.getFieldMatchType();
+		let fieldMatchType = this.component.getFieldMatchType();
 		var excelColumnList = [{}];
 		for (let [key, value] of Object.entries(this.typeLabelList)) {
 			if (fieldMatchType === "label") {
@@ -381,14 +382,14 @@ export default class ExcelUpload {
 		// set the file value
 		XLSX.utils.book_append_sheet(wb, ws, "Tabelle1");
 		// download the created excel file
-		XLSX.writeFile(wb, this._component.getExcelFileName());
+		XLSX.writeFile(wb, this.component.getExcelFileName());
 
 		MessageToast.show(this._geti18nText("downloadingTemplate"));
 	}
 
 	_checkIfODataIsV4() {
 		try {
-			if (this._context.getModel().getODataVersion() === "4.0") {
+			if (this.context.getModel().getODataVersion() === "4.0") {
 				return true;
 			}
 		} catch (error) {
@@ -405,13 +406,13 @@ export default class ExcelUpload {
 	}
 
 	_addToErrorsResults(errorResults) {
-		this._component.setErrorResults(this._component.getErrorResults().concat(errorResults));
+		this.component.setErrorResults(this.component.getErrorResults().concat(errorResults));
 	}
 
 	_checkMandatoryFields(data, errorArray) {
 		// error cases
-		if (this._component.getMandatoryFields()) {
-			for (const mandatoryField of this._component.getMandatoryFields()) {
+		if (this.component.getMandatoryFields()) {
+			for (const mandatoryField of this.component.getMandatoryFields()) {
 				const errorMessage = {
 					title: this._geti18nText("mandatoryFieldNotFilled", [this.typeLabelList[mandatoryField].label]),
 					counter: 0,
@@ -436,7 +437,7 @@ export default class ExcelUpload {
 	}
 
 	_getValueFromRow(row, label, type) {
-		const fieldMatchType = this._component.getFieldMatchType();
+		const fieldMatchType = this.component.getFieldMatchType();
 		let value;
 		if (fieldMatchType === "label") {
 			value = row[label];
@@ -451,14 +452,37 @@ export default class ExcelUpload {
 		return value;
 	}
 
-	_geti18nText(text, array) {
-		return this._componentI18n.getResourceBundle().getText(text, array);
+	_geti18nText(text: string, array?: any):string {
+		const resourceBundle = this.componentI18n.getResourceBundle() as ResourceBundle;
+		return resourceBundle.getText(text, array);
 	}
 
-	_getActionName(oContext, sOperation) {
+	_getActionName(oContext: any, sOperation:string) {
 		var oModel = oContext.getModel(),
 			oMetaModel = oModel.getMetaModel(),
 			sEntitySetPath = oMetaModel.getMetaPath(oContext.getPath());
 		return oMetaModel.getObject("".concat(sEntitySetPath, "@com.sap.vocabularies.Common.v1.DraftRoot/").concat(sOperation));
+	}
+
+	async buffer_RS(stream: ReadableStream) {
+		/* collect data */
+		const buffers = [];
+		const reader = stream.getReader();
+		for (;;) {
+			const res = await reader.read();
+			if (res.value) buffers.push(res.value);
+			if (res.done) break;
+		}
+
+		/* concat */
+		const out = new Uint8Array(buffers.reduce((acc, v) => acc + v.length, 0));
+
+		let off = 0;
+		for (const u8 of buffers) {
+			out.set(u8, off);
+			off += u8.length;
+		}
+
+		return out;
 	}
 }
