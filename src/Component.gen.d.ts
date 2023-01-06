@@ -3,70 +3,72 @@ import { PropertyBindingInfo } from "sap/ui/base/ManagedObject";
 import { $UIComponentSettings } from "sap/ui/core/UIComponent";
 
 declare module "./Component" {
-	/**
-	 * Interface defining the settings object used in constructor calls
-	 */
-	interface $ComponentSettings extends $UIComponentSettings {
-		excelFileName?: string | PropertyBindingInfo;
-		context?: object | PropertyBindingInfo | `{${string}}`;
-		columns?: string[] | PropertyBindingInfo | `{${string}}`;
-		tableId?: string | PropertyBindingInfo;
-		odataType?: string | PropertyBindingInfo;
-		mandatoryFields?: string[] | PropertyBindingInfo | `{${string}}`;
-		errorResults?: object | PropertyBindingInfo | `{${string}}`;
-		fieldMatchType?: string | PropertyBindingInfo;
-		activateDraft?: boolean | PropertyBindingInfo | `{${string}}`;
-		checkBeforeRead?: (event: Event) => void;
-		changeBeforeCreate?: (event: Event) => void;
-	}
 
-	export default interface Component {
-		// property: excelFileName
-		getExcelFileName(): string;
-		setExcelFileName(excelFileName: string): this;
+    /**
+     * Interface defining the settings object used in constructor calls
+     */
+    interface $ComponentSettings extends $UIComponentSettings {
+        excelFileName?: string | PropertyBindingInfo;
+        context?: object | PropertyBindingInfo | `{${string}}`;
+        columns?: string[] | PropertyBindingInfo | `{${string}}`;
+        tableId?: string | PropertyBindingInfo;
+        odataType?: string | PropertyBindingInfo;
+        mandatoryFields?: string[] | PropertyBindingInfo | `{${string}}`;
+        errorResults?: object | PropertyBindingInfo | `{${string}}`;
+        fieldMatchType?: string | PropertyBindingInfo;
+        activateDraft?: boolean | PropertyBindingInfo | `{${string}}`;
+        checkBeforeRead?: (event: Event) => void;
+        changeBeforeCreate?: (event: Event) => void;
+    }
 
-		// property: context
-		getContext(): object;
-		setContext(context: object): this;
+    export default interface Component {
 
-		// property: columns
-		getColumns(): string[];
-		setColumns(columns: string[]): this;
+        // property: excelFileName
+        getExcelFileName(): string;
+        setExcelFileName(excelFileName: string): this;
 
-		// property: tableId
-		getTableId(): string;
-		setTableId(tableId: string): this;
+        // property: context
+        getContext(): object;
+        setContext(context: object): this;
 
-		// property: odataType
-		getOdataType(): string;
-		setOdataType(odataType: string): this;
+        // property: columns
+        getColumns(): string[];
+        setColumns(columns: string[]): this;
 
-		// property: mandatoryFields
-		getMandatoryFields(): string[];
-		setMandatoryFields(mandatoryFields: string[]): this;
+        // property: tableId
+        getTableId(): string;
+        setTableId(tableId: string): this;
 
-		// property: errorResults
-		getErrorResults(): object;
-		setErrorResults(errorResults: object): this;
+        // property: odataType
+        getOdataType(): string;
+        setOdataType(odataType: string): this;
 
-		// property: fieldMatchType
-		getFieldMatchType(): string;
-		setFieldMatchType(fieldMatchType: string): this;
+        // property: mandatoryFields
+        getMandatoryFields(): string[];
+        setMandatoryFields(mandatoryFields: string[]): this;
 
-		// property: activateDraft
-		getActivateDraft(): boolean;
-		setActivateDraft(activateDraft: boolean): this;
+        // property: errorResults
+        getErrorResults(): object;
+        setErrorResults(errorResults: object): this;
 
-		// event: checkBeforeRead
-		attachCheckBeforeRead(fn: (event: Event) => void, listener?: object): this;
-		attachCheckBeforeRead<CustomDataType extends object>(data: CustomDataType, fn: (event: Event, data: CustomDataType) => void, listener?: object): this;
-		detachCheckBeforeRead(fn: (event: Event) => void, listener?: object): this;
-		fireCheckBeforeRead(parameters?: object): this;
+        // property: fieldMatchType
+        getFieldMatchType(): string;
+        setFieldMatchType(fieldMatchType: string): this;
 
-		// event: changeBeforeCreate
-		attachChangeBeforeCreate(fn: (event: Event) => void, listener?: object): this;
-		attachChangeBeforeCreate<CustomDataType extends object>(data: CustomDataType, fn: (event: Event, data: CustomDataType) => void, listener?: object): this;
-		detachChangeBeforeCreate(fn: (event: Event) => void, listener?: object): this;
-		fireChangeBeforeCreate(parameters?: object): this;
-	}
+        // property: activateDraft
+        getActivateDraft(): boolean;
+        setActivateDraft(activateDraft: boolean): this;
+
+        // event: checkBeforeRead
+        attachCheckBeforeRead(fn: (event: Event) => void, listener?: object): this;
+        attachCheckBeforeRead<CustomDataType extends object>(data: CustomDataType, fn: (event: Event, data: CustomDataType) => void, listener?: object): this;
+        detachCheckBeforeRead(fn: (event: Event) => void, listener?: object): this;
+        fireCheckBeforeRead(parameters?: object): this;
+
+        // event: changeBeforeCreate
+        attachChangeBeforeCreate(fn: (event: Event) => void, listener?: object): this;
+        attachChangeBeforeCreate<CustomDataType extends object>(data: CustomDataType, fn: (event: Event, data: CustomDataType) => void, listener?: object): this;
+        detachChangeBeforeCreate(fn: (event: Event) => void, listener?: object): this;
+        fireChangeBeforeCreate(parameters?: object): this;
+    }
 }

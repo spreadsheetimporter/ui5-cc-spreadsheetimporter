@@ -8,11 +8,3 @@ builder:
       afterTask: replaceCopyright
       configuration:
         addToNamespace: true
----
-specVersion: "2.6"
-kind: extension
-type: task
-metadata:
-  name: createBundle
-task:
-  path: node_modules/ui5-tooling-modules/lib/task.js
