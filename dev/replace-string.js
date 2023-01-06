@@ -50,7 +50,7 @@ function replaceYamlFile(versionSlash) {
 }
 
 function replaceWebappFolder(version, versionSlash) {
-	copyDirectorySync("src", "webapp");
+	// copyDirectorySync("src", "webapp");
 	fs.copyFileSync("webapp/i18n/i18n_en.properties", "webapp/i18n/i18n.properties");
 	const options = {
 		files: ["**/webapp/**"],

@@ -22,16 +22,16 @@ jobs:
       - name: checkout excelUpload Repo
         uses: actions/checkout@v3
 
+      - name: use pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7.17.1
+
       - name: use node 16
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: "npm"
-          cache-dependency-path: "**/package-lock.json"
-
-      - name: install pnpm
-        run: |
-          npm install -g pnpm
+          cache: "pnpm"
 
       # we need this for workspace mgmt
       - name: check npm version >= 7
@@ -42,10 +42,12 @@ jobs:
           npm i -g npm@latest
           npm --version
 
-      - name: setup excelUpload control
+      - name: pnpm install
         run: |
           pnpm install
-          npm run build
+
+      - name: Run Build
+        run: npm run build
 
       # update chromedriver
       - name: update chromedriver to latest
