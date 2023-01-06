@@ -78,8 +78,8 @@ export default class MetadataHandler {
 		let entityTypeLabel;
 
 		// get the property list of the entity for which we need to download the template
-		var annotations = this.excelUploadController._context.getModel().getMetaModel().getData()["$Annotations"];
-		const properties = this.excelUploadController._context.getModel().getMetaModel().getData()[this.excelUploadController.component.getOdataType()];
+		var annotations = this.excelUploadController.context.getModel().getMetaModel().getData()["$Annotations"];
+		const properties = this.excelUploadController.context.getModel().getMetaModel().getData()[this.excelUploadController.component.getOdataType()];
 		// try get facet label
 		try {
 			entityTypeLabel = annotations[this.excelUploadController.component.getOdataType()]["@com.sap.vocabularies.UI.v1.Facets"][0].Label;

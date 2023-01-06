@@ -28,7 +28,7 @@ export default class ExcelUpload {
 	private typeLabelList: ListObject;
 	private dialog: Dialog;
 	private errorDialog: Dialog;
-	private componentI18n : ResourceModel;
+	private componentI18n: ResourceModel;
 
 	constructor(component: Component, componentI18n: ResourceModel) {
 		this._excelSheetsData = [];
@@ -130,55 +130,56 @@ export default class ExcelUpload {
 	async openExcelUploadDialog() {
 		this._excelSheetsData = [];
 		if (!this.dialog || this.dialog.isDestroyed()) {
-			this.dialog = await Fragment.load({
+			this.dialog = (await Fragment.load({
 				name: "cc.excelUpload.XXXnamespaceXXX.fragment.ExcelUpload",
 				type: "XML",
 				controller: this,
-			}) as Dialog;
+			})) as Dialog;
 			this.dialog.setModel(this.componentI18n, "i18n");
 		}
 		this.dialog.open();
 	}
 
 	async onFileUpload(oEvent: Event) {
-		var excelSheetsData = [];
-		const stream:ReadableStream = oEvent.getParameter("files")[0].stream();
-		const data = await this.buffer_RS(stream);
-		const workbook = XLSX.read(data);
-		this.component.setErrorResults([]);
-		// reading all sheets
-		workbook.SheetNames.forEach(function (sheetName) {
-			// appending the excel file data to the global variable
-			excelSheetsData.push(XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]));
-		});
-		// use only first sheet
-		var firstSheet = excelSheetsData[0];
-		//remove empty spaces before and after every value
-		for (const object of firstSheet) {
-			for (const key in object) {
-				object[key] = typeof object[key] === "string" ? object[key].trim() : object[key];
-			}
-		}
-		// check if data is ok in extension method
-		this._checkMandatoryFields(firstSheet, this.component.getErrorResults());
-		this.component.fireCheckBeforeRead({ sheetData: firstSheet });
-		if (this.component.getErrorResults().some((error) => error.counter > 0)) {
-			// error found in excel
-			// remove those errors not found
-			const errorArray = this.component.getErrorResults().filter((error) => error.counter !== 0);
-			throw errorArray;
-		}
-
-		// Wait for all promises to be resolved
 		try {
+			var excelSheetsData = [];
+			const stream: ReadableStream = oEvent.getParameter("files")[0].stream();
+			const data = await this.buffer_RS(stream);
+			const workbook = XLSX.read(data);
+			this.component.setErrorResults([]);
+			// reading all sheets
+			workbook.SheetNames.forEach(function (sheetName) {
+				// appending the excel file data to the global variable
+				excelSheetsData.push(XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]));
+			});
+			// use only first sheet
+			var firstSheet = excelSheetsData[0];
+			//remove empty spaces before and after every value
+			for (const object of firstSheet) {
+				for (const key in object) {
+					object[key] = typeof object[key] === "string" ? object[key].trim() : object[key];
+				}
+			}
+			// check if data is ok in extension method
+			this._checkMandatoryFields(firstSheet, this.component.getErrorResults());
+			this.component.fireCheckBeforeRead({ sheetData: firstSheet });
+			if (this.component.getErrorResults().some((error) => error.counter > 0)) {
+				// error found in excel
+				// remove those errors not found
+				const errorArray = this.component.getErrorResults().filter((error) => error.counter !== 0);
+				throw errorArray;
+			}
+
+			// Wait for all promises to be resolved
+
 			this._excelSheetsData = firstSheet;
 			MessageToast.show(this._geti18nText("uploadSuccessful"));
 		} catch (error) {
-			this.errorDialog = await Fragment.load({
+			this.errorDialog = (await Fragment.load({
 				name: "cc.excelUpload.XXXnamespaceXXX.fragment.ErrorDialog",
 				type: "XML",
 				controller: this,
-			}) as Dialog;
+			})) as Dialog;
 			this.dialog.setModel(this.componentI18n, "i18n");
 			this.errorDialog.setModel(new JSONModel(), "errorData");
 			var fileUploader = this.dialog.getContent()[0];
@@ -452,12 +453,12 @@ export default class ExcelUpload {
 		return value;
 	}
 
-	_geti18nText(text: string, array?: any):string {
+	_geti18nText(text: string, array?: any): string {
 		const resourceBundle = this.componentI18n.getResourceBundle() as ResourceBundle;
 		return resourceBundle.getText(text, array);
 	}
 
-	_getActionName(oContext: any, sOperation:string) {
+	_getActionName(oContext: any, sOperation: string) {
 		var oModel = oContext.getModel(),
 			oMetaModel = oModel.getMetaModel(),
 			sEntitySetPath = oMetaModel.getMetaPath(oContext.getPath());
