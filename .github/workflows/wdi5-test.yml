@@ -23,11 +23,10 @@ jobs:
         uses: actions/checkout@v3
 
       - name: use node 16
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: "npm"
-          cache-dependency-path: "**/package-lock.json"
+          cache: "pnpm"
 
       - name: install pnpm
         run: |
@@ -47,7 +46,7 @@ jobs:
           pnpm install
 
       - name: Run Build
-        run:  npm run build
+        run: npm run build
 
       # update chromedriver
       - name: update chromedriver to latest
