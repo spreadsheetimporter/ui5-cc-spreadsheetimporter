@@ -69,6 +69,7 @@
     "ui5-task-stringreplacer": "^0.7.2",
     "replace-in-file": "^6.3.5",
     "babel-preset-transform-ui5": "^7.0.5",
+    "@ui5/ts-interface-generator": "0.5.4",
     "typescript": "4.9.4",
     "@typescript-eslint/eslint-plugin": "^5.48.0",
     "@typescript-eslint/parser": "^5.48.0",

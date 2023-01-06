@@ -16,6 +16,7 @@ importers:
       "@typescript-eslint/eslint-plugin": ^5.48.0
       "@typescript-eslint/parser": ^5.48.0
       "@ui5/cli": 3.0.0-rc.1
+      "@ui5/ts-interface-generator": 0.5.4
       babel-preset-transform-ui5: ^7.0.5
       chokidar: ^3.5.3
       conventional-changelog-cli: ^2.2.2
@@ -48,6 +49,7 @@ importers:
       "@typescript-eslint/eslint-plugin": 5.48.0_k73wpmdolxikpyqun3p36akaaq
       "@typescript-eslint/parser": 5.48.0_iukboom6ndih5an6iafl45j2fe
       "@ui5/cli": 3.0.0-rc.1
+      "@ui5/ts-interface-generator": 0.5.4
       babel-preset-transform-ui5: 7.0.5
       chokidar: 3.5.3
       conventional-changelog-cli: 2.2.2
@@ -2717,6 +2719,15 @@ packages:
       yesno: 0.4.0
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /@ui5/ts-interface-generator/0.5.4:
+    resolution: { integrity: sha512-ll1j/3lLVBmWKsYfz/CyAI3KOPThxjSAN/HVK+nR5QyZFIVQNIByoTlvl7BOQjeVJuis0+3fSr1zJRXUZZqmeg== }
+    hasBin: true
+    dependencies:
+      hjson: 3.2.2
+      loglevel: 1.8.1
+      yargs: 17.6.2
     dev: true
 
   /@wdio/cli/7.29.1:
@@ -6301,6 +6312,11 @@ packages:
 
   /he/1.2.0:
     resolution: { integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw== }
+    hasBin: true
+    dev: true
+
+  /hjson/3.2.2:
+    resolution: { integrity: sha512-MkUeB0cTIlppeSsndgESkfFD21T2nXPRaBStLtf3cAYA2bVEFdXlodZB0TukwZiobPD1Ksax5DK4RTZeaXCI3Q== }
     hasBin: true
     dev: true
 

@@ -1,6 +1,8 @@
 import { Columns, Property, ListObject, PropertyArray } from "../types";
 import ExcelUpload from "./ExcelUpload";
-
+/**
+ * @namespace cc.excelUpload.XXXnamespaceXXX
+ */
 export default class MetadataHandler {
 	private excelUploadController: ExcelUpload;
 
@@ -10,20 +12,20 @@ export default class MetadataHandler {
 
 	public createLabelListV2(colums: Columns): ListObject {
 		let listObject: ListObject = {};
-	
+
 		// get the property list of the entity for which we need to download the template
 		// binding.getModel().getMetaModel().getObject("/Orders")
 		const oDataEntityType = this.excelUploadController._oDataEntityType;
 		const properties: PropertyArray = oDataEntityType.property;
-		const entityTypeLabel:string = oDataEntityType["sap:label"];
-	
+		const entityTypeLabel: string = oDataEntityType["sap:label"];
+
 		// check if file name is not set
 		if (!this.excelUploadController._component.getExcelFileName() && entityTypeLabel) {
 			this.excelUploadController._component.setExcelFileName(`${entityTypeLabel}.xlsx`);
 		} else if (!this.excelUploadController._component.getExcelFileName() && !entityTypeLabel) {
 			this.excelUploadController._component.setExcelFileName(`Template.xlsx`);
 		}
-	
+
 		if (colums) {
 			for (const propertyName of colums) {
 				const property = properties.find((property: any) => property.name === propertyName);
@@ -54,25 +56,24 @@ export default class MetadataHandler {
 				}
 			}
 		}
-	
+
 		return listObject;
 	}
-	
 
-	_getLabelV2(oDataEntityType: { [x: string]: any; }, properties: any, property: { [x: string]: any; }, propertyName: string, options: any) {
+	_getLabelV2(oDataEntityType: { [x: string]: any }, properties: any, property: { [x: string]: any }, propertyName: string, options: any) {
 		if (property["sap:label"]) {
 			return property["sap:label"];
 		}
 		try {
 			const lineItemsAnnotations = oDataEntityType["com.sap.vocabularies.UI.v1.LineItem"];
-			return lineItemsAnnotations.find((dataField: { Value: { Path: any; }; }) => dataField.Value.Path === propertyName).Label.String;
+			return lineItemsAnnotations.find((dataField: { Value: { Path: any } }) => dataField.Value.Path === propertyName).Label.String;
 		} catch (error) {
 			console.debug(`${propertyName} not found as a LineItem Label`);
 		}
 		return propertyName;
 	}
 
-	_createLabelListV4(colums: Columns):ListObject {
+	_createLabelListV4(colums: Columns): ListObject {
 		let listObject: ListObject = {};
 		let entityTypeLabel;
 
@@ -126,13 +127,13 @@ export default class MetadataHandler {
 		return listObject;
 	}
 
-	_getLabelV4(annotations: { [x: string]: { [x: string]: any; }; }, properties: any, propertyName: string, propertyLabel: { [x: string]: any; }, options: any) {
+	_getLabelV4(annotations: { [x: string]: { [x: string]: any } }, properties: any, propertyName: string, propertyLabel: { [x: string]: any }, options: any) {
 		if (propertyLabel["@com.sap.vocabularies.Common.v1.Label"]) {
 			return propertyLabel["@com.sap.vocabularies.Common.v1.Label"];
 		}
 		try {
 			const lineItemsAnnotations = annotations[this.excelUploadController._component.getOdataType()]["@com.sap.vocabularies.UI.v1.LineItem"];
-			return lineItemsAnnotations.find((dataField: { Value: { $Path: any; }; }) => dataField.Value.$Path === propertyName).Label;
+			return lineItemsAnnotations.find((dataField: { Value: { $Path: any } }) => dataField.Value.$Path === propertyName).Label;
 		} catch (error) {
 			console.debug(`${propertyName} not found as a LineItem Label`);
 		}

@@ -5,7 +5,9 @@ import JSONModel from "sap/ui/model/json/JSONModel";
 import * as XLSX from "xlsx";
 import MetadataHandler from "./MetadataHandler";
 import DraftController from "sap/ui/generic/app/transaction/DraftController";
-
+/**
+ * @namespace cc.excelUpload.XXXnamespaceXXX
+ */
 export default class ExcelUpload {
 	public _oDataEntityType: any;
 
