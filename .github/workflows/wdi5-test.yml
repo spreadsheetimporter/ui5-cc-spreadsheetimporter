@@ -22,15 +22,14 @@ jobs:
       - name: checkout excelUpload Repo
         uses: actions/checkout@v3
 
+      - name: use pnpm
+        uses: pnpm/action-setup@v2
+
       - name: use node 16
         uses: actions/setup-node@v3
         with:
           node-version: 16
           cache: "pnpm"
-
-      - name: install pnpm
-        run: |
-          npm install -g pnpm
 
       # we need this for workspace mgmt
       - name: check npm version >= 7
