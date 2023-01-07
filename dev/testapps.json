@@ -1,27 +1,96 @@
 [
   {
     "rootAppName": "ordersv2fe",
+    "appTitel": "Orders V2 FE 108",
     "copyVersions": [
       {
         "version": "1.96.16",
-        "port": "8090"
+        "port": "8090",
+        "appTitel": "Orders V2 FE 96"
       },
       {
         "version": "1.84.31",
-        "port": "8091"
+        "port": "8091",
+        "appTitel": "Orders V2 FE 84"
+      },
+      {
+        "version": "1.71.53",
+        "port": "8092",
+        "appTitel": "Orders V2 FE 71"
+      }
+    ]
+  },
+  {
+    "rootAppName": "ordersv2fenondraft",
+    "appTitel": "Orders V2 FE ND 108",
+    "copyVersions": [
+      {
+        "version": "1.96.16",
+        "port": "8093",
+        "appTitel": "Orders V2 FE ND 96"
+      },
+      {
+        "version": "1.84.31",
+        "port": "8094",
+        "appTitel": "Orders V2 FE ND 84"
+      },
+      {
+        "version": "1.71.53",
+        "port": "8095",
+        "appTitel": "Orders V2 FE ND 71"
+      }
+    ]
+  },
+  {
+    "rootAppName": "ordersv2freestyle",
+    "appTitel": "Orders V2 FS 108",
+    "copyVersions": [
+      {
+        "version": "1.96.16",
+        "port": "8096",
+        "appTitel": "Orders V2 FS 96"
+      },
+      {
+        "version": "1.84.31",
+        "port": "8097",
+        "appTitel": "Orders V2 FS 84"
+      },
+      {
+        "version": "1.71.53",
+        "port": "8098",
+        "appTitel": "Orders V2 FS 71"
       }
     ]
   },
   {
     "rootAppName": "ordersv4fe",
+    "appTitel": "Orders V4 FE 108",
     "copyVersions": [
       {
         "version": "1.96.16",
-        "port": "8092"
+        "port": "8097",
+        "appTitel": "Orders V4 FE 96"
       },
       {
         "version": "1.84.31",
-        "port": "8093"
+        "port": "8098",
+        "appTitel": "Orders V4 FE 84"
+      },
+      {
+        "version": "1.71.53",
+        "port": "8099",
+        "appTitel": "Orders V4 FE 71"
+      }
+    ]
+  },
+  {
+    "rootAppName": "ordersv4fpm",
+    "appTitel": "Orders V4 FPM 108",
+    "copyVersions": [
+      {
+        "version": "1.96.16",
+        "port": "8100",
+        "appTitel": "Orders V4 FPM 96"
       }
     ]
   }

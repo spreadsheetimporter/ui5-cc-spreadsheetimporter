@@ -6,4 +6,17 @@ dist
 .DS_Store
 
 # test apps start
+/examples/packages/ordersv2fe96
+/examples/packages/ordersv2fe84
+/examples/packages/ordersv4fe96
+/examples/packages/ordersv4fe84
+/examples/packages/ordersv2fe71
+/examples/packages/ordersv2fenondraft96
+/examples/packages/ordersv2fenondraft84
+/examples/packages/ordersv2fenondraft71
+/examples/packages/ordersv2freestyle96
+/examples/packages/ordersv2freestyle84
+/examples/packages/ordersv2freestyle71
+/examples/packages/ordersv4fe71
+/examples/packages/ordersv4fpm96
 # test apps end

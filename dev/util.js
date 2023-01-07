@@ -1,7 +1,6 @@
 const replace = require("replace-in-file");
 const fs = require("fs");
 
-
 function copyDirectorySync(src, dest, excludedFolder) {
 	const files = fs.readdirSync(src);
 
@@ -45,7 +44,6 @@ function replaceWebappFolder(version, versionSlash) {
 
 // replace version in examples folder
 function replaceVersionInExamples(versionSlash, ui5Apps) {
-	
 	let manifests = [];
 	ui5Apps.forEach((app) => {
 		let path = "examples/packages/" + app + "/webapp/manifest.json";
@@ -63,39 +61,44 @@ function replaceVersionInExamples(versionSlash, ui5Apps) {
 }
 
 function deleteFolderRecursive(path) {
-    if (fs.existsSync(path)) {
-      fs.readdirSync(path).forEach((file) => {
-        const curPath = `${path}/${file}`;
-        if (fs.lstatSync(curPath).isDirectory()) {
-          // recurse
-          deleteFolderRecursive(curPath);
-        } else {
-          // delete file
-          fs.unlinkSync(curPath);
-        }
-      });
-      fs.rmdirSync(path);
-    }
-  }
-
-function getPackageJson(){
-    // Read the contents of the package.json file
-const packageJson = fs.readFileSync("package.json", "utf8");
-
-// Parse the JSON content
-return JSON.parse(packageJson);
-
+	if (fs.existsSync(path)) {
+		fs.readdirSync(path).forEach((file) => {
+			const curPath = `${path}/${file}`;
+			if (fs.lstatSync(curPath).isDirectory()) {
+				// recurse
+				deleteFolderRecursive(curPath);
+			} else {
+				// delete file
+				fs.unlinkSync(curPath);
+			}
+		});
+		fs.rmdirSync(path);
+	}
 }
 
-function getVersionDots(){
-const packageData = getPackageJson()
-// Get the version from the parsed data
-return `v${packageData.version}`;
+function getPackageJson() {
+	// Read the contents of the package.json file
+	const packageJson = fs.readFileSync("package.json", "utf8");
+
+	// Parse the JSON content
+	return JSON.parse(packageJson);
 }
 
-function getVersionSlash(){
-const version = getVersionDots()
-return version.replaceAll(".", "/");
+function getVersionDots() {
+	const packageData = getPackageJson();
+	// Get the version from the parsed data
+	return `v${packageData.version}`;
+}
+
+function getVersionSlash() {
+	const version = getVersionDots();
+	return version.replaceAll(".", "/");
+}
+function searchAndReplace(inputFile, search, replace) {
+	const file = fs.readFileSync(inputFile, "utf8");
+	let result = file.replace(search, replace);
+
+	fs.writeFileSync(inputFile, result, "utf8");
 }
 
 module.exports.getPackageJson = getPackageJson;
@@ -106,3 +109,4 @@ module.exports.replaceWebappFolder = replaceWebappFolder;
 module.exports.replaceYamlFile = replaceYamlFile;
 module.exports.copyDirectorySync = copyDirectorySync;
 module.exports.deleteFolderRecursive = deleteFolderRecursive;
+module.exports.searchAndReplace = searchAndReplace;

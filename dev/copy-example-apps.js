@@ -14,6 +14,8 @@ function testAppsAction(action) {
 		const rootApp = testAppData[index];
 		const rootAppPath = `./examples/packages/${rootApp.rootAppName}`;
 		const targetVersions = rootApp.copyVersions;
+		replaceInFile(rootAppPath +"/webapp/i18n/i18n.properties",rootApp.appTitel)
+		// change gitignore file before the copy action
 		for (let indey = 0; indey < targetVersions.length; indey++) {
 			const targetVersion = targetVersions[indey];
 			const versionName = rootApp.rootAppName + targetVersion.version.split(".")[1];
@@ -21,6 +23,7 @@ function testAppsAction(action) {
 			addToGitignore.push(versionPath);
 		}
 		updateGitIgnore(action, addToGitignore);
+		// copy root apps with different versions
 		for (let indey = 0; indey < targetVersions.length; indey++) {
 			const targetVersion = targetVersions[indey];
 			const versionName = rootApp.rootAppName + targetVersion.version.split(".")[1];
@@ -28,6 +31,7 @@ function testAppsAction(action) {
 			if (action === "create") {
 				util.deleteFolderRecursive(versionPath);
 				copyApps(rootAppPath, versionPath, targetVersion.version, targetVersion.port);
+				replaceInFile(versionPath +"/webapp/i18n/i18n.properties",targetVersion.appTitel)
 			}
 			if (action === "delete") {
 				util.deleteFolderRecursive(versionPath);
@@ -55,6 +59,16 @@ function copyApps(versionPathRoot, versionPathNew, version, port) {
 	packageJsonData["scripts"]["start"] = startScript;
 	packageJsonData = JSON.stringify(packageJsonData, null, 2);
 	fs.writeFileSync(pathPackageJson, packageJsonData, "utf8");
+	// replace i18n title
+	replaceInFile(`${versionPathNew}/webapp/i18n/i18n.properties`, 'appTitle=', 'appTitle=Test');
+	// replace theme to sap_fiori_3 in 1.71 and 1.84
+	if(version.split(".")[1] === "71" || version.split(".")[1] === "84"){
+		util.searchAndReplace(`${versionPathNew}/webapp/test/flpSandbox.html`,/sap_horizon/g,"sap_fiori_3")
+	}
+	// special script only for 1.71
+	if(version.split(".")[1] === "71"){
+		util.searchAndReplace(`${versionPathNew}/webapp/test/flpSandbox.html`,/<!-- only for 1.71 -->/g,`<script src="changes_preview.js"></script>`)
+	}
 }
 
 // Read the .gitignore file
@@ -72,7 +86,7 @@ function updateGitIgnore(action, testStrings) {
 		}
 	});
 	// Read the .gitignore file
-	fs.readFile(".gitignore", "utf8", (error, data) => {
+	fs.readFileSync(".gitignore", "utf8", (error, data) => {
 		if (error) {
 			console.error(error);
 			return;
@@ -128,3 +142,18 @@ function updateGitIgnore(action, testStrings) {
 		});
 	});
 }
+
+function replaceInFile(filePath, replaceValue) {
+
+    const i18n = fs.readFileSync(filePath, 'utf8')
+    // Use a regular expression to match the line with the search value
+    const regex = /^appTitle=.*/gm;
+    // Replace the matched line with the replace value
+    const result = i18n.replace(regex, (match) => {
+        return 'appTitle=' + replaceValue;
+    });
+    // Write the modified contents back to the file
+    fs.writeFileSync(filePath, result, 'utf8')
+}
+
+
