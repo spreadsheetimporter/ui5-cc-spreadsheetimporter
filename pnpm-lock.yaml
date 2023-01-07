@@ -112,6 +112,36 @@ importers:
       '@sap/ux-ui5-tooling': 1.8.4
       '@ui5/cli': 2.14.17
 
+  examples/packages/ordersv2fe84:
+    specifiers:
+      '@sap-ux/ui5-middleware-fe-mockserver': '2'
+      '@sap/ux-specification': UI5-1.108
+      '@sap/ux-ui5-tooling': '1'
+      '@ui5/cli': ^2.14.17
+      ui5-cc-excelupload: ./../../../
+    dependencies:
+      ui5-cc-excelupload: link:../../..
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver': 2.1.49
+      '@sap/ux-specification': 1.102.14
+      '@sap/ux-ui5-tooling': 1.8.4
+      '@ui5/cli': 2.14.17
+
+  examples/packages/ordersv2fe96:
+    specifiers:
+      '@sap-ux/ui5-middleware-fe-mockserver': '2'
+      '@sap/ux-specification': UI5-1.108
+      '@sap/ux-ui5-tooling': '1'
+      '@ui5/cli': ^2.14.17
+      ui5-cc-excelupload: ./../../../
+    dependencies:
+      ui5-cc-excelupload: link:../../..
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver': 2.1.49
+      '@sap/ux-specification': 1.102.14
+      '@sap/ux-ui5-tooling': 1.8.4
+      '@ui5/cli': 2.14.17
+
   examples/packages/ordersv2fenondraft:
     specifiers:
       '@sap-ux/ui5-middleware-fe-mockserver': '2'
@@ -141,6 +171,36 @@ importers:
       '@ui5/cli': 2.14.17
 
   examples/packages/ordersv4fe:
+    specifiers:
+      '@sap-ux/ui5-middleware-fe-mockserver': '2'
+      '@sap/ux-specification': UI5-1.108
+      '@sap/ux-ui5-tooling': '1'
+      '@ui5/cli': ^2.14.1
+      ui5-cc-excelupload: ./../../../
+    dependencies:
+      ui5-cc-excelupload: link:../../..
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver': 2.1.49
+      '@sap/ux-specification': 1.102.14
+      '@sap/ux-ui5-tooling': 1.8.4
+      '@ui5/cli': 2.14.17
+
+  examples/packages/ordersv4fe84:
+    specifiers:
+      '@sap-ux/ui5-middleware-fe-mockserver': '2'
+      '@sap/ux-specification': UI5-1.108
+      '@sap/ux-ui5-tooling': '1'
+      '@ui5/cli': ^2.14.1
+      ui5-cc-excelupload: ./../../../
+    dependencies:
+      ui5-cc-excelupload: link:../../..
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver': 2.1.49
+      '@sap/ux-specification': 1.102.14
+      '@sap/ux-ui5-tooling': 1.8.4
+      '@ui5/cli': 2.14.17
+
+  examples/packages/ordersv4fe96:
     specifiers:
       '@sap-ux/ui5-middleware-fe-mockserver': '2'
       '@sap/ux-specification': UI5-1.108

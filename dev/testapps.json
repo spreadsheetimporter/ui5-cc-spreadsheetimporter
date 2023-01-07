@@ -1,0 +1,28 @@
+[
+  {
+    "rootAppName": "ordersv2fe",
+    "copyVersions": [
+      {
+        "version": "1.96.16",
+        "port": "8090"
+      },
+      {
+        "version": "1.84.31",
+        "port": "8091"
+      }
+    ]
+  },
+  {
+    "rootAppName": "ordersv4fe",
+    "copyVersions": [
+      {
+        "version": "1.96.16",
+        "port": "8092"
+      },
+      {
+        "version": "1.84.31",
+        "port": "8093"
+      }
+    ]
+  }
+]

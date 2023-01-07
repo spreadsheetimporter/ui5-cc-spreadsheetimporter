@@ -45,7 +45,9 @@
     "replaceString": "node ./dev/replace-string.js",
     "build:watch": "node ./dev/chokidar.js",
     "setupExamplespnpm": "cd examples && pnpm install",
-    "updateChromedriver": "cd examples && pnpm add chromedriver@latest --save-dev -w"
+    "updateChromedriver": "cd examples && pnpm add chromedriver@latest --save-dev -w",
+    "copyTestApps": "node ./dev/copy-example-apps.js create",
+    "deleteTestApps": "node ./dev/copy-example-apps.js  delete"
   },
   "dependencies": {
     "xlsx": "^0.18.5"
