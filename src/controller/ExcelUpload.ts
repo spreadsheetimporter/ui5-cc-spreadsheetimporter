@@ -29,10 +29,12 @@ export default class ExcelUpload {
 	private dialog: Dialog;
 	private errorDialog: Dialog;
 	private componentI18n: ResourceModel;
+	private UI5MinorVersion: number;
 
 	constructor(component: Component, componentI18n: ResourceModel) {
 		this._excelSheetsData = [];
 		this.dialog = null;
+		this.UI5MinorVersion = sap.ui.version.split(".")[1];
 		this.component = component;
 		this.component.setErrorResults([]);
 		this.componentI18n = componentI18n;
@@ -302,9 +304,21 @@ export default class ExcelUpload {
 					createContexts.push(context);
 					createPromises.push(context.created());
 				} else {
-					const context = binding.create(this._payload, /*bAtEnd*/ true, { inactive: false, expand: "" });
-					createContexts.push(context);
-					createPromises.push(context.created());
+					let context;
+					if (this.UI5MinorVersion >= 96 && this.UI5MinorVersion < 108) {
+						context = binding.create(this._payload);
+						createContexts.push(context);
+						createPromises.push(context.created());
+					}
+					if (this.UI5MinorVersion >= 108) {
+						context = binding.create(this._payload, /*bAtEnd*/ true, { inactive: false, expand: "" });
+						createContexts.push(context);
+						createPromises.push(context.created());
+					}
+					if (this.UI5MinorVersion < 96) {
+						context = binding.getModel().createEntry("/" + binding.oEntityType.name,{ properties:  this._payload });
+						console.log(context)
+					}
 				}
 			}
 			// wait for all drafts to be created
