@@ -42,10 +42,14 @@ jobs:
           npm i -g npm@latest
           npm --version
 
+      - name: pnpm install
+        run: |
+          pnpm install
+
       - name: copy test apps
         run: npm run copyTestApps
 
-      - name: pnpm install
+      - name: pnpm install for test apps
         run: |
           pnpm install
 
