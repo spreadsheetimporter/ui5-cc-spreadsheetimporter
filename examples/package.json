@@ -26,7 +26,9 @@
     "testv2108": "wdio run ./test/wdioV2108.conf.js",
     "testv2": "run-p testv2108 testv296 testv284",
     "testv4": "wdio run ./test/wdioV4.conf.js",
-    "testv2Headless": "wdio run ./test/wdioV2.conf.js --headless",
+    "testv2108Headless": "wdio run ./test/wdioV2108.conf.js --headless",
+    "testv296Headless": "wdio run ./test/wdioV296.conf.js --headless",
+    "testv284Headless": "wdio run ./test/wdioV284.conf.js --headless",
     "testv4Headless": "wdio run ./test/wdioV4.conf.js --headless"
   },
   "devDependencies": {

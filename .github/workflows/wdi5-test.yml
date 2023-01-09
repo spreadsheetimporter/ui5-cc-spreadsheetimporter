@@ -59,12 +59,41 @@ jobs:
           npm i -g @sap/cds-dk
 
       # run app
-      - name: run app
-        run: npm start&
+      - name: start cap server
+        run: npm run start:server&
+
+      - name: start test apps
+        run: |
+          npm run startv2&
+          npm run startv4&
 
       # run wdi5 tests
       - name: test wdi5 v2
-        run: npm run testv2Headless
+        run: npm run testv2108Headless
+
+      - name: kill CAP Server
+        run: |
+          pkill -f "@sap/cds-dk/bin/watch.js"
+
+      - name: start CAP Server
+        run: |
+          npm run start:server&
+
+      # run wdi5 tests
+      - name: test wdi5 v4
+        run: npm run testv296Headless
+      
+      - name: kill CAP Server
+        run: |
+          pkill -f "@sap/cds-dk/bin/watch.js"
+
+      - name: start CAP Server
+        run: |
+          npm run start:server&
+
+      # run wdi5 tests
+      - name: test wdi5 v4
+        run: npm run testv284Headless
 
       - name: kill CAP Server
         run: |
