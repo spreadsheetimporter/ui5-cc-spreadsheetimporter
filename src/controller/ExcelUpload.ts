@@ -12,6 +12,12 @@ import Dialog from "sap/m/Dialog";
 import Event from "sap/ui/base/Event";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import ResourceBundle from "sap/base/i18n/ResourceBundle";
+import OData from "./odata/OData";
+import ODataV2108 from "./odata/ODataV2108";
+import ODataV296 from "./odata/ODataV296";
+import ODataV284 from "./odata/ODataV284";
+import ODataV271 from "./odata/ODataV271";
+import ODataV4108 from "./odata/ODataV4108";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
@@ -30,6 +36,8 @@ export default class ExcelUpload {
 	private errorDialog: Dialog;
 	private componentI18n: ResourceModel;
 	private UI5MinorVersion: number;
+	private odataHandler: OData;
+	private payload: any;
 
 	constructor(component: Component, componentI18n: ResourceModel) {
 		this._excelSheetsData = [];
@@ -38,6 +46,7 @@ export default class ExcelUpload {
 		this.component = component;
 		this.component.setErrorResults([]);
 		this.componentI18n = componentI18n;
+		this.odataHandler = this.getODataHandler(this.UI5MinorVersion)
 		this.metadataHandler = new MetadataHandler(this);
 		this.setContext();
 	}
@@ -129,9 +138,24 @@ export default class ExcelUpload {
 		this.typeLabelList = this.metadataHandler.createLabelListV2(this.component.getColumns());
 	}
 
+	getODataHandler(version: number): OData {
+		if(this.isODataV4){
+			return new ODataV4108(version)
+		}
+		if (version >= 108) {
+			return new ODataV2108(version);
+		} else if (version < 108 && version >= 96) {
+			return new ODataV296(version);
+		} else if (version < 96 && version >= 84) {
+			return new ODataV284(version);
+		} else if (version < 84) {
+			return new ODataV271(version);
+		}
+	}
+
 	async openExcelUploadDialog() {
 		this._excelSheetsData = [];
-		if (!this.dialog || this.dialog.isDestroyed()) {
+		if (!this.dialog){ // TODO: check if needed from 1.93 || this.dialog.isDestroyed()) {
 			this.dialog = (await Fragment.load({
 				name: "cc.excelUpload.XXXnamespaceXXX.fragment.ExcelUpload",
 				type: "XML",
@@ -296,28 +320,40 @@ export default class ExcelUpload {
 					}
 				}
 
-				this._payload = payload;
+				this.payload = payload;
 				// extension method to manipulate payload
-				this.component.fireChangeBeforeCreate({ payload: this._payload });
+				this.component.fireChangeBeforeCreate({ payload: this.payload });
 				if (this.isODataV4) {
-					const context = binding.create(this._payload);
-					createContexts.push(context);
-					createPromises.push(context.created());
+					const returnObject = this.odataHandler.create(model,binding,this.payload)
+					createContexts.push(returnObject.context)
+					createPromises.push(returnObject.promise);
+					// const context = binding.create(this.payload);
+					// createContexts.push(context);
+					// createPromises.push(context.created());
 				} else {
 					let context;
-					if (this.UI5MinorVersion >= 96 && this.UI5MinorVersion < 108) {
-						context = binding.create(this._payload);
-						createContexts.push(context);
-						createPromises.push(context.created());
-					}
 					if (this.UI5MinorVersion >= 108) {
-						context = binding.create(this._payload, /*bAtEnd*/ true, { inactive: false, expand: "" });
-						createContexts.push(context);
-						createPromises.push(context.created());
+						const returnObject = this.odataHandler.create(model,binding,this.payload)
+						createContexts.push(returnObject.context)
+						createPromises.push(returnObject.promise)
+						// context = binding.create(this.payload, /*bAtEnd*/ true, { inactive: false, expand: "" });
+						// createContexts.push(context);
+						// createPromises.push(context.created());
+					}
+					if (this.UI5MinorVersion >= 96 && this.UI5MinorVersion < 108) {
+						const returnObject = this.odataHandler.create(model,binding,this.payload)
+						createContexts.push(returnObject.context)
+						createPromises.push(returnObject.promise)
+						// context = binding.create(this.payload);
+						// createContexts.push(context);
+						// createPromises.push(context.created());
 					}
 					if (this.UI5MinorVersion < 96) {
-						context = binding.getModel().createEntry("/" + binding.oEntityType.name,{ properties:  this._payload });
-						console.log(context)
+						const returnObject = this.odataHandler.create(model,binding,this.payload)
+						createContexts.push(returnObject.context)
+						// createPromises.push(returnObject.promise)
+						// context = binding.getModel().createEntry("/" + binding.oEntityType.name, { properties: this.payload });
+						// console.log(context);
 					}
 				}
 			}
@@ -417,7 +453,7 @@ export default class ExcelUpload {
 	}
 
 	_setPayload(payload) {
-		this._payload = payload;
+		this.payload = payload;
 	}
 
 	_addToErrorsResults(errorResults) {

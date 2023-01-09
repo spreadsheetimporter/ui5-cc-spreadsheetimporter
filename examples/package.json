@@ -21,7 +21,10 @@
     "start:uiv2freestyle": "pnpm --filter ordersv2freestyle start",
     "start:uiv4fpm": "pnpm --filter ordersv4fpm start",
     "watch:server": "pnpm --filter @capire/orders watch",
-    "testv2": "wdio run ./test/wdioV2.conf.js",
+    "testv296": "wdio run ./test/wdioV296.conf.js",
+    "testv284": "wdio run ./test/wdioV284.conf.js",
+    "testv2108": "wdio run ./test/wdioV2108.conf.js",
+    "testv2": "run-p testv2108 testv296 testv284",
     "testv4": "wdio run ./test/wdioV4.conf.js",
     "testv2Headless": "wdio run ./test/wdioV2.conf.js --headless",
     "testv4Headless": "wdio run ./test/wdioV4.conf.js --headless"
