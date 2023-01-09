@@ -64,11 +64,11 @@ jobs:
 
       - name: start test apps
         run: |
-          npm run startv2&
+          npm run startv2fe&
           npm run startv4&
 
       # run wdi5 tests
-      - name: test wdi5 v2
+      - name: test wdi5 v2 ui5 108
         run: npm run testv2108Headless
 
       - name: kill CAP Server
@@ -80,7 +80,7 @@ jobs:
           npm run start:server&
 
       # run wdi5 tests
-      - name: test wdi5 v4
+      - name: test wdi5 v2 ui5 96
         run: npm run testv296Headless
       
       - name: kill CAP Server
@@ -92,7 +92,7 @@ jobs:
           npm run start:server&
 
       # run wdi5 tests
-      - name: test wdi5 v4
+      - name: test wdi5 v2 ui5 84
         run: npm run testv284Headless
 
       - name: kill CAP Server

@@ -23,6 +23,8 @@
   "scripts": {
     "prepare": "chmod +x ./node_modules/husky/lib/bin.js && node ./.husky/skip.js || husky install",
     "start": "pnpm --filter ui5-cc-excelupload-sample start",
+    "startv2fe": "pnpm --filter ui5-cc-excelupload-sample start:uiv2fe",
+    "startv4": "pnpm --filter ui5-cc-excelupload-sample start:uiv4fe",
     "testv2": "pnpm --filter ui5-cc-excelupload-sample testv2",
     "testv4": "pnpm --filter ui5-cc-excelupload-sample testv4",
     "start:server": "pnpm --filter ui5-cc-excelupload-sample watch:server",
