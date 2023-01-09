@@ -64,6 +64,7 @@ function copyApps(versionPathRoot, versionPathNew, version, port) {
 	// replace theme to sap_fiori_3 in 1.71 and 1.84
 	if(version.split(".")[1] === "71" || version.split(".")[1] === "84"){
 		util.searchAndReplace(`${versionPathNew}/webapp/test/flpSandbox.html`,/sap_horizon/g,"sap_fiori_3")
+		util.searchAndReplace(`${versionPathNew}/webapp/index.html`,/sap_horizon/g,"sap_fiori_3")
 	}
 	// special script only for 1.71
 	if(version.split(".")[1] === "71"){
