@@ -121,7 +121,7 @@ describe("Open Excel Upload dialog", () => {
 		// 	}
 		// });
 		// const value = await field.getText();
-		const field = $("#TEST123");
+		const field = $("#ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::OrderItems--com.sap.vocabularies.UI.v1.Identification::quantity::Field");
 		const fieldValue = field.getValue();
 		console.log(field);
 		console.log(fieldValue);
