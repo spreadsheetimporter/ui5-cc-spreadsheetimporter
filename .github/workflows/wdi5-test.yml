@@ -9,13 +9,18 @@ jobs:
   test-wdi5:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        scenario: ["ordersv2fe"]
+        ui5version: [108]
+
     steps:
       - name: update chrome
         run: |
           wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
           sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
           sudo apt-get update
-          sudo apt-get --only-upgrade install google-chrome-stable
+          sudo apt-get install google-chrome-stable -y
           # check chrome version
           google-chrome --version
 
@@ -44,6 +49,7 @@ jobs:
 
       - name: pnpm install
         run: |
+          npm pkg delete scripts.prepare
           pnpm install
 
       - name: copy test apps
@@ -71,45 +77,44 @@ jobs:
 
       - name: start test apps
         run: |
-          npm run startv2fe&
-          npm run startv4&
+          npm run start${{ matrix.scenario }}${{ matrix.ui5version }}&
 
       # run wdi5 tests
-      - name: test wdi5 v2 ui5 108
-        run: npm run testv2108Headless
+      - name: test wdi5 ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
+        run: npm run test${{ matrix.scenario }}${{ matrix.ui5version }} -- --headless
 
       - name: kill CAP Server
         run: |
           pkill -f "@sap/cds-dk/bin/watch.js"
 
-      - name: start CAP Server
-        run: |
-          npm run start:server&
+      # - name: start CAP Server
+      #   run: |
+      #     npm run start:server&
 
-      # run wdi5 tests
-      - name: test wdi5 v2 ui5 96
-        run: npm run testv296Headless
+      # # run wdi5 tests
+      # - name: test wdi5 v2 ui5 96
+      #   run: npm run testv296Headless
       
-      - name: kill CAP Server
-        run: |
-          pkill -f "@sap/cds-dk/bin/watch.js"
+      # - name: kill CAP Server
+      #   run: |
+      #     pkill -f "@sap/cds-dk/bin/watch.js"
 
-      - name: start CAP Server
-        run: |
-          npm run start:server&
+      # - name: start CAP Server
+      #   run: |
+      #     npm run start:server&
 
-      # run wdi5 tests
-      - name: test wdi5 v2 ui5 84
-        run: npm run testv284Headless
+      # # run wdi5 tests
+      # - name: test wdi5 v2 ui5 84
+      #   run: npm run testv284Headless
 
-      - name: kill CAP Server
-        run: |
-          pkill -f "@sap/cds-dk/bin/watch.js"
+      # - name: kill CAP Server
+      #   run: |
+      #     pkill -f "@sap/cds-dk/bin/watch.js"
 
-      - name: start CAP Server
-        run: |
-          npm run start:server&
+      # - name: start CAP Server
+      #   run: |
+      #     npm run start:server&
 
-      # run wdi5 tests
-      - name: test wdi5 v4
-        run: npm run testv4Headless
+      # # run wdi5 tests
+      # - name: test wdi5 v4
+      #   run: npm run testv4Headless

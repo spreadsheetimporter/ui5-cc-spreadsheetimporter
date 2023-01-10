@@ -30,7 +30,7 @@ function testAppsAction(action) {
 			const versionPath = `./examples/packages/${versionName}`;
 			if (action === "create") {
 				util.deleteFolderRecursive(versionPath);
-				copyApps(rootAppPath, versionPath, targetVersion.version, targetVersion.port);
+				copyApps(rootAppPath, versionPath, targetVersion.version, targetVersion.port, versionName);
 				replaceInFile(versionPath +"/webapp/i18n/i18n.properties",targetVersion.appTitel)
 			}
 			if (action === "delete") {
@@ -39,7 +39,7 @@ function testAppsAction(action) {
 		}
 	}
 }
-function copyApps(versionPathRoot, versionPathNew, version, port) {
+function copyApps(versionPathRoot, versionPathNew, version, port, versionName) {
 	// create folder if
 	fs.mkdirSync(versionPathNew);
 	util.copyDirectorySync(versionPathRoot, versionPathNew, "node_modules");
@@ -57,6 +57,12 @@ function copyApps(versionPathRoot, versionPathNew, version, port) {
 	let startScript = packageJsonData["scripts"]["start"];
 	startScript = startScript.replace(/\b\d{1,4}\b/, port);
 	packageJsonData["scripts"]["start"] = startScript;
+	// replace port number in silent script
+	let startSilentScript = packageJsonData["scripts"]["start:silent"];
+	startSilentScript = startSilentScript.replace(/\b\d{1,4}\b/, port);
+	packageJsonData["scripts"]["start:silent"] = startSilentScript;
+	// change package.json name
+	packageJsonData["name"] = versionName;
 	packageJsonData = JSON.stringify(packageJsonData, null, 2);
 	fs.writeFileSync(pathPackageJson, packageJsonData, "utf8");
 	// replace i18n title
