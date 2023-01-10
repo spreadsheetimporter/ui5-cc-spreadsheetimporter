@@ -113,7 +113,7 @@ describe("Open Excel Upload dialog", () => {
 		$columnListItem = await columnListItem.getWebElement();
 		$columnListItem.click();
 		try {
-			await $("filtekuzfutkfk424214").waitForExist({ timeout: 1100 });
+			await $("filtekuzfutkfk424214").waitForExist({ timeout: 5000 });
 		} catch (error) {}
 	});
 
