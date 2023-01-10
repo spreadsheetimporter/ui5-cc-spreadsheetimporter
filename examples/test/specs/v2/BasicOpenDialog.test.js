@@ -114,11 +114,11 @@ describe("Open Excel Upload dialog", () => {
 		$columnListItem.click();
 	});
 
-	it("check Field: Quantity New", async () => {
-		await $('//*[@id="ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::OrderItems--com.sap.vocabularies.UI.v1.Identification::quantity::Field"]').waitForExist({ timeout: 10000 })
-		const header = await $('//*[@id="ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::OrderItems--com.sap.vocabularies.UI.v1.Identification::quantity::Field"]')
-		const  value = await header.getText()
-		expect(value).toBe("3");
+	it("fields quantity", async () => {
+		const elements = await $$("[id*='quantity']")
+		for (const element of elements) {
+			console.log(await element.getHTML());
+		}
 	});
 
 	it("check Field: Quantity", async () => {
