@@ -81,46 +81,10 @@ jobs:
       - name: start cap server
         run: npm run start:server&
 
-      - name: start test apps
+      - name: start app ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
         run: |
           npm run start${{ matrix.scenario }}${{ matrix.ui5version }}&
 
       # run wdi5 tests
       - name: test wdi5 ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
         run: npm run test${{ matrix.scenario }}${{ matrix.ui5version }} -- --headless
-
-      - name: kill CAP Server
-        run: |
-          pkill -f "@sap/cds-dk/bin/watch.js"
-
-      # - name: start CAP Server
-      #   run: |
-      #     npm run start:server&
-
-      # # run wdi5 tests
-      # - name: test wdi5 v2 ui5 96
-      #   run: npm run testv296Headless
-      
-      # - name: kill CAP Server
-      #   run: |
-      #     pkill -f "@sap/cds-dk/bin/watch.js"
-
-      # - name: start CAP Server
-      #   run: |
-      #     npm run start:server&
-
-      # # run wdi5 tests
-      # - name: test wdi5 v2 ui5 84
-      #   run: npm run testv284Headless
-
-      # - name: kill CAP Server
-      #   run: |
-      #     pkill -f "@sap/cds-dk/bin/watch.js"
-
-      # - name: start CAP Server
-      #   run: |
-      #     npm run start:server&
-
-      # # run wdi5 tests
-      # - name: test wdi5 v4
-      #   run: npm run testv4Headless
