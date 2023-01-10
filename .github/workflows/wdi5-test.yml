@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         scenario: ["ordersv2fe"]
-        ui5version: [108]
+        ui5version: [108,96,84]
 
     steps:
       - name: update chrome
@@ -20,7 +20,7 @@ jobs:
           wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
           sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
           sudo apt-get update
-          sudo apt-get install google-chrome-stable -y
+          sudo apt-get --only-upgrade install google-chrome-stable
           # check chrome version
           google-chrome --version
 
