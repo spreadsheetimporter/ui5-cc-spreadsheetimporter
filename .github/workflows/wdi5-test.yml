@@ -16,9 +16,9 @@ jobs:
         ui5version: [108,96,84]
         exclude:
           - scenario: ordersv4fe
-            version: 96
+            ui5version: 96
           - scenario: ordersv4fe
-            version: 84
+            ui5version: 84
 
     steps:
       - name: update chrome
