@@ -8,12 +8,17 @@ on:
 jobs:
   test-wdi5:
     runs-on: ubuntu-latest
-    continue-on-error: true
     
     strategy:
+      fail-fast: false
       matrix:
-        scenario: ["ordersv2fe"]
+        scenario: ["ordersv2fe","ordersv4fe"]
         ui5version: [108,96,84]
+        exclude:
+          - scenario: ordersv4fe
+            version: 96
+          - scenario: ordersv4fe
+            version: 84
 
     steps:
       - name: update chrome

@@ -38,6 +38,8 @@
     "testordersv2fe96": "wait-on tcp:4004 && wait-on tcp:8090 && pnpm --filter ui5-cc-excelupload-sample testordersv2fe96",
     "startordersv2fe84": "pnpm --filter ordersv2fe84 start:silent",
     "testordersv2fe84": "wait-on tcp:4004 && wait-on tcp:8091 && pnpm --filter ui5-cc-excelupload-sample testordersv2fe84",
+    "startordersv4fe108": "pnpm --filter ordersv4fe108 start:silent",
+    "testordersv4fe108": "wait-on tcp:4004 && wait-on tcp:8080 && pnpm --filter ui5-cc-excelupload-sample testordersv4fe108",
     "lint": "eslint .",
     "lint:staged": "lint-staged",
     "lint:commit": "commitlint -e",
