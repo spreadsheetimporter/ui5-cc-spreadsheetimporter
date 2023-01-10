@@ -112,9 +112,13 @@ describe("Open Excel Upload dialog", () => {
 		columnListItem = await smartToggle.getParent();
 		$columnListItem = await columnListItem.getWebElement();
 		$columnListItem.click();
-		try {
-			await $("filtekuzfutkfk424214").waitForExist({ timeout: 5000 });
-		} catch (error) {}
+	});
+
+	it("check Field: Quantity New", async () => {
+		await $('//*[@id="ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::OrderItems--com.sap.vocabularies.UI.v1.Identification::quantity::Field"]').waitForExist({ timeout: 10000 })
+		const header = await $('//*[@id="ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::OrderItems--com.sap.vocabularies.UI.v1.Identification::quantity::Field"]')
+		const  value = await header.getText()
+		expect(value).toBe("3");
 	});
 
 	it("check Field: Quantity", async () => {
@@ -124,6 +128,7 @@ describe("Open Excel Upload dialog", () => {
 			}
 		});
 		const value = await field.getText();
+		expect(value).toBe("3");
 	});
 
 	it("check Field: Product", async () => {
