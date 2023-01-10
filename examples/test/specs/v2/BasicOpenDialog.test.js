@@ -112,6 +112,9 @@ describe("Open Excel Upload dialog", () => {
 		// columnListItem = await smartToggle.getParent();
 		// $columnListItem = await columnListItem.getWebElement();
 		// $columnListItem.click();
+		try {
+			await $("filtekuzfutkfk424214").waitForExist({ timeout: 1000 });
+		} catch (error) {}
 		const table = await browser.asControl({
 
 			selector: {
@@ -136,13 +139,6 @@ describe("Open Excel Upload dialog", () => {
 		}
 		
 
-	});
-
-	it("fields quantity", async () => {
-		const elements = await $$("[id*='quantity']")
-		for (const element of elements) {
-			console.log(await element.getHTML());
-		}
 	});
 
 	it("check Field: Quantity", async () => {
