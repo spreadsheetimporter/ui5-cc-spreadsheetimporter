@@ -35,7 +35,7 @@
     "startordersv2fe108": "pnpm --filter ordersv2fe108 start:silent",
     "testordersv2fe108": "wait-on tcp:4004 && wait-on tcp:8081 && pnpm --filter ui5-cc-excelupload-sample testordersv2fe108",
     "startordersv2fe96": "pnpm --filter ordersv2fe96 start:silent",
-    "testordersv2fe96": "wait-on tcp:4004 && wait-on tcp:8093 && pnpm --filter ui5-cc-excelupload-sample testordersv2fe96",
+    "testordersv2fe96": "wait-on tcp:4004 && wait-on tcp:8090 && pnpm --filter ui5-cc-excelupload-sample testordersv2fe96",
     "startordersv2fe84": "pnpm --filter ordersv2fe84 start:silent",
     "testordersv2fe84": "wait-on tcp:4004 && wait-on tcp:8091 && pnpm --filter ui5-cc-excelupload-sample testordersv2fe84",
     "lint": "eslint .",
