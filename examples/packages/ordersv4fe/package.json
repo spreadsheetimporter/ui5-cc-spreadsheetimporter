@@ -1,5 +1,5 @@
 {
-  "name": "ordersv4fe",
+  "name": "ordersv4fe108",
   "version": "0.0.1",
   "private": true,
   "description": "",
@@ -20,6 +20,7 @@
   },
   "scripts": {
     "start": "fiori run -p 8080 --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false&sap-language=EN#uiv4ordersv4fe-tile\"",
+    "start:silent": "fiori run -p 8080",
     "start-local": "fiori run --config ./ui5-local.yaml --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#uiv4ordersv4fe-tile\"",
     "build": "ui5 build --config=ui5.yaml --all --clean-dest --dest dist",
     "deploy": "fiori verify",

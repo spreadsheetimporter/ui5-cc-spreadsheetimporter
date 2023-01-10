@@ -8,6 +8,17 @@ on:
 jobs:
   test-wdi5:
     runs-on: ubuntu-latest
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        scenario: ["ordersv2fe","ordersv4fe"]
+        ui5version: [108,96,84]
+        exclude:
+          - scenario: ordersv4fe
+            ui5version: 96
+          - scenario: ordersv4fe
+            ui5version: 84
 
     steps:
       - name: update chrome
@@ -44,6 +55,14 @@ jobs:
 
       - name: pnpm install
         run: |
+          npm pkg delete scripts.prepare
+          pnpm install
+
+      - name: copy test apps
+        run: npm run copyTestApps
+
+      - name: pnpm install for test apps
+        run: |
           pnpm install
 
       - name: Run Build
@@ -59,21 +78,13 @@ jobs:
           npm i -g @sap/cds-dk
 
       # run app
-      - name: run app
-        run: npm start&
+      - name: start cap server
+        run: npm run start:server&
+
+      - name: start app ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
+        run: |
+          npm run start${{ matrix.scenario }}${{ matrix.ui5version }}&
 
       # run wdi5 tests
-      - name: test wdi5 v2
-        run: npm run testv2Headless
-
-      - name: kill CAP Server
-        run: |
-          pkill -f "@sap/cds-dk/bin/watch.js"
-
-      - name: start CAP Server
-        run: |
-          npm run start:server&
-
-      # run wdi5 tests
-      - name: test wdi5 v4
-        run: npm run testv4Headless
+      - name: test wdi5 ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
+        run: npm run test${{ matrix.scenario }}${{ matrix.ui5version }} -- --headless

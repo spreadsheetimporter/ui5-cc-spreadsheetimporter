@@ -98,20 +98,47 @@ describe("Open Excel Upload dialog", () => {
 	});
 
 	it("go to Sub Detail Page", async () => {
-		const text = await browser.asControl({
-			forceSelect: true,
+		// const text = await browser.asControl({
+		// 	forceSelect: true,
+		// 	selector: {
+		// 		controlType: "sap.m.Text",
+		// 		viewId: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders",
+		// 		properties: {
+		// 			text: "254"
+		// 		}
+		// 	}
+		// });
+		// smartToggle = await text.getParent();
+		// columnListItem = await smartToggle.getParent();
+		// $columnListItem = await columnListItem.getWebElement();
+		// $columnListItem.click();
+		try {
+			await $("filtekuzfutkfk424214").waitForExist({ timeout: 1000 });
+		} catch (error) {}
+		const table = await browser.asControl({
+
 			selector: {
-				controlType: "sap.m.Text",
+				controlType: "sap.m.Table",
 				viewId: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders",
-				properties: {
-					text: "254"
-				}
+				interaction: "root"
 			}
 		});
-		smartToggle = await text.getParent();
-		columnListItem = await smartToggle.getParent();
-		$columnListItem = await columnListItem.getWebElement();
-		$columnListItem.click();
+		const metadata = await table.getMetadata()
+		const items = await table.getItems()
+		for (let index = 0; index < items.length; index++) {
+			const element = items[index];
+			const binding = await element.getBindingContext()
+			const object = await binding.getObject()
+			if(object.product_ID === "254"){
+				const $element = await element.getWebElement();
+				$element.click()
+				break
+			}
+			console.log(object)
+			
+		}
+		
+
 	});
 
 	it("check Field: Quantity", async () => {
