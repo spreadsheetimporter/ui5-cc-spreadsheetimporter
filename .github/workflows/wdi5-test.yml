@@ -55,8 +55,8 @@ jobs:
 
       - name: get port
         run: |
-          PORT=$(node ./dev/get-port.js ${{ matrix.scenario }} ${{ matrix.ui5version }})
-          echo "PORT=$PORT" >> $GITHUB_ENV
+          TESTAPPPORT=$(node ./dev/get-port.js ${{ matrix.scenario }} ${{ matrix.ui5version }})
+          echo "TESTAPPPORT=$TESTAPPPORT" >> $GITHUB_ENV
 
       - name: pnpm install
         run: |
@@ -84,7 +84,8 @@ jobs:
 
       # run app
       - name: start cap server
-        run: npm run start:server&
+        run: |
+          npm run start:server&
 
       - name: start app ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
         run: |
@@ -94,5 +95,5 @@ jobs:
       - name: test wdi5 ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
         run: |
           while ! nc -z localhost 4004; do sleep 0.1; done
-          while ! nc -z localhost ${{ env.PORT }}; do sleep 0.1; done
+          while ! nc -z localhost ${{ env.TESTAPPPORT }}; do sleep 0.1; done
           pnpm --filter ui5-cc-excelupload-sample test${{ matrix.scenario }}${{ matrix.ui5version }} -- --headless
