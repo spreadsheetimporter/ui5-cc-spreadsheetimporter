@@ -146,6 +146,7 @@ describe("Open Excel Upload dialog", () => {
 			const object = await binding.getObject();
 			if (object.product_ID === "254") {
 				const $element = await element.getWebElement();
+				await $element.scrollIntoView()
 				try {
 					await $element.click();
 				} catch (error) {
