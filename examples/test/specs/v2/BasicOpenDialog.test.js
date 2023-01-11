@@ -130,7 +130,16 @@ describe("Open Excel Upload dialog", () => {
 			const object = await binding.getObject();
 			if (object.product_ID === "254") {
 				const $element = await element.getWebElement();
-				$element.click();
+				try {
+					$element.click();
+				} catch (error) {
+					// click failed, try again in a second
+					console.log(error);
+					try {
+						await $("filtekuzfutkfk424214").waitForExist({ timeout: 1000 });
+					} catch (error) {}
+					$element.click();
+				}
 				break;
 			}
 		}
