@@ -93,6 +93,6 @@ jobs:
       # run wdi5 tests
       - name: test wdi5 ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
         run: |
-          wait-on tcp:4004 
-          wait-on tcp:${{ env.PORT }}
+          while ! nc -z localhost 4004; do sleep 1; done
+          while ! nc -z localhost ${{ env.PORT }}; do sleep 1; done
           pnpm --filter ui5-cc-excelupload-sample test${{ matrix.scenario }}${{ matrix.ui5version }}
