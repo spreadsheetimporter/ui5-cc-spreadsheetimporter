@@ -153,7 +153,7 @@ describe("Open Excel Upload dialog", () => {
 					// click failed, try again in a second
 					console.log(error);
 					try {
-						await $("filtekuzfutkfk424214").waitForExist({ timeout: 1000 });
+						await $("filtekuzfutkfk424214").waitForExist({ timeout: 6000 });
 					} catch (error) {}
 					await $element.click();
 				}
