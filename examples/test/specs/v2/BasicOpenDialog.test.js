@@ -18,6 +18,20 @@ describe("Open Excel Upload dialog", () => {
 		await browser
 			.asControl({
 				selector: {
+					controlType: "sap.m.Button",
+					viewId: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ListReport.view.ListReport::Orders",
+					properties: {
+						text: "Go"
+					}
+				}
+			})
+			.press();
+	});
+
+	it("go to object page", async () => {
+		await browser
+			.asControl({
+				selector: {
 					controlType: "sap.m.ColumnListItem",
 					viewId: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ListReport.view.ListReport::Orders",
 					bindingPath: {
@@ -29,7 +43,7 @@ describe("Open Excel Upload dialog", () => {
 			.press();
 	});
 
-	it("should see an object page", async () => {
+	it("go to edit mode", async () => {
 		await browser
 			.asControl({
 				selector: {

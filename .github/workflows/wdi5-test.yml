@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
       matrix:
         scenario: ["ordersv2fe", "ordersv4fe"]
-        ui5version: [108, 96, 84]
+        ui5version: [108, 96, 84, 71]
         exclude:
           - scenario: ordersv4fe
             ui5version: 96
