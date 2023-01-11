@@ -101,23 +101,6 @@ function searchAndReplace(inputFile, search, replace) {
 	fs.writeFileSync(inputFile, result, "utf8");
 }
 
-function getPortByAppVersion(rootAppName, versionMinor) {
-	const testApps = fs.readFileSync("dev/testapps.json", "utf8");
-	let json_data = JSON.parse(testApps);
-	let port = undefined;
-
-	// Iterate through the objects in the JSON data
-	json_data.forEach((obj) => {
-		if (obj.rootAppName === rootAppName) {
-			obj.copyVersions.forEach((version) => {
-				if (version.versionMinor === versionMinor) {
-					port = version.port;
-				}
-			});
-		}
-	});
-	return port;
-}
 
 module.exports.getPackageJson = getPackageJson;
 module.exports.getVersionDots = getVersionDots;
@@ -128,4 +111,3 @@ module.exports.replaceYamlFile = replaceYamlFile;
 module.exports.copyDirectorySync = copyDirectorySync;
 module.exports.deleteFolderRecursive = deleteFolderRecursive;
 module.exports.searchAndReplace = searchAndReplace;
-module.exports.getPortByAppVersion = getPortByAppVersion;
