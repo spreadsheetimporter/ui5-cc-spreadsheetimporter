@@ -2,6 +2,8 @@
   {
     "rootAppName": "ordersv2fe",
     "appTitel": "Orders V2 FE 108",
+    "port" : "8081",
+    "versionMinor": 108,
     "copyVersions": [
       {
         "version": "1.96.16",
@@ -25,6 +27,8 @@
   },
   {
     "rootAppName": "ordersv2fenondraft",
+    "port" : "8083",
+    "versionMinor": 108,
     "appTitel": "Orders V2 FE ND 108",
     "copyVersions": [
       {
@@ -49,6 +53,8 @@
   },
   {
     "rootAppName": "ordersv2freestyle",
+    "port" : "8082",
+    "versionMinor": 108,
     "appTitel": "Orders V2 FS 108",
     "copyVersions": [
       {
@@ -73,6 +79,8 @@
   },
   {
     "rootAppName": "ordersv4fe",
+    "port" : "8081",
+    "versionMinor": 108,
     "appTitel": "Orders V4 FE 108",
     "copyVersions": [
       {
@@ -97,6 +105,8 @@
   },
   {
     "rootAppName": "ordersv4fpm",
+    "port" : "8084",
+    "versionMinor": 108,
     "appTitel": "Orders V4 FPM 108",
     "copyVersions": [
       {
