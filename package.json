@@ -25,6 +25,7 @@
     "start": "pnpm --filter ui5-cc-excelupload-sample start",
     "startv2fe": "pnpm --filter ui5-cc-excelupload-sample start:uiv2fe",
     "startv4": "pnpm --filter ui5-cc-excelupload-sample start:uiv4fe",
+    "start:server": "pnpm --filter ui5-cc-excelupload-sample watch:server",
     "testordersv2fe108": "wait-on tcp:4004 && wait-on tcp:8081 && pnpm --filter ui5-cc-excelupload-sample testordersv2fe108",
     "testordersv2fe96": "wait-on tcp:4004 && wait-on tcp:8090 && pnpm --filter ui5-cc-excelupload-sample testordersv2fe96",
     "testordersv2fe84": "wait-on tcp:4004 && wait-on tcp:8091 && pnpm --filter ui5-cc-excelupload-sample testordersv2fe84",
