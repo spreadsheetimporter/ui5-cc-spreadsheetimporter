@@ -79,7 +79,7 @@
   },
   {
     "rootAppName": "ordersv4fe",
-    "port" : "8081",
+    "port" : "8080",
     "versionMinor": 108,
     "appTitel": "Orders V4 FE 108",
     "copyVersions": [
