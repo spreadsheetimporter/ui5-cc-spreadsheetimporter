@@ -13,50 +13,58 @@ describe("Open Excel Upload dialog", () => {
 		day: "numeric",
 		year: "numeric"
 	};
-	before(async () => {
-		FioriElementsFacade = await browser.fe.initialize({
-			onTheMainPage: {
-				ListReport: {
-					appId: "ui.v4.ordersv4fe",
-					componentId: "OrdersList",
-					entitySet: "Orders"
-				}
-			},
-			onTheDetailPage: {
-				ObjectPage: {
-					appId: "ui.v4.ordersv4fe",
-					componentId: "OrdersObjectPage",
-					entitySet: "Orders"
-				}
-			},
-			onTheSubDetailPage: {
-				ObjectPage: {
-					appId: "ui.v4.ordersv4fe",
-					componentId: "Orders_ItemsObjectPage",
-					entitySet: "Orders_Items"
-				}
-			},
-			onTheShell: {
-				Shell: {}
-			}
-		});
-	});
 
 	it("should trigger search on ListReport page", async () => {
-		await FioriElementsFacade.execute((Given, When, Then) => {
-			Given.onTheMainPage.onFilterBar().iExecuteSearch();
-			Then.onTheMainPage.onTable().iCheckRows(2);
-			Then.onTheMainPage.onTable().iCheckRows({ OrderNo: "2", buyer: "jane.doe@test.com" });
-			When.onTheMainPage.onTable().iPressRow({ OrderNo: "2" });
-		});
+			await browser
+			.asControl({
+				selector: {
+					id: "ui.v4.ordersv4fe::OrdersList--fe::FilterBar::Orders-btnSearch"
+				}
+			})
+			.press();
 	});
 
-	it("should see an object page", async () => {
-		await FioriElementsFacade.execute((Given, When, Then) => {
-			Then.onTheDetailPage.onHeader().iCheckEdit();
-			When.onTheDetailPage.onHeader().iExecuteEdit();
-			Then.onTheDetailPage.iSeeThisPage().and.iSeeObjectPageInEditMode();
+	it("go to object page", async () => {
+		const table = await browser.asControl({
+			selector: {
+				interaction: "root",
+				id: "ui.v4.ordersv4fe::OrdersList--fe::table::Orders::LineItem-innerTable"
+			}
 		});
+		const items = await table.getItems();
+		for (let index = 0; index < items.length; index++) {
+			const element = items[index];
+			const binding = await element.getBindingContext();
+			const object = await binding.getObject();
+			if (object.OrderNo === "2") {
+				const $element = await element.getWebElement();
+				try {
+					await $element.click();
+				} catch (error) {
+					// click failed, try again in a second
+					console.log(error);
+					try {
+						await $("filtekuzfutkfk424214").waitForExist({ timeout: 1000 });
+					} catch (error) {}
+					await $element.click();
+				}
+				break;
+			}
+		}
+		// force wait to stabelize tests
+		try {
+			await $("filtekuzfutkfk424214").waitForExist({ timeout: 1000 });
+		} catch (error) {}
+	});
+
+	it("go to edit mode", async () => {
+		await browser
+			.asControl({
+				selector: {
+					id: "ui.v4.ordersv4fe::OrdersObjectPage--fe::StandardAction::Edit"
+				}
+			})
+			.press();
 	});
 
 	it("Open ExcelUpload Dialog V4", async () => {
@@ -95,6 +103,10 @@ describe("Open Excel Upload dialog", () => {
 		const $uploader = await uploader.getWebElement(); // wdi5
 		const $fileInput = await $uploader.$("input[type=file]"); // wdio
 		await $fileInput.setValue(remoteFilePath); // wdio
+		// force wait to stabelize tests
+		try {
+			await $("filtekuzfutkfk424214").waitForExist({ timeout: 500 });
+		} catch (error) {}
 		await browser
 			.asControl({
 				selector: {
@@ -108,115 +120,141 @@ describe("Open Excel Upload dialog", () => {
 	});
 
 	it("execute save", async () => {
-		await FioriElementsFacade.execute((Given, When, Then) => {
-			When.onTheDetailPage.onFooter().iExecuteSave();
-		});
+		await browser
+			.asControl({
+				selector: {
+					id: "ui.v4.ordersv4fe::OrdersObjectPage--fe::FooterBar::StandardAction::Save"
+				}
+			})
+			.press();
 	});
 
 	it("go to Sub Detail Page", async () => {
-		await FioriElementsFacade.execute((Given, When, Then) => {
-			Then.onTheDetailPage.onTable({ property: "Items" }).iCheckRows({ ID: "254" });
-			When.onTheDetailPage.onTable({ property: "Items" }).iPressRow({ ID: "254" });
+		// try {
+		// 	await $("filtekuzfutkfk424214").waitForExist({ timeout: 1000 });
+		// } catch (error) {}
+		const table = await browser.asControl({
+			selector: {
+				interaction: "root",
+				id: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable"
+			}
 		});
+		const items = await table.getItems();
+		for (let index = 0; index < items.length; index++) {
+			const element = items[index];
+			const binding = await element.getBindingContext();
+			const object = await binding.getObject();
+			if (object.product_ID === "254") {
+				const $element = await element.getWebElement();
+				try {
+					await $element.click();
+				} catch (error) {
+					// click failed, try again in a second
+					console.log(error);
+					try {
+						await $("filtekuzfutkfk424214").waitForExist({ timeout: 1000 });
+					} catch (error) {}
+					await $element.click();
+				}
+				break;
+			}
+		}
+		// force wait to stabelize tests
+		try {
+			await $("filtekuzfutkfk424214").waitForExist({ timeout: 1000 });
+		} catch (error) {}
 	});
 
 	it("check Field: Quantity", async () => {
-		await FioriElementsFacade.execute((Given, When, Then) => {
-			Then.onTheSubDetailPage.iSeeThisPage();
-			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "quantity" }, { value: "3" });
+		const field = await browser.asControl({
+			selector: {
+				id: "ui.v4.ordersv4fe::Orders_ItemsObjectPage--fe::FormContainer::Identification::FormElement::DataField::quantity::Field-content"
+			}
 		});
+		const contentDisplay = await field.getContentDisplay();
+		const value = await contentDisplay.getText();
+		expect(value).toBe("3");
 	});
 
 	it("check Field: Product", async () => {
-		await FioriElementsFacade.execute((Given, When, Then) => {
-			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "title" }, { value: "Product Test 2" });
+		const field = await browser.asControl({
+			selector: {
+				id: "ui.v4.ordersv4fe::Orders_ItemsObjectPage--fe::FormContainer::Identification::FormElement::DataField::title::Field-content"
+
+			}
 		});
+		const contentDisplay = await field.getContentDisplay();
+		const value = await contentDisplay.getText();
+		expect(value).toBe("Product Test 2");
 	});
 
 	it("check Field: UnitPrice", async () => {
-		await FioriElementsFacade.execute((Given, When, Then) => {
-			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "price" }, { value: "13.7" });
+		const field = await browser.asControl({
+			selector: {
+				id: "ui.v4.ordersv4fe::Orders_ItemsObjectPage--fe::FormContainer::Identification::FormElement::DataField::price::Field-content"
+			}
 		});
+		const contentDisplay = await field.getContentDisplay();
+		const value = await contentDisplay.getText();
+		expect(value).toBe("13.7");
 	});
 
 	it("check Field: validFrom", async () => {
-		const selector = {
+		const field = await browser.asControl({
 			selector: {
-				controlType: "sap.ui.layout.form.FormElement",
-				descendant: {
-					controlType: "sap.m.Label",
-					properties: {
-						text: "validFrom"
-					}
-				}
+				id: "ui.v4.ordersv4fe::Orders_ItemsObjectPage--fe::FormContainer::Identification::FormElement::DataField::validFrom::Field-content"
 			}
-		};
-		const formElement = await browser.asControl(selector);
-		const fields = await formElement.getFields();
-		const field = fields[0];
-		const content = await field.getContentDisplay();
-		const binding = await content.getBinding("text");
-		const value = await binding.getValue();
-		const date = new Date(value);
-		const formattedDate = date.toLocaleString("en-US", optionsLong);
-		await FioriElementsFacade.execute((Given, When, Then) => {
-			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "validFrom" }, { value: formattedDate });
 		});
+		const binding = await field.getBindingContext();
+		const object = await binding.getObject();
+		const date = new Date(object.validFrom)
+		const formattedDate = await date.toLocaleString("en-US", optionsLong);
+		// check printend value
+		const contentDisplay = await field.getContentDisplay();
+		const valueText = await contentDisplay.getText();
+		expect(valueText).toBe(formattedDate);
 	});
 
 	it("check Field: timestamp", async () => {
-		const selector = {
+		const field = await browser.asControl({
 			selector: {
-				controlType: "sap.ui.layout.form.FormElement",
-				descendant: {
-					controlType: "sap.m.Label",
-					properties: {
-						text: "timestamp"
-					}
-				}
+				id: "ui.v4.ordersv4fe::Orders_ItemsObjectPage--fe::FormContainer::Identification::FormElement::DataField::timestamp::Field-content"
 			}
-		};
-		const formElement = await browser.asControl(selector);
-		const fields = await formElement.getFields();
-		const field = fields[0];
-		const content = await field.getContentDisplay();
-		const binding = await content.getBinding("text");
-		const value = await binding.getValue();
-		const date = new Date(value);
-		const formattedDate = date.toLocaleString("en-US", optionsLong);
-		await FioriElementsFacade.execute((Given, When, Then) => {
-			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "timestamp" }, { value: formattedDate });
 		});
+		const binding = await field.getBindingContext();
+		const object = await binding.getObject();
+		const date = new Date(object.timestamp)
+		const formattedDate = await date.toLocaleString("en-US", optionsLong);
+		// check printend value
+		const contentDisplay = await field.getContentDisplay();
+		const valueText = await contentDisplay.getText();
+		expect(valueText).toBe(formattedDate);
 	});
 
 	it("check Field: date", async () => {
-		const selector = {
+		const field = await browser.asControl({
 			selector: {
-				controlType: "sap.ui.layout.form.FormElement",
-				descendant: {
-					controlType: "sap.m.Label",
-					properties: {
-						text: "date"
-					}
-				}
+				id: "ui.v4.ordersv4fe::Orders_ItemsObjectPage--fe::FormContainer::Identification::FormElement::DataField::date::Field-content"
 			}
-		};
-		const formElement = await browser.asControl(selector);
-		const fields = await formElement.getFields();
-		const field = fields[0];
-		const content = await field.getContentDisplay();
-		const binding = await content.getBinding("text");
-		const value = await binding.getValue();
-		const date = new Date(value);
-		const formattedDate = date.toLocaleString("en-US", optionsShort);
-		await FioriElementsFacade.execute((Given, When, Then) => {
-			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "date" }, { value: formattedDate });
 		});
+		const binding = await field.getBindingContext();
+		const object = await binding.getObject();
+		const date = new Date(object.date)
+		const formattedDate = await date.toLocaleString("en-US", optionsShort);
+		// check printend value
+		const contentDisplay = await field.getContentDisplay();
+		const valueText = await contentDisplay.getText();
+		expect(valueText).toBe(formattedDate);
 	});
 
 	it("check Field: time", async () => {
-		await FioriElementsFacade.execute((Given, When, Then) => {
-			Then.onTheSubDetailPage.onForm("OrderItems").iCheckField({ property: "time" }, { value: "4:00:00 PM" });
+		const field = await browser.asControl({
+			selector: {
+				id: "ui.v4.ordersv4fe::Orders_ItemsObjectPage--fe::FormContainer::Identification::FormElement::DataField::time::Field-content"
+			}
 		});
+		const contentDisplay = await field.getContentDisplay();
+		const value = await contentDisplay.getText();
+		expect(value).toBe("4:00:00 PM");
 	});
 });

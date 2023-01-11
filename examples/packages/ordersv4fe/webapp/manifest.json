@@ -129,7 +129,6 @@
                   }
                 }
               },
-              "initialLoad": "Enabled",
               "content": {
                 "header": {
                   "actions": {
@@ -189,7 +188,7 @@
           "options": {
             "settings": {
               "editableHeaderContent": false,
-              "entitySet": "Orders_Items"
+              "entitySet": "OrderItems"
             }
           }
         }

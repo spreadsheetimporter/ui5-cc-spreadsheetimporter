@@ -25,13 +25,10 @@
     "testordersv2fe84": "wdio run ./test/wdioV284.conf.js",
     "testordersv2fe96": "wdio run ./test/wdioV296.conf.js",
     "testordersv2fe108": "wdio run ./test/wdioV2108.conf.js",
-    "testordersv4fe108": "wdio run ./test/wdioV4.conf.js",
-    "testv2": "run-p testv2108 testv296 testv284",
-    "testv4": "wdio run ./test/wdioV4.conf.js",
-    "testv2108Headless": "wdio run ./test/wdioV2108.conf.js --headless",
-    "testv296Headless": "wdio run ./test/wdioV296.conf.js --headless",
-    "testv284Headless": "wdio run ./test/wdioV284.conf.js --headless",
-    "testv4Headless": "wdio run ./test/wdioV4.conf.js --headless"
+    "testordersv4fe108": "wdio run ./test/wdioV4108.conf.js",
+    "testordersv4fe96": "wdio run ./test/wdioV496.conf.js",
+    "testordersv4fe84": "wdio run ./test/wdioV484.conf.js",
+    "testordersv4fe71": "wdio run ./test/wdioV471.conf.js"
   },
   "devDependencies": {
     "@wdio/cli": "^7.29.1",

@@ -46,9 +46,9 @@ export default class ExcelUpload {
 		this.component = component;
 		this.component.setErrorResults([]);
 		this.componentI18n = componentI18n;
-		this.odataHandler = this.getODataHandler(this.UI5MinorVersion)
 		this.metadataHandler = new MetadataHandler(this);
 		this.setContext();
+		this.odataHandler = this.getODataHandler(this.UI5MinorVersion)
 	}
 
 	async setContext() {
@@ -83,7 +83,7 @@ export default class ExcelUpload {
 			}
 		}
 		// try get odata type from table
-		this.tableObject = this.context.byId(this.component.getTableId());
+		this.tableObject = this.view.byId(this.component.getTableId());
 		const tableBindingPath = this.tableObject.getBindingPath("items");
 		const metaModel = this.tableObject.getModel().getMetaModel();
 		const metaModelData = this.tableObject.getModel().getMetaModel().getData();
@@ -124,13 +124,13 @@ export default class ExcelUpload {
 			}
 		}
 		// try get odata type from table
-		this.tableObject = this.context.byId(this.component.getTableId());
+		this.tableObject = this.view.byId(this.component.getTableId());
 		if (!this.component.getOdataType()) {
 			this.component.setOdataType(this.tableObject.getBinding("items")._getEntityType().entityType);
 			if (!this.component.getOdataType()) {
 				console.error("No OData Type found. Please specify 'odataType' in options");
 			}
-			const metaModel = this.context.byId(this.component.getTableId()).getModel().getMetaModel();
+			const metaModel = this.view.byId(this.component.getTableId()).getModel().getMetaModel();
 			await metaModel.loaded();
 			this.oDataEntityType = metaModel.getODataEntityType(this.component.getOdataType());
 		}
@@ -282,8 +282,8 @@ export default class ExcelUpload {
 		// intializing the message manager for displaying the odata response messages
 		try {
 			// get binding of table to create rows
-			const model = this.context.byId(this.component.getTableId()).getModel();
-			const binding = this.context.byId(this.component.getTableId()).getBinding("items");
+			const model = this.view.byId(this.component.getTableId()).getModel();
+			const binding = this.view.byId(this.component.getTableId()).getBinding("items");
 			let createPromises = [];
 			let createContexts = [];
 			let activateActions = [];

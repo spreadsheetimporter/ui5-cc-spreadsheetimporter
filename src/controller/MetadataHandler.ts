@@ -128,7 +128,7 @@ export default class MetadataHandler {
 	}
 
 	_getLabelV4(annotations: { [x: string]: { [x: string]: any } }, properties: any, propertyName: string, propertyLabel: { [x: string]: any }, options: any) {
-		if (propertyLabel["@com.sap.vocabularies.Common.v1.Label"]) {
+		if (propertyLabel && propertyLabel["@com.sap.vocabularies.Common.v1.Label"]) {
 			return propertyLabel["@com.sap.vocabularies.Common.v1.Label"];
 		}
 		try {
