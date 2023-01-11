@@ -98,6 +98,9 @@ describe("Open Excel Upload dialog", () => {
 	});
 
 	it("go to Sub Detail Page", async () => {
+		try {
+			await $("filtekuzfutkfk424214").waitForExist({ timeout: 1000 });
+		} catch (error) {}
 		const table = await browser.asControl({
 			selector: {
 				controlType: "sap.m.Table",
