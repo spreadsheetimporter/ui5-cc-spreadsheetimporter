@@ -8,17 +8,19 @@ on:
 jobs:
   test-wdi5:
     runs-on: ubuntu-latest
-    
+
     strategy:
       fail-fast: false
       matrix:
-        scenario: ["ordersv2fe","ordersv4fe"]
-        ui5version: [108,96,84]
+        scenario: ["ordersv2fe", "ordersv4fe"]
+        ui5version: [108, 96, 84, 71]
         exclude:
           - scenario: ordersv4fe
             ui5version: 96
           - scenario: ordersv4fe
             ui5version: 84
+          - scenario: ordersv4fe
+            ui5version: 71
 
     steps:
       - name: update chrome
@@ -53,6 +55,11 @@ jobs:
           npm i -g npm@latest
           npm --version
 
+      - name: get port
+        run: |
+          TESTAPPPORT=$(node ./dev/get-port.js ${{ matrix.scenario }} ${{ matrix.ui5version }})
+          echo "TESTAPPPORT=$TESTAPPPORT" >> $GITHUB_ENV
+
       - name: pnpm install
         run: |
           npm pkg delete scripts.prepare
@@ -79,12 +86,16 @@ jobs:
 
       # run app
       - name: start cap server
-        run: npm run start:server&
+        run: |
+          npm run start:server&
 
       - name: start app ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
         run: |
-          npm run start${{ matrix.scenario }}${{ matrix.ui5version }}&
+          pnpm --filter ${{ matrix.scenario }}${{ matrix.ui5version }} start:silent&
 
       # run wdi5 tests
       - name: test wdi5 ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
-        run: npm run test${{ matrix.scenario }}${{ matrix.ui5version }} -- --headless
+        run: |
+          while ! nc -z localhost 4004; do sleep 0.1; done
+          while ! nc -z localhost ${{ env.TESTAPPPORT }}; do sleep 0.1; done
+          pnpm --filter ui5-cc-excelupload-sample test${{ matrix.scenario }}${{ matrix.ui5version }} -- --headless

@@ -2,6 +2,7 @@
 pnpm-lock.yaml
 package-lock.json
 .yo-rc.json
+/dev/*
 
 # Ignore build output folders
 /packages/*/dist/**

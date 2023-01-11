@@ -101,6 +101,7 @@ function searchAndReplace(inputFile, search, replace) {
 	fs.writeFileSync(inputFile, result, "utf8");
 }
 
+
 module.exports.getPackageJson = getPackageJson;
 module.exports.getVersionDots = getVersionDots;
 module.exports.getVersionSlash = getVersionSlash;
