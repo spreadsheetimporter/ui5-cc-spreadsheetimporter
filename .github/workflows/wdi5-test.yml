@@ -55,7 +55,7 @@ jobs:
 
       - name: get port
         run: |
-          PORT=$(node .\dev\get-port.js ${{ matrix.scenario }} ${{ matrix.ui5version }})
+          PORT=$(node ./dev/get-port.js ${{ matrix.scenario }} ${{ matrix.ui5version }})
           echo "PORT=$PORT" >> $GITHUB_ENV
 
       - name: pnpm install
