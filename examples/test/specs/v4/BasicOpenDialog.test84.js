@@ -15,7 +15,7 @@ describe("Open Excel Upload dialog", () => {
 	};
 
 	it("should trigger search on ListReport page", async () => {
-			await browser
+		await browser
 			.asControl({
 				selector: {
 					id: "ui.v4.ordersv4fe::OrdersList--fe::FilterBar::Orders-btnSearch"
@@ -146,8 +146,12 @@ describe("Open Excel Upload dialog", () => {
 			const object = await binding.getObject();
 			if (object.product_ID === "254") {
 				const $element = await element.getWebElement();
-				await $element.scrollIntoView()
+				await $element.scrollIntoView();
 				try {
+					await browser.waitUntil(async () => {
+						await $element.isExisting();
+						return true;
+					}, 6000);
 					await $element.click();
 				} catch (error) {
 					// click failed, try again in a second
@@ -180,7 +184,6 @@ describe("Open Excel Upload dialog", () => {
 		const field = await browser.asControl({
 			selector: {
 				id: "ui.v4.ordersv4fe::Orders_ItemsObjectPage--fe::FormContainer::Identification::FormElement::DataField::title::Field"
-
 			}
 		});
 		const value = await field.getText();
@@ -205,7 +208,7 @@ describe("Open Excel Upload dialog", () => {
 		});
 		const binding = await field.getBindingContext();
 		const object = await binding.getObject();
-		const date = new Date(object.validFrom)
+		const date = new Date(object.validFrom);
 		const formattedDate = await date.toLocaleString("en-US", optionsLong);
 		// check printend value
 		const valueText = await field.getText();
@@ -220,7 +223,7 @@ describe("Open Excel Upload dialog", () => {
 		});
 		const binding = await field.getBindingContext();
 		const object = await binding.getObject();
-		const date = new Date(object.timestamp)
+		const date = new Date(object.timestamp);
 		const formattedDate = await date.toLocaleString("en-US", optionsLong);
 		// check printend value
 		const valueText = await field.getText();
@@ -235,7 +238,7 @@ describe("Open Excel Upload dialog", () => {
 		});
 		const binding = await field.getBindingContext();
 		const object = await binding.getObject();
-		const date = new Date(object.date)
+		const date = new Date(object.date);
 		const formattedDate = await date.toLocaleString("en-US", optionsShort);
 		// check printend value
 		const valueText = await field.getText();

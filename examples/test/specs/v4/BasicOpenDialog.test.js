@@ -148,6 +148,10 @@ describe("Open Excel Upload dialog", () => {
 				const $element = await element.getWebElement();
 				await $element.scrollIntoView()
 				try {
+					await browser.waitUntil(async () => {
+						await $element.isExisting();
+						return true;
+					}, 6000);
 					await $element.click();
 				} catch (error) {
 					// click failed, try again in a second
