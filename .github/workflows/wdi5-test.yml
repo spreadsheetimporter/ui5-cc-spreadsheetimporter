@@ -8,12 +8,12 @@ on:
 jobs:
   test-wdi5:
     runs-on: ubuntu-latest
-    
+
     strategy:
       fail-fast: false
       matrix:
-        scenario: ["ordersv2fe","ordersv4fe"]
-        ui5version: [108,96,84]
+        scenario: ["ordersv2fe", "ordersv4fe"]
+        ui5version: [108, 96, 84]
         exclude:
           - scenario: ordersv4fe
             ui5version: 96
@@ -83,7 +83,7 @@ jobs:
 
       - name: start app ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
         run: |
-          npm run start${{ matrix.scenario }}${{ matrix.ui5version }}&
+          pnpm --filter ${{ matrix.scenario }}${{ matrix.ui5version }} start:silent&
 
       # run wdi5 tests
       - name: test wdi5 ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
