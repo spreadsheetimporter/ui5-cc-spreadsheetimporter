@@ -4,6 +4,7 @@ package-lock.json
 # Ignore build output folders
 /docs/**
 /webapp/**
+/dev/**
 
 # Ignore files by extension
 /**/*.svg

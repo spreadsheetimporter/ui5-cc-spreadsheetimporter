@@ -3,6 +3,7 @@ node_modules
 dist
 webapp
 examples
+dev
 
 # Include all JS files
 !*.js

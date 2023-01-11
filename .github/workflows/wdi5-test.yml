@@ -53,6 +53,11 @@ jobs:
           npm i -g npm@latest
           npm --version
 
+      - name: get port
+        run: |
+          PORT=$(node .\dev\get-port.js ${{ matrix.scenario }} ${{ matrix.ui5version }})
+          echo "PORT=$PORT" >> $GITHUB_ENV
+
       - name: pnpm install
         run: |
           npm pkg delete scripts.prepare
@@ -87,4 +92,7 @@ jobs:
 
       # run wdi5 tests
       - name: test wdi5 ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
-        run: npm run test${{ matrix.scenario }}${{ matrix.ui5version }} -- --headless
+        run: |
+          wait-on tcp:4004 
+          wait-on tcp:${{ env.PORT }}
+          pnpm --filter ui5-cc-excelupload-sample test${{ matrix.scenario }}${{ matrix.ui5version }}
