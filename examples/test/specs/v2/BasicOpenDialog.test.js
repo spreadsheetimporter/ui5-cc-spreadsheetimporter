@@ -131,14 +131,14 @@ describe("Open Excel Upload dialog", () => {
 			if (object.product_ID === "254") {
 				const $element = await element.getWebElement();
 				try {
-					$element.click();
+					await $element.click();
 				} catch (error) {
 					// click failed, try again in a second
 					console.log(error);
 					try {
 						await $("filtekuzfutkfk424214").waitForExist({ timeout: 1000 });
 					} catch (error) {}
-					$element.click();
+					await $element.click();
 				}
 				break;
 			}
