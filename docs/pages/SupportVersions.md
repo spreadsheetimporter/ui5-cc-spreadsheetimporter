@@ -42,6 +42,6 @@ Another overview shows which apps are already tested automatically with wdi5 and
 | UI5 Version  | List Report Draft  | Object Page Draft  |  Freestyle | Flexible Programming Model |
 |---|---|---|---|---|
 | 1.108  |    | :white_check_mark: |  |  |
-| 1.96  |   |   |   |   |
-|  1.84 |   |   |   |   |
-|  1.71 |   |   |   |   |
+| 1.96  |   | :white_check_mark:  |   |   |
+|  1.84 |   | :white_check_mark:  |   |   |
+|  1.71 |   | :white_check_mark:  |   |   |

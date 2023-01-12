@@ -69,10 +69,10 @@ exports.config = {
 			"goog:chromeOptions": {
 				args:
 					process.argv.indexOf("--headless") > -1
-						? ["--headless"]
+						? ["--headless", "--window-size=1920,1080"]
 						: process.argv.indexOf("--debug") > -1
-						? ["window-size=1440,800", "--auto-open-devtools-for-tabs"]
-						: ["window-size=1440,800"]
+						? ["--window-size=1920,1080", "--auto-open-devtools-for-tabs"]
+						: ["--window-size=1920,1080"]
 			},
 			acceptInsecureCerts: true
 			// If outputDir is provided WebdriverIO can capture driver session logs
@@ -112,7 +112,7 @@ exports.config = {
 	// with `/`, the base url gets prepended, not including the path portion of your baseUrl.
 	// If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
 	// gets prepended directly.
-	baseUrl: "http://localhost:8080/index.html?sap-language=EN",
+	baseUrl: "http://localhost:8099/index.html?sap-language=EN",
 	//
 	// Default timeout for all waitFor* commands.
 	waitforTimeout: 10000,
