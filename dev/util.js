@@ -103,28 +103,22 @@ function searchAndReplace(inputFile, search, replace) {
 }
 
 function getTestappObject(scenario,version){
-	console.log(`Scenario: ${scenario}`)
-	console.log(`Version: ${version}`)
 	const testApps = fs.readFileSync(path.resolve(__dirname, 'testapps.json'), 'UTF-8');
 	// const testApps = fs.readFileSync("./dev/testapps.json", "utf8");
 	let json_data = JSON.parse(testApps);
 	version = parseInt(version)
-	console.log(`Version after parsing: ${version}`)
 
 	for (let index = 0; index < json_data.length; index++) {
 		const element = json_data[index];
 		if(element.rootAppName === scenario){
-			console.log(`Scenario found with ${scenario} and rootAppNAme ${element.rootAppName}`)
 			const rootObject = element;
 			if(rootObject.versionMinor === version){
-				console.log(`Version found with ${version} and versionMinor ${rootObject.versionMinor}`)
 				return rootObject;
 			} else {
 				const rootVersions = rootObject.copyVersions
 				for (let index = 0; index < rootVersions.length; index++) {
 					const subObject = rootVersions[index];
 					if(subObject.versionMinor === version){
-						console.log(`SubVersion found with ${version} and versionMinor ${subObject.versionMinor}`)
 						return subObject;
 					}
 				}

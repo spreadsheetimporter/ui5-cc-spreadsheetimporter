@@ -1,5 +1,6 @@
 const util = require("./../../dev/util");
 
+// i guess there is a better way for it
 let scenario = process.argv[5];
 let version = 0;
 if (scenario === "--headless") {
@@ -13,10 +14,7 @@ if (process.argv.length === 6) {
 	version = process.argv[5];
 }
 
-console.log("start XXX");
 const testappObject = util.getTestappObject(scenario, version);
-console.log(testappObject);
-console.log("stop XXX");
 const specs = testappObject["testMapping"]["specs"];
 const port = testappObject.port;
 
