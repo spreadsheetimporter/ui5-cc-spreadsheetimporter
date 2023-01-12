@@ -123,15 +123,10 @@ describe("Open Excel Upload dialog", () => {
 	});
 
 	it("go to Sub Detail Page", async () => {
-		const messageToastPromise = undefined;
-		try {
-			messageToastPromise = $("filtekuzfutkfk424214").waitForExist({ timeout: 4000 });
-		} catch (error) {}
 		const table = await browser.asControl({
 			selector: {
-				controlType: "sap.m.Table",
-				viewId: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders",
-				interaction: "root"
+				interaction: "root",
+				id: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders"
 			}
 		});
 		const items = await table.getItems();
@@ -140,19 +135,11 @@ describe("Open Excel Upload dialog", () => {
 			const binding = await element.getBindingContext();
 			const object = await binding.getObject();
 			if (object.product_ID === "254") {
-				const $element = await element.getWebElement();
-				await $element.scrollIntoView();
 				try {
-					// wait for message toast
-					await messageToastPromise;
-					await $element.click();
+					const path = binding.sPath;
+					await browser.goTo({ sHash: `#${path}` });
 				} catch (error) {
-					// click failed, try again in a second
-					console.error("Click to sub object page failed. Try again");
-					try {
-						await $("filtekuzfutkfk424214").waitForExist({ timeout: 6000 });
-					} catch (error) {}
-					await $element.click();
+					console.log(error);
 				}
 				break;
 			}
