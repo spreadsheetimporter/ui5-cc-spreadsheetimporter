@@ -2,12 +2,14 @@ const util = require("./../../dev/util");
 
 const scenario = process.argv[4];
 const version = process.argv[5];
-
+console.log("start XXX");
 const testappObject = util.getTestappObject(scenario, version);
-const specs = testappObject.testMapping.specs;
+console.log(testappObject);
+console.log("stop XXX");
+const specs = testappObject["testMapping"]["specs"];
 const port = testappObject.port;
 
-exports.config = {
+module.exports.config = {
 	specs: specs,
 	exclude: [
 		// 'path/to/excluded/files'
