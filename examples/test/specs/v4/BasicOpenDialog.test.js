@@ -15,13 +15,30 @@ describe("Open Excel Upload dialog", () => {
 	};
 
 	it("should trigger search on ListReport page", async () => {
-			await browser
-			.asControl({
-				selector: {
-					id: "ui.v4.ordersv4fe::OrdersList--fe::FilterBar::Orders-btnSearch"
-				}
-			})
-			.press();
+		const goButton = await browser.asControl({
+			selector: {
+				id: "ui.v4.ordersv4fe::OrdersList--fe::FilterBar::Orders-btnSearch"
+			}
+		});
+		if (goButton._domId) {
+			await goButton.press();
+		} else {
+			const title = await browser
+				.asControl({
+					selector: {
+						id: "ui.v4.ordersv4fe::OrdersList--fe::ListReport-header"
+					}
+				})
+				await title.press();
+			
+			const goButtonExpanded = await browser
+				.asControl({
+					selector: {
+						id: "ui.v4.ordersv4fe::OrdersList--fe::FilterBar::Orders-btnSearch"
+					}
+				})
+				await goButtonExpanded.press();
+		}
 	});
 
 	it("go to object page", async () => {
@@ -130,9 +147,9 @@ describe("Open Excel Upload dialog", () => {
 	});
 
 	it("go to Sub Detail Page", async () => {
-		// try {
-		// 	await $("filtekuzfutkfk424214").waitForExist({ timeout: 1000 });
-		// } catch (error) {}
+		try {
+			const messageToastPromise = $("filtekuzfutkfk424214").waitForExist({ timeout: 4000 });
+		} catch (error) {}
 		const table = await browser.asControl({
 			selector: {
 				interaction: "root",
@@ -148,10 +165,8 @@ describe("Open Excel Upload dialog", () => {
 				const $element = await element.getWebElement();
 				await $element.scrollIntoView()
 				try {
-					await browser.waitUntil(async () => {
-						await $element.isExisting();
-						return true;
-					}, 6000);
+					// wait for message toast
+					await messageToastPromise;
 					await $element.click();
 				} catch (error) {
 					// click failed, try again in a second

@@ -15,17 +15,30 @@ describe("Open Excel Upload dialog", () => {
 	};
 
 	it("should trigger search on ListReport page", async () => {
-		await browser
-			.asControl({
-				selector: {
-					controlType: "sap.m.Button",
-					viewId: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ListReport.view.ListReport::Orders",
-					properties: {
-						text: "Go"
+		const goButton = await browser.asControl({
+			selector: {
+				id: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ListReport.view.ListReport::Orders--listReportFilter-btnGo"
+			}
+		});
+		if (goButton._domId) {
+			await goButton.press();
+		} else {
+			const title = await browser
+				.asControl({
+					selector: {
+						id: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ListReport.view.ListReport::Orders--template:::ListReportPage:::DynamicPageTitle"
 					}
-				}
-			})
-			.press();
+				})
+				await title.press();
+			
+			const goButtonExpanded = await browser
+				.asControl({
+					selector: {
+						id: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ListReport.view.ListReport::Orders--listReportFilter-btnGo"
+					}
+				})
+				await goButtonExpanded.press();
+		}
 	});
 
 	it("go to object page", async () => {
@@ -113,7 +126,7 @@ describe("Open Excel Upload dialog", () => {
 
 	it("go to Sub Detail Page", async () => {
 		try {
-			await $("filtekuzfutkfk424214").waitForExist({ timeout: 1000 });
+			const messageToastPromise = $("filtekuzfutkfk424214").waitForExist({ timeout: 4000 });
 		} catch (error) {}
 		const table = await browser.asControl({
 			selector: {
@@ -122,7 +135,6 @@ describe("Open Excel Upload dialog", () => {
 				interaction: "root"
 			}
 		});
-		const metadata = await table.getMetadata();
 		const items = await table.getItems();
 		for (let index = 0; index < items.length; index++) {
 			const element = items[index];
@@ -130,12 +142,14 @@ describe("Open Excel Upload dialog", () => {
 			const object = await binding.getObject();
 			if (object.product_ID === "254") {
 				const $element = await element.getWebElement();
-				await $element.scrollIntoView()
+				await $element.scrollIntoView();
 				try {
+					// wait for message toast
+					await messageToastPromise;
 					await $element.click();
 				} catch (error) {
 					// click failed, try again in a second
-					console.log(error);
+					console.error("Click to sub object page failed. Try again");
 					try {
 						await $("filtekuzfutkfk424214").waitForExist({ timeout: 6000 });
 					} catch (error) {}
