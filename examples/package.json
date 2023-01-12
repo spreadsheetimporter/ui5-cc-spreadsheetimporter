@@ -21,14 +21,7 @@
     "start:uiv2freestyle": "pnpm --filter ordersv2freestyle start",
     "start:uiv4fpm": "pnpm --filter ordersv4fpm start",
     "watch:server": "pnpm --filter @capire/orders watch",
-    "testordersv2fe71": "wdio run ./test/wdioV271.conf.js",
-    "testordersv2fe84": "wdio run ./test/wdioV284.conf.js",
-    "testordersv2fe96": "wdio run ./test/wdioV296.conf.js",
-    "testordersv2fe108": "wdio run ./test/wdioV2108.conf.js",
-    "testordersv4fe108": "wdio run ./test/wdioV4108.conf.js",
-    "testordersv4fe96": "wdio run ./test/wdioV496.conf.js",
-    "testordersv4fe84": "wdio run ./test/wdioV484.conf.js",
-    "testordersv4fe71": "wdio run ./test/wdioV471.conf.js"
+    "test": "wdio run ./test/wdio-base.conf.js"
   },
   "devDependencies": {
     "@wdio/cli": "^7.29.1",
