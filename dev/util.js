@@ -106,6 +106,7 @@ function getTestappObject(scenario,version){
 	const testApps = fs.readFileSync(path.resolve(__dirname, 'testapps.json'), 'UTF-8');
 	// const testApps = fs.readFileSync("./dev/testapps.json", "utf8");
 	let json_data = JSON.parse(testApps);
+	console.log(json_data)
 	let rootObject;
 	version = parseInt(version)
 
