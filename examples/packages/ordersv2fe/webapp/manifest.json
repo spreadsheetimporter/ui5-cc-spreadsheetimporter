@@ -20,9 +20,7 @@
         "uri": "/v2/orders/",
         "type": "OData",
         "settings": {
-          "annotations": [
-            "annotation"
-          ],
+          "annotations": ["annotation"],
           "localUri": "localService/metadata.xml",
           "odataVersion": "2.0"
         }
@@ -189,8 +187,8 @@
               "name": "sap.suite.ui.generic.template.ObjectPage"
             },
             "pages": {
-              "ObjectPage|Items": {
-                "navigationProperty": "Items",
+              "ObjectPage|OrderItems": {
+                "navigationProperty": "OrderItems",
                 "entitySet": "OrderItems",
                 "defaultLayoutTypeIfExternalNavigation": "MidColumnFullScreen",
                 "component": {

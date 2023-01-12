@@ -40,18 +40,32 @@ describe("Open Excel Upload dialog", () => {
 	});
 
 	it("go to object page", async () => {
-		await browser
-			.asControl({
-				selector: {
-					controlType: "sap.m.ColumnListItem",
-					viewId: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ListReport.view.ListReport::Orders",
-					bindingPath: {
-						path: "/Orders(ID=guid'64e718c9-ff99-47f1-8ca3-950c850777d4',IsActiveEntity=true)",
-						propertyPath: "IsActiveEntity"
-					}
+		const table = await browser.asControl({
+			selector: {
+				interaction: "root",
+				id: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ListReport.view.ListReport::Orders--responsiveTable"
+			}
+		});
+		const items = await table.getItems();
+		for (let index = 0; index < items.length; index++) {
+			const element = items[index];
+			const binding = await element.getBindingContext();
+			const object = await binding.getObject();
+			if (object.OrderNo === "2") {
+				try {
+					const path = binding.sPath;
+					await browser.goTo({ sHash: `#${path}` });
+				} catch (error) {
+					// click faile
+					console.log(error);
 				}
-			})
-			.press();
+				break;
+			}
+		}
+		// force wait to stabelize tests
+		try {
+			await $("filtekuzfutkfk424214").waitForExist({ timeout: 1000 });
+		} catch (error) {}
 	});
 
 	it("go to edit mode", async () => {
@@ -126,10 +140,12 @@ describe("Open Excel Upload dialog", () => {
 		const table = await browser.asControl({
 			selector: {
 				interaction: "root",
-				id: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders"
+				id: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders--Items::com.sap.vocabularies.UI.v1.LineItem::responsiveTable"
 			}
 		});
 		const items = await table.getItems();
+		const rootBinding = await table.getBindingContext();
+		const rootPath = await rootBinding.getPath();
 		for (let index = 0; index < items.length; index++) {
 			const element = items[index];
 			const binding = await element.getBindingContext();
@@ -137,7 +153,7 @@ describe("Open Excel Upload dialog", () => {
 			if (object.product_ID === "254") {
 				try {
 					const path = binding.sPath;
-					await browser.goTo({ sHash: `#${path}` });
+					await browser.goTo({ sHash: `#${rootPath}${path}` });
 				} catch (error) {
 					console.log(error);
 				}

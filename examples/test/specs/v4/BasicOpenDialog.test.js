@@ -52,16 +52,12 @@ describe("Open Excel Upload dialog", () => {
 			const binding = await element.getBindingContext();
 			const object = await binding.getObject();
 			if (object.OrderNo === "2") {
-				const $element = await element.getWebElement();
 				try {
-					await $element.click();
+					const path = binding.sPath;
+					await browser.goTo({ sHash: `#${path}` });
 				} catch (error) {
-					// click failed, try again in a second
+					// click faile
 					console.log(error);
-					try {
-						await $("filtekuzfutkfk424214").waitForExist({ timeout: 1000 });
-					} catch (error) {}
-					await $element.click();
 				}
 				break;
 			}
