@@ -108,7 +108,6 @@ function getTestappObject(scenario,version){
 	let json_data = JSON.parse(testApps);
 	console.log(json_data)
 	version = parseInt(version)
-	let rootVersions;
 
 	for (let index = 0; index < json_data.length; index++) {
 		const element = json_data[index];
@@ -117,18 +116,19 @@ function getTestappObject(scenario,version){
 			if(rootObject.versionMinor === version){
 				return rootObject;
 			} else {
-				rootVersions = rootObject.copyVersions
+				const rootVersions = rootObject.copyVersions
+				for (let index = 0; index < rootVersions.length; index++) {
+					const subObject = rootVersions[index];
+					if(subObject.versionMinor === version){
+						return subObject;
+					}
+				}
 			}
 			break;
 		}
 	}
 	
-	for (let index = 0; index < rootVersions.length; index++) {
-		const subObject = rootVersions[index];
-		if(subObject.versionMinor === version){
-			return subObject;
-		}
-	}
+
 
 }
 
