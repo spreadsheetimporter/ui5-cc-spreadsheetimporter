@@ -1,7 +1,7 @@
 const util = require("./../../dev/util");
 
-const scenario = process.argv[4];
-const version = process.argv[5];
+const scenario = process.argv[5];
+const version = process.argv[6];
 console.log("start XXX");
 const testappObject = util.getTestappObject(scenario, version);
 console.log(testappObject);
