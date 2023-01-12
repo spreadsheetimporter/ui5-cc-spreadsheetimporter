@@ -69,7 +69,7 @@ exports.config = {
 			"goog:chromeOptions": {
 				args:
 					process.argv.indexOf("--headless") > -1
-						? ["--headless"]
+						? ["--headless", "--window-size=1920,1080"]
 						: process.argv.indexOf("--debug") > -1
 						? ["window-size=1440,800", "--auto-open-devtools-for-tabs"]
 						: ["window-size=1440,800"]
