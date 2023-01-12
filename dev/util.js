@@ -107,14 +107,13 @@ function getTestappObject(scenario,version){
 	// const testApps = fs.readFileSync("./dev/testapps.json", "utf8");
 	let json_data = JSON.parse(testApps);
 	console.log(json_data)
-	let rootObject;
 	version = parseInt(version)
 	let rootVersions;
 
 	for (let index = 0; index < json_data.length; index++) {
 		const element = json_data[index];
 		if(element.rootAppName === scenario){
-			rootObject = element;
+			const rootObject = element;
 			if(rootObject.versionMinor === version){
 				return rootObject;
 			} else {
