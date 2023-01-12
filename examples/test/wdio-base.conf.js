@@ -1,17 +1,13 @@
 const util = require("./../../dev/util");
-
-// i guess there is a better way for it
-let scenario = process.argv[5];
+let scenario = "";
 let version = 0;
-if (scenario === "--headless") {
-	scenario = process.argv[6];
-	version = process.argv[7];
-} else {
-	version = process.argv[6];
-}
-if (process.argv.length === 6) {
-	scenario = process.argv[4];
-	version = process.argv[5];
+
+for (let index = 0; index < process.argv.length; index++) {
+	const arg = process.argv[index];
+	if (arg.startsWith("orders")) {
+		scenario = arg;
+		version = process.argv[index + 1];
+	}
 }
 
 const testappObject = util.getTestappObject(scenario, version);
