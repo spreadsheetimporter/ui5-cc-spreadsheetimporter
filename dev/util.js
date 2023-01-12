@@ -109,19 +109,23 @@ function getTestappObject(scenario,version){
 	console.log(json_data)
 	let rootObject;
 	version = parseInt(version)
+	let rootVersions;
 
 	for (let index = 0; index < json_data.length; index++) {
 		const element = json_data[index];
 		if(element.rootAppName === scenario){
 			rootObject = element;
+			if(rootObject.versionMinor === version){
+				return rootObject;
+			} else {
+				rootVersions = rootObject.copyVersions
+			}
 			break;
 		}
 	}
-	if(rootObject.versionMinor === version){
-		return rootObject;
-	}
-	for (let index = 0; index < rootObject.copyVersions.length; index++) {
-		const subObject = rootObject.copyVersions[index];
+	
+	for (let index = 0; index < rootVersions.length; index++) {
+		const subObject = rootVersions[index];
 		if(subObject.versionMinor === version){
 			return subObject;
 		}
