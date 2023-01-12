@@ -1,91 +1,44 @@
+const Base = require("../Objects/Base");
+const FEV2 = require("../Objects/FEV2");
+const FEV4 = require("../Objects/FEV4");
+const { optionsLong, optionsShort } = require("../Objects/types");
+
+let FE = undefined;
+let BaseClass = undefined;
+
 describe("Open Excel Upload dialog", () => {
-	const optionsLong = {
-		year: "numeric",
-		month: "short",
-		day: "numeric",
-		hour: "numeric",
-		minute: "numeric",
-		second: "numeric",
-		hour12: true
-	};
-	const optionsShort = {
-		month: "short",
-		day: "numeric",
-		year: "numeric"
-	};
-
+	before(async () => {
+		BaseClass = new Base();
+		const scenario = browser.config.scenario;
+		if (scenario.startsWith("ordersv2")) {
+			FE = new FEV2();
+		}
+		if (scenario.startsWith("ordersv4")) {
+			FE = new FEV4();
+		}
+	});
 	it("should trigger search on ListReport page", async () => {
-		const goButton = await browser.asControl({
-			selector: {
-				id: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ListReport.view.ListReport::Orders--listReportFilter-btnGo"
-			}
-		});
-		if (goButton._domId) {
-			await goButton.press();
-		} else {
-			const title = await browser.asControl({
-				selector: {
-					id: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ListReport.view.ListReport::Orders--template:::ListReportPage:::DynamicPageTitle"
-				}
-			});
-			await title.press();
-
-			const goButtonExpanded = await browser.asControl({
-				selector: {
-					id: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ListReport.view.ListReport::Orders--listReportFilter-btnGo"
-				}
-			});
-			await goButtonExpanded.press();
+		try {
+			await BaseClass.pressById("ui.v2.ordersv2fe::sap.suite.ui.generic.template.ListReport.view.ListReport::Orders--listReportFilter-btnGo");
+		} catch (error) {
+			await BaseClass.pressById("ui.v2.ordersv2fe::sap.suite.ui.generic.template.ListReport.view.ListReport::Orders--template:::ListReportPage:::DynamicPageTitle");
+			await BaseClass.pressById("ui.v2.ordersv2fe::sap.suite.ui.generic.template.ListReport.view.ListReport::Orders--listReportFilter-btnGo");
 		}
 	});
 
 	it("go to object page", async () => {
-		const table = await browser.asControl({
-			selector: {
-				interaction: "root",
-				id: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ListReport.view.ListReport::Orders--responsiveTable"
-			}
-		});
-		const items = await table.getItems();
-		for (let index = 0; index < items.length; index++) {
-			const element = items[index];
-			const binding = await element.getBindingContext();
-			const object = await binding.getObject();
-			if (object.OrderNo === "2") {
-				try {
-					const path = binding.sPath;
-					await browser.goTo({ sHash: `#${path}` });
-				} catch (error) {
-					// click faile
-					console.log(error);
-				}
-				break;
-			}
-		}
+		const hash = await FE.getRoutingHash("ui.v2.ordersv2fe::sap.suite.ui.generic.template.ListReport.view.ListReport::Orders--responsiveTable", "OrderNo", "2");
+		await browser.goTo({ sHash: hash });
 		// force wait to stabelize tests
-		try {
-			await $("filtekuzfutkfk424214").waitForExist({ timeout: 1000 });
-		} catch (error) {}
+		await BaseClass.dummyWait(1000);
 	});
 
 	it("go to edit mode", async () => {
-		await browser
-			.asControl({
-				selector: {
-					id: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders--edit"
-				}
-			})
-			.press();
+		await BaseClass.pressById("ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders--edit");
 	});
 
-	it("Open ExcelUpload Dialog V2", async () => {
-		await browser
-			.asControl({
-				selector: {
-					id: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders--action::excelUploadButton"
-				}
-			})
-			.press();
+	it("Open ExcelUpload Dialog", async () => {
+		await BaseClass.pressById("ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders--action::excelUploadButton");
 		const excelUploadDialog = await browser.asControl({
 			selector: {
 				controlType: "sap.m.Dialog",
@@ -127,72 +80,32 @@ describe("Open Excel Upload dialog", () => {
 	});
 
 	it("execute save", async () => {
-		await browser
-			.asControl({
-				selector: {
-					id: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders--activate"
-				}
-			})
-			.press();
+		await BaseClass.pressById("ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders--activate");
 	});
 
 	it("go to Sub Detail Page", async () => {
-		const table = await browser.asControl({
-			selector: {
-				interaction: "root",
-				id: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders--Items::com.sap.vocabularies.UI.v1.LineItem::responsiveTable"
-			}
-		});
-		const items = await table.getItems();
-		const rootBinding = await table.getBindingContext();
-		const rootPath = await rootBinding.getPath();
-		for (let index = 0; index < items.length; index++) {
-			const element = items[index];
-			const binding = await element.getBindingContext();
-			const object = await binding.getObject();
-			if (object.product_ID === "254") {
-				try {
-					const path = binding.sPath;
-					await browser.goTo({ sHash: `#${rootPath}${path}` });
-				} catch (error) {
-					console.log(error);
-				}
-				break;
-			}
-		}
+		const hash = await FE.getRoutingHash(
+			"ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders--Items::com.sap.vocabularies.UI.v1.LineItem::responsiveTable",
+			"product_ID",
+			"254"
+		);
+		await browser.goTo({ sHash: hash });
 		// force wait to stabelize tests
-		try {
-			await $("filtekuzfutkfk424214").waitForExist({ timeout: 1000 });
-		} catch (error) {}
+		await BaseClass.dummyWait(1000);
 	});
 
 	it("check Field: Quantity", async () => {
-		const field = await browser.asControl({
-			selector: {
-				id: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::OrderItems--com.sap.vocabularies.UI.v1.Identification::quantity::Field"
-			}
-		});
-		const value = await field.getText();
+		const value = await FE.getFieldValue("quantity");
 		expect(value).toBe("3");
 	});
 
 	it("check Field: Product", async () => {
-		const field = await browser.asControl({
-			selector: {
-				id: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::OrderItems--com.sap.vocabularies.UI.v1.Identification::title::Field"
-			}
-		});
-		const value = await field.getText();
+		const value = await FE.getFieldValue("title");
 		expect(value).toBe("Product Test 2");
 	});
 
 	it("check Field: UnitPrice", async () => {
-		const field = await browser.asControl({
-			selector: {
-				id: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::OrderItems--com.sap.vocabularies.UI.v1.Identification::price::Field"
-			}
-		});
-		const value = await field.getText();
+		const value = await FE.getFieldValue("price");
 		expect(value).toBe("13.7");
 	});
 
@@ -263,12 +176,7 @@ describe("Open Excel Upload dialog", () => {
 	});
 
 	it("check Field: time", async () => {
-		const field = await browser.asControl({
-			selector: {
-				id: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::OrderItems--com.sap.vocabularies.UI.v1.Identification::time::Field"
-			}
-		});
-		const value = await field.getText();
+		const value = await FE.getFieldValue("time");
 		expect(value).toBe("4:00:00 PM");
 	});
 });

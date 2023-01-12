@@ -15,6 +15,7 @@ const specs = testappObject["testMapping"]["specs"];
 const port = testappObject.port;
 
 module.exports.config = {
+	scenario: scenario,
 	specs: specs,
 	exclude: [
 		// 'path/to/excluded/files'
