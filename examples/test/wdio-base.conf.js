@@ -1,7 +1,14 @@
 const util = require("./../../dev/util");
 
-const scenario = process.argv[5];
-const version = process.argv[6];
+let scenario = process.argv[5];
+let version = 0;
+if (scenario === "--headless") {
+	scenario = process.argv[6];
+	version = process.argv[7];
+} else {
+	version = process.argv[6];
+}
+
 console.log("start XXX");
 const testappObject = util.getTestappObject(scenario, version);
 console.log(testappObject);
