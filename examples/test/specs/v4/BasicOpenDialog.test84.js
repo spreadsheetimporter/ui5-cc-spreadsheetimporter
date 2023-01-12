@@ -23,21 +23,19 @@ describe("Open Excel Upload dialog", () => {
 		if (goButton._domId) {
 			await goButton.press();
 		} else {
-			const title = await browser
-				.asControl({
-					selector: {
-						id: "ui.v4.ordersv4fe::OrdersList--fe::ListReport-header"
-					}
-				})
-				await title.press();
-			
-			const goButtonExpanded = await browser
-				.asControl({
-					selector: {
-						id: "ui.v4.ordersv4fe::OrdersList--fe::FilterBar::Orders-btnSearch"
-					}
-				})
-				await goButtonExpanded.press();
+			const title = await browser.asControl({
+				selector: {
+					id: "ui.v4.ordersv4fe::OrdersList--fe::ListReport-header"
+				}
+			});
+			await title.press();
+
+			const goButtonExpanded = await browser.asControl({
+				selector: {
+					id: "ui.v4.ordersv4fe::OrdersList--fe::FilterBar::Orders-btnSearch"
+				}
+			});
+			await goButtonExpanded.press();
 		}
 	});
 
@@ -147,8 +145,9 @@ describe("Open Excel Upload dialog", () => {
 	});
 
 	it("go to Sub Detail Page", async () => {
+		const messageToastPromise = undefined;
 		try {
-			const messageToastPromise = $("filtekuzfutkfk424214").waitForExist({ timeout: 4000 });
+			messageToastPromise = $("filtekuzfutkfk424214").waitForExist({ timeout: 4000 });
 		} catch (error) {}
 		const table = await browser.asControl({
 			selector: {

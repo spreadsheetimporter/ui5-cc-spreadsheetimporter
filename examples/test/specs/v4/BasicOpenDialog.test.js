@@ -23,21 +23,19 @@ describe("Open Excel Upload dialog", () => {
 		if (goButton._domId) {
 			await goButton.press();
 		} else {
-			const title = await browser
-				.asControl({
-					selector: {
-						id: "ui.v4.ordersv4fe::OrdersList--fe::ListReport-header"
-					}
-				})
-				await title.press();
-			
-			const goButtonExpanded = await browser
-				.asControl({
-					selector: {
-						id: "ui.v4.ordersv4fe::OrdersList--fe::FilterBar::Orders-btnSearch"
-					}
-				})
-				await goButtonExpanded.press();
+			const title = await browser.asControl({
+				selector: {
+					id: "ui.v4.ordersv4fe::OrdersList--fe::ListReport-header"
+				}
+			});
+			await title.press();
+
+			const goButtonExpanded = await browser.asControl({
+				selector: {
+					id: "ui.v4.ordersv4fe::OrdersList--fe::FilterBar::Orders-btnSearch"
+				}
+			});
+			await goButtonExpanded.press();
 		}
 	});
 
@@ -147,8 +145,9 @@ describe("Open Excel Upload dialog", () => {
 	});
 
 	it("go to Sub Detail Page", async () => {
+		const messageToastPromise = undefined;
 		try {
-			const messageToastPromise = $("filtekuzfutkfk424214").waitForExist({ timeout: 4000 });
+			messageToastPromise = $("filtekuzfutkfk424214").waitForExist({ timeout: 4000 });
 		} catch (error) {}
 		const table = await browser.asControl({
 			selector: {
@@ -163,7 +162,7 @@ describe("Open Excel Upload dialog", () => {
 			const object = await binding.getObject();
 			if (object.product_ID === "254") {
 				const $element = await element.getWebElement();
-				await $element.scrollIntoView()
+				await $element.scrollIntoView();
 				try {
 					// wait for message toast
 					await messageToastPromise;
@@ -200,7 +199,6 @@ describe("Open Excel Upload dialog", () => {
 		const field = await browser.asControl({
 			selector: {
 				id: "ui.v4.ordersv4fe::Orders_ItemsObjectPage--fe::FormContainer::Identification::FormElement::DataField::title::Field-content"
-
 			}
 		});
 		const contentDisplay = await field.getContentDisplay();
@@ -227,7 +225,7 @@ describe("Open Excel Upload dialog", () => {
 		});
 		const binding = await field.getBindingContext();
 		const object = await binding.getObject();
-		const date = new Date(object.validFrom)
+		const date = new Date(object.validFrom);
 		const formattedDate = await date.toLocaleString("en-US", optionsLong);
 		// check printend value
 		const contentDisplay = await field.getContentDisplay();
@@ -243,7 +241,7 @@ describe("Open Excel Upload dialog", () => {
 		});
 		const binding = await field.getBindingContext();
 		const object = await binding.getObject();
-		const date = new Date(object.timestamp)
+		const date = new Date(object.timestamp);
 		const formattedDate = await date.toLocaleString("en-US", optionsLong);
 		// check printend value
 		const contentDisplay = await field.getContentDisplay();
@@ -259,7 +257,7 @@ describe("Open Excel Upload dialog", () => {
 		});
 		const binding = await field.getBindingContext();
 		const object = await binding.getObject();
-		const date = new Date(object.date)
+		const date = new Date(object.date);
 		const formattedDate = await date.toLocaleString("en-US", optionsShort);
 		// check printend value
 		const contentDisplay = await field.getContentDisplay();
