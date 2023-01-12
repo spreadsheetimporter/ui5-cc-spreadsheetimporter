@@ -8,6 +8,10 @@ if (scenario === "--headless") {
 } else {
 	version = process.argv[6];
 }
+if (process.argv.length === 6) {
+	scenario = process.argv[4];
+	version = process.argv[5];
+}
 
 console.log("start XXX");
 const testappObject = util.getTestappObject(scenario, version);
