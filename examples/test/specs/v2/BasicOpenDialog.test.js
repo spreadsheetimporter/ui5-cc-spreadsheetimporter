@@ -19,27 +19,27 @@ describe("Open Excel Upload dialog", () => {
 	});
 	it("should trigger search on ListReport page", async () => {
 		try {
-			await BaseClass.pressById("ui.v2.ordersv2fe::sap.suite.ui.generic.template.ListReport.view.ListReport::Orders--listReportFilter-btnGo");
+			await BaseClass.pressById(FE.listReportGoButton);
 		} catch (error) {
-			await BaseClass.pressById("ui.v2.ordersv2fe::sap.suite.ui.generic.template.ListReport.view.ListReport::Orders--template:::ListReportPage:::DynamicPageTitle");
+			await BaseClass.pressById(FE.listReportDynamicPageTitle);
 			await BaseClass.dummyWait(500);
-			await BaseClass.pressById("ui.v2.ordersv2fe::sap.suite.ui.generic.template.ListReport.view.ListReport::Orders--listReportFilter-btnGo");
+			await BaseClass.pressById(FE.listReportGoButton);
 		}
 	});
 
 	it("go to object page", async () => {
-		const hash = await FE.getRoutingHash("ui.v2.ordersv2fe::sap.suite.ui.generic.template.ListReport.view.ListReport::Orders--responsiveTable", "OrderNo", "2");
+		const hash = await FE.getRoutingHash(FE.listReportTable, FE.navToObjectPageAttribute, FE.navToObjectPageValue);
 		await browser.goTo({ sHash: hash });
 		// force wait to stabelize tests
 		await BaseClass.dummyWait(1000);
 	});
 
 	it("go to edit mode", async () => {
-		await BaseClass.pressById("ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders--edit");
+		await BaseClass.pressById(FE.objectPageEditButton);
 	});
 
 	it("Open ExcelUpload Dialog", async () => {
-		await BaseClass.pressById("ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders--action::excelUploadButton");
+		await BaseClass.pressById(FE.objectPageExceluploadButton);
 		const excelUploadDialog = await browser.asControl({
 			selector: {
 				controlType: "sap.m.Dialog",
@@ -81,15 +81,11 @@ describe("Open Excel Upload dialog", () => {
 	});
 
 	it("execute save", async () => {
-		await BaseClass.pressById("ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders--activate");
+		await BaseClass.pressById(FE.objectPageSaveButton);
 	});
 
 	it("go to Sub Detail Page", async () => {
-		const hash = await FE.getRoutingHash(
-			"ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders--Items::com.sap.vocabularies.UI.v1.LineItem::responsiveTable",
-			"product_ID",
-			"254"
-		);
+		const hash = await FE.getRoutingHash(FE.objectPageOrderItems, FE.navToSubObjectPageAttribute, FE.navToSubObjectPageValue, true);
 		await browser.goTo({ sHash: hash });
 		// force wait to stabelize tests
 		await BaseClass.dummyWait(1000);
@@ -111,69 +107,18 @@ describe("Open Excel Upload dialog", () => {
 	});
 
 	it("check Field: validFrom", async () => {
-		const selector = {
-			selector: {
-				controlType: "sap.ui.comp.smartform.GroupElement",
-				descendant: {
-					controlType: "sap.ui.comp.smartfield.SmartLabel",
-					properties: {
-						text: "validFrom"
-					}
-				}
-			}
-		};
-		const formElement = await browser.asControl(selector);
-		const fields = await formElement.getFields();
-		const field = fields[0];
-		const binding = await field.getBinding("text");
-		const date = await binding.getValue();
-		const formattedDate = await date.toLocaleString("en-US", optionsLong);
-		const valueText = await field.getText();
-		expect(valueText).toBe(formattedDate);
+		const returnObject = await FE.getDateFields("validFrom", optionsLong);
+		expect(returnObject.valueText).toBe(returnObject.formattedDate);
 	});
 
 	it("check Field: timestamp", async () => {
-		const selector = {
-			selector: {
-				controlType: "sap.ui.comp.smartform.GroupElement",
-				descendant: {
-					controlType: "sap.ui.comp.smartfield.SmartLabel",
-					properties: {
-						text: "timestamp"
-					}
-				}
-			}
-		};
-		const formElement = await browser.asControl(selector);
-		const fields = await formElement.getFields();
-		const field = fields[0];
-		const binding = await field.getBinding("text");
-		const date = await binding.getValue();
-		const formattedDate = await date.toLocaleString("en-US", optionsLong);
-		const valueText = await field.getText();
-		expect(valueText).toBe(formattedDate);
+		const returnObject = await FE.getDateFields("timestamp", optionsLong);
+		expect(returnObject.valueText).toBe(returnObject.formattedDate);
 	});
 
 	it("check Field: date", async () => {
-		const selector = {
-			selector: {
-				controlType: "sap.ui.comp.smartform.GroupElement",
-				descendant: {
-					controlType: "sap.ui.comp.smartfield.SmartLabel",
-					properties: {
-						text: "date"
-					}
-				}
-			}
-		};
-		const formElement = await browser.asControl(selector);
-		const fields = await formElement.getFields();
-		const field = fields[0];
-		const binding = await field.getBinding("text");
-		const date = await binding.getValue();
-		const formattedDate = await date.toLocaleString("en-US", optionsShort);
-		const valueText = await field.getText();
-		expect(valueText).toBe(formattedDate);
+		const returnObject = await FE.getDateFields("date", optionsShort);
+		expect(returnObject.valueText).toBe(returnObject.formattedDate);
 	});
 
 	it("check Field: time", async () => {

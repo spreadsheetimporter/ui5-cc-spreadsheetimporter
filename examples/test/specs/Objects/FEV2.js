@@ -4,6 +4,22 @@ const FE = require("./FE");
 class FEV2 {
 	constructor() {
 		this.BaseClass = new Base();
+		this.rootId = "ui.v2.ordersv2fe::sap.suite.ui.generic.template.";
+		this.listReportId = this.rootId + "ListReport.view.ListReport::Orders--";
+		this.objectPageId = this.rootId + "ObjectPage.view.Details::Orders--";
+		this.listReportGoButton = this.listReportId + "listReportFilter-btnGo";
+		this.listReportDynamicPageTitle = this.listReportId + "template:::ListReportPage:::DynamicPageTitle";
+		this.listReportTable = this.listReportId + "responsiveTable";
+		this.objectPageEditButton = this.objectPageId + "edit";
+		this.objectPageExceluploadButton = this.objectPageId + "action::excelUploadButton";
+		this.objectPageSaveButton = this.objectPageId + "activate";
+		this.objectPageOrderItems = this.objectPageId + "Items::com.sap.vocabularies.UI.v1.LineItem::responsiveTable";
+		// nav to sub object page
+		this.navToObjectPageAttribute = "OrderNo";
+		this.navToObjectPageValue = "2";
+		// nav to sub object page
+		this.navToSubObjectPageAttribute = "product_ID";
+		this.navToSubObjectPageValue = "254";
 	}
 	async getFieldValue(fieldName) {
 		let value = "";
@@ -12,22 +28,22 @@ class FEV2 {
 		);
 		const dataType = await field.getDataType();
 		value = await field.getValue();
+		// only for V2 71
 		if (dataType === "Edm.Time" && value.ms) {
 			value = this.getTimeValue(value.ms);
-		} else {
 		}
 
 		return value.toString();
 	}
 
-	async getRoutingHash(tableId, objectAttribute, objectValue) {
+	async getRoutingHash(tableId, objectAttribute, objectValue, rootPathBool) {
 		const table = await this.BaseClass.getControlById(tableId);
 		const items = await table.getItems();
 		const rootBinding = await table.getBindingContext();
 		let rootPath = "";
-		try {
+		if (rootPathBool) {
 			rootPath = await rootBinding.getPath();
-		} catch (error) {}
+		}
 		for (let index = 0; index < items.length; index++) {
 			const element = items[index];
 			const binding = await element.getBindingContext();
@@ -37,6 +53,28 @@ class FEV2 {
 				return `#${rootPath}${path}`;
 			}
 		}
+	}
+
+	async getDateFields(attribute, options) {
+		const selector = {
+			selector: {
+				controlType: "sap.ui.comp.smartform.GroupElement",
+				descendant: {
+					controlType: "sap.ui.comp.smartfield.SmartLabel",
+					properties: {
+						text: attribute
+					}
+				}
+			}
+		};
+		const formElement = await browser.asControl(selector);
+		const fields = await formElement.getFields();
+		const field = fields[0];
+		const binding = await field.getBinding("text");
+		const date = await binding.getValue();
+		const formattedDate = await date.toLocaleString("en-US", options);
+		const valueText = await field.getText();
+		return { valueText: valueText, formattedDate: formattedDate };
 	}
 
 	getTimeValue(ms) {
