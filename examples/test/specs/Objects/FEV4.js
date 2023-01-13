@@ -7,7 +7,7 @@ class FEV4 {
 		const field = await Base.getControlById(`ui.v4.ordersv4fe::Orders_ItemsObjectPage--fe::FormContainer::Identification::FormElement::DataField::${fieldName}::Field-content`);
 		const contentDisplay = await field.getContentDisplay();
 		const value = await contentDisplay.getText();
-		return value;
+		return value.toString();
 	}
 
 	async getRoutingHash(tableId, objectAttribute, objectValue) {

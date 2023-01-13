@@ -11,6 +11,7 @@ class Base {
 	}
 	async pressById(id) {
 		const object = await browser.asControl({
+			forceSelect: true,
 			selector: {
 				id: id
 			}

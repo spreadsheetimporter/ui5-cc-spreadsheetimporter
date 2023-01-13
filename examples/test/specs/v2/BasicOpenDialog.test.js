@@ -22,6 +22,7 @@ describe("Open Excel Upload dialog", () => {
 			await BaseClass.pressById("ui.v2.ordersv2fe::sap.suite.ui.generic.template.ListReport.view.ListReport::Orders--listReportFilter-btnGo");
 		} catch (error) {
 			await BaseClass.pressById("ui.v2.ordersv2fe::sap.suite.ui.generic.template.ListReport.view.ListReport::Orders--template:::ListReportPage:::DynamicPageTitle");
+			await BaseClass.dummyWait(500);
 			await BaseClass.pressById("ui.v2.ordersv2fe::sap.suite.ui.generic.template.ListReport.view.ListReport::Orders--listReportFilter-btnGo");
 		}
 	});

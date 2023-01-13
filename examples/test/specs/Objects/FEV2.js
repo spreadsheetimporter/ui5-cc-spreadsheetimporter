@@ -6,11 +6,18 @@ class FEV2 {
 		this.BaseClass = new Base();
 	}
 	async getFieldValue(fieldName) {
+		let value = "";
 		const field = await this.BaseClass.getControlById(
 			`ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::OrderItems--com.sap.vocabularies.UI.v1.Identification::${fieldName}::Field`
 		);
-		const value = await field.getValue();
-		return value;
+		const dataType = await field.getDataType();
+		value = await field.getValue();
+		if (dataType === "Edm.Time") {
+			value = this.getTimeValue(value.ms);
+		} else {
+		}
+
+		return value.toString();
 	}
 
 	async getRoutingHash(tableId, objectAttribute, objectValue) {
@@ -30,6 +37,19 @@ class FEV2 {
 				return `#${rootPath}${path}`;
 			}
 		}
+	}
+
+	getTimeValue(ms) {
+		var date = new Date(ms);
+		var hours = Math.floor(ms / (1000 * 60 * 60)) % 24;
+		var minutes = Math.floor(ms / (1000 * 60)) % 60;
+		var seconds = Math.floor(ms / 1000) % 60;
+		var ampm = hours >= 12 ? "PM" : "AM";
+		hours = hours % 12;
+		hours = hours ? hours : 12; // the hour '0' should be '12'
+		minutes = minutes < 10 ? "0" + minutes : minutes;
+		seconds = seconds < 10 ? "0" + seconds : seconds;
+		return hours + ":" + minutes + ":" + seconds + " " + ampm;
 	}
 }
 module.exports = FEV2;
