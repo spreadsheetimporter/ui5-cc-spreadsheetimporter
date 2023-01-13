@@ -12,7 +12,7 @@ class FEV2 {
 		);
 		const dataType = await field.getDataType();
 		value = await field.getValue();
-		if (dataType === "Edm.Time") {
+		if (dataType === "Edm.Time" && value.ms) {
 			value = this.getTimeValue(value.ms);
 		} else {
 		}
