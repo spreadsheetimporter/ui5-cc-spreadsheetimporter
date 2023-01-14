@@ -112,7 +112,7 @@
         "port": "8097",
         "appTitel": "Orders V4 FE 96",
         "testMapping": {
-          "specs": ["./test/specs/v4/**/*.test.js"]
+          "specs": ["./test/specs/v2/**/*.test.js"]
         }
       },
       {
@@ -121,7 +121,7 @@
         "port": "8098",
         "appTitel": "Orders V4 FE 84",
         "testMapping": {
-          "specs": ["./test/specs/v4/**/*.test84.js"]
+          "specs": ["./test/specs/v2/**/*.test.js"]
         }
       },
       {
@@ -130,7 +130,7 @@
         "port": "8099",
         "appTitel": "Orders V4 FE 71",
         "testMapping": {
-          "specs": ["./test/specs/v4/**/*.test.js"]
+          "specs": ["./test/specs/v2/**/*.test.js"]
         }
       }
     ]

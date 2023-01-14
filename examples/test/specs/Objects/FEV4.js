@@ -22,25 +22,39 @@ class FEV4 {
 		this.navToSubObjectPageValue = "254";
 	}
 	async getFieldValue(fieldName) {
-		const field = await this.BaseClass.getControlById(`ui.v4.ordersv4fe::Orders_ItemsObjectPage--fe::FormContainer::Identification::FormElement::DataField::${fieldName}::Field-content`);
-		const contentDisplay = await field.getContentDisplay();
-		const value = await contentDisplay.getText();
-		return value.toString();
+		const field = await this.BaseClass.getControlById(`ui.v4.ordersv4fe::Orders_ItemsObjectPage--fe::FormContainer::Identification::FormElement::DataField::${fieldName}::Field`);
+		let valueText = ""
+		try {
+			// const content = await field.getContent()
+			const contentDisplay = await field.getContentDisplay();
+		    valueText = await contentDisplay.getText();
+		} catch (error) {
+			// only for version 84
+			valueText = await field.getText()
+		}
+		return valueText.toString();
 	}
 
 	async getDateFields(attribute, options) {
 		const field = await browser.asControl({
 			selector: {
-				id: `ui.v4.ordersv4fe::Orders_ItemsObjectPage--fe::FormContainer::Identification::FormElement::DataField::${attribute}::Field-content`
+				id: `ui.v4.ordersv4fe::Orders_ItemsObjectPage--fe::FormContainer::Identification::FormElement::DataField::${attribute}::Field`
 			}
 		});
 		const binding = await field.getBindingContext();
 		const object = await binding.getObject();
-		const date = new Date(object.validFrom);
+		const date = new Date(object[attribute]);
 		const formattedDate = await date.toLocaleString("en-US", options);
 		// check printend value
-		const contentDisplay = await field.getContentDisplay();
-		const valueText = await contentDisplay.getText();
+		let valueText = ""
+		try {
+			// const content = await field.getContent()
+			const contentDisplay = await field.getContentDisplay();
+		    valueText = await contentDisplay.getText();
+		} catch (error) {
+			// only for version 84
+			valueText = await field.getText()
+		}
 		return { valueText: valueText, formattedDate: formattedDate };
 	}
 
