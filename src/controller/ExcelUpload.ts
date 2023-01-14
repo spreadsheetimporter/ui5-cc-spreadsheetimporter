@@ -207,7 +207,7 @@ export default class ExcelUpload {
 	}
 
 	onCloseDialog(oEvent) {
-		this.dialog.destroy();
+		this.dialog.close();
 	}
 	onCloseErrorDialog(oEvent) {
 		this.errorDialog.close();

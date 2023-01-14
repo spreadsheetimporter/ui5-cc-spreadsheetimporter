@@ -21,7 +21,8 @@
     "start:uiv2freestyle": "pnpm --filter ordersv2freestyle start",
     "start:uiv4fpm": "pnpm --filter ordersv4fpm start",
     "watch:server": "pnpm --filter @capire/orders watch",
-    "test": "wdio run ./test/wdio-base.conf.js"
+    "test": "wdio run ./test/wdio-base.conf.js",
+    "test:single" :"npm run test -- ordersv2fe  96 --spec OpenExcelDialog"
   },
   "devDependencies": {
     "@wdio/cli": "^7.29.1",
