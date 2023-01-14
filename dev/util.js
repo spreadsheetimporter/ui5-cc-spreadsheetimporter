@@ -1,5 +1,6 @@
 const replace = require("replace-in-file");
 const fs = require("fs");
+const path = require('path')
 
 function copyDirectorySync(src, dest, excludedFolder) {
 	const files = fs.readdirSync(src);
@@ -101,6 +102,35 @@ function searchAndReplace(inputFile, search, replace) {
 	fs.writeFileSync(inputFile, result, "utf8");
 }
 
+function getTestappObject(scenario,version){
+	const testApps = fs.readFileSync(path.resolve(__dirname, 'testapps.json'), 'UTF-8');
+	// const testApps = fs.readFileSync("./dev/testapps.json", "utf8");
+	let json_data = JSON.parse(testApps);
+	version = parseInt(version)
+
+	for (let index = 0; index < json_data.length; index++) {
+		const element = json_data[index];
+		if(element.rootAppName === scenario){
+			const rootObject = element;
+			if(rootObject.versionMinor === version){
+				return rootObject;
+			} else {
+				const rootVersions = rootObject.copyVersions
+				for (let index = 0; index < rootVersions.length; index++) {
+					const subObject = rootVersions[index];
+					if(subObject.versionMinor === version){
+						return subObject;
+					}
+				}
+			}
+			break;
+		}
+	}
+	
+
+
+}
+
 
 module.exports.getPackageJson = getPackageJson;
 module.exports.getVersionDots = getVersionDots;
@@ -111,3 +141,4 @@ module.exports.replaceYamlFile = replaceYamlFile;
 module.exports.copyDirectorySync = copyDirectorySync;
 module.exports.deleteFolderRecursive = deleteFolderRecursive;
 module.exports.searchAndReplace = searchAndReplace;
+module.exports.getTestappObject = getTestappObject;

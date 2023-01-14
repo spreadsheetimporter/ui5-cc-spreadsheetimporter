@@ -2,32 +2,56 @@
   {
     "rootAppName": "ordersv2fe",
     "appTitel": "Orders V2 FE 108",
-    "port" : "8081",
+    "port": "8081",
     "versionMinor": 108,
+    "testMapping": {
+      "specs": [
+        "./test/specs/UploadFileListReport.test.js",
+        "./test/specs/UploadFileObjectPage.test.js"
+      ]
+    },
     "copyVersions": [
       {
         "version": "1.96.16",
         "versionMinor": 96,
         "port": "8090",
-        "appTitel": "Orders V2 FE 96"
+        "appTitel": "Orders V2 FE 96",
+        "testMapping": {
+          "specs": [
+            "./test/specs/UploadFileListReport.test.js",
+        "./test/specs/UploadFileObjectPage.test.js"
+          ]
+        }
       },
       {
         "version": "1.84.31",
         "versionMinor": 84,
         "port": "8091",
-        "appTitel": "Orders V2 FE 84"
+        "appTitel": "Orders V2 FE 84",
+        "testMapping": {
+          "specs": [
+            "./test/specs/UploadFileListReport.test.js",
+        "./test/specs/UploadFileObjectPage.test.js"
+          ]
+        }
       },
       {
         "version": "1.71.53",
         "versionMinor": 71,
         "port": "8092",
-        "appTitel": "Orders V2 FE 71"
+        "appTitel": "Orders V2 FE 71",
+        "testMapping": {
+          "specs": [
+            "./test/specs/UploadFileListReport.test.js",
+        "./test/specs/UploadFileObjectPage.test.js"
+          ]
+        }
       }
     ]
   },
   {
     "rootAppName": "ordersv2fenondraft",
-    "port" : "8083",
+    "port": "8083",
     "versionMinor": 108,
     "appTitel": "Orders V2 FE ND 108",
     "copyVersions": [
@@ -53,7 +77,7 @@
   },
   {
     "rootAppName": "ordersv2freestyle",
-    "port" : "8082",
+    "port": "8082",
     "versionMinor": 108,
     "appTitel": "Orders V2 FS 108",
     "copyVersions": [
@@ -79,33 +103,57 @@
   },
   {
     "rootAppName": "ordersv4fe",
-    "port" : "8080",
+    "port": "8080",
     "versionMinor": 108,
     "appTitel": "Orders V4 FE 108",
+    "testMapping": {
+      "specs": [
+        "./test/specs/UploadFileListReport.test.js",
+        "./test/specs/UploadFileObjectPage.test.js"
+      ]
+    },
     "copyVersions": [
       {
         "version": "1.96.16",
         "versionMinor": 96,
         "port": "8097",
-        "appTitel": "Orders V4 FE 96"
+        "appTitel": "Orders V4 FE 96",
+        "testMapping": {
+          "specs": [
+        "./test/specs/UploadFileListReport.test.js",
+        "./test/specs/UploadFileObjectPage.test.js"
+      ]
+        }
       },
       {
         "version": "1.84.31",
         "versionMinor": 84,
         "port": "8098",
-        "appTitel": "Orders V4 FE 84"
+        "appTitel": "Orders V4 FE 84",
+        "testMapping": {
+          "specs": [
+        "./test/specs/UploadFileListReport.test.js",
+        "./test/specs/UploadFileObjectPage.test.js"
+      ]
+        }
       },
       {
         "version": "1.71.53",
         "versionMinor": 71,
         "port": "8099",
-        "appTitel": "Orders V4 FE 71"
+        "appTitel": "Orders V4 FE 71",
+        "testMapping": {
+          "specs": [
+        "./test/specs/UploadFileListReport.test.js",
+        "./test/specs/UploadFileObjectPage.test.js"
+      ]
+        }
       }
     ]
   },
   {
     "rootAppName": "ordersv4fpm",
-    "port" : "8084",
+    "port": "8084",
     "versionMinor": 108,
     "appTitel": "Orders V4 FPM 108",
     "copyVersions": [
