@@ -61,6 +61,20 @@ class FEV2 {
 		}
 	}
 
+	async getTableObject(tableId, objectAttribute, objectValue) {
+		const table = await this.BaseClass.getControlById(tableId);
+		const items = await table.getItems();
+		const rootBinding = await table.getBindingContext();
+		for (let index = 0; index < items.length; index++) {
+			const element = items[index];
+			const binding = await element.getBindingContext();
+			const object = await binding.getObject();
+			if (object[objectAttribute] === objectValue) {
+				return object
+			}
+		}
+	}
+
 	async getDateFields(attribute, options) {
 		const selector = {
 			selector: {

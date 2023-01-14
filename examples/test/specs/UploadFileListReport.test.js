@@ -70,8 +70,8 @@ describe("Upload File List Report", () => {
 		await BaseClass.dummyWait(500);
 	});
 
-	it("go to object page", async () => {
-		const hash = await FE.getRoutingHash(FE.listReportTable, FE.checkFileuploadListreportAttribute, FE.checkFileuploadListreportValue);
-		expect(hash).not.toBe(undefined);
+	it("entry created and activated", async () => {
+		const object = await FE.getTableObject(FE.listReportTable, FE.checkFileuploadListreportAttribute, FE.checkFileuploadListreportValue);
+		expect(hash).toBeTruthy(object.IsActiveEntity)
 	});
 });
