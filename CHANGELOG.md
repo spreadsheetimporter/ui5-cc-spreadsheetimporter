@@ -1,3 +1,23 @@
+# [0.6.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.3.4...v0.6.0) (2023-01-14)
+
+
+### Bug Fixes
+
+* open excel dialog twice again ([#20](https://github.com/marianfoo/ui5-cc-excelUpload/issues/20)) ([7a37483](https://github.com/marianfoo/ui5-cc-excelUpload/commit/7a37483d93f07e7b9a9c72ab774a045a06d2766d))
+
+
+### Features
+
+Created compatibility and wdi5 tests for List Report and Object Page in Draft Mode for OData V2 (Versions 108,96,84,71) and OData V4 (Versions 108,96,84)  
+More info see [Supported Versions](https://marianfoo.github.io/ui5-cc-excelUpload/pages/SupportVersions/)
+
+* compatibility/wdi5 tests with v2 FE 96/84/71 ([3f010d9](https://github.com/marianfoo/ui5-cc-excelUpload/commit/3f010d9a1a360702972552b647f8f20368d72640))
+* support for v4 96/84 ([#16](https://github.com/marianfoo/ui5-cc-excelUpload/issues/16)) ([109813f](https://github.com/marianfoo/ui5-cc-excelUpload/commit/109813f8e20acc16d351da04c80b0208b90008c7))
+* working in Draft List Report V2/V4 ([#17](https://github.com/marianfoo/ui5-cc-excelUpload/issues/17)) ([cc07d38](https://github.com/marianfoo/ui5-cc-excelUpload/commit/cc07d387e8af2afb45877887911a68f726945646))
+* works in ListReport/ObjectPage V4/V2 and Freestyle V2([#10](https://github.com/marianfoo/ui5-cc-excelUpload/issues/10)) ([d9432d2](https://github.com/marianfoo/ui5-cc-excelUpload/commit/d9432d25142addd8ff7fbe804f9a832692588ef4))
+
+
+
 # [0.5.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.3.4...v0.5.0) (2023-01-04)
 
 

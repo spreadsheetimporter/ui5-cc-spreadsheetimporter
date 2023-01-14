@@ -93,7 +93,7 @@
       "css": []
     },
     "resourceRoots": {
-      "cc.excelUpload": "./thirdparty/customControl/excelUpload/v0/5/0"
+      "cc.excelUpload": "./thirdparty/customControl/excelUpload/v0/6/0"
     },
     "routing": {
       "config": {},
