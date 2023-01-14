@@ -8,18 +8,24 @@ class FEV2 {
 		this.listReportId = this.rootId + "ListReport.view.ListReport::Orders--";
 		this.objectPageId = this.rootId + "ObjectPage.view.Details::Orders--";
 		this.listReportGoButton = this.listReportId + "listReportFilter-btnGo";
+		this.listReportExceluploadButton = this.listReportId + "action::excelUploadButton";
 		this.listReportDynamicPageTitle = this.listReportId + "template:::ListReportPage:::DynamicPageTitle";
 		this.listReportTable = this.listReportId + "responsiveTable";
 		this.objectPageEditButton = this.objectPageId + "edit";
 		this.objectPageExceluploadButton = this.objectPageId + "action::excelUploadButton";
 		this.objectPageSaveButton = this.objectPageId + "activate";
 		this.objectPageOrderItems = this.objectPageId + "Items::com.sap.vocabularies.UI.v1.LineItem::responsiveTable";
+		this.listReportUploadFilename = "test/testFiles/ListReportOrdersNoErrosV2.xlsx"
 		// nav to sub object page
 		this.navToObjectPageAttribute = "OrderNo";
 		this.navToObjectPageValue = "2";
 		// nav to sub object page
 		this.navToSubObjectPageAttribute = "product_ID";
 		this.navToSubObjectPageValue = "254";
+		// check file upload list report
+		this.checkFileuploadListreportAttribute = "OrderNo";
+		this.checkFileuploadListreportValue = "4";
+
 	}
 	async getFieldValue(fieldName) {
 		let value = "";

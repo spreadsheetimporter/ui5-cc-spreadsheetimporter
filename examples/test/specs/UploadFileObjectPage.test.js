@@ -1,12 +1,12 @@
-const Base = require("../Objects/Base");
-const FEV2 = require("../Objects/FEV2");
-const FEV4 = require("../Objects/FEV4");
-const { optionsLong, optionsShort } = require("../Objects/types");
+const Base = require("./Objects/Base");
+const FEV2 = require("./Objects/FEV2");
+const FEV4 = require("./Objects/FEV4");
+const { optionsLong, optionsShort } = require("./Objects/types");
 
 let FE = undefined;
 let BaseClass = undefined;
 
-describe("Open Excel Upload dialog", () => {
+describe("Upload File Object Page", () => {
 	before(async () => {
 		BaseClass = new Base();
 		const scenario = browser.config.scenario;

@@ -6,7 +6,8 @@
     "versionMinor": 108,
     "testMapping": {
       "specs": [
-        "./test/specs/v2/**/*.test.js"
+        "./test/specs/UploadFileListReport.test.js",
+        "./test/specs/UploadFileObjectPage.test.js"
       ]
     },
     "copyVersions": [
@@ -17,7 +18,8 @@
         "appTitel": "Orders V2 FE 96",
         "testMapping": {
           "specs": [
-            "./test/specs/v2/**/*.test.js"
+            "./test/specs/UploadFileListReport.test.js",
+        "./test/specs/UploadFileObjectPage.test.js"
           ]
         }
       },
@@ -28,7 +30,8 @@
         "appTitel": "Orders V2 FE 84",
         "testMapping": {
           "specs": [
-            "./test/specs/v2/**/*.test.js"
+            "./test/specs/UploadFileListReport.test.js",
+        "./test/specs/UploadFileObjectPage.test.js"
           ]
         }
       },
@@ -39,7 +42,8 @@
         "appTitel": "Orders V2 FE 71",
         "testMapping": {
           "specs": [
-            "./test/specs/v2/**/*.test.js"
+            "./test/specs/UploadFileListReport.test.js",
+        "./test/specs/UploadFileObjectPage.test.js"
           ]
         }
       }
@@ -103,7 +107,10 @@
     "versionMinor": 108,
     "appTitel": "Orders V4 FE 108",
     "testMapping": {
-      "specs": ["./test/specs/v2/**/*.test.js"]
+      "specs": [
+        "./test/specs/UploadFileListReport.test.js",
+        "./test/specs/UploadFileObjectPage.test.js"
+      ]
     },
     "copyVersions": [
       {
@@ -112,7 +119,10 @@
         "port": "8097",
         "appTitel": "Orders V4 FE 96",
         "testMapping": {
-          "specs": ["./test/specs/v2/**/*.test.js"]
+          "specs": [
+        "./test/specs/UploadFileListReport.test.js",
+        "./test/specs/UploadFileObjectPage.test.js"
+      ]
         }
       },
       {
@@ -121,7 +131,10 @@
         "port": "8098",
         "appTitel": "Orders V4 FE 84",
         "testMapping": {
-          "specs": ["./test/specs/v2/**/*.test.js"]
+          "specs": [
+        "./test/specs/UploadFileListReport.test.js",
+        "./test/specs/UploadFileObjectPage.test.js"
+      ]
         }
       },
       {
@@ -130,7 +143,10 @@
         "port": "8099",
         "appTitel": "Orders V4 FE 71",
         "testMapping": {
-          "specs": ["./test/specs/v2/**/*.test.js"]
+          "specs": [
+        "./test/specs/UploadFileListReport.test.js",
+        "./test/specs/UploadFileObjectPage.test.js"
+      ]
         }
       }
     ]

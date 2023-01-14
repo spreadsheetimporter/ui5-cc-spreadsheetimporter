@@ -8,18 +8,23 @@ class FEV4 {
 		this.listReportId = this.rootId + "OrdersList--fe::";
 		this.objectPageId = this.rootId + "OrdersObjectPage--fe::";
 		this.listReportGoButton = this.listReportId + "FilterBar::Orders-btnSearch";
+		this.listReportExceluploadButton = this.listReportId + "CustomAction::excelUploadListReport";
 		this.listReportDynamicPageTitle = this.listReportId + "ListReport-header";
 		this.listReportTable = this.listReportId + "table::Orders::LineItem-innerTable";
 		this.objectPageEditButton = this.objectPageId + "StandardAction::Edit";
 		this.objectPageExceluploadButton = this.objectPageId + "CustomAction::excelUpload";
 		this.objectPageSaveButton = this.objectPageId + "FooterBar::StandardAction::Save";
 		this.objectPageOrderItems = this.objectPageId + "table::Items::LineItem-innerTable";
+		this.listReportUploadFilename = "test/testFiles/ListReportOrdersNoErros.xlsx"
 		// nav to sub object page
 		this.navToObjectPageAttribute = "OrderNo";
 		this.navToObjectPageValue = "2";
 		// nav to sub object page
 		this.navToSubObjectPageAttribute = "product_ID";
 		this.navToSubObjectPageValue = "254";
+		// check file upload list report
+		this.checkFileuploadListreportAttribute = "OrderNo";
+		this.checkFileuploadListreportValue = "4";
 	}
 	async getFieldValue(fieldName) {
 		const field = await this.BaseClass.getControlById(`ui.v4.ordersv4fe::Orders_ItemsObjectPage--fe::FormContainer::Identification::FormElement::DataField::${fieldName}::Field`);
