@@ -32,16 +32,16 @@ Another overview shows which apps are already tested automatically with wdi5 and
 
 | UI5 Version  | List Report Draft  | List Report Non Draft  | Object Page Draft  | Object Page Non Draft  | Freestyle |
 |---|---|---|---|---|---|
-| 1.108  |    |   | :white_check_mark: |  |   |
-| 1.96  |   |   |  :white_check_mark: |   |   |
-|  1.84 |   |   |  :white_check_mark: |   |   |
-|  1.71 |   |   |  :white_check_mark: |   |   |
+| 1.108  | :white_check_mark:   |   | :white_check_mark: |  |   |
+| 1.96  | :white_check_mark:  |   |  :white_check_mark: |   |   |
+|  1.84 |  :white_check_mark: |   |  :white_check_mark: |   |   |
+|  1.71 | :white_check_mark:  |   |  :white_check_mark: |   |   |
 
 ### CAP V4
 
 | UI5 Version  | List Report Draft  | Object Page Draft  |  Freestyle | Flexible Programming Model |
 |---|---|---|---|---|
-| 1.108  |    | :white_check_mark: |  |  |
-| 1.96  |   | :white_check_mark:  |   |   |
-|  1.84 |   | :white_check_mark:  |   |   |
-|  1.71 |   | :white_check_mark:  |   |   |
+| 1.108  |  :white_check_mark:  | :white_check_mark: |  |  |
+| 1.96  | :white_check_mark:  | :white_check_mark:  |   |   |
+|  1.84 |  :white_check_mark: | :white_check_mark:  |   |   |
+|  1.71 |   |   |   |   |
