@@ -72,6 +72,6 @@ describe("Upload File List Report", () => {
 
 	it("entry created and activated", async () => {
 		const object = await FE.getTableObject(FE.listReportTable, FE.checkFileuploadListreportAttribute, FE.checkFileuploadListreportValue);
-		expect(hash).toBeTruthy(object.IsActiveEntity)
+		expect(object).toBeTruthy(object.IsActiveEntity)
 	});
 });

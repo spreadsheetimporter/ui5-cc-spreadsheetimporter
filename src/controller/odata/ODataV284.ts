@@ -6,8 +6,18 @@ export default class ODataV284 extends OData {
         super(ui5version);
     }
     create(model: any, binding: any, payload: any) {
-        // let context = binding.getModel().createEntry("/" + binding.oEntityType.name, { properties: payload });
-        let context = binding.getModel().createEntry(binding.sDeepPath, { properties: payload });
-		return context
+        const submitChangesPromise = (binding,payload) => {
+            return new Promise((resolve, reject) => {
+                let context = binding.getModel().createEntry(binding.sDeepPath, { properties: payload,
+                    success: (data) => {
+                        resolve(context);
+                    },
+                    error: (oError) => {
+                        reject(oError);
+                    },
+                });
+            });
+        };
+        return submitChangesPromise(binding,payload)
     }
 }
