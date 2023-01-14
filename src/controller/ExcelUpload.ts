@@ -13,11 +13,8 @@ import Event from "sap/ui/base/Event";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import ResourceBundle from "sap/base/i18n/ResourceBundle";
 import OData from "./odata/OData";
-import ODataV2108 from "./odata/ODataV2108";
-import ODataV296 from "./odata/ODataV296";
-import ODataV284 from "./odata/ODataV284";
-import ODataV271 from "./odata/ODataV271";
-import ODataV4108 from "./odata/ODataV4108";
+import ODataV2 from "./odata/ODataV2";
+import ODataV4 from "./odata/ODataV4";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
@@ -140,17 +137,10 @@ export default class ExcelUpload {
 
 	getODataHandler(version: number): OData {
 		if (this.isODataV4) {
-			return new ODataV4108(version);
-		}
-		if (version >= 108) {
-			return new ODataV2108(version);
-		} else if (version < 108 && version >= 96) {
-			return new ODataV296(version);
-		} else if (version < 96 && version >= 84) {
-			return new ODataV284(version);
-		} else if (version < 84) {
-			return new ODataV271(version);
-		}
+			return new ODataV4(version);
+		}else{
+			return new ODataV2(version);
+		} 
 	}
 
 	async openExcelUploadDialog() {
@@ -337,29 +327,8 @@ export default class ExcelUpload {
 					// createPromises.push(context.created());
 				} else {
 					let context;
-					if (this.UI5MinorVersion >= 108) {
-						const returnObject = this.odataHandler.create(model, binding, this.payload);
-						createContexts.push(returnObject.context);
-						createPromises.push(returnObject.promise);
-						// context = binding.create(this.payload, /*bAtEnd*/ true, { inactive: false, expand: "" });
-						// createContexts.push(context);
-						// createPromises.push(context.created());
-					}
-					if (this.UI5MinorVersion >= 96 && this.UI5MinorVersion < 108) {
-						const returnObject = this.odataHandler.create(model, binding, this.payload);
-						createContexts.push(returnObject.context);
-						createPromises.push(returnObject.promise);
-						// context = binding.create(this.payload);
-						// createContexts.push(context);
-						// createPromises.push(context.created());
-					}
-					if (this.UI5MinorVersion < 96) {
-						const returnObject = this.odataHandler.create(model, binding, this.payload);
-						// createContexts.push(returnObject);
-						createPromises.push(returnObject)
-						// context = binding.getModel().createEntry("/" + binding.oEntityType.name, { properties: this.payload });
-						// console.log(context);
-					}
+					const returnObject = this.odataHandler.create(model, binding, this.payload);
+					createPromises.push(returnObject);
 				}
 			}
 			// wait for all drafts to be created
@@ -382,12 +351,12 @@ export default class ExcelUpload {
 
 				try {
 					const oData = await submitChangesPromise(model);
-					console.log(oData)
+					console.log(oData);
 					// handle success
 				} catch (oError) {
 					// handle error
 				}
-				if (!this.isODataV4 && this.UI5MinorVersion < 96) {
+				if (!this.isODataV4 && this.UI5MinorVersion < 108) {
 					createContexts = await Promise.all(createPromises);
 				} else {
 					let resultsCreation = await Promise.all(createPromises);

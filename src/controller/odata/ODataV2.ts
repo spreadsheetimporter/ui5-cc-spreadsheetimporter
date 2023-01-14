@@ -1,6 +1,6 @@
 import OData from "./OData";
 
-export default class ODataV284 extends OData {
+export default class ODataV2 extends OData {
     
     constructor(ui5version: number) { 
         super(ui5version);
