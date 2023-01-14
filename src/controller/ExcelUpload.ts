@@ -356,7 +356,7 @@ export default class ExcelUpload {
 				} catch (oError) {
 					// handle error
 				}
-				if (!this.isODataV4 && this.UI5MinorVersion < 108) {
+				if (!this.isODataV4) {
 					createContexts = await Promise.all(createPromises);
 				} else {
 					let resultsCreation = await Promise.all(createPromises);
