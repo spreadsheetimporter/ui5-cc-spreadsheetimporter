@@ -35,6 +35,7 @@ export default class ExcelUpload {
 	private UI5MinorVersion: number;
 	private odataHandler: OData;
 	private payload: any;
+	private binding: any;
 
 	constructor(component: Component, componentI18n: ResourceModel) {
 		this._excelSheetsData = [];
@@ -43,9 +44,10 @@ export default class ExcelUpload {
 		this.component = component;
 		this.component.setErrorResults([]);
 		this.componentI18n = componentI18n;
+		this.isODataV4 = this._checkIfODataIsV4();
+		this.odataHandler = this.getODataHandler(this.UI5MinorVersion);
 		this.metadataHandler = new MetadataHandler(this);
 		this.setContext();
-		this.odataHandler = this.getODataHandler(this.UI5MinorVersion);
 	}
 
 	async setContext() {
@@ -53,7 +55,7 @@ export default class ExcelUpload {
 		if (this.context.base) {
 			this.context = this.context.base;
 		}
-		this.isODataV4 = this._checkIfODataIsV4();
+		
 		if (this.isODataV4) {
 			this.view = this.context._view;
 			if (!this.view) {
@@ -80,7 +82,8 @@ export default class ExcelUpload {
 			}
 		}
 		// try get odata type from table
-		const tableBindingPath = this.tableObject.getBindingPath("items");
+		this.binding = this.odataHandler.getBinding(this.tableObject)
+		const tableBindingPath = this.binding.getPath()
 		const metaModel = this.tableObject.getModel().getMetaModel();
 		const metaModelData = this.tableObject.getModel().getMetaModel().getData();
 		if (!this.component.getOdataType()) {
@@ -119,8 +122,9 @@ export default class ExcelUpload {
 			}
 		}
 		// try get odata type from table
+		this.binding = this.odataHandler.getBinding(this.tableObject)
 		if (!this.component.getOdataType()) {
-			this.component.setOdataType(this.tableObject.getBinding("items")._getEntityType().entityType);
+			this.component.setOdataType(this.binding._getEntityType().entityType);
 			if (!this.component.getOdataType()) {
 				console.error("No OData Type found. Please specify 'odataType' in options");
 			}
@@ -275,7 +279,6 @@ export default class ExcelUpload {
 		try {
 			// get binding of table to create rows
 			const model = this.tableObject.getModel();
-			const binding = this.tableObject.getBinding("items");
 			let createPromises = [];
 			let createContexts = [];
 			let activateActions = [];
@@ -314,12 +317,12 @@ export default class ExcelUpload {
 				// extension method to manipulate payload
 				this.component.fireChangeBeforeCreate({ payload: this.payload });
 				if (this.isODataV4) {
-					const returnObject = this.odataHandler.create(model, binding, this.payload);
+					const returnObject = this.odataHandler.create(model, this.binding, this.payload);
 					createContexts.push(returnObject.context);
 					createPromises.push(returnObject.promise);
 				} else {
 					let context;
-					const returnObject = this.odataHandler.create(model, binding, this.payload);
+					const returnObject = this.odataHandler.create(model, this.binding, this.payload);
 					createPromises.push(returnObject);
 				}
 			}
@@ -387,7 +390,7 @@ export default class ExcelUpload {
 			// wait for all draft to be created
 			const resultsActivations = await Promise.all(activateActionsPromises);
 			try {
-				binding.refresh();
+				this.binding.refresh();
 			} catch (error) {
 				console.debug(error);
 			}
@@ -428,7 +431,7 @@ export default class ExcelUpload {
 
 	_checkIfODataIsV4() {
 		try {
-			if (this.context.getModel().getODataVersion() === "4.0") {
+			if (this.component.getContext().getModel().getODataVersion() === "4.0") {
 				return true;
 			}
 		} catch (error) {

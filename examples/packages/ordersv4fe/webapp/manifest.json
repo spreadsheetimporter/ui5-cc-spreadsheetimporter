@@ -111,6 +111,11 @@
                     "pattern": "Orders({key})/Items({key2}):?query:",
                     "name": "Orders_ItemsObjectPage",
                     "target": "Orders_ItemsObjectPage"
+                },
+                {
+                    "pattern": "OrdersListGridTable:?query:",
+                    "name": "OrdersListGridTable",
+                    "target": "OrdersListGridTable"
                 }
             ],
             "targets": {
@@ -136,12 +141,6 @@
                                             "id": "excelUploadListReportButton",
                                             "text": "Excel Upload",
                                             "press": "ui.v4.ordersv4fe.ext.ListReportExtController.openExcelUploadDialog",
-                                            "requiresSelection": false
-                                        },
-                                        "submit": {
-                                            "id": "excelUploadListReportButton",
-                                            "text": "Submit",
-                                            "press": "ui.v4.ordersv4fe.ext.ListReportExtController.submit",
                                             "requiresSelection": false
                                         }
                                     }
@@ -189,6 +188,43 @@
                         "settings": {
                             "editableHeaderContent": false,
                             "entitySet": "OrderItems"
+                        }
+                    }
+                },
+                "OrdersListGridTable": {
+                    "type": "Component",
+                    "id": "OrdersListGridTable",
+                    "name": "sap.fe.templates.ListReport",
+                    "options": {
+                        "settings": {
+                            "entitySet": "Orders",
+                            "variantManagement": "Page",
+                            "navigation": {
+                                "Orders": {
+                                    "detail": {
+                                        "route": "OrdersObjectPage"
+                                    }
+                                }
+                            },
+                            "content": {
+                                "header": {
+                                    "actions": {
+                                        "excelUploadListReport": {
+                                            "id": "excelUploadListReportButton",
+                                            "text": "Excel Upload",
+                                            "press": "ui.v4.ordersv4fe.ext.ListReportExtController.openExcelUploadDialog",
+                                            "requiresSelection": false
+                                        }
+                                    }
+                                }
+                            },
+                            "controlConfiguration": {
+                                "@com.sap.vocabularies.UI.v1.LineItem": {
+                                    "tableSettings": {
+                                        "type": "GridTable"
+                                    }
+                                }
+                            }
                         }
                     }
                 }
