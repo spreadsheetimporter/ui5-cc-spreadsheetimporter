@@ -25,6 +25,13 @@ class FEV4 {
 		// check file upload list report
 		this.checkFileuploadListreportAttribute = "OrderNo";
 		this.checkFileuploadListreportValue = "4";
+		// grid table
+		this.gridTablePageId = this.rootId + "OrdersListGridTable--fe::";
+		this.listReportGridTable = this.gridTablePageId + "table::Orders::LineItem-innerTable"
+		this.gridTablePageGoButton = this.gridTablePageId + "FilterBar::Orders-btnSearch";
+		this.gridTablePageDynamicPageTitle = this.gridTablePageId + "ListReport-header";
+		this.gridTablePageExceluploadButton = this.gridTablePageId + "CustomAction::excelUploadListReport";
+
 	}
 	async getFieldValue(fieldName) {
 		const field = await this.BaseClass.getControlById(`ui.v4.ordersv4fe::Orders_ItemsObjectPage--fe::FormContainer::Identification::FormElement::DataField::${fieldName}::Field`);
@@ -80,8 +87,14 @@ class FEV4 {
 
 	async getTableObject(tableId, objectAttribute, objectValue) {
 		const table = await this.BaseClass.getControlById(tableId);
-		const items = await table.getItems();
-		const rootBinding = await table.getBindingContext();
+		const metadata = await table.getMetadata()
+		const type = await metadata.getName()
+		let items = undefined;
+		if(type === "sap.m.Table"){
+			items = await table.getItems();
+		} else {
+			items = await table.getRows()
+		}
 		for (let index = 0; index < items.length; index++) {
 			const element = items[index];
 			const binding = await element.getBindingContext();
