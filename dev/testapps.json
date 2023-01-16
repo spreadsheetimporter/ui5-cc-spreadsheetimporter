@@ -6,9 +6,7 @@
     "versionMinor": 108,
     "testMapping": {
       "specs": [
-        "./test/specs/UploadFileListReport.test.js",
-        "./test/specs/UploadFileObjectPage.test.js",
-        "./test/specs/**.test.js"
+        "./test/specs/all/**.test.js"
       ]
     },
     "copyVersions": [
@@ -19,10 +17,7 @@
         "appTitel": "Orders V2 FE 96",
         "testMapping": {
           "specs": [
-            "./test/specs/UploadFileListReport.test.js",
-            "./test/specs/UploadFileObjectPage.test.js",
-            "./test/specs/**.test.js",
-            "./test/specs/**.test.js"
+            "./test/specs/all/**.test.js"
           ]
         }
       },
@@ -33,9 +28,7 @@
         "appTitel": "Orders V2 FE 84",
         "testMapping": {
           "specs": [
-            "./test/specs/UploadFileListReport.test.js",
-            "./test/specs/UploadFileObjectPage.test.js",
-            "./test/specs/**.test.js"
+            "./test/specs/all/**.test.js"
           ]
         }
       },
@@ -46,9 +39,7 @@
         "appTitel": "Orders V2 FE 71",
         "testMapping": {
           "specs": [
-            "./test/specs/UploadFileListReport.test.js",
-            "./test/specs/UploadFileObjectPage.test.js",
-            "./test/specs/**.test.js"
+            "./test/specs/all/**.test.js"
           ]
         }
       }
@@ -113,9 +104,8 @@
     "appTitel": "Orders V4 FE 108",
     "testMapping": {
       "specs": [
-        "./test/specs/UploadFileListReport.test.js",
-        "./test/specs/UploadFileObjectPage.test.js",
-        "./test/specs/**.test.js"
+        "./test/specs/all/**.test.js",
+        "./test/specs/v4/**.test.js"
       ]
     },
     "copyVersions": [
@@ -126,9 +116,8 @@
         "appTitel": "Orders V4 FE 96",
         "testMapping": {
           "specs": [
-            "./test/specs/UploadFileListReport.test.js",
-            "./test/specs/UploadFileObjectPage.test.js",
-            "./test/specs/**.test.js"
+            "./test/specs/all/**.test.js",
+            "./test/specs/v4/**.test.js"
           ]
         }
       },
@@ -139,9 +128,8 @@
         "appTitel": "Orders V4 FE 84",
         "testMapping": {
           "specs": [
-            "./test/specs/UploadFileListReport.test.js",
-            "./test/specs/UploadFileObjectPage.test.js",
-            "./test/specs/**.test.js"
+            "./test/specs/all/**.test.js",
+            "./test/specs/v4/**.test.js"
           ]
         }
       },
@@ -152,9 +140,8 @@
         "appTitel": "Orders V4 FE 71",
         "testMapping": {
           "specs": [
-            "./test/specs/UploadFileListReport.test.js",
-            "./test/specs/UploadFileObjectPage.test.js",
-            "./test/specs/**.test.js"
+            "./test/specs/all/**.test.js",
+            "./test/specs/v4/**.test.js"
           ]
         }
       }

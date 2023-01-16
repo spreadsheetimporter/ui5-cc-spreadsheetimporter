@@ -14,7 +14,6 @@ export default class MetadataHandler {
 		let listObject: ListObject = {};
 
 		// get the property list of the entity for which we need to download the template
-		// binding.getModel().getMetaModel().getObject("/Orders")
 		const oDataEntityType = this.excelUploadController.oDataEntityType;
 		const properties: PropertyArray = oDataEntityType.property;
 		const entityTypeLabel: string = oDataEntityType["sap:label"];

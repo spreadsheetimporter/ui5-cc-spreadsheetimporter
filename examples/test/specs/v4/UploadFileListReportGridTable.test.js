@@ -1,12 +1,11 @@
-const Base = require("./Objects/Base");
-const FEV2 = require("./Objects/FEV2");
-const FEV4 = require("./Objects/FEV4");
-const { optionsLong, optionsShort } = require("./Objects/types");
+const Base = require("./../Objects/Base");
+const FEV2 = require("./../Objects/FEV2");
+const FEV4 = require("./../Objects/FEV4");
 
 let FE = undefined;
 let BaseClass = undefined;
 
-describe("Upload File List Report", () => {
+describe("Upload File List Report Grid Table", () => {
 	before(async () => {
 		BaseClass = new Base();
 		const scenario = browser.config.scenario;
@@ -16,19 +15,21 @@ describe("Upload File List Report", () => {
 		if (scenario.startsWith("ordersv4")) {
 			FE = new FEV4();
 		}
+		await browser.goTo({ sHash: "#/Orders" })
+		await BaseClass.dummyWait(1000);
 	});
 	it("should trigger search on ListReport page", async () => {
 		try {
-			await BaseClass.pressById(FE.listReportGoButton);
+			await BaseClass.pressById(FE.gridTablePageGoButton);
 		} catch (error) {
-			await BaseClass.pressById(FE.listReportDynamicPageTitle);
+			await BaseClass.pressById(FE.gridTablePageDynamicPageTitle);
 			await BaseClass.dummyWait(500);
-			await BaseClass.pressById(FE.listReportGoButton);
+			await BaseClass.pressById(FE.gridTablePageGoButton);
 		}
 	});
 
 	it("Open ExcelUpload Dialog", async () => {
-		await BaseClass.pressById(FE.listReportExceluploadButton);
+		await BaseClass.pressById(FE.gridTablePageExceluploadButton);
 		const excelUploadDialog = await browser.asControl({
 			selector: {
 				controlType: "sap.m.Dialog",
@@ -71,7 +72,7 @@ describe("Upload File List Report", () => {
 	});
 
 	it("entry created and activated", async () => {
-		const object = await FE.getTableObject(FE.listReportTable, FE.checkFileuploadListreportAttribute, FE.checkFileuploadListreportValue);
+		const object = await FE.getTableObject(FE.listReportGridTable, FE.checkFileuploadListreportAttribute, FE.checkFileuploadListreportValue);
 		expect(object.IsActiveEntity).toBeTruthy()
 	});
 });

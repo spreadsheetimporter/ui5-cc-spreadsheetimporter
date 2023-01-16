@@ -35,6 +35,7 @@ export default class ExcelUpload {
 	private UI5MinorVersion: number;
 	private odataHandler: OData;
 	private payload: any;
+	private binding: any;
 
 	constructor(component: Component, componentI18n: ResourceModel) {
 		this._excelSheetsData = [];
@@ -43,9 +44,10 @@ export default class ExcelUpload {
 		this.component = component;
 		this.component.setErrorResults([]);
 		this.componentI18n = componentI18n;
+		this.isODataV4 = this._checkIfODataIsV4();
+		this.odataHandler = this.getODataHandler(this.UI5MinorVersion);
 		this.metadataHandler = new MetadataHandler(this);
 		this.setContext();
-		this.odataHandler = this.getODataHandler(this.UI5MinorVersion);
 	}
 
 	async setContext() {
@@ -53,7 +55,7 @@ export default class ExcelUpload {
 		if (this.context.base) {
 			this.context = this.context.base;
 		}
-		this.isODataV4 = this._checkIfODataIsV4();
+		
 		if (this.isODataV4) {
 			this.view = this.context._view;
 			if (!this.view) {
@@ -71,17 +73,17 @@ export default class ExcelUpload {
 	async _setContextV4() {
 		// try get object page table
 		if (!this.component.getTableId()) {
-			const domRef = this.view.getContent()[0].getDomRef();
-			let tables = domRef.querySelectorAll("[id$='::LineItem-innerTable']");
+			let tables = this.view.findAggregatedObjects(true, function(o) { return o.isA("sap.m.Table") || o.isA("sap.ui.table.Table"); });
 			if (tables.length > 1) {
 				console.error("Found more than one table on Object Page.\n Please specify table in option 'tableId'");
 			} else {
-				this.component.setTableId(tables[0].getAttribute("id"));
+				this.component.setTableId(tables[0].getId());
+				this.tableObject = tables[0]
 			}
 		}
 		// try get odata type from table
-		this.tableObject = this.view.byId(this.component.getTableId());
-		const tableBindingPath = this.tableObject.getBindingPath("items");
+		this.binding = this.odataHandler.getBinding(this.tableObject)
+		const tableBindingPath = this.binding.getPath()
 		const metaModel = this.tableObject.getModel().getMetaModel();
 		const metaModelData = this.tableObject.getModel().getMetaModel().getData();
 		if (!this.component.getOdataType()) {
@@ -111,23 +113,22 @@ export default class ExcelUpload {
 	async _setContextV2() {
 		// try get object page table
 		if (!this.component.getTableId()) {
-			const domRef = this.view.getContent()[0].getDomRef();
-			// list report v2 responsive Table
-			const tables = domRef.querySelectorAll("[id$='responsiveTable']");
+			let tables = this.view.findAggregatedObjects(true, function(o) { return o.isA("sap.m.Table") || o.isA("sap.ui.table.Table"); });
 			if (tables.length > 1) {
 				console.error("Found more than one table on Object Page.\n Please specify table in option 'tableId'");
 			} else {
-				this.component.setTableId(tables[0].getAttribute("id"));
+				this.component.setTableId(tables[0].getId());
+				this.tableObject = tables[0]
 			}
 		}
 		// try get odata type from table
-		this.tableObject = this.view.byId(this.component.getTableId());
+		this.binding = this.odataHandler.getBinding(this.tableObject)
 		if (!this.component.getOdataType()) {
-			this.component.setOdataType(this.tableObject.getBinding("items")._getEntityType().entityType);
+			this.component.setOdataType(this.binding._getEntityType().entityType);
 			if (!this.component.getOdataType()) {
 				console.error("No OData Type found. Please specify 'odataType' in options");
 			}
-			const metaModel = this.view.byId(this.component.getTableId()).getModel().getMetaModel();
+			const metaModel = this.tableObject.getModel().getMetaModel();
 			await metaModel.loaded();
 			this.oDataEntityType = metaModel.getODataEntityType(this.component.getOdataType());
 		}
@@ -277,14 +278,11 @@ export default class ExcelUpload {
 		// intializing the message manager for displaying the odata response messages
 		try {
 			// get binding of table to create rows
-			const model = this.view.byId(this.component.getTableId()).getModel();
-			const binding = this.view.byId(this.component.getTableId()).getBinding("items");
+			const model = this.tableObject.getModel();
 			let createPromises = [];
 			let createContexts = [];
 			let activateActions = [];
 			let activateActionsPromises = [];
-
-			// binding.attachCreateCompleted(this.test, this);
 
 			// loop over data from excel files
 			for (const row of this._excelSheetsData) {
@@ -319,15 +317,12 @@ export default class ExcelUpload {
 				// extension method to manipulate payload
 				this.component.fireChangeBeforeCreate({ payload: this.payload });
 				if (this.isODataV4) {
-					const returnObject = this.odataHandler.create(model, binding, this.payload);
+					const returnObject = this.odataHandler.create(model, this.binding, this.payload);
 					createContexts.push(returnObject.context);
 					createPromises.push(returnObject.promise);
-					// const context = binding.create(this.payload);
-					// createContexts.push(context);
-					// createPromises.push(context.created());
 				} else {
 					let context;
-					const returnObject = this.odataHandler.create(model, binding, this.payload);
+					const returnObject = this.odataHandler.create(model, this.binding, this.payload);
 					createPromises.push(returnObject);
 				}
 			}
@@ -368,7 +363,6 @@ export default class ExcelUpload {
 				if (this.isODataV4) {
 					for (let index = 0; index < createContexts.length; index++) {
 						const element = createContexts[index];
-						// const operation = element.getModel().bindContext(this._activateActionName + "(...)", element, { $$inheritExpandSelect: true });
 						const operationName = this._getActionName(element, "ActivationAction");
 						if (operationName) {
 							const operation = element.getModel().bindContext(`${operationName}(...)`, element, { $$inheritExpandSelect: true });
@@ -396,7 +390,7 @@ export default class ExcelUpload {
 			// wait for all draft to be created
 			const resultsActivations = await Promise.all(activateActionsPromises);
 			try {
-				binding.refresh();
+				this.binding.refresh();
 			} catch (error) {
 				console.debug(error);
 			}
@@ -437,7 +431,7 @@ export default class ExcelUpload {
 
 	_checkIfODataIsV4() {
 		try {
-			if (this.context.getModel().getODataVersion() === "4.0") {
+			if (this.component.getContext().getModel().getODataVersion() === "4.0") {
 				return true;
 			}
 		} catch (error) {
