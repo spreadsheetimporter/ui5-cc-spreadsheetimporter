@@ -113,7 +113,7 @@
                     "target": "Orders_ItemsObjectPage"
                 },
                 {
-                    "pattern": "OrdersListGridTable:?query:",
+                    "pattern": "Orders:?query:",
                     "name": "OrdersListGridTable",
                     "target": "OrdersListGridTable"
                 }
@@ -215,13 +215,6 @@
                                             "press": "ui.v4.ordersv4fe.ext.ListReportExtController.openExcelUploadDialog",
                                             "requiresSelection": false
                                         }
-                                    }
-                                }
-                            },
-                            "controlConfiguration": {
-                                "@com.sap.vocabularies.UI.v1.LineItem": {
-                                    "tableSettings": {
-                                        "type": "GridTable"
                                     }
                                 }
                             }
