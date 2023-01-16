@@ -1,12 +1,11 @@
-const Base = require("./Objects/Base");
-const FEV2 = require("./Objects/FEV2");
-const FEV4 = require("./Objects/FEV4");
-const { optionsLong, optionsShort } = require("./Objects/types");
+const Base = require("./../Objects/Base");
+const FEV2 = require("./../Objects/FEV2");
+const FEV4 = require("./../Objects/FEV4");
 
 let FE = undefined;
 let BaseClass = undefined;
 
-describe("Upload File List Report", () => {
+describe("Upload File List Report Grid Table", () => {
 	before(async () => {
 		BaseClass = new Base();
 		const scenario = browser.config.scenario;
