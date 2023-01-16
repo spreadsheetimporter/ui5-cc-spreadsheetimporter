@@ -284,8 +284,6 @@ export default class ExcelUpload {
 			let activateActions = [];
 			let activateActionsPromises = [];
 
-			// binding.attachCreateCompleted(this.test, this);
-
 			// loop over data from excel files
 			for (const row of this._excelSheetsData) {
 				let payload = {};
@@ -322,9 +320,6 @@ export default class ExcelUpload {
 					const returnObject = this.odataHandler.create(model, binding, this.payload);
 					createContexts.push(returnObject.context);
 					createPromises.push(returnObject.promise);
-					// const context = binding.create(this.payload);
-					// createContexts.push(context);
-					// createPromises.push(context.created());
 				} else {
 					let context;
 					const returnObject = this.odataHandler.create(model, binding, this.payload);
@@ -368,7 +363,6 @@ export default class ExcelUpload {
 				if (this.isODataV4) {
 					for (let index = 0; index < createContexts.length; index++) {
 						const element = createContexts[index];
-						// const operation = element.getModel().bindContext(this._activateActionName + "(...)", element, { $$inheritExpandSelect: true });
 						const operationName = this._getActionName(element, "ActivationAction");
 						if (operationName) {
 							const operation = element.getModel().bindContext(`${operationName}(...)`, element, { $$inheritExpandSelect: true });
