@@ -16,6 +16,7 @@ describe("Upload File List Report Grid Table", () => {
 			FE = new FEV4();
 		}
 		await browser.goTo({ sHash: "#/OrdersListGridTable" })
+		await BaseClass.dummyWait(1000);
 	});
 	it("should trigger search on ListReport page", async () => {
 		try {
