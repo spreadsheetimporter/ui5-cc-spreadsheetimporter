@@ -1,7 +1,7 @@
 import UIComponent from "sap/ui/core/UIComponent";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Device from "sap/ui/Device";
-import ExcelUpload from "./controller/ExcelUpload";
+import ExcelUpload from "cc/excelUpload/XXXnamespaceSlashXXX/controller/ExcelUpload";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
