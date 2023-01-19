@@ -11,6 +11,8 @@ env:
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v3
         with:
@@ -21,7 +23,7 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-      
+
       - name: Build
         run: npm run build
 
@@ -32,3 +34,9 @@ jobs:
           npm publish
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: "dist/**/*,ui5.yaml"
+          bodyFile: "CHANGELOG.md"
+          token: ${{ secrets.GITHUB_TOKEN }}
