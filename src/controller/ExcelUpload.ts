@@ -15,6 +15,7 @@ import ResourceBundle from "sap/base/i18n/ResourceBundle";
 import OData from "./odata/OData";
 import ODataV2 from "./odata/ODataV2";
 import ODataV4 from "./odata/ODataV4";
+import FileUploader from "sap/ui/unified/FileUploader";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
@@ -149,7 +150,6 @@ export default class ExcelUpload {
 	}
 
 	async openExcelUploadDialog() {
-		this.payloadArray = [];
 		if (!this.dialog) {
 			// TODO: check if needed from 1.93 || this.dialog.isDestroyed()) {
 			this.dialog = (await Fragment.load({
@@ -159,11 +159,13 @@ export default class ExcelUpload {
 			})) as Dialog;
 			this.dialog.setModel(this.componentI18n, "i18n");
 		}
+		(this.dialog.getContent()[0] as FileUploader).clear();
 		this.dialog.open();
 	}
 
 	async onFileUpload(oEvent: Event) {
 		try {
+			this.payloadArray = []
 			const fileType = oEvent.getParameter("files")[0].type;
 			let excelSheetsData: any[] = [];
 			const stream: ReadableStream = oEvent.getParameter("files")[0].stream();

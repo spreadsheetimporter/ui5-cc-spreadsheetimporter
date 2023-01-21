@@ -56,7 +56,7 @@
     "@commitlint/cli": "^17.4.0",
     "@commitlint/config-conventional": "^17.4.0",
     "@prettier/plugin-xml": "^2.2.0",
-    "@ui5/cli": "3.0.0-rc.1",
+    "@ui5/cli": "3.0.0-rc.2",
     "conventional-changelog-cli": "^2.2.2",
     "eslint": "^8.31.0",
     "husky": "^8.0.3",
