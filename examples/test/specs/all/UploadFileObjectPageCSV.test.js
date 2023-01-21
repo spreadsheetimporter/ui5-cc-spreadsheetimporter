@@ -6,7 +6,7 @@ const { optionsLong, optionsShort } = require("./../Objects/types");
 let FE = undefined;
 let BaseClass = undefined;
 
-describe("Upload File Object Page", () => {
+describe("Upload CSV File Object Page", () => {
 	before(async () => {
 		BaseClass = new Base();
 		const scenario = browser.config.scenario;
