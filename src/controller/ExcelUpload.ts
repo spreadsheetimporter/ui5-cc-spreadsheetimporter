@@ -36,9 +36,9 @@ export default class ExcelUpload {
 	private odataHandler: OData;
 	private payload: any;
 	private binding: any;
+	private payloadArray: any[];
 
 	constructor(component: Component, componentI18n: ResourceModel) {
-		this._excelSheetsData = [];
 		this.dialog = null;
 		this.UI5MinorVersion = sap.ui.version.split(".")[1];
 		this.component = component;
@@ -55,7 +55,7 @@ export default class ExcelUpload {
 		if (this.context.base) {
 			this.context = this.context.base;
 		}
-		
+
 		if (this.isODataV4) {
 			this.view = this.context._view;
 			if (!this.view) {
@@ -73,17 +73,19 @@ export default class ExcelUpload {
 	async _setContextV4() {
 		// try get object page table
 		if (!this.component.getTableId()) {
-			let tables = this.view.findAggregatedObjects(true, function(o) { return o.isA("sap.m.Table") || o.isA("sap.ui.table.Table"); });
+			let tables = this.view.findAggregatedObjects(true, function (o) {
+				return o.isA("sap.m.Table") || o.isA("sap.ui.table.Table");
+			});
 			if (tables.length > 1) {
 				console.error("Found more than one table on Object Page.\n Please specify table in option 'tableId'");
 			} else {
 				this.component.setTableId(tables[0].getId());
-				this.tableObject = tables[0]
+				this.tableObject = tables[0];
 			}
 		}
 		// try get odata type from table
-		this.binding = this.odataHandler.getBinding(this.tableObject)
-		const tableBindingPath = this.binding.getPath()
+		this.binding = this.odataHandler.getBinding(this.tableObject);
+		const tableBindingPath = this.binding.getPath();
 		const metaModel = this.tableObject.getModel().getMetaModel();
 		const metaModelData = this.tableObject.getModel().getMetaModel().getData();
 		if (!this.component.getOdataType()) {
@@ -113,16 +115,18 @@ export default class ExcelUpload {
 	async _setContextV2() {
 		// try get object page table
 		if (!this.component.getTableId()) {
-			let tables = this.view.findAggregatedObjects(true, function(o) { return o.isA("sap.m.Table") || o.isA("sap.ui.table.Table"); });
+			let tables = this.view.findAggregatedObjects(true, function (o) {
+				return o.isA("sap.m.Table") || o.isA("sap.ui.table.Table");
+			});
 			if (tables.length > 1) {
 				console.error("Found more than one table on Object Page.\n Please specify table in option 'tableId'");
 			} else {
 				this.component.setTableId(tables[0].getId());
-				this.tableObject = tables[0]
+				this.tableObject = tables[0];
 			}
 		}
 		// try get odata type from table
-		this.binding = this.odataHandler.getBinding(this.tableObject)
+		this.binding = this.odataHandler.getBinding(this.tableObject);
 		if (!this.component.getOdataType()) {
 			this.component.setOdataType(this.binding._getEntityType().entityType);
 			if (!this.component.getOdataType()) {
@@ -139,13 +143,13 @@ export default class ExcelUpload {
 	getODataHandler(version: number): OData {
 		if (this.isODataV4) {
 			return new ODataV4(version);
-		}else{
+		} else {
 			return new ODataV2(version);
-		} 
+		}
 	}
 
 	async openExcelUploadDialog() {
-		this._excelSheetsData = [];
+		this.payloadArray = [];
 		if (!this.dialog) {
 			// TODO: check if needed from 1.93 || this.dialog.isDestroyed()) {
 			this.dialog = (await Fragment.load({
@@ -160,15 +164,27 @@ export default class ExcelUpload {
 
 	async onFileUpload(oEvent: Event) {
 		try {
-			var excelSheetsData = [];
+			const fileType = oEvent.getParameter("files")[0].type;
+			let excelSheetsData: any[] = [];
 			const stream: ReadableStream = oEvent.getParameter("files")[0].stream();
 			const data = await this.buffer_RS(stream);
-			const workbook = XLSX.read(data);
+			let workbook = XLSX.read(data);
 			this.component.setErrorResults([]);
 			// reading all sheets
-			workbook.SheetNames.forEach(function (sheetName) {
-				// appending the excel file data to the global variable
-				excelSheetsData.push(XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]));
+			workbook.SheetNames.forEach((sheetName) => {
+				// Need special case for CSV Import
+				// let worksheet = workbook.Sheets[sheetName];
+				// const range = XLSX.utils.decode_range(worksheet["!ref"]);
+				// for (let row = range.s.r + 1; row <= range.e.r; ++row) {
+				// 	for (let col = range.s.c; col <= range.e.c; ++col) {
+				// 		const ref = XLSX.utils.encode_cell({ r: row, c: col });
+				// 		if (worksheet[ref] && worksheet[ref].t === "n") {
+				// 			worksheet[ref].v = this._changeDecimalSeperator(worksheet[ref].w);
+				// 		}
+				// 	}
+				// }
+				let data = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+				excelSheetsData.push(data);
 			});
 			// use only first sheet
 			var firstSheet = excelSheetsData[0];
@@ -189,8 +205,7 @@ export default class ExcelUpload {
 			}
 
 			// Wait for all promises to be resolved
-
-			this._excelSheetsData = firstSheet;
+			this._parseExcelData(firstSheet);
 			MessageToast.show(this._geti18nText("uploadSuccessful"));
 		} catch (error) {
 			this.errorDialog = (await Fragment.load({
@@ -220,7 +235,7 @@ export default class ExcelUpload {
 	 */
 	async onUploadSet(oEvent) {
 		// checking if excel file contains data or not
-		if (!this._excelSheetsData.length) {
+		if (!this.payloadArray.length) {
 			MessageToast.show(this._geti18nText("selectFileUpload"));
 			return;
 		}
@@ -284,35 +299,8 @@ export default class ExcelUpload {
 			let activateActions = [];
 			let activateActionsPromises = [];
 
-			// loop over data from excel files
-			for (const row of this._excelSheetsData) {
-				let payload = {};
-				// check each specified column if availalble in excel data
-				for (const [columnKey, metadataColumn] of Object.entries(this.typeLabelList)) {
-					// depending on parse type
-					const value = this._getValueFromRow(row, metadataColumn.label, columnKey);
-					// depending on data type
-					if (value) {
-						if (metadataColumn.type === "Edm.Boolean") {
-							payload[columnKey] = `${value || ""}`;
-						} else if (metadataColumn.type === "Edm.Date") {
-							let excelDate = new Date(Math.round((value - 25569) * 86400 * 1000));
-							payload[columnKey] = `${excelDate.getFullYear()}-${("0" + (excelDate.getMonth() + 1)).slice(-2)}-${("0" + excelDate.getDate()).slice(-2)}`;
-						} else if (metadataColumn.type === "Edm.DateTimeOffset" || metadataColumn.type === "Edm.DateTime") {
-							payload[columnKey] = new Date(Math.round((value - 25569) * 86400 * 1000));
-						} else if (metadataColumn.type === "Edm.TimeOfDay" || metadataColumn.type === "Edm.Time") {
-							//convert to hh:mm:ss
-							const secondsInADay = 24 * 60 * 60;
-							const timeInSeconds = value * secondsInADay;
-							payload[columnKey] = new Date(timeInSeconds * 1000).toISOString().substring(11, 16);
-						} else if (metadataColumn.type === "Edm.Double" || metadataColumn.type === "Edm.Int32") {
-							payload[columnKey] = value;
-						} else {
-							payload[columnKey] = `${value || ""}`;
-						}
-					}
-				}
-
+			// loop over data from excel file
+			for (const payload of this.payloadArray) {
 				this.payload = payload;
 				// extension method to manipulate payload
 				this.component.fireChangeBeforeCreate({ payload: this.payload });
@@ -494,9 +482,52 @@ export default class ExcelUpload {
 		return value;
 	}
 
+	_parseExcelData(sheetData) {
+		// loop over data from excel file
+		for (const row of sheetData) {
+			let payload = {};
+			// check each specified column if availalble in excel data
+			for (const [columnKey, metadataColumn] of Object.entries(this.typeLabelList)) {
+				// depending on parse type
+				const value = this._getValueFromRow(row, metadataColumn.label, columnKey);
+				// depending on data type
+				if (value) {
+					if (metadataColumn.type === "Edm.Boolean") {
+						payload[columnKey] = `${value || ""}`;
+					} else if (metadataColumn.type === "Edm.Date") {
+						let excelDate = new Date(Math.round((value - 25569) * 86400 * 1000));
+						payload[columnKey] = `${excelDate.getFullYear()}-${("0" + (excelDate.getMonth() + 1)).slice(-2)}-${("0" + excelDate.getDate()).slice(-2)}`;
+					} else if (metadataColumn.type === "Edm.DateTimeOffset" || metadataColumn.type === "Edm.DateTime") {
+						payload[columnKey] = new Date(Math.round((value - 25569) * 86400 * 1000));
+					} else if (metadataColumn.type === "Edm.TimeOfDay" || metadataColumn.type === "Edm.Time") {
+						//convert to hh:mm:ss
+						const secondsInADay = 24 * 60 * 60;
+						const timeInSeconds = value * secondsInADay;
+						payload[columnKey] = new Date(timeInSeconds * 1000).toISOString().substring(11, 16);
+					} else if (metadataColumn.type === "Edm.Double" || metadataColumn.type === "Edm.Int32") {
+						payload[columnKey] = value;
+					} else {
+						payload[columnKey] = `${value || ""}`;
+					}
+				}
+			}
+
+			this.payloadArray.push(payload);
+		}
+	}
+
 	_geti18nText(text: string, array?: any): string {
 		const resourceBundle = this.componentI18n.getResourceBundle() as ResourceBundle;
 		return resourceBundle.getText(text, array);
+	}
+
+	_changeDecimalSeperator(value: string): number {
+		// Replace thousands separator with empty string
+		value = value.replace(/[.]/g, "");
+		// Replace decimal separator with a dot
+		value = value.replace(/[,]/g, ".");
+		// Convert string to number
+		return parseFloat(value)
 	}
 
 	_getActionName(oContext: any, sOperation: string) {

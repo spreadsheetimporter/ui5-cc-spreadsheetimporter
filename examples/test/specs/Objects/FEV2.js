@@ -28,18 +28,9 @@ class FEV2 {
 
 	}
 	async getFieldValue(fieldName) {
-		let value = "";
-		const field = await this.BaseClass.getControlById(
-			`ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::OrderItems--com.sap.vocabularies.UI.v1.Identification::${fieldName}::Field`
-		);
-		const dataType = await field.getDataType();
-		value = await field.getValue();
-		// only for V2 71
-		if (dataType === "Edm.Time" && value.ms) {
-			value = this.getTimeValue(value.ms);
-		}
-
-		return value.toString();
+		const field = await $(`//*[@id="ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::OrderItems--com.sap.vocabularies.UI.v1.Identification::${fieldName}::Field-text"]`)
+		const value = await field.getText();
+		return value
 	}
 
 	async getRoutingHash(tableId, objectAttribute, objectValue, rootPathBool) {
