@@ -3,7 +3,7 @@ import Fragment from "sap/ui/core/Fragment";
 import MessageToast from "sap/m/MessageToast";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import * as XLSX from "xlsx";
-import MetadataHandler from "./MetadataHandler";
+import MetadataHandler from "cc/excelUpload/XXXnamespaceSlashXXX/controller/MetadataHandler";
 import DraftController from "sap/ui/generic/app/transaction/DraftController";
 import Component from "../Component";
 import XMLView from "sap/ui/core/mvc/XMLView";
