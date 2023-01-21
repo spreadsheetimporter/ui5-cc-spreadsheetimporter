@@ -26,14 +26,14 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
 					const sheetData = oEvent.getParameter("sheetData");
 					let errorArray = [
 						{
-							title: "Price to high (max 100)",
+							title: "Price to high (max 10.000)",
 							counter: 0
 						}
 					];
 					for (const row of sheetData) {
 						//check for invalid date
 						if (row.UnitPrice) {
-							if (row.UnitPrice > 100) {
+							if (row.UnitPrice > 10000) {
 								errorArray[0].counter = errorArray[0].counter + 1;
 							}
 						}

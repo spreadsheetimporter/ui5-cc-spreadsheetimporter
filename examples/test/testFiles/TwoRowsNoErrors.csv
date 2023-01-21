@@ -1,3 +1,2 @@
 ID;Quantity;ProductTitle;UnitPrice;validFrom;timestamp;date;time
-253;2;Product Test 1;12,56;25.11.2023;24.11.2023;23.11.2023;15:00:00
-254;3;Product Test 2;13,68;25.11.2024;24.11.2024;23.11.2024;16:00:00
+256;2;Product Test 1;1112.56;45255;45254;45253;0.625

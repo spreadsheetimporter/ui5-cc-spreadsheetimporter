@@ -8,7 +8,7 @@
       </Bar>
     </subHeader>
     <content>
-      <upload:FileUploader width="90%" placeholder="{i18n>exceluploadPlaceholder}" fileType="xlsx, xls, csv" change="onFileUpload" class="sapUiMediumMargin" />
+      <upload:FileUploader width="90%" placeholder="{i18n>exceluploadPlaceholder}" fileType="xlsx,xls,csv" change="onFileUpload" class="sapUiMediumMargin" />
     </content>
     <buttons>
       <Button text="{i18n>upload}" press="onUploadSet" icon="sap-icon://upload-to-cloud" type="Emphasized" />
