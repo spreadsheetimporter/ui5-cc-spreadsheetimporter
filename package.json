@@ -87,5 +87,10 @@
   "workspaces": [
     "examples/*",
     "package.json"
-  ]
+  ],
+  "pnpm": {
+    "overrides": {
+      "@rollup/plugin-node-resolve": "15.0.1"
+    }
+  }
 }
