@@ -1,7 +1,7 @@
 import UIComponent from "sap/ui/core/UIComponent";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Device from "sap/ui/Device";
-import ExcelUpload from "cc/excelUpload/XXXnamespaceSlashXXX/controller/ExcelUpload";
+import ExcelUpload from "./controller/ExcelUpload";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
@@ -13,6 +13,9 @@ export default class Component extends UIComponent {
 	}
 
 	public static metadata = {
+		interfaces: [
+			"sap.ui.core.IAsyncContentCreation"
+		],
 		manifest: "json",
 		properties: {
 			excelFileName: { type: "string", defaultValue: "Template.xlsx" },

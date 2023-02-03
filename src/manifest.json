@@ -4,7 +4,6 @@
   "sap.app": {
     "id": "cc.excelUpload.XXXnamespaceXXX",
     "type": "component",
-    "embeddedBy": "../../../../../",
     "i18n": "i18n/i18n.properties",
     "title": "{{compTitle}}",
     "description": "{{compDescription}}",
@@ -53,7 +52,7 @@
         "settings": {
           "bundleName": "cc.excelUpload.XXXnamespaceXXX.i18n.i18n",
           "supportedLocales": ["en", "de"],
-					"fallbackLocale": "en"
+          "fallbackLocale": "en"
         }
       }
     },

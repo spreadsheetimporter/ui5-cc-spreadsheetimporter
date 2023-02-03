@@ -29,7 +29,7 @@ function replaceYamlFile(versionSlash) {
 		from: [/XXXnamespaceSlashXXX/g],
 		to: [versionSlash],
 	};
-	return replace(optionsYaml);
+	return replace.sync(optionsYaml);
 }
 
 function replaceWebappFolder(version, versionSlash) {
@@ -40,11 +40,11 @@ function replaceWebappFolder(version, versionSlash) {
 		from: [/XXXnamespaceXXX/g, /XXXnamespaceSlashXXX/g],
 		to: [version, versionSlash],
 	};
-	return replace(options);
+	return replace.sync(options);
 }
 
 // replace version in examples folder
-function replaceVersionInExamples(versionSlash, ui5Apps) {
+function replaceVersionInExamples(versionSlash, version, ui5Apps) {
 	let manifests = [];
 	ui5Apps.forEach((app) => {
 		let path = "examples/packages/" + app + "/webapp/manifest.json";
@@ -53,7 +53,16 @@ function replaceVersionInExamples(versionSlash, ui5Apps) {
 		// Parse the JSON content
 		let manifestData = JSON.parse(manifest);
 		// Replace with current version
-		manifestData["sap.ui5"].resourceRoots["cc.excelUpload"] = `./thirdparty/customControl/excelUpload/${versionSlash}`;
+		const resourceRoots = manifestData["sap.ui5"].resourceRoots;
+		const updatedResourceRoots = {};
+		Object.keys(resourceRoots)
+			.filter(key => !key.startsWith("cc.excelUpload"))
+			.forEach(key => {
+				updatedResourceRoots[key] = resourceRoots[key];
+			});
+		updatedResourceRoots[`cc.excelUpload.${version}`] = `./thirdparty/customControl/excelUpload/${versionSlash}`;
+		manifestData["sap.ui5"].resourceRoots = updatedResourceRoots
+		manifestData["sap.ui5"]["componentUsages"]["excelUpload"].name = `cc.excelUpload.${version}`;
 		// Stringify manifest data back to string
 		manifestData = JSON.stringify(manifestData, null, 2);
 		// Write back manifest file
@@ -102,7 +111,7 @@ function searchAndReplace(inputFile, search, replace) {
 	fs.writeFileSync(inputFile, result, "utf8");
 }
 
-function getTestappObject(scenario,version){
+function getTestappObject(scenario, version) {
 	const testApps = fs.readFileSync(path.resolve(__dirname, 'testapps.json'), 'UTF-8');
 	// const testApps = fs.readFileSync("./dev/testapps.json", "utf8");
 	let json_data = JSON.parse(testApps);
@@ -110,15 +119,15 @@ function getTestappObject(scenario,version){
 
 	for (let index = 0; index < json_data.length; index++) {
 		const element = json_data[index];
-		if(element.rootAppName === scenario){
+		if (element.rootAppName === scenario) {
 			const rootObject = element;
-			if(rootObject.versionMinor === version){
+			if (rootObject.versionMinor === version) {
 				return rootObject;
 			} else {
 				const rootVersions = rootObject.copyVersions
 				for (let index = 0; index < rootVersions.length; index++) {
 					const subObject = rootVersions[index];
-					if(subObject.versionMinor === version){
+					if (subObject.versionMinor === version) {
 						return subObject;
 					}
 				}
@@ -126,7 +135,7 @@ function getTestappObject(scenario,version){
 			break;
 		}
 	}
-	
+
 
 
 }

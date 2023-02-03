@@ -14,5 +14,5 @@ const yamlPromise = util.replaceYamlFile(versionSlash);
 
 if (!develop) {
 	let ui5Apps = ["ordersv2fe", "ordersv2fenondraft", "ordersv2freestyle", "ordersv4fe", "ordersv4fpm"];
-	util.replaceVersionInExamples(versionSlash, ui5Apps);
+	util.replaceVersionInExamples(versionSlash, version, ui5Apps);
 }

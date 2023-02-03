@@ -1,11 +1,13 @@
 # UI5 Tooling
 
 !!! warning 
-        **This control is still in beta**: It fundamently works, but the APIs are still changing and lot of bugs still be there!
+        **This control is still in beta**: Basic functionality is given, but bugs may still occur and APIs may change!
 
 
-A UI5 Module to integrate a Excel Upload for Fiori Element Apps.  
-The module focuses on making integration into existing Fiori element apps as easy as possible, with as little code and configuration as possible.
+This control simply enables the mass upload of data, independent of the backend, OData version and Fiori scenario.  
+This is made possible by reading the Excel file and using the standard APIs.  
+The control will submit not the file, but just the data from the Excel File.  
+The integration of the control is designed to be as simple as possible and, in the best case, requires no configuration.
 
 [**Get Started**](./pages/GettingStarted.md){: .md-button .md-button--primary .sap-icon-initiative }
 
