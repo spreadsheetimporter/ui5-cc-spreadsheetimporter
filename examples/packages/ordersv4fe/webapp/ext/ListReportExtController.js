@@ -9,7 +9,7 @@ sap.ui.define([], function () {
 			this._view.setBusyIndicatorDelay(0);
 			this._view.setBusy(true);
 			if (!this.excelUpload) {
-				this.excelUpload = await this._controller.getAppComponent().createComponent({
+				this.excelUpload = await this.getEditFlow().getView().getController().getAppComponent().createComponent({
 					usage: "excelUpload",
 					async: true,
 					componentData: {
