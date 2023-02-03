@@ -107,7 +107,7 @@ importers:
       ui5-cc-excelupload: link:../../..
     devDependencies:
       "@sap-ux/ui5-middleware-fe-mockserver": 2.1.52
-      "@sap/ux-specification": 1.102.15
+      "@sap/ux-specification": 1.102.16
       "@sap/ux-ui5-tooling": 1.8.4
       "@ui5/cli": 2.14.17
 
@@ -122,7 +122,7 @@ importers:
       ui5-cc-excelupload: link:../../..
     devDependencies:
       "@sap-ux/ui5-middleware-fe-mockserver": 2.1.52
-      "@sap/ux-specification": 1.102.15
+      "@sap/ux-specification": 1.102.16
       "@sap/ux-ui5-tooling": 1.8.4
       "@ui5/cli": 2.14.17
 
@@ -137,7 +137,7 @@ importers:
       ui5-cc-excelupload: link:../../..
     devDependencies:
       "@sap-ux/ui5-middleware-fe-mockserver": 2.1.52
-      "@sap/ux-specification": 1.102.15
+      "@sap/ux-specification": 1.102.16
       "@sap/ux-ui5-tooling": 1.8.4
       "@ui5/cli": 2.14.17
 
@@ -152,7 +152,7 @@ importers:
       ui5-cc-excelupload: link:../../..
     devDependencies:
       "@sap-ux/ui5-middleware-fe-mockserver": 2.1.52
-      "@sap/ux-specification": 1.102.15
+      "@sap/ux-specification": 1.102.16
       "@sap/ux-ui5-tooling": 1.8.4
       "@ui5/cli": 2.14.17
 
@@ -167,7 +167,7 @@ importers:
       ui5-cc-excelupload: link:../../..
     devDependencies:
       "@sap-ux/ui5-middleware-fe-mockserver": 2.1.52
-      "@sap/ux-specification": 1.102.15
+      "@sap/ux-specification": 1.102.16
       "@sap/ux-ui5-tooling": 1.8.4
       "@ui5/cli": 2.14.17
 
@@ -182,7 +182,7 @@ importers:
       ui5-cc-excelupload: link:../../..
     devDependencies:
       "@sap-ux/ui5-middleware-fe-mockserver": 2.1.52
-      "@sap/ux-specification": 1.102.15
+      "@sap/ux-specification": 1.102.16
       "@sap/ux-ui5-tooling": 1.8.4
       "@ui5/cli": 2.14.17
 
@@ -197,7 +197,7 @@ importers:
       ui5-cc-excelupload: link:../../..
     devDependencies:
       "@sap-ux/ui5-middleware-fe-mockserver": 2.1.52
-      "@sap/ux-specification": 1.102.15
+      "@sap/ux-specification": 1.102.16
       "@sap/ux-ui5-tooling": 1.8.4
       "@ui5/cli": 2.14.17
 
@@ -212,7 +212,7 @@ importers:
       ui5-cc-excelupload: link:../../..
     devDependencies:
       "@sap-ux/ui5-middleware-fe-mockserver": 2.1.52
-      "@sap/ux-specification": 1.102.15
+      "@sap/ux-specification": 1.102.16
       "@sap/ux-ui5-tooling": 1.8.4
       "@ui5/cli": 2.14.17
 
@@ -279,7 +279,7 @@ importers:
       ui5-cc-excelupload: link:../../..
     devDependencies:
       "@sap-ux/ui5-middleware-fe-mockserver": 2.1.52
-      "@sap/ux-specification": 1.102.15
+      "@sap/ux-specification": 1.102.16
       "@sap/ux-ui5-tooling": 1.8.4
       "@ui5/cli": 2.14.17
 
@@ -294,7 +294,7 @@ importers:
       ui5-cc-excelupload: link:../../..
     devDependencies:
       "@sap-ux/ui5-middleware-fe-mockserver": 2.1.52
-      "@sap/ux-specification": 1.102.15
+      "@sap/ux-specification": 1.102.16
       "@sap/ux-ui5-tooling": 1.8.4
       "@ui5/cli": 2.14.17
 
@@ -309,7 +309,7 @@ importers:
       ui5-cc-excelupload: link:../../..
     devDependencies:
       "@sap-ux/ui5-middleware-fe-mockserver": 2.1.52
-      "@sap/ux-specification": 1.102.15
+      "@sap/ux-specification": 1.102.16
       "@sap/ux-ui5-tooling": 1.8.4
       "@ui5/cli": 2.14.17
 
@@ -324,7 +324,7 @@ importers:
       ui5-cc-excelupload: link:../../..
     devDependencies:
       "@sap-ux/ui5-middleware-fe-mockserver": 2.1.52
-      "@sap/ux-specification": 1.102.15
+      "@sap/ux-specification": 1.102.16
       "@sap/ux-ui5-tooling": 1.8.4
       "@ui5/cli": 2.14.17
 
@@ -339,7 +339,7 @@ importers:
       ui5-cc-excelupload: link:../../..
     devDependencies:
       "@sap-ux/ui5-middleware-fe-mockserver": 2.1.52
-      "@sap/ux-specification": 1.102.15
+      "@sap/ux-specification": 1.102.16
       "@sap/ux-ui5-tooling": 1.8.4
       "@ui5/cli": 2.14.17
 
@@ -354,7 +354,7 @@ importers:
       ui5-cc-excelupload: link:../../..
     devDependencies:
       "@sap-ux/ui5-middleware-fe-mockserver": 2.1.52
-      "@sap/ux-specification": 1.102.15
+      "@sap/ux-specification": 1.102.16
       "@sap/ux-ui5-tooling": 1.8.4
       "@ui5/cli": 2.14.17
 
@@ -2121,8 +2121,8 @@ packages:
       xml-js: 1.6.11
     dev: true
 
-  /@sap-ux/fe-fpm-writer/0.18.3:
-    resolution: { integrity: sha512-Ay3iurHA/6+iHKpXGw1D6Jkh6k2/83RSr6uUk5UpxyI0oIB4lEgZa7iPCZkx9mUtiZ93QIrKWbbz57q6RqyBrg== }
+  /@sap-ux/fe-fpm-writer/0.18.4:
+    resolution: { integrity: sha512-X51W1508+7MvSeLUrBtRycJP0H4/tkZijLmfKJu/VdS8TaGlueTvdhcIJlxneACwKUT3q23E92sRs8OhLMYMvw== }
     engines: { node: ">= 14.16.0 < 15.0.0 || >=16.1.0 < 17.0.0 || >=18.0.0 < 19.0.0", pnpm: ">=6.26.1 < 7.0.0 || >=7.1.0" }
     dependencies:
       "@xmldom/xmldom": 0.8.6
@@ -2212,11 +2212,11 @@ packages:
       "@sap/cds-foss": 4.0.0
     dev: false
 
-  /@sap/ux-specification/1.102.15:
-    resolution: { integrity: sha512-ctvaS0rjeiLX5MqanMo7gCKtD3P7ayBbNOG2pcSu0DGWDrQ1PY+44JHrGcy2+bmuQAIPhBAImIaPW+nqF+6QPg== }
+  /@sap/ux-specification/1.102.16:
+    resolution: { integrity: sha512-3BYBBa7s3tlyY/xz5AZLd9SFuJghcQ1e+dx03rqjkvycSB/wsV7Pn0Tvl+d+MKPxqwVG38J1tHMP7NnZTubw2g== }
     engines: { node: ">= 14.16.0 < 15.0.0 || >= 16.1.0 < 17.0.0 || >= 18.0.0 < 19.0.0 || >= 20.0.0", yarn: ">=1.22.19 < 2" }
     dependencies:
-      "@sap-ux/fe-fpm-writer": 0.18.3
+      "@sap-ux/fe-fpm-writer": 0.18.4
       "@sap-ux/vocabularies-types": 0.6.8
     dev: true
 
@@ -4261,12 +4261,7 @@ packages:
     dev: false
 
   /color-convert/1.9.3:
-    resolution:
-      {
-        integrity: sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==,
-        registry: https://registry.yarnpkg.com/,
-        tarball: https://registry.yarnpkg.com/color-convert/-/color-convert-1.9.3.tgz,
-      }
+    resolution: { integrity: sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg== }
     dependencies:
       color-name: 1.1.3
     dev: true
@@ -7051,12 +7046,7 @@ packages:
     dev: true
 
   /is-number/7.0.0:
-    resolution:
-      {
-        integrity: sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==,
-        registry: https://registry.yarnpkg.com/,
-        tarball: https://registry.yarnpkg.com/is-number/-/is-number-7.0.0.tgz,
-      }
+    resolution: { integrity: sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng== }
     engines: { node: ">=0.12.0" }
 
   /is-obj/2.0.0:
@@ -9100,12 +9090,7 @@ packages:
     dev: true
 
   /path-type/3.0.0:
-    resolution:
-      {
-        integrity: sha512-T2ZUsdZFHgA3u4e5PfPbjd7HDDpxPnQb5jN0SrDsjNSuVXHJqtwTnWqG0B1jZrgmJ/7lj1EmVIByWt1gxGkWvg==,
-        registry: https://registry.yarnpkg.com/,
-        tarball: https://registry.yarnpkg.com/path-type/-/path-type-3.0.0.tgz,
-      }
+    resolution: { integrity: sha512-T2ZUsdZFHgA3u4e5PfPbjd7HDDpxPnQb5jN0SrDsjNSuVXHJqtwTnWqG0B1jZrgmJ/7lj1EmVIByWt1gxGkWvg== }
     engines: { node: ">=4" }
     dependencies:
       pify: 3.0.0
@@ -9449,12 +9434,7 @@ packages:
     dev: true
 
   /queue-microtask/1.2.3:
-    resolution:
-      {
-        integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==,
-        registry: https://registry.yarnpkg.com/,
-        tarball: https://registry.yarnpkg.com/queue-microtask/-/queue-microtask-1.2.3.tgz,
-      }
+    resolution: { integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A== }
     dev: true
 
   /quick-lru/4.0.1:
@@ -9879,12 +9859,7 @@ packages:
     dev: true
 
   /reusify/1.0.4:
-    resolution:
-      {
-        integrity: sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==,
-        registry: https://registry.yarnpkg.com/,
-        tarball: https://registry.yarnpkg.com/reusify/-/reusify-1.0.4.tgz,
-      }
+    resolution: { integrity: sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw== }
     engines: { iojs: ">=1.0.0", node: ">=0.10.0" }
     dev: true
 
@@ -9954,12 +9929,7 @@ packages:
     dev: true
 
   /run-parallel/1.2.0:
-    resolution:
-      {
-        integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==,
-        registry: https://registry.yarnpkg.com/,
-        tarball: https://registry.yarnpkg.com/run-parallel/-/run-parallel-1.2.0.tgz,
-      }
+    resolution: { integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA== }
     dependencies:
       queue-microtask: 1.2.3
     dev: true
@@ -10612,12 +10582,7 @@ packages:
     dev: true
 
   /supports-color/5.5.0:
-    resolution:
-      {
-        integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==,
-        registry: https://registry.yarnpkg.com/,
-        tarball: https://registry.yarnpkg.com/supports-color/-/supports-color-5.5.0.tgz,
-      }
+    resolution: { integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow== }
     engines: { node: ">=4" }
     dependencies:
       has-flag: 3.0.0
@@ -10768,12 +10733,7 @@ packages:
     dev: true
 
   /to-regex-range/5.0.1:
-    resolution:
-      {
-        integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==,
-        registry: https://registry.yarnpkg.com/,
-        tarball: https://registry.yarnpkg.com/to-regex-range/-/to-regex-range-5.0.1.tgz,
-      }
+    resolution: { integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ== }
     engines: { node: ">=8.0" }
     dependencies:
       is-number: 7.0.0
