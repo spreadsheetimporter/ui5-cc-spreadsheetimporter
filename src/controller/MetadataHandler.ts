@@ -1,5 +1,5 @@
 import { Columns, Property, ListObject, PropertyArray } from "../types";
-import ExcelUpload from "cc/excelUpload/XXXnamespaceSlashXXX/controller/ExcelUpload";
+import ExcelUpload from "./ExcelUpload";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */

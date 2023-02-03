@@ -29,7 +29,7 @@ function replaceYamlFile(versionSlash) {
 		from: [/XXXnamespaceSlashXXX/g],
 		to: [versionSlash],
 	};
-	return replace(optionsYaml);
+	return replace.sync(optionsYaml);
 }
 
 function replaceWebappFolder(version, versionSlash) {
@@ -40,7 +40,7 @@ function replaceWebappFolder(version, versionSlash) {
 		from: [/XXXnamespaceXXX/g, /XXXnamespaceSlashXXX/g],
 		to: [version, versionSlash],
 	};
-	return replace(options);
+	return replace.sync(options);
 }
 
 // replace version in examples folder
