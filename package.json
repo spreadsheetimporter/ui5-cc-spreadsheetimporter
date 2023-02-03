@@ -44,7 +44,6 @@
     "build:dev": "ui5 build --config=ui5-build.yaml --all --clean-dest --dest dist  --exclude-task=replaceCopyright replaceVersion generateFlexChangesBundle generateVersionInfo minify escapeNonAsciiCharacters",
     "replaceString": "node ./dev/replace-string.js",
     "build:watch": "node ./dev/chokidar.js",
-    "setupExamplespnpm": "cd examples && pnpm install",
     "updateChromedriver": "cd examples && pnpm add chromedriver@latest --save-dev -w",
     "copyTestApps": "node ./dev/copy-example-apps.js create && pnpm i",
     "deleteTestApps": "node ./dev/copy-example-apps.js  delete"

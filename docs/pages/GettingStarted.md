@@ -24,17 +24,29 @@ npm install ui5-cc-excelupload
 }
 ````
 
-3\. Add `resourceRoots` to you `manifest.json`
+3\. Add `resourceRoots` to you `manifest.json` under `sap.ui5`
    
 ⚠️ You must always keep your ui5-cc-excelUpload version up to date here when updating the module.
 
 ````json
 "resourceRoots": {
-    "cc.excelUpload": "./thirdparty/customControl/excelUpload/v0/3/5"
+    "cc.excelUpload.v0.6.0": "./thirdparty/customControl/excelUpload/v0/6/0"
 },
 ````
 
-4\. Add `--all` to your build script in the package.json
+4\. Add `componentUsages` to you `manifest.json` under `sap.ui5`
+   
+⚠️ You must always keep your ui5-cc-excelUpload version up to date here when updating the module.
+
+````json
+"componentUsages": {
+    "excelUpload": {
+        "name": "cc.excelUpload.v0.6.0"
+    }
+},
+````
+
+5\. Add `--all` to your build script in the package.json
 ````json
 "scripts": {
 // ...
@@ -97,9 +109,9 @@ openExcelUploadDialog: async function (oEvent) {
     this._view.setBusyIndicatorDelay(0)
     this._view.setBusy(true)
     if (!this.excelUpload) {
-        this.excelUpload = await sap.ui.getCore().createComponent({
-            name: "cc.excelUpload",
-            async: false,
+        this.excelUpload = await this._controller.getAppComponent().createComponent({
+            usage: "excelUpload",
+            async: true,
             componentData: {
                 context: this
             }
@@ -153,9 +165,9 @@ openExcelUploadDialog: async function (oEvent) {
     this.getView().setBusyIndicatorDelay(0)
     this.getView().setBusy(true)
     if (!this.excelUpload) {
-        this.excelUpload = await sap.ui.getCore().createComponent({
-            name: "cc.excelUpload",
-            async: false,
+        this.excelUpload = await this.getView().getController().getOwnerComponent().createComponent({
+            usage: "excelUpload",
+            async: true,
             componentData: {
                 context: this
             }
