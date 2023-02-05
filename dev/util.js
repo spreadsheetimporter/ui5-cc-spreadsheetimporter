@@ -32,6 +32,16 @@ function replaceYamlFile(versionSlash) {
 	return replace.sync(optionsYaml);
 }
 
+function replaceYamlFileDeploy(versionShort) {
+	fs.copyFileSync("ui5-deploy-publish.yaml", "ui5-deploy.yaml");
+	const optionsYaml = {
+		files: ["**/ui5-deploy.yaml"],
+		from: [/XXXnamespaceShortXXX/g],
+		to: [versionShort],
+	};
+	return replace.sync(optionsYaml);
+}
+
 function replaceWebappFolder(version, versionSlash) {
 	// util.copyDirectorySync("src", "webapp");
 	fs.copyFileSync("webapp/i18n/i18n_en.properties", "webapp/i18n/i18n.properties");
@@ -147,6 +157,7 @@ module.exports.getVersionSlash = getVersionSlash;
 module.exports.replaceVersionInExamples = replaceVersionInExamples;
 module.exports.replaceWebappFolder = replaceWebappFolder;
 module.exports.replaceYamlFile = replaceYamlFile;
+module.exports.replaceYamlFileDeploy = replaceYamlFileDeploy;
 module.exports.copyDirectorySync = copyDirectorySync;
 module.exports.deleteFolderRecursive = deleteFolderRecursive;
 module.exports.searchAndReplace = searchAndReplace;

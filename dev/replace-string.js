@@ -4,12 +4,14 @@ const develop = process.argv.includes("--develop");
 
 // Get the version from the parsed data
 const version = util.getVersionDots()
+const versionShort = util.getVersionDots().replaceAll(".", "")
 const versionSlash = util.getVersionSlash()
 
 // replace strings in publish folder
 const webappPromise = util.replaceWebappFolder(version, versionSlash);
 // create ui5.yaml with current version
 const yamlPromise = util.replaceYamlFile(versionSlash);
+const yamlPromiseDeploy = util.replaceYamlFileDeploy(versionShort);
 
 
 if (!develop) {
