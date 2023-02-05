@@ -1,9 +1,16 @@
-# Getting Started
-## Installing the UI5 Custom Controll
-### Requirements
-- [Node.js](https://nodejs.org/) Version 14 or later
+## Deployment Strategy
 
-### General Setup
+There are two ways to use the Excel Upload Control.
+Since a Reuse Component (library) is basically utilised, this results in two deployment strategies that can be used.  
+### Decentralised deployment:
+The library is attached directly to each app and deployed with it.  
+### Central deployment:
+The Excel upload is stored directly as a library centrally, e.g. in the on-premise ABAP system.  
+For more information, please see the Page [Central Deployment](../../../ui5-cc-excelUpload/pages/CentralDeployment).
+
+## Setup
+
+### Setup Decentralised deployment
 
 1\. Install from npm
 
@@ -30,23 +37,11 @@ npm install ui5-cc-excelupload
 
 ````json
 "resourceRoots": {
-    "cc.excelUpload.v0.6.0": "./thirdparty/customControl/excelUpload/v0/6/0"
+    "cc.excelUpload.v0.7.0": "./thirdparty/customControl/excelUpload/v0/7/0"
 },
 ````
 
-4\. Add `componentUsages` to you `manifest.json` under `sap.ui5`
-   
-⚠️ You must always keep your ui5-cc-excelUpload version up to date here when updating the module.
-
-````json
-"componentUsages": {
-    "excelUpload": {
-        "name": "cc.excelUpload.v0.6.0"
-    }
-},
-````
-
-5\. Add `--all` to your build script in the package.json
+4\. Add `--all` to your build script in the package.json
 ````json
 "scripts": {
 // ...
@@ -54,6 +49,36 @@ npm install ui5-cc-excelupload
 // ...
 },
 ````
+
+5\. Add `componentUsages` to you `manifest.json` under `sap.ui5`
+   
+⚠️ You must always keep your ui5-cc-excelUpload version up to date here when updating the module.
+
+````json
+"componentUsages": {
+    "excelUpload": {
+        "name": "cc.excelUpload.v0.7.0"
+    }
+},
+````
+
+### Setup Central deployment
+
+1\. Execute the deployment with the version you like to use, see here [Central Deployment](../../../ui5-cc-excelUpload/pages/CentralDeployment).
+
+2\. Add `componentUsages` to you `manifest.json` under `sap.ui5`
+   
+⚠️ You must always keep your ui5-cc-excelUpload version up to date here when updating the module.
+
+````json
+"componentUsages": {
+    "excelUpload": {
+        "name": "cc.excelUpload.v0.7.0"
+    }
+},
+````
+
+
 
 
 !!! warning 
