@@ -1,4 +1,11 @@
-# [0.7.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.6.0...v0.7.0) (2023-02-03)
+## [0.8.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.7.0...v0.8.0) (2023-02-10)
+
+### Features
+
+* setup for central deployment abap ([#41](https://github.com/marianfoo/ui5-cc-excelUpload/issues/41)) ([54bc904](https://github.com/marianfoo/ui5-cc-excelUpload/commit/54bc904f1e79faf7639218692b5e7e01a86dd4eb))
+
+
+## [0.7.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.6.0...v0.7.0) (2023-02-03)
 
 **Breaking Changes**
 
@@ -17,7 +24,7 @@ See [Documenation](https://marianfoo.github.io/ui5-cc-excelUpload/pages/GettingS
 
 
 
-# [0.6.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.5.0...v0.6.0) (2023-01-14)
+## [0.6.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.5.0...v0.6.0) (2023-01-14)
 
 
 ### Bug Fixes
@@ -37,7 +44,7 @@ More info see [Supported Versions](https://marianfoo.github.io/ui5-cc-excelUploa
 
 
 
-# [0.5.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.4.0...v0.5.0) (2023-01-04)
+## [0.5.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.4.0...v0.5.0) (2023-01-04)
 
 
 ### Features
@@ -49,7 +56,7 @@ More info see [Supported Versions](https://marianfoo.github.io/ui5-cc-excelUploa
 
 
 
-# [0.4.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.3.4...v0.4.0) (2022-12-23)
+## [0.4.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.3.4...v0.4.0) (2022-12-23)
 
 **Breaking Changes**
 
@@ -109,7 +116,7 @@ See [Documenation](https://marianfoo.github.io/ui5-cc-excelUpload/pages/GettingS
 
 
 
-# [0.3.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.2.2...v0.3.0) (2022-12-06)
+## [0.3.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.2.2...v0.3.0) (2022-12-06)
 
 ### Breaking Changes
 
@@ -133,7 +140,7 @@ See [Documenation](https://marianfoo.github.io/ui5-cc-excelUpload/pages/GettingS
 
 
 
-# [0.2.0](/compare/v0.1.2...v0.2.0) (2022-11-30)
+## [0.2.0](/compare/v0.1.2...v0.2.0) (2022-11-30)
 
 
 ### Features
@@ -152,6 +159,3 @@ See [Documenation](https://marianfoo.github.io/ui5-cc-excelUpload/pages/GettingS
 
 
 # 0.1.0 (2022-11-29)
-
-
-
