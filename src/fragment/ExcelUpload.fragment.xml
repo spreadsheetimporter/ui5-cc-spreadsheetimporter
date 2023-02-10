@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:upload="sap.ui.unified">
-  <Dialog title="{i18n>excelupload}" contentWidth="34vw" contentHeight="100px">
+  <Dialog title="{i18n>excelupload}" contentWidth="34vw" contentHeight="100px" verticalScrolling="false">
     <subHeader>
       <Bar>
         <contentLeft>
