@@ -1,4 +1,11 @@
-# [0.7.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.6.0...v0.7.0) (2023-02-03)
+## [0.8.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.7.0...v0.8.0) (2023-02-10)
+
+### Features
+
+* setup for central deployment abap ([#41](https://github.com/marianfoo/ui5-cc-excelUpload/issues/41)) ([54bc904](https://github.com/marianfoo/ui5-cc-excelUpload/commit/54bc904f1e79faf7639218692b5e7e01a86dd4eb))
+
+
+## [0.7.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.6.0...v0.7.0) (2023-02-03)
 
 **Breaking Changes**
 
@@ -17,7 +24,7 @@ See [Documenation](https://marianfoo.github.io/ui5-cc-excelUpload/pages/GettingS
 
 
 
-# [0.6.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.5.0...v0.6.0) (2023-01-14)
+## [0.6.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.5.0...v0.6.0) (2023-01-14)
 
 
 ### Bug Fixes
@@ -37,7 +44,7 @@ More info see [Supported Versions](https://marianfoo.github.io/ui5-cc-excelUploa
 
 
 
-# [0.5.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.4.0...v0.5.0) (2023-01-04)
+## [0.5.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.4.0...v0.5.0) (2023-01-04)
 
 
 ### Features
@@ -49,7 +56,7 @@ More info see [Supported Versions](https://marianfoo.github.io/ui5-cc-excelUploa
 
 
 
-# [0.4.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.3.4...v0.4.0) (2022-12-23)
+## [0.4.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.3.4...v0.4.0) (2022-12-23)
 
 **Breaking Changes**
 
@@ -61,28 +68,6 @@ See [Documenation](https://marianfoo.github.io/ui5-cc-excelUpload/pages/GettingS
 * multiversion support ([#6](https://github.com/marianfoo/ui5-cc-excelUpload/issues/6)) ([68aa9ca](https://github.com/marianfoo/ui5-cc-excelUpload/commit/68aa9ca2dab84bac0bcd81406636d87038fc1b2e))
 
 
-
-## [0.8.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.3.4...v0.8.0) (2023-02-10)
-
-
-### Features
-
-* add intial csv support ([#33](https://github.com/marianfoo/ui5-cc-excelUpload/issues/33)) ([f7ec051](https://github.com/marianfoo/ui5-cc-excelUpload/commit/f7ec051ad20c5304764f97d3d1b89358cee279f1))
-* compatibility/wdi5 tests with v2 FE 1.96 and 1.84 ([3f010d9](https://github.com/marianfoo/ui5-cc-excelUpload/commit/3f010d9a1a360702972552b647f8f20368d72640))
-* init i18n ([#8](https://github.com/marianfoo/ui5-cc-excelUpload/issues/8)) ([593b009](https://github.com/marianfoo/ui5-cc-excelUpload/commit/593b009298bfc61c2bedce1e23573e96e8ff9e3a))
-* multiversion support ([#6](https://github.com/marianfoo/ui5-cc-excelUpload/issues/6)) ([68aa9ca](https://github.com/marianfoo/ui5-cc-excelUpload/commit/68aa9ca2dab84bac0bcd81406636d87038fc1b2e))
-* setup for central deployment abap ([#41](https://github.com/marianfoo/ui5-cc-excelUpload/issues/41)) ([54bc904](https://github.com/marianfoo/ui5-cc-excelUpload/commit/54bc904f1e79faf7639218692b5e7e01a86dd4eb))
-* support for v4 96/84 ([#16](https://github.com/marianfoo/ui5-cc-excelUpload/issues/16)) ([109813f](https://github.com/marianfoo/ui5-cc-excelUpload/commit/109813f8e20acc16d351da04c80b0208b90008c7))
-* working in Draft List Report V2/V4 ([#17](https://github.com/marianfoo/ui5-cc-excelUpload/issues/17)) ([cc07d38](https://github.com/marianfoo/ui5-cc-excelUpload/commit/cc07d387e8af2afb45877887911a68f726945646))
-* works in ListReport/ObjectPage V4/V2 and Freestyle V2([#10](https://github.com/marianfoo/ui5-cc-excelUpload/issues/10)) ([d9432d2](https://github.com/marianfoo/ui5-cc-excelUpload/commit/d9432d25142addd8ff7fbe804f9a832692588ef4))
-
-
-### Bug Fixes
-
-* component-preload.js and componentUsages in examples apps ([#40](https://github.com/marianfoo/ui5-cc-excelUpload/issues/40)) ([33c6e88](https://github.com/marianfoo/ui5-cc-excelUpload/commit/33c6e880b32b13d36638e6dfaddbf69cd5263701))
-* open excel dialog twice again ([#20](https://github.com/marianfoo/ui5-cc-excelUpload/issues/20)) ([7a37483](https://github.com/marianfoo/ui5-cc-excelUpload/commit/7a37483d93f07e7b9a9c72ab774a045a06d2766d))
-* upload same file two times ([#37](https://github.com/marianfoo/ui5-cc-excelUpload/issues/37)), closes [#36](https://github.com/marianfoo/ui5-cc-excelUpload/issues/36) ([553e5a8](https://github.com/marianfoo/ui5-cc-excelUpload/commit/553e5a8f84f12b96f6e6f04f83efef009fc3a23b))
-* using component-preload.js ([#31](https://github.com/marianfoo/ui5-cc-excelUpload/issues/31)) ([4b223bb](https://github.com/marianfoo/ui5-cc-excelUpload/commit/4b223bbb044ef441435d6733e857574c7e5775d4))
 
 ## [0.3.4](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.3.3...v0.3.4) (2022-12-09)
 
@@ -131,7 +116,7 @@ See [Documenation](https://marianfoo.github.io/ui5-cc-excelUpload/pages/GettingS
 
 
 
-# [0.3.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.2.2...v0.3.0) (2022-12-06)
+## [0.3.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.2.2...v0.3.0) (2022-12-06)
 
 ### Breaking Changes
 
@@ -155,7 +140,7 @@ See [Documenation](https://marianfoo.github.io/ui5-cc-excelUpload/pages/GettingS
 
 
 
-# [0.2.0](/compare/v0.1.2...v0.2.0) (2022-11-30)
+## [0.2.0](/compare/v0.1.2...v0.2.0) (2022-11-30)
 
 
 ### Features
