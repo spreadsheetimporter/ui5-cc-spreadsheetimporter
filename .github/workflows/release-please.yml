@@ -15,7 +15,6 @@ jobs:
           package-name: ui5-cc-excelupload
           bump-minor-pre-major: true
           prerelease: true
-          release-as: 0.8.0
       - uses: actions/checkout@v3
       - name: Setup git user
         run: |
