@@ -6,6 +6,7 @@ dist
 .DS_Store
 archive.zip
 ui5-deploy.yaml
+package-lock.json
 # test apps start
 /examples/packages/ordersv2fe96
 /examples/packages/ordersv2fe84
