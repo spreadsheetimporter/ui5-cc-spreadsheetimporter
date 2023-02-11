@@ -181,15 +181,15 @@
           }
         },
         "pages": {
-          "ObjectPage|OrdersND": {
+          "ObjectPage|OrderND": {
             "entitySet": "OrdersND",
             "defaultLayoutTypeIfExternalNavigation": "MidColumnFullScreen",
             "component": {
               "name": "sap.suite.ui.generic.template.ObjectPage"
             },
             "pages": {
-              "ObjectPage|Items": {
-                "navigationProperty": "Items",
+              "ObjectPage|OrderItemsND": {
+                "navigationProperty": "OrderItemsND",
                 "entitySet": "OrderItemsND",
                 "defaultLayoutTypeIfExternalNavigation": "MidColumnFullScreen",
                 "component": {

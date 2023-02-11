@@ -1,3 +1,4 @@
+const FEV2ND = require("../Objects/FEV2ND");
 const Base = require("./../Objects/Base");
 const FEV2 = require("./../Objects/FEV2");
 const FEV4 = require("./../Objects/FEV4");
@@ -5,16 +6,20 @@ const { optionsLong, optionsShort } = require("./../Objects/types");
 
 let FE = undefined;
 let BaseClass = undefined;
+let scenario = undefined
 
 describe("Upload File List Report", () => {
 	before(async () => {
 		BaseClass = new Base();
-		const scenario = browser.config.scenario;
+		scenario = browser.config.scenario;
 		if (scenario.startsWith("ordersv2")) {
 			FE = new FEV2();
 		}
 		if (scenario.startsWith("ordersv4")) {
 			FE = new FEV4();
+		}
+		if (scenario.startsWith("ordersv2fenondraft")) {
+			FE = new FEV2ND();
 		}
 	});
 	it("should trigger search on ListReport page", async () => {
@@ -72,6 +77,10 @@ describe("Upload File List Report", () => {
 
 	it("entry created and activated", async () => {
 		const object = await FE.getTableObject(FE.listReportTable, FE.checkFileuploadListreportAttribute, FE.checkFileuploadListreportValue);
-		expect(object.IsActiveEntity).toBeTruthy()
+		if (scenario.startsWith("ordersv2fenondraft")) {
+			expect(object.OrderNo).toBe('4')
+		} else {
+			expect(object.IsActiveEntity).toBeTruthy()
+		}
 	});
 });
