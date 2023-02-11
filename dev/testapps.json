@@ -50,24 +50,44 @@
     "port": "8083",
     "versionMinor": 108,
     "appTitel": "Orders V2 FE ND 108",
+    "testMapping": {
+      "specs": [
+        "./test/specs/all/**.test.js"
+      ]
+    },
     "copyVersions": [
       {
         "version": "1.96.16",
         "versionMinor": 96,
         "port": "8093",
-        "appTitel": "Orders V2 FE ND 96"
+        "appTitel": "Orders V2 FE ND 96",
+        "testMapping": {
+          "specs": [
+            "./test/specs/all/**.test.js"
+          ]
+        }
       },
       {
         "version": "1.84.31",
         "versionMinor": 84,
         "port": "8094",
-        "appTitel": "Orders V2 FE ND 84"
+        "appTitel": "Orders V2 FE ND 84",
+        "testMapping": {
+          "specs": [
+            "./test/specs/all/**.test.js"
+          ]
+        }
       },
       {
         "version": "1.71.53",
         "versionMinor": 71,
         "port": "8095",
-        "appTitel": "Orders V2 FE ND 71"
+        "appTitel": "Orders V2 FE ND 71",
+        "testMapping": {
+          "specs": [
+            "./test/specs/all/**.test.js"
+          ]
+        }
       }
     ]
   },

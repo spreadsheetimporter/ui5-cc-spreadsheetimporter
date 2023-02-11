@@ -1,3 +1,4 @@
+const FEV2ND = require("../Objects/FEV2ND");
 const Base = require("./../Objects/Base");
 const FEV2 = require("./../Objects/FEV2");
 const FEV4 = require("./../Objects/FEV4");
@@ -15,6 +16,9 @@ describe("Upload File List Report", () => {
 		}
 		if (scenario.startsWith("ordersv4")) {
 			FE = new FEV4();
+		}
+		if (scenario.startsWith("ordersv2fenondraft")) {
+			FE = new FEV2ND;
 		}
 	});
 	it("should trigger search on ListReport page", async () => {

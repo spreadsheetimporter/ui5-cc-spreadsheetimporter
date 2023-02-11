@@ -5,9 +5,9 @@ sap.ui.define([], function () {
 			this.getView().setBusyIndicatorDelay(0);
 			// this.getView().setBusy(true)
 			if (!this.excelUpload) {
-				this.excelUpload = await this.getController().getAppComponent().createComponent({
-					name: "cc.excelUpload",
-					async: false,
+				this.excelUpload = await this.getOwnerComponent().createComponent({
+					usage: "excelUpload",
+					async: true,
 					componentData: {
 						context: this,
 						columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time"],
@@ -22,14 +22,14 @@ sap.ui.define([], function () {
 					const sheetData = oEvent.getParameter("sheetData");
 					let errorArray = [
 						{
-							title: "Price to high (max 100)",
+							title: "Price to high (max 10.000)",
 							counter: 0
 						}
 					];
 					for (const row of sheetData) {
 						//check for invalid date
 						if (row.UnitPrice) {
-							if (row.UnitPrice > 100) {
+							if (row.UnitPrice > 10000) {
 								errorArray[0].counter = errorArray[0].counter + 1;
 							}
 						}
