@@ -10,21 +10,15 @@ Another overview shows which apps are already tested automatically with wdi5 and
 
 ### CAP V2
 
-| UI5 Version  | [List Report Draft](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/examples/packages/ordersv2fe/webapp/ext/controller/ListReportExt.controller.js)  | [List Report Non Draft](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/examples/packages/ordersv2fenondraft/webapp/ext/controller/ListReportExt.controller.js)  | [Object Page Draft](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/examples/packages/ordersv2fe/webapp/ext/controller/ObjectPageExt.controller.js)  | [Object Page Non Draft](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/examples/packages/ordersv2fenondraft/webapp/ext/controller/ObjectPageExt.controller.js)  | [Freestyle](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/examples/packages/ordersv2freestyle/webapp/controller/List.controller.js) |
-|---|---|---|---|---|---|
-| 1.108  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| 1.96  |   |   |   |   |   |
-|  1.84 |   |   |   |   |   |
-|  1.71 |   |   |   |   |   |
+| [List Report Draft](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/examples/packages/ordersv2fe/webapp/ext/controller/ListReportExt.controller.js)  | [List Report Non Draft](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/examples/packages/ordersv2fenondraft/webapp/ext/controller/ListReportExt.controller.js)  | [Object Page Draft](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/examples/packages/ordersv2fe/webapp/ext/controller/ObjectPageExt.controller.js)  | [Object Page Non Draft](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/examples/packages/ordersv2fenondraft/webapp/ext/controller/ObjectPageExt.controller.js)  | [Freestyle](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/examples/packages/ordersv2freestyle/webapp/controller/List.controller.js) |
+|---|---|---|---|---|
+| :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 
 ### CAP V4
 
-| UI5 Version  | [List Report Draft](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/examples/packages/ordersv4fe/webapp/ext/ListReportExtController.js)  | [Object Page Draft](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/examples/packages/ordersv4fe/webapp/ext/ObjectPageExtController.js)  |  Freestyle | [Flexible Programming Model](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/examples/packages/ordersv4fpm/webapp/ext/main/Main.controller.js) |
-|---|---|---|---|---|
-| 1.108  | :white_check_mark:   | :white_check_mark: |  |  :white_check_mark:  |
-| 1.96  |   |   |   |   |
-|  1.84 |   |   |   |   |
-|  1.71 |   |   |   |   |
+| [List Report Draft](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/examples/packages/ordersv4fe/webapp/ext/ListReportExtController.js)  | [Object Page Draft](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/examples/packages/ordersv4fe/webapp/ext/ObjectPageExtController.js)  |  Freestyle | [Flexible Programming Model](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/examples/packages/ordersv4fpm/webapp/ext/main/Main.controller.js) |
+|---|---|---|---|
+| :white_check_mark:   | :white_check_mark: |  |  :white_check_mark:  |
 
 ## wdi5 Tests
 
@@ -32,10 +26,10 @@ Another overview shows which apps are already tested automatically with wdi5 and
 
 | UI5 Version  | List Report Draft  | List Report Non Draft  | Object Page Draft  | Object Page Non Draft  | Freestyle |
 |---|---|---|---|---|---|
-| 1.108  | :white_check_mark:   |   | :white_check_mark: |  |   |
-| 1.96  | :white_check_mark:  |   |  :white_check_mark: |   |   |
-|  1.84 |  :white_check_mark: |   |  :white_check_mark: |   |   |
-|  1.71 | :white_check_mark:  |   |  :white_check_mark: |   |   |
+| 1.108  | :white_check_mark:   |  :white_check_mark: | :white_check_mark: | :white_check_mark:  |   |
+| 1.96  | :white_check_mark:  |  :white_check_mark: |  :white_check_mark: | :white_check_mark:  |   |
+|  1.84 |  :white_check_mark: | :white_check_mark:  |  :white_check_mark: | :white_check_mark:  |   |
+|  1.71 | :white_check_mark:  |  :white_check_mark: |  :white_check_mark: | :white_check_mark: |   |
 
 ### CAP V4
 
@@ -44,4 +38,3 @@ Another overview shows which apps are already tested automatically with wdi5 and
 | 1.108  |  :white_check_mark:  | :white_check_mark: |  |  |
 | 1.96  | :white_check_mark:  | :white_check_mark:  |   |   |
 |  1.84 |  :white_check_mark: | :white_check_mark:  |   |   |
-|  1.71 |   |   |   |   |
