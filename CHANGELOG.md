@@ -1,3 +1,9 @@
+## [0.8.1](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.8.0...v0.8.1) (2023-02-10)
+
+
+### Bug Fixes
+
+* remove scrollbar from dialog ([#45](https://github.com/marianfoo/ui5-cc-excelUpload/issues/45)) ([bb1b197](https://github.com/marianfoo/ui5-cc-excelUpload/commit/bb1b1979ef9a49a8c26477970f6a03d411ba93e8))
 
 ## [0.8.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.7.0...v0.8.0) (2023-02-10)
 

@@ -12,6 +12,7 @@ nav:
   - Events: pages/Events.md
   - Supported Versions: pages/SupportVersions.md
   - Central Deployment: pages/CentralDeployment.md
+  - yo Generator: pages/Generator.md
   # - UI5 CLI: pages/CLI.md
   # - Development:
   #     - Overview: pages/Overview.md

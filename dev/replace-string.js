@@ -8,10 +8,12 @@ const versionShort = util.getVersionDots().replaceAll(".", "")
 const versionSlash = util.getVersionSlash()
 
 // replace strings in publish folder
-const webappPromise = util.replaceWebappFolder(version, versionSlash);
+util.replaceSomething("webapp/i18n/i18n_en.properties", "webapp/i18n/i18n.properties",["**/webapp/**"],[/XXXnamespaceXXX/g, /XXXnamespaceSlashXXX/g],[version, versionSlash])
 // create ui5.yaml with current version
-const yamlPromise = util.replaceYamlFile(versionSlash);
-const yamlPromiseDeploy = util.replaceYamlFileDeploy(versionShort);
+util.replaceSomething("ui5-publish.yaml", "ui5.yaml",["**/ui5.yaml"],[/XXXnamespaceSlashXXX/g],[versionSlash])
+util.replaceSomething("ui5-deploy-publish.yaml", "ui5-deploy.yaml",["**/ui5-deploy.yaml"],[/XXXnamespaceShortXXX/g],[versionShort])
+// replace in docs
+util.replaceSomething("docs/pages/GettingStartedTEMPLATE.md", "docs/pages/GettingStarted.md",["**/docs/pages/GettingStarted.md"],[/XXXnamespaceXXX/g, /XXXnamespaceSlashXXX/g],[version, versionSlash])
 
 
 if (!develop) {

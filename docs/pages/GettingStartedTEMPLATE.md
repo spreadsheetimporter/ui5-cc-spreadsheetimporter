@@ -10,7 +10,6 @@ For more information, please see the Page [Central Deployment](../../../ui5-cc-e
 
 ## Setup
 
-Here are the manual steps how to integrate the ui5-cc-excelUpload component. For a simplified integration, a [yo generator](../../../ui5-cc-excelUpload/pages/Generator) is also available.
 ### Setup Decentralised deployment
 
 1\. Install from npm
@@ -38,7 +37,7 @@ npm install ui5-cc-excelupload
 
 ````json
 "resourceRoots": {
-    "cc.excelUpload.v0.8.1": "./thirdparty/customControl/excelUpload/v0/8/1"
+    "cc.excelUpload.XXXnamespaceXXX": "./thirdparty/customControl/excelUpload/XXXnamespaceSlashXXX"
 },
 ````
 
@@ -58,7 +57,7 @@ npm install ui5-cc-excelupload
 ````json
 "componentUsages": {
     "excelUpload": {
-        "name": "cc.excelUpload.v0.8.1"
+        "name": "cc.excelUpload.XXXnamespaceXXX"
     }
 },
 ````
@@ -74,7 +73,7 @@ npm install ui5-cc-excelupload
 ````json
 "componentUsages": {
     "excelUpload": {
-        "name": "cc.excelUpload.v0.8.1"
+        "name": "cc.excelUpload.XXXnamespaceXXX"
     }
 },
 ````

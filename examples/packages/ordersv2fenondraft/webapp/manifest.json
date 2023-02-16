@@ -99,11 +99,11 @@
     },
     "componentUsages": {
       "excelUpload": {
-        "name": "cc.excelUpload.v0.8.0"
+        "name": "cc.excelUpload.v0.8.1"
       }
     },
     "resourceRoots": {
-      "cc.excelUpload.v0.8.0": "./thirdparty/customControl/excelUpload/v0/8/0"
+      "cc.excelUpload.v0.8.1": "./thirdparty/customControl/excelUpload/v0/8/1"
     },
     "routing": {
       "config": {},
@@ -181,15 +181,15 @@
           }
         },
         "pages": {
-          "ObjectPage|OrdersND": {
+          "ObjectPage|OrderND": {
             "entitySet": "OrdersND",
             "defaultLayoutTypeIfExternalNavigation": "MidColumnFullScreen",
             "component": {
               "name": "sap.suite.ui.generic.template.ObjectPage"
             },
             "pages": {
-              "ObjectPage|Items": {
-                "navigationProperty": "Items",
+              "ObjectPage|OrderItemsND": {
+                "navigationProperty": "OrderItemsND",
                 "entitySet": "OrderItemsND",
                 "defaultLayoutTypeIfExternalNavigation": "MidColumnFullScreen",
                 "component": {

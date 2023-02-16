@@ -1,3 +1,4 @@
+const FEV2ND = require("../Objects/FEV2ND");
 const Base = require("./../Objects/Base");
 const FEV2 = require("./../Objects/FEV2");
 const FEV4 = require("./../Objects/FEV4");
@@ -5,6 +6,7 @@ const { optionsLong, optionsShort } = require("./../Objects/types");
 
 let FE = undefined;
 let BaseClass = undefined;
+let skipSave = false;
 
 describe("Upload CSV File Object Page", () => {
 	before(async () => {
@@ -15,6 +17,10 @@ describe("Upload CSV File Object Page", () => {
 		}
 		if (scenario.startsWith("ordersv4")) {
 			FE = new FEV4();
+		}
+		if (scenario.startsWith("ordersv2fenondraft")) {
+			FE = new FEV2ND();
+			skipSave = true;
 		}
 	});
 	it("should trigger search on ListReport page", async () => {
@@ -81,7 +87,9 @@ describe("Upload CSV File Object Page", () => {
 	});
 
 	it("execute save", async () => {
-		await BaseClass.pressById(FE.objectPageSaveButton);
+		if (!skipSave) {
+			await BaseClass.pressById(FE.objectPageSaveButton);
+		}
 	});
 
 	it("go to Sub Detail Page", async () => {
