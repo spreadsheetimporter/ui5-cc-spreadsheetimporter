@@ -27,6 +27,8 @@ jobs:
           sudo apt-get --only-upgrade install google-chrome-stable
           # check chrome version
           google-chrome --version
+      - name: install gnome-keyring
+        run: sudo apt install gnome-keyring
 
       - name: checkout excelUpload Repo
         uses: actions/checkout@v3

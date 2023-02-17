@@ -13,10 +13,10 @@
     "ui5-cc-excelupload": "./../../../"
   },
   "devDependencies": {
-    "@ui5/cli": "^2.14.1",
-    "@sap/ux-ui5-tooling": "1",
-    "@sap/ux-specification": "UI5-1.108",
-    "@sap-ux/ui5-middleware-fe-mockserver": "2"
+    "@sap-ux/ui5-middleware-fe-mockserver": "^2.1.55",
+    "@sap/ux-specification": "^1.102.16",
+    "@sap/ux-ui5-tooling": "^1.8.6",
+    "@ui5/cli": "3.0.1"
   },
   "scripts": {
     "start": "fiori run -p 8084 --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#uiv4ordersv4fpm-tile\"",

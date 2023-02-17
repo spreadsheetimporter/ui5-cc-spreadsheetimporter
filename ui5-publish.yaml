@@ -2,20 +2,7 @@ specVersion: "2.6"
 type: module
 metadata:
   name: ui5-cc-excelupload
----
-specVersion: "2.6"
-kind: extension
-type: project-shim
-metadata:
-  name: thirdparty
-shims:
-  configurations:
-    ui5-cc-excelupload:
-      specVersion: "2.6"
-      type: module
-      metadata:
-        name: ui5-cc-excelupload
-      resources:
-        configuration:
-          paths:
-            "/thirdparty/customControl/excelUpload/XXXnamespaceSlashXXX/": "./dist/"
+resources:
+  configuration:
+    paths:
+      "/thirdparty/customControl/excelUpload/XXXnamespaceSlashXXX/": "./dist/"
