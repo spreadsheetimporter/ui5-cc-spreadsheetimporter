@@ -42,7 +42,9 @@ npm install ui5-cc-excelupload
 },
 ````
 
-4\. Add `--all` to your build script in the package.json
+4\. Add `--all` to your build script in the package.json  
+:information_source: This step is not necessary from UI5 Tooling V3
+
 ````json
 "scripts": {
 // ...

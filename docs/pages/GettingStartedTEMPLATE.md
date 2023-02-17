@@ -10,6 +10,7 @@ For more information, please see the Page [Central Deployment](../../../ui5-cc-e
 
 ## Setup
 
+Here are the manual steps how to integrate the ui5-cc-excelUpload component. For a simplified integration, a [yo generator](../../../ui5-cc-excelUpload/pages/Generator) is also available.
 ### Setup Decentralised deployment
 
 1\. Install from npm
@@ -41,7 +42,9 @@ npm install ui5-cc-excelupload
 },
 ````
 
-4\. Add `--all` to your build script in the package.json
+4\. Add `--all` to your build script in the package.json  
+:information_source: This step is not necessary from UI5 Tooling V3
+
 ````json
 "scripts": {
 // ...
