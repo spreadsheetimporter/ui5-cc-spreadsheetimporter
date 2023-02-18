@@ -11,8 +11,8 @@
       <upload:FileUploader width="90%" placeholder="{i18n>exceluploadPlaceholder}" fileType="xlsx,xls,csv" change="onFileUpload" sameFilenameAllowed="true" class="sapUiMediumMargin" />
     </content>
     <buttons>
-      <Button text="{i18n>upload}" press="onUploadSet" icon="sap-icon://upload-to-cloud" type="Emphasized" />
-      <Button press="onCloseDialog" text="{i18n>close}" icon="sap-icon://cancel" />
+      <Button text="{i18n>upload}" press="onUploadSet"  type="Emphasized" />
+      <Button press="onCloseDialog" text="{i18n>close}"  />
     </buttons>
   </Dialog>
 </core:FragmentDefinition>
