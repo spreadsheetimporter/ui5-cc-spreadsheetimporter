@@ -31,7 +31,7 @@ jobs:
         run: |
           gh pr checkout ${{ fromJSON(steps.release.outputs.pr).number }}
           npm install
-          npm run build
+          npm run replaceString
           git add .
           git commit --amend --no-edit
           git push --force
