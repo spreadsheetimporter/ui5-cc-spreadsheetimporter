@@ -4,8 +4,6 @@ var shell = require("shelljs");
 var execAsync = require("./execAsync")
 let timeoutId;
 execAsync("npx @ui5/ts-interface-generator --watch")
-shell.exec("babel src --out-dir webapp --source-maps true --extensions \".ts,.js\" --copy-files")
-shell.exec("node ./dev/replace-string.js --develop");
 shell.exec(
 	"ui5 build --config=ui5-build.yaml --all --clean-dest --dest dist  --exclude-task=replaceCopyright replaceVersion generateFlexChangesBundle generateVersionInfo minify escapeNonAsciiCharacters "
 );
@@ -21,8 +19,6 @@ chokidar
 	.on("change", (event, path) => {
 		clearTimeout(timeoutId)
 		timeoutId = setTimeout(() => {
-			shell.exec("babel src --out-dir webapp --source-maps true --extensions \".ts,.js\" --copy-files")
-			shell.exec("node ./dev/replace-string.js --develop");
 			shell.exec(
 				"ui5 build --config=ui5-build.yaml --all --clean-dest --dest dist  --exclude-task=replaceCopyright replaceVersion generateFlexChangesBundle generateVersionInfo minify escapeNonAsciiCharacters "
 			);
