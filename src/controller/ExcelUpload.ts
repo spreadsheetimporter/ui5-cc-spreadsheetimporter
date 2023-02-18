@@ -172,6 +172,7 @@ export default class ExcelUpload {
 			const data = await this.buffer_RS(stream);
 			let workbook = XLSX.read(data);
 			this.component.setErrorResults([]);
+			let columnNames
 			// reading all sheets
 			workbook.SheetNames.forEach((sheetName) => {
 				// Need special case for CSV Import
@@ -186,6 +187,7 @@ export default class ExcelUpload {
 				// 	}
 				// }
 				let data = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+				columnNames = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })[0];
 				excelSheetsData.push(data);
 			});
 			// use only first sheet
@@ -198,6 +200,7 @@ export default class ExcelUpload {
 			}
 			// check if data is ok in extension method
 			this._checkMandatoryFields(firstSheet, this.component.getErrorResults());
+			this._checkColumnNames(columnNames, this.component.getErrorResults());
 			this.component.fireCheckBeforeRead({ sheetData: firstSheet });
 			if (this.component.getErrorResults().some((error) => error.counter > 0)) {
 				// error found in excel
@@ -466,6 +469,37 @@ export default class ExcelUpload {
 		}
 
 		return errorArray;
+	}
+
+	_checkColumnNames(columnNames, errorArray){
+		const fieldMatchType = this.component.getFieldMatchType();
+		for (let index = 0; index < columnNames.length; index++) {
+			const columnName = columnNames[index];
+			let found = false;
+			for (const key in this.typeLabelList) {
+				if (this.typeLabelList.hasOwnProperty(key)){
+					if (fieldMatchType === "label") {
+						if(this.typeLabelList[key].label === columnName){
+							found = true
+							break;
+						}
+					}
+					if (fieldMatchType === "labelTypeBrackets") {
+						if(columnName.includes(`[${key}]`)){
+							found = true
+							break;
+						}
+					}
+				}
+			  }
+			  if(!found){
+				const errorMessage = {
+					title: this._geti18nText("columnNotFound", [columnName]),
+					counter: 1,
+				};
+				errorArray.push(errorMessage)
+			  }
+		}
 	}
 
 	_getValueFromRow(row, label, type) {
