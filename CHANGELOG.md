@@ -5,6 +5,20 @@
 
 * remove scrollbar from dialog ([#45](https://github.com/marianfoo/ui5-cc-excelUpload/issues/45)) ([bb1b197](https://github.com/marianfoo/ui5-cc-excelUpload/commit/bb1b1979ef9a49a8c26477970f6a03d411ba93e8))
 
+## [0.9.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.8.1...v0.9.0) (2023-02-18)
+
+
+### Features
+
+* check if all columns name in file match metadata ([#57](https://github.com/marianfoo/ui5-cc-excelUpload/issues/57)) ([7c538a0](https://github.com/marianfoo/ui5-cc-excelUpload/commit/7c538a0d68e1fb7a4ea9d09dff560fccc08a09ec))
+* support for UI5 Tooling V3 ([#47](https://github.com/marianfoo/ui5-cc-excelUpload/issues/47)) ([d9f52e9](https://github.com/marianfoo/ui5-cc-excelUpload/commit/d9f52e9c02c8060c284f47ef1a12f322879b4169))
+
+
+### Bug Fixes
+
+* Align Dialogs more with Fiori Guidelines ([#54](https://github.com/marianfoo/ui5-cc-excelUpload/issues/54)) ([4f74eeb](https://github.com/marianfoo/ui5-cc-excelUpload/commit/4f74eeb66b6b64e6574632eea6837f88915c28ab))
+* horizontal scrollbar in dialog on mobile view ([#55](https://github.com/marianfoo/ui5-cc-excelUpload/issues/55)) ([3288a25](https://github.com/marianfoo/ui5-cc-excelUpload/commit/3288a25b28230655c805552ff14ca8d16f57e990))
+
 ## [0.8.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.7.0...v0.8.0) (2023-02-10)
 
 ### Features
