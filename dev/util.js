@@ -1,6 +1,7 @@
 const replace = require("replace-in-file");
 const fs = require("fs");
 const path = require('path')
+const yaml = require('js-yaml');
 
 function copyDirectorySync(src, dest, excludedFolder) {
 	const files = fs.readdirSync(src);
@@ -22,7 +23,7 @@ function copyDirectorySync(src, dest, excludedFolder) {
 	}
 }
 
-function replaceSomething(copyFrom, copyTo, files, from,to) {
+function replaceSomething(copyFrom, copyTo, files, from, to) {
 	fs.copyFileSync(copyFrom, copyTo);
 	const options = {
 		files: files,
@@ -124,11 +125,85 @@ function getTestappObject(scenario, version) {
 			break;
 		}
 	}
+}
 
+function replaceYamlFileBuild(version, versionShort, versionSlash) {
+	// Load the ui5-build.yaml file
+	const fileContents = fs.readFileSync('ui5-build.yaml', 'utf8');
 
+	// Parse the YAML into a JavaScript object
+	const ui5Build = yaml.load(fileContents);
+
+	// Replace the values
+	ui5Build.builder.customTasks.forEach(task => {
+		if (task.name === 'ui5-tooling-stringreplace-task') {
+			task.configuration.replace.forEach(replacement => {
+				if (replacement.placeholder === 'XXXnamespaceXXX') {
+					replacement.value = version;
+				}
+				if (replacement.placeholder === 'XXXnamespaceShortXXX') {
+					replacement.value = versionShort;
+				}
+				if (replacement.placeholder === 'XXXnamespaceSlashXXX') {
+					replacement.value = versionSlash;
+				}
+			});
+		}
+	});
+
+	// Serialize the modified object back to YAML
+	const updatedYaml = yaml.dump(ui5Build, { lineWidth: -1 });
+
+	// Save the updated ui5-build.yaml file
+	fs.writeFileSync('ui5-build.yaml', updatedYaml, 'utf8');
 
 }
 
+function replaceYamlFileComponent(versionSlash) {
+	// Load the ui5-build.yaml file
+	const fileContents = fs.readFileSync('ui5.yaml', 'utf8');
+
+	// Parse the YAML into a JavaScript object
+	const ui5Build = yaml.load(fileContents);
+	const key = "/thirdparty/customControl/excelUpload/" + versionSlash + "/"
+	// Replace the values
+	ui5Build.resources.configuration.paths = {
+		[key]: "./dist/"
+	  };
+
+
+	// Serialize the modified object back to YAML
+	const updatedYaml = yaml.dump(ui5Build);
+
+	// Save the updated ui5-build.yaml file
+	fs.writeFileSync('ui5.yaml', updatedYaml, 'utf8');
+
+}
+
+function replaceYamlFileDeploy(version, versionShort) {
+	// Load the ui5-build.yaml file
+	const fileContents = fs.readFileSync('ui5-deploy.yaml', 'utf8');
+
+	// Parse the YAML into a JavaScript object
+	const ui5Build = yaml.load(fileContents);
+
+	// Replace the values
+	// Update the paths
+	ui5Build.metadata.name = `cc.excelUpload.${version}`
+	ui5Build.builder.customTasks.forEach(task => {
+		if (task.name === 'deploy-to-abap') {
+			task.configuration.app.name = `Z_EXLUP_${versionShort}`
+		}
+	});
+
+
+	// Serialize the modified object back to YAML
+	const updatedYaml = yaml.dump(ui5Build, { lineWidth: -1 });
+
+	// Save the updated ui5-build.yaml file
+	fs.writeFileSync('ui5-deploy.yaml', updatedYaml, 'utf8');
+
+}
 
 module.exports.getPackageJson = getPackageJson;
 module.exports.getVersionDots = getVersionDots;
@@ -139,3 +214,6 @@ module.exports.copyDirectorySync = copyDirectorySync;
 module.exports.deleteFolderRecursive = deleteFolderRecursive;
 module.exports.searchAndReplace = searchAndReplace;
 module.exports.getTestappObject = getTestappObject;
+module.exports.replaceYamlFileBuild = replaceYamlFileBuild;
+module.exports.replaceYamlFileDeploy = replaceYamlFileDeploy;
+module.exports.replaceYamlFileComponent = replaceYamlFileComponent;

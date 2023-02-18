@@ -1,10 +1,35 @@
-specVersion: "2.6"
+specVersion: '2.6'
 type: application
 metadata:
   name: ui5-cc-excelupload
+resources:
+  configuration:
+    paths:
+      webapp: src
 builder:
   customTasks:
+    - name: ui5-tooling-transpile-task
+      afterTask: replaceVersion
+      configuration:
+        filePattern: .+(ts|tsx)
+        transpileTypeScript: true
+        transpileAsync: true
+        removeConsoleStatements: true
+    - name: ui5-tooling-stringreplace-task
+      afterTask: ui5-tooling-transpile-task
+      configuration:
+        files:
+          - '**/*.js'
+          - '**/*.xml'
+          - '**/*.ts'
+        replace:
+          - placeholder: XXXnamespaceXXX
+            value: v0.8.1
+          - placeholder: XXXnamespaceShortXXX
+            value: v081
+          - placeholder: XXXnamespaceSlashXXX
+            value: v0/8/1
     - name: ui5-tooling-modules-task
-      afterTask: replaceCopyright
+      afterTask: ui5-tooling-stringreplace-task
       configuration:
         addToNamespace: true
