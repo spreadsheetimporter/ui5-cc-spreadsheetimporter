@@ -18,3 +18,7 @@ server:
         backend:
           - path: /orders
             url: http://localhost:4004
+    - name: ui5-middleware-index
+      afterMiddleware: compression
+      configuration:
+        index: "index.html"

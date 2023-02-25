@@ -270,6 +270,7 @@ importers:
       '@sap/ux-ui5-tooling': ^1.8.6
       '@ui5/cli': 3.0.1
       ui5-cc-excelupload: ./../../../
+      ui5-middleware-index: 0.3.0
     dependencies:
       ui5-cc-excelupload: link:../../..
     devDependencies:
@@ -277,6 +278,7 @@ importers:
       '@sap/ux-specification': 1.102.17
       '@sap/ux-ui5-tooling': 1.9.0
       '@ui5/cli': 3.0.1
+      ui5-middleware-index: 0.3.0
 
   examples/packages/ordersv4fe71:
     specifiers:
@@ -10050,6 +10052,12 @@ packages:
 
   /uc.micro/1.0.6:
     resolution: {integrity: sha512-8Y75pvTYkLJW2hWQHXxoqRgV7qb9B+9vFEtidML+7koHUFapnVJAZ6cKs+Qjz5Aw3aZWHMC6u0wJE3At+nSGwA==}
+    dev: true
+
+  /ui5-middleware-index/0.3.0:
+    resolution: {integrity: sha512-jLHBZER05A9OuSAkr18zFCM5gXbmUJn/PFHBXgSO56m0yPW0480/K2lL4Z9hZ8SQiAYAwhqDJJcLxC/prWlBzg==}
+    dependencies:
+      '@ui5/logger': 2.0.1
     dev: true
 
   /ui5-tooling-modules/0.7.8:
