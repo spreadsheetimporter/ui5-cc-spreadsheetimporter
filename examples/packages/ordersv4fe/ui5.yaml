@@ -10,10 +10,7 @@ framework:
   libraries:
     - name: sap.ui.core
     - name: sap.ui.layout
-    - name: sap.ui.support
-    - name: sap.ui.testrecorder
     - name: sap.m
-    - name: sap.ushell
     - name: sap.fe.templates
 server:
   customMiddleware:
