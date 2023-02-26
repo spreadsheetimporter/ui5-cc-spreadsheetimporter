@@ -1,2 +1,0 @@
-sap.ui.require(["sap/fe/test/JourneyRunner","ui/v4/orders/test/integration/FirstJourney","ui/v4/orders/test/integration/pages/OrdersList","ui/v4/orders/test/integration/pages/OrdersObjectPage","ui/v4/orders/test/integration/pages/Orders_ItemsObjectPage"],function(e,r,t,s,i){"use strict";var e=new e({launchUrl:sap.ui.require.toUrl("ui/v4/orders")+"/index.html"});e.run({pages:{onTheOrdersList:t,onTheOrdersObjectPage:s,onTheOrders_ItemsObjectPage:i}},r.run)});
-//# sourceMappingURL=opaTests.qunit.js.map

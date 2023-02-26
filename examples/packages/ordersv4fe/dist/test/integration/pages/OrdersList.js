@@ -1,2 +1,0 @@
-sap.ui.define(["sap/fe/test/ListReport"],function(e){"use strict";var t={actions:{},assertions:{}};return new e({appId:"ui.v4.orders",componentId:"OrdersList",entitySet:"Orders"},t)});
-//# sourceMappingURL=OrdersList.js.map

@@ -1,2 +1,0 @@
-sap.ui.define(["sap/fe/test/ObjectPage"],function(e){"use strict";var t={actions:{},assertions:{}};return new e({appId:"ui.v4.orders",componentId:"OrdersObjectPage",entitySet:"Orders"},t)});
-//# sourceMappingURL=OrdersObjectPage.js.map
