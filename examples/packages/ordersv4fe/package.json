@@ -16,12 +16,10 @@
     "@sap-ux/ui5-middleware-fe-mockserver": "^2.1.55",
     "@sap/ux-specification": "^1.102.16",
     "@sap/ux-ui5-tooling": "^1.8.6",
-    "@ui5/cli": "3.0.1",
-    "ui5-middleware-index": "0.3.0"
+    "@ui5/cli": "3.0.1"
   },
   "scripts": {
     "start": "fiori run -p 8080 --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false&sap-language=EN#uiv4ordersv4fe-tile\"",
-    "start:prod": "fiori run -p 8080 --config=ui5-prod.yaml",
     "start:silent": "fiori run -p 8080",
     "start-local": "fiori run --config ./ui5-local.yaml --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#uiv4ordersv4fe-tile\"",
     "build": "ui5 build --config=ui5.yaml --all --clean-dest --dest dist",

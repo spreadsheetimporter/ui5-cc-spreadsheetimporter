@@ -4,14 +4,6 @@ specVersion: "2.5"
 metadata:
   name: ui.v4.ordersv4fe
 type: application
-framework:
-  name: SAPUI5
-  version: "1.108.0"
-  libraries:
-    - name: sap.ui.core
-    - name: sap.ui.layout
-    - name: sap.m
-    - name: sap.fe.templates
 server:
   customMiddleware:
     - name: fiori-tools-proxy
