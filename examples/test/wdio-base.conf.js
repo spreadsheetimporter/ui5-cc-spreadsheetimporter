@@ -24,7 +24,7 @@ module.exports.config = {
 	exclude: [
 		// 'path/to/excluded/files'
 	],
-	maxInstances: 2,
+	maxInstances: 10,
 	//
 	capabilities: [
 		{
