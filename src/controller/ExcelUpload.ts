@@ -116,7 +116,7 @@ export default class ExcelUpload {
 		// try get odata type from table
 		this.binding = this.odataHandler.getBinding(this.tableObject);
 		if (!this.binding) {
-			throw new Error("No error on Table found.\n If you´re on a List Report, press the Go Button.");
+			throw new Error(this._geti18nText("bindingError"));
 		}
 		const tableBindingPath = this.binding.getPath();
 		const metaModel = this.tableObject.getModel().getMetaModel();
@@ -161,7 +161,7 @@ export default class ExcelUpload {
 		// try get odata type from table
 		this.binding = this.odataHandler.getBinding(this.tableObject);
 		if (!this.binding) {
-			throw new Error("No error on Table found.\n If you´re on a List Report, press the Go Button.");
+			throw new Error(this._geti18nText("bindingError"));
 		}
 		if (!this.component.getOdataType()) {
 			this.component.setOdataType(this.binding._getEntityType().entityType);
