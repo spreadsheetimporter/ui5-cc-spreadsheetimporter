@@ -30,7 +30,6 @@ class FEV2ND {
 	async getFieldValue(fieldName) {
 		const field = await $(`//*[@id="ui.v2.ordersv2fenondraft::sap.suite.ui.generic.template.ObjectPage.view.Details::OrderItemsND--com.sap.vocabularies.UI.v1.Identification::${fieldName}::Field-text"]`)
 		let value = await field.getText();
-		value = value.replace(/[\u00A0\u1680​\u180e\u2000-\u2009\u200a​\u200b​\u202f\u205f​\u3000]/g,' ');
 		return value
 	}
 
@@ -85,9 +84,7 @@ class FEV2ND {
 		const binding = await field.getBinding("text");
 		const date = await binding.getValue();
 		let formattedDate = await date.toLocaleString("en-US", options);
-		formattedDate = formattedDate.replace(/[\u00A0\u1680​\u180e\u2000-\u2009\u200a​\u200b​\u202f\u205f​\u3000]/g,' ');
 		let valueText = await field.getText();
-		valueText = valueText.replace(/[\u00A0\u1680​\u180e\u2000-\u2009\u200a​\u200b​\u202f\u205f​\u3000]/g,' ');
 		return { valueText: valueText, formattedDate: formattedDate };
 	}
 

@@ -20,7 +20,7 @@
   },
   "scripts": {
     "start": "fiori run -p 8083 --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#uiv2ordersv2fenondraft-tile\"",
-    "start:silent": "fiori run -p 8083",
+    "start:silent": "fiori run -p 8083  --config=ui5-test.yaml",
     "start-local": "fiori run --config ./ui5-local.yaml --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#uiv2ordersv2fenondraft-tile\"",
     "build": "ui5 build --config=ui5.yaml --clean-dest --dest dist",
     "deploy": "fiori verify",
