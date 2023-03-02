@@ -26,7 +26,7 @@ describe("Upload File List Report", () => {
 			await BaseClass.pressById(FE.listReportGoButton);
 		} catch (error) {
 			await BaseClass.pressById(FE.listReportDynamicPageTitle);
-			await BaseClass.dummyWait(500);
+			await BaseClass.dummyWait(1500);
 			await BaseClass.pressById(FE.listReportGoButton);
 		}
 	});
