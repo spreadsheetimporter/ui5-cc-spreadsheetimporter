@@ -16,16 +16,23 @@
 		</style>
 		<script
 			id="sap-ui-bootstrap"
-			src="resources/sap-ui-core.js"
+			src="https://sapui5.hana.ondemand.com/1.108/resources/sap-ui-core.js"
 			data-sap-ui-theme="sap_horizon"
 			data-sap-ui-resourceroots='{
             "ui.v4.ordersv4fe": "./"
         }'
+			data-sap-ui-oninit="module:sap/ui/core/ComponentSupport"
 			data-sap-ui-compatVersion="edge"
 			data-sap-ui-async="true"
+			data-sap-ui-language="en"
 			data-sap-ui-frameOptions="trusted"
+			data-sap-ui-xx-waitForTheme="true"
+			data-sap-ui-xx-supportedLanguages="en"
+			data-sap-ui-theme-roots='{
+				"sap_horizon" : "https://sapui5.hana.ondemand.com/1.108.9/resources/",
+				"sap_horizon_dark" : "https://sapui5.hana.ondemand.com/1.108.9/resources/"
+			}'
 		></script>
-		<script id="locate-reuse-libs" src="./utils/locate-reuse-libs.js" data-sap-ui-manifest-uri="./manifest.json" data-sap-ui-componentName="ui.v4.ordersv4fe"></script>
 	</head>
 	<body class="sapUiBody sapUiSizeCompact" id="content">
 		<div data-sap-ui-component data-name="ui.v4.ordersv4fe" data-id="container" data-settings='{"id" : "ui.v4.ordersv4fe"}' data-handle-validation="true"></div>
