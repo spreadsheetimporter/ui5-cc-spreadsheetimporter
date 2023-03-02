@@ -16,6 +16,7 @@ import OData from "./odata/OData";
 import ODataV2 from "./odata/ODataV2";
 import ODataV4 from "./odata/ODataV4";
 import FileUploader from "sap/ui/unified/FileUploader";
+import MessageBox from "sap/m/MessageBox";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
@@ -38,17 +39,33 @@ export default class ExcelUpload {
 	private payload: any;
 	private binding: any;
 	private payloadArray: any[];
+	private errorState: boolean;
+	private errorMessage: string;
+	private initialSetupPromise: Promise<void>;
 
 	constructor(component: Component, componentI18n: ResourceModel) {
 		this.dialog = null;
+		this.errorState = false;
 		this.UI5MinorVersion = sap.ui.version.split(".")[1];
 		this.component = component;
 		this.component.setErrorResults([]);
 		this.componentI18n = componentI18n;
 		this.isODataV4 = this._checkIfODataIsV4();
 		this.odataHandler = this.getODataHandler(this.UI5MinorVersion);
+		this.initialSetupPromise = this.initialSetup();
+	}
+
+	async initialSetup(): Promise<void> {
+		if (!this.dialog) {
+			this.dialog = (await Fragment.load({
+				name: "cc.excelUpload.XXXnamespaceXXX.fragment.ExcelUpload",
+				type: "XML",
+				controller: this,
+			})) as Dialog;
+			this.dialog.setModel(this.componentI18n, "i18n");
+		}
 		this.metadataHandler = new MetadataHandler(this);
-		this.setContext();
+		await this.setContext();
 	}
 
 	async setContext() {
@@ -62,10 +79,22 @@ export default class ExcelUpload {
 			if (!this.view) {
 				this.view = this.context.getView();
 			}
-			this._setContextV4();
+			try {
+				await this._setContextV4();
+				this.errorState = false;
+			} catch (error) {
+				this.errorMessage = error.message;
+				this.errorState = true;
+			}
 		} else {
 			this.view = this.context.getView();
-			await this._setContextV2();
+			try {
+				await this._setContextV2();
+				this.errorState = false;
+			} catch (error) {
+				this.errorMessage = error.message;
+				this.errorState = true;
+			}
 		}
 		this.model = this.tableObject.getModel();
 		this.draftController = new DraftController(this.model, undefined);
@@ -86,6 +115,9 @@ export default class ExcelUpload {
 		}
 		// try get odata type from table
 		this.binding = this.odataHandler.getBinding(this.tableObject);
+		if (!this.binding) {
+			throw new Error("No error on Table found.\n If you´re on a List Report, press the Go Button.");
+		}
 		const tableBindingPath = this.binding.getPath();
 		const metaModel = this.tableObject.getModel().getMetaModel();
 		const metaModelData = this.tableObject.getModel().getMetaModel().getData();
@@ -128,6 +160,9 @@ export default class ExcelUpload {
 		}
 		// try get odata type from table
 		this.binding = this.odataHandler.getBinding(this.tableObject);
+		if (!this.binding) {
+			throw new Error("No error on Table found.\n If you´re on a List Report, press the Go Button.");
+		}
 		if (!this.component.getOdataType()) {
 			this.component.setOdataType(this.binding._getEntityType().entityType);
 			if (!this.component.getOdataType()) {
@@ -150,17 +185,15 @@ export default class ExcelUpload {
 	}
 
 	async openExcelUploadDialog() {
-		if (!this.dialog) {
-			// TODO: check if needed from 1.93 || this.dialog.isDestroyed()) {
-			this.dialog = (await Fragment.load({
-				name: "cc.excelUpload.XXXnamespaceXXX.fragment.ExcelUpload",
-				type: "XML",
-				controller: this,
-			})) as Dialog;
-			this.dialog.setModel(this.componentI18n, "i18n");
+		await this.initialSetupPromise;
+		await this.initialSetup();
+		if (!this.errorState) {
+			(this.dialog.getContent()[0] as FileUploader).clear();
+			this.dialog.open();
+		} else {
+			MessageBox.error(this.errorMessage);
+			console.error("ErrorState: True. Can not open dialog.");
 		}
-		(this.dialog.getContent()[0] as FileUploader).clear();
-		this.dialog.open();
 	}
 
 	async onFileUpload(oEvent: Event) {
@@ -172,7 +205,7 @@ export default class ExcelUpload {
 			const data = await this.buffer_RS(stream);
 			let workbook = XLSX.read(data);
 			this.component.setErrorResults([]);
-			let columnNames
+			let columnNames;
 			// reading all sheets
 			workbook.SheetNames.forEach((sheetName) => {
 				// Need special case for CSV Import
@@ -471,34 +504,34 @@ export default class ExcelUpload {
 		return errorArray;
 	}
 
-	_checkColumnNames(columnNames, errorArray){
+	_checkColumnNames(columnNames, errorArray) {
 		const fieldMatchType = this.component.getFieldMatchType();
 		for (let index = 0; index < columnNames.length; index++) {
 			const columnName = columnNames[index];
 			let found = false;
 			for (const key in this.typeLabelList) {
-				if (this.typeLabelList.hasOwnProperty(key)){
+				if (this.typeLabelList.hasOwnProperty(key)) {
 					if (fieldMatchType === "label") {
-						if(this.typeLabelList[key].label === columnName){
-							found = true
+						if (this.typeLabelList[key].label === columnName) {
+							found = true;
 							break;
 						}
 					}
 					if (fieldMatchType === "labelTypeBrackets") {
-						if(columnName.includes(`[${key}]`)){
-							found = true
+						if (columnName.includes(`[${key}]`)) {
+							found = true;
 							break;
 						}
 					}
 				}
-			  }
-			  if(!found){
+			}
+			if (!found) {
 				const errorMessage = {
 					title: this._geti18nText("columnNotFound", [columnName]),
 					counter: 1,
 				};
-				errorArray.push(errorMessage)
-			  }
+				errorArray.push(errorMessage);
+			}
 		}
 	}
 
