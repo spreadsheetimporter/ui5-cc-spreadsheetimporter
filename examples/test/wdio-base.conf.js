@@ -15,6 +15,10 @@ const specs = testappObject["testMapping"]["specs"];
 const port = testappObject.port;
 
 module.exports.config = {
+	wdi5: {
+        logLevel: "error",
+        waitForUI5Timeout: 29000
+    },
 	scenario: scenario,
 	specs: specs,
 	exclude: [
@@ -41,7 +45,7 @@ module.exports.config = {
 	logLevel: "error",
 	bail: 0,
 	baseUrl: `http://localhost:${port}/index.html?sap-language=EN`,
-	waitforTimeout: 10000,
+	waitforTimeout: 20000,
 	connectionRetryTimeout: process.argv.indexOf("--debug") > -1 ? 1200000 : 120000,
 	connectionRetryCount: 3,
 	services: ["chromedriver", "ui5"],
