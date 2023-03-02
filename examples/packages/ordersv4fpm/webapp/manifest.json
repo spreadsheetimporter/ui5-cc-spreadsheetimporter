@@ -94,11 +94,11 @@
     },
     "componentUsages": {
       "excelUpload": {
-        "name": "cc.excelUpload.v0.9.0"
+        "name": "cc.excelUpload.v0.9.1"
       }
     },
     "resourceRoots": {
-      "cc.excelUpload.v0.9.0": "./thirdparty/customControl/excelUpload/v0/9/0"
+      "cc.excelUpload.v0.9.1": "./thirdparty/customControl/excelUpload/v0/9/1"
     },
     "routing": {
       "config": {},

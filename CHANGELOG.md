@@ -5,6 +5,13 @@
 
 * remove scrollbar from dialog ([#45](https://github.com/marianfoo/ui5-cc-excelUpload/issues/45)) ([bb1b197](https://github.com/marianfoo/ui5-cc-excelUpload/commit/bb1b1979ef9a49a8c26477970f6a03d411ba93e8))
 
+## [0.9.1](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.9.0...v0.9.1) (2023-03-02)
+
+
+### Bug Fixes
+
+* check for binding before open dialog ([#62](https://github.com/marianfoo/ui5-cc-excelUpload/issues/62)) ([c1f545f](https://github.com/marianfoo/ui5-cc-excelUpload/commit/c1f545f830c4a6d0ed5ef3be2f07285e4551b926))
+
 ## [0.9.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.8.1...v0.9.0) (2023-02-18)
 
 
