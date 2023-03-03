@@ -14,10 +14,11 @@ nav:
   - Central Deployment: pages/CentralDeployment.md
   - yo Generator: pages/Generator.md
   # - UI5 CLI: pages/CLI.md
-  # - Development:
-  #     - Overview: pages/Overview.md
-  #   - OpenUI5: pages/OpenUI5.md
-  #   - SAPUI5: pages/SAPUI5.md
+  - Development:
+      - Getting Started: pages/Development/GettingStarted.md
+      - wdi5 Tests: pages/Development/wdi5.md
+      - Docs: pages/Development/Docs.md
+      - GitHub Actions: pages/Development/GitHubActions.md
   # - Extensibility:
   #   - Custom Tasks: pages/extensibility/CustomTasks.md
   #   - Custom Server Middleware: pages/extensibility/CustomServerMiddleware.md
