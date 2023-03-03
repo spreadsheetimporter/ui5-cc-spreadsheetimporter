@@ -19,6 +19,7 @@ nav:
       - wdi5 Tests: pages/Development/wdi5.md
       - Docs: pages/Development/Docs.md
       - GitHub Actions: pages/Development/GitHubActions.md
+  - User Documentation: pages/UserDocumentation.md
   # - Extensibility:
   #   - Custom Tasks: pages/extensibility/CustomTasks.md
   #   - Custom Server Middleware: pages/extensibility/CustomServerMiddleware.md
