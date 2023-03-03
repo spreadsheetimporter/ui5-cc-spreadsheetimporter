@@ -40,4 +40,5 @@ The wdi5 tests in GitHub Actions must run headless, which is also possible to ca
 
 ## GitHub Actions
 
-TODO
+As specified in the [`testapps.json`](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/dev/testapps.json) file, the GitHub Action Workflow will run on every Pull Request push and test scenarios with all current UI5 Maintenance Versions and is written down in [`wdi5-test.yml`](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/.github/workflows/wdi5-test.yml).  
+More info at 
