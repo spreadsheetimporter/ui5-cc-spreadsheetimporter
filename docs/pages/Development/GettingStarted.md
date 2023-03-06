@@ -18,9 +18,8 @@ Want to just quickly start the test enviroment, see here. Detail Informations be
 ````sh
 git clone https://github.com/marianfoo/ui5-cc-excelUpload
 pnpm i
-npm run build
-npm run start:server
-npm run start:v4fe:108
+# will start build:watch: start CAP Server and FE Apps V4 1.108
+npm start
 ````
 
 ## Setup `ui5-cc-excelupload`
