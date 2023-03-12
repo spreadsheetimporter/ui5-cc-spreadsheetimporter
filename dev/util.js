@@ -192,7 +192,7 @@ function replaceYamlFileDeploy(version, versionShort) {
 	ui5Build.metadata.name = `cc.excelUpload.${version}`
 	ui5Build.builder.customTasks.forEach(task => {
 		if (task.name === 'deploy-to-abap') {
-			task.configuration.app.name = `Z_EXLUP_${versionShort}`
+			task.configuration.app.name = `Z_XUP_${versionShort}`
 		}
 	});
 
