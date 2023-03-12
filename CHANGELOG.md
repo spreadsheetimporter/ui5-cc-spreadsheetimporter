@@ -1,3 +1,10 @@
+## [0.10.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.9.1...v0.10.0) (2023-03-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* use namespace with underscores ([#72](https://github.com/marianfoo/ui5-cc-excelUpload/issues/72))
+
 ## [0.9.1](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.9.0...v0.9.1) (2023-03-02)
 
 
