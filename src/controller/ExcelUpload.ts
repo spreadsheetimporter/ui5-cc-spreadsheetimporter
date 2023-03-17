@@ -333,18 +333,24 @@ export default class ExcelUpload {
 			// get binding of table to create rows
 			const model = this.tableObject.getModel();
 
-			// loop over data from excel file
-			for (const payload of this.payloadArray) {
-				this.payload = payload;
-				// extension method to manipulate payload
-				this.component.fireChangeBeforeCreate({ payload: this.payload });
-				this.odataHandler.createAsync(model, this.binding, this.payload);
-			}
-			// wait for all drafts to be created
-			await this.odataHandler.waitForCreation(model);
+			// Slice the array into chunks of 'batchSize' if necessary
+			const slicedPayloadArray = this.odataHandler.processPayloadArray(this.component.getBatchSize(), this.payloadArray);
 
-			// check for and activate all drafts and wait for all draft to be created
-			await this.odataHandler.waitForDraft();
+			// Loop over the sliced array
+			for (const batch of slicedPayloadArray) {
+				// loop over data from excel file
+				for (const payload of batch) {
+					this.payload = payload;
+					// Extension method to manipulate payload
+					this.component.fireChangeBeforeCreate({ payload: this.payload });
+					this.odataHandler.createAsync(model, this.binding, this.payload);
+				}
+				// wait for all drafts to be created
+				await this.odataHandler.waitForCreation(model);
+
+				// check for and activate all drafts and wait for all draft to be created
+				await this.odataHandler.waitForDraft();
+			}
 			try {
 				this.binding.refresh();
 			} catch (error) {

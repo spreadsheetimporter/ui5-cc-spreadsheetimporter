@@ -24,6 +24,22 @@ export default abstract class OData {
 		return oMetaModel.getObject("".concat(sEntitySetPath, "@com.sap.vocabularies.Common.v1.DraftRoot/").concat(sOperation));
 	}
 
+	// Slice the array into chunks of 'batchSize' if necessary
+	public processPayloadArray(batchSize: number, payloadArray: string | any[]) {
+		if (batchSize > 0 && payloadArray.length > 1000) {
+			let slicedPayloadArray = [];
+			const numOfSlices = Math.ceil(payloadArray.length / batchSize);
+			const equalSize = Math.ceil(payloadArray.length / numOfSlices);
+
+			for (let i = 0; i < payloadArray.length; i += equalSize) {
+				slicedPayloadArray.push(payloadArray.slice(i, i + equalSize));
+			}
+			return slicedPayloadArray;
+		} else {
+			return [payloadArray];
+		}
+	}
+
 	abstract create(model: any, binding: any, payload: any): any;
 	abstract createAsync(model: any, binding: any, payload: any): any;
 	abstract waitForCreation(model: any): void;
