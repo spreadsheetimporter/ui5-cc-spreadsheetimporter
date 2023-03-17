@@ -13,9 +13,7 @@ export default class Component extends UIComponent {
 	}
 
 	public static metadata = {
-		interfaces: [
-			"sap.ui.core.IAsyncContentCreation"
-		],
+		interfaces: ["sap.ui.core.IAsyncContentCreation"],
 		manifest: "json",
 		properties: {
 			excelFileName: { type: "string", defaultValue: "Template.xlsx" },
@@ -27,6 +25,7 @@ export default class Component extends UIComponent {
 			errorResults: { type: "object" },
 			fieldMatchType: { type: "string", defaultValue: "label" },
 			activateDraft: { type: "boolean", defaultValue: false },
+			batchSize: { type: "int", defaultValue: 1000 },
 		},
 		aggregations: {
 			rootControl: {
@@ -68,6 +67,7 @@ export default class Component extends UIComponent {
 		this.setMandatoryFields(oCompData.mandatoryFields);
 		this.setFieldMatchType(oCompData.fieldMatchType);
 		this.setActivateDraft(oCompData.activateDraft);
+		this.setBatchSize(oCompData.batchSize);
 
 		// call the init function of the parent - ATTENTION: this triggers createContent()
 		// call the base component's init function
