@@ -26,7 +26,7 @@ export default abstract class OData {
 
 	// Slice the array into chunks of 'batchSize' if necessary
 	public processPayloadArray(batchSize: number, payloadArray: string | any[]) {
-		if (batchSize > 0 && payloadArray.length > 1000) {
+		if (batchSize > 0) {
 			let slicedPayloadArray = [];
 			const numOfSlices = Math.ceil(payloadArray.length / batchSize);
 			const equalSize = Math.ceil(payloadArray.length / numOfSlices);
