@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.11.1](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.11.0...v0.11.1) (2023-03-17)
+
+
+### Bug Fixes
+
+* use batchSize even when payload has less  then 1000 lines ([#77](https://github.com/marianfoo/ui5-cc-excelUpload/issues/77)) ([c0926d1](https://github.com/marianfoo/ui5-cc-excelUpload/commit/c0926d12d9a224e48d0ca5d1b20f00ada693f89e))
+
 ## [0.11.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.10.0...v0.11.0) (2023-03-17)
 
 
