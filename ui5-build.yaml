@@ -24,11 +24,11 @@ builder:
           - '**/*.ts'
         replace:
           - placeholder: XXXnamespaceXXX
-            value: v0_10_0
+            value: v0_11_0
           - placeholder: XXXnamespaceShortXXX
-            value: v0100
+            value: v0110
           - placeholder: XXXnamespaceSlashXXX
-            value: v0_10_0
+            value: v0_11_0
     - name: ui5-tooling-modules-task
       afterTask: ui5-tooling-stringreplace-task
       configuration:
