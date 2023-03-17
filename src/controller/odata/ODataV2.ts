@@ -29,7 +29,7 @@ export default class ODataV2 extends OData {
 		this.createPromises.push(returnObject);
 	}
 
-	async waitForCreation(model: any): Promise<any[]> {
+	async waitForCreation(model: any) {
 		const submitChangesPromise = (model) => {
 			return new Promise((resolve, reject) => {
 				model.submitChanges({
@@ -50,7 +50,7 @@ export default class ODataV2 extends OData {
 		} catch (oError) {
 			// handle error
 		}
-		return Promise.all(this.createPromises);
+		this.createContexts = await Promise.all(this.createPromises);
 	}
 
 	async waitForDraft(): Promise<any[]> {
