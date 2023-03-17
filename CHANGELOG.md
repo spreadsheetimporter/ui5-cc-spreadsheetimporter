@@ -1,9 +1,19 @@
+# Changelog
+
+## [0.11.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.10.0...v0.11.0) (2023-03-17)
+
+
+### Features
+
+* new option `batchSizes` to slice batch calls to backend ([#75](https://github.com/marianfoo/ui5-cc-excelUpload/issues/75)) ([8f7684f](https://github.com/marianfoo/ui5-cc-excelUpload/commit/8f7684f8ec9efb840a58bb8e970821f92f0230f5))
+
 ## [0.10.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.9.1...v0.10.0) (2023-03-12)
 
 
 ### ⚠ BREAKING CHANGES
 
 * use namespace with underscores ([#72](https://github.com/marianfoo/ui5-cc-excelUpload/issues/72))
+
 
 ## [0.9.1](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.9.0...v0.9.1) (2023-03-02)
 
