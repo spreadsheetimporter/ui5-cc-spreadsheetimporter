@@ -18,7 +18,7 @@ Want to just quickly start the test enviroment, see here. Detail Informations be
 ````sh
 git clone https://github.com/marianfoo/ui5-cc-excelUpload
 pnpm i
-# will start build:watch: start CAP Server and FE Apps V4 1.108
+# will run `build` and start CAP Server and FE Apps V4 1.108
 npm start
 ````
 
