@@ -97,7 +97,7 @@ export default class ExcelUpload {
 			}
 		}
 		this.model = this.tableObject.getModel();
-		this.draftController = new DraftController(this.model, undefined);
+		this.odataHandler.draftController = new DraftController(this.model, undefined);
 	}
 
 	async _setContextV4() {
@@ -327,94 +327,24 @@ export default class ExcelUpload {
 	 * @param {*} fnResolve
 	 * @param {*} fnReject
 	 */
-	async callOdata(fnResolve, fnReject) {
+	async callOdata(fnResolve: any, fnReject: any) {
 		// intializing the message manager for displaying the odata response messages
 		try {
 			// get binding of table to create rows
 			const model = this.tableObject.getModel();
-			let createPromises = [];
-			let createContexts = [];
-			let activateActions = [];
-			let activateActionsPromises = [];
 
 			// loop over data from excel file
 			for (const payload of this.payloadArray) {
 				this.payload = payload;
 				// extension method to manipulate payload
 				this.component.fireChangeBeforeCreate({ payload: this.payload });
-				if (this.isODataV4) {
-					const returnObject = this.odataHandler.create(model, this.binding, this.payload);
-					createContexts.push(returnObject.context);
-					createPromises.push(returnObject.promise);
-				} else {
-					let context;
-					const returnObject = this.odataHandler.create(model, this.binding, this.payload);
-					createPromises.push(returnObject);
-				}
+				this.odataHandler.createAsync(model, this.binding, this.payload);
 			}
 			// wait for all drafts to be created
-			if (this.isODataV4) {
-				await model.submitBatch(model.getUpdateGroupId());
-				const resultsCreation = await Promise.all(createPromises);
-			} else {
-				const submitChangesPromise = (model) => {
-					return new Promise((resolve, reject) => {
-						model.submitChanges({
-							success: (data) => {
-								resolve(data);
-							},
-							error: (oError) => {
-								reject(oError);
-							},
-						});
-					});
-				};
+			await this.odataHandler.waitForCreation(model);
 
-				try {
-					const oData = await submitChangesPromise(model);
-					console.log(oData);
-					// handle success
-				} catch (oError) {
-					// handle error
-				}
-				if (!this.isODataV4) {
-					createContexts = await Promise.all(createPromises);
-				} else {
-					let resultsCreation = await Promise.all(createPromises);
-				}
-			}
-
-			// check for and activate all drafts
-			if (this.component.getActivateDraft()) {
-				if (this.isODataV4) {
-					for (let index = 0; index < createContexts.length; index++) {
-						const element = createContexts[index];
-						const operationName = this._getActionName(element, "ActivationAction");
-						if (operationName) {
-							const operation = element.getModel().bindContext(`${operationName}(...)`, element, { $$inheritExpandSelect: true });
-							activateActionsPromises.push(operation.execute("$auto", false, null, /*bReplaceWithRVC*/ true));
-						}
-					}
-				} else {
-					for (let index = 0; index < createContexts.length; index++) {
-						const element = createContexts[index];
-						if (this.draftController.getDraftContext().hasDraft(element)) {
-							// this will fail i.e. in a Object Page Table, maybe better way to check, hasDraft is still true
-							try {
-								const checkImport = this.draftController.getDraftContext().getODataDraftFunctionImportName(element, "ActivationAction");
-								if (checkImport !== null) {
-									const activationPromise = this.draftController.activateDraftEntity(element, true);
-									activateActionsPromises.push(activationPromise);
-								}
-							} catch (error) {
-								console.debug("Activate Draft failed");
-							}
-						}
-					}
-				}
-			}
-			// wait for all draft to be created
-			const resultsActivations = await Promise.all(activateActionsPromises);
+			// check for and activate all drafts and wait for all draft to be created
+			await this.odataHandler.waitForDraft();
 			try {
 				this.binding.refresh();
 			} catch (error) {
@@ -597,13 +527,6 @@ export default class ExcelUpload {
 		value = value.replace(/[,]/g, ".");
 		// Convert string to number
 		return parseFloat(value);
-	}
-
-	_getActionName(oContext: any, sOperation: string) {
-		var oModel = oContext.getModel(),
-			oMetaModel = oModel.getMetaModel(),
-			sEntitySetPath = oMetaModel.getMetaPath(oContext.getPath());
-		return oMetaModel.getObject("".concat(sEntitySetPath, "@com.sap.vocabularies.Common.v1.DraftRoot/").concat(sOperation));
 	}
 
 	async buffer_RS(stream: ReadableStream) {
