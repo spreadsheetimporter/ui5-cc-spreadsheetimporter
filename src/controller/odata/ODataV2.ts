@@ -72,4 +72,9 @@ export default class ODataV2 extends OData {
 		}
 		return Promise.all(activateActionsPromises);
 	}
+
+	resetContexts(){
+		this.createContexts = []
+		this.createPromises = []
+	}
 }

@@ -349,7 +349,12 @@ export default class ExcelUpload {
 				await this.odataHandler.waitForCreation(model);
 
 				// check for and activate all drafts and wait for all draft to be created
-				await this.odataHandler.waitForDraft();
+				if(this.component.getActivateDraft()){
+					await this.odataHandler.waitForDraft();
+				}
+
+				this.odataHandler.resetContexts()
+				
 			}
 			try {
 				this.binding.refresh();
