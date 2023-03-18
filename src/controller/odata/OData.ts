@@ -44,4 +44,5 @@ export default abstract class OData {
 	abstract createAsync(model: any, binding: any, payload: any): any;
 	abstract waitForCreation(model: any): void;
 	abstract waitForDraft(): void;
+	abstract resetContexts(): void;
 }
