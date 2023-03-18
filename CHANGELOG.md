@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.11.2](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.11.1...v0.11.2) (2023-03-18)
+
+
+### Bug Fixes
+
+* missing check for active draft option ([#81](https://github.com/marianfoo/ui5-cc-excelUpload/issues/81)) ([e15e2eb](https://github.com/marianfoo/ui5-cc-excelUpload/commit/e15e2ebd79d2f59f6597c7f9923ea3dc95493395))
+
 ## [0.11.1](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.11.0...v0.11.1) (2023-03-17)
 
 
