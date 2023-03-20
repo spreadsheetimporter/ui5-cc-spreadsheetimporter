@@ -1,6 +1,6 @@
 ## Options
 
-These options are available:
+These options are available and explained in detail below:
 
 | Option | Description | Details |
 | ------ | --- | --- |
@@ -28,14 +28,14 @@ If not defined, code checks if Label for OData Type defined.
 
 ### `tableId`
 
-Currently it is checked if exactly one table exists in an Object page.
-If there is none or more then one, a error is returned.  
+This plugin checks first whether exactly one table exists in an object page.
+If there is no table or more than one table, an error is returned.  
 In case of error, the ID of the table can be specified.  
 **example:** `tableId: "ui5.isu.msb.createmeterread::RunObjectPage--fe::table::_Ableseauftrag::LineItem-innerTable`
 
 ### `odataType`
 
-An attempt is currently being made to read the OData type from the table found.
+This plugin attempts to read the OData type from the table.
 In case of error, the OData Type can be specified.  
 **example:** `odataType: com.sap.gateway.srvd.zui_mr_create_run.v0001.AbleseauftragType`
 
@@ -53,7 +53,7 @@ Options:
 - `label`  
 - `labelTypeBrackets`
 
-It is possible that the labels of different attributes have the same label.  
+In some cases, the labels of different attributes may be identical to each other.  
 In order to assign the correct labels and types, there is an option to make the type visible in the header.  
 This way a correct assignment can be made.
 

@@ -1,10 +1,10 @@
 # Supported Versions
 
-The goal is to support as many environments and UI5 versions as possible.  
-Currently we aim for all Long-term versions that are in maintenance.
+The goal is to support as many versions and environments as possible, especially all versions in long term maintenance. 
 
-Here is an overview of which apps have already been created and passed the first smoke tests.  
-Another overview shows which apps are already tested automatically with wdi5 and are therefore constantly tested for their functionality.
+Here is an overview of the apps that were created and passed the smoke test. 
+
+Another overview will be shown to you what apps are already testet automatically with wdi5 and are therefore tested on a contstant basis.
 
 ## Apps
 

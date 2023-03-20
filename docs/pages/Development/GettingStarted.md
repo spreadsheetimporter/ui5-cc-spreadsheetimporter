@@ -13,7 +13,7 @@ npm i -g @sap/cds-dk
 
 ## Quick start
 
-Want to just quickly start the test enviroment, see here. Detail Informations below.
+To quickly start the test environment, see here. See detailed information below.
 
 ````sh
 git clone https://github.com/marianfoo/ui5-cc-excelUpload
@@ -22,18 +22,19 @@ pnpm i
 npm start
 ````
 
-## Setup `ui5-cc-excelupload`
 
-This is the basic setup to continue with the next steps.
+## Setup `ui5-cc-excelUpload`
+
+This is the basic setting-up to continue with the next steps.
 
 ````sh
 # Clone GitHub Repo
 git clone https://github.com/marianfoo/ui5-cc-excelUpload
 
-# Install all packages including for test enviroment
+# Install all packages including for test environment
 pnpm i
 
-# Build Control to consume via test enviroment
+# Build Control to consume via test environment
 npm run build
 ````
 

@@ -1,4 +1,4 @@
-To make the integration easier there is the possibility to use a yo generator to avoid the manual addition.  
+To make the integration easier there is the possibility to use a yo generator to avoid manual additional steps in your project. 
 
 ## Installation
 
