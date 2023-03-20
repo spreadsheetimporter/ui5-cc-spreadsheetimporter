@@ -112,6 +112,8 @@ export default class ExcelUpload {
 				this.component.setTableId(tables[0].getId());
 				this.tableObject = tables[0];
 			}
+		} else {
+			this.tableObject = this.view.byId(this.component.getTableId());
 		}
 		// try get odata type from table
 		this.binding = this.odataHandler.getBinding(this.tableObject);
@@ -157,6 +159,8 @@ export default class ExcelUpload {
 				this.component.setTableId(tables[0].getId());
 				this.tableObject = tables[0];
 			}
+		} else {
+			this.tableObject = this.view.byId(this.component.getTableId());
 		}
 		// try get odata type from table
 		this.binding = this.odataHandler.getBinding(this.tableObject);
@@ -349,12 +353,11 @@ export default class ExcelUpload {
 				await this.odataHandler.waitForCreation(model);
 
 				// check for and activate all drafts and wait for all draft to be created
-				if(this.component.getActivateDraft()){
+				if (this.component.getActivateDraft()) {
 					await this.odataHandler.waitForDraft();
 				}
 
-				this.odataHandler.resetContexts()
-				
+				this.odataHandler.resetContexts();
 			}
 			try {
 				this.binding.refresh();
