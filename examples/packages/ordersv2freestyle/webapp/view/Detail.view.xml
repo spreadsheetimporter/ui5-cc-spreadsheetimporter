@@ -1,5 +1,6 @@
-<mvc:View controllerName="ui.v2.ordersv2freestyle.controller.Detail" xmlns="sap.m" xmlns:semantic="sap.f.semantic" xmlns:mvc="sap.ui.core.mvc">
-  <semantic:SemanticPage id="detailPage" busy="{detailView>/busy}" busyIndicatorDelay="{detailView>/delay}">
+<mvc:View controllerName="ui.v2.ordersv2freestyle.controller.Detail" xmlns="sap.m" xmlns:semantic="sap.f.semantic" xmlns:mvc="sap.ui.core.mvc"
+xmlns:excel="cc.excelUploadButton.v0_11_2">
+  <semantic:SemanticPage id="detailPage" showFooter="true" busy="{detailView>/busy}" busyIndicatorDelay="{detailView>/delay}">
     <semantic:titleHeading>
       <Title text="{OrderNo}" level="H2" />
     </semantic:titleHeading>
@@ -7,8 +8,11 @@
       <ObjectAttribute title="{i18n>priceTitle}" />
       <ObjectNumber />
     </semantic:headerContent>
+    <semantic:footerCustomActions>
+      <excel:ExcelUpload text="test" tableId="container-ui.v2.ordersv2freestyle---detail--lineItemsList"/>
+  </semantic:footerCustomActions>
     <semantic:addAction>
-      <semantic:AddAction press="openExcelUpload" />
+      <semantic:AddAction value="tes" press="openExcelUpload" />
     </semantic:addAction>
     <semantic:editAction>
       <semantic:EditAction press="prepareDraft" />
