@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.11.3](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.11.2...v0.11.3) (2023-03-20)
+
+
+### Bug Fixes
+
+* use attribute tableId to get tableObject ([#84](https://github.com/marianfoo/ui5-cc-excelUpload/issues/84)) ([0860373](https://github.com/marianfoo/ui5-cc-excelUpload/commit/0860373725854a3bcc613925453933051a4e5a2a))
+
 ## [0.11.2](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.11.1...v0.11.2) (2023-03-18)
 
 
