@@ -45,6 +45,7 @@ theme:
   font: false
   features:
     - navigation.expand
+    - content.code.copy
 
 # extra_css:
 #   - 'stylesheets/extra.css'
@@ -76,6 +77,11 @@ markdown_extensions:
       custom_checkbox: true
   - pymdownx.tilde
   - pymdownx.caret
+  - pymdownx.snippets
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
