@@ -1,8 +1,8 @@
 # Central Deployment
 
-The basic idea behind the development of the UI5 Excel upload was that this always deployed with each app itself.  
-But there is also the possibility to deploy the control centrally.  
-It should be noted that the control is consumed version-dependently. This makes it more independent and a new version can always be deployed.
+The basic idea behind the development of the UI5 Excel upload was that the control always be deployed with each app.  
+But there is also the possibility to deploy the control centrally on the backend.  
+It should be noted that the control is consumed version indipendently. This makes it more independent and a new version can always be deployed.
 
 Currently there is no automatic possibility to do this automatically. Therefore, here are the instructions on how to upload the UI5 Excel centrally in an ABAP on premise system.
 
