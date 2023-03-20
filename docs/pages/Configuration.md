@@ -18,7 +18,11 @@ These options are available and explained in detail below:
 
 **default:** all fields  
 This option defines which fields should only be taken into account during the upload.  
-**example:** `columns: ["ID", "Birthday","FirstName","LastName"],`
+**example:**
+
+````
+columns: ["ID", "Birthday","FirstName","LastName"],
+````
 
 ### `excelFileName`
 
@@ -31,25 +35,38 @@ If not defined, code checks if Label for OData Type defined.
 This plugin checks first whether exactly one table exists in an object page.
 If there is no table or more than one table, an error is returned.  
 In case of error, the ID of the table can be specified.  
-**example:** `tableId: "ui5.isu.msb.createmeterread::RunObjectPage--fe::table::_Ableseauftrag::LineItem-innerTable`
+**example:**  
+
+````
+tableId: "ui5.isu.msb.createmeterread::RunObjectPage--fe::table::_Ableseauftrag::LineItem-innerTable
+````
 
 ### `odataType`
 
 This plugin attempts to read the OData type from the table.
 In case of error, the OData Type can be specified.  
-**example:** `odataType: com.sap.gateway.srvd.zui_mr_create_run.v0001.AbleseauftragType`
+**example:**
+
+````
+odataType: com.sap.gateway.srvd.zui_mr_create_run.v0001.AbleseauftragType
+````
 
 ### `mandatoryFields`
 
 The selected fields are checked to see if they are present in Excel.
 If not defined, they will not be checked.  
-**example:** `mandatoryFields: ["product_ID", "quantity"]`
+**example:**
+
+````
+mandatoryFields: ["product_ID", "quantity"]`
+````
 
 ### `fieldMatchType`
 
 **default:** `label`
 
 Options:  
+
 - `label`  
 - `labelTypeBrackets`
 
@@ -73,12 +90,13 @@ This is useful e.g. in a list report. If this option is set to `false`, all uplo
 **default:** `1.000`
 
 Options:  
+
 - `0` : Payload will not be divided
 
 For large files it is necessary to split batch requests and not to send them all at once. This batchSize option enables you to control the number of records processed in each batch request, which can help avoid memory issues and improve performance.
 
 When the number of lines in the Excel file exceeds the specified batchSize, the payload array is divided into equal parts, with each part containing the maximum number of lines specified by the batchSize. The application then processes each part separately, sending batch requests to the backend server.
 
-The default value is 1,000, which means that when the number of lines in the Excel file exceeds 1,000, the payload array will be divided into equal parts, and each part will be sent as a separate batch request. 
+The default value is 1,000, which means that when the number of lines in the Excel file exceeds 1,000, the payload array will be divided into equal parts, and each part will be sent as a separate batch request.
 
 If you set the batchSize to 0, the payload array will not be divided, and the entire array will be sent as a single batch request.

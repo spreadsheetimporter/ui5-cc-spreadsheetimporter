@@ -27,12 +27,20 @@ Following steps are currently executed in a ubuntu enviroment with matrix:
 8. Update also Chromedriver to latest version
 9. Start CAP Server (for all scenarios the same)
 10. Start the Scenario App
-    1. For example, the matrix variables in `start:silent&` is used like : `pnpm --filter ${{ matrix.scenario }}${{ matrix.ui5version }} start:silent&`
-    that can be: `pnpm --filter ordersv4fe108 start`  
+    1. For example, the matrix variables in `start:silent&` is used like :  
+    
+    `pnpm --filter ${{ matrix.scenario }}${{ matrix.ui5version }} start:silent&`  
+    that can be:  
+    `pnpm --filter ordersv4fe108 start`  
 11. Start wdi5 Tests
-    1. First check if server and app is running
-    2. Start wdi5 test `headless` for the current scenario
-    3. So `pnpm --filter ui5-cc-excelupload-sample test -- -- --headless ${{ matrix.scenario }} ${{ matrix.ui5version }}` will be `pnpm --filter ui5-cc-excelupload-sample test -- -- ordersv4fe 108`
+    
+    a. First check if server and app is running
+
+    b. Start wdi5 test `headless` for the current scenario
+    
+    c. So `pnpm --filter ui5-cc-excelupload-sample test -- -- --headless ${{ matrix.scenario }} ${{ matrix.ui5version }}`  
+    will be  
+    `pnpm --filter ui5-cc-excelupload-sample test -- -- ordersv4fe 108`
 
 ### Start wdi5 Tests
 

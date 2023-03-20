@@ -13,9 +13,14 @@ The pages and images are stored in the [`docs`](https://github.com/marianfoo/ui5
 
 To run the docs locally, you can use docker.  
 To build the docker image run:  
-`docker build . -t mkdocs`  
+```sh
+docker build . -t mkdocs  
+```
+
 To run the container:  
-`docker run --rm -it -p 8000:8000 -v ${PWD}:/docs mkdocs`  
+```sh
+`docker run --rm -it -p 8000:8000 -v ${PWD}:/docs mkdocs
+```
 and then open http://localhost:8000/ui5-cc-excelUpload/
 
 ### Prod Build
