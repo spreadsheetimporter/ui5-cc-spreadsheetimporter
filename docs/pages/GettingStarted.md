@@ -2,16 +2,16 @@
 
 There are two ways to use the Excel Upload Control.
 Since a Reuse Component (library) is basically utilised, this results in two deployment strategies that can be used.  
-### Decentralised deployment:
+### Decentralized deployment
 The library is attached directly to each app and deployed with it.  
-### Central deployment:
+### Central deployment
 The Excel upload is stored directly as a library centrally, e.g. in the on-premise ABAP system.  
 For more information, please see the Page [Central Deployment](../../../ui5-cc-excelUpload/pages/CentralDeployment).
 
 ## Setup
 
-Here are the manual steps how to integrate the ui5-cc-excelUpload component. For a simplified integration, a [yo generator](../../../ui5-cc-excelUpload/pages/Generator) is also available.
-### Setup Decentralised deployment
+Here are the steps how to integrate the ui5-cc-excelUpload component manually. For a simplified integration, a [yo generator](../../../ui5-cc-excelUpload/pages/Generator) is also available.
+### Setup Decentralized deployment
 
 1\. Install from npm
 
@@ -47,9 +47,9 @@ npm install ui5-cc-excelupload
 
 ````json
 "scripts": {
-// ...
+//...
 "build": "ui5 build --config=ui5.yaml --all --clean-dest --dest dist",
-// ...
+//...
 },
 ````
 
@@ -100,7 +100,7 @@ If you have done that, you can continue with the implementation of your Custom C
 
 ### Extension in manifest.json
 
-As a example, here is how you custom action can look like.  
+As a example, here is how your custom action can look like.  
 This example is from the [sample app](https://github.com/marianfoo/ui5-cc-excelUpload-sampleapp/blob/744f008b1b052a3df5594215d8d11811a8e646b7/packages/orders/webapp/manifest.json#L145-L157) for the object page.
 
 ````json

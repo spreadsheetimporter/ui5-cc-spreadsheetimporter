@@ -2,9 +2,9 @@
 
 There are two ways to use the Excel Upload Control.
 Since a Reuse Component (library) is basically utilised, this results in two deployment strategies that can be used.  
-### Decentralised deployment:
+### Decentralized deployment
 The library is attached directly to each app and deployed with it.  
-### Central deployment:
+### Central deployment
 The Excel upload is stored directly as a library centrally, e.g. in the on-premise ABAP system.  
 For more information, please see the Page [Central Deployment](../../../ui5-cc-excelUpload/pages/CentralDeployment).
 
@@ -25,9 +25,9 @@ npm install ui5-cc-excelupload
 ````json
 "ui5": {
   "dependencies": [
-    // ...
+    //...
     "ui5-cc-excelupload"
-    // ...
+    //...
   ]
 }
 ````
@@ -87,7 +87,7 @@ npm install ui5-cc-excelupload
 !!! warning 
         There are different implementations for Fiori Elements depending on the OData Version
 
-## Starting with Fiori Elements
+## Starting with the Fiori Elements application
 
 To start the Excel Upload Dialog, you need in your Fiori Elements App a Button.  
 The best way is start with the [Guided Development](https://blogs.sap.com/2021/08/16/getting-up-to-speed-with-sap-fiori-tools-guided-development-overview/) Extension to add a custom action:  
@@ -100,7 +100,7 @@ If you have done that, you can continue with the implementation of your Custom C
 
 ### Extension in manifest.json
 
-As a example, here is how you custom action can look like.  
+As a example, here is how your custom action can look like.  
 This example is from the [sample app](https://github.com/marianfoo/ui5-cc-excelUpload-sampleapp/blob/744f008b1b052a3df5594215d8d11811a8e646b7/packages/orders/webapp/manifest.json#L145-L157) for the object page.
 
 ````json
