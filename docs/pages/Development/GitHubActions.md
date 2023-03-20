@@ -26,12 +26,21 @@ Following steps are currently executed in a ubuntu enviroment with matrix:
 7. Build ui5-cc-excelupload
 8. Update also Chromedriver to latest version
 9. Start CAP Server (for all scenarios the same)
-10. Start Scenario App
-    1. Can use the matrix variables like `pnpm --filter ${{ matrix.scenario }}${{ matrix.ui5version }} start:silent&` will be `pnpm --filter ordersv4fe108 start`  
-11. Start wdi5 Tests 
-    1. First check if server and app is running
-    2. Start wdi5 test `headless` for the current scenario
-    3. So `pnpm --filter ui5-cc-excelupload-sample test -- -- --headless ${{ matrix.scenario }} ${{ matrix.ui5version }}` will be `pnpm --filter ui5-cc-excelupload-sample test -- -- ordersv4fe 108`
+10. Start the Scenario App
+    1. For example, the matrix variables in `start:silent&` is used like :  
+    
+    `pnpm --filter ${{ matrix.scenario }}${{ matrix.ui5version }} start:silent&`  
+    that can be:  
+    `pnpm --filter ordersv4fe108 start`  
+11. Start wdi5 Tests
+    
+    a. First check if server and app is running
+
+    b. Start wdi5 test `headless` for the current scenario
+    
+    c. So `pnpm --filter ui5-cc-excelupload-sample test -- -- --headless ${{ matrix.scenario }} ${{ matrix.ui5version }}`  
+    will be  
+    `pnpm --filter ui5-cc-excelupload-sample test -- -- ordersv4fe 108`
 
 ### Start wdi5 Tests
 
@@ -42,14 +51,14 @@ With these parameters we can assign the appropriate port and spec files in the `
 We try to ensure that all spec files apply to all scenarios, but certain ones can only be tested with OData V4, for example.
 
 
-## Release Please
+## Release Please Action
 
 For automatic versioning and changelog generation, we use [release-please-action](https://github.com/google-github-actions/release-please-action), which allows everything to be done with GitHub Actions.  
 This workflow is defined in [release-please.yml](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/.github/workflows/release-please.yml).  
 
 This workflow will create a Pull Request if a `fix:` or `feat:` commit is pushed to the `main` branch.  
-This Pull Request contains all changes, like the updated Version and Changelog.  
-In addition, scripts run to change the version in other files.
+This Pull Request contains all changes, like the updated version and Changelog.  
+In addition, scripts run to change the version in other files.  
 In this [commit](https://github.com/marianfoo/ui5-cc-excelUpload/commit/4bf424914ca6c66c52cb17852f36ddbd520af07e), you can see which files are updated with this scripts.  
 For example, in ui5.yaml and the sample apps.  
 

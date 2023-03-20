@@ -13,12 +13,14 @@ nav:
   - Supported Versions: pages/SupportVersions.md
   - Central Deployment: pages/CentralDeployment.md
   - yo Generator: pages/Generator.md
+  - Button Control: pages/Button.md
   # - UI5 CLI: pages/CLI.md
   - Development:
       - Getting Started: pages/Development/GettingStarted.md
       - wdi5 Tests: pages/Development/wdi5.md
       - Docs: pages/Development/Docs.md
       - GitHub Actions: pages/Development/GitHubActions.md
+  - User Documentation: pages/UserDocumentation.md
   # - Extensibility:
   #   - Custom Tasks: pages/extensibility/CustomTasks.md
   #   - Custom Server Middleware: pages/extensibility/CustomServerMiddleware.md
@@ -44,6 +46,7 @@ theme:
   font: false
   features:
     - navigation.expand
+    - content.code.copy
 
 # extra_css:
 #   - 'stylesheets/extra.css'
@@ -75,6 +78,11 @@ markdown_extensions:
       custom_checkbox: true
   - pymdownx.tilde
   - pymdownx.caret
+  - pymdownx.snippets
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
