@@ -8,6 +8,7 @@ site_dir: "site" # default
 nav:
   - Home: index.md
   - Getting Started: pages/GettingStarted.md
+  - How it works: pages/HowItWorks.md
   - Configuration: pages/Configuration.md
   - Events: pages/Events.md
   - Supported Versions: pages/SupportVersions.md

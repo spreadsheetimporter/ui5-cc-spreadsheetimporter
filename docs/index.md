@@ -1,7 +1,7 @@
-# UI5 Excel  Upload
+# UI5 Excel Upload
 
 !!! warning 
-        **This control is still in beta**: Basic functionality is given, but bugs may still occur and APIs may change!
+        **This control is still in beta**: Core functionality is given, but bugs may still occur and APIs may change!
 
 
 This control enables the mass upload of data and quick creations of records. It supports standard identification.
