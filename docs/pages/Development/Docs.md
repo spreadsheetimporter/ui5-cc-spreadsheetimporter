@@ -19,7 +19,7 @@ docker build . -t mkdocs
 
 To run the container:  
 ```sh
-`docker run --rm -it -p 8000:8000 -v ${PWD}:/docs mkdocs
+docker run --rm -it -p 8000:8000 -v ${PWD}:/docs mkdocs
 ```
 and then open http://localhost:8000/ui5-cc-excelUpload/
 
