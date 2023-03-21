@@ -5,25 +5,19 @@ This is achieved by reading the files already in the frontend and using the stan
 
 ## Technical Background
 
-The basis for UI5 ExcelUpload is a reuse component.  
-Therefore it is also necessary to define `componentUsages` in the manifest and use `createComponent` in the code.  
-This allows among other things that i18n can be used and a component-preload improves the performance of the loading time.  
-Accordingly, the use is simple when the component is deployed centrally on an ABAP server.
+The UI5 ExcelUpload is built on a reuse component, which means that componentUsages must be defined in the manifest and createComponent must be used in the code.  
+This allows for the use of i18n and a component-preload, which improves loading time performance.  
+When the component is deployed centrally on an ABAP server, the setup is straightforward.
 
 ## Integration into UI5
 
-The component can be integrated very easily because certain things are required.
-The most important thing is that the component has access to the context or the view. Without this access it cannot work.
-When the component is created, it looks for a table in the view to use the binding of this for the upload.
-Thereby also other things are derived like the metadata and the actions for the activation of the drafts.  
-If no table or more than two tables are found, the table must be defined in the options.
+Integrating the component is straightforward as long as the component has access to the context or the view. Without this access, it won't work.  
+When the component is created, it looks for a table in the view to use the binding for the upload. Other necessary details, such as metadata and draft activation actions, are also derived from the table. If no table or more than two tables are found, the table must be defined in the options.
 
 ## Creating Template File
 
-With the metadata we can also find out the entity of the binding and thus create a template file with the labels.
+Using the metadata, the component can identify the entity of the binding and create a template file with labels.
 
 ## Extracting the Excel files
 
-To avoid sending the whole file as binary data to the backend, the open source library "SheetJS" is used here to read the data from the Excel file.  
-The Excel formats are also converted to OData formats.  
-Now that we have the raw data, we can use the ODataListBinding and [`create`](https://ui5.sap.com/#/api/sap.ui.model.odata.v4.ODataListBinding%23methods/create) to send the data to the backend.
+To avoid sending the entire Excel file as binary data to the backend, the component uses the open source library "SheetJS" to read data from the file. Excel formats are converted to OData formats as well. With the raw data in hand, the component can use the ODataListBinding and create to send the data to the backend.
