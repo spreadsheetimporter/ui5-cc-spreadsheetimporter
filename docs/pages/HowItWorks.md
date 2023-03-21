@@ -20,6 +20,8 @@ Using the metadata, the component can identify the entity of the binding and cre
 
 ## Extracting the Excel files
 
-To avoid sending the entire Excel file as binary data to the backend, the component uses the open source library "SheetJS" to read data from the file. Excel formats are converted to OData formats as well. With the raw data in hand, the component can use the ODataListBinding and create to send the data to the backend.  
+To avoid sending the entire Excel file as binary data to the backend, the component uses the open source library [SheetJS](https://sheetjs.com/) to read data from the file. Excel formats are converted to OData formats as well. With the raw data in hand, the component can use the ODataListBinding and [`create`](https://ui5.sap.com/#/api/sap.ui.model.odata.v4.ODataListBinding%23methods/create) to send the data to the backend.  
+Since the standard interfaces are used here, the big advantage is also the independence from the backend scenario (e.g. CAP or RAP).  
+
 The data is sent as a batch. To prevent a batch from becoming too large, data is sent in 1,000 batches by default.
 The size of the batches can be adjusted in the options.
