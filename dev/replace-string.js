@@ -13,6 +13,7 @@ util.replaceYamlFileBuild(versionUnderscore,versionShort,versionUnderscore)
 // create ui5.yaml with current version
 util.replaceYamlFileComponent(versionUnderscore)
 util.replaceYamlFileDeploy(versionUnderscore,versionUnderscore)
+util.replaceVersionManifest(versionUnderscore)
 // replace in docs
 util.replaceSomething("docs/pages/GettingStartedTEMPLATE.md", "docs/pages/GettingStarted.md",["**/docs/pages/GettingStarted.md"],[/XXXnamespaceXXX/g, /XXXnamespaceSlashXXX/g],[versionUnderscore, versionUnderscore])
 
