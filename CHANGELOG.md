@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.11.4](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.11.3...v0.11.4) (2023-03-27)
+
+
+### Bug Fixes
+
+* namespace at manifest was not replaced correctly ([#91](https://github.com/marianfoo/ui5-cc-excelUpload/issues/91)) ([f60c19b](https://github.com/marianfoo/ui5-cc-excelUpload/commit/f60c19b99d5e9a6c2607d76386dea7f710a52d31))
+
 ## [0.11.3](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.11.2...v0.11.3) (2023-03-20)
 
 

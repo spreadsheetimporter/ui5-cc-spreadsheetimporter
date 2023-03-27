@@ -10,8 +10,8 @@ For more information, please see the Page [Central Deployment](../../../ui5-cc-e
 
 ## Setup
 
-Here are the steps how to integrate the ui5-cc-excelUpload component manually. For a simplified integration, a [yo generator](../../../ui5-cc-excelUpload/pages/Generator) is also available.
-### Setup Decentralized deployment
+Here are the manual steps how to integrate the ui5-cc-excelUpload component. For a simplified integration, a [yo generator](../../../ui5-cc-excelUpload/pages/Generator) is also available.
+### Setup Decentralised deployment
 
 1\. Install from npm
 
@@ -25,9 +25,9 @@ npm install ui5-cc-excelupload
 ````json
 "ui5": {
   "dependencies": [
-    // ...
+    //...
     "ui5-cc-excelupload"
-    // ...
+    //...
   ]
 }
 ````
@@ -38,7 +38,7 @@ npm install ui5-cc-excelupload
 
 ````json
 "resourceRoots": {
-    "cc.excelUpload.v0_11_3": "./thirdparty/customControl/excelUpload/v0_11_3"
+    "cc.excelUpload.v0_11_4": "./thirdparty/customControl/excelUpload/v0_11_4"
 },
 ````
 
@@ -47,9 +47,9 @@ npm install ui5-cc-excelupload
 
 ````json
 "scripts": {
-//...
+// ...
 "build": "ui5 build --config=ui5.yaml --all --clean-dest --dest dist",
-//...
+// ...
 },
 ````
 
@@ -60,7 +60,7 @@ npm install ui5-cc-excelupload
 ````json
 "componentUsages": {
     "excelUpload": {
-        "name": "cc.excelUpload.v0_11_3"
+        "name": "cc.excelUpload.v0_11_4"
     }
 },
 ````
@@ -76,7 +76,7 @@ npm install ui5-cc-excelupload
 ````json
 "componentUsages": {
     "excelUpload": {
-        "name": "cc.excelUpload.v0_11_3"
+        "name": "cc.excelUpload.v0_11_4"
     }
 },
 ````
@@ -87,7 +87,7 @@ npm install ui5-cc-excelupload
 !!! warning 
         There are different implementations for Fiori Elements depending on the OData Version
 
-## Starting with Fiori Elements
+## Starting with the Fiori Elements application
 
 To start the Excel Upload Dialog, you need in your Fiori Elements App a Button.  
 The best way is start with the [Guided Development](https://blogs.sap.com/2021/08/16/getting-up-to-speed-with-sap-fiori-tools-guided-development-overview/) Extension to add a custom action:  
