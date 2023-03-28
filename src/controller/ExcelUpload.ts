@@ -422,29 +422,30 @@ export default class ExcelUpload {
 	}
 
 	_checkMandatoryFields(data, errorArray) {
-		// error cases
-		if (this.component.getMandatoryFields()) {
-			for (const mandatoryField of this.component.getMandatoryFields()) {
-				const errorMessage = {
-					title: this._geti18nText("mandatoryFieldNotFilled", [this.typeLabelList[mandatoryField].label]),
-					counter: 0,
-				};
-				for (const row of data) {
-					let label;
-					if (typeof this.typeLabelList[mandatoryField] !== "undefined" && mandatoryField in this.typeLabelList) {
-						label = this.typeLabelList[mandatoryField]["label"];
-					} else {
-						console.error(`Mandatory Field ${mandatoryField} not found for checking mandatory fields`);
-					}
-					const value = this._getValueFromRow(row, label, mandatoryField);
-					if (value === "" || value === undefined) {
-						errorMessage.counter = errorMessage.counter + 1;
-					}
+		const mandatoryFields = this.component.getMandatoryFields();
+		if (!mandatoryFields) {
+			return errorArray;
+		}
+		for (const mandatoryField of mandatoryFields) {
+			const fieldLabel = this.typeLabelList[mandatoryField]?.label;
+			if (!fieldLabel) {
+				console.error(`Mandatory Field ${mandatoryField} not found for checking mandatory fields`);
+				continue;
+			}
+			const errorMessage = {
+				title: this._geti18nText("mandatoryFieldNotFilled", [fieldLabel]),
+				counter: 0,
+			};
+			for (const row of data) {
+				const value = this._getValueFromRow(row, fieldLabel, mandatoryField);
+				if (value === "" || value === undefined) {
+					errorMessage.counter++;
 				}
+			}
+			if (errorMessage.counter > 0) {
 				errorArray.push(errorMessage);
 			}
 		}
-
 		return errorArray;
 	}
 
