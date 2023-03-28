@@ -7,7 +7,7 @@ import MetadataHandler from "./MetadataHandler";
 import DraftController from "sap/ui/generic/app/transaction/DraftController";
 import Component from "../Component";
 import XMLView from "sap/ui/core/mvc/XMLView";
-import { ListObject } from "../types";
+import { ListObject, ErrorMessage } from "../types";
 import Dialog from "sap/m/Dialog";
 import Event from "sap/ui/base/Event";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
@@ -42,8 +42,10 @@ export default class ExcelUpload {
 	private errorState: boolean;
 	private errorMessage: string;
 	private initialSetupPromise: Promise<void>;
+	public errorArray  : ErrorMessage[];
 
 	constructor(component: Component, componentI18n: ResourceModel) {
+		this.errorArray = [];
 		this.dialog = null;
 		this.errorState = false;
 		this.UI5MinorVersion = sap.ui.version.split(".")[1];
@@ -200,67 +202,46 @@ export default class ExcelUpload {
 		}
 	}
 
-	async onFileUpload(oEvent: Event) {
+	async onFileUpload(event: Event) {
 		try {
-			this.payloadArray = [];
-			const fileType = oEvent.getParameter("files")[0].type;
-			let excelSheetsData: any[] = [];
-			const stream: ReadableStream = oEvent.getParameter("files")[0].stream();
-			const data = await this.buffer_RS(stream);
-			let workbook = XLSX.read(data);
 			this.component.setErrorResults([]);
-			let columnNames;
-			// reading all sheets
-			workbook.SheetNames.forEach((sheetName) => {
-				// Need special case for CSV Import
-				// let worksheet = workbook.Sheets[sheetName];
-				// const range = XLSX.utils.decode_range(worksheet["!ref"]);
-				// for (let row = range.s.r + 1; row <= range.e.r; ++row) {
-				// 	for (let col = range.s.c; col <= range.e.c; ++col) {
-				// 		const ref = XLSX.utils.encode_cell({ r: row, c: col });
-				// 		if (worksheet[ref] && worksheet[ref].t === "n") {
-				// 			worksheet[ref].v = this._changeDecimalSeperator(worksheet[ref].w);
-				// 		}
-				// 	}
-				// }
-				let data = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-				columnNames = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })[0];
-				excelSheetsData.push(data);
-			});
-			// use only first sheet
-			var firstSheet = excelSheetsData[0];
+			const file = event.getParameter("files")[0];
+
+			const workbook = (await this._readWorkbook(file)) as XLSX.WorkBook;
+			const sheetName = workbook.SheetNames[0];
+			let excelSheetsData = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+			let columnNames = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })[0];
+
+			if (!excelSheetsData || excelSheetsData.length === 0) {
+				throw new Error(this._geti18nText("emptySheet"));
+			}
+
 			//remove empty spaces before and after every value
-			for (const object of firstSheet) {
+			for (const object of excelSheetsData) {
 				for (const key in object) {
 					object[key] = typeof object[key] === "string" ? object[key].trim() : object[key];
 				}
 			}
-			// check if data is ok in extension method
-			this._checkMandatoryFields(firstSheet, this.component.getErrorResults());
-			this._checkColumnNames(columnNames, this.component.getErrorResults());
-			this.component.fireCheckBeforeRead({ sheetData: firstSheet });
-			if (this.component.getErrorResults().some((error) => error.counter > 0)) {
-				// error found in excel
-				// remove those errors not found
-				const errorArray = this.component.getErrorResults().filter((error) => error.counter !== 0);
-				throw errorArray;
+
+			this.errorArray = this._checkMandatoryFields(excelSheetsData, this.errorArray);
+			this.errorArray = this._checkColumnNames(columnNames, this.errorArray);
+			this.component.fireCheckBeforeRead({ sheetData: excelSheetsData });
+
+			if (this.errorArray.some((error) => error.counter > 0)) {
+				// show error dialog
+				this.displayErrors();
+				// reset file uploader
+				var fileUploader = this.dialog.getContent()[0] as FileUploader;
+				fileUploader.setValue();
+				return;
 			}
 
-			// Wait for all promises to be resolved
-			this._parseExcelData(firstSheet);
-			MessageToast.show(this._geti18nText("uploadSuccessful"));
+			this.payloadArray = [];
+			this._parseExcelData(excelSheetsData);
 		} catch (error) {
-			this.errorDialog = (await Fragment.load({
-				name: "cc.excelUpload.XXXnamespaceXXX.fragment.ErrorDialog",
-				type: "XML",
-				controller: this,
-			})) as Dialog;
-			this.dialog.setModel(this.componentI18n, "i18n");
-			this.errorDialog.setModel(new JSONModel(), "errorData");
-			var fileUploader = this.dialog.getContent()[0];
-			fileUploader.setValue();
-			this.errorDialog.getModel("errorData").setData(error);
-			this.errorDialog.open();
+			// show other errors
+			console.error(error);
+			MessageToast.show(error.message);
 		}
 	}
 
@@ -421,7 +402,7 @@ export default class ExcelUpload {
 		this.component.setErrorResults(this.component.getErrorResults().concat(errorResults));
 	}
 
-	_checkMandatoryFields(data, errorArray) {
+	_checkMandatoryFields(data: unknown[], errorArray: ErrorMessage[]) {
 		const mandatoryFields = this.component.getMandatoryFields();
 		if (!mandatoryFields) {
 			return errorArray;
@@ -435,7 +416,7 @@ export default class ExcelUpload {
 			const errorMessage = {
 				title: this._geti18nText("mandatoryFieldNotFilled", [fieldLabel]),
 				counter: 0,
-			};
+			} as ErrorMessage;
 			for (const row of data) {
 				const value = this._getValueFromRow(row, fieldLabel, mandatoryField);
 				if (value === "" || value === undefined) {
@@ -449,7 +430,7 @@ export default class ExcelUpload {
 		return errorArray;
 	}
 
-	_checkColumnNames(columnNames, errorArray) {
+	_checkColumnNames(columnNames: any, errorArray: ErrorMessage[]) {
 		const fieldMatchType = this.component.getFieldMatchType();
 		for (let index = 0; index < columnNames.length; index++) {
 			const columnName = columnNames[index];
@@ -474,10 +455,11 @@ export default class ExcelUpload {
 				const errorMessage = {
 					title: this._geti18nText("columnNotFound", [columnName]),
 					counter: 1,
-				};
+				} as ErrorMessage;
 				errorArray.push(errorMessage);
 			}
 		}
+		return errorArray;
 	}
 
 	_getValueFromRow(row, label, type) {
@@ -564,5 +546,39 @@ export default class ExcelUpload {
 		}
 
 		return out;
+	}
+
+	/**
+	 * Display errors in the errorArray.
+	 * @param {Array} errorArray - Array containing error messages and their counters.
+	 */
+	async displayErrors() {
+		if (!this.errorDialog) {
+			this.errorDialog = (await Fragment.load({
+				name: "cc.excelUpload.XXXnamespaceXXX.fragment.ErrorDialog",
+				type: "XML",
+				controller: this,
+			})) as Dialog;
+		}
+		this.errorDialog.setModel(new JSONModel(), "errorData");
+		(this.errorDialog.getModel("errorData") as JSONModel).setData(this.errorArray.filter((error) => error.counter !== 0));
+		this.errorDialog.open();
+	}
+
+	/**
+	 * Read the uploaded workbook from the file.
+	 * @param {File} file - The uploaded file.
+	 * @returns {Promise} - Promise object representing the workbook.
+	 */
+	async _readWorkbook(file: Blob) {
+		return new Promise(async (resolve, reject) => {
+			try {
+				const data = await this.buffer_RS(file.stream());
+				let workbook = XLSX.read(data);
+				resolve(workbook);
+			} catch (error) {
+				reject(error);
+			}
+		});
 	}
 }

@@ -11,3 +11,8 @@ export interface Property {
 export type ListObject = { [key: string]: Property };
 export type PropertyArray = { [key: string]: any }[];
 export type Columns = string[];
+
+export interface ErrorMessage {
+	title: string;
+	counter: number;
+}
