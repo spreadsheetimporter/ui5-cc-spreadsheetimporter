@@ -31,3 +31,7 @@ https://marianfoo.github.io/ui5-cc-excelUpload/
 You find the documentation for the development here:
 
 https://marianfoo.github.io/ui5-cc-excelUpload/pages/Development/GettingStarted/
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md)
