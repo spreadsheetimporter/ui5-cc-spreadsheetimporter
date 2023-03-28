@@ -7,7 +7,7 @@ import MetadataHandler from "./MetadataHandler";
 import DraftController from "sap/ui/generic/app/transaction/DraftController";
 import Component from "../Component";
 import XMLView from "sap/ui/core/mvc/XMLView";
-import { ListObject } from "../types";
+import { ListObject, ErrorMessage } from "../types";
 import Dialog from "sap/m/Dialog";
 import Event from "sap/ui/base/Event";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
@@ -17,6 +17,7 @@ import ODataV2 from "./odata/ODataV2";
 import ODataV4 from "./odata/ODataV4";
 import FileUploader from "sap/ui/unified/FileUploader";
 import MessageBox from "sap/m/MessageBox";
+import Button from "sap/m/Button";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
@@ -42,8 +43,10 @@ export default class ExcelUpload {
 	private errorState: boolean;
 	private errorMessage: string;
 	private initialSetupPromise: Promise<void>;
+	public errorArray: ErrorMessage[];
 
 	constructor(component: Component, componentI18n: ResourceModel) {
+		this.errorArray = [];
 		this.dialog = null;
 		this.errorState = false;
 		this.UI5MinorVersion = sap.ui.version.split(".")[1];
@@ -65,7 +68,15 @@ export default class ExcelUpload {
 			this.dialog.setModel(this.componentI18n, "i18n");
 		}
 		this.metadataHandler = new MetadataHandler(this);
-		await this.setContext();
+		this.odataHandler.metaDatahandler = this.metadataHandler;
+		try {
+			await this.setContext();
+			this.errorState = false;
+		} catch (error) {
+			this.errorMessage = error.message;
+			this.errorState = true;
+			console.error(error);
+		}
 	}
 
 	async setContext() {
@@ -74,110 +85,19 @@ export default class ExcelUpload {
 			this.context = this.context.base;
 		}
 
-		if (this.isODataV4) {
-			this.view = this.context._view;
-			if (!this.view) {
-				this.view = this.context.getView();
-			}
-			try {
-				await this._setContextV4();
-				this.errorState = false;
-			} catch (error) {
-				this.errorMessage = error.message;
-				this.errorState = true;
-			}
-		} else {
-			this.view = this.context.getView();
-			try {
-				await this._setContextV2();
-				this.errorState = false;
-			} catch (error) {
-				this.errorMessage = error.message;
-				this.errorState = true;
-			}
+		this.view = this.odataHandler.getView(this.context);
+		this.tableObject = this.odataHandler.getTableObject(this.component.getTableId(), this.view);
+		this.component.setTableId(this.tableObject.getId());
+		this.binding = this.odataHandler.getBinding(this.tableObject);
+		if (!this.binding) {
+			throw new Error(this._geti18nText("bindingError"));
 		}
+		const odataType = this.odataHandler.getOdataType(this.binding, this.tableObject, this.component.getOdataType());
+		this.component.setOdataType(odataType);
+		this.typeLabelList = await this.odataHandler.createLabelList(this.component.getColumns(), odataType, this.tableObject);
+
 		this.model = this.tableObject.getModel();
 		this.odataHandler.draftController = new DraftController(this.model, undefined);
-	}
-
-	async _setContextV4() {
-		// try get object page table
-		if (!this.component.getTableId()) {
-			let tables = this.view.findAggregatedObjects(true, function (o) {
-				return o.isA("sap.m.Table") || o.isA("sap.ui.table.Table");
-			});
-			if (tables.length > 1) {
-				console.error("Found more than one table on Object Page.\n Please specify table in option 'tableId'");
-			} else {
-				this.component.setTableId(tables[0].getId());
-				this.tableObject = tables[0];
-			}
-		} else {
-			this.tableObject = this.view.byId(this.component.getTableId());
-		}
-		// try get odata type from table
-		this.binding = this.odataHandler.getBinding(this.tableObject);
-		if (!this.binding) {
-			throw new Error(this._geti18nText("bindingError"));
-		}
-		const tableBindingPath = this.binding.getPath();
-		const metaModel = this.tableObject.getModel().getMetaModel();
-		const metaModelData = this.tableObject.getModel().getMetaModel().getData();
-		if (!this.component.getOdataType()) {
-			// for list report
-			try {
-				const metaDataObject = metaModel.getObject(tableBindingPath);
-				this.component.setOdataType(metaDataObject["$Type"]);
-			} catch (error) {
-				console.debug();
-			}
-			// for object page
-			if (!this.component.getOdataType()) {
-				for (const [key, value] of Object.entries(metaModelData)) {
-					if (value["$kind"] === "EntityType" && value[tableBindingPath]) {
-						this.component.setOdataType(value[tableBindingPath]["$Type"]);
-					}
-				}
-			}
-			if (!this.component.getOdataType()) {
-				console.error("No OData Type found. Please specify 'odataType' in options");
-			}
-		}
-
-		this.typeLabelList = this.metadataHandler.createLabelListV4(this.component.getColumns());
-	}
-
-	async _setContextV2() {
-		// try get object page table
-		if (!this.component.getTableId()) {
-			let tables = this.view.findAggregatedObjects(true, function (o) {
-				return o.isA("sap.m.Table") || o.isA("sap.ui.table.Table");
-			});
-			if (tables.length > 1) {
-				console.error("Found more than one table on Object Page.\n Please specify table in option 'tableId'");
-			} else {
-				this.component.setTableId(tables[0].getId());
-				this.tableObject = tables[0];
-			}
-		} else {
-			this.tableObject = this.view.byId(this.component.getTableId());
-		}
-		// try get odata type from table
-		this.binding = this.odataHandler.getBinding(this.tableObject);
-		if (!this.binding) {
-			throw new Error(this._geti18nText("bindingError"));
-		}
-		if (!this.component.getOdataType()) {
-			this.component.setOdataType(this.binding._getEntityType().entityType);
-			if (!this.component.getOdataType()) {
-				console.error("No OData Type found. Please specify 'odataType' in options");
-			}
-			const metaModel = this.tableObject.getModel().getMetaModel();
-			await metaModel.loaded();
-			this.oDataEntityType = metaModel.getODataEntityType(this.component.getOdataType());
-		}
-
-		this.typeLabelList = this.metadataHandler.createLabelListV2(this.component.getColumns());
 	}
 
 	getODataHandler(version: number): OData {
@@ -190,7 +110,9 @@ export default class ExcelUpload {
 
 	async openExcelUploadDialog() {
 		await this.initialSetupPromise;
-		await this.initialSetup();
+		if (this.errorState) {
+			await this.initialSetup();
+		}
 		if (!this.errorState) {
 			(this.dialog.getContent()[0] as FileUploader).clear();
 			this.dialog.open();
@@ -200,82 +122,62 @@ export default class ExcelUpload {
 		}
 	}
 
-	async onFileUpload(oEvent: Event) {
+	async onFileUpload(event: Event) {
 		try {
-			this.payloadArray = [];
-			const fileType = oEvent.getParameter("files")[0].type;
-			let excelSheetsData: any[] = [];
-			const stream: ReadableStream = oEvent.getParameter("files")[0].stream();
-			const data = await this.buffer_RS(stream);
-			let workbook = XLSX.read(data);
 			this.component.setErrorResults([]);
-			let columnNames;
-			// reading all sheets
-			workbook.SheetNames.forEach((sheetName) => {
-				// Need special case for CSV Import
-				// let worksheet = workbook.Sheets[sheetName];
-				// const range = XLSX.utils.decode_range(worksheet["!ref"]);
-				// for (let row = range.s.r + 1; row <= range.e.r; ++row) {
-				// 	for (let col = range.s.c; col <= range.e.c; ++col) {
-				// 		const ref = XLSX.utils.encode_cell({ r: row, c: col });
-				// 		if (worksheet[ref] && worksheet[ref].t === "n") {
-				// 			worksheet[ref].v = this._changeDecimalSeperator(worksheet[ref].w);
-				// 		}
-				// 	}
-				// }
-				let data = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-				columnNames = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })[0];
-				excelSheetsData.push(data);
-			});
-			// use only first sheet
-			var firstSheet = excelSheetsData[0];
+			this.errorArray = [];
+			const file = event.getParameter("files")[0];
+
+			const workbook = (await this._readWorkbook(file)) as XLSX.WorkBook;
+			const sheetName = workbook.SheetNames[0];
+			let excelSheetsData = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+			let columnNames = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })[0];
+
+			if (!excelSheetsData || excelSheetsData.length === 0) {
+				throw new Error(this._geti18nText("emptySheet"));
+			}
+
 			//remove empty spaces before and after every value
-			for (const object of firstSheet) {
+			for (const object of excelSheetsData) {
 				for (const key in object) {
 					object[key] = typeof object[key] === "string" ? object[key].trim() : object[key];
 				}
 			}
-			// check if data is ok in extension method
-			this._checkMandatoryFields(firstSheet, this.component.getErrorResults());
-			this._checkColumnNames(columnNames, this.component.getErrorResults());
-			this.component.fireCheckBeforeRead({ sheetData: firstSheet });
-			if (this.component.getErrorResults().some((error) => error.counter > 0)) {
-				// error found in excel
-				// remove those errors not found
-				const errorArray = this.component.getErrorResults().filter((error) => error.counter !== 0);
-				throw errorArray;
+
+			this.errorArray = this._checkMandatoryFields(excelSheetsData, this.errorArray);
+			this.errorArray = this._checkColumnNames(columnNames, this.errorArray);
+			this.component.fireCheckBeforeRead({ sheetData: excelSheetsData });
+
+			if (this.errorArray.some((error) => error.counter > 0)) {
+				// show error dialog
+				this.displayErrors();
+				// reset file uploader
+				var fileUploader = this.dialog.getContent()[0] as FileUploader;
+				fileUploader.setValue();
+				return;
 			}
 
-			// Wait for all promises to be resolved
-			this._parseExcelData(firstSheet);
-			MessageToast.show(this._geti18nText("uploadSuccessful"));
+			this.payloadArray = [];
+			this._parseExcelData(excelSheetsData);
 		} catch (error) {
-			this.errorDialog = (await Fragment.load({
-				name: "cc.excelUpload.XXXnamespaceXXX.fragment.ErrorDialog",
-				type: "XML",
-				controller: this,
-			})) as Dialog;
-			this.dialog.setModel(this.componentI18n, "i18n");
-			this.errorDialog.setModel(new JSONModel(), "errorData");
-			var fileUploader = this.dialog.getContent()[0];
-			fileUploader.setValue();
-			this.errorDialog.getModel("errorData").setData(error);
-			this.errorDialog.open();
+			// show other errors
+			console.error(error);
+			MessageToast.show(error.message);
 		}
 	}
 
-	onCloseDialog(oEvent) {
+	onCloseDialog() {
 		this.dialog.close();
 	}
-	onCloseErrorDialog(oEvent) {
+	onCloseErrorDialog() {
 		this.errorDialog.close();
 	}
 
 	/**
 	 * Sending extracted data to backend
-	 * @param {*} oEvent
+	 * @param {*} event
 	 */
-	async onUploadSet(oEvent) {
+	async onUploadSet(event: Event) {
 		// checking if excel file contains data or not
 		if (!this.payloadArray.length) {
 			MessageToast.show(this._geti18nText("selectFileUpload"));
@@ -283,10 +185,11 @@ export default class ExcelUpload {
 		}
 
 		var that = this;
-		var oSource = oEvent.getSource();
+		const source = event.getSource() as Button;
+		const sourceParent = source.getParent() as Dialog;
 
-		oSource.getParent().setBusyIndicatorDelay(0);
-		oSource.getParent().setBusy(true);
+		sourceParent.setBusyIndicatorDelay(0);
+		sourceParent.setBusy(true);
 		await this._sleep(50);
 
 		// creating a promise as the extension api accepts odata call in form of promise only
@@ -322,7 +225,7 @@ export default class ExcelUpload {
 			}
 		}
 
-		oSource.getParent().setBusy(false);
+		sourceParent.setBusy(false);
 		this.onCloseDialog();
 	}
 
@@ -421,34 +324,35 @@ export default class ExcelUpload {
 		this.component.setErrorResults(this.component.getErrorResults().concat(errorResults));
 	}
 
-	_checkMandatoryFields(data, errorArray) {
-		// error cases
-		if (this.component.getMandatoryFields()) {
-			for (const mandatoryField of this.component.getMandatoryFields()) {
-				const errorMessage = {
-					title: this._geti18nText("mandatoryFieldNotFilled", [this.typeLabelList[mandatoryField].label]),
-					counter: 0,
-				};
-				for (const row of data) {
-					let label;
-					if (typeof this.typeLabelList[mandatoryField] !== "undefined" && mandatoryField in this.typeLabelList) {
-						label = this.typeLabelList[mandatoryField]["label"];
-					} else {
-						console.error(`Mandatory Field ${mandatoryField} not found for checking mandatory fields`);
-					}
-					const value = this._getValueFromRow(row, label, mandatoryField);
-					if (value === "" || value === undefined) {
-						errorMessage.counter = errorMessage.counter + 1;
-					}
+	_checkMandatoryFields(data: unknown[], errorArray: ErrorMessage[]) {
+		const mandatoryFields = this.component.getMandatoryFields();
+		if (!mandatoryFields) {
+			return errorArray;
+		}
+		for (const mandatoryField of mandatoryFields) {
+			const fieldLabel = this.typeLabelList[mandatoryField]?.label;
+			if (!fieldLabel) {
+				console.error(`Mandatory Field ${mandatoryField} not found for checking mandatory fields`);
+				continue;
+			}
+			const errorMessage = {
+				title: this._geti18nText("mandatoryFieldNotFilled", [fieldLabel]),
+				counter: 0,
+			} as ErrorMessage;
+			for (const row of data) {
+				const value = this._getValueFromRow(row, fieldLabel, mandatoryField);
+				if (value === "" || value === undefined) {
+					errorMessage.counter++;
 				}
+			}
+			if (errorMessage.counter > 0) {
 				errorArray.push(errorMessage);
 			}
 		}
-
 		return errorArray;
 	}
 
-	_checkColumnNames(columnNames, errorArray) {
+	_checkColumnNames(columnNames: any, errorArray: ErrorMessage[]) {
 		const fieldMatchType = this.component.getFieldMatchType();
 		for (let index = 0; index < columnNames.length; index++) {
 			const columnName = columnNames[index];
@@ -473,10 +377,11 @@ export default class ExcelUpload {
 				const errorMessage = {
 					title: this._geti18nText("columnNotFound", [columnName]),
 					counter: 1,
-				};
+				} as ErrorMessage;
 				errorArray.push(errorMessage);
 			}
 		}
+		return errorArray;
 	}
 
 	_getValueFromRow(row, label, type) {
@@ -563,5 +468,39 @@ export default class ExcelUpload {
 		}
 
 		return out;
+	}
+
+	/**
+	 * Display errors in the errorArray.
+	 * @param {Array} errorArray - Array containing error messages and their counters.
+	 */
+	async displayErrors() {
+		if (!this.errorDialog) {
+			this.errorDialog = (await Fragment.load({
+				name: "cc.excelUpload.XXXnamespaceXXX.fragment.ErrorDialog",
+				type: "XML",
+				controller: this,
+			})) as Dialog;
+		}
+		this.errorDialog.setModel(new JSONModel(), "errorData");
+		(this.errorDialog.getModel("errorData") as JSONModel).setData(this.errorArray.filter((error) => error.counter !== 0));
+		this.errorDialog.open();
+	}
+
+	/**
+	 * Read the uploaded workbook from the file.
+	 * @param {File} file - The uploaded file.
+	 * @returns {Promise} - Promise object representing the workbook.
+	 */
+	async _readWorkbook(file: Blob) {
+		return new Promise(async (resolve, reject) => {
+			try {
+				const data = await this.buffer_RS(file.stream());
+				let workbook = XLSX.read(data);
+				resolve(workbook);
+			} catch (error) {
+				reject(error);
+			}
+		});
 	}
 }

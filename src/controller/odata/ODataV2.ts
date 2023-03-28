@@ -1,3 +1,4 @@
+import { Columns } from "../../types";
 import OData from "./OData";
 
 export default class ODataV2 extends OData {
@@ -73,8 +74,25 @@ export default class ODataV2 extends OData {
 		return Promise.all(activateActionsPromises);
 	}
 
-	resetContexts(){
-		this.createContexts = []
-		this.createPromises = []
+	getView(context: any) {
+		return context.getView();
+	}
+
+	getOdataType(binding: any, tableObject: any, odataType: any) {
+		if (!odataType) {
+			return binding._getEntityType().entityType;
+		}
+	}
+
+	async createLabelList(columns: Columns, odataType: string, tableObject: any) {
+		const metaModel = tableObject.getModel().getMetaModel();
+		await metaModel.loaded();
+		const oDataEntityType = metaModel.getODataEntityType(odataType);
+		return this.metaDatahandler.createLabelListV2(columns, odataType, oDataEntityType);
+	}
+
+	resetContexts() {
+		this.createContexts = [];
+		this.createPromises = [];
 	}
 }
