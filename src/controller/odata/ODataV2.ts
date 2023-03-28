@@ -84,8 +84,11 @@ export default class ODataV2 extends OData {
 		}
 	}
 
-	createLabelList(columns: Columns, odataType: string) {
-		return this.metaDatahandler.createLabelListV2(columns, odataType);
+	async createLabelList(columns: Columns, odataType: string, tableObject: any) {
+		const metaModel = tableObject.getModel().getMetaModel();
+		await metaModel.loaded();
+		const oDataEntityType = metaModel.getODataEntityType(odataType);
+		return this.metaDatahandler.createLabelListV2(columns, odataType, oDataEntityType);
 	}
 
 	resetContexts() {

@@ -94,7 +94,7 @@ export default class ExcelUpload {
 		}
 		const odataType = this.odataHandler.getOdataType(this.binding, this.tableObject, this.component.getOdataType());
 		this.component.setOdataType(odataType);
-		this.typeLabelList = this.odataHandler.createLabelList(this.component.getColumns(), odataType);
+		this.typeLabelList = await this.odataHandler.createLabelList(this.component.getColumns(), odataType, this.tableObject);
 
 		this.model = this.tableObject.getModel();
 		this.odataHandler.draftController = new DraftController(this.model, undefined);

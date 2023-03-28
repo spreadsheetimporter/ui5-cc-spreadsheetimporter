@@ -66,6 +66,6 @@ export default abstract class OData {
 	abstract waitForDraft(): void;
 	abstract resetContexts(): void;
 	abstract getView(context: any): any;
-	abstract createLabelList(columns: Columns, odataType: string): ListObject;
+	abstract createLabelList(columns: Columns, odataType: string, tableObject: any): Promise<ListObject>;
 	abstract getOdataType(binding: any, tableObject: any, odataType: any): string;
 }

@@ -10,11 +10,10 @@ export default class MetadataHandler {
 		this.excelUploadController = excelUploadController;
 	}
 
-	public createLabelListV2(colums: Columns, odataType: string): ListObject {
+	public createLabelListV2(colums: Columns, odataType: string, oDataEntityType: any): ListObject {
 		let listObject: ListObject = {};
 
 		// get the property list of the entity for which we need to download the template
-		const oDataEntityType = this.excelUploadController.oDataEntityType;
 		const properties: PropertyArray = oDataEntityType.property;
 		const entityTypeLabel: string = oDataEntityType["sap:label"];
 

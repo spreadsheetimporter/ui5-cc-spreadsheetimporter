@@ -71,7 +71,7 @@ export default class ODataV4 extends OData {
 		}
 	}
 
-	createLabelList(columns: Columns, odataType: string) {
+	async createLabelList(columns: Columns, odataType: string) {
 		return this.metaDatahandler.createLabelListV4(columns, odataType);
 	}
 
