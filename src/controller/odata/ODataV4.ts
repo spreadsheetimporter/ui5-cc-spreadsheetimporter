@@ -1,3 +1,4 @@
+import { Columns } from "../../types";
 import OData from "./OData";
 
 export default class ODataV4 extends OData {
@@ -40,8 +41,42 @@ export default class ODataV4 extends OData {
 		return Promise.all(activateActionsPromises);
 	}
 
-	resetContexts(){
-		this.createContexts = []
-		this.createPromises = []
+	getView(context: any) {
+		return context._view;
+	}
+
+	getOdataType(binding: any, tableObject: any, odataType: any) {
+		const tableBindingPath = binding.getPath();
+		const metaModel = tableObject.getModel().getMetaModel();
+		const metaModelData = tableObject.getModel().getMetaModel().getData();
+		if (!odataType) {
+			// for list report
+			try {
+				const metaDataObject = metaModel.getObject(tableBindingPath);
+				return metaDataObject["$Type"];
+			} catch (error) {
+				console.debug();
+			}
+			// for object page
+			if (!odataType) {
+				for (const [key, value] of Object.entries(metaModelData)) {
+					if (value["$kind"] === "EntityType" && value[tableBindingPath]) {
+						return value[tableBindingPath]["$Type"];
+					}
+				}
+			}
+			if (!odataType) {
+				console.error("No OData Type found. Please specify 'odataType' in options");
+			}
+		}
+	}
+
+	createLabelList(columns: Columns, odataType: string) {
+		return this.metaDatahandler.createLabelListV4(columns, odataType);
+	}
+
+	resetContexts() {
+		this.createContexts = [];
+		this.createPromises = [];
 	}
 }

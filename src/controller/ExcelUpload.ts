@@ -17,6 +17,7 @@ import ODataV2 from "./odata/ODataV2";
 import ODataV4 from "./odata/ODataV4";
 import FileUploader from "sap/ui/unified/FileUploader";
 import MessageBox from "sap/m/MessageBox";
+import Button from "sap/m/Button";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
@@ -42,7 +43,7 @@ export default class ExcelUpload {
 	private errorState: boolean;
 	private errorMessage: string;
 	private initialSetupPromise: Promise<void>;
-	public errorArray  : ErrorMessage[];
+	public errorArray: ErrorMessage[];
 
 	constructor(component: Component, componentI18n: ResourceModel) {
 		this.errorArray = [];
@@ -67,7 +68,15 @@ export default class ExcelUpload {
 			this.dialog.setModel(this.componentI18n, "i18n");
 		}
 		this.metadataHandler = new MetadataHandler(this);
-		await this.setContext();
+		this.odataHandler.metaDatahandler = this.metadataHandler;
+		try {
+			await this.setContext();
+			this.errorState = false;
+		} catch (error) {
+			this.errorMessage = error.message;
+			this.errorState = true;
+			console.error(error);
+		}
 	}
 
 	async setContext() {
@@ -76,110 +85,19 @@ export default class ExcelUpload {
 			this.context = this.context.base;
 		}
 
-		if (this.isODataV4) {
-			this.view = this.context._view;
-			if (!this.view) {
-				this.view = this.context.getView();
-			}
-			try {
-				await this._setContextV4();
-				this.errorState = false;
-			} catch (error) {
-				this.errorMessage = error.message;
-				this.errorState = true;
-			}
-		} else {
-			this.view = this.context.getView();
-			try {
-				await this._setContextV2();
-				this.errorState = false;
-			} catch (error) {
-				this.errorMessage = error.message;
-				this.errorState = true;
-			}
+		this.view = this.odataHandler.getView(this.context);
+		this.tableObject = this.odataHandler.getTableObject(this.component.getTableId(), this.view);
+		this.component.setTableId(this.tableObject.getId());
+		this.binding = this.odataHandler.getBinding(this.tableObject);
+		if (!this.binding) {
+			throw new Error(this._geti18nText("bindingError"));
 		}
+		const odataType = this.odataHandler.getOdataType(this.binding, this.tableObject, this.component.getOdataType());
+		this.component.setOdataType(odataType);
+		this.typeLabelList = this.odataHandler.createLabelList(this.component.getColumns(), odataType);
+
 		this.model = this.tableObject.getModel();
 		this.odataHandler.draftController = new DraftController(this.model, undefined);
-	}
-
-	async _setContextV4() {
-		// try get object page table
-		if (!this.component.getTableId()) {
-			let tables = this.view.findAggregatedObjects(true, function (o) {
-				return o.isA("sap.m.Table") || o.isA("sap.ui.table.Table");
-			});
-			if (tables.length > 1) {
-				console.error("Found more than one table on Object Page.\n Please specify table in option 'tableId'");
-			} else {
-				this.component.setTableId(tables[0].getId());
-				this.tableObject = tables[0];
-			}
-		} else {
-			this.tableObject = this.view.byId(this.component.getTableId());
-		}
-		// try get odata type from table
-		this.binding = this.odataHandler.getBinding(this.tableObject);
-		if (!this.binding) {
-			throw new Error(this._geti18nText("bindingError"));
-		}
-		const tableBindingPath = this.binding.getPath();
-		const metaModel = this.tableObject.getModel().getMetaModel();
-		const metaModelData = this.tableObject.getModel().getMetaModel().getData();
-		if (!this.component.getOdataType()) {
-			// for list report
-			try {
-				const metaDataObject = metaModel.getObject(tableBindingPath);
-				this.component.setOdataType(metaDataObject["$Type"]);
-			} catch (error) {
-				console.debug();
-			}
-			// for object page
-			if (!this.component.getOdataType()) {
-				for (const [key, value] of Object.entries(metaModelData)) {
-					if (value["$kind"] === "EntityType" && value[tableBindingPath]) {
-						this.component.setOdataType(value[tableBindingPath]["$Type"]);
-					}
-				}
-			}
-			if (!this.component.getOdataType()) {
-				console.error("No OData Type found. Please specify 'odataType' in options");
-			}
-		}
-
-		this.typeLabelList = this.metadataHandler.createLabelListV4(this.component.getColumns());
-	}
-
-	async _setContextV2() {
-		// try get object page table
-		if (!this.component.getTableId()) {
-			let tables = this.view.findAggregatedObjects(true, function (o) {
-				return o.isA("sap.m.Table") || o.isA("sap.ui.table.Table");
-			});
-			if (tables.length > 1) {
-				console.error("Found more than one table on Object Page.\n Please specify table in option 'tableId'");
-			} else {
-				this.component.setTableId(tables[0].getId());
-				this.tableObject = tables[0];
-			}
-		} else {
-			this.tableObject = this.view.byId(this.component.getTableId());
-		}
-		// try get odata type from table
-		this.binding = this.odataHandler.getBinding(this.tableObject);
-		if (!this.binding) {
-			throw new Error(this._geti18nText("bindingError"));
-		}
-		if (!this.component.getOdataType()) {
-			this.component.setOdataType(this.binding._getEntityType().entityType);
-			if (!this.component.getOdataType()) {
-				console.error("No OData Type found. Please specify 'odataType' in options");
-			}
-			const metaModel = this.tableObject.getModel().getMetaModel();
-			await metaModel.loaded();
-			this.oDataEntityType = metaModel.getODataEntityType(this.component.getOdataType());
-		}
-
-		this.typeLabelList = this.metadataHandler.createLabelListV2(this.component.getColumns());
 	}
 
 	getODataHandler(version: number): OData {
@@ -192,7 +110,9 @@ export default class ExcelUpload {
 
 	async openExcelUploadDialog() {
 		await this.initialSetupPromise;
-		await this.initialSetup();
+		if (this.errorState) {
+			await this.initialSetup();
+		}
 		if (!this.errorState) {
 			(this.dialog.getContent()[0] as FileUploader).clear();
 			this.dialog.open();
@@ -205,6 +125,7 @@ export default class ExcelUpload {
 	async onFileUpload(event: Event) {
 		try {
 			this.component.setErrorResults([]);
+			this.errorArray = [];
 			const file = event.getParameter("files")[0];
 
 			const workbook = (await this._readWorkbook(file)) as XLSX.WorkBook;
@@ -245,18 +166,18 @@ export default class ExcelUpload {
 		}
 	}
 
-	onCloseDialog(oEvent) {
+	onCloseDialog() {
 		this.dialog.close();
 	}
-	onCloseErrorDialog(oEvent) {
+	onCloseErrorDialog() {
 		this.errorDialog.close();
 	}
 
 	/**
 	 * Sending extracted data to backend
-	 * @param {*} oEvent
+	 * @param {*} event
 	 */
-	async onUploadSet(oEvent) {
+	async onUploadSet(event: Event) {
 		// checking if excel file contains data or not
 		if (!this.payloadArray.length) {
 			MessageToast.show(this._geti18nText("selectFileUpload"));
@@ -264,10 +185,11 @@ export default class ExcelUpload {
 		}
 
 		var that = this;
-		var oSource = oEvent.getSource();
+		const source = event.getSource() as Button;
+		const sourceParent = source.getParent() as Dialog;
 
-		oSource.getParent().setBusyIndicatorDelay(0);
-		oSource.getParent().setBusy(true);
+		sourceParent.setBusyIndicatorDelay(0);
+		sourceParent.setBusy(true);
 		await this._sleep(50);
 
 		// creating a promise as the extension api accepts odata call in form of promise only
@@ -303,7 +225,7 @@ export default class ExcelUpload {
 			}
 		}
 
-		oSource.getParent().setBusy(false);
+		sourceParent.setBusy(false);
 		this.onCloseDialog();
 	}
 

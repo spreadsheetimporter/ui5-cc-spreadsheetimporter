@@ -10,7 +10,7 @@ export default class MetadataHandler {
 		this.excelUploadController = excelUploadController;
 	}
 
-	public createLabelListV2(colums: Columns): ListObject {
+	public createLabelListV2(colums: Columns, odataType: string): ListObject {
 		let listObject: ListObject = {};
 
 		// get the property list of the entity for which we need to download the template
@@ -72,16 +72,16 @@ export default class MetadataHandler {
 		return propertyName;
 	}
 
-	public createLabelListV4(colums: Columns): ListObject {
+	public createLabelListV4(colums: Columns, odataType: string): ListObject {
 		let listObject: ListObject = {};
 		let entityTypeLabel;
 
 		// get the property list of the entity for which we need to download the template
 		var annotations = this.excelUploadController.context.getModel().getMetaModel().getData()["$Annotations"];
-		const properties = this.excelUploadController.context.getModel().getMetaModel().getData()[this.excelUploadController.component.getOdataType()];
+		const properties = this.excelUploadController.context.getModel().getMetaModel().getData()[odataType];
 		// try get facet label
 		try {
-			entityTypeLabel = annotations[this.excelUploadController.component.getOdataType()]["@com.sap.vocabularies.UI.v1.Facets"][0].Label;
+			entityTypeLabel = annotations[odataType]["@com.sap.vocabularies.UI.v1.Facets"][0].Label;
 		} catch (error) {
 			console.debug("Facet Label not found");
 		}
@@ -97,9 +97,9 @@ export default class MetadataHandler {
 			for (const propertyName of colums) {
 				const property = properties[propertyName];
 				if (property) {
-					const propertyLabel = annotations[`${this.excelUploadController.component.getOdataType()}/${propertyName}`];
+					const propertyLabel = annotations[`${odataType}/${propertyName}`];
 					listObject[propertyName] = {} as Property;
-					listObject[propertyName].label = this._getLabelV4(annotations, properties, propertyName, propertyLabel, this._options);
+					listObject[propertyName].label = this._getLabelV4(annotations, properties, propertyName, propertyLabel, this._options, odataType);
 					if (!listObject[propertyName].label) {
 						listObject[propertyName].label = propertyName;
 					}
@@ -111,10 +111,10 @@ export default class MetadataHandler {
 		} else {
 			const propertiesFiltered = Object.entries(properties).filter(([propertyName, propertyValue]) => propertyValue["$kind"] === "Property");
 			for (const [propertyName, propertyValue] of propertiesFiltered) {
-				const propertyLabel = annotations[`${this.excelUploadController.component.getOdataType()}/${propertyName}`];
+				const propertyLabel = annotations[`${odataType}/${propertyName}`];
 				if (!propertyLabel["@com.sap.vocabularies.UI.v1.Hidden"]) {
 					listObject[propertyName] = {} as Property;
-					listObject[propertyName].label = this._getLabelV4(annotations, properties, propertyName, propertyLabel, this._options);
+					listObject[propertyName].label = this._getLabelV4(annotations, properties, propertyName, propertyLabel, this._options, odataType);
 					if (!listObject[propertyName].label) {
 						listObject[propertyName].label = propertyName;
 					}
@@ -126,12 +126,12 @@ export default class MetadataHandler {
 		return listObject;
 	}
 
-	_getLabelV4(annotations: { [x: string]: { [x: string]: any } }, properties: any, propertyName: string, propertyLabel: { [x: string]: any }, options: any) {
+	_getLabelV4(annotations: { [x: string]: { [x: string]: any } }, properties: any, propertyName: string, propertyLabel: { [x: string]: any }, options: any, odataType: string) {
 		if (propertyLabel && propertyLabel["@com.sap.vocabularies.Common.v1.Label"]) {
 			return propertyLabel["@com.sap.vocabularies.Common.v1.Label"];
 		}
 		try {
-			const lineItemsAnnotations = annotations[this.excelUploadController.component.getOdataType()]["@com.sap.vocabularies.UI.v1.LineItem"];
+			const lineItemsAnnotations = annotations[odataType]["@com.sap.vocabularies.UI.v1.LineItem"];
 			return lineItemsAnnotations.find((dataField: { Value: { $Path: any } }) => dataField.Value.$Path === propertyName).Label;
 		} catch (error) {
 			console.debug(`${propertyName} not found as a LineItem Label`);

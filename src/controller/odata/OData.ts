@@ -1,11 +1,15 @@
 import DraftController from "sap/ui/generic/app/transaction/DraftController";
+import { Columns, ListObject } from "../../types";
+import MetadataHandler from "../MetadataHandler";
 
 export default abstract class OData {
 	UI5MinorVersion: number;
 	draftController: DraftController;
+	metaDatahandler: MetadataHandler;
 
-	constructor(ui5version: number) {
+	constructor(ui5version: number, metaDatahandler: MetadataHandler) {
 		this.UI5MinorVersion = ui5version;
+		this.metaDatahandler = metaDatahandler;
 	}
 
 	public getBinding(tableObject: any): any {
@@ -40,9 +44,28 @@ export default abstract class OData {
 		}
 	}
 
+	public getTableObject(tableId: string, view: any) {
+		// try get object page table
+		if (!tableId) {
+			let tables = view.findAggregatedObjects(true, function (o) {
+				return o.isA("sap.m.Table") || o.isA("sap.ui.table.Table");
+			});
+			if (tables.length > 1) {
+				console.error("Found more than one table on Object Page.\n Please specify table in option 'tableId'");
+			} else {
+				return tables[0];
+			}
+		} else {
+			return view.byId(tableId);
+		}
+	}
+
 	abstract create(model: any, binding: any, payload: any): any;
 	abstract createAsync(model: any, binding: any, payload: any): any;
 	abstract waitForCreation(model: any): void;
 	abstract waitForDraft(): void;
 	abstract resetContexts(): void;
+	abstract getView(context: any): any;
+	abstract createLabelList(columns: Columns, odataType: string): ListObject;
+	abstract getOdataType(binding: any, tableObject: any, odataType: any): string;
 }
