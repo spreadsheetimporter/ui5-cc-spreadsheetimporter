@@ -6,11 +6,11 @@ Since a Reuse Component (library) is basically utilised, this results in two dep
 The library is attached directly to each app and deployed with it.  
 ### Central deployment
 The Excel upload is stored directly as a library centrally, e.g. in the on-premise ABAP system.  
-For more information, please see the Page [Central Deployment](../../../ui5-cc-excelUpload/pages/CentralDeployment).
+For more information, please see the Page [Central Deployment](CentralDeployment.md).
 
 ## Setup
 
-Here are the manual steps how to integrate the ui5-cc-excelUpload component. For a simplified integration, a [yo generator](../../../ui5-cc-excelUpload/pages/Generator) is also available.
+Here are the manual steps how to integrate the ui5-cc-excelUpload component. For a simplified integration, a [yo generator](Generator.md) is also available.
 ### Setup Decentralised deployment
 
 1\. Install from npm
@@ -67,7 +67,7 @@ npm install ui5-cc-excelupload
 
 ### Setup Central deployment
 
-1\. Execute the deployment with the version you like to use, see here [Central Deployment](../../../ui5-cc-excelUpload/pages/CentralDeployment).
+1\. Execute the deployment with the version you like to use, see here [Central Deployment](CentralDeployment.md).
 
 2\. Add `componentUsages` to you `manifest.json` under `sap.ui5`
    
