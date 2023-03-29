@@ -46,5 +46,5 @@ npm run deploy
 
 ## Consuming in Fiori App
 
-Perform the same steps as you did in [Getting Started](../../pages/GettingStarted/).  
+Perform the same steps as you did in [Getting Started](./../pages/GettingStarted.md).  
 It is not necessary to install the control using npm and the entry `resourceRoots` in the `manifest.json`.

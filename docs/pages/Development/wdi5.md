@@ -51,4 +51,4 @@ pnpm --filter ui5-cc-excelupload-sample test -- -- --headless ordersv4fe 84
 
 As specified in the [`testapps.json`](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/dev/testapps.json) file, the GitHub Action Workflow will run on every Pull Request push, testing scenarios with all current UI5 Maintenance Versions and is written down in [`wdi5-test.yml`](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/.github/workflows/wdi5-test.yml).
 
-More info at [GitHub Actions](../../../pages/Development/GitHubActions)
+More info at [GitHub Actions](./../Development/GitHubActions.md)
