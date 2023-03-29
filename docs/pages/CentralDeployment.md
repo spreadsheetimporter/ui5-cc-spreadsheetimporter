@@ -28,7 +28,7 @@ npm install
 
 3\. Change `ui5-deploy.yaml`
 
-For the deployment, you have to change the default [`ui5-deploy.yaml`](https://github.com/marianfoo/generator-excelUpload/blob/main/ui5-deploy.yaml) to your settings.  
+For the deployment, you have to change the default [`ui5-deploy.yaml`](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/ui5-deploy.yaml) to your settings.  
 When deploying a new version, it is important to use a different app name. This is always done automatically with a new version.  
 For this purpose, the variable `XXXnamespaceShortXXX` in the file `ui5-deploy-publish.yaml` must not be changed.  
 If you want to use your own app name, it is important to change the name for newer versions, otherwise other versions will be overwritten.
@@ -46,5 +46,5 @@ npm run deploy
 
 ## Consuming in Fiori App
 
-Perform the same steps as you did in [Getting Started](../../../ui5-cc-excelUpload/pages/GettingStarted/).  
+Perform the same steps as you did in [Getting Started](../../pages/GettingStarted/).  
 It is not necessary to install the control using npm and the entry `resourceRoots` in the `manifest.json`.
