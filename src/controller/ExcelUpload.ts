@@ -4,7 +4,6 @@ import MessageToast from "sap/m/MessageToast";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import * as XLSX from "xlsx";
 import MetadataHandler from "./MetadataHandler";
-import DraftController from "sap/ui/generic/app/transaction/DraftController";
 import Component from "../Component";
 import XMLView from "sap/ui/core/mvc/XMLView";
 import { ListObject, ErrorMessage } from "../types";
@@ -26,6 +25,7 @@ export default class ExcelUpload {
 	public component: Component;
 	public context: any;
 	private isODataV4: boolean;
+	private isOpenUI5: boolean;
 	private view: XMLView;
 	private tableObject: any;
 	private metadataHandler: MetadataHandler;
@@ -54,6 +54,8 @@ export default class ExcelUpload {
 		this.component.setErrorResults([]);
 		this.componentI18n = componentI18n;
 		this.isODataV4 = this._checkIfODataIsV4();
+		// check if "sap.ui.generic" is available, if false it is OpenUI5
+		this.isOpenUI5 = sap.ui.generic ? false : true;
 		this.odataHandler = this.getODataHandler(this.UI5MinorVersion);
 		this.initialSetupPromise = this.initialSetup();
 	}
@@ -97,7 +99,12 @@ export default class ExcelUpload {
 		this.typeLabelList = await this.odataHandler.createLabelList(this.component.getColumns(), odataType, this.tableObject);
 
 		this.model = this.tableObject.getModel();
-		this.odataHandler.draftController = new DraftController(this.model, undefined);
+		try {
+			// Load the DraftController asynchronously using the loadDraftController function
+			const DraftController: sap.ui.generic.app.transaction.DraftController = await this._loadDraftController();
+			// Create an instance of the DraftController
+			this.odataHandler.draftController = new DraftController(this.model, undefined);
+		} catch (error) {}
 	}
 
 	getODataHandler(version: number): OData {
@@ -501,6 +508,26 @@ export default class ExcelUpload {
 			} catch (error) {
 				reject(error);
 			}
+		});
+	}
+
+	/**
+	 * Dynamically loads the `sap.ui.generic.app.transaction.DraftController` module.
+	 *
+	 * @returns {Promise<sap.ui.generic.app.transaction.DraftController>} A Promise that resolves to an instance of the `DraftController` class.
+	 * @throws {Error} If the `DraftController` module cannot be loaded.
+	 */
+	async _loadDraftController() {
+		return new Promise(function (resolve, reject) {
+			sap.ui.require(
+				["sap/ui/generic/app/transaction/DraftController"],
+				function (DraftController) {
+					resolve(DraftController);
+				},
+				function (err) {
+					reject(err);
+				}
+			);
 		});
 	}
 }
