@@ -13,7 +13,7 @@
         width="auto"
         class="sapFDynamicPageAlignContent"
         items="{
-                    path: '/Orders',
+                    path: '/OrdersND',
                     sorter: {
                         path: 'OrderNo',
                         descending: false

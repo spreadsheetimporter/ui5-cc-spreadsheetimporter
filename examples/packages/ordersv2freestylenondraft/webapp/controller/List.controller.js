@@ -62,15 +62,17 @@ sap.ui.define(
 				this.getView().setBusyIndicatorDelay(0);
 				this.getView().setBusy(true);
 				if (!this.excelUpload) {
-					this.excelUpload = await this.getController().getAppComponent().createComponent({
-						name: "cc.excelUpload",
-						async: false,
-						componentData: {
-							context: this,
-							activateDraft: true,
-							tableId: "application-uiv2ordersv2freestyle-display-component---list--list"
-						}
-					});
+					this.excelUpload = await this.getController()
+						.getAppComponent()
+						.createComponent({
+							name: "cc.excelUpload",
+							async: false,
+							componentData: {
+								context: this,
+								activateDraft: true,
+								tableId: "application-uiv2ordersv2freestyle-display-component---list--list"
+							}
+						});
 
 					// event to check before uploaded to app
 					this.excelUpload.attachCheckBeforeRead(function (oEvent) {

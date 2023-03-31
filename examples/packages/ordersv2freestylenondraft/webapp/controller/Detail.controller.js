@@ -83,7 +83,7 @@ sap.ui.define(
 					.metadataLoaded()
 					.then(
 						function () {
-							var sObjectPath = this.getModel().createKey("Orders", {
+							var sObjectPath = this.getModel().createKey("OrdersND", {
 								ID: sObjectId,
 								IsActiveEntity: true
 							});
@@ -99,7 +99,7 @@ sap.ui.define(
 				this._draftController = new sap.ui.generic.app.transaction.DraftController(source.getModel());
 				this.context = source.getBindingContext();
 				this._draftController.createEditDraftEntity(this.context);
-				var sObjectPath = this.getView().getModel().createKey("Orders", {
+				var sObjectPath = this.getView().getModel().createKey("OrdersND", {
 					ID: "7e2f2640-6866-4dcf-8f4d-3027aa831cad",
 					IsActiveEntity: false
 				});
@@ -112,7 +112,7 @@ sap.ui.define(
 				this._draftController = new sap.ui.generic.app.transaction.DraftController(source.getModel());
 				this.context = source.getBindingContext();
 				this._draftController.activateDraftEntity(this.context);
-				var sObjectPath = this.getView().getModel().createKey("Orders", {
+				var sObjectPath = this.getView().getModel().createKey("OrdersND", {
 					ID: "7e2f2640-6866-4dcf-8f4d-3027aa831cad",
 					IsActiveEntity: true
 				});
@@ -176,13 +176,14 @@ sap.ui.define(
 				this.getView().setBusyIndicatorDelay(0);
 				this.getView().setBusy(true);
 				if (!this.excelUpload) {
-					this.excelUpload = await sap.ui.getCore().createComponent({
-						name: "cc.excelUpload",
-						async: false,
+					this.excelUpload = await this.getOwnerComponent().createComponent({
+						usage: "excelUpload",
+						async: true,
 						componentData: {
 							context: this,
-							activateDraft: false,
-							tableId: "application-uiv2ordersv2freestyle-display-component---detail--lineItemsList"
+							columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time"],
+							mandatoryFields: ["product_ID", "quantity"],
+							excelFileName: "Test.xlsx"
 						}
 					});
 

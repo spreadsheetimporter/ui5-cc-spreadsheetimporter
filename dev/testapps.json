@@ -92,28 +92,28 @@
     ]
   },
   {
-    "rootAppName": "ordersv2freestyle",
+    "rootAppName": "ordersv2freestylenondraft",
     "port": "8082",
     "versionMinor": 108,
-    "appTitel": "Orders V2 FS 108",
+    "appTitel": "Orders V2 FS ND 108",
     "copyVersions": [
       {
         "version": "1.96.16",
         "versionMinor": 96,
         "port": "8096",
-        "appTitel": "Orders V2 FS 96"
+        "appTitel": "Orders V2 FS ND 96"
       },
       {
         "version": "1.84.31",
         "versionMinor": 84,
         "port": "8097",
-        "appTitel": "Orders V2 FS 84"
+        "appTitel": "Orders V2 FS ND 84"
       },
       {
         "version": "1.71.53",
         "versionMinor": 71,
         "port": "8098",
-        "appTitel": "Orders V2 FS 71"
+        "appTitel": "Orders V2 FS ND 71"
       }
     ]
   },
@@ -132,7 +132,7 @@
       {
         "version": "1.96.16",
         "versionMinor": 96,
-        "port": "8097",
+        "port": "8087",
         "appTitel": "Orders V4 FE 96",
         "testMapping": {
           "specs": [
@@ -144,7 +144,7 @@
       {
         "version": "1.84.31",
         "versionMinor": 84,
-        "port": "8098",
+        "port": "8088",
         "appTitel": "Orders V4 FE 84",
         "testMapping": {
           "specs": [

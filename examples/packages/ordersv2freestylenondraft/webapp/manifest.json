@@ -1,7 +1,7 @@
 {
   "_version": "1.48.0",
   "sap.app": {
-    "id": "ui.v2.ordersv2freestyle",
+    "id": "ui.v2.ordersv2freestylenondraft",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -94,9 +94,7 @@
         "controlId": "layout",
         "controlAggregation": "beginColumnPages",
         "bypassed": {
-          "target": [
-            "notFound"
-          ]
+          "target": ["notFound"]
         },
         "async": true
       },
@@ -107,12 +105,9 @@
           "target": "list"
         },
         {
-          "pattern": "Orders/{objectId}",
+          "pattern": "OrdersND/{objectId}",
           "name": "object",
-          "target": [
-            "list",
-            "object"
-          ]
+          "target": ["list", "object"]
         }
       ],
       "targets": {
