@@ -118,6 +118,32 @@
     ]
   },
   {
+    "rootAppName": "ordersv2freestylenondraftopenui5",
+    "port": "8105",
+    "versionMinor": 108,
+    "appTitel": "Orders V2 FS ND OP 108",
+    "copyVersions": [
+      {
+        "version": "1.96.16",
+        "versionMinor": 96,
+        "port": "8106",
+        "appTitel": "Orders V2 FS ND OP 96"
+      },
+      {
+        "version": "1.84.31",
+        "versionMinor": 84,
+        "port": "8107",
+        "appTitel": "Orders V2 FS ND OP 84"
+      },
+      {
+        "version": "1.71.53",
+        "versionMinor": 71,
+        "port": "8108",
+        "appTitel": "Orders V2 FS ND OP 71"
+      }
+    ]
+  },
+  {
     "rootAppName": "ordersv4fe",
     "port": "8080",
     "versionMinor": 108,
