@@ -73,7 +73,7 @@ describe("Upload File Object Page", () => {
 	});
 
 	it("Check for upload", async () => {
-		await BaseClass.dummyWait(500);
+		await BaseClass.dummyWait(1000);
 		const textControl = await browser.asControl({
 			selector: {
 				controlType: "sap.m.Text",
