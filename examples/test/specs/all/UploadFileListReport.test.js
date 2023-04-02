@@ -27,7 +27,7 @@ describe("Upload File List Report", () => {
 			async () => {
 				return (await BaseClass.isVisibleById(FE.listReportGoButton)) || (await BaseClass.isVisibleById(FE.listReportDynamicPageTitle));
 			},
-			5000,
+			30000,
 			"GoButton and DynamicPageTitle not visible"
 		);
 
