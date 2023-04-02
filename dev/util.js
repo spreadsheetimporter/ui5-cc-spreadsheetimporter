@@ -220,6 +220,32 @@ function replaceVersionManifest(version) {
 	fs.writeFileSync('./src/manifest.json', JSON.stringify(jsonData, null, 2));
 }
 
+function deleteFolderRecursive(folderPath) {
+	const stack = [folderPath];
+  
+	while (stack.length) {
+	  const curPath = stack.pop();
+  
+	  if (fs.existsSync(curPath)) {
+		const files = fs.readdirSync(curPath);
+  
+		for (const file of files) {
+		  const filePath = path.join(curPath, file);
+  
+		  if (fs.lstatSync(filePath).isDirectory()) {
+			stack.push(filePath);
+		  } else {
+			fs.unlinkSync(filePath);
+		  }
+		}
+  
+		fs.rmdirSync(curPath);
+	  }
+	}
+  }
+  
+  
+
 module.exports.getPackageJson = getPackageJson;
 module.exports.getVersionDots = getVersionDots;
 module.exports.getVersionSlash = getVersionSlash;
@@ -233,3 +259,4 @@ module.exports.replaceYamlFileBuild = replaceYamlFileBuild;
 module.exports.replaceYamlFileDeploy = replaceYamlFileDeploy;
 module.exports.replaceYamlFileComponent = replaceYamlFileComponent;
 module.exports.replaceVersionManifest = replaceVersionManifest;
+module.exports.deleteFolderRecursive = deleteFolderRecursive;
