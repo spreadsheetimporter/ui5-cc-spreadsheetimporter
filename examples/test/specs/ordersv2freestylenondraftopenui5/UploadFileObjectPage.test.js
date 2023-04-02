@@ -84,6 +84,6 @@ describe("Upload File Object Page", () => {
 			}
 		});
 		const actualText = await textControl.getProperty("text");
-		expect(actualText).toEqual("5");
+		expect(actualText).toEqual("254");
 	});
 });
