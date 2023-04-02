@@ -23,19 +23,11 @@ describe("Upload File List Report", () => {
 		}
 	});
 	it("should trigger search on ListReport page", async () => {
-		await browser.waitUntil(
-			async () => {
-				return (await BaseClass.isVisibleById(FE.listReportGoButton)) || (await BaseClass.isVisibleById(FE.listReportDynamicPageTitle));
-			},
-			30000,
-			"GoButton and DynamicPageTitle not visible"
-		);
-
 		try {
 			await BaseClass.pressById(FE.listReportGoButton);
 		} catch (error) {
 			await BaseClass.pressById(FE.listReportDynamicPageTitle);
-			await browser.pause(500);
+			await BaseClass.dummyWait(500);
 			await BaseClass.pressById(FE.listReportGoButton);
 		}
 	});
@@ -64,11 +56,12 @@ describe("Upload File List Report", () => {
 				id: "__uploader0"
 			}
 		});
-		const fileName = FE.listReportUploadFilename;
-		const remoteFilePath = await browser.uploadFile(fileName);
-		const $uploader = await uploader.getWebElement();
-		const $fileInput = await $uploader.$("input[type=file]");
-		await $fileInput.setValue(remoteFilePath);
+		const fileName = FE.listReportUploadFilename; // relative to wdio.conf.(j|t)s
+		const remoteFilePath = await browser.uploadFile(fileName); // this also works in CI senarios!
+		// transition from wdi5 api -> wdio api
+		const $uploader = await uploader.getWebElement(); // wdi5
+		const $fileInput = await $uploader.$("input[type=file]"); // wdio
+		await $fileInput.setValue(remoteFilePath); // wdio
 		await browser
 			.asControl({
 				selector: {
@@ -79,7 +72,7 @@ describe("Upload File List Report", () => {
 				}
 			})
 			.press();
-		await browser.pause(500);
+		await BaseClass.dummyWait(500);
 	});
 
 	it("entry created and activated", async () => {
@@ -90,4 +83,4 @@ describe("Upload File List Report", () => {
 			expect(object.IsActiveEntity).toBeTruthy();
 		}
 	});
-}, 30000); // Add a 30-second timeout for the test suite.
+});
