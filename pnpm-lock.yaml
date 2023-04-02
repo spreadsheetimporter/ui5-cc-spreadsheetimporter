@@ -293,7 +293,103 @@ importers:
         specifier: 3.0.5
         version: 3.0.5(bluebird@3.7.2)
 
+  examples/packages/ordersv2freestylenondraft71:
+    dependencies:
+      ui5-cc-excelupload:
+        specifier: ./../../../
+        version: link:../../..
+    devDependencies:
+      "@sap-ux/ui5-middleware-fe-mockserver":
+        specifier: ^2.1.74
+        version: 2.1.74
+      "@sap/ux-ui5-tooling":
+        specifier: ^1.9.2
+        version: 1.9.2
+      "@ui5/cli":
+        specifier: 3.0.5
+        version: 3.0.5(bluebird@3.7.2)
+
+  examples/packages/ordersv2freestylenondraft84:
+    dependencies:
+      ui5-cc-excelupload:
+        specifier: ./../../../
+        version: link:../../..
+    devDependencies:
+      "@sap-ux/ui5-middleware-fe-mockserver":
+        specifier: ^2.1.74
+        version: 2.1.74
+      "@sap/ux-ui5-tooling":
+        specifier: ^1.9.2
+        version: 1.9.2
+      "@ui5/cli":
+        specifier: 3.0.5
+        version: 3.0.5(bluebird@3.7.2)
+
+  examples/packages/ordersv2freestylenondraft96:
+    dependencies:
+      ui5-cc-excelupload:
+        specifier: ./../../../
+        version: link:../../..
+    devDependencies:
+      "@sap-ux/ui5-middleware-fe-mockserver":
+        specifier: ^2.1.74
+        version: 2.1.74
+      "@sap/ux-ui5-tooling":
+        specifier: ^1.9.2
+        version: 1.9.2
+      "@ui5/cli":
+        specifier: 3.0.5
+        version: 3.0.5(bluebird@3.7.2)
+
   examples/packages/ordersv2freestylenondraftopenui5:
+    dependencies:
+      ui5-cc-excelupload:
+        specifier: ./../../../
+        version: link:../../..
+    devDependencies:
+      "@sap-ux/ui5-middleware-fe-mockserver":
+        specifier: ^2.1.74
+        version: 2.1.74
+      "@sap/ux-ui5-tooling":
+        specifier: ^1.9.2
+        version: 1.9.2
+      "@ui5/cli":
+        specifier: 3.0.5
+        version: 3.0.5(bluebird@3.7.2)
+
+  examples/packages/ordersv2freestylenondraftopenui571:
+    dependencies:
+      ui5-cc-excelupload:
+        specifier: ./../../../
+        version: link:../../..
+    devDependencies:
+      "@sap-ux/ui5-middleware-fe-mockserver":
+        specifier: ^2.1.74
+        version: 2.1.74
+      "@sap/ux-ui5-tooling":
+        specifier: ^1.9.2
+        version: 1.9.2
+      "@ui5/cli":
+        specifier: 3.0.5
+        version: 3.0.5(bluebird@3.7.2)
+
+  examples/packages/ordersv2freestylenondraftopenui584:
+    dependencies:
+      ui5-cc-excelupload:
+        specifier: ./../../../
+        version: link:../../..
+    devDependencies:
+      "@sap-ux/ui5-middleware-fe-mockserver":
+        specifier: ^2.1.74
+        version: 2.1.74
+      "@sap/ux-ui5-tooling":
+        specifier: ^1.9.2
+        version: 1.9.2
+      "@ui5/cli":
+        specifier: 3.0.5
+        version: 3.0.5(bluebird@3.7.2)
+
+  examples/packages/ordersv2freestylenondraftopenui596:
     dependencies:
       ui5-cc-excelupload:
         specifier: ./../../../
