@@ -6,7 +6,7 @@ const { optionsLong, optionsShort } = require("./../Objects/types");
 
 let FE = undefined;
 let BaseClass = undefined;
-let scenario = undefined
+let scenario = undefined;
 
 describe("Upload File List Report", () => {
 	before(async () => {
@@ -23,11 +23,19 @@ describe("Upload File List Report", () => {
 		}
 	});
 	it("should trigger search on ListReport page", async () => {
+		await browser.waitUntil(
+			async () => {
+				return (await BaseClass.isVisibleById(FE.listReportGoButton)) || (await BaseClass.isVisibleById(FE.listReportDynamicPageTitle));
+			},
+			5000,
+			"GoButton and DynamicPageTitle not visible"
+		);
+
 		try {
 			await BaseClass.pressById(FE.listReportGoButton);
 		} catch (error) {
 			await BaseClass.pressById(FE.listReportDynamicPageTitle);
-			await BaseClass.dummyWait(500);
+			await browser.pause(500);
 			await BaseClass.pressById(FE.listReportGoButton);
 		}
 	});
@@ -56,12 +64,11 @@ describe("Upload File List Report", () => {
 				id: "__uploader0"
 			}
 		});
-		const fileName = FE.listReportUploadFilename; // relative to wdio.conf.(j|t)s
-		const remoteFilePath = await browser.uploadFile(fileName); // this also works in CI senarios!
-		// transition from wdi5 api -> wdio api
-		const $uploader = await uploader.getWebElement(); // wdi5
-		const $fileInput = await $uploader.$("input[type=file]"); // wdio
-		await $fileInput.setValue(remoteFilePath); // wdio
+		const fileName = FE.listReportUploadFilename;
+		const remoteFilePath = await browser.uploadFile(fileName);
+		const $uploader = await uploader.getWebElement();
+		const $fileInput = await $uploader.$("input[type=file]");
+		await $fileInput.setValue(remoteFilePath);
 		await browser
 			.asControl({
 				selector: {
@@ -72,15 +79,15 @@ describe("Upload File List Report", () => {
 				}
 			})
 			.press();
-		await BaseClass.dummyWait(500);
+		await browser.pause(500);
 	});
 
 	it("entry created and activated", async () => {
 		const object = await FE.getTableObject(FE.listReportTable, FE.checkFileuploadListreportAttribute, FE.checkFileuploadListreportValue);
 		if (scenario.startsWith("ordersv2fenondraft")) {
-			expect(object.OrderNo).toBe('4')
+			expect(object.OrderNo).toBe("4");
 		} else {
-			expect(object.IsActiveEntity).toBeTruthy()
+			expect(object.IsActiveEntity).toBeTruthy();
 		}
 	});
-});
+}, 30000); // Add a 30-second timeout for the test suite.
