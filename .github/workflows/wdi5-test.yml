@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        scenario: ["ordersv2fe", "ordersv4fe", "ordersv2fenondraft"]
+        scenario: ["ordersv2fe", "ordersv4fe", "ordersv2fenondraft", "ordersv2freestylenondraftopenui5"]
         ui5version: [108, 96, 84, 71]
         exclude:
           - scenario: ordersv4fe
