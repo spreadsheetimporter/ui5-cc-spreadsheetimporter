@@ -122,24 +122,44 @@
     "port": "8105",
     "versionMinor": 108,
     "appTitel": "Orders V2 FS ND OP 108",
+    "testMapping": {
+      "specs": [
+        "./test/specs/ordersv2freestylenondraftopenui5/**.test.js"
+      ]
+    },
     "copyVersions": [
       {
         "version": "1.96.16",
         "versionMinor": 96,
         "port": "8106",
-        "appTitel": "Orders V2 FS ND OP 96"
+        "appTitel": "Orders V2 FS ND OP 96",
+        "testMapping": {
+          "specs": [
+            "./test/specs/ordersv2freestylenondraftopenui5/**.test.js"
+          ]
+        }
       },
       {
         "version": "1.84.31",
         "versionMinor": 84,
         "port": "8107",
-        "appTitel": "Orders V2 FS ND OP 84"
+        "appTitel": "Orders V2 FS ND OP 84",
+        "testMapping": {
+          "specs": [
+            "./test/specs/ordersv2freestylenondraftopenui5/**.test.js"
+          ]
+        }
       },
       {
         "version": "1.71.53",
         "versionMinor": 71,
         "port": "8108",
-        "appTitel": "Orders V2 FS ND OP 71"
+        "appTitel": "Orders V2 FS ND OP 71",
+        "testMapping": {
+          "specs": [
+            "./test/specs/ordersv2freestylenondraftopenui5/**.test.js"
+          ]
+        }
       }
     ]
   },
