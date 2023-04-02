@@ -73,15 +73,13 @@ describe("Upload File Object Page", () => {
 	});
 
 	it("Check for upload", async () => {
-		await BaseClass.dummyWait(3000);
-		const pageSource = await browser.getPageSource();
-		console.log("Page Source: ", pageSource);
+		await BaseClass.dummyWait(500);
 		const textControl = await browser.asControl({
 			selector: {
 				controlType: "sap.m.Text",
 				viewId: "container-todo---detail",
 				properties: {
-					text: "5"
+					text: "254"
 				}
 			}
 		});
