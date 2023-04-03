@@ -29,8 +29,11 @@ export default class Parser {
 					} else if (metadataColumn.type === "Edm.Int32") {
 						payload[columnKey] = value;
 					} else if (metadataColumn.type === "Edm.Double") {
+						let valueDouble = value;
+						if (typeof value === 'string') {
+						const valueString = value;
 						// check if value is a number a does contain anything other than numbers and decimal seperator
-						if (/[^0-9.,]/.test(value)) {
+						if (/[^0-9.,]/.test(valueDouble)) {
 							// Error: Value does contain anything other than numbers and decimal seperator
 							errorHandler.addParsingError({
 								title: util.geti18nText("parsingErrorNotNumber", [metadataColumn.label]),
@@ -40,18 +43,22 @@ export default class Parser {
 							});
 							break;
 						}
-						const valueDouble = value.replace(",", ".");
-						if (parseFloat(valueDouble) !== valueDouble) {
-							// Error: the parsed float value is not the same as the original string value
-							errorHandler.addParsingError({
-								title: util.geti18nText("parsingErrorNotSameNumber", [metadataColumn.label]),
-								row: index + 1,
-								type: ErrorTypes.ParsingError,
-								counter: 1,
-							});
-							break;
+						
+						const valueStringDecimal = valueString.replace(",", ".");
+						 valueDouble = parseFloat(valueStringDecimal);
+
+							if (valueDouble !== parseFloat(valueStringDecimal)) {
+								// Error: the parsed float value is not the same as the original string value
+								errorHandler.addParsingError({
+									title: util.geti18nText("parsingErrorNotSameNumber", [metadataColumn.label]),
+									row: index + 1,
+									type: ErrorTypes.ParsingError,
+									counter: 1,
+								});
+								break;
+							}
 						}
-						payload[columnKey] = parseFloat(valueDouble);
+						payload[columnKey] = valueDouble
 					} else {
 						payload[columnKey] = `${value || ""}`;
 					}
