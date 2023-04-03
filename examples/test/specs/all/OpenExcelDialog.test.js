@@ -52,7 +52,7 @@ describe("Upload File List Report", () => {
 				selector: {
 					controlType: "sap.m.Button",
 					properties: {
-						text: "Close"
+						text: "Cancel"
 					}
 				}
 			})
