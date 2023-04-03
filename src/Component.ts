@@ -2,10 +2,12 @@ import UIComponent from "sap/ui/core/UIComponent";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Device from "sap/ui/Device";
 import ExcelUpload from "./controller/ExcelUpload";
+import { ErrorMessage } from "./types";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
 export default class Component extends UIComponent {
+	excelUpload: ExcelUpload;
 	constructor(idOrSettings?: string | $ComponentSettings);
 	constructor(id?: string, settings?: $ComponentSettings);
 	constructor(id?: string, settings?: $ComponentSettings) {
@@ -22,7 +24,6 @@ export default class Component extends UIComponent {
 			tableId: { type: "string" },
 			odataType: { type: "string" },
 			mandatoryFields: { type: "string[]" },
-			errorResults: { type: "object" },
 			fieldMatchType: { type: "string", defaultValue: "label" },
 			activateDraft: { type: "boolean", defaultValue: false },
 			batchSize: { type: "int", defaultValue: 1000 },
@@ -107,22 +108,6 @@ export default class Component extends UIComponent {
 	//OVERRIDE SETTERS
 	//=============================================================================
 
-	// /**
-	//  * Overrides method <code>getErrorResults</code> of the component to set this text in the button.
-	//  * @override
-	//  */
-	// Component.prototype.getErrorResults = function (array) {
-	// 	return this.excelUpload.getErrorResults();
-	// };
-	// /**
-	//  * Overrides method <code>setErrorResults</code> of the component to set this text in the button.
-	//  * @override
-	//  */
-	// Component.prototype.setErrorResults = function (array) {
-	// 	this.excelUpload.setErrorResults(array)
-	// 	return this;
-	// };
-
 	//=============================================================================
 	//PUBLIC APIS
 	//=============================================================================
@@ -147,8 +132,12 @@ export default class Component extends UIComponent {
 	 * add to error array
 	 * @public
 	 */
-	addToErrorsResults(errorArray) {
-		this.excelUpload._addToErrorsResults(errorArray);
+	addToErrorsResults(errorArray: ErrorMessage[]) {
+		this.excelUpload.addToErrorsResults(errorArray);
+	}
+
+	getErrorsResults(): ErrorMessage[] {
+		return this.excelUpload.getErrorResults();
 	}
 
 	//=============================================================================
