@@ -32,6 +32,24 @@ describe("Upload File Object Page", () => {
 				}
 			})
 			.press();
+		await browser.waitUntil(
+			async () => {
+				const excelUploadDialog = await browser.asControl({
+					selector: {
+						controlType: "sap.m.Dialog",
+						properties: {
+							title: "Excel Upload"
+						},
+						searchOpenDialogs: true
+					}
+				});
+				return excelUploadDialog.isOpen();
+			},
+			{
+				timeout: 15000,
+				timeoutMsg: "ExcelUpload Dialog did not appear within 5 seconds"
+			}
+		);
 		const excelUploadDialog = await browser.asControl({
 			selector: {
 				controlType: "sap.m.Dialog",
