@@ -12,7 +12,8 @@ The integration of the control is designed to be as simple as possible and, in t
 
 [**Get Started**](./pages/GettingStarted.md){: .md-button .md-button--primary .sap-icon-initiative }
 
-See all currently supported OData and UI5 Versions [here](./pages/SupportVersions.md).
+See all currently supported OData and UI5 Versions [here](./pages/SupportVersions.md).  
+A quick screencast on YouTube how to integrate the control can be found [here](https://www.youtube.com/watch?v=dODt9ZWmi4A).
 
 ## Main Features
 

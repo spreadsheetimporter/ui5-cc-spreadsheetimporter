@@ -6,6 +6,9 @@ Here is an overview of the apps that were created and passed the smoke test.
 
 Another overview will be shown to you what apps are already testet automatically with wdi5 and are therefore tested on a contstant basis.
 
+All the examples apps are found in the [`examples`](https://github.com/marianfoo/ui5-cc-excelUpload/tree/main/examples/packages) folder. The test scripts are found in the [`test`](https://github.com/marianfoo/ui5-cc-excelUpload/tree/main/examples/test) folder.  
+More info at [wdi5 tests](./Development/wdi5.md)
+
 ## Apps
 
 ### CAP V2
@@ -24,12 +27,15 @@ Another overview will be shown to you what apps are already testet automatically
 
 ### CAP V2
 
-| UI5 Version  | List Report Draft  | List Report Non Draft  | Object Page Draft  | Object Page Non Draft  | Freestyle |
-|---|---|---|---|---|---|
-| 1.108  | :white_check_mark:   |  :white_check_mark: | :white_check_mark: | :white_check_mark:  |   |
-| 1.96  | :white_check_mark:  |  :white_check_mark: |  :white_check_mark: | :white_check_mark:  |   |
-|  1.84 |  :white_check_mark: | :white_check_mark:  |  :white_check_mark: | :white_check_mark:  |   |
-|  1.71 | :white_check_mark:  |  :white_check_mark: |  :white_check_mark: | :white_check_mark: |   |
+| UI5 Version  | List Report Draft  | List Report Non Draft  | Object Page Draft  | Object Page Non Draft  | Freestyle | OpenUI5 Freestyle |
+|---|---|---|---|---|---|---|
+| 1.108  | :white_check_mark:   |  :white_check_mark: | :white_check_mark: | :white_check_mark:  | :white_check_mark:  | :white_check_mark: |
+| 1.96  | :white_check_mark:  |  :white_check_mark: |  :white_check_mark: | :white_check_mark:  |  :white_check_mark: | :white_check_mark: |
+|  1.84 |  :white_check_mark: | :white_check_mark:  |  :white_check_mark: | :white_check_mark:  | :white_check_mark:  | :white_check_mark: |
+|  1.71 | :white_check_mark:  |  :white_check_mark: |  :white_check_mark: | :white_check_mark: |  :white_check_mark: | :white_check_mark: |
+
+!!! warning 
+        **OpenUI5**: Draft Activation for V2 in OpenUI5 is not supported.
 
 ### CAP V4
 

@@ -40,7 +40,8 @@
     "replaceString": "node ./dev/replace-string.js",
     "build:watch": "node ./dev/chokidar.js",
     "updateChromedriver": "cd examples && pnpm add chromedriver@latest --save-dev -w",
-    "copyTestApps": "node ./dev/copy-example-apps.js create && pnpm i",
+    "copyTestApps": "node ./dev/copy-example-apps.js create && pnpm i --no-frozen-lockfile",
+    "deleteAllNodeModules": "node dev/util.js deleteNodeModules .",
     "deleteTestApps": "node ./dev/copy-example-apps.js  delete",
     "deploy": "npm run build && fiori deploy --config ui5-deploy.yaml -y"
   },
@@ -57,7 +58,7 @@
     "@typescript-eslint/eslint-plugin": "^5.57.0",
     "@typescript-eslint/parser": "^5.57.0",
     "@ui5/cli": "3.0.5",
-    "@ui5/ts-interface-generator": "0.5.4",
+    "@ui5/ts-interface-generator": "0.5.5",
     "babel-preset-transform-ui5": "^7.1.1",
     "bluebird": "3.7.2",
     "chokidar": "^3.5.3",
@@ -71,13 +72,9 @@
     "pretty-quick": "^3.1.3",
     "replace-in-file": "^6.3.5",
     "shelljs": "^0.8.5",
-    "typescript": "4.9.5",
+    "typescript": "5.0.3",
     "ui5-tooling-modules": "0.7.12",
     "ui5-tooling-stringreplace": "0.1.1",
     "ui5-tooling-transpile": "0.4.1"
-  },
-  "workspaces": [
-    "examples/*",
-    "package.json"
-  ]
+  }
 }

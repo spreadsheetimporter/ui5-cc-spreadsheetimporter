@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        scenario: ["ordersv2fe", "ordersv4fe","ordersv2fenondraft"]
+        scenario: ["ordersv2fe", "ordersv4fe", "ordersv2fenondraft", "ordersv2freestylenondraftopenui5", "ordersv2freestylenondraft"]
         ui5version: [108, 96, 84, 71]
         exclude:
           - scenario: ordersv4fe
@@ -61,14 +61,14 @@ jobs:
       - name: pnpm install
         run: |
           npm pkg delete scripts.prepare
-          pnpm install
+          pnpm install --no-frozen-lockfile
 
       - name: copy test apps
         run: npm run copyTestApps
 
       - name: pnpm install for test apps
         run: |
-          pnpm install
+          pnpm install --no-frozen-lockfile
 
       - name: Run Build
         run: npm run build

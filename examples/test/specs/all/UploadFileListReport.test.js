@@ -6,7 +6,7 @@ const { optionsLong, optionsShort } = require("./../Objects/types");
 
 let FE = undefined;
 let BaseClass = undefined;
-let scenario = undefined
+let scenario = undefined;
 
 describe("Upload File List Report", () => {
 	before(async () => {
@@ -44,6 +44,16 @@ describe("Upload File List Report", () => {
 			}
 		});
 		expect(excelUploadDialog.isOpen()).toBeTruthy();
+		try {
+			browser.execute(function () {
+				const blockLayerPopup = document.getElementById("sap-ui-blocklayer-popup");
+				if (blockLayerPopup) {
+					blockLayerPopup.remove();
+				}
+			});
+		} catch (error) {
+			console.log("sap-ui-blocklayer-popup removed");
+		}
 	});
 
 	it("Upload file", async () => {
@@ -78,9 +88,9 @@ describe("Upload File List Report", () => {
 	it("entry created and activated", async () => {
 		const object = await FE.getTableObject(FE.listReportTable, FE.checkFileuploadListreportAttribute, FE.checkFileuploadListreportValue);
 		if (scenario.startsWith("ordersv2fenondraft")) {
-			expect(object.OrderNo).toBe('4')
+			expect(object.OrderNo).toBe("4");
 		} else {
-			expect(object.IsActiveEntity).toBeTruthy()
+			expect(object.IsActiveEntity).toBeTruthy();
 		}
 	});
 });
