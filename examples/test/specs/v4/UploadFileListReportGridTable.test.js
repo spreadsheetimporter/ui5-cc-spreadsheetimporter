@@ -15,7 +15,7 @@ describe("Upload File List Report Grid Table", () => {
 		if (scenario.startsWith("ordersv4")) {
 			FE = new FEV4();
 		}
-		await browser.goTo({ sHash: "#/Orders" })
+		await browser.goTo({ sHash: "#/Orders" });
 		await BaseClass.dummyWait(1000);
 	});
 	it("should trigger search on ListReport page", async () => {
@@ -40,6 +40,16 @@ describe("Upload File List Report Grid Table", () => {
 			}
 		});
 		expect(excelUploadDialog.isOpen()).toBeTruthy();
+		try {
+			browser.execute(function () {
+				const blockLayerPopup = document.getElementById("sap-ui-blocklayer-popup");
+				if (blockLayerPopup) {
+					blockLayerPopup.remove();
+				}
+			});
+		} catch (error) {
+			console.log("sap-ui-blocklayer-popup removed");
+		}
 	});
 
 	it("Upload file", async () => {
@@ -73,6 +83,6 @@ describe("Upload File List Report Grid Table", () => {
 
 	it("entry created and activated", async () => {
 		const object = await FE.getTableObject(FE.listReportGridTable, FE.checkFileuploadListreportAttribute, FE.checkFileuploadListreportValue);
-		expect(object.IsActiveEntity).toBeTruthy()
+		expect(object.IsActiveEntity).toBeTruthy();
 	});
 });

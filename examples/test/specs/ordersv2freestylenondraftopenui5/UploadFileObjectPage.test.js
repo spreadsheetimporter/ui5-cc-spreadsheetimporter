@@ -42,6 +42,16 @@ describe("Upload File Object Page", () => {
 			}
 		});
 		expect(excelUploadDialog.isOpen()).toBeTruthy();
+		try {
+			browser.execute(function () {
+				const blockLayerPopup = document.getElementById("sap-ui-blocklayer-popup");
+				if (blockLayerPopup) {
+					blockLayerPopup.remove();
+				}
+			});
+		} catch (error) {
+			console.log("sap-ui-blocklayer-popup removed");
+		}
 	});
 
 	it("Upload file", async () => {

@@ -18,7 +18,7 @@ describe("Upload File List Report", () => {
 			FE = new FEV4();
 		}
 		if (scenario.startsWith("ordersv2fenondraft")) {
-			FE = new FEV2ND;
+			FE = new FEV2ND();
 		}
 	});
 	it("should trigger search on ListReport page", async () => {
@@ -36,6 +36,17 @@ describe("Upload File List Report", () => {
 	});
 
 	it("Close ExcelUpload Dialog", async () => {
+		try {
+			browser.execute(function () {
+				const blockLayerPopup = document.getElementById("sap-ui-blocklayer-popup");
+				if (blockLayerPopup) {
+					blockLayerPopup.remove();
+				}
+			});
+		} catch (error) {
+			console.log("sap-ui-blocklayer-popup removed");
+		}
+
 		await browser
 			.asControl({
 				selector: {
@@ -58,7 +69,7 @@ describe("Upload File List Report", () => {
 				}
 			}
 		});
-		const isDialogOpen = await excelUploadDialog.isOpen()
+		const isDialogOpen = await excelUploadDialog.isOpen();
 		expect(isDialogOpen).toBeTruthy();
 	});
 });
