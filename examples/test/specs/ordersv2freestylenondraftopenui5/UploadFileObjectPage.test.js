@@ -18,6 +18,7 @@ describe("Upload File Object Page", () => {
 				}
 			})
 			.press();
+		await BaseClass.dummyWait(1000);
 	});
 
 	it("Open ExcelUpload Dialog", async () => {
@@ -40,6 +41,7 @@ describe("Upload File Object Page", () => {
 			}
 		};
 		await browser.asControl(buttonSelector).press();
+		await BaseClass.dummyWait(1000);
 		try {
 			await browser.waitUntil(
 				async () => {
