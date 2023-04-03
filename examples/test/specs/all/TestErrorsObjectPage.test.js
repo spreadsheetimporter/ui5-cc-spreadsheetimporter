@@ -96,8 +96,10 @@ describe("Upload File Object Page", () => {
 		});
 		const modelData = await errorDialog.getModel("errorData")
 		const errorData = await modelData.getData();
+		const lengthErrorArray = Object.keys(errorData._baseObject).length
 		console.log("File uploaded");
-		Object.keys(errorData._baseObject).length.should.be.equal(4);
+		// length equal to 4
+		expect(lengthErrorArray).toEqual(4);
 	});
 	
 });
