@@ -13,7 +13,7 @@ sap.ui.define(
 	function (BaseController, JSONModel, Filter, Sorter, FilterOperator, GroupHeaderListItem, Device, Fragment, formatter) {
 		"use strict";
 
-		return BaseController.extend("ui.v2.ordersv2freestyle.controller.List", {
+		return BaseController.extend("ui.v2.ordersv2freestylenondraft.controller.List", {
 			formatter: formatter,
 
 			/* =========================================================== */
@@ -180,7 +180,7 @@ sap.ui.define(
 				if (!this.byId("viewSettingsDialog")) {
 					Fragment.load({
 						id: this.getView().getId(),
-						name: "ui.v2.ordersv2freestyle.view.ViewSettingsDialog",
+						name: "ui.v2.ordersv2freestylenondraft.view.ViewSettingsDialog",
 						controller: this
 					}).then(
 						function (oDialog) {

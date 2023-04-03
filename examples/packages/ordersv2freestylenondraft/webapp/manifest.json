@@ -51,11 +51,7 @@
         "sap.m": {},
         "sap.ui.core": {},
         "sap.f": {},
-        "sap.suite.ui.generic.template": {},
-        "sap.ui.comp": {},
-        "sap.ui.generic.app": {},
-        "sap.ui.table": {},
-        "sap.ushell": {}
+        "sap.ui.table": {}
       }
     },
     "contentDensities": {
@@ -66,7 +62,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "ui.v2.ordersv2freestyle.i18n.i18n"
+          "bundleName": "ui.v2.ordersv2freestylenondraft.i18n.i18n"
         }
       },
       "": {
@@ -90,7 +86,7 @@
       "config": {
         "routerClass": "sap.f.routing.Router",
         "viewType": "XML",
-        "viewPath": "ui.v2.ordersv2freestyle.view",
+        "viewPath": "ui.v2.ordersv2freestylenondraft.view",
         "controlId": "layout",
         "controlAggregation": "beginColumnPages",
         "bypassed": {
@@ -134,7 +130,7 @@
       }
     },
     "rootView": {
-      "viewName": "ui.v2.ordersv2freestyle.view.App",
+      "viewName": "ui.v2.ordersv2freestylenondraft.view.App",
       "type": "XML",
       "async": true,
       "id": "app"

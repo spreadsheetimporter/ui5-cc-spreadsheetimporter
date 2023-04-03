@@ -1,4 +1,4 @@
-<mvc:View controllerName="ui.v2.ordersv2freestyle.controller.List" xmlns="sap.m" xmlns:semantic="sap.f.semantic" xmlns:mvc="sap.ui.core.mvc">
+<mvc:View controllerName="ui.v2.ordersv2freestylenondraft.controller.List" xmlns="sap.m" xmlns:semantic="sap.f.semantic" xmlns:mvc="sap.ui.core.mvc">
   <semantic:SemanticPage id="listPage" preserveHeaderStateOnScroll="true" toggleHeaderOnTitleClick="false">
     <semantic:titleHeading>
       <Title id="listPageTitle" text="{listView>/title}" level="H2" />

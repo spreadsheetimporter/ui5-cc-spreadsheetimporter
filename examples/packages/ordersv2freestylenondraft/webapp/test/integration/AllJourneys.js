@@ -7,7 +7,7 @@ sap.ui.define(["sap/ui/test/Opa5", "./arrangements/Startup", "./ListJourney", ".
 	"use strict";
 	Opa5.extendConfig({
 		arrangements: new Startup(),
-		viewNamespace: "ui.v2.ordersv2freestyle.view.",
+		viewNamespace: "ui.v2.ordersv2freestylenondraft.view.",
 		autoWait: true
 	});
 });

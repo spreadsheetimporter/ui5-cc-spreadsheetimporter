@@ -1,4 +1,4 @@
-<mvc:View controllerName="ui.v2.ordersv2freestyle.controller.App" displayBlock="true" height="100%" xmlns="sap.m" xmlns:f="sap.f" xmlns:mvc="sap.ui.core.mvc">
+<mvc:View controllerName="ui.v2.ordersv2freestylenondraft.controller.App" displayBlock="true" height="100%" xmlns="sap.m" xmlns:f="sap.f" xmlns:mvc="sap.ui.core.mvc">
   <App id="app" busy="{appView>/busy}" busyIndicatorDelay="{appView>/delay}">
     <f:FlexibleColumnLayout id="layout" layout="{appView>/layout}" backgroundDesign="Translucent" />
   </App>

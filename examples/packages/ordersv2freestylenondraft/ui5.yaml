@@ -2,7 +2,7 @@
 
 specVersion: "2.5"
 metadata:
-  name: ui.v2.ordersv2freestyle
+  name: ui.v2.ordersv2freestylenondraftnondraftopenui5
 type: application
 server:
   customMiddleware:
@@ -24,8 +24,3 @@ server:
         port: 35731
         path: webapp
         delay: 300
-    - name: fiori-tools-preview
-      afterMiddleware: fiori-tools-appreload
-      configuration:
-        component: ui.v2.ordersv2freestyle
-        ui5Theme: sap_horizon

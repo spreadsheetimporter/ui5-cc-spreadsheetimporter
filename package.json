@@ -41,7 +41,7 @@
     "build:watch": "node ./dev/chokidar.js",
     "updateChromedriver": "cd examples && pnpm add chromedriver@latest --save-dev -w",
     "copyTestApps": "node ./dev/copy-example-apps.js create && pnpm i --no-frozen-lockfile",
-    "deleteAllNodeModules": "node dev/util.js deleteFolderRecursive .",
+    "deleteAllNodeModules": "node dev/util.js deleteNodeModules .",
     "deleteTestApps": "node ./dev/copy-example-apps.js  delete",
     "deploy": "npm run build && fiori deploy --config ui5-deploy.yaml -y"
   },

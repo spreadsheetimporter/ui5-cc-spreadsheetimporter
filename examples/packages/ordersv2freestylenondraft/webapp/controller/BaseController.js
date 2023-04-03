@@ -1,7 +1,7 @@
 sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History"], function (Controller, History) {
 	"use strict";
 
-	return Controller.extend("ui.v2.ordersv2freestyle.controller.BaseController", {
+	return Controller.extend("ui.v2.ordersv2freestylenondraft.controller.BaseController", {
 		/**
 		 * Convenience method for accessing the router in every controller of the application.
 		 * @public

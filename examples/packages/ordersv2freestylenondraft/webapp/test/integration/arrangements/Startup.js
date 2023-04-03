@@ -1,7 +1,7 @@
 sap.ui.define(["sap/ui/test/Opa5", "sap/ui/model/odata/v2/ODataModel"], function (Opa5, ODataModel) {
 	"use strict";
 
-	return Opa5.extend("ui.v2.ordersv2freestyle.test.integration.arrangements.Startup", {
+	return Opa5.extend("ui.v2.ordersv2freestylenondraft.test.integration.arrangements.Startup", {
 		/**
 		 * Initializes mock server, then starts the app component
 		 * @param {object} oOptionsParameter An object that contains the configuration for starting up the app

@@ -1,7 +1,7 @@
 sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel"], function (BaseController, JSONModel) {
 	"use strict";
 
-	return BaseController.extend("ui.v2.ordersv2freestyle.controller.App", {
+	return BaseController.extend("ui.v2.ordersv2freestylenondraft.controller.App", {
 		onInit: function () {
 			var oViewModel,
 				fnSetAppNotBusy,

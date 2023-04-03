@@ -1,33 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 	<head>
-		<meta charset="UTF-8" />
+		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<title>Order V2 Freestyle</title>
-		<style>
-			html,
-			body,
-			body > div,
-			#container,
-			#container-uiarea {
-				height: 100%;
-			}
-		</style>
+		<title>OpenUI5 Todo App</title>
+
 		<script
 			id="sap-ui-bootstrap"
 			src="resources/sap-ui-core.js"
-			data-sap-ui-theme="sap_horizon"
-			data-sap-ui-resourceroots='{
-            "ui.v2.ordersv2freestyle": "./"
-        }'
+			data-sap-ui-libs="sap.m"
+			data-sap-ui-xx-waitForTheme="true"
+			data-sap-ui-theme="sap_fiori_3"
+			data-sap-ui-resourceRoots='{
+			"ui.v2.ordersv2freestylenondraft": "./"
+		}'
+			data-sap-ui-onInit="module:sap/ui/core/ComponentSupport"
 			data-sap-ui-compatVersion="edge"
 			data-sap-ui-async="true"
-			data-sap-ui-frameOptions="trusted"
 		></script>
-		<script id="locate-reuse-libs" src="./utils/locate-reuse-libs.js" data-sap-ui-manifest-uri="./manifest.json" data-sap-ui-componentName="ui.v2.ordersv2freestyle"></script>
 	</head>
-	<body class="sapUiBody sapUiSizeCompact" id="content">
-		<div data-sap-ui-component data-name="ui.v2.ordersv2freestyle" data-id="container" data-settings='{"id" : "ui.v2.ordersv2freestyle"}' data-handle-validation="true"></div>
+
+	<body class="sapUiBody">
+		<div data-sap-ui-component data-name="ui.v2.ordersv2freestylenondraft" data-id="container" data-settings='{"id" : "todo"}'></div>
 	</body>
 </html>

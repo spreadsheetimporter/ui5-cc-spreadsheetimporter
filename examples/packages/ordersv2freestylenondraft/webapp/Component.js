@@ -3,7 +3,7 @@ sap.ui.define(
 	function (UIComponent, Device, models, ListSelector, ErrorHandler) {
 		"use strict";
 
-		return UIComponent.extend("ui.v2.ordersv2freestyle.Component", {
+		return UIComponent.extend("ui.v2.ordersv2freestylenondraft.Component", {
 			/**
 			 * @param {typeof sap.ui.model.json.JSONModel} JSONModel
 			 * @param {typeof sap.ui.Device} Device

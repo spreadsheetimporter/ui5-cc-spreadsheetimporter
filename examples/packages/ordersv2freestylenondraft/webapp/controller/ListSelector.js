@@ -1,7 +1,7 @@
 sap.ui.define(["sap/ui/base/Object", "sap/base/Log"], function (BaseObject, Log) {
 	"use strict";
 
-	return BaseObject.extend("ui.v2.ordersv2freestyle.controller.ListSelector", {
+	return BaseObject.extend("ui.v2.ordersv2freestylenondraft.controller.ListSelector", {
 		/**
 		 * Provides a convenience API for selecting list items. All the functions will wait until the initial load of the a List passed to the instance by the setBoundMasterList
 		 * function.

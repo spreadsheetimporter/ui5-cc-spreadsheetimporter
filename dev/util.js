@@ -220,7 +220,7 @@ function replaceVersionManifest(version) {
 	fs.writeFileSync('./src/manifest.json', JSON.stringify(jsonData, null, 2));
 }
 
-function deleteFolderRecursive(folderPath) {
+function deleteNodeModules(folderPath) {
 	const stack = [folderPath];
   
 	while (stack.length) {
@@ -259,4 +259,4 @@ module.exports.replaceYamlFileBuild = replaceYamlFileBuild;
 module.exports.replaceYamlFileDeploy = replaceYamlFileDeploy;
 module.exports.replaceYamlFileComponent = replaceYamlFileComponent;
 module.exports.replaceVersionManifest = replaceVersionManifest;
-module.exports.deleteFolderRecursive = deleteFolderRecursive;
+module.exports.deleteNodeModules = deleteNodeModules;

@@ -36,7 +36,7 @@ sap.ui.define(["sap/ui/test/Opa5", "sap/ui/core/routing/HashChanger", "sap/ui/do
 	// eslint-disable-next-line no-unused-expressions
 	document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", fnSetupFLPStyles) : fnSetupFLPStyles();
 
-	return Opa5.extend("ui.v2.ordersv2freestyle.test.integration.arrangements.FLP", {
+	return Opa5.extend("ui.v2.ordersv2freestylenondraft.test.integration.arrangements.FLP", {
 		/**
 		 * Navigating to home screen to unload the app component
 		 * @returns {sap.ui.test.Opa5.waitFor} Assertion that is always executed
