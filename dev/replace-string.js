@@ -19,6 +19,6 @@ util.replaceSomething("docs/pages/GettingStartedTEMPLATE.md", "docs/pages/Gettin
 
 
 if (!develop) {
-	let ui5Apps = ["ordersv2fe", "ordersv2fenondraft", "ordersv2freestyle", "ordersv4fe", "ordersv4fpm"];
+	let ui5Apps = ["ordersv2fe", "ordersv2fenondraft", "ordersv2freestylenondraft","ordersv2freestylenondraftopenui5", "ordersv4fe", "ordersv4fpm"];
 	util.replaceVersionInExamples(versionUnderscore, versionUnderscore, ui5Apps);
 }
