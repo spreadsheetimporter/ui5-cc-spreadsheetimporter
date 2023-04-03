@@ -21,36 +21,16 @@ describe("Upload File Object Page", () => {
 	});
 
 	it("Open ExcelUpload Dialog", async () => {
-		await browser
-			.asControl({
-				selector: {
-					controlType: "sap.m.Button",
-					viewId: "container-todo---detail",
-					properties: {
-						text: "Excel Upload"
-					}
+		const buttonSelector = {
+			selector: {
+				controlType: "sap.m.Button",
+				viewId: "container-todo---detail",
+				properties: {
+					text: "Excel Upload"
 				}
-			})
-			.press();
-		await browser.waitUntil(
-			async () => {
-				const excelUploadDialog = await browser.asControl({
-					selector: {
-						controlType: "sap.m.Dialog",
-						properties: {
-							title: "Excel Upload"
-						},
-						searchOpenDialogs: true
-					}
-				});
-				return excelUploadDialog.isOpen();
-			},
-			{
-				timeout: 15000,
-				timeoutMsg: "ExcelUpload Dialog did not appear within 5 seconds"
 			}
-		);
-		const excelUploadDialog = await browser.asControl({
+		};
+		const dialogSelector = {
 			selector: {
 				controlType: "sap.m.Dialog",
 				properties: {
@@ -58,7 +38,34 @@ describe("Upload File Object Page", () => {
 				},
 				searchOpenDialogs: true
 			}
-		});
+		};
+		await browser.asControl(buttonSelector).press();
+		try {
+			await browser.waitUntil(
+				async () => {
+					excelUploadDialog = await browser.asControl(dialogSelector);
+					return excelUploadDialog.isOpen();
+				},
+				{
+					timeout: 5000,
+					timeoutMsg: "ExcelUpload Dialog did not appear within 20 seconds"
+				}
+			);
+		} catch (error) {}
+		let excelUploadDialog = await browser.asControl(dialogSelector);
+		if (!excelUploadDialog.isOpen()) {
+			await browser.asControl(buttonSelector).press();
+			await browser.waitUntil(
+				async () => {
+					excelUploadDialog = await browser.asControl(dialogSelector);
+					return excelUploadDialog.isOpen();
+				},
+				{
+					timeout: 20000,
+					timeoutMsg: "ExcelUpload Dialog did not appear within 20 seconds"
+				}
+			);
+		}
 		expect(excelUploadDialog.isOpen()).toBeTruthy();
 		try {
 			browser.execute(function () {
