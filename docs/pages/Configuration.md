@@ -85,6 +85,9 @@ This option defines in draft scenarios whether a draft should be activated immed
 The option only defines whether the attempt should be started. If a draft activation is basically not possible, it will not be executed and may lead to errors.  
 This is useful e.g. in a list report. If this option is set to `false`, all uploaded units have to be activated manually.
 
+!!! warning 
+        Draft Activation for OData V2 in **OpenUI5** is not supported.
+
 ### `batchSize`
 
 **default:** `1.000`
