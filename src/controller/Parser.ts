@@ -31,27 +31,27 @@ export default class Parser {
 					} else if (metadataColumn.type === "Edm.Double") {
 						let valueDouble = value;
 						if (typeof value === 'string') {
-						const valueString = value;
-						// check if value is a number a does contain anything other than numbers and decimal seperator
-						if (/[^0-9.,]/.test(valueDouble)) {
-							// Error: Value does contain anything other than numbers and decimal seperator
-							errorHandler.addParsingError({
-								title: util.geti18nText("parsingErrorNotNumber", [metadataColumn.label]),
-								row: index + 1,
-								type: ErrorTypes.ParsingError,
-								counter: 1,
-							});
-							break;
-						}
-						
-						const valueStringDecimal = valueString.replace(",", ".");
-						 valueDouble = parseFloat(valueStringDecimal);
+							const valueString = value;
+							// check if value is a number a does contain anything other than numbers and decimal seperator
+							if (/[^0-9.,]/.test(valueDouble)) {
+								// Error: Value does contain anything other than numbers and decimal seperator
+								errorHandler.addParsingError({
+									title: util.geti18nText("parsingErrorNotNumber", [metadataColumn.label]),
+									row: index + 2,
+									type: ErrorTypes.ParsingError,
+									counter: 1,
+								});
+								break;
+							}
 
-							if (valueDouble !== parseFloat(valueStringDecimal)) {
+								const valueStringDecimal = valueString.replace(",", ".");
+								valueDouble = parseFloat(valueStringDecimal);
+
+								if ( parseFloat(valueStringDecimal).toString() !== valueStringDecimal) {
 								// Error: the parsed float value is not the same as the original string value
 								errorHandler.addParsingError({
 									title: util.geti18nText("parsingErrorNotSameNumber", [metadataColumn.label]),
-									row: index + 1,
+									row: index + 2,
 									type: ErrorTypes.ParsingError,
 									counter: 1,
 								});

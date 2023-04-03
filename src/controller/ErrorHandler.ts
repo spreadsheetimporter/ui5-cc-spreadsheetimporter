@@ -47,7 +47,7 @@ export default class ErrorHandler {
 				const errorMessage = {
 					title: this.excelUploadController.util.geti18nText("mandatoryFieldNotFilled", [fieldLabel]),
 					type: ErrorTypes.MandatoryFieldNotFilled,
-					row: index,
+					row: index + 2,
 					counter: 1,
 				} as ErrorMessage;
 				if (value === "" || value === undefined) {
