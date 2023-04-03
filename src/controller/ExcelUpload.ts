@@ -51,7 +51,7 @@ export default class ExcelUpload {
 	constructor(component: Component, componentI18n: ResourceModel) {
 		this.dialog = null;
 		this.errorState = false;
-		this.UI5MinorVersion = sap.ui.versioninfo.version.split(".")[1];
+		this.UI5MinorVersion = sap.ui.version.split(".")[1];
 		this.component = component;
 		this.componentI18n = componentI18n;
 		this.util = new Util(componentI18n.getResourceBundle() as ResourceBundle);
