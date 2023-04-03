@@ -106,6 +106,7 @@ export default class ErrorHandler {
 				type: "XML",
 				controller: this,
 			})) as Dialog;
+			this.errorDialog.setTitle(this.excelUploadController.util.geti18nText("errorDialogTitle"));
 		}
 		this.errorDialog.setModel(new JSONModel(), "errorData");
 		const errorGrouped = this.groupErrors(this.errorResults);
