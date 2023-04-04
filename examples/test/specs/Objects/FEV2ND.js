@@ -15,22 +15,24 @@ class FEV2ND {
 		this.objectPageExceluploadButton = this.objectPageId + "action::excelUploadButton";
 		this.objectPageSaveButton = this.objectPageId + "activate";
 		this.objectPageOrderItems = this.objectPageId + "Items::com.sap.vocabularies.UI.v1.LineItem::responsiveTable";
-		this.listReportUploadFilename = "test/testFiles/ListReportOrdersNoErrosV2.xlsx"
+		this.listReportUploadFilename = "test/testFiles/ListReportOrdersNoErrosV2.xlsx";
 		// nav to sub object page
 		this.navToObjectPageAttribute = "OrderNo";
 		this.navToObjectPageValue = "2";
+		this.navToObjectPageValue1 = "1";
 		// nav to sub object page
 		this.navToSubObjectPageAttribute = "product_ID";
 		this.navToSubObjectPageValue = "254";
 		// check file upload list report
 		this.checkFileuploadListreportAttribute = "OrderNo";
 		this.checkFileuploadListreportValue = "4";
-
 	}
 	async getFieldValue(fieldName) {
-		const field = await $(`//*[@id="ui.v2.ordersv2fenondraft::sap.suite.ui.generic.template.ObjectPage.view.Details::OrderItemsND--com.sap.vocabularies.UI.v1.Identification::${fieldName}::Field-text"]`)
+		const field = await $(
+			`//*[@id="ui.v2.ordersv2fenondraft::sap.suite.ui.generic.template.ObjectPage.view.Details::OrderItemsND--com.sap.vocabularies.UI.v1.Identification::${fieldName}::Field-text"]`
+		);
 		let value = await field.getText();
-		return value
+		return value;
 	}
 
 	async getRoutingHash(tableId, objectAttribute, objectValue, rootPathBool) {
@@ -61,7 +63,7 @@ class FEV2ND {
 			const binding = await element.getBindingContext();
 			const object = await binding.getObject();
 			if (object[objectAttribute] === objectValue) {
-				return object
+				return object;
 			}
 		}
 	}

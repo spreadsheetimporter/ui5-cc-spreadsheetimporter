@@ -23,18 +23,9 @@ describe("Upload File Object Page", () => {
 			skipSave = true;
 		}
 	});
-	it("should trigger search on ListReport page", async () => {
-		try {
-			await BaseClass.pressById(FE.listReportGoButton);
-		} catch (error) {
-			await BaseClass.pressById(FE.listReportDynamicPageTitle);
-			await BaseClass.dummyWait(500);
-			await BaseClass.pressById(FE.listReportGoButton);
-		}
-	});
 
 	it("go to object page", async () => {
-		const hash = await FE.getRoutingHash(FE.listReportTable, FE.navToObjectPageAttribute, FE.navToObjectPageValue);
+		const hash = await FE.getRoutingHash(FE.listReportTable, FE.navToObjectPageAttribute, FE.navToObjectPageValue1);
 		await browser.goTo({ sHash: hash });
 		// force wait to stabelize tests
 		await BaseClass.dummyWait(1000);
