@@ -27,38 +27,19 @@ export default class Parser {
 						const timeInSeconds = value * secondsInADay;
 						payload[columnKey] = new Date(timeInSeconds * 1000).toISOString().substring(11, 16);
 					} else if (metadataColumn.type === "Edm.Int32") {
-						payload[columnKey] = value;
-					} else if (metadataColumn.type === "Edm.Double") {
-						let valueDouble = value;
-						if (typeof value === 'string') {
-							const valueString = value;
-							// check if value is a number a does contain anything other than numbers and decimal seperator
-							if (/[^0-9.,]/.test(valueDouble)) {
-								// Error: Value does contain anything other than numbers and decimal seperator
-								errorHandler.addParsingError({
-									title: util.geti18nText("parsingErrorNotNumber", [metadataColumn.label]),
-									row: index + 2,
-									type: ErrorTypes.ParsingError,
-									counter: 1,
-								});
-								break;
-							}
-
-								const valueStringDecimal = valueString.replace(",", ".");
-								valueDouble = parseFloat(valueStringDecimal);
-
-								if ( parseFloat(valueStringDecimal).toString() !== valueStringDecimal) {
-								// Error: the parsed float value is not the same as the original string value
-								errorHandler.addParsingError({
-									title: util.geti18nText("parsingErrorNotSameNumber", [metadataColumn.label]),
-									row: index + 2,
-									type: ErrorTypes.ParsingError,
-									counter: 1,
-								});
-								break;
-							}
+						try {
+							const valueInteger = this.checkInteger(value, metadataColumn, util, errorHandler, index);
+							payload[columnKey] = valueInteger;
+						} catch (error) {
+							break;
 						}
-						payload[columnKey] = valueDouble
+					} else if (metadataColumn.type === "Edm.Double") {
+						try {
+							const valueDouble = this.checkDouble(value, metadataColumn, util, errorHandler, index);
+							payload[columnKey] = valueDouble;
+						} catch (error) {
+							break;
+						}
 					} else {
 						payload[columnKey] = `${value || ""}`;
 					}
@@ -68,5 +49,60 @@ export default class Parser {
 			payloadArray.push(payload);
 		}
 		return payloadArray;
+	}
+
+	static checkDouble(value, metadataColumn, util, errorHandler, index) {
+		let valueDouble = value;
+		if (typeof value === "string") {
+			const valueString = value;
+			// check if value is a number a does contain anything other than numbers and decimal seperator
+			if (/[^0-9.,]/.test(valueDouble)) {
+				// Error: Value does contain anything other than numbers and decimal seperator
+				this.addParsingError("parsingErrorNotNumber", util, errorHandler, index, [metadataColumn.label]);
+				throw new Error("Parsing Error");
+			}
+
+			const valueStringDecimal = valueString.replace(",", ".");
+			valueDouble = parseFloat(valueStringDecimal);
+
+			if (parseFloat(valueStringDecimal).toString() !== valueStringDecimal) {
+				// Error: the parsed float value is not the same as the original string value
+				this.addParsingError("parsingErrorNotSameNumber", util, errorHandler, index, [metadataColumn.label]);
+				throw new Error("Parsing Error");
+			}
+		}
+		return valueDouble;
+	}
+
+	static checkInteger(value, metadataColumn, util, errorHandler, index) {
+		let valueInteger = value;
+		if (!Number.isInteger(valueInteger)) {
+			const valueString = value;
+			if (typeof value === "string") {
+				// check if value is a number a does contain anything other than numbers
+				if (/[^0-9]/.test(valueInteger)) {
+					// Error: Value does contain anything other than numbers
+					this.addParsingError("parsingErrorNotFullNumber", util, errorHandler, index, [metadataColumn.label]);
+					throw new Error("Parsing Error");
+				}
+			}
+			valueInteger = parseInt(valueString);
+
+			if (parseInt(valueString).toString() !== valueString.toString()) {
+				// Error: the parsed float value is not the same as the original string value
+				this.addParsingError("parsingErrorNotSameNumber", util, errorHandler, index, [metadataColumn.label]);
+				throw new Error("Parsing Error");
+			}
+		}
+		return valueInteger;
+	}
+
+	static addParsingError(text: string, util: Util, errorHandler: ErrorHandler, index: number, array?: any) {
+		errorHandler.addParsingError({
+			title: util.geti18nText(text, array),
+			row: index + 2,
+			type: ErrorTypes.ParsingError,
+			counter: 1,
+		});
 	}
 }

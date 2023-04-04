@@ -110,11 +110,12 @@ export default class ErrorHandler {
 		}
 		this.errorDialog.setModel(new JSONModel(), "errorData");
 		const errorGrouped = this.groupErrors(this.errorResults);
-		(this.errorDialog.getModel("errorData") as JSONModel).setData(errorGrouped);
+		const sortedErrorGrouped = this.sortErrorsByTitle(errorGrouped);
+		(this.errorDialog.getModel("errorData") as JSONModel).setData(sortedErrorGrouped);
 		this.errorDialog.open();
 	}
 
-	groupErrors(errors) {
+	groupErrors(errors: ErrorMessage[]) {
 		const counterLargerThanOne = errors.filter((error) => error.counter !== 0);
 		const parsingErrors = counterLargerThanOne.filter((error) => error.type.group === true);
 		const errorGroups = parsingErrors.reduce((groups, error) => {
@@ -140,5 +141,17 @@ export default class ErrorHandler {
 
 	private onCloseErrorDialog() {
 		this.errorDialog.close();
+	}
+
+	private sortErrorsByTitle(errors: ErrorMessage[]) {
+		return errors.sort((a, b) => {
+			if (a.title < b.title) {
+				return -1;
+			}
+			if (a.title > b.title) {
+				return 1;
+			}
+			return 0;
+		});
 	}
 }
