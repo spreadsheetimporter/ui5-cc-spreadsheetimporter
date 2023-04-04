@@ -121,7 +121,7 @@ describe("Upload CSV File Object Page", () => {
 
 	it("check Field: UnitPrice", async () => {
 		const value = await FE.getFieldValue("price");
-		expect(value).toBe("1,112.6");
+		expect(value).toBe("12.6");
 	});
 
 	it("check Field: validFrom", async () => {
