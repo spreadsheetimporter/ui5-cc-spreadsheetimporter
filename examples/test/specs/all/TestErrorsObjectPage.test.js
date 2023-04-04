@@ -45,6 +45,7 @@ describe("Upload File Object Page", () => {
 	});
 
 	it("Open ExcelUpload Dialog", async () => {
+		await BaseClass.dummyWait(500);
 		await BaseClass.pressById(FE.objectPageExceluploadButton);
 		const excelUploadDialog = await browser.asControl({
 			selector: {
@@ -94,12 +95,11 @@ describe("Upload File Object Page", () => {
 				searchOpenDialogs: true
 			}
 		});
-		const modelData = await errorDialog.getModel("errorData")
+		const modelData = await errorDialog.getModel("errorData");
 		const errorData = await modelData.getData();
-		const lengthErrorArray = Object.keys(errorData._baseObject).length
+		const lengthErrorArray = Object.keys(errorData._baseObject).length;
 		console.log("File uploaded");
 		// length equal to 4
 		expect(lengthErrorArray).toEqual(4);
 	});
-	
 });
