@@ -25,7 +25,7 @@ describe("Upload File Object Page", () => {
 	});
 
 	it("go to object page", async () => {
-		const hash = await FE.getRoutingHash(FE.listReportTable, FE.navToObjectPageAttribute, FE.navToObjectPageValue1);
+		const hash = await FE.getRoutingHash(FE.listReportTable, FE.navToObjectPageAttribute, "200");
 		await browser.goTo({ sHash: hash });
 		// force wait to stabelize tests
 		await BaseClass.dummyWait(1000);

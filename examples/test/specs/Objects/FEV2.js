@@ -19,7 +19,6 @@ class FEV2 {
 		// nav to sub object page
 		this.navToObjectPageAttribute = "OrderNo";
 		this.navToObjectPageValue = "2";
-		this.navToObjectPageValue1 = "1";
 		// nav to sub object page
 		this.navToSubObjectPageAttribute = "product_ID";
 		this.navToSubObjectPageValue = "254";
