@@ -43,8 +43,9 @@ export default class Parser {
 							//convert to hh:mm:ss
 							const secondsInADay = 24 * 60 * 60;
 							const timeInSeconds = value * secondsInADay;
+							const date = new Date(timeInSeconds * 1000);
+							this.checkDate(date, metadataColumn, util, errorHandler, index);
 							const excelDate = new Date(timeInSeconds * 1000).toISOString().substring(11, 16);
-							this.checkDate(excelDate, metadataColumn, util, errorHandler, index);
 							payload[columnKey] = excelDate;
 						} catch (error) {
 							this.addParsingError("errorWhileParsing", util, errorHandler, index, [metadataColumn.label]);
