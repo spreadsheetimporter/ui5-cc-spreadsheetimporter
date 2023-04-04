@@ -42,3 +42,8 @@ export interface ErrorMessage {
 	row?: number;
 	group?: boolean;
 }
+
+export type Payload = {
+	[key: string]: any;
+};
+export type PayloadArray = Payload[];

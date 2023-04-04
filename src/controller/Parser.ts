@@ -1,13 +1,14 @@
-import { ErrorTypes } from "../types";
+import Component from "../Component";
+import { ErrorTypes, ListObject, Payload, PayloadArray, Property } from "../types";
 import ErrorHandler from "./ErrorHandler";
 import Util from "./Util";
 
 export default class Parser {
-	static parseExcelData(sheetData, typeLabelList, component, errorHandler: ErrorHandler, util: Util) {
+	static parseExcelData(sheetData: PayloadArray, typeLabelList: ListObject, component: Component, errorHandler: ErrorHandler, util: Util) {
 		const payloadArray = [];
 		// loop over data from excel file
 		for (const [index, row] of sheetData.entries()) {
-			let payload = {};
+			let payload: Payload = {};
 			// check each specified column if availalble in excel data
 			for (const [columnKey, metadataColumn] of Object.entries(typeLabelList)) {
 				// depending on parse type
@@ -51,7 +52,7 @@ export default class Parser {
 		return payloadArray;
 	}
 
-	static checkDouble(value, metadataColumn, util, errorHandler, index) {
+	static checkDouble(value: any, metadataColumn: Property, util: Util, errorHandler: ErrorHandler, index: number) {
 		let valueDouble = value;
 		if (typeof value === "string") {
 			const valueString = value;
@@ -74,7 +75,7 @@ export default class Parser {
 		return valueDouble;
 	}
 
-	static checkInteger(value, metadataColumn, util, errorHandler, index) {
+	static checkInteger(value: any, metadataColumn: Property, util: Util, errorHandler: ErrorHandler, index: number) {
 		let valueInteger = value;
 		if (!Number.isInteger(valueInteger)) {
 			const valueString = value;
