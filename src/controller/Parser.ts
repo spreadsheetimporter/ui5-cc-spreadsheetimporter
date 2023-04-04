@@ -16,30 +16,52 @@ export default class Parser {
 				// depending on data type
 				if (value) {
 					if (metadataColumn.type === "Edm.Boolean") {
-						payload[columnKey] = `${value || ""}`;
+						if (typeof value === "boolean" || value === "true" || value === "false") {
+							payload[columnKey] = `${value || ""}`;
+						} else {
+							this.addParsingError("valueNotABoolean", util, errorHandler, index, [metadataColumn.label]);
+						}
 					} else if (metadataColumn.type === "Edm.Date") {
-						let excelDate = new Date(Math.round((value - 25569) * 86400 * 1000));
-						payload[columnKey] = `${excelDate.getFullYear()}-${("0" + (excelDate.getMonth() + 1)).slice(-2)}-${("0" + excelDate.getDate()).slice(-2)}`;
+						try {
+							const excelDate = new Date(Math.round((value - 25569) * 86400 * 1000));
+							this.checkDate(excelDate, metadataColumn, util, errorHandler, index);
+							const dateString = `${excelDate.getFullYear()}-${("0" + (excelDate.getMonth() + 1)).slice(-2)}-${("0" + excelDate.getDate()).slice(-2)}`;
+							payload[columnKey] = dateString;
+						} catch (error) {
+							this.addParsingError("errorWhileParsing", util, errorHandler, index, [metadataColumn.label]);
+						}
 					} else if (metadataColumn.type === "Edm.DateTimeOffset" || metadataColumn.type === "Edm.DateTime") {
-						payload[columnKey] = new Date(Math.round((value - 25569) * 86400 * 1000));
+						try {
+							const excelDate = new Date(Math.round((value - 25569) * 86400 * 1000));
+							this.checkDate(excelDate, metadataColumn, util, errorHandler, index);
+							payload[columnKey] = excelDate;
+						} catch (error) {
+							this.addParsingError("errorWhileParsing", util, errorHandler, index, [metadataColumn.label]);
+						}
 					} else if (metadataColumn.type === "Edm.TimeOfDay" || metadataColumn.type === "Edm.Time") {
-						//convert to hh:mm:ss
-						const secondsInADay = 24 * 60 * 60;
-						const timeInSeconds = value * secondsInADay;
-						payload[columnKey] = new Date(timeInSeconds * 1000).toISOString().substring(11, 16);
+						try {
+							//convert to hh:mm:ss
+							const secondsInADay = 24 * 60 * 60;
+							const timeInSeconds = value * secondsInADay;
+							const excelDate = new Date(timeInSeconds * 1000).toISOString().substring(11, 16);
+							this.checkDate(excelDate, metadataColumn, util, errorHandler, index);
+							payload[columnKey] = excelDate;
+						} catch (error) {
+							this.addParsingError("errorWhileParsing", util, errorHandler, index, [metadataColumn.label]);
+						}
 					} else if (metadataColumn.type === "Edm.Int32") {
 						try {
 							const valueInteger = this.checkInteger(value, metadataColumn, util, errorHandler, index);
 							payload[columnKey] = valueInteger;
 						} catch (error) {
-							break;
+							this.addParsingError("errorWhileParsing", util, errorHandler, index, [metadataColumn.label]);
 						}
 					} else if (metadataColumn.type === "Edm.Double") {
 						try {
 							const valueDouble = this.checkDouble(value, metadataColumn, util, errorHandler, index);
 							payload[columnKey] = valueDouble;
 						} catch (error) {
-							break;
+							this.addParsingError("errorWhileParsing", util, errorHandler, index, [metadataColumn.label]);
 						}
 					} else {
 						payload[columnKey] = `${value || ""}`;
@@ -52,6 +74,12 @@ export default class Parser {
 		return payloadArray;
 	}
 
+	static checkDate(value: any, metadataColumn: Property, util: Util, errorHandler: ErrorHandler, index: number) {
+		if (isNaN(value.getTime())) {
+			this.addParsingError("invalidDate", util, errorHandler, index, [metadataColumn.label]);
+		}
+	}
+
 	static checkDouble(value: any, metadataColumn: Property, util: Util, errorHandler: ErrorHandler, index: number) {
 		let valueDouble = value;
 		if (typeof value === "string") {
@@ -60,7 +88,6 @@ export default class Parser {
 			if (/[^0-9.,]/.test(valueDouble)) {
 				// Error: Value does contain anything other than numbers and decimal seperator
 				this.addParsingError("parsingErrorNotNumber", util, errorHandler, index, [metadataColumn.label]);
-				throw new Error("Parsing Error");
 			}
 
 			const valueStringDecimal = valueString.replace(",", ".");
@@ -69,7 +96,6 @@ export default class Parser {
 			if (parseFloat(valueStringDecimal).toString() !== valueStringDecimal) {
 				// Error: the parsed float value is not the same as the original string value
 				this.addParsingError("parsingErrorNotSameNumber", util, errorHandler, index, [metadataColumn.label]);
-				throw new Error("Parsing Error");
 			}
 		}
 		return valueDouble;
@@ -84,7 +110,6 @@ export default class Parser {
 				if (/[^0-9]/.test(valueInteger)) {
 					// Error: Value does contain anything other than numbers
 					this.addParsingError("parsingErrorNotFullNumber", util, errorHandler, index, [metadataColumn.label]);
-					throw new Error("Parsing Error");
 				}
 			}
 			valueInteger = parseInt(valueString);
@@ -92,7 +117,6 @@ export default class Parser {
 			if (parseInt(valueString).toString() !== valueString.toString()) {
 				// Error: the parsed float value is not the same as the original string value
 				this.addParsingError("parsingErrorNotSameNumber", util, errorHandler, index, [metadataColumn.label]);
-				throw new Error("Parsing Error");
 			}
 		}
 		return valueInteger;
