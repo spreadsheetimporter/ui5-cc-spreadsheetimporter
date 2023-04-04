@@ -76,11 +76,11 @@
     },
     "componentUsages": {
       "excelUpload": {
-        "name": "cc.excelUpload.v0_11_4"
+        "name": "cc.excelUpload.v0_12_0"
       }
     },
     "resourceRoots": {
-      "cc.excelUpload.v0_11_4": "./thirdparty/customControl/excelUpload/v0_11_4"
+      "cc.excelUpload.v0_12_0": "./thirdparty/customControl/excelUpload/v0_12_0"
     },
     "routing": {
       "config": {
@@ -90,7 +90,9 @@
         "controlId": "layout",
         "controlAggregation": "beginColumnPages",
         "bypassed": {
-          "target": ["notFound"]
+          "target": [
+            "notFound"
+          ]
         },
         "async": true
       },
@@ -103,7 +105,10 @@
         {
           "pattern": "OrdersND/{objectId}",
           "name": "object",
-          "target": ["list", "object"]
+          "target": [
+            "list",
+            "object"
+          ]
         }
       ],
       "targets": {
