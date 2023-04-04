@@ -1,5 +1,5 @@
 import Dialog from "sap/m/Dialog";
-import { ErrorMessage, ErrorTypes } from "../types";
+import { ErrorMessage, ErrorTypes, ListObject, PayloadArray } from "../types";
 import ExcelUpload from "./ExcelUpload";
 import Util from "./Util";
 import Fragment from "sap/ui/core/Fragment";
@@ -31,7 +31,7 @@ export default class ErrorHandler {
 		return this.errorResults;
 	}
 
-	checkMandatoryFields(data: unknown[], mandatoryFields, typeLabelList) {
+	checkMandatoryFields(data: PayloadArray, mandatoryFields: string[], typeLabelList: ListObject) {
 		if (!mandatoryFields) {
 			return;
 		}
@@ -57,7 +57,7 @@ export default class ErrorHandler {
 		}
 	}
 
-	checkColumnNames(columnNames: any, fieldMatchType, typeLabelList) {
+	checkColumnNames(columnNames: string[], fieldMatchType: string, typeLabelList: ListObject) {
 		for (let index = 0; index < columnNames.length; index++) {
 			const columnName = columnNames[index];
 			let found = false;
@@ -110,11 +110,12 @@ export default class ErrorHandler {
 		}
 		this.errorDialog.setModel(new JSONModel(), "errorData");
 		const errorGrouped = this.groupErrors(this.errorResults);
-		(this.errorDialog.getModel("errorData") as JSONModel).setData(errorGrouped);
+		const sortedErrorGrouped = this.sortErrorsByTitle(errorGrouped);
+		(this.errorDialog.getModel("errorData") as JSONModel).setData(sortedErrorGrouped);
 		this.errorDialog.open();
 	}
 
-	groupErrors(errors) {
+	groupErrors(errors: ErrorMessage[]): ErrorMessage[] {
 		const counterLargerThanOne = errors.filter((error) => error.counter !== 0);
 		const parsingErrors = counterLargerThanOne.filter((error) => error.type.group === true);
 		const errorGroups = parsingErrors.reduce((groups, error) => {
@@ -140,5 +141,17 @@ export default class ErrorHandler {
 
 	private onCloseErrorDialog() {
 		this.errorDialog.close();
+	}
+
+	private sortErrorsByTitle(errors: ErrorMessage[]) {
+		return errors.sort((a, b) => {
+			if (a.title < b.title) {
+				return -1;
+			}
+			if (a.title > b.title) {
+				return 1;
+			}
+			return 0;
+		});
 	}
 }
