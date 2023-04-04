@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.12.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.11.4...v0.12.0) (2023-04-04)
+
+
+### Features
+
+* add Support for OpenUI5 ([#97](https://github.com/marianfoo/ui5-cc-excelUpload/issues/97)) ([9f1ed6c](https://github.com/marianfoo/ui5-cc-excelUpload/commit/9f1ed6c471c9d42e70fa265340df7c2dcaaa1ab3))
+  * including [Sample App for OpenUI5](https://github.com/marianfoo/ui5-cc-excelUpload/tree/main/examples/packages/ordersv2freestylenondraftopenui5) and wdi5 Tests
+* improve checks for all Edm Types ([#105](https://github.com/marianfoo/ui5-cc-excelUpload/issues/105)) ([dc91ee2](https://github.com/marianfoo/ui5-cc-excelUpload/commit/dc91ee252e1b9c2d204a1486ff8cf1f13ec3109e))
+  * Documentation for the improved Error Handling can be found [here](https://marianfoo.github.io/ui5-cc-excelUpload/pages/Checks/)
+* improved checks on the data formats and error handling ([#103](https://github.com/marianfoo/ui5-cc-excelUpload/issues/103)) ([801cfcb](https://github.com/marianfoo/ui5-cc-excelUpload/commit/801cfcb9b5ed24807144707d03d1db5b0247178e))
+  * Improvements for custom error handling. Documentation can be found [here](https://marianfoo.github.io/ui5-cc-excelUpload/pages/Events/#check-data-before-upload-to-app)
+* new automatically translated languages added ([#107](https://github.com/marianfoo/ui5-cc-excelUpload/issues/107)) ([477e899](https://github.com/marianfoo/ui5-cc-excelUpload/commit/477e899d0dbd91149b2bad608bc12579e5ef6ac4))
+  * the english language was automatic translated to following languages: `Chinese`, `French`, `Spanish`, `Italien`, `Hindi`, `Japanese`
+
 ## [0.11.4](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.11.3...v0.11.4) (2023-03-27)
 
 

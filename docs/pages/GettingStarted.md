@@ -38,7 +38,7 @@ npm install ui5-cc-excelupload
 
 ````json
 "resourceRoots": {
-    "cc.excelUpload.v0_11_4": "./thirdparty/customControl/excelUpload/v0_11_4"
+    "cc.excelUpload.v0_12_0": "./thirdparty/customControl/excelUpload/v0_12_0"
 },
 ````
 
@@ -60,14 +60,14 @@ npm install ui5-cc-excelupload
 ````json
 "componentUsages": {
     "excelUpload": {
-        "name": "cc.excelUpload.v0_11_4"
+        "name": "cc.excelUpload.v0_12_0"
     }
 },
 ````
 
 ### Setup Central deployment
 
-1\. Execute the deployment with the version you like to use, see here [Central Deployment](./CentralDeployment.md).
+1\. Execute the deployment with the version you like to use, see here [Central Deployment](CentralDeployment.md).
 
 2\. Add `componentUsages` to you `manifest.json` under `sap.ui5`
    
@@ -76,7 +76,7 @@ npm install ui5-cc-excelupload
 ````json
 "componentUsages": {
     "excelUpload": {
-        "name": "cc.excelUpload.v0_11_4"
+        "name": "cc.excelUpload.v0_12_0"
     }
 },
 ````
