@@ -24,6 +24,16 @@ describe("Upload File Object Page", () => {
 		}
 	});
 
+	it("should trigger search on ListReport page", async () => {
+		try {
+			await BaseClass.pressById(FE.listReportGoButton);
+		} catch (error) {
+			await BaseClass.pressById(FE.listReportDynamicPageTitle);
+			await BaseClass.dummyWait(500);
+			await BaseClass.pressById(FE.listReportGoButton);
+		}
+	});
+
 	it("go to object page", async () => {
 		const hash = await FE.getRoutingHash(FE.listReportTable, FE.navToObjectPageAttribute, "200");
 		await browser.goTo({ sHash: hash });
