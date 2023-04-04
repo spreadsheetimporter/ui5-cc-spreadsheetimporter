@@ -15,7 +15,7 @@ class FEV4 {
 		this.objectPageExceluploadButton = this.objectPageId + "CustomAction::excelUpload";
 		this.objectPageSaveButton = this.objectPageId + "FooterBar::StandardAction::Save";
 		this.objectPageOrderItems = this.objectPageId + "table::Items::LineItem-innerTable";
-		this.listReportUploadFilename = "test/testFiles/ListReportOrdersNoErros.xlsx"
+		this.listReportUploadFilename = "test/testFiles/ListReportOrdersNoErros.xlsx";
 		// nav to sub object page
 		this.navToObjectPageAttribute = "OrderNo";
 		this.navToObjectPageValue = "2";
@@ -27,22 +27,21 @@ class FEV4 {
 		this.checkFileuploadListreportValue = "4";
 		// grid table
 		this.gridTablePageId = this.rootId + "OrdersListGridTable--fe::";
-		this.listReportGridTable = this.gridTablePageId + "table::Orders::LineItem-innerTable"
+		this.listReportGridTable = this.gridTablePageId + "table::Orders::LineItem-innerTable";
 		this.gridTablePageGoButton = this.gridTablePageId + "FilterBar::Orders-btnSearch";
 		this.gridTablePageDynamicPageTitle = this.gridTablePageId + "ListReport-header";
 		this.gridTablePageExceluploadButton = this.gridTablePageId + "CustomAction::excelUploadListReport";
-
 	}
 	async getFieldValue(fieldName) {
 		const field = await this.BaseClass.getControlById(`ui.v4.ordersv4fe::Orders_ItemsObjectPage--fe::FormContainer::Identification::FormElement::DataField::${fieldName}::Field`);
-		let valueText = ""
+		let valueText = "";
 		try {
 			// const content = await field.getContent()
 			const contentDisplay = await field.getContentDisplay();
-		    valueText = await contentDisplay.getText();
+			valueText = await contentDisplay.getText();
 		} catch (error) {
 			// only for version 84
-			valueText = await field.getText()
+			valueText = await field.getText();
 		}
 		return valueText.toString();
 	}
@@ -58,14 +57,14 @@ class FEV4 {
 		const date = new Date(object[attribute]);
 		const formattedDate = await date.toLocaleString("en-US", options);
 		// check printend value
-		let valueText = ""
+		let valueText = "";
 		try {
 			// const content = await field.getContent()
 			const contentDisplay = await field.getContentDisplay();
-		    valueText = await contentDisplay.getText();
+			valueText = await contentDisplay.getText();
 		} catch (error) {
 			// only for version 84
-			valueText = await field.getText()
+			valueText = await field.getText();
 		}
 		return { valueText: valueText, formattedDate: formattedDate };
 	}
@@ -87,20 +86,20 @@ class FEV4 {
 
 	async getTableObject(tableId, objectAttribute, objectValue) {
 		const table = await this.BaseClass.getControlById(tableId);
-		const metadata = await table.getMetadata()
-		const type = await metadata.getName()
+		const metadata = await table.getMetadata();
+		const type = await metadata.getName();
 		let items = undefined;
-		if(type === "sap.m.Table"){
+		if (type === "sap.m.Table") {
 			items = await table.getItems();
 		} else {
-			items = await table.getRows()
+			items = await table.getRows();
 		}
 		for (let index = 0; index < items.length; index++) {
 			const element = items[index];
 			const binding = await element.getBindingContext();
 			const object = await binding.getObject();
 			if (object[objectAttribute] === objectValue) {
-				return object
+				return object;
 			}
 		}
 	}

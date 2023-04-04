@@ -12,7 +12,7 @@
 |**Application Title**<br>Order V2 Freestyle|
 |**Namespace**<br>ui.v2|
 |**UI5 Theme**<br>sap_horizon|
-|**UI5 Version**<br>1.108.11|
+|**UI5 Version**<br>1.108.10|
 |**Enable Code Assist Libraries**<br>False|
 |**Enable TypeScript**<br>False|
 |**Add Eslint configuration**<br>False|

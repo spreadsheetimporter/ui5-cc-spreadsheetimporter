@@ -8,7 +8,7 @@ let FE = undefined;
 let BaseClass = undefined;
 let skipSave = false;
 
-describe("Upload CSV File Object Page", () => {
+describe("Upload File Object Page", () => {
 	before(async () => {
 		BaseClass = new Base();
 		const scenario = browser.config.scenario;
@@ -23,6 +23,7 @@ describe("Upload CSV File Object Page", () => {
 			skipSave = true;
 		}
 	});
+
 	it("should trigger search on ListReport page", async () => {
 		try {
 			await BaseClass.pressById(FE.listReportGoButton);
@@ -34,7 +35,7 @@ describe("Upload CSV File Object Page", () => {
 	});
 
 	it("go to object page", async () => {
-		const hash = await FE.getRoutingHash(FE.listReportTable, "OrderNo", "1");
+		const hash = await FE.getRoutingHash(FE.listReportTable, FE.navToObjectPageAttribute, "200");
 		await browser.goTo({ sHash: hash });
 		// force wait to stabelize tests
 		await BaseClass.dummyWait(1000);
@@ -45,6 +46,7 @@ describe("Upload CSV File Object Page", () => {
 	});
 
 	it("Open ExcelUpload Dialog", async () => {
+		await BaseClass.dummyWait(500);
 		await BaseClass.pressById(FE.objectPageExceluploadButton);
 		const excelUploadDialog = await browser.asControl({
 			selector: {
@@ -78,69 +80,27 @@ describe("Upload CSV File Object Page", () => {
 				id: "__uploader0"
 			}
 		});
-		const fileName = "test/testFiles/TwoRowsNoErrors.csv"; // relative to wdio.conf.(j|t)s
+		const fileName = "test/testFiles/TwoRowsErrors.xlsx"; // relative to wdio.conf.(j|t)s
 		const remoteFilePath = await browser.uploadFile(fileName); // this also works in CI senarios!
 		// transition from wdi5 api -> wdio api
 		const $uploader = await uploader.getWebElement(); // wdi5
 		const $fileInput = await $uploader.$("input[type=file]"); // wdio
 		await $fileInput.setValue(remoteFilePath); // wdio
-		await browser
-			.asControl({
-				selector: {
-					controlType: "sap.m.Button",
-					properties: {
-						text: "Upload"
-					}
-				}
-			})
-			.press();
-	});
-
-	it("execute save", async () => {
-		if (!skipSave) {
-			await BaseClass.pressById(FE.objectPageSaveButton);
-		}
-	});
-
-	it("go to Sub Detail Page", async () => {
-		const hash = await FE.getRoutingHash(FE.objectPageOrderItems, "product_ID", "256", true);
-		await browser.goTo({ sHash: hash });
-		// force wait to stabelize tests
-		await BaseClass.dummyWait(1000);
-	});
-
-	it("check Field: Quantity", async () => {
-		const value = await FE.getFieldValue("quantity");
-		expect(value).toBe("2");
-	});
-
-	it("check Field: Product", async () => {
-		const value = await FE.getFieldValue("title");
-		expect(value).toBe("Product Test 1");
-	});
-
-	it("check Field: UnitPrice", async () => {
-		const value = await FE.getFieldValue("price");
-		expect(value).toBe("12.6");
-	});
-
-	it("check Field: validFrom", async () => {
-		const returnObject = await FE.getDateFields("validFrom", optionsLong);
-		expect(returnObject.valueText).toBe(returnObject.formattedDate);
-	});
-
-	it("check Field: timestamp", async () => {
-		const returnObject = await FE.getDateFields("timestamp", optionsLong);
-		expect(returnObject.valueText).toBe(returnObject.formattedDate);
-	});
-
-	it("check Field: date", async () => {
-		const returnObject = await FE.getDateFields("date", optionsShort);
-		expect(returnObject.valueText).toBe(returnObject.formattedDate);
-	});
-
-	it("check Field: time", async () => {
-		const value = await FE.getFieldValue("time");
-		expect(value).toBe("3:00:00 PM");
+		await BaseClass.dummyWait(200);
+		const errorDialog = await browser.asControl({
+			selector: {
+				controlType: "sap.m.Dialog",
+				properties: {
+					title: "Error on Upload"
+				},
+				searchOpenDialogs: true
+			}
+		});
+		const modelData = await errorDialog.getModel("errorData");
+		const errorData = await modelData.getData();
+		const lengthErrorArray = Object.keys(errorData._baseObject).length;
+		console.log("File uploaded");
+		// length equal to 5
+		expect(lengthErrorArray).toEqual(5);
 	});
 });

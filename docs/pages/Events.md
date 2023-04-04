@@ -10,23 +10,34 @@ It checks whether the price is over 100.
 this.excelUpload.attachCheckBeforeRead(function(oEvent) {
     // example
     const sheetData = oEvent.getParameter("sheetData");
-    let errorArray = [
-            {
-                title: "Price to high (max 100)",
-                counter: 0,
-            },
-        ];
-        for (const row of sheetData) {
-            //check for invalid date
-            if (row.UnitPrice) {
-                if(row.UnitPrice > 100){
-                    errorArray[0].counter = errorArray[0].counter + 1
+    let errorArray = [];
+    for (const [index, row] of sheetData.entries()) {
+        //check for invalid price
+        if (row.UnitPrice) {
+            if (row.UnitPrice > 100) {
+                const error = {
+                    title: "Price to high (max 100)",
+                    row: index + 2,
+                    group: true
                 }
+                errorArray.push(error);
             }
         }
+    }
     oEvent.getSource().addToErrorsResults(errorArray)
 }, this)
 ````
+
+You can add errors to the `errorResults` property of the `ExcelUpload` control. After the event the upload is canceled and the errors are displayed in the Error Dialog.  
+With the method `addToErrorsResults` you can add errors to the `errorResults` property. It expects an array of objects with the following properties:
+
+- `title` - the title of the error
+- `row` - the row number of the error
+- `group` - if you want to group the errors, set `true` or `false`. (Grouping is by title)
+
+The Errors with the same title will be grouped.
+
+![Error Dialog](./../images/error_dialog.png){ loading=lazy }
 
 ### Manipulate Data before it is send to the backend
 When the `Upload` button is pressed, the `changeBeforeCreate` is fired.

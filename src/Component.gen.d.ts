@@ -14,7 +14,6 @@ declare module "./Component" {
         tableId?: string | PropertyBindingInfo;
         odataType?: string | PropertyBindingInfo;
         mandatoryFields?: string[] | PropertyBindingInfo | `{${string}}`;
-        errorResults?: object | PropertyBindingInfo | `{${string}}`;
         fieldMatchType?: string | PropertyBindingInfo;
         activateDraft?: boolean | PropertyBindingInfo | `{${string}}`;
         batchSize?: number | PropertyBindingInfo | `{${string}}`;
@@ -47,10 +46,6 @@ declare module "./Component" {
         // property: mandatoryFields
         getMandatoryFields(): string[];
         setMandatoryFields(mandatoryFields: string[]): this;
-
-        // property: errorResults
-        getErrorResults(): object;
-        setErrorResults(errorResults: object): this;
 
         // property: fieldMatchType
         getFieldMatchType(): string;

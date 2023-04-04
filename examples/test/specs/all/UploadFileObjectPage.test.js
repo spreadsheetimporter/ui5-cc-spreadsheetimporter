@@ -45,6 +45,7 @@ describe("Upload File Object Page", () => {
 	});
 
 	it("Open ExcelUpload Dialog", async () => {
+		await BaseClass.dummyWait(500);
 		await BaseClass.pressById(FE.objectPageExceluploadButton);
 		const excelUploadDialog = await browser.asControl({
 			selector: {

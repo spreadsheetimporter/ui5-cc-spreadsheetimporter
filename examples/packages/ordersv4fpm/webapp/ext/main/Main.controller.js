@@ -6,31 +6,33 @@ sap.ui.define(["sap/fe/core/PageController"], function (PageController) {
 			this.getView().setBusyIndicatorDelay(0);
 			this.getView().setBusy(true);
 			if (!this.excelUpload) {
-				this.excelUpload = await this.getController().getAppComponent().createComponent({
-					name: "cc.excelUpload",
-					async: false,
-					componentData: {
-						context: this,
-						activateDraft: true,
-						tableId: "ui.v4.ordersv4fpm::OrdersMain--LineItemTablePageEdit-content-innerTable"
-					}
-				});
+				this.excelUpload = await this.getController()
+					.getAppComponent()
+					.createComponent({
+						name: "cc.excelUpload",
+						async: false,
+						componentData: {
+							context: this,
+							activateDraft: true,
+							tableId: "ui.v4.ordersv4fpm::OrdersMain--LineItemTablePageEdit-content-innerTable"
+						}
+					});
 
 				// event to check before uploaded to app
 				this.excelUpload.attachCheckBeforeRead(function (oEvent) {
 					// example
 					const sheetData = oEvent.getParameter("sheetData");
-					let errorArray = [
-						{
-							title: "Price to high (max 100)",
-							counter: 0
-						}
-					];
-					for (const row of sheetData) {
-						//check for invalid date
+					let errorArray = [];
+					for (const [index, row] of sheetData.entries()) {
+						//check for invalid price
 						if (row.UnitPrice) {
 							if (row.UnitPrice > 100) {
-								errorArray[0].counter = errorArray[0].counter + 1;
+								const error = {
+									title: "Price to high (max 100)",
+									row: index + 2,
+									group: true
+								};
+								errorArray.push(error);
 							}
 						}
 					}

@@ -78,17 +78,17 @@ sap.ui.define(
 					this.excelUpload.attachCheckBeforeRead(function (oEvent) {
 						// example
 						const sheetData = oEvent.getParameter("sheetData");
-						let errorArray = [
-							{
-								title: "Price to high (max 100)",
-								counter: 0
-							}
-						];
-						for (const row of sheetData) {
-							//check for invalid date
+						let errorArray = [];
+						for (const [index, row] of sheetData.entries()) {
+							//check for invalid price
 							if (row.UnitPrice) {
 								if (row.UnitPrice > 100) {
-									errorArray[0].counter = errorArray[0].counter + 1;
+									const error = {
+										title: "Price to high (max 100)",
+										row: index + 2,
+										group: true
+									};
+									errorArray.push(error);
 								}
 							}
 						}
