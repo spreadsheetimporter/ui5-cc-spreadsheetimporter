@@ -11,6 +11,7 @@ nav:
   - How it works: pages/HowItWorks.md
   - Configuration: pages/Configuration.md
   - Events: pages/Events.md
+  - Error Handling: pages/Checks.md
   - Supported Versions: pages/SupportVersions.md
   - Central Deployment: pages/CentralDeployment.md
   - yo Generator: pages/Generator.md

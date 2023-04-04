@@ -25,6 +25,14 @@ export enum ErrorTypes {
 		title: "ParsingError",
 		group: true,
 	},
+	CustomErrorGroup = {
+		title: "CustomErrorGroup",
+		group: true,
+	},
+	CustomError = {
+		title: "CustomError",
+		group: false,
+	},
 }
 
 export interface ErrorMessage {
@@ -32,4 +40,5 @@ export interface ErrorMessage {
 	type: ErrorTypes;
 	counter: number;
 	row?: number;
+	group?: boolean;
 }

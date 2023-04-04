@@ -100,7 +100,7 @@ describe("Upload File Object Page", () => {
 		const errorData = await modelData.getData();
 		const lengthErrorArray = Object.keys(errorData._baseObject).length;
 		console.log("File uploaded");
-		// length equal to 4
-		expect(lengthErrorArray).toEqual(4);
+		// length equal to 5
+		expect(lengthErrorArray).toEqual(5);
 	});
 });

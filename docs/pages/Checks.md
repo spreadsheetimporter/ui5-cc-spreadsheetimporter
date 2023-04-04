@@ -1,0 +1,9 @@
+## Error Types
+The following types of errors are handled by the UI5 Excel Upload Control:
+
+- **Mandatory Fields**: The control ensures that all mandatory fields are filled in before submitting data. If a mandatory field is left blank, an error message is displayed.
+
+- **Column Names Mismatch**: The control checks that the column names in the uploaded file match the expected column names. If there is a mismatch i.e. a additional column that should not be there, an error message is displayed.
+
+- **Data Type Mismatch**: The control checks that the data types in the uploaded file match the expected data types. 
+- **Custom Errors**: The control allows you to add custom errors to the error dialog. You can add errors to the `errorResults` property of the `ExcelUpload` control. After the event the upload is canceled and the errors are displayed in the Error Dialog (see [Events](../Events#check-data-before-upload-to-app) for more information).

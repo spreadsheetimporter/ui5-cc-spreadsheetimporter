@@ -6,7 +6,7 @@ import * as XLSX from "xlsx";
 import MetadataHandler from "./MetadataHandler";
 import Component from "../Component";
 import XMLView from "sap/ui/core/mvc/XMLView";
-import { ListObject, ErrorMessage } from "../types";
+import { ListObject, ErrorMessage, ErrorTypes } from "../types";
 import Dialog from "sap/m/Dialog";
 import Event from "sap/ui/base/Event";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
@@ -20,6 +20,7 @@ import Button from "sap/m/Button";
 import Util from "./Util";
 import Parser from "./Parser";
 import ErrorHandler from "./ErrorHandler";
+import { escape } from "querystring";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
@@ -385,7 +386,15 @@ export default class ExcelUpload {
 		return this.errorHandler.getErrorResults();
 	}
 
-	addToErrorsResults(error: ErrorMessage[]) {
-		this.errorHandler.addToErrorsResults(error);
+	addToErrorsResults(errorArray: ErrorMessage[]) {
+		errorArray.forEach((error) => {
+			if (error.group) {
+				error.type = ErrorTypes.CustomErrorGroup;
+			} else {
+				error.type = ErrorTypes.CustomError;
+			}
+			error.counter = 1;
+		});
+		this.errorHandler.addToErrorsResults(errorArray);
 	}
 }

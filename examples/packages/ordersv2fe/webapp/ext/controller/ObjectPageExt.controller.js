@@ -9,32 +9,35 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
 			this.getView().setBusyIndicatorDelay(0);
 			// this.getView().setBusy(true)
 			if (!this.excelUpload) {
-				this.excelUpload = await this.getView().getController().getOwnerComponent().createComponent({
-					usage: "excelUpload",
-					async: true,
-					componentData: {
-						context: this,
-						columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time"],
-						mandatoryFields: ["product_ID", "quantity"],
-						excelFileName: "Test.xlsx"
-					}
-				});
+				this.excelUpload = await this.getView()
+					.getController()
+					.getOwnerComponent()
+					.createComponent({
+						usage: "excelUpload",
+						async: true,
+						componentData: {
+							context: this,
+							columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time"],
+							mandatoryFields: ["product_ID", "quantity"],
+							excelFileName: "Test.xlsx"
+						}
+					});
 
 				// event to check before uploaded to app
 				this.excelUpload.attachCheckBeforeRead(function (oEvent) {
 					// example
 					const sheetData = oEvent.getParameter("sheetData");
-					let errorArray = [
-						{
-							title: "Price to high (max 10.000)",
-							counter: 0
-						}
-					];
-					for (const row of sheetData) {
-						//check for invalid date
+					let errorArray = [];
+					for (const [index, row] of sheetData.entries()) {
+						//check for invalid price
 						if (row.UnitPrice) {
-							if (row.UnitPrice > 10000) {
-								errorArray[0].counter = errorArray[0].counter + 1;
+							if (row.UnitPrice > 100) {
+								const error = {
+									title: "Price to high (max 100)",
+									row: index + 2,
+									group: true
+								};
+								errorArray.push(error);
 							}
 						}
 					}
