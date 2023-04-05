@@ -13,6 +13,14 @@ See here for all currently [supported Versions](https://marianfoo.github.io/ui5-
 
 ![Excel Upload Dialog](/images/ExcelUploadDialog.png "Excel Upload Dialog")
 
+## Live Demo
+
+It is possible to try this out directly at:  
+https://excelupload.marianzeis.de/
+
+The app is an OData V4 app with UI5 version 1.108 and a CAP backend.  
+The data is reset every hour on the hour.
+
 
 ## Install
 
