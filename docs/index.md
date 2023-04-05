@@ -23,6 +23,13 @@ A quick screencast on YouTube how to integrate the control can be found [here](h
  - Extension Points for uploading to Apps and sending to the Backend
  - Multiversion support in Fiori Launchpad (multiple Component Versions side by side)
 
+## Live Demo
+
+It is possible to try this out directly at:  
+https://excelupload.marianzeis.de/
+
+The app is an OData V4 app with UI5 version 1.108 and a CAP backend.  
+The data is reset every hour on the hour.
 
 ### Install
 
