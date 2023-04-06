@@ -1,0 +1,9 @@
+generators/opa5/templates/test/integration/AllJourneys.js
+generators/newwebapp/templates/uimodule/ui5.yaml
+generators/newopa5po/templates/test/integration/pages/$poFile.js
+generators/newopa5journey/templates/test/integration/$journey.js
+generators/newopa5journey/templates/test/integration/$journey.js
+generators/newcontrol/templates/webapp/control/template.js
+generators/newuiveri5po/templates/pages/$poFile.js
+generators/newuiveri5spec/templates/$specName.spec.js
+generators/uiveri5/templates/conf.js

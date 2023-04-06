@@ -46,7 +46,7 @@
   "sap.ui5": {
     "flexEnabled": true,
     "dependencies": {
-      "minUI5Version": "1.108.10",
+      "minUI5Version": "1.108.9",
       "libs": {
         "sap.m": {},
         "sap.ui.core": {},
@@ -90,9 +90,7 @@
         "controlId": "layout",
         "controlAggregation": "beginColumnPages",
         "bypassed": {
-          "target": [
-            "notFound"
-          ]
+          "target": ["notFound"]
         },
         "async": true
       },
@@ -105,10 +103,7 @@
         {
           "pattern": "OrdersND/{objectId}",
           "name": "object",
-          "target": [
-            "list",
-            "object"
-          ]
+          "target": ["list", "object"]
         }
       ],
       "targets": {

@@ -1,4 +1,4 @@
-specVersion: '2.5'
+specVersion: "2.5"
 metadata:
   name: cc.excelUpload.v0_12_0
 type: application
@@ -13,13 +13,13 @@ builder:
       configuration:
         target:
           url: http://vhcala4hci:50000
-          client: '001'
+          client: "001"
         credentials:
           username: env:USER
           password: env:PW
         app:
           name: Z_XUP_v0_12_0
-          description: ''
+          description: ""
           package: Z_EXCELUPLOAD
           transport: A4HK900057
         exclude:

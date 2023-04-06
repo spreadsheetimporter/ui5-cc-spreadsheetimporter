@@ -1,0 +1,16 @@
+{
+  "bump-minor-pre-major": true,
+  "prerelease": true,
+  "separate-pull-requests": true,
+  "packages": {
+    "packages/ui5-cc-excelUpload": {
+      "package-name": "ui5-cc-excelupload"
+    },
+    "packages/ui5-cc-excelUpload-Button": {
+      "package-name": "ui5-cc-excelupload-button"
+    },
+    "packages/ui5-cc-excelUpload-Generator": {
+      "package-name": "generator-ui5-excelupload"
+    }
+  }
+}

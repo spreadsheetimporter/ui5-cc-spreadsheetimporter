@@ -207,9 +207,8 @@ function replaceYamlFileDeploy(version, versionShort) {
 
 function replaceVersionManifest(version) {
 	// Read the JSON file
-	const jsonFile = fs.readFileSync('./src/manifest.json', 'utf8');
+	const jsonFile = fs.readFileSync('./packages/ui5-cc-excelUpload/src/manifest.json', 'utf8');
 	const jsonData = JSON.parse(jsonFile);
-
 	// Replace the version
 
 	jsonData['sap.app']['id'] = `cc.excelUpload.${version}`;
@@ -217,7 +216,7 @@ function replaceVersionManifest(version) {
 	jsonData['sap.ui5']['models']['i18n']['settings']['bundleName'] = `cc.excelUpload.${version}.i18n.i18n`;
 
 	// Write the updated JSON to file
-	fs.writeFileSync('./src/manifest.json', JSON.stringify(jsonData, null, 2));
+	fs.writeFileSync('./packages/ui5-cc-excelUpload/src/manifest.json', JSON.stringify(jsonData, null, 2));
 }
 
 function deleteNodeModules(folderPath) {
