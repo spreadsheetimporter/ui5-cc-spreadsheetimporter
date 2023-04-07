@@ -45,6 +45,7 @@ sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
 		},
 		init() {
 			console.debug(`[${this.getMetadata().getName()}] > init`)
+
 			this.attachPress(this.press)
 		},
 		renderer: async function (oRm, oControl) {
