@@ -10,7 +10,7 @@ jobs:
       - uses: google-github-actions/release-please-action@v3
         id: release
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_WORKFLOW_TOKEN }}
           command: manifest
           monorepo-tags: true
           release-type: node
@@ -27,7 +27,7 @@ jobs:
       - name: Update versions
         if: ${{ steps.release.outputs.pr }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_WORKFLOW_TOKEN }}
         run: |
           gh pr checkout ${{ fromJSON(steps.release.outputs.pr).number }}
           npm install
