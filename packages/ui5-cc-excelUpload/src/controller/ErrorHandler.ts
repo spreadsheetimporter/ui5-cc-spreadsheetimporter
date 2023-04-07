@@ -10,6 +10,8 @@ export default class ErrorHandler {
 	private excelUploadController: ExcelUpload;
 	private errorDialog: Dialog;
 
+
+	
 	constructor(excelUploadController: any) {
 		this.errorResults = [];
 		this.excelUploadController = excelUploadController;
