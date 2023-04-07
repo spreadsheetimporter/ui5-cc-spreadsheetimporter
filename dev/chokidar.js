@@ -9,7 +9,7 @@ shell.exec(
 );
 // One-liner for current directory
 chokidar
-	.watch("../packages/ui5-cc-excelUpload/src/", {
+	.watch("./packages/ui5-cc-excelUpload/src/", {
 		awaitWriteFinish: {
 			stabilityThreshold: 1000,
 			pollInterval: 100,
