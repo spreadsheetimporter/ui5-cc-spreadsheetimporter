@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.1](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.12.0...ui5-cc-excelupload-v0.12.1) (2023-04-07)
+
+
+### Bug Fixes
+
+* remove unused imports ([#119](https://github.com/marianfoo/ui5-cc-excelUpload/issues/119)) ([2eea092](https://github.com/marianfoo/ui5-cc-excelUpload/commit/2eea0929757be965c1011abad4b82aa5f58a0a45))
+
 ## [0.12.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/v0.11.4...v0.12.0) (2023-04-04)
 
 
