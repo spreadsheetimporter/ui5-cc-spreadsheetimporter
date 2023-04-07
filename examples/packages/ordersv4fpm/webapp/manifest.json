@@ -20,9 +20,7 @@
         "uri": "/orders/",
         "type": "OData",
         "settings": {
-          "annotations": [
-            "annotation"
-          ],
+          "annotations": ["annotation"],
           "localUri": "localService/metadata.xml",
           "odataVersion": "4.0"
         }
@@ -55,7 +53,7 @@
   "sap.ui5": {
     "flexEnabled": true,
     "dependencies": {
-      "minUI5Version": "1.108.10",
+      "minUI5Version": "1.108.9",
       "libs": {
         "sap.m": {},
         "sap.ui.core": {},

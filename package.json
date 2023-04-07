@@ -1,24 +1,15 @@
 {
-  "name": "ui5-cc-excelupload",
-  "version": "0.12.0",
-  "description": "A UI5 Module to integrate a Excel Upload for Fiori Element Apps.",
+  "name": "ui5-excelupload",
+  "version": "0.0.0",
+  "description": "Modules Excel Upload for Fiori Element Apps.",
   "main": "Component.js",
-  "keywords": [
-    "ui5",
-    "custom control",
-    "xlsx",
-    "Excel"
-  ],
+  "private": true,
   "author": "Marian Zeis",
   "homepage": "https://marianfoo.github.io/ui5-cc-excelUpload/",
   "repository": {
     "type": "git",
     "url": "https://github.com/marianfoo/ui5-cc-excelUpload.git"
   },
-  "files": [
-    "dist",
-    "ui5.yaml"
-  ],
   "license": "Apache-2.0",
   "scripts": {
     "prepare": "chmod +x ./node_modules/husky/lib/bin.js && node ./.husky/skip.js || husky install",
@@ -35,8 +26,7 @@
     "prettier:staged": "pretty-quick --staged --verbose",
     "hooks:pre-commit": "npm-run-all --sequential prettier:staged lint:staged",
     "hooks:pre-push": "npm-run-all --sequential lint:commit",
-    "build": "ui5 build --config=ui5-build.yaml --all --clean-dest --dest dist",
-    "build:dev": "ui5 build --config=ui5-build.yaml --all --clean-dest --dest dist  --exclude-task=replaceCopyright replaceVersion generateFlexChangesBundle generateVersionInfo minify escapeNonAsciiCharacters",
+    "build": "pnpm --filter ui5-cc-excelupload build",
     "replaceString": "node ./dev/replace-string.js",
     "build:watch": "node ./dev/chokidar.js",
     "updateChromedriver": "cd examples && pnpm add chromedriver@latest --save-dev -w",
@@ -44,9 +34,6 @@
     "deleteAllNodeModules": "node dev/util.js deleteNodeModules .",
     "deleteTestApps": "node ./dev/copy-example-apps.js  delete",
     "deploy": "npm run build && fiori deploy --config ui5-deploy.yaml -y"
-  },
-  "dependencies": {
-    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.5.1",
@@ -72,9 +59,6 @@
     "pretty-quick": "^3.1.3",
     "replace-in-file": "^6.3.5",
     "shelljs": "^0.8.5",
-    "typescript": "5.0.3",
-    "ui5-tooling-modules": "0.7.12",
-    "ui5-tooling-stringreplace": "0.1.1",
-    "ui5-tooling-transpile": "0.4.1"
+    "typescript": "5.0.3"
   }
 }

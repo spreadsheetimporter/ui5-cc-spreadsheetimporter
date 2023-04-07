@@ -78,7 +78,7 @@ function deleteFolderRecursive(path) {
 
 function getPackageJson() {
 	// Read the contents of the package.json file
-	const packageJson = fs.readFileSync("package.json", "utf8");
+	const packageJson = fs.readFileSync("./packages/ui5-cc-excelUpload/package.json", "utf8");
 
 	// Parse the JSON content
 	return JSON.parse(packageJson);
@@ -129,7 +129,7 @@ function getTestappObject(scenario, version) {
 
 function replaceYamlFileBuild(version, versionShort, versionSlash) {
 	// Load the ui5-build.yaml file
-	const fileContents = fs.readFileSync('ui5-build.yaml', 'utf8');
+	const fileContents = fs.readFileSync('./packages/ui5-cc-excelUpload/ui5-build.yaml', 'utf8');
 
 	// Parse the YAML into a JavaScript object
 	const ui5Build = yaml.load(fileContents);
@@ -155,13 +155,13 @@ function replaceYamlFileBuild(version, versionShort, versionSlash) {
 	const updatedYaml = yaml.dump(ui5Build, { lineWidth: -1 });
 
 	// Save the updated ui5-build.yaml file
-	fs.writeFileSync('ui5-build.yaml', updatedYaml, 'utf8');
+	fs.writeFileSync('./packages/ui5-cc-excelUpload/ui5-build.yaml', updatedYaml, 'utf8');
 
 }
 
 function replaceYamlFileComponent(versionSlash) {
 	// Load the ui5-build.yaml file
-	const fileContents = fs.readFileSync('ui5.yaml', 'utf8');
+	const fileContents = fs.readFileSync('./packages/ui5-cc-excelUpload/ui5.yaml', 'utf8');
 
 	// Parse the YAML into a JavaScript object
 	const ui5Build = yaml.load(fileContents);
@@ -176,13 +176,13 @@ function replaceYamlFileComponent(versionSlash) {
 	const updatedYaml = yaml.dump(ui5Build);
 
 	// Save the updated ui5-build.yaml file
-	fs.writeFileSync('ui5.yaml', updatedYaml, 'utf8');
+	fs.writeFileSync('./packages/ui5-cc-excelUpload/ui5.yaml', updatedYaml, 'utf8');
 
 }
 
 function replaceYamlFileDeploy(version, versionShort) {
 	// Load the ui5-build.yaml file
-	const fileContents = fs.readFileSync('ui5-deploy.yaml', 'utf8');
+	const fileContents = fs.readFileSync('./packages/ui5-cc-excelUpload/ui5-deploy.yaml', 'utf8');
 
 	// Parse the YAML into a JavaScript object
 	const ui5Build = yaml.load(fileContents);
@@ -201,15 +201,14 @@ function replaceYamlFileDeploy(version, versionShort) {
 	const updatedYaml = yaml.dump(ui5Build, { lineWidth: -1 });
 
 	// Save the updated ui5-build.yaml file
-	fs.writeFileSync('ui5-deploy.yaml', updatedYaml, 'utf8');
+	fs.writeFileSync('./packages/ui5-cc-excelUpload/ui5-deploy.yaml', updatedYaml, 'utf8');
 
 }
 
 function replaceVersionManifest(version) {
 	// Read the JSON file
-	const jsonFile = fs.readFileSync('./src/manifest.json', 'utf8');
+	const jsonFile = fs.readFileSync('./packages/ui5-cc-excelUpload/src/manifest.json', 'utf8');
 	const jsonData = JSON.parse(jsonFile);
-
 	// Replace the version
 
 	jsonData['sap.app']['id'] = `cc.excelUpload.${version}`;
@@ -217,7 +216,7 @@ function replaceVersionManifest(version) {
 	jsonData['sap.ui5']['models']['i18n']['settings']['bundleName'] = `cc.excelUpload.${version}.i18n.i18n`;
 
 	// Write the updated JSON to file
-	fs.writeFileSync('./src/manifest.json', JSON.stringify(jsonData, null, 2));
+	fs.writeFileSync('./packages/ui5-cc-excelUpload/src/manifest.json', JSON.stringify(jsonData, null, 2));
 }
 
 function deleteNodeModules(folderPath) {

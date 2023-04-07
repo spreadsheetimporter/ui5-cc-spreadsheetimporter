@@ -5,11 +5,11 @@ var execAsync = require("./execAsync")
 let timeoutId;
 execAsync("npx @ui5/ts-interface-generator --watch")
 shell.exec(
-	"ui5 build --config=ui5-build.yaml --all --clean-dest --dest dist  --exclude-task=replaceCopyright replaceVersion generateFlexChangesBundle generateVersionInfo minify escapeNonAsciiCharacters "
+	"pnpm --filter ui5-cc-excelupload build:dev "
 );
 // One-liner for current directory
 chokidar
-	.watch("./src/", {
+	.watch("./packages/ui5-cc-excelUpload/src/", {
 		awaitWriteFinish: {
 			stabilityThreshold: 1000,
 			pollInterval: 100,
@@ -20,7 +20,7 @@ chokidar
 		clearTimeout(timeoutId)
 		timeoutId = setTimeout(() => {
 			shell.exec(
-				"ui5 build --config=ui5-build.yaml --all --clean-dest --dest dist  --exclude-task=replaceCopyright replaceVersion generateFlexChangesBundle generateVersionInfo minify escapeNonAsciiCharacters "
+				"pnpm --filter ui5-cc-excelupload build:dev "
 			);
 		}, 100);
 

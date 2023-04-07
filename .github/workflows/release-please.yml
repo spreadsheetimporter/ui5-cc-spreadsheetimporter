@@ -10,16 +10,16 @@ jobs:
       - uses: google-github-actions/release-please-action@v3
         id: release
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_WORKFLOW_TOKEN }}
+          command: manifest
+          monorepo-tags: true
           release-type: node
-          package-name: ui5-cc-excelupload
-          bump-minor-pre-major: true
-          prerelease: true
       - uses: actions/checkout@v3
       - name: Setup git user
         run: |
           git config --global user.email "ops+robot@npmjs.com"
           git config --global user.name "npm team"
+          echo '${{toJSON(steps.release.outputs)}}'
       - uses: actions/setup-node@v3
         with:
           node-version: "18"
@@ -27,7 +27,7 @@ jobs:
       - name: Update versions
         if: ${{ steps.release.outputs.pr }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_WORKFLOW_TOKEN }}
         run: |
           gh pr checkout ${{ fromJSON(steps.release.outputs.pr).number }}
           npm install
@@ -36,24 +36,54 @@ jobs:
           git commit --amend --no-edit
           git push --force
 
-
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-        if: ${{ steps.release.outputs.release_created }}
-      - name: Run npm install
-        if: ${{ steps.release.outputs.release_created }}
-        run: npm install
+        if: ${{ steps.release.outputs.releases_created }}
 
-      - name: Build
-        run: npm run build
-        if: ${{ steps.release.outputs.release_created }}
+      - name: use pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7.17.1
+      - name: Run pnpm install
+        if: ${{ steps.release.outputs.releases_created }}
+        run: pnpm install  --no-frozen-lockfile
 
-      - name: Publish to NPM
-        if: ${{ steps.release.outputs.release_created }}
+      - name: Build ui5-cc-excelupload
+        run: pnpm --filter ui5-cc-excelupload build
+        if: ${{ steps.release.outputs['packages/ui5-cc-excelUpload--release_created'] }}
+
+      - name: Publish ui5-cc-excelupload to NPM
+        if: ${{ steps.release.outputs['packages/ui5-cc-excelUpload--release_created'] }}
         run: |
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           echo ":::: Publishing as $(npm whoami)"
-          npm publish
+          cd .\packages\ui5-cc-excelUpload\ && npm publish
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Build ui5-cc-excelUpload-Button
+        run: echo "Build ui5-cc-excelUpload-Button"
+        if: ${{ steps.release.outputs['packages/ui5-cc-excelUpload-Button--release_created'] }}
+
+      - name: Publish ui5-cc-excelUpload-Button to NPM
+        if: ${{ steps.release.outputs['packages/ui5-cc-excelUpload-Button--release_created'] }}
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+          echo ":::: Publishing as $(npm whoami)"
+          cd .\packages\ui5-cc-excelUpload-Button\ && npm publish
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Build ui5-cc-excelUpload-Generator
+        run: echo "Build ui5-cc-excelUpload-Generator"
+        if: ${{ steps.release.outputs['packages/ui5-cc-excelUpload-Generator--release_created'] }}
+
+      - name: Publish ui5-cc-excelUpload-Generator to NPM
+        if: ${{ steps.release.outputs['packages/ui5-cc-excelUpload-Generator--release_created'] }}
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+          echo ":::: Publishing as $(npm whoami)"
+          cd .\packages\ui5-cc-excelUpload-Generator\ && npm publish
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

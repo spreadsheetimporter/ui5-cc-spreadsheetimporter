@@ -10,7 +10,7 @@
   ],
   "main": "webapp/index.html",
   "dependencies": {
-    "ui5-cc-excelupload": "./../../../"
+    "ui5-cc-excelupload": "./../../../packages/ui5-cc-excelUpload"
   },
   "devDependencies": {
     "@sap-ux/ui5-middleware-fe-mockserver": "^2.1.74",
