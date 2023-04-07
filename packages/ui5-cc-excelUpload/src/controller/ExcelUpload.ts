@@ -1,7 +1,6 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 import Fragment from "sap/ui/core/Fragment";
 import MessageToast from "sap/m/MessageToast";
-import JSONModel from "sap/ui/model/json/JSONModel";
 import * as XLSX from "xlsx";
 import MetadataHandler from "./MetadataHandler";
 import Component from "../Component";
@@ -20,7 +19,6 @@ import Button from "sap/m/Button";
 import Util from "./Util";
 import Parser from "./Parser";
 import ErrorHandler from "./ErrorHandler";
-import { escape } from "querystring";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
