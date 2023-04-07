@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.15.0](https://github.com/marianfoo/ui5-cc-excelUpload-multirepo/compare/ui5-cc-excelupload-v0.14.0...ui5-cc-excelupload-v0.15.0) (2023-04-07)
+
+
+### Features
+
+* add new empty line ([d1593dd](https://github.com/marianfoo/ui5-cc-excelUpload-multirepo/commit/d1593dd6d964dcbd9efd6af24f1b28f53fffe6db))
+
 ## [0.14.0](https://github.com/marianfoo/ui5-cc-excelUpload-multirepo/compare/ui5-cc-excelupload-v0.13.0...ui5-cc-excelupload-v0.14.0) (2023-04-07)
 
 
