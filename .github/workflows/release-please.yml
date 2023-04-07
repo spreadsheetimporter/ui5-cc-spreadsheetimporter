@@ -11,6 +11,8 @@ jobs:
         id: release
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          command: manifest
+          monorepo-tags: true
           release-type: node
       - uses: actions/checkout@v3
       - name: Setup git user
