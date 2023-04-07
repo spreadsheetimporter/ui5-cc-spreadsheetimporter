@@ -21,7 +21,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "ui5-cc-excelupload": "0.11.3"
+    "ui5-cc-excelupload": "0.12.0"
   },
   "devDependencies": {
     "eslint": "^7.19.0",
