@@ -40,19 +40,51 @@ jobs:
         with:
           fetch-depth: 0
         if: ${{ steps.release.outputs.releases_created }}
-      - name: Run npm install
-        if: ${{ steps.release.outputs.releases_created }}
-        run: npm install
 
-      - name: Build
-        run: npm run build
+      - name: use pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7.17.1
+      - name: Run pnpm install
         if: ${{ steps.release.outputs.releases_created }}
+        run: pnpm install  --no-frozen-lockfile
 
-      - name: Publish to NPM
-        if: ${{ steps.release.outputs.releases_created }}
+      - name: Build ui5-cc-excelupload
+        run: pnpm --filter ui5-cc-excelupload build
+        if: ${{ steps.release.outputs['packages/ui5-cc-excelUpload--release_created'] }}
+
+      - name: Publish ui5-cc-excelupload to NPM
+        if: ${{ steps.release.outputs['packages/ui5-cc-excelUpload--release_created'] }}
         run: |
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           echo ":::: Publishing as $(npm whoami)"
-          npm publish
+          cd .\packages\ui5-cc-excelUpload\ && npm publish
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Build ui5-cc-excelUpload-Button
+        run: echo "Build ui5-cc-excelUpload-Button"
+        if: ${{ steps.release.outputs['packages/ui5-cc-excelUpload-Button--release_created'] }}
+  
+      - name: Publish ui5-cc-excelUpload-Button to NPM
+        if: ${{ steps.release.outputs['packages/ui5-cc-excelUpload-Button--release_created'] }}
+        run: |
+            echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+            echo ":::: Publishing as $(npm whoami)"
+            cd .\packages\ui5-cc-excelUpload-Button\ && npm publish
+          env:
+            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Build ui5-cc-excelUpload-Generator
+        run: echo "Build ui5-cc-excelUpload-Generator"
+        if: ${{ steps.release.outputs['packages/ui5-cc-excelUpload-Generator--release_created'] }}
+
+      - name: Publish ui5-cc-excelUpload-Generator to NPM
+        if: ${{ steps.release.outputs['packages/ui5-cc-excelUpload-Generator--release_created'] }}
+        run: |
+            echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+            echo ":::: Publishing as $(npm whoami)"
+            cd .\packages\ui5-cc-excelUpload-Generator\ && npm publish
+          env:
+            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    
