@@ -24,7 +24,7 @@
   "homepage": "https://marianfoo.github.io/ui5-cc-excelUpload/pages/Generator/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/marianfoo/generator-excelUpload.git"
+    "url": "https://github.com/marianfoo/ui5-cc-excelUpload.git"
   },
   "files": [
     "helpers",

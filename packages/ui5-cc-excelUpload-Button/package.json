@@ -14,11 +14,12 @@
     "notepad control"
   ],
   "author": "Marian Zeis",
+  "homepage": "https://marianfoo.github.io/ui5-cc-excelUpload/",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/marianfoo/ui5-cc-excelUpload.git"
   },
-  "license": "Beerware",
+  "license": "Apache-2.0",
   "dependencies": {
     "ui5-cc-excelupload": "0.11.3"
   },
