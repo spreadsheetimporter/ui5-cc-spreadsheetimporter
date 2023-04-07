@@ -27,7 +27,6 @@
     "hooks:pre-commit": "npm-run-all --sequential prettier:staged lint:staged",
     "hooks:pre-push": "npm-run-all --sequential lint:commit",
     "build": "pnpm --filter ui5-cc-excelupload build",
-    "build:dev": "ui5 build --config=ui5-build.yaml --all --clean-dest --dest dist  --exclude-task=replaceCopyright replaceVersion generateFlexChangesBundle generateVersionInfo minify escapeNonAsciiCharacters",
     "replaceString": "node ./dev/replace-string.js",
     "build:watch": "node ./dev/chokidar.js",
     "updateChromedriver": "cd examples && pnpm add chromedriver@latest --save-dev -w",
