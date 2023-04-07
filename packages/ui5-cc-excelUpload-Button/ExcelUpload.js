@@ -21,9 +21,6 @@ sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
 				mandatoryFields: {
 					type: "string[]"
 				},
-				errorResults: {
-					type: "object"
-				},
 				fieldMatchType: {
 					type: "string",
 					defaultValue: "label"
