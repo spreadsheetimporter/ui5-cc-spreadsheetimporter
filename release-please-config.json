@@ -1,22 +1,16 @@
 {
+  "bump-minor-pre-major": true,
+  "prerelease": true,
+  "separate-pull-requests": true,
   "packages": {
     "packages/ui5-cc-excelUpload": {
-      "package-name": "ui5-cc-excelupload",
-      "bump-minor-pre-major": true,
-      "prerelease": true,
-      "separate-pull-requests": true
+      "package-name": "ui5-cc-excelupload"
     },
     "packages/ui5-cc-excelUpload-Button": {
-      "package-name": "ui5-cc-excelupload-button",
-      "bump-minor-pre-major": true,
-      "prerelease": true,
-      "separate-pull-requests": true
+      "package-name": "ui5-cc-excelupload-button"
     },
     "packages/ui5-cc-excelUpload-Generator": {
-      "package-name": "generator-ui5-excelupload",
-      "bump-minor-pre-major": true,
-      "prerelease": true,
-      "separate-pull-requests": true
+      "package-name": "generator-ui5-excelupload"
     }
   },
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"
