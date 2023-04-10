@@ -12,7 +12,7 @@ describe("Upload File Object Page", () => {
 					controlType: "sap.m.ObjectListItem",
 					viewId: "container-todo---list",
 					bindingPath: {
-						path: "/OrdersND(guid'7e2f2640-6866-4dcf-8f4d-3027aa831cad')",
+						path: "/OrdersND(guid'64e718c9-ff99-47f1-8ca3-950c850777d4')",
 						propertyPath: "OrderNo"
 					}
 				}
@@ -27,7 +27,7 @@ describe("Upload File Object Page", () => {
 				controlType: "sap.m.Button",
 				viewId: "container-todo---detail",
 				properties: {
-					text: "Excel Upload Code"
+					text: "Excel Upload Button"
 				}
 			}
 		};

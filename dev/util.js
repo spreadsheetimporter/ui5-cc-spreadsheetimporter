@@ -34,10 +34,11 @@ function replaceSomething(copyFrom, copyTo, files, from, to) {
 }
 
 // replace version in examples folder
-function replaceVersionInExamples(versionSlash, version, ui5Apps) {
+function replaceVersionInExamples(versionSlash, version, ui5Apps, versionButton, versionUnderscoreButton) {
 	let manifests = [];
 	ui5Apps.forEach((app) => {
-		let path = "examples/packages/" + app + "/webapp/manifest.json";
+		let rootPath = "examples/packages/" + app + "/";
+		let path = rootPath + "webapp/manifest.json";
 		// Read the contents of the package.json file
 		let manifest = fs.readFileSync(path, "utf8");
 		// Parse the JSON content
@@ -51,13 +52,28 @@ function replaceVersionInExamples(versionSlash, version, ui5Apps) {
 				updatedResourceRoots[key] = resourceRoots[key];
 			});
 		updatedResourceRoots[`cc.excelUpload.${version}`] = `./thirdparty/customControl/excelUpload/${versionSlash}`;
+		// add to every app even if it is not used
+		updatedResourceRoots[`cc.excelUploadButton.${versionButton}`] = `./thirdparty/customControl/excelUploadButton/${versionUnderscoreButton}`;
 		manifestData["sap.ui5"].resourceRoots = updatedResourceRoots
 		manifestData["sap.ui5"]["componentUsages"]["excelUpload"].name = `cc.excelUpload.${version}`;
 		// Stringify manifest data back to string
 		manifestData = JSON.stringify(manifestData, null, 2);
 		// Write back manifest file
 		fs.writeFileSync(path, manifestData, "utf8");
+		if (app.startsWith("ordersv2freestylenondraft")) {
+			replaceVersionInXML(rootPath, versionUnderscoreButton);
+		}
 	});
+}
+
+function replaceVersionInXML(rootPath, versionUnderscoreButton) {
+	const path = rootPath + "webapp/view/Detail.view.xml";
+	let view = fs.readFileSync(path, "utf8");
+	// Use a regular expression to replace the namespace prefix value
+	const regex = /cc\.excelUploadButton\.v\d_\d_\d/g;
+	const updatedString = view.replace(regex, `cc.excelUploadButton.${versionUnderscoreButton}`);
+	fs.writeFileSync(path, updatedString, "utf8");
+
 }
 
 function deleteFolderRecursive(path) {
@@ -76,22 +92,22 @@ function deleteFolderRecursive(path) {
 	}
 }
 
-function getPackageJson() {
+function getPackageJson(path) {
 	// Read the contents of the package.json file
-	const packageJson = fs.readFileSync("./packages/ui5-cc-excelUpload/package.json", "utf8");
+	const packageJson = fs.readFileSync(path, "utf8");
 
 	// Parse the JSON content
 	return JSON.parse(packageJson);
 }
 
-function getVersionDots() {
-	const packageData = getPackageJson();
+function getVersionDots(path) {
+	const packageData = getPackageJson(path);
 	// Get the version from the parsed data
 	return `v${packageData.version}`;
 }
 
-function getVersionSlash() {
-	const version = getVersionDots();
+function getVersionSlash(path) {
+	const version = getVersionDots(path);
 	return version.replaceAll(".", "/");
 }
 function searchAndReplace(inputFile, search, replace) {
@@ -169,7 +185,7 @@ function replaceYamlFileComponent(versionSlash) {
 	// Replace the values
 	ui5Build.resources.configuration.paths = {
 		[key]: "./dist/"
-	  };
+	};
 
 
 	// Serialize the modified object back to YAML
@@ -221,29 +237,29 @@ function replaceVersionManifest(version) {
 
 function deleteNodeModules(folderPath) {
 	const stack = [folderPath];
-  
+
 	while (stack.length) {
-	  const curPath = stack.pop();
-  
-	  if (fs.existsSync(curPath)) {
-		const files = fs.readdirSync(curPath);
-  
-		for (const file of files) {
-		  const filePath = path.join(curPath, file);
-  
-		  if (fs.lstatSync(filePath).isDirectory()) {
-			stack.push(filePath);
-		  } else {
-			fs.unlinkSync(filePath);
-		  }
+		const curPath = stack.pop();
+
+		if (fs.existsSync(curPath)) {
+			const files = fs.readdirSync(curPath);
+
+			for (const file of files) {
+				const filePath = path.join(curPath, file);
+
+				if (fs.lstatSync(filePath).isDirectory()) {
+					stack.push(filePath);
+				} else {
+					fs.unlinkSync(filePath);
+				}
+			}
+
+			fs.rmdirSync(curPath);
 		}
-  
-		fs.rmdirSync(curPath);
-	  }
 	}
-  }
-  
-  
+}
+
+
 
 module.exports.getPackageJson = getPackageJson;
 module.exports.getVersionDots = getVersionDots;

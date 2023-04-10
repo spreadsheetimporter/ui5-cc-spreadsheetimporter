@@ -90,33 +90,6 @@ sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel", "../model/form
 				);
 		},
 
-		prepareDraft: async function (oEvent) {
-			const source = oEvent.getSource();
-			const metaModel = this.getView().getModel().getMetaModel();
-			await metaModel.loaded();
-			this._draftController = new sap.ui.generic.app.transaction.DraftController(source.getModel());
-			this.context = source.getBindingContext();
-			this._draftController.createEditDraftEntity(this.context);
-			var sObjectPath = this.getView().getModel().createKey("OrdersND", {
-				ID: "7e2f2640-6866-4dcf-8f4d-3027aa831cad",
-				IsActiveEntity: false
-			});
-			this._bindView("/" + sObjectPath);
-		},
-		saveDraft: async function (oEvent) {
-			const source = oEvent.getSource();
-			const metaModel = this.getView().getModel().getMetaModel();
-			await metaModel.loaded();
-			this._draftController = new sap.ui.generic.app.transaction.DraftController(source.getModel());
-			this.context = source.getBindingContext();
-			this._draftController.activateDraftEntity(this.context);
-			var sObjectPath = this.getView().getModel().createKey("OrdersND", {
-				ID: "7e2f2640-6866-4dcf-8f4d-3027aa831cad",
-				IsActiveEntity: true
-			});
-			this._bindView("/" + sObjectPath);
-		},
-
 		/**
 		 * Binds the view to the object path. Makes sure that detail view displays
 		 * a busy indicator while data for the corresponding element binding is loaded.
@@ -217,6 +190,28 @@ sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel", "../model/form
 				}, this);
 			}
 			this.excelUpload.openExcelUploadDialog();
+			this.getView().setBusy(false);
+		},
+
+		openExcelUploadButton: async function (oEvent) {
+			this.getView().setBusyIndicatorDelay(0);
+			this.getView().setBusy(true);
+			if (!this.excelUploadButton) {
+				this.excelUploadButton = await this.getView()
+					.getController()
+					.getOwnerComponent()
+					.createComponent({
+						usage: "excelUpload",
+						async: true,
+						componentData: {
+							context: this,
+							context: this,
+							activateDraft: false,
+							tableId: "container-ui.v2.ordersv2freestyle---detail--lineItemsList"
+						}
+					});
+			}
+			this.excelUploadButton.openExcelUploadDialog();
 			this.getView().setBusy(false);
 		},
 
