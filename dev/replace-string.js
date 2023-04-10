@@ -11,6 +11,13 @@ const versionShort = util.getVersionDots(path).replaceAll(".", "")
 const versionUnderscore = util.getVersionDots(path).replaceAll(".", "_")
 const versionSlash = util.getVersionSlash(path)
 
+	// Get the version from the parsed data
+	const pathButton = "./packages/ui5-cc-excelUpload-Button/package.json"
+	const versionButton = util.getVersionDots(pathButton)
+	const versionShortButton = versionButton.replaceAll(".", "")
+	const versionUnderscoreButton = versionButton.replaceAll(".", "_")
+	const versionSlashButton = util.getVersionSlash(pathButton)
+
 // replace strings in publish folder
 util.replaceYamlFileBuild(versionUnderscore, versionShort, versionUnderscore)
 // create ui5.yaml with current version
@@ -20,21 +27,16 @@ util.replaceVersionManifest(versionUnderscore)
 // replace in docs
 util.replaceSomething("docs/pages/GettingStartedTEMPLATE.md", "docs/pages/GettingStarted.md", ["**/docs/pages/GettingStarted.md"], [/XXXnamespaceXXX/g, /XXXnamespaceSlashXXX/g], [versionUnderscore, versionUnderscore])
 
-replaceButton()
+replaceButton(versionUnderscoreButton)
 
 
 if (!develop) {
 	let ui5Apps = ["ordersv2fe", "ordersv2fenondraft", "ordersv2freestylenondraft", "ordersv2freestylenondraftopenui5", "ordersv4fe", "ordersv4fpm"];
-	util.replaceVersionInExamples(versionUnderscore, versionUnderscore, ui5Apps);
+	util.replaceVersionInExamples(versionUnderscore, versionUnderscore, ui5Apps,versionButton, versionUnderscoreButton);
 }
 
-function replaceButton() {
-	// Get the version from the parsed data
-	const path = "./packages/ui5-cc-excelUpload-Button/package.json"
-	const version = util.getVersionDots(path)
-	const versionShort = version.replaceAll(".", "")
-	const versionUnderscore = version.replaceAll(".", "_")
-	const versionSlash = util.getVersionSlash(path)
+function replaceButton(versionUnderscore) {
+
 
 	const namespace = `cc.excelUploadButton.${versionUnderscore}.ExcelUpload`
 
