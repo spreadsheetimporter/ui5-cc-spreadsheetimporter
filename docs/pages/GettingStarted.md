@@ -10,8 +10,8 @@ For more information, please see the Page [Central Deployment](CentralDeployment
 
 ## Setup
 
-Here are the manual steps how to integrate the ui5-cc-excelUpload component. For a simplified integration, a [yo generator](Generator.md) is also available.
-### Setup Decentralised deployment
+Here are the steps how to integrate the ui5-cc-excelUpload component manually. For a simplified integration, a [yo generator](Generator.md) is also available.
+### Setup Decentralized deployment
 
 1\. Install from npm
 
@@ -155,7 +155,7 @@ openExcelUploadDialog: async function (oEvent) {
 
 ### Extension in manifest.json
 
-As a example, here is how you custom action can look like.  
+As a example, here is how your custom action can look like.  
 This example is from the [sample app](https://github.com/marianfoo/ui5-cc-excelUpload-sampleapp/blob/744f008b1b052a3df5594215d8d11811a8e646b7/packages/ordersv2/webapp/manifest.json#L110-L134) for the object page.
 
 ````json
