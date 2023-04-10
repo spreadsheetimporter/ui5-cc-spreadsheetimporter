@@ -8,7 +8,7 @@
       <ObjectNumber />
     </semantic:headerContent>
     <semantic:titleCustomTextActions>
-      <Button text="Excel Upload" press="openExcelUpload" />
+      <Button text="Excel Upload Code" press="openExcelUpload" />
       <excel:ExcelUpload text="Excel Upload Button" tableId="container-todo---detail--lineItemsList"/>
     </semantic:titleCustomTextActions>
     <semantic:content>

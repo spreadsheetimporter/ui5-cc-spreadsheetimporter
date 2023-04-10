@@ -27,7 +27,7 @@ describe("Upload File Object Page", () => {
 				controlType: "sap.m.Button",
 				viewId: "container-todo---detail",
 				properties: {
-					text: "Excel Upload"
+					text: "Excel Upload Code"
 				}
 			}
 		};
@@ -87,8 +87,7 @@ describe("Upload File Object Page", () => {
 
 			selector: {
 				interaction: "root",
-				controlType: "sap.ui.unified.FileUploader",
-				id: "__uploader0"
+				controlType: "sap.ui.unified.FileUploader"
 			}
 		});
 		const fileName = "test/testFiles/TwoRowsNoErrors.xlsx"; // relative to wdio.conf.(j|t)s
