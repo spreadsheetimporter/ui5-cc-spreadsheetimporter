@@ -9,7 +9,7 @@
     </semantic:headerContent>
     <semantic:titleCustomTextActions>
       <Button text="Excel Upload Code" press="openExcelUpload" />
-      <excel:ExcelUpload text="Excel Upload Button" tableId="container-todo---detail--lineItemsList"/>
+      <excel:ExcelUpload id="excelUploadButton" text="Excel Upload Button" tableId="container-todo---detail--lineItemsList" changeBeforeCreate="changeBeforeCreate" checkBeforeRead="checkBeforeRead"/>
     </semantic:titleCustomTextActions>
     <semantic:content>
       <Table

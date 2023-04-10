@@ -220,28 +220,6 @@ sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel", "../model/form
 			this.getView().setBusy(false);
 		},
 
-		openExcelUploadButton: async function (oEvent) {
-			this.getView().setBusyIndicatorDelay(0);
-			this.getView().setBusy(true);
-			if (!this.excelUploadButton) {
-				this.excelUploadButton = await this.getView()
-					.getController()
-					.getOwnerComponent()
-					.createComponent({
-						usage: "excelUpload",
-						async: true,
-						componentData: {
-							context: this,
-							context: this,
-							activateDraft: false,
-							tableId: "container-ui.v2.ordersv2freestyle---detail--lineItemsList"
-						}
-					});
-			}
-			this.excelUploadButton.openExcelUploadDialog();
-			this.getView().setBusy(false);
-		},
-
 		_onMetadataLoaded: function () {
 			// Store original busy indicator delay for the detail view
 			var iOriginalViewBusyDelay = this.getView().getBusyIndicatorDelay(),
