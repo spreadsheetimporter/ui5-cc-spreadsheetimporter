@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.5](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-button-v0.0.4...ui5-cc-excelupload-button-v0.0.5) (2023-04-10)
+
+
+### Bug Fixes
+
+* update correct versions in code ([#124](https://github.com/marianfoo/ui5-cc-excelUpload/issues/124)) ([71f106e](https://github.com/marianfoo/ui5-cc-excelUpload/commit/71f106e908e85f444a8f8a1fe5974d3aedbeca25))
+
 ## [0.0.4](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-button-v0.0.3...ui5-cc-excelupload-button-v0.0.4) (2023-04-07)
 
 
