@@ -53,6 +53,10 @@ jobs:
           npm i -g npm@latest
           npm --version
 
+      - name: link excel button
+        run: |
+          cd packages/ui5-cc-excelUpload-Button && npm link && cd ../..
+
       - name: get port
         run: |
           TESTAPPPORT=$(node ./dev/get-port.js ${{ matrix.scenario }} ${{ matrix.ui5version }})
