@@ -28,7 +28,7 @@ npm install
 
 3\. Change `ui5-deploy.yaml`
 
-For the deployment, you have to change the default [`ui5-deploy.yaml`](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/ui5-deploy.yaml) to your settings.  
+For the deployment, you have to change the default [`ui5-deploy.yaml`](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/packages/ui5-cc-excelUpload/ui5-deploy.yaml) to your settings.  
 When deploying a new version, it is important to use a different app name. This is always done automatically with a new version.  
 For this purpose, the variable `XXXnamespaceShortXXX` in the file `ui5-deploy-publish.yaml` must not be changed.  
 If you want to use your own app name, it is important to change the name for newer versions, otherwise other versions will be overwritten.
@@ -41,6 +41,7 @@ If you deploy from BAS, remove the `credentials` section in the yaml file.
 5\. Run Deployment
 
 ```sh
+cd packages/ui5-cc-excelUpload
 npm run deploy
 ```
 

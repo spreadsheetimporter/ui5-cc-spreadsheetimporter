@@ -23,6 +23,6 @@ It would be used like this:
 
 More information and will come.
 
-https://github.com/marianfoo/ui5-cc-excelUpload-Button
+https://github.com/marianfoo/ui5-cc-excelUpload/tree/main/packages/ui5-cc-excelUpload-Button
 
 https://www.npmjs.com/package/ui5-cc-excelupload-button
