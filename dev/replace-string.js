@@ -54,7 +54,7 @@ function replaceButton() {
 
 	// Parse the YAML into a JavaScript object
 	const ui5Build = yaml.load(fileContents);
-	const key = "/thirdparty/customControl/excelUploadButton/" + versionSlash + "/"
+	const key = "/thirdparty/customControl/excelUploadButton/" + versionUnderscore + "/"
 	// Replace the values
 	ui5Build.resources.configuration.paths = {
 		[key]: "./"
