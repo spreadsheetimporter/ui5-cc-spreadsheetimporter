@@ -76,22 +76,22 @@ function deleteFolderRecursive(path) {
 	}
 }
 
-function getPackageJson() {
+function getPackageJson(path) {
 	// Read the contents of the package.json file
-	const packageJson = fs.readFileSync("./packages/ui5-cc-excelUpload/package.json", "utf8");
+	const packageJson = fs.readFileSync(path, "utf8");
 
 	// Parse the JSON content
 	return JSON.parse(packageJson);
 }
 
-function getVersionDots() {
-	const packageData = getPackageJson();
+function getVersionDots(path) {
+	const packageData = getPackageJson(path);
 	// Get the version from the parsed data
 	return `v${packageData.version}`;
 }
 
-function getVersionSlash() {
-	const version = getVersionDots();
+function getVersionSlash(path) {
+	const version = getVersionDots(path);
 	return version.replaceAll(".", "/");
 }
 function searchAndReplace(inputFile, search, replace) {
