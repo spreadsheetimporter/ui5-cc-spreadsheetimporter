@@ -5,4 +5,4 @@ metadata:
 resources:
   configuration:
     paths:
-      /thirdparty/customControl/excelUploadButton/v0/0/4/: ./
+      /thirdparty/customControl/excelUploadButton/v0_0_4/: ./
