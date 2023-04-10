@@ -1,6 +1,7 @@
 {
   "bump-minor-pre-major": true,
   "prerelease": true,
+  "plugins": ["node-workspace"],
   "packages": {
     "packages/ui5-cc-excelUpload": {
       "package-name": "ui5-cc-excelupload"
