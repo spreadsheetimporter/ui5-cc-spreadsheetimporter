@@ -80,7 +80,8 @@
       }
     },
     "resourceRoots": {
-      "cc.excelUpload.v0_12_1": "./thirdparty/customControl/excelUpload/v0_12_1"
+      "cc.excelUpload.v0_12_1": "./thirdparty/customControl/excelUpload/v0_12_1",
+      "cc.excelUploadButton.v0_0_4": "./thirdparty/customControl/excelUploadButton/v0_0_4"
     },
     "routing": {
       "config": {
