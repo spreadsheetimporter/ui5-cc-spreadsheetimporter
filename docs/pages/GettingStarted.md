@@ -10,8 +10,8 @@ For more information, please see the Page [Central Deployment](CentralDeployment
 
 ## Setup
 
-Here are the manual steps how to integrate the ui5-cc-excelUpload component. For a simplified integration, a [yo generator](Generator.md) is also available.
-### Setup Decentralised deployment
+Here are the steps how to integrate the ui5-cc-excelUpload component manually. For a simplified integration, a [yo generator](Generator.md) is also available.
+### Setup Decentralized deployment
 
 1\. Install from npm
 
@@ -101,7 +101,7 @@ If you have done that, you can continue with the implementation of your Custom C
 ### Extension in manifest.json
 
 As a example, here is how your custom action can look like.  
-This example is from the [sample app](https://github.com/marianfoo/ui5-cc-excelUpload-sampleapp/blob/744f008b1b052a3df5594215d8d11811a8e646b7/packages/orders/webapp/manifest.json#L145-L157) for the object page.
+This example is from the [sample app](https://github.com/marianfoo/ui5-cc-excelUpload/blob/47d22cdc42aa1cacfd797bdc0e025b830330dc5e/examples/packages/ordersv4fe/webapp/manifest.json#L158-L188) for the object page.
 
 ````json
 "OrdersObjectPage": {
@@ -155,8 +155,8 @@ openExcelUploadDialog: async function (oEvent) {
 
 ### Extension in manifest.json
 
-As a example, here is how you custom action can look like.  
-This example is from the [sample app](https://github.com/marianfoo/ui5-cc-excelUpload-sampleapp/blob/744f008b1b052a3df5594215d8d11811a8e646b7/packages/ordersv2/webapp/manifest.json#L110-L134) for the object page.
+As a example, here is how your custom action can look like.  
+This example is from the [sample app](https://github.com/marianfoo/ui5-cc-excelUpload/blob/47d22cdc42aa1cacfd797bdc0e025b830330dc5e/examples/packages/ordersv2fe/webapp/manifest.json#L115-L135) for the object page.
 
 ````json
 "extends": {

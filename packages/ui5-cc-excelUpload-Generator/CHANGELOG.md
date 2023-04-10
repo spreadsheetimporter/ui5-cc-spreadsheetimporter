@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.2.4](https://github.com/marianfoo/ui5-cc-excelUpload/compare/generator-ui5-excelupload-v0.2.3...generator-ui5-excelupload-v0.2.4) (2023-04-07)
+## 0.2.4 (2023-04-07)
 
 
 ### Bug Fixes

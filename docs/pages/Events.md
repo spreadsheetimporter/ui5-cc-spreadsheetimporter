@@ -4,7 +4,7 @@ There are extension points in form of events, where you can intervene and manipu
 When the file is uploaded to the App, the `checkBeforeRead` is fired.
 
 #### Example
-This sample is from the [sample app](https://github.com/marianfoo/ui5-cc-excelUpload-sampleapp/blob/744f008b1b052a3df5594215d8d11811a8e646b7/packages/orders/webapp/ext/ObjectPageExtController.js#L26-L44). 
+This sample is from the [sample app](https://github.com/marianfoo/ui5-cc-excelUpload/blob/47d22cdc42aa1cacfd797bdc0e025b830330dc5e/examples/packages/ordersv4fe/webapp/ext/ObjectPageExtController.js#L24-L42). 
 It checks whether the price is over 100. 
 ````javascript
 this.excelUpload.attachCheckBeforeRead(function(oEvent) {
@@ -43,7 +43,7 @@ The Errors with the same title will be grouped.
 When the `Upload` button is pressed, the `changeBeforeCreate` is fired.
 
 #### Example
-This sample is from the [sample app](https://github.com/marianfoo/ui5-cc-excelUpload-sampleapp/blob/744f008b1b052a3df5594215d8d11811a8e646b7/packages/orders/webapp/ext/ObjectPageExtController.js#L47-L54).
+This sample is from the [sample app](https://github.com/marianfoo/ui5-cc-excelUpload/blob/47d22cdc42aa1cacfd797bdc0e025b830330dc5e/examples/packages/ordersv4fe/webapp/ext/ObjectPageExtController.js#L45-L52).
 This is a sample to overwrite the payload.  
 
 ````javascript
