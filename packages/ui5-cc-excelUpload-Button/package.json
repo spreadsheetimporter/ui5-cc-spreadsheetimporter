@@ -1,6 +1,6 @@
 {
   "name": "ui5-cc-excelupload-button",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "",
   "main": "ExcelUpload.js",
   "scripts": {
@@ -21,7 +21,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "ui5-cc-excelupload": "0.12.2"
+    "ui5-cc-excelupload": "0.12.3"
   },
   "devDependencies": {
     "eslint": "^7.19.0",

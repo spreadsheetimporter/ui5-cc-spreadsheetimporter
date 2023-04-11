@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.3](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.12.2...ui5-cc-excelupload-v0.12.3) (2023-04-11)
+
+
+### Bug Fixes
+
+* enablement for V4 FPM ([#135](https://github.com/marianfoo/ui5-cc-excelUpload/issues/135)) ([1bf89ba](https://github.com/marianfoo/ui5-cc-excelUpload/commit/1bf89bae4375f202ed04113fa183da7fcc0a55ba))
+
 ## [0.12.2](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.12.1...ui5-cc-excelupload-v0.12.2) (2023-04-10)
 
 
