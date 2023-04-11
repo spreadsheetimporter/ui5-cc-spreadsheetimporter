@@ -20,9 +20,7 @@
         "uri": "/orders/",
         "type": "OData",
         "settings": {
-          "annotations": [
-            "annotation"
-          ],
+          "annotations": ["annotation"],
           "localUri": "localService/metadata.xml",
           "odataVersion": "4.0"
         }
@@ -55,7 +53,7 @@
   "sap.ui5": {
     "flexEnabled": true,
     "dependencies": {
-      "minUI5Version": "1.108.9",
+      "minUI5Version": "1.108.11",
       "libs": {
         "sap.m": {},
         "sap.ui.core": {},
@@ -99,7 +97,7 @@
     },
     "resourceRoots": {
       "cc.excelUpload.v0_12_2": "./thirdparty/customControl/excelUpload/v0_12_2",
-      "cc.excelUploadButton.v0.0.5": "./thirdparty/customControl/excelUploadButton/v0_0_5"
+      "cc.excelUploadButton.v0_0_5": "./thirdparty/customControl/excelUploadButton/v0_0_5"
     },
     "routing": {
       "config": {},

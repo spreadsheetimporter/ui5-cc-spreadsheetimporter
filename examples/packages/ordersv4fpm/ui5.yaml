@@ -4,28 +4,22 @@ specVersion: "2.5"
 metadata:
   name: ui.v4.ordersv4fpm
 type: application
+framework:
+  name: SAPUI5
+  version: 1.108.11
+  libraries:
+    - name: sap.ui.core
+    - name: sap.m
+    - name: sap.ui.comp
+    - name: sap.ushell
+    - name: sap.fe.templates
+    - name: themelib_sap_horizon
 server:
   customMiddleware:
-    - name: fiori-tools-proxy
+    - name: ui5-middleware-simpleproxy
       afterMiddleware: compression
+      mountPath: /orders
       configuration:
-        ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
-        ui5:
-          path:
-            - /resources
-            - /test-resources
-          url: https://ui5.sap.com
-        backend:
-          - path: /orders
-            url: http://localhost:4004
-    - name: fiori-tools-appreload
-      afterMiddleware: compression
-      configuration:
-        port: 35734
-        path: webapp
-        delay: 300
-    - name: fiori-tools-preview
-      afterMiddleware: fiori-tools-appreload
-      configuration:
-        component: ui.v4.ordersv4fpm
-        ui5Theme: sap_horizon
+        baseUri: "http://localhost:4004/orders"
+        excludePatterns:
+          - "/local/**"

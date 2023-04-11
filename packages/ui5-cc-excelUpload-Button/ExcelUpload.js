@@ -36,7 +36,7 @@ sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
 			},
 			events: {
 				press: function (e) {
-					alert("clicked")
+					//alert("clicked")
 				}
 			}
 		},
@@ -47,14 +47,39 @@ sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
 		renderer: async function (oRm, oControl) {
 			sap.m.ButtonRenderer.render(oRm, oControl)
 			const view = oControl._getViewControllerOfControl(oControl)
-			oControl.excelUpload = await view.getOwnerComponent().createComponent({
-				usage: "excelUpload",
-				async: true,
-				componentData: {
-					context: view,
-					tableId: oControl.getTableId()
-				}
-			})
+			if (view.getAppComponent) {
+				oControl.excelUpload = await view.getAppComponent().createComponent({
+					usage: "excelUpload",
+					async: true,
+					componentData: {
+						context: view,
+						excelFileName: oControl.getExcelFileName(),
+						columns: oControl.getColumns(),
+						tableId: oControl.getTableId(),
+						odataType: oControl.getOdataType(),
+						mandatoryFields: oControl.getMandatoryFields(),
+						fieldMatchType: oControl.getFieldMatchType(),
+						activateDraft: oControl.getActivateDraft(),
+						batchSize: oControl.getBatchSize()
+					}
+				})
+			} else {
+				oControl.excelUpload = await view.getOwnerComponent().createComponent({
+					usage: "excelUpload",
+					async: true,
+					componentData: {
+						context: view,
+						excelFileName: oControl.getExcelFileName(),
+						columns: oControl.getColumns(),
+						tableId: oControl.getTableId(),
+						odataType: oControl.getOdataType(),
+						mandatoryFields: oControl.getMandatoryFields(),
+						fieldMatchType: oControl.getFieldMatchType(),
+						activateDraft: oControl.getActivateDraft(),
+						batchSize: oControl.getBatchSize()
+					}
+				})
+			}
 		},
 		press: function (event) {
 			console.log("test")
