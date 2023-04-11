@@ -18,6 +18,7 @@ permissions:
 jobs:
   link-checker:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.title !== 'chore: release main'
     steps:
       - name: "Checkout source code"
         uses: actions/checkout@v3
