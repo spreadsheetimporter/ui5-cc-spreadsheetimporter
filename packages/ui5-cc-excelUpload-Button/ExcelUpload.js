@@ -6,9 +6,6 @@ sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
 					type: "string",
 					defaultValue: "Template.xlsx"
 				},
-				context: {
-					type: "object"
-				},
 				columns: {
 					type: "string[]"
 				},
@@ -35,8 +32,16 @@ sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
 				}
 			},
 			events: {
-				press: function (e) {
-					//alert("clicked")
+				checkBeforeRead: {
+					parameters: {
+						sheetData: { type: "object" },
+						errorResults: { type: "object" }
+					}
+				},
+				changeBeforeCreate: {
+					parameters: {
+						payload: { type: "object" }
+					}
 				}
 			}
 		},
@@ -80,10 +85,22 @@ sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
 					}
 				})
 			}
+			oControl.excelUpload.attachCheckBeforeRead(function (oEvent) {
+				this.fireEvent("checkBeforeRead", { sheetData: oEvent.getParameter("sheetData") })
+			}, oControl)
+			oControl.excelUpload.attachChangeBeforeCreate(function (oEvent) {
+				this.fireEvent("changeBeforeCreate", { payload: oEvent.getParameter("payload") })
+			}, oControl)
 		},
 		press: function (event) {
-			console.log("test")
 			this.excelUpload.openExcelUploadDialog()
+		},
+
+		addToErrorsResults: function (errorArray) {
+			this.excelUpload.addToErrorsResults(errorArray)
+		},
+		setPayload: function (payload) {
+			this.excelUpload.setPayload(payload)
 		},
 		_getViewControllerOfControl(oControl) {
 			var oView = null

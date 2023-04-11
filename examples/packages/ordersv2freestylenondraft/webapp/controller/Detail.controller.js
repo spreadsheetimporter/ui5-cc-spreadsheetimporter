@@ -193,26 +193,32 @@ sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel", "../model/form
 			this.getView().setBusy(false);
 		},
 
-		openExcelUploadButton: async function (oEvent) {
-			this.getView().setBusyIndicatorDelay(0);
-			this.getView().setBusy(true);
-			if (!this.excelUploadButton) {
-				this.excelUploadButton = await this.getView()
-					.getController()
-					.getOwnerComponent()
-					.createComponent({
-						usage: "excelUpload",
-						async: true,
-						componentData: {
-							context: this,
-							context: this,
-							activateDraft: false,
-							tableId: "container-ui.v2.ordersv2freestyle---detail--lineItemsList"
-						}
-					});
+		checkBeforeRead(oEvent) {
+			const sheetData = oEvent.getParameter("sheetData");
+			let errorArray = [];
+			for (const [index, row] of sheetData.entries()) {
+				//check for invalid price
+				if (row.UnitPrice) {
+					if (row.UnitPrice > 100) {
+						const error = {
+							title: "Price to high (max 100)",
+							row: index + 2,
+							group: true
+						};
+						errorArray.push(error);
+					}
+				}
 			}
-			this.excelUploadButton.openExcelUploadDialog();
-			this.getView().setBusy(false);
+			oEvent.getSource().addToErrorsResults(errorArray);
+		},
+
+		changeBeforeCreate(oEvent) {
+			let payload = oEvent.getParameter("payload");
+			// round number from 12,56 to 12,6
+			if (payload.price) {
+				payload.price = Number(payload.price.toFixed(1));
+			}
+			oEvent.getSource().setPayload(payload);
 		},
 
 		_onMetadataLoaded: function () {
