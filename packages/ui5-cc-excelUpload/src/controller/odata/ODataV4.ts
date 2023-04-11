@@ -42,7 +42,7 @@ export default class ODataV4 extends OData {
 	}
 
 	getView(context: any) {
-		return context._view;
+		return context._view || context.oView;
 	}
 
 	getOdataType(binding: any, tableObject: any, odataType: any) {
