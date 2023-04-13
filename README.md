@@ -38,4 +38,4 @@ https://marianfoo.github.io/ui5-cc-excelUpload/pages/Development/GettingStarted/
 
 ## Changelog `ui5-cc-excelupload`
 
-See [CHANGELOG.md]([CHANGELOG.md](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/packages/ui5-cc-excelUpload/CHANGELOG.md))
+See [CHANGELOG.md](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/packages/ui5-cc-excelUpload/CHANGELOG.md)
