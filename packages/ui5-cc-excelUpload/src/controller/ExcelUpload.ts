@@ -104,21 +104,23 @@ export default class ExcelUpload {
 		this.view = this.odataHandler.getView(this.context);
 		this.tableObject = this.odataHandler.getTableObject(this.component.getTableId(), this.view);
 		this.component.setTableId(this.tableObject.getId());
-		this.binding = this.odataHandler.getBinding(this.tableObject);
-		if (!this.binding) {
-			throw new Error(this.util.geti18nText("bindingError"));
-		}
-		const odataType = this.odataHandler.getOdataType(this.binding, this.tableObject, this.component.getOdataType());
-		this.component.setOdataType(odataType);
-		this.typeLabelList = await this.odataHandler.createLabelList(this.component.getColumns(), odataType, this.tableObject);
+		if (!this.component.getStandalone()) {
+			this.binding = this.odataHandler.getBinding(this.tableObject);
+			if (!this.binding) {
+				throw new Error(this.util.geti18nText("bindingError"));
+			}
+			const odataType = this.odataHandler.getOdataType(this.binding, this.tableObject, this.component.getOdataType());
+			this.component.setOdataType(odataType);
+			this.typeLabelList = await this.odataHandler.createLabelList(this.component.getColumns(), odataType, this.tableObject);
 
-		this.model = this.tableObject.getModel();
-		try {
-			// Load the DraftController asynchronously using the loadDraftController function
-			const DraftController: sap.ui.generic.app.transaction.DraftController = await this._loadDraftController();
-			// Create an instance of the DraftController
-			this.odataHandler.draftController = new DraftController(this.model, undefined);
-		} catch (error) {}
+			this.model = this.tableObject.getModel();
+			try {
+				// Load the DraftController asynchronously using the loadDraftController function
+				const DraftController: sap.ui.generic.app.transaction.DraftController = await this._loadDraftController();
+				// Create an instance of the DraftController
+				this.odataHandler.draftController = new DraftController(this.model, undefined);
+			} catch (error) {}
+		}
 	}
 
 	/**
@@ -176,12 +178,18 @@ export default class ExcelUpload {
 				}
 			}
 
-			this.errorHandler.checkMandatoryFields(excelSheetsData, this.component.getMandatoryFields(), this.typeLabelList);
-			this.errorHandler.checkColumnNames(columnNames, this.component.getFieldMatchType(), this.typeLabelList);
+			if (!this.component.getStandalone()) {
+				this.errorHandler.checkMandatoryFields(excelSheetsData, this.component.getMandatoryFields(), this.typeLabelList);
+				this.errorHandler.checkColumnNames(columnNames, this.component.getFieldMatchType(), this.typeLabelList);
+			}
+			this.payload = excelSheetsData;
 			this.component.fireCheckBeforeRead({ sheetData: excelSheetsData });
-
-			this.payloadArray = [];
-			this.payloadArray = Parser.parseExcelData(excelSheetsData, this.typeLabelList, this.component, this.errorHandler, this.util);
+			if (!this.component.getStandalone()) {
+				this.payloadArray = [];
+				this.payloadArray = Parser.parseExcelData(this.payload, this.typeLabelList, this.component, this.errorHandler, this.util);
+			} else {
+				this.payloadArray = this.payload;
+			}
 
 			if (this.errorHandler.areErrorsPresent()) {
 				// show error dialog
@@ -319,12 +327,19 @@ export default class ExcelUpload {
 		// create excel column list
 		let fieldMatchType = this.component.getFieldMatchType();
 		var excelColumnList = [{}];
-		for (let [key, value] of Object.entries(this.typeLabelList)) {
-			if (fieldMatchType === "label") {
-				excelColumnList[0][value.label] = "";
+		if (this.component.getStandalone()) {
+			// loop over this.component.getColumns
+			for (let column of this.component.getColumns()) {
+				excelColumnList[0][column] = "";
 			}
-			if (fieldMatchType === "labelTypeBrackets") {
-				excelColumnList[0][`${value.label}[${key}]`] = "";
+		} else {
+			for (let [key, value] of Object.entries(this.typeLabelList)) {
+				if (fieldMatchType === "label") {
+					excelColumnList[0][value.label] = "";
+				}
+				if (fieldMatchType === "labelTypeBrackets") {
+					excelColumnList[0][`${value.label}[${key}]`] = "";
+				}
 			}
 		}
 
