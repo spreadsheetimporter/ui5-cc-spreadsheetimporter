@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.2.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-button-v0.1.0...ui5-cc-excelupload-button-v0.2.0) (2023-04-13)
+
+
+### Features
+
+* add event `uploadButtonPress` ([#143](https://github.com/marianfoo/ui5-cc-excelUpload/issues/143)) ([23b918c](https://github.com/marianfoo/ui5-cc-excelUpload/commit/23b918c42369bc3607a239037beb540b0ec90c60))
+* new option to upload in standalone mode ([#145](https://github.com/marianfoo/ui5-cc-excelUpload/issues/145)) ([ead496f](https://github.com/marianfoo/ui5-cc-excelUpload/commit/ead496fab2329723df23e40b7873b9e54d481413))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * ui5-cc-excelupload bumped from 0.12.3 to 0.13.0
+
 ## [0.1.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-button-v0.0.5...ui5-cc-excelupload-button-v0.1.0) (2023-04-11)
 
 
