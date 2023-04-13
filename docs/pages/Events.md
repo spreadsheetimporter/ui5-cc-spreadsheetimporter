@@ -75,5 +75,7 @@ It is possible to prevent the data send to the backend with the method `preventD
 this.excelUpload.attachChangeBeforeCreate(function (oEvent) {
     // prevent data send to backend
     oEvent.preventDefault();
+    // get payload
+    const payload = oEvent.getParameter("payload")
 }, this);
 ````
