@@ -53,7 +53,7 @@ function replaceVersionInExamples(versionSlash, version, ui5Apps, versionButton,
 			});
 		updatedResourceRoots[`cc.excelUpload.${version}`] = `./thirdparty/customControl/excelUpload/${versionSlash}`;
 		// add to every app even if it is not used
-		updatedResourceRoots[`cc.excelUploadButton.${versionButton}`] = `./thirdparty/customControl/excelUploadButton/${versionUnderscoreButton}`;
+		updatedResourceRoots[`cc.excelUploadButton.${versionUnderscoreButton}`] = `./thirdparty/customControl/excelUploadButton/${versionUnderscoreButton}`;
 		manifestData["sap.ui5"].resourceRoots = updatedResourceRoots
 		manifestData["sap.ui5"]["componentUsages"]["excelUpload"].name = `cc.excelUpload.${version}`;
 		// Stringify manifest data back to string
