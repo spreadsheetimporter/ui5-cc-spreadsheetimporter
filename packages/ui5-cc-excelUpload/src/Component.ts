@@ -3,6 +3,7 @@ import JSONModel from "sap/ui/model/json/JSONModel";
 import Device from "sap/ui/Device";
 import ExcelUpload from "./controller/ExcelUpload";
 import { ErrorMessage } from "./types";
+import { $ComponentSettings } from "sap/ui/core/Component";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
@@ -43,6 +44,12 @@ export default class Component extends UIComponent {
 				},
 			},
 			changeBeforeCreate: {
+				parameters: {
+					payload: { type: "object" },
+				},
+			},
+			uploadButtonPress: {
+				allowPreventDefault: true,
 				parameters: {
 					payload: { type: "object" },
 				},

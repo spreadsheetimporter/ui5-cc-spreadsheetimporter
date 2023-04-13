@@ -39,6 +39,11 @@ sap.ui.define([], function () {
 					oEvent.getSource().addToErrorsResults(errorArray);
 				}, this);
 
+				// event example to prevent uploading data to backend
+				this.excelUpload.attachUploadButtonPress(function (event) {
+					//event.preventDefault();
+				}, this);
+
 				// event to change data before send to backend
 				this.excelUpload.attachChangeBeforeCreate(function (oEvent) {
 					let payload = oEvent.getParameter("payload");

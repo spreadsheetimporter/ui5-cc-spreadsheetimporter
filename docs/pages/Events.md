@@ -1,9 +1,15 @@
 There are extension points in form of events, where you can intervene and manipulate data.
 
-### Check Data before Upload to App
+| Event | Description |
+| ------ | --- |
+| `checkBeforeRead` | Check Data before data uploaded to the UI5  |
+| `changeBeforeCreate` | Change Data before send to the backend |
+| `uploadButtonPress` | Fire when `Upload` Button is pressed, possible to prevent data send to backend |
+
+## Check Data before Upload to App
 When the file is uploaded to the App, the `checkBeforeRead` is fired.
 
-#### Example
+### Example
 This sample is from the [sample app](https://github.com/marianfoo/ui5-cc-excelUpload/blob/47d22cdc42aa1cacfd797bdc0e025b830330dc5e/examples/packages/ordersv4fe/webapp/ext/ObjectPageExtController.js#L24-L42). 
 It checks whether the price is over 100. 
 ````javascript
@@ -39,10 +45,10 @@ The Errors with the same title will be grouped.
 
 ![Error Dialog](./../images/error_dialog.png){ loading=lazy }
 
-### Manipulate Data before it is send to the backend
+## Manipulate Data before it is send to the backend
 When the `Upload` button is pressed, the `changeBeforeCreate` is fired.
 
-#### Example
+### Example
 This sample is from the [sample app](https://github.com/marianfoo/ui5-cc-excelUpload/blob/47d22cdc42aa1cacfd797bdc0e025b830330dc5e/examples/packages/ordersv4fe/webapp/ext/ObjectPageExtController.js#L45-L52).
 This is a sample to overwrite the payload.  
 
@@ -54,5 +60,19 @@ this.excelUpload.attachChangeBeforeCreate(function (oEvent) {
         payload.price = Number(payload.price.toFixed(1));
     }
     oEvent.getSource().setPayload(payload);
+}, this);
+````
+
+## Event when Upload Button is pressed
+When the `Upload` button is pressed, the `uploadButtonPress` is fired. The Event is fired before the `changeBeforeCreate` event.
+
+
+### Example
+
+
+````javascript
+this.excelUpload.attachChangeBeforeCreate(function (oEvent) {
+    // prevent data send to backend
+    oEvent.preventDefault();
 }, this);
 ````
