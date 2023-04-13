@@ -132,14 +132,10 @@ importers:
         version: 3.0.5(bluebird@3.7.2)
 
   examples/packages/ordersv2fe71:
-    specifiers:
-      "@sap-ux/ui5-middleware-fe-mockserver": ^2.1.74
-      "@sap/ux-specification": ^1.108.1
-      "@sap/ux-ui5-tooling": ^1.9.2
-      "@ui5/cli": 3.0.5
-      ui5-cc-excelupload: ./../../../
     dependencies:
-      ui5-cc-excelupload: link:../../..
+      ui5-cc-excelupload:
+        specifier: ./../../../packages/ui5-cc-excelUpload
+        version: link:../../../packages/ui5-cc-excelUpload
     devDependencies:
       "@sap-ux/ui5-middleware-fe-mockserver":
         specifier: ^2.1.74
@@ -155,14 +151,10 @@ importers:
         version: 3.0.5(bluebird@3.7.2)
 
   examples/packages/ordersv2fe84:
-    specifiers:
-      "@sap-ux/ui5-middleware-fe-mockserver": ^2.1.74
-      "@sap/ux-specification": ^1.108.1
-      "@sap/ux-ui5-tooling": ^1.9.2
-      "@ui5/cli": 3.0.5
-      ui5-cc-excelupload: ./../../../
     dependencies:
-      ui5-cc-excelupload: link:../../..
+      ui5-cc-excelupload:
+        specifier: ./../../../packages/ui5-cc-excelUpload
+        version: link:../../../packages/ui5-cc-excelUpload
     devDependencies:
       "@sap-ux/ui5-middleware-fe-mockserver":
         specifier: ^2.1.74
@@ -178,14 +170,10 @@ importers:
         version: 3.0.5(bluebird@3.7.2)
 
   examples/packages/ordersv2fe96:
-    specifiers:
-      "@sap-ux/ui5-middleware-fe-mockserver": ^2.1.74
-      "@sap/ux-specification": ^1.108.1
-      "@sap/ux-ui5-tooling": ^1.9.2
-      "@ui5/cli": 3.0.5
-      ui5-cc-excelupload: ./../../../
     dependencies:
-      ui5-cc-excelupload: link:../../..
+      ui5-cc-excelupload:
+        specifier: ./../../../packages/ui5-cc-excelUpload
+        version: link:../../../packages/ui5-cc-excelUpload
     devDependencies:
       "@sap-ux/ui5-middleware-fe-mockserver":
         specifier: ^2.1.74
@@ -220,14 +208,10 @@ importers:
         version: 3.0.5(bluebird@3.7.2)
 
   examples/packages/ordersv2fenondraft71:
-    specifiers:
-      "@sap-ux/ui5-middleware-fe-mockserver": ^2.1.74
-      "@sap/ux-specification": ^1.108.1
-      "@sap/ux-ui5-tooling": ^1.9.2
-      "@ui5/cli": 3.0.5
-      ui5-cc-excelupload: ./../../../
     dependencies:
-      ui5-cc-excelupload: link:../../..
+      ui5-cc-excelupload:
+        specifier: ./../../../packages/ui5-cc-excelUpload
+        version: link:../../../packages/ui5-cc-excelUpload
     devDependencies:
       "@sap-ux/ui5-middleware-fe-mockserver":
         specifier: ^2.1.74
@@ -243,14 +227,10 @@ importers:
         version: 3.0.5(bluebird@3.7.2)
 
   examples/packages/ordersv2fenondraft84:
-    specifiers:
-      "@sap-ux/ui5-middleware-fe-mockserver": ^2.1.74
-      "@sap/ux-specification": ^1.108.1
-      "@sap/ux-ui5-tooling": ^1.9.2
-      "@ui5/cli": 3.0.5
-      ui5-cc-excelupload: ./../../../
     dependencies:
-      ui5-cc-excelupload: link:../../..
+      ui5-cc-excelupload:
+        specifier: ./../../../packages/ui5-cc-excelUpload
+        version: link:../../../packages/ui5-cc-excelUpload
     devDependencies:
       "@sap-ux/ui5-middleware-fe-mockserver":
         specifier: ^2.1.74
@@ -266,14 +246,10 @@ importers:
         version: 3.0.5(bluebird@3.7.2)
 
   examples/packages/ordersv2fenondraft96:
-    specifiers:
-      "@sap-ux/ui5-middleware-fe-mockserver": ^2.1.74
-      "@sap/ux-specification": ^1.108.1
-      "@sap/ux-ui5-tooling": ^1.9.2
-      "@ui5/cli": 3.0.5
-      ui5-cc-excelupload: ./../../../
     dependencies:
-      ui5-cc-excelupload: link:../../..
+      ui5-cc-excelupload:
+        specifier: ./../../../packages/ui5-cc-excelUpload
+        version: link:../../../packages/ui5-cc-excelUpload
     devDependencies:
       "@sap-ux/ui5-middleware-fe-mockserver":
         specifier: ^2.1.74
@@ -308,13 +284,13 @@ importers:
         version: 3.0.5(bluebird@3.7.2)
 
   examples/packages/ordersv2freestylenondraft71:
-    specifiers:
-      "@sap-ux/ui5-middleware-fe-mockserver": ^2.1.74
-      "@sap/ux-ui5-tooling": ^1.9.2
-      "@ui5/cli": 3.0.5
-      ui5-cc-excelupload: ./../../../
     dependencies:
-      ui5-cc-excelupload: link:../../..
+      ui5-cc-excelupload:
+        specifier: ./../../../packages/ui5-cc-excelUpload
+        version: link:../../../packages/ui5-cc-excelUpload
+      ui5-cc-excelupload-button:
+        specifier: ./../../../packages/ui5-cc-excelUpload-Button
+        version: link:../../../packages/ui5-cc-excelUpload-Button
     devDependencies:
       "@sap-ux/ui5-middleware-fe-mockserver":
         specifier: ^2.1.74
@@ -327,13 +303,13 @@ importers:
         version: 3.0.5(bluebird@3.7.2)
 
   examples/packages/ordersv2freestylenondraft84:
-    specifiers:
-      "@sap-ux/ui5-middleware-fe-mockserver": ^2.1.74
-      "@sap/ux-ui5-tooling": ^1.9.2
-      "@ui5/cli": 3.0.5
-      ui5-cc-excelupload: ./../../../
     dependencies:
-      ui5-cc-excelupload: link:../../..
+      ui5-cc-excelupload:
+        specifier: ./../../../packages/ui5-cc-excelUpload
+        version: link:../../../packages/ui5-cc-excelUpload
+      ui5-cc-excelupload-button:
+        specifier: ./../../../packages/ui5-cc-excelUpload-Button
+        version: link:../../../packages/ui5-cc-excelUpload-Button
     devDependencies:
       "@sap-ux/ui5-middleware-fe-mockserver":
         specifier: ^2.1.74
@@ -346,13 +322,13 @@ importers:
         version: 3.0.5(bluebird@3.7.2)
 
   examples/packages/ordersv2freestylenondraft96:
-    specifiers:
-      "@sap-ux/ui5-middleware-fe-mockserver": ^2.1.74
-      "@sap/ux-ui5-tooling": ^1.9.2
-      "@ui5/cli": 3.0.5
-      ui5-cc-excelupload: ./../../../
     dependencies:
-      ui5-cc-excelupload: link:../../..
+      ui5-cc-excelupload:
+        specifier: ./../../../packages/ui5-cc-excelUpload
+        version: link:../../../packages/ui5-cc-excelUpload
+      ui5-cc-excelupload-button:
+        specifier: ./../../../packages/ui5-cc-excelUpload-Button
+        version: link:../../../packages/ui5-cc-excelUpload-Button
     devDependencies:
       "@sap-ux/ui5-middleware-fe-mockserver":
         specifier: ^2.1.74
@@ -384,13 +360,13 @@ importers:
         version: 3.0.5(bluebird@3.7.2)
 
   examples/packages/ordersv2freestylenondraftopenui571:
-    specifiers:
-      "@sap-ux/ui5-middleware-fe-mockserver": ^2.1.74
-      "@sap/ux-ui5-tooling": ^1.9.2
-      "@ui5/cli": 3.0.5
-      ui5-cc-excelupload: ./../../../
     dependencies:
-      ui5-cc-excelupload: link:../../..
+      ui5-cc-excelupload:
+        specifier: ./../../../packages/ui5-cc-excelUpload
+        version: link:../../../packages/ui5-cc-excelUpload
+      ui5-cc-excelupload-button:
+        specifier: ./../../../packages/ui5-cc-excelUpload-Button
+        version: link:../../../packages/ui5-cc-excelUpload-Button
     devDependencies:
       "@sap-ux/ui5-middleware-fe-mockserver":
         specifier: ^2.1.74
@@ -403,13 +379,13 @@ importers:
         version: 3.0.5(bluebird@3.7.2)
 
   examples/packages/ordersv2freestylenondraftopenui584:
-    specifiers:
-      "@sap-ux/ui5-middleware-fe-mockserver": ^2.1.74
-      "@sap/ux-ui5-tooling": ^1.9.2
-      "@ui5/cli": 3.0.5
-      ui5-cc-excelupload: ./../../../
     dependencies:
-      ui5-cc-excelupload: link:../../..
+      ui5-cc-excelupload:
+        specifier: ./../../../packages/ui5-cc-excelUpload
+        version: link:../../../packages/ui5-cc-excelUpload
+      ui5-cc-excelupload-button:
+        specifier: ./../../../packages/ui5-cc-excelUpload-Button
+        version: link:../../../packages/ui5-cc-excelUpload-Button
     devDependencies:
       "@sap-ux/ui5-middleware-fe-mockserver":
         specifier: ^2.1.74
@@ -422,13 +398,13 @@ importers:
         version: 3.0.5(bluebird@3.7.2)
 
   examples/packages/ordersv2freestylenondraftopenui596:
-    specifiers:
-      "@sap-ux/ui5-middleware-fe-mockserver": ^2.1.74
-      "@sap/ux-ui5-tooling": ^1.9.2
-      "@ui5/cli": 3.0.5
-      ui5-cc-excelupload: ./../../../
     dependencies:
-      ui5-cc-excelupload: link:../../..
+      ui5-cc-excelupload:
+        specifier: ./../../../packages/ui5-cc-excelUpload
+        version: link:../../../packages/ui5-cc-excelUpload
+      ui5-cc-excelupload-button:
+        specifier: ./../../../packages/ui5-cc-excelUpload-Button
+        version: link:../../../packages/ui5-cc-excelUpload-Button
     devDependencies:
       "@sap-ux/ui5-middleware-fe-mockserver":
         specifier: ^2.1.74
@@ -460,49 +436,61 @@ importers:
         version: 3.0.6(bluebird@3.7.2)
 
   examples/packages/ordersv4fe71:
-    specifiers:
-      "@sap-ux/ui5-middleware-fe-mockserver": ^2.1.74
-      "@sap/ux-specification": ^1.108.1
-      "@sap/ux-ui5-tooling": ^1.9.2
-      "@ui5/cli": 3.0.5
-      ui5-cc-excelupload: ./../../../
     dependencies:
-      ui5-cc-excelupload: link:../../..
+      ui5-cc-excelupload:
+        specifier: ./../../../packages/ui5-cc-excelUpload
+        version: link:../../../packages/ui5-cc-excelUpload
     devDependencies:
-      "@sap-ux/ui5-middleware-fe-mockserver": 2.1.78
-      "@sap/ux-specification": 1.108.2
-      "@sap/ux-ui5-tooling": 1.9.3
-      "@ui5/cli": 3.0.5
+      "@sap-ux/ui5-middleware-fe-mockserver":
+        specifier: ^2.1.74
+        version: 2.1.78
+      "@sap/ux-specification":
+        specifier: ^1.108.1
+        version: 1.108.2
+      "@sap/ux-ui5-tooling":
+        specifier: ^1.9.3
+        version: 1.9.3
+      "@ui5/cli":
+        specifier: 3.0.6
+        version: 3.0.6(bluebird@3.7.2)
 
   examples/packages/ordersv4fe84:
-    specifiers:
-      "@sap-ux/ui5-middleware-fe-mockserver": ^2.1.74
-      "@sap/ux-specification": ^1.108.1
-      "@sap/ux-ui5-tooling": ^1.9.2
-      "@ui5/cli": 3.0.5
-      ui5-cc-excelupload: ./../../../
     dependencies:
-      ui5-cc-excelupload: link:../../..
+      ui5-cc-excelupload:
+        specifier: ./../../../packages/ui5-cc-excelUpload
+        version: link:../../../packages/ui5-cc-excelUpload
     devDependencies:
-      "@sap-ux/ui5-middleware-fe-mockserver": 2.1.78
-      "@sap/ux-specification": 1.108.2
-      "@sap/ux-ui5-tooling": 1.9.3
-      "@ui5/cli": 3.0.5
+      "@sap-ux/ui5-middleware-fe-mockserver":
+        specifier: ^2.1.74
+        version: 2.1.78
+      "@sap/ux-specification":
+        specifier: ^1.108.1
+        version: 1.108.2
+      "@sap/ux-ui5-tooling":
+        specifier: ^1.9.3
+        version: 1.9.3
+      "@ui5/cli":
+        specifier: 3.0.6
+        version: 3.0.6(bluebird@3.7.2)
 
   examples/packages/ordersv4fe96:
-    specifiers:
-      "@sap-ux/ui5-middleware-fe-mockserver": ^2.1.74
-      "@sap/ux-specification": ^1.108.1
-      "@sap/ux-ui5-tooling": ^1.9.2
-      "@ui5/cli": 3.0.5
-      ui5-cc-excelupload: ./../../../
     dependencies:
-      ui5-cc-excelupload: link:../../..
+      ui5-cc-excelupload:
+        specifier: ./../../../packages/ui5-cc-excelUpload
+        version: link:../../../packages/ui5-cc-excelUpload
     devDependencies:
-      "@sap-ux/ui5-middleware-fe-mockserver": 2.1.78
-      "@sap/ux-specification": 1.108.2
-      "@sap/ux-ui5-tooling": 1.9.3
-      "@ui5/cli": 3.0.5
+      "@sap-ux/ui5-middleware-fe-mockserver":
+        specifier: ^2.1.74
+        version: 2.1.78
+      "@sap/ux-specification":
+        specifier: ^1.108.1
+        version: 1.108.2
+      "@sap/ux-ui5-tooling":
+        specifier: ^1.9.3
+        version: 1.9.3
+      "@ui5/cli":
+        specifier: 3.0.6
+        version: 3.0.6(bluebird@3.7.2)
 
   examples/packages/ordersv4fpm:
     dependencies:
@@ -530,14 +518,10 @@ importers:
         version: 0.9.5
 
   examples/packages/ordersv4fpm96:
-    specifiers:
-      "@sap-ux/ui5-middleware-fe-mockserver": ^2.1.74
-      "@sap/ux-specification": ^1.108.1
-      "@sap/ux-ui5-tooling": ^1.9.2
-      "@ui5/cli": 3.0.5
-      ui5-cc-excelupload: ./../../../
     dependencies:
-      ui5-cc-excelupload: link:../../..
+      ui5-cc-excelupload:
+        specifier: ./../../../packages/ui5-cc-excelUpload
+        version: link:../../../packages/ui5-cc-excelUpload
     devDependencies:
       "@sap-ux/ui5-middleware-fe-mockserver":
         specifier: ^2.1.74
@@ -650,14 +634,10 @@ importers:
         version: 0.4.1
 
   packages/ui5-cc-excelUpload-Button:
-    specifiers:
-      eslint: ^7.19.0
-      eslint-plugin-jest: ^24.1.3
-      jest: ^26.6.3
-      jest-puppeteer: ^4.4.0
-      ui5-cc-excelupload: 0.12.0
     dependencies:
-      ui5-cc-excelupload: 0.12.0
+      ui5-cc-excelupload:
+        specifier: ../ui5-cc-excelupload
+        version: link:../ui5-cc-excelupload
     devDependencies:
       eslint:
         specifier: ^7.19.0
@@ -3323,7 +3303,7 @@ packages:
     resolution: { integrity: sha512-AY0VoG/AXdlSOocuREfPoEW4SNhOPp/7fw6mpAxfVIny1uZ+0fEtMoCi7NhELSlqQIRLMu7RgfKhkxT+AJ+EXg== }
     engines: { node: ^14.17.0 || ^16.13.0 || >=18.0.0 }
     dependencies:
-      minimatch: 7.4.5
+      minimatch: 7.4.6
     dev: true
 
   /@types/aria-query@5.0.1:
@@ -3903,7 +3883,7 @@ packages:
       globby: 13.1.3
       graceful-fs: 4.2.11
       micromatch: 4.0.5
-      minimatch: 7.4.5
+      minimatch: 7.4.6
       pretty-hrtime: 1.0.3
       random-int: 3.0.0
     dev: true
@@ -8514,7 +8494,7 @@ packages:
     resolution: { integrity: sha512-ezmQ1Dg2b3jVZh2Dh+ar6Eu2MqNSTkyb32HU2MAQQQX9tKM3q/UQ/9lf03lQ5hW+fOeoMnwxwkleZ0xcNp0/qg== }
     engines: { node: ^14.17.0 || ^16.13.0 || >=18.0.0 }
     dependencies:
-      minimatch: 7.4.5
+      minimatch: 7.4.6
     dev: true
 
   /ignore@3.3.10:
@@ -10767,6 +10747,13 @@ packages:
 
   /minimatch@7.4.5:
     resolution: { integrity: sha512-OzOamaOmNBJZUv2qqY1OSWa+++4YPpOkLgkc0w30Oov5ufKlWWXnFUl0l4dgmSv5Shq/zRVkEOXAe2NaqO4l5Q== }
+    engines: { node: ">=10" }
+    dependencies:
+      brace-expansion: 2.0.1
+    dev: true
+
+  /minimatch@7.4.6:
+    resolution: { integrity: sha512-sBz8G/YjVniEz6lKPNpKxXwazJe4c19fEfV2GDMX6AjFz+MX9uDWIZW8XreVhkFW3fkIdTv/gxWr/Kks5FFAVw== }
     engines: { node: ">=10" }
     dependencies:
       brace-expansion: 2.0.1
@@ -14256,13 +14243,18 @@ packages:
     resolution: { integrity: sha512-8Y75pvTYkLJW2hWQHXxoqRgV7qb9B+9vFEtidML+7koHUFapnVJAZ6cKs+Qjz5Aw3aZWHMC6u0wJE3At+nSGwA== }
     dev: true
 
-  /ui5-cc-excelupload/0.12.0:
-    resolution: { integrity: sha512-3tVFulg96rR4rRc7oQIHvcYnrcyCJ6upTA0W67oonlOZD0KRUZYu//ElBb6pnQVLDsaSIfxXfFCH3VnUVzI+rA== }
+  /ui5-middleware-simpleproxy@0.9.5:
+    resolution: { integrity: sha512-W10w0NaeMd6xC+oFUrkhAri8rxLJxEFzzDrwrLzCvYQVZfakHwAXihWtZB7YCOyG5Qj5aaKCfrW7QaGllC7L+w== }
     dependencies:
-      xlsx: 0.18.5
-    dev: false
+      "@ui5/logger": 2.0.1
+      dotenv: 16.0.3
+      express-http-proxy: 1.6.3
+      minimatch: 7.4.5
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
 
-  /ui5-tooling-modules/0.7.12:
+  /ui5-tooling-modules@0.7.12:
     resolution: { integrity: sha512-QcKAXdNqi28oYzNHnkHhSuIw4Vn4ZjeSxgQVsynVxY2KG0hgjfOKfG+UTk9ic3bAJ28/nao17OgRBL8WcFoZSQ== }
     dependencies:
       "@buxlabs/amd-to-es6": 0.16.3

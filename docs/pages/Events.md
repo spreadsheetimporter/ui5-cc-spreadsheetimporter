@@ -64,7 +64,8 @@ this.excelUpload.attachChangeBeforeCreate(function (oEvent) {
 ````
 
 ## Event when Upload Button is pressed
-When the `Upload` button is pressed, the `uploadButtonPress` is fired. The Event is fired before the `changeBeforeCreate` event.
+When the `Upload` button is pressed, the `uploadButtonPress` is fired. The Event is fired before the `changeBeforeCreate` event.  
+It is possible to prevent the data send to the backend with the method `preventDefault` of the event.
 
 
 ### Example
@@ -74,5 +75,7 @@ When the `Upload` button is pressed, the `uploadButtonPress` is fired. The Event
 this.excelUpload.attachChangeBeforeCreate(function (oEvent) {
     // prevent data send to backend
     oEvent.preventDefault();
+    // get payload
+    const payload = oEvent.getParameter("payload")
 }, this);
 ````

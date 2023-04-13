@@ -12,7 +12,8 @@ These options are available and explained in detail below:
 | `mandatoryFields`  | The selected fields are checked to see if they are present | string[] |
 | `fieldMatchType` | Defines what type of strategy is executed when matching excel columns | string |
 | `activateDraft` | Determines whether a draft should be activated immediately  | boolean |
-| `batchSize` | Determines bach sizes send to backend server  | boolean |
+| `batchSize` | Determines bach sizes send to backend server  | integer |
+| `standalone` | Mode if you do not have a table and want to do the processing yourself  | boolean |
 
 ### `columns`
 
@@ -103,3 +104,30 @@ When the number of lines in the Excel file exceeds the specified batchSize, the 
 The default value is 1,000, which means that when the number of lines in the Excel file exceeds 1,000, the payload array will be divided into equal parts, and each part will be sent as a separate batch request.
 
 If you set the batchSize to 0, the payload array will not be divided, and the entire array will be sent as a single batch request.
+
+
+### `standalone`
+
+**default:** `false`
+
+This option defines whether the plugin should be used in standalone mode or not.  
+If this option is set to `true`, no table is searched and therefore no context is needed.  
+The mandatory parameter `context` and the parameter `tableId` is no longer necessary.
+
+If you want to use the template download function, you have to set the parameter `columns`, otherwise the `Download Template` button will not be displayed.  
+The `payload` will be a array of objects with the keys named like the `columns` parameter.
+
+**Example:**
+
+
+````javascript
+this.excelUpload.attachUploadButtonPress(function (oEvent) {
+        const model = this.getModel("tableData");
+        model.setData(oEvent.getParameter("payload"));
+}, this);
+````
+
+An example of an implementation to display data of an Excelupload in a freestyle app can be found here:
+
+[UploadToTable.controller.js](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/examples/packages/ordersv2freestylenondraft/webapp/controller/UploadToTable.controller.js)  
+[UploadToTable.view.xml](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/examples/packages/ordersv2freestylenondraft/webapp/view/UploadToTable.view.xml)

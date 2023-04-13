@@ -105,6 +105,11 @@
           "pattern": "OrdersND/{objectId}",
           "name": "object",
           "target": ["list", "object"]
+        },
+        {
+          "pattern": "UploadToTable",
+          "name": "upload",
+          "target": "upload"
         }
       ],
       "targets": {
@@ -127,6 +132,10 @@
         "notFound": {
           "viewName": "NotFound",
           "viewId": "notFound"
+        },
+        "upload": {
+          "viewName": "UploadToTable",
+          "viewId": "uploadToTable"
         }
       }
     },

@@ -29,7 +29,8 @@ sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
 				batchSize: {
 					type: "int",
 					defaultValue: 1000
-				}
+				},
+				standalone: { type: "boolean", defaultValue: false }
 			},
 			events: {
 				checkBeforeRead: {
@@ -71,7 +72,8 @@ sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
 						mandatoryFields: oControl.getMandatoryFields(),
 						fieldMatchType: oControl.getFieldMatchType(),
 						activateDraft: oControl.getActivateDraft(),
-						batchSize: oControl.getBatchSize()
+						batchSize: oControl.getBatchSize(),
+						standalone: oControl.getStandalone()
 					}
 				})
 			} else {
@@ -87,7 +89,8 @@ sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
 						mandatoryFields: oControl.getMandatoryFields(),
 						fieldMatchType: oControl.getFieldMatchType(),
 						activateDraft: oControl.getActivateDraft(),
-						batchSize: oControl.getBatchSize()
+						batchSize: oControl.getBatchSize(),
+						standalone: oControl.getStandalone()
 					}
 				})
 			}
@@ -98,7 +101,7 @@ sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
 				this.fireChangeBeforeCreate({ payload: oEvent.getParameter("payload") })
 			}, oControl)
 			oControl.excelUpload.attachUploadButtonPress(function (oEvent) {
-				const isDefaultNotPrevented = this.fireUploadButtonPress({ payload: this.payload })
+				const isDefaultNotPrevented = this.fireUploadButtonPress({ payload: oEvent.getParameter("payload") })
 				if (!isDefaultNotPrevented) {
 					oEvent.preventDefault()
 				}

@@ -24,7 +24,7 @@ export default class MetadataHandler {
 			this.excelUploadController.component.setExcelFileName(`Template.xlsx`);
 		}
 
-		if (colums) {
+		if (colums.length > 0) {
 			for (const propertyName of colums) {
 				const property = properties.find((property: any) => property.name === propertyName);
 				if (property) {
@@ -92,7 +92,7 @@ export default class MetadataHandler {
 			this.excelUploadController.component.setExcelFileName(`Template.xlsx`);
 		}
 
-		if (colums) {
+		if (colums.length > 0) {
 			for (const propertyName of colums) {
 				const property = properties[propertyName];
 				if (property) {

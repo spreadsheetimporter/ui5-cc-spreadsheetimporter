@@ -19,6 +19,7 @@ import Button from "sap/m/Button";
 import Util from "./Util";
 import Parser from "./Parser";
 import ErrorHandler from "./ErrorHandler";
+import Bar from "sap/m/Bar";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
@@ -79,16 +80,22 @@ export default class ExcelUpload {
 			})) as Dialog;
 			this.dialog.setModel(this.componentI18n, "i18n");
 		}
-		this.metadataHandler = new MetadataHandler(this);
+		if (this.component.getStandalone() && this.component.getColumns().length === 0) {
+			(this.dialog.getSubHeader() as Bar).setVisible(false);
+			(this.dialog.getSubHeader() as Bar).getContentLeft()[0].setVisible(false);
+		}
 		this.errorHandler = new ErrorHandler(this);
-		this.odataHandler.metaDatahandler = this.metadataHandler;
-		try {
-			await this.setContext();
-			this.errorState = false;
-		} catch (error) {
-			this.errorMessage = error.message;
-			this.errorState = true;
-			console.error(error);
+		if (!this.component.getStandalone()) {
+			this.metadataHandler = new MetadataHandler(this);
+			this.odataHandler.metaDatahandler = this.metadataHandler;
+			try {
+				await this.setContext();
+				this.errorState = false;
+			} catch (error) {
+				this.errorMessage = error.message;
+				this.errorState = true;
+				console.error(error);
+			}
 		}
 	}
 
@@ -104,6 +111,7 @@ export default class ExcelUpload {
 		this.view = this.odataHandler.getView(this.context);
 		this.tableObject = this.odataHandler.getTableObject(this.component.getTableId(), this.view);
 		this.component.setTableId(this.tableObject.getId());
+
 		this.binding = this.odataHandler.getBinding(this.tableObject);
 		if (!this.binding) {
 			throw new Error(this.util.geti18nText("bindingError"));
@@ -176,12 +184,18 @@ export default class ExcelUpload {
 				}
 			}
 
-			this.errorHandler.checkMandatoryFields(excelSheetsData, this.component.getMandatoryFields(), this.typeLabelList);
-			this.errorHandler.checkColumnNames(columnNames, this.component.getFieldMatchType(), this.typeLabelList);
+			if (!this.component.getStandalone()) {
+				this.errorHandler.checkMandatoryFields(excelSheetsData, this.component.getMandatoryFields(), this.typeLabelList);
+				this.errorHandler.checkColumnNames(columnNames, this.component.getFieldMatchType(), this.typeLabelList);
+			}
+			this.payload = excelSheetsData;
 			this.component.fireCheckBeforeRead({ sheetData: excelSheetsData });
-
-			this.payloadArray = [];
-			this.payloadArray = Parser.parseExcelData(excelSheetsData, this.typeLabelList, this.component, this.errorHandler, this.util);
+			if (!this.component.getStandalone()) {
+				this.payloadArray = [];
+				this.payloadArray = Parser.parseExcelData(this.payload, this.typeLabelList, this.component, this.errorHandler, this.util);
+			} else {
+				this.payloadArray = this.payload;
+			}
 
 			if (this.errorHandler.areErrorsPresent()) {
 				// show error dialog
@@ -211,7 +225,7 @@ export default class ExcelUpload {
 	 */
 	async onUploadSet(event: Event) {
 		const isDefaultNotPrevented = this.component.fireUploadButtonPress({ payload: this.payload });
-		if (!isDefaultNotPrevented) {
+		if (!isDefaultNotPrevented || this.component.getStandalone()) {
 			this.onCloseDialog();
 			console.debug("Default action prevented. Data not sent to backend.");
 			return;
@@ -319,12 +333,19 @@ export default class ExcelUpload {
 		// create excel column list
 		let fieldMatchType = this.component.getFieldMatchType();
 		var excelColumnList = [{}];
-		for (let [key, value] of Object.entries(this.typeLabelList)) {
-			if (fieldMatchType === "label") {
-				excelColumnList[0][value.label] = "";
+		if (this.component.getStandalone()) {
+			// loop over this.component.getColumns
+			for (let column of this.component.getColumns()) {
+				excelColumnList[0][column] = "";
 			}
-			if (fieldMatchType === "labelTypeBrackets") {
-				excelColumnList[0][`${value.label}[${key}]`] = "";
+		} else {
+			for (let [key, value] of Object.entries(this.typeLabelList)) {
+				if (fieldMatchType === "label") {
+					excelColumnList[0][value.label] = "";
+				}
+				if (fieldMatchType === "labelTypeBrackets") {
+					excelColumnList[0][`${value.label}[${key}]`] = "";
+				}
 			}
 		}
 

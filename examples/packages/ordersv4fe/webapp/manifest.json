@@ -20,9 +20,7 @@
         "uri": "/orders/",
         "type": "OData",
         "settings": {
-          "annotations": [
-            "annotation"
-          ],
+          "annotations": ["annotation"],
           "localUri": "localService/metadata.xml",
           "odataVersion": "4.0"
         }
@@ -99,7 +97,7 @@
     },
     "resourceRoots": {
       "cc.excelUpload.v0_12_3": "./thirdparty/customControl/excelUpload/v0_12_3",
-      "cc.excelUploadButton.v0.1.0": "./thirdparty/customControl/excelUploadButton/v0_1_0"
+      "cc.excelUploadButton.v0_1_0": "./thirdparty/customControl/excelUploadButton/v0_1_0"
     },
     "routing": {
       "routes": [

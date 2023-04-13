@@ -16,6 +16,7 @@ declare module "./Component" {
 		fieldMatchType?: string | PropertyBindingInfo;
 		activateDraft?: boolean | PropertyBindingInfo | `{${string}}`;
 		batchSize?: number | PropertyBindingInfo | `{${string}}`;
+		standalone?: boolean | PropertyBindingInfo | `{${string}}`;
 		checkBeforeRead?: (event: Event) => void;
 		changeBeforeCreate?: (event: Event) => void;
 		uploadButtonPress?: (event: Event) => void;
@@ -57,6 +58,10 @@ declare module "./Component" {
 		// property: batchSize
 		getBatchSize(): number;
 		setBatchSize(batchSize: number): this;
+
+		// property: standalone
+		getStandalone(): boolean;
+		setStandalone(standalone: boolean): this;
 
 		// event: checkBeforeRead
 		attachCheckBeforeRead(fn: (event: Event) => void, listener?: object): this;

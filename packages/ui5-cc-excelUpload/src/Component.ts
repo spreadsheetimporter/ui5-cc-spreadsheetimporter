@@ -28,6 +28,7 @@ export default class Component extends UIComponent {
 			fieldMatchType: { type: "string", defaultValue: "label" },
 			activateDraft: { type: "boolean", defaultValue: false },
 			batchSize: { type: "int", defaultValue: 1000 },
+			standalone: { type: "boolean", defaultValue: false },
 		},
 		aggregations: {
 			rootControl: {
@@ -68,6 +69,10 @@ export default class Component extends UIComponent {
 		// if (typeof oCompData.renderButton === "boolean"){
 		// 	this.setRenderButton(oCompData.renderButton);
 		// }
+		// if oCompData.columns is undefined, then set it to an empty array
+		if (!oCompData.columns) {
+			oCompData.columns = [];
+		}
 		this.setContext(oCompData.context);
 		this.setColumns(oCompData.columns);
 		this.setTableId(oCompData.tableId);
@@ -76,6 +81,7 @@ export default class Component extends UIComponent {
 		this.setFieldMatchType(oCompData.fieldMatchType);
 		this.setActivateDraft(oCompData.activateDraft);
 		this.setBatchSize(oCompData.batchSize);
+		this.setStandalone(oCompData.standalone);
 
 		// call the init function of the parent - ATTENTION: this triggers createContent()
 		// call the base component's init function
