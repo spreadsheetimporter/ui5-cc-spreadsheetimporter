@@ -76,12 +76,12 @@
     },
     "componentUsages": {
       "excelUpload": {
-        "name": "cc.excelUpload.v0_12_3"
+        "name": "cc.excelUpload.v0_13_0"
       }
     },
     "resourceRoots": {
-      "cc.excelUpload.v0_12_3": "./thirdparty/customControl/excelUpload/v0_12_3",
-      "cc.excelUploadButton.v0_1_0": "./thirdparty/customControl/excelUploadButton/v0_1_0"
+      "cc.excelUpload.v0_13_0": "./thirdparty/customControl/excelUpload/v0_13_0",
+      "cc.excelUploadButton.v0_2_0": "./thirdparty/customControl/excelUploadButton/v0_2_0"
     },
     "routing": {
       "config": {
@@ -91,7 +91,9 @@
         "controlId": "layout",
         "controlAggregation": "beginColumnPages",
         "bypassed": {
-          "target": ["notFound"]
+          "target": [
+            "notFound"
+          ]
         },
         "async": true
       },
@@ -104,7 +106,10 @@
         {
           "pattern": "OrdersND/{objectId}",
           "name": "object",
-          "target": ["list", "object"]
+          "target": [
+            "list",
+            "object"
+          ]
         },
         {
           "pattern": "UploadToTable",
