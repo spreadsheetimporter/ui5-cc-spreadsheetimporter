@@ -33,7 +33,6 @@ sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel", "../model/form
 					usage: "excelUpload",
 					async: true,
 					componentData: {
-						context: this,
 						columns: ["product_ID", "username"],
 						standalone: true
 					}
@@ -111,7 +110,6 @@ sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel", "../model/form
 		uploadButtonPress(oEvent) {
 			const model = this.getModel("tableData");
 			model.setData(oEvent.getParameter("payload"));
-			oEvent.preventDefault();
 		}
 	});
 });

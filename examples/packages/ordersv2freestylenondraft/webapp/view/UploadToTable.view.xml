@@ -13,7 +13,7 @@
     </semantic:headerContent>
     <semantic:titleCustomTextActions>
       <Button text="Excel Upload Code" press="openExcelUpload" />
-      <excel:ExcelUpload id="excelUploadButton" standalone="true" text="Excel Upload Button" columns="product_ID,username" tableId="container-todo---uploadToTable--lineItemsList2" changeBeforeCreate="changeBeforeCreate" checkBeforeRead="checkBeforeRead" uploadButtonPress="uploadButtonPress"/>
+      <excel:ExcelUpload id="excelUploadButton" standalone="true" text="Excel Upload Button" columns="product_ID,username" changeBeforeCreate="changeBeforeCreate" checkBeforeRead="checkBeforeRead" uploadButtonPress="uploadButtonPress"/>
     </semantic:titleCustomTextActions>
     <semantic:content>
       <Table id="lineItemsList2" items="{tableData>/}" width="auto" noDataText="{i18n>detailLineItemTableNoDataText}" busyIndicatorDelay="{detailView>/lineItemTableDelay}">

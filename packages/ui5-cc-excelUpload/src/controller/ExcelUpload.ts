@@ -19,6 +19,7 @@ import Button from "sap/m/Button";
 import Util from "./Util";
 import Parser from "./Parser";
 import ErrorHandler from "./ErrorHandler";
+import Bar from "sap/m/Bar";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
@@ -79,16 +80,22 @@ export default class ExcelUpload {
 			})) as Dialog;
 			this.dialog.setModel(this.componentI18n, "i18n");
 		}
-		this.metadataHandler = new MetadataHandler(this);
+		if (this.component.getStandalone() && this.component.getColumns().length === 0) {
+			(this.dialog.getSubHeader() as Bar).setVisible(false);
+			(this.dialog.getSubHeader() as Bar).getContentLeft()[0].setVisible(false);
+		}
 		this.errorHandler = new ErrorHandler(this);
-		this.odataHandler.metaDatahandler = this.metadataHandler;
-		try {
-			await this.setContext();
-			this.errorState = false;
-		} catch (error) {
-			this.errorMessage = error.message;
-			this.errorState = true;
-			console.error(error);
+		if (!this.component.getStandalone()) {
+			this.metadataHandler = new MetadataHandler(this);
+			this.odataHandler.metaDatahandler = this.metadataHandler;
+			try {
+				await this.setContext();
+				this.errorState = false;
+			} catch (error) {
+				this.errorMessage = error.message;
+				this.errorState = true;
+				console.error(error);
+			}
 		}
 	}
 
@@ -104,23 +111,22 @@ export default class ExcelUpload {
 		this.view = this.odataHandler.getView(this.context);
 		this.tableObject = this.odataHandler.getTableObject(this.component.getTableId(), this.view);
 		this.component.setTableId(this.tableObject.getId());
-		if (!this.component.getStandalone()) {
-			this.binding = this.odataHandler.getBinding(this.tableObject);
-			if (!this.binding) {
-				throw new Error(this.util.geti18nText("bindingError"));
-			}
-			const odataType = this.odataHandler.getOdataType(this.binding, this.tableObject, this.component.getOdataType());
-			this.component.setOdataType(odataType);
-			this.typeLabelList = await this.odataHandler.createLabelList(this.component.getColumns(), odataType, this.tableObject);
 
-			this.model = this.tableObject.getModel();
-			try {
-				// Load the DraftController asynchronously using the loadDraftController function
-				const DraftController: sap.ui.generic.app.transaction.DraftController = await this._loadDraftController();
-				// Create an instance of the DraftController
-				this.odataHandler.draftController = new DraftController(this.model, undefined);
-			} catch (error) {}
+		this.binding = this.odataHandler.getBinding(this.tableObject);
+		if (!this.binding) {
+			throw new Error(this.util.geti18nText("bindingError"));
 		}
+		const odataType = this.odataHandler.getOdataType(this.binding, this.tableObject, this.component.getOdataType());
+		this.component.setOdataType(odataType);
+		this.typeLabelList = await this.odataHandler.createLabelList(this.component.getColumns(), odataType, this.tableObject);
+
+		this.model = this.tableObject.getModel();
+		try {
+			// Load the DraftController asynchronously using the loadDraftController function
+			const DraftController: sap.ui.generic.app.transaction.DraftController = await this._loadDraftController();
+			// Create an instance of the DraftController
+			this.odataHandler.draftController = new DraftController(this.model, undefined);
+		} catch (error) {}
 	}
 
 	/**
@@ -219,7 +225,7 @@ export default class ExcelUpload {
 	 */
 	async onUploadSet(event: Event) {
 		const isDefaultNotPrevented = this.component.fireUploadButtonPress({ payload: this.payload });
-		if (!isDefaultNotPrevented) {
+		if (!isDefaultNotPrevented || this.component.getStandalone()) {
 			this.onCloseDialog();
 			console.debug("Default action prevented. Data not sent to backend.");
 			return;
