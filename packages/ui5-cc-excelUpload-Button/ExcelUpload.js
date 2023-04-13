@@ -42,6 +42,12 @@ sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
 					parameters: {
 						payload: { type: "object" }
 					}
+				},
+				uploadButtonPress: {
+					allowPreventDefault: true,
+					parameters: {
+						payload: { type: "object" }
+					}
 				}
 			}
 		},
@@ -86,10 +92,16 @@ sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
 				})
 			}
 			oControl.excelUpload.attachCheckBeforeRead(function (oEvent) {
-				this.fireEvent("checkBeforeRead", { sheetData: oEvent.getParameter("sheetData") })
+				this.fireCheckBeforeRead({ sheetData: oEvent.getParameter("sheetData") })
 			}, oControl)
 			oControl.excelUpload.attachChangeBeforeCreate(function (oEvent) {
-				this.fireEvent("changeBeforeCreate", { payload: oEvent.getParameter("payload") })
+				this.fireChangeBeforeCreate({ payload: oEvent.getParameter("payload") })
+			}, oControl)
+			oControl.excelUpload.attachUploadButtonPress(function (oEvent) {
+				const isDefaultNotPrevented = this.fireUploadButtonPress({ payload: this.payload })
+				if (!isDefaultNotPrevented) {
+					oEvent.preventDefault()
+				}
 			}, oControl)
 		},
 		press: function (event) {

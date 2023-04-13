@@ -221,6 +221,10 @@ sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel", "../model/form
 			oEvent.getSource().setPayload(payload);
 		},
 
+		uploadButtonPress(oEvent) {
+			//oEvent.preventDefault();
+		},
+
 		_onMetadataLoaded: function () {
 			// Store original busy indicator delay for the detail view
 			var iOriginalViewBusyDelay = this.getView().getBusyIndicatorDelay(),

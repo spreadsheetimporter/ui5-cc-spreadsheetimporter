@@ -47,6 +47,11 @@ export default class ExcelUpload {
 	private initialSetupPromise: Promise<void>;
 	public errorArray: ErrorMessage[];
 
+	/**
+	 * Initializes ExcelUpload instance.
+	 * @param {Component} component - The component to be used.
+	 * @param {ResourceModel} componentI18n - The i18n resource model for the component.
+	 */
 	constructor(component: Component, componentI18n: ResourceModel) {
 		this.dialog = null;
 		this.errorState = false;
@@ -61,6 +66,10 @@ export default class ExcelUpload {
 		this.initialSetupPromise = this.initialSetup();
 	}
 
+	/**
+	 * Executes initial setup.
+	 * @returns {Promise<void>} A promise that resolves when the initial setup is complete.
+	 */
 	async initialSetup(): Promise<void> {
 		if (!this.dialog) {
 			this.dialog = (await Fragment.load({
@@ -83,6 +92,9 @@ export default class ExcelUpload {
 		}
 	}
 
+	/**
+	 * Sets context for the instance.
+	 */
 	async setContext() {
 		this.context = this.component.getContext();
 		if (this.context.base) {
@@ -109,6 +121,11 @@ export default class ExcelUpload {
 		} catch (error) {}
 	}
 
+	/**
+	 * Retrieves OData handler based on UI5 version.
+	 * @param {number} version - UI5 version number.
+	 * @returns {OData} OData handler instance.
+	 */
 	getODataHandler(version: number): OData {
 		if (this.isODataV4) {
 			return new ODataV4(version);
@@ -117,6 +134,9 @@ export default class ExcelUpload {
 		}
 	}
 
+	/**
+	 * Opens the Excel upload dialog.
+	 */
 	async openExcelUploadDialog() {
 		await this.initialSetupPromise;
 		if (this.errorState) {
@@ -131,6 +151,10 @@ export default class ExcelUpload {
 		}
 	}
 
+	/**
+	 * Handles file upload event.
+	 * @param {Event} event - The file upload event.
+	 */
 	async onFileUpload(event: Event) {
 		try {
 			this.errorHandler.setErrorResults([]);
@@ -174,6 +198,9 @@ export default class ExcelUpload {
 		}
 	}
 
+	/**
+	 * Closes the Excel upload dialog.
+	 */
 	onCloseDialog() {
 		this.dialog.close();
 	}
@@ -183,6 +210,12 @@ export default class ExcelUpload {
 	 * @param {*} event
 	 */
 	async onUploadSet(event: Event) {
+		const isDefaultNotPrevented = this.component.fireUploadButtonPress({ payload: this.payload });
+		if (!isDefaultNotPrevented) {
+			this.onCloseDialog();
+			console.debug("Default action prevented. Data not sent to backend.");
+			return;
+		}
 		// checking if excel file contains data or not
 		if (!this.payloadArray.length) {
 			MessageToast.show(this.util.geti18nText("selectFileUpload"));
@@ -235,9 +268,9 @@ export default class ExcelUpload {
 	}
 
 	/**
-	 * helper method to call OData
-	 * @param {*} fnResolve
-	 * @param {*} fnReject
+	 * Helper method to call OData service.
+	 * @param {*} fnResolve - The resolve function for the Promise.
+	 * @param {*} fnReject - The reject function for the Promise.
 	 */
 	async callOdata(fnResolve: any, fnReject: any) {
 		// intializing the message manager for displaying the odata response messages
@@ -362,7 +395,6 @@ export default class ExcelUpload {
 
 	/**
 	 * Dynamically loads the `sap.ui.generic.app.transaction.DraftController` module.
-	 *
 	 * @returns {Promise<sap.ui.generic.app.transaction.DraftController>} A Promise that resolves to an instance of the `DraftController` class.
 	 * @throws {Error} If the `DraftController` module cannot be loaded.
 	 */
@@ -380,10 +412,18 @@ export default class ExcelUpload {
 		});
 	}
 
+	/**
+	 * Returns error results from the ErrorHandler.
+	 * @returns {ErrorMessage[]} - An array of error messages.
+	 */
 	getErrorResults() {
 		return this.errorHandler.getErrorResults();
 	}
 
+	/**
+	 * Adds error messages to the ErrorHandler's error results.
+	 * @param {ErrorMessage[]} errorArray - An array of error messages to add.
+	 */
 	addToErrorsResults(errorArray: ErrorMessage[]) {
 		errorArray.forEach((error) => {
 			if (error.group) {
