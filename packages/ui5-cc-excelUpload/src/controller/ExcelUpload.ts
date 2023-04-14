@@ -20,6 +20,7 @@ import Util from "./Util";
 import Parser from "./Parser";
 import ErrorHandler from "./ErrorHandler";
 import Bar from "sap/m/Bar";
+import Log from "sap/base/Log";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
@@ -94,7 +95,7 @@ export default class ExcelUpload {
 			} catch (error) {
 				this.errorMessage = error.message;
 				this.errorState = true;
-				console.error(error);
+				Util.showError(error, "ExcelUpload.ts", "initialSetup");
 			}
 		}
 	}
@@ -155,7 +156,7 @@ export default class ExcelUpload {
 			this.dialog.open();
 		} else {
 			MessageBox.error(this.errorMessage);
-			console.error("ErrorState: True. Can not open dialog.");
+			Log.error("ErrorState: True. Can not open dialog.", "ExcelUpload.ts.openExcelUploadDialog");
 		}
 	}
 
@@ -206,9 +207,7 @@ export default class ExcelUpload {
 				return;
 			}
 		} catch (error) {
-			// show other errors
-			console.error(error);
-			MessageToast.show(error.message);
+			Util.showError(error, "ExcelUpload.ts", "onFileUpload");
 		}
 	}
 
@@ -270,7 +269,7 @@ export default class ExcelUpload {
 				try {
 					await this.context.extensionAPI.securedExecution(fnAddMessage, mParameters);
 				} catch (error) {
-					console.error(error);
+					Util.showError(error, "ExcelUpload.ts", "onUploadSet");
 				}
 			} else {
 				await fnAddMessage();
