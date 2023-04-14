@@ -21,6 +21,7 @@ import ErrorHandler from "./ErrorHandler";
 import Bar from "sap/m/Bar";
 import Preview from "./Preview";
 import Log from "sap/base/Log";
+import JSONModel from "sap/ui/model/json/JSONModel";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
@@ -75,6 +76,9 @@ export default class ExcelUpload {
 	 * @returns {Promise<void>} A promise that resolves when the initial setup is complete.
 	 */
 	async initialSetup(): Promise<void> {
+		const infoModel = new JSONModel({
+			dataRows: 0,
+		});
 		if (!this.dialog) {
 			this.dialog = (await Fragment.load({
 				name: "cc.excelUpload.XXXnamespaceXXX.fragment.ExcelUpload",
@@ -82,6 +86,7 @@ export default class ExcelUpload {
 				controller: this,
 			})) as Dialog;
 			this.dialog.setModel(this.componentI18n, "i18n");
+			this.dialog.setModel(infoModel, "info");
 		}
 		if (this.component.getStandalone() && this.component.getColumns().length === 0) {
 			(this.dialog.getSubHeader() as Bar).setVisible(false);
@@ -208,12 +213,13 @@ export default class ExcelUpload {
 				// show error dialog
 				this.errorHandler.displayErrors();
 				// reset file uploader
-				var fileUploader = this.dialog.getContent()[0] as FileUploader;
-				fileUploader.setValue();
+				this._resetContent();
 				return;
 			}
+			(this.dialog.getModel("info") as JSONModel).setProperty("/dataRows", this.payloadArray.length);
 		} catch (error) {
 			Util.showError(error, "ExcelUpload.ts", "onFileUpload");
+			this._resetContent();
 		}
 	}
 
@@ -221,6 +227,7 @@ export default class ExcelUpload {
 	 * Closes the Excel upload dialog.
 	 */
 	onCloseDialog() {
+		this._resetContent();
 		this.dialog.close();
 	}
 
@@ -275,6 +282,7 @@ export default class ExcelUpload {
 					await this.context.extensionAPI.securedExecution(fnAddMessage, mParameters);
 				} catch (error) {
 					Util.showError(error, "ExcelUpload.ts", "onUploadSet");
+					this._resetContent();
 				}
 			} else {
 				await fnAddMessage();
@@ -282,6 +290,7 @@ export default class ExcelUpload {
 		}
 
 		sourceParent.setBusy(false);
+
 		this.onCloseDialog();
 	}
 
@@ -435,6 +444,15 @@ export default class ExcelUpload {
 				}
 			);
 		});
+	}
+
+	_resetContent() {
+		this.payloadArray = [];
+		this.payload = [];
+		(this.dialog.getModel("info") as JSONModel).setProperty("/dataRows", 0);
+		this.odataHandler.resetContexts();
+		var fileUploader = this.dialog.getContent()[0] as FileUploader;
+		fileUploader.setValue();
 	}
 
 	/**

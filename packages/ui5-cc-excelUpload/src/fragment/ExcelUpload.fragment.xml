@@ -1,4 +1,6 @@
-<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:upload="sap.ui.unified">
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:upload="sap.ui.unified">
   <Dialog title="{i18n>excelupload}" contentWidth="40vw" contentHeight="100px" verticalScrolling="false">
     <subHeader>
       <Bar>
@@ -6,6 +8,16 @@
           <Button press="onTempDownload" text="{i18n>downloadTemplate}" icon="sap-icon://download-from-cloud" />
         </contentLeft>
         <contentRight>
+          <Text text="{i18n>noDataRows}" visible="{= ${info>/dataRows} === 0}" />
+          <Text xmlns="sap.m" xmlns:core="sap.ui.core" core:require="{ formatMessage: 'sap/base/strings/formatMessage' }" 
+          visible="{= ${info>/dataRows} > 0}"
+          text="{
+              parts: [
+                'i18n>dataRows',
+                'info>/dataRows'
+              ],
+              formatter: 'formatMessage'
+            }"/>
           <Button press="showPreview" text="{i18n>showPreview}" icon="sap-icon://display" />
         </contentRight>
       </Bar>
@@ -14,8 +26,8 @@
       <upload:FileUploader width="80%" placeholder="{i18n>exceluploadPlaceholder}" fileType="xlsx,xls,csv" change="onFileUpload" sameFilenameAllowed="true" class="sapUiMediumMargin" />
     </content>
     <buttons>
-      <Button text="{i18n>upload}" press="onUploadSet"  type="Emphasized" />
-      <Button press="onCloseDialog" text="{i18n>close}"  />
+      <Button text="{i18n>upload}" press="onUploadSet" type="Emphasized" />
+      <Button press="onCloseDialog" text="{i18n>close}" />
     </buttons>
   </Dialog>
 </core:FragmentDefinition>
