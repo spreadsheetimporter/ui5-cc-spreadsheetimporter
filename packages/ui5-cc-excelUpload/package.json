@@ -13,7 +13,8 @@
   "homepage": "https://marianfoo.github.io/ui5-cc-excelUpload/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/marianfoo/ui5-cc-excelUpload.git"
+    "url": "https://github.com/marianfoo/ui5-cc-excelUpload.git",
+    "directory": "packages/ui5-cc-excelUpload"
   },
   "files": [
     "dist",

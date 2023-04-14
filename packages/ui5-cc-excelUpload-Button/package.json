@@ -1,7 +1,7 @@
 {
   "name": "ui5-cc-excelupload-button",
   "version": "0.2.1",
-  "description": "",
+  "description": "A UI5 Button to integrate a Excel Upload for Fiori Element Apps.",
   "main": "ExcelUpload.js",
   "scripts": {
     "test": "jest",
@@ -11,13 +11,16 @@
   "keywords": [
     "ui5",
     "custom control",
-    "notepad control"
+    "xlsx",
+    "Excel",
+    "Button"
   ],
   "author": "Marian Zeis",
-  "homepage": "https://marianfoo.github.io/ui5-cc-excelUpload/",
+  "homepage": "https://marianfoo.github.io/ui5-cc-excelUpload/pages/Button/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/marianfoo/ui5-cc-excelUpload.git"
+    "url": "https://github.com/marianfoo/ui5-cc-excelUpload.git",
+    "directory": "packages/ui5-cc-excelUpload-Button"
   },
   "license": "Apache-2.0",
   "dependencies": {
