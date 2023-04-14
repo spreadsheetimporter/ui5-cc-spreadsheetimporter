@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.14.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.13.0...ui5-cc-excelupload-v0.14.0) (2023-04-14)
+
+
+### Features
+
+* handle backend error ([#110](https://github.com/marianfoo/ui5-cc-excelUpload/issues/110)) ([3abc24a](https://github.com/marianfoo/ui5-cc-excelUpload/commit/3abc24a3bdcc6fb201197581a702cbcac42d9a22))
+* preview of data uploaded to app and row counter ([#148](https://github.com/marianfoo/ui5-cc-excelUpload/issues/148)) ([fb57789](https://github.com/marianfoo/ui5-cc-excelUpload/commit/fb5778954c5897e6e0b054e7d0771eae2c420598))
+
 ## [0.13.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.12.3...ui5-cc-excelupload-v0.13.0) (2023-04-13)
 
 
