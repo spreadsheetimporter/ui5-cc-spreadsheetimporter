@@ -277,15 +277,15 @@ export default class ExcelUpload {
 		if (this.isODataV4) {
 			await this.context.editFlow.securedExecution(fnAddMessage, mParameters);
 		} else {
-			if (this.context.extensionAPI) {
-				try {
+			try {
+				if (this.context.extensionAPI) {
 					await this.context.extensionAPI.securedExecution(fnAddMessage, mParameters);
-				} catch (error) {
-					Util.showError(error, "ExcelUpload.ts", "onUploadSet");
-					this._resetContent();
+				} else {
+					await fnAddMessage();
 				}
-			} else {
-				await fnAddMessage();
+			} catch (error) {
+				Util.showError(error, "ExcelUpload.ts", "onUploadSet");
+				this._resetContent();
 			}
 		}
 
@@ -336,7 +336,7 @@ export default class ExcelUpload {
 		} catch (error) {
 			this.odataHandler.resetContexts();
 			Log.error(error);
-			fnReject();
+			fnReject(error);
 		}
 	}
 
