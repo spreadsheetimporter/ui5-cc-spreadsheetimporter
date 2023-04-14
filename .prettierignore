@@ -5,6 +5,11 @@ package-lock.json
 /docs/**
 /webapp/**
 /dev/**
+/dist/**
+
+dist
+node_modules
+
 
 # Ignore files by extension
 /**/*.svg
