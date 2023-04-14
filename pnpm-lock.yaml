@@ -522,6 +522,9 @@ importers:
       ui5-cc-excelupload:
         specifier: ./../../../packages/ui5-cc-excelUpload
         version: link:../../../packages/ui5-cc-excelUpload
+      ui5-cc-excelupload-button:
+        specifier: ./../../../packages/ui5-cc-excelUpload-Button
+        version: link:../../../packages/ui5-cc-excelUpload-Button
     devDependencies:
       "@sap-ux/ui5-middleware-fe-mockserver":
         specifier: ^2.1.74
@@ -530,11 +533,14 @@ importers:
         specifier: ^1.108.1
         version: 1.108.2
       "@sap/ux-ui5-tooling":
-        specifier: ^1.9.2
+        specifier: ^1.9.3
         version: 1.9.3
       "@ui5/cli":
         specifier: 3.0.5
         version: 3.0.5(bluebird@3.7.2)
+      ui5-middleware-simpleproxy:
+        specifier: 0.9.5
+        version: 0.9.5
 
   examples/packages/server:
     dependencies:
@@ -636,8 +642,8 @@ importers:
   packages/ui5-cc-excelUpload-Button:
     dependencies:
       ui5-cc-excelupload:
-        specifier: ../ui5-cc-excelupload
-        version: link:../ui5-cc-excelupload
+        specifier: 0.13.0
+        version: link:../ui5-cc-excelUpload
     devDependencies:
       eslint:
         specifier: ^7.19.0

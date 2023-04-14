@@ -5,6 +5,7 @@
     "moduleResolution": "node",
     "skipLibCheck": true,
     "preserveConstEnums": true,
+    "removeComments": false,
     "sourceMap": false,
     "allowJs": true,
     "strict": true,
