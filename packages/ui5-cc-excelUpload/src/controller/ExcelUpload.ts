@@ -1,4 +1,3 @@
-import ManagedObject from "sap/ui/base/ManagedObject";
 import Fragment from "sap/ui/core/Fragment";
 import MessageToast from "sap/m/MessageToast";
 import * as XLSX from "xlsx";
@@ -20,6 +19,7 @@ import Util from "./Util";
 import Parser from "./Parser";
 import ErrorHandler from "./ErrorHandler";
 import Bar from "sap/m/Bar";
+import Preview from "./Preview";
 import Log from "sap/base/Log";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
@@ -34,6 +34,7 @@ export default class ExcelUpload {
 	private tableObject: any;
 	private metadataHandler: MetadataHandler;
 	private errorHandler: ErrorHandler;
+	private previewHandler: Preview;
 	public util: Util;
 	private model: any;
 	private typeLabelList: ListObject;
@@ -66,6 +67,7 @@ export default class ExcelUpload {
 		this.isOpenUI5 = sap.ui.generic ? false : true;
 		this.odataHandler = this.getODataHandler(this.UI5MinorVersion);
 		this.initialSetupPromise = this.initialSetup();
+		this.previewHandler = new Preview();
 	}
 
 	/**
@@ -160,6 +162,10 @@ export default class ExcelUpload {
 		}
 	}
 
+	async showPreview() {
+		this.previewHandler.showPreview(this.payloadArray);
+	}
+
 	/**
 	 * Handles file upload event.
 	 * @param {Event} event - The file upload event.
@@ -226,7 +232,6 @@ export default class ExcelUpload {
 		const isDefaultNotPrevented = this.component.fireUploadButtonPress({ payload: this.payload });
 		if (!isDefaultNotPrevented || this.component.getStandalone()) {
 			this.onCloseDialog();
-			console.debug("Default action prevented. Data not sent to backend.");
 			return;
 		}
 		// checking if excel file contains data or not
@@ -316,11 +321,11 @@ export default class ExcelUpload {
 			try {
 				this.binding.refresh();
 			} catch (error) {
-				console.debug(error);
+				Log.error(error);
 			}
 			fnResolve();
 		} catch (error) {
-			console.log(error);
+			Log.error(error);
 			fnReject();
 		}
 	}

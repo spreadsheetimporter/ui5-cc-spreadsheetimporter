@@ -13,7 +13,7 @@ builder:
       configuration:
         filePattern: .+(ts|tsx)
         transpileTypeScript: true
-        transpileAsync: true
+        transpileAsync: false
         removeConsoleStatements: true
     - name: ui5-tooling-stringreplace-task
       afterTask: ui5-tooling-transpile-task

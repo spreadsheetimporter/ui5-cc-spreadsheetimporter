@@ -52,4 +52,12 @@ export default class Util {
 			actions: [Action.CANCEL],
 		});
 	}
+
+	static showErrorMessage(errorMessage: string, className: string, methodName: string) {
+		Log.error(errorMessage, `${className}.${methodName}`);
+		MessageBox.error(errorMessage, {
+			initialFocus: Action.CLOSE,
+			actions: [Action.CANCEL],
+		});
+	}
 }
