@@ -11,7 +11,7 @@ entity Orders : cuid, managed {
 entity OrderItems : cuid {
     order     : Association to Orders;
     product   : Association to Products;
-    quantity  : Integer;
+    quantity  : Integer @assert.range: [ 0, 3 ];
     title     : String; //> intentionally replicated as snapshot from product.title
     price     : Double; //> materialized calculated field
     validFrom : DateTime;
@@ -36,7 +36,7 @@ entity OrdersND : cuid, managed {
 entity OrderItemsND : cuid {
     order     : Association to OrdersND;
     product   : Association to ProductsND;
-    quantity  : Integer;
+    quantity  : Integer @assert.range: [ 0, 3 ];
     title     : String; //> intentionally replicated as snapshot from product.title
     price     : Double; //> materialized calculated field
     validFrom : DateTime;

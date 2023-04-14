@@ -334,6 +334,7 @@ export default class ExcelUpload {
 			}
 			fnResolve();
 		} catch (error) {
+			this.odataHandler.resetContexts();
 			Log.error(error);
 			fnReject();
 		}
