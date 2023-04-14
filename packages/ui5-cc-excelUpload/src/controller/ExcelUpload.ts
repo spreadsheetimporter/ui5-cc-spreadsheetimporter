@@ -67,7 +67,7 @@ export default class ExcelUpload {
 		this.isOpenUI5 = sap.ui.generic ? false : true;
 		this.odataHandler = this.getODataHandler(this.UI5MinorVersion);
 		this.initialSetupPromise = this.initialSetup();
-		this.previewHandler = new Preview();
+		this.previewHandler = new Preview(this.util);
 	}
 
 	/**

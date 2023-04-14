@@ -5,9 +5,9 @@
         <contentLeft>
           <Button press="onTempDownload" text="{i18n>downloadTemplate}" icon="sap-icon://download-from-cloud" />
         </contentLeft>
-        <contentMiddle>
-          <Button press="showPreview" text="Show Preview" icon="sap-icon://display" />
-        </contentMiddle>
+        <contentRight>
+          <Button press="showPreview" text="{i18n>showPreview}" icon="sap-icon://display" />
+        </contentRight>
       </Bar>
     </subHeader>
     <content>
