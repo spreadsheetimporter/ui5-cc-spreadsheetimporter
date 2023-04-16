@@ -1,5 +1,6 @@
 import { Columns, Property, ListObject, PropertyArray } from "../types";
 import ExcelUpload from "./ExcelUpload";
+
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */

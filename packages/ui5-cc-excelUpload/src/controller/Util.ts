@@ -9,12 +9,19 @@ export default class Util {
 		this.resourceBundle = resourceBundle;
 	}
 
-	static getValueFromRow(row, label, type, fieldMatchType) {
+	/**
+	 * Get value from row
+	 * @param row
+	 * @param label
+	 * @param type
+	 * @param fieldMatchType
+	 */
+	static getValueFromRow(row: any, label: string, type: string, fieldMatchType: string) {
 		let value;
-		if (fieldMatchType === "label") {
+		if (fieldMatchType === "label") { // label
 			value = row[label];
 		}
-		if (fieldMatchType === "labelTypeBrackets") {
+		if (fieldMatchType === "labelTypeBrackets") { // label[type]
 			try {
 				value = Object.entries(row).find(([key]) => key.includes(`[${type}]`))[1];
 			} catch (error) {

@@ -3,6 +3,9 @@ import { ErrorTypes, ListObject, Payload, PayloadArray, Property } from "../type
 import ErrorHandler from "./ErrorHandler";
 import Util from "./Util";
 
+/**
+ * Parser class
+ */
 export default class Parser {
 	static parseExcelData(sheetData: PayloadArray, typeLabelList: ListObject, component: Component, errorHandler: ErrorHandler, util: Util) {
 		const payloadArray = [];

@@ -57,6 +57,12 @@ export default class ErrorHandler {
 		}
 	}
 
+	/**
+	 * Check if the column names are present in the typeLabelList.
+	 * @param {Array} columnNames - Array containing the column names.
+	 * @param {String} fieldMatchType - Type of the field match.
+	 * @param {Object} typeLabelList - Object containing the type and label of the fields.
+	 */
 	checkColumnNames(columnNames: string[], fieldMatchType: string, typeLabelList: ListObject) {
 		for (let index = 0; index < columnNames.length; index++) {
 			const columnName = columnNames[index];
