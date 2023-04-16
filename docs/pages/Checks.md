@@ -1,5 +1,5 @@
-## Error Types
-The following types of errors are handled by the UI5 Excel Upload Control:
+## Error Types and Handling
+The following types of errors are handled by the UI5 Excel Upload Control.
 
 - **Mandatory Fields**: The control ensures that all mandatory fields are filled in before submitting data. If a mandatory field is left blank, an error message is displayed.
 

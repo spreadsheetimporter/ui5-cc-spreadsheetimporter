@@ -1,7 +1,8 @@
 # Button
 
-Currently in development is a UI5 button that can be used especially for freestyle applications.  
-It would be used like this:
+Currently in development is a UI5 button that can be used especially for freestyle applications.
+
+It can be used like this:
 
 ````xml
 <mvc:View

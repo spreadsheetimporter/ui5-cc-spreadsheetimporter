@@ -3,34 +3,27 @@
 !!! warning
         **This control is still in beta**: Core functionality is given, but bugs may still occur and APIs may change!
 
-This control enables the mass upload of data and quick creations of records. It supports standard identification.
-The usage is independent of the backend, OData version, and Fiori scenario.
-Import is made possible by reading the Excel Files and using standard digital APIs.  
-The control will not submit the file but just the data from the Excel Files.  
-The integration of the control is designed to be as simple as possible and, in the best case, requires no configuration.
+This control enables the mass upload of data and quick creation of records. It supports standard identification.  
+The usage is independent of the backend, OData version, and Fiori scenario. Import is made possible by reading the Excel Files and using standard digital APIs. The control will not submit the file but just the data from the Excel Files.  
+The integration of the control is designed to be as simple as possible and, in the best case, requires no configuration. The control is designed to be used in a List Report or Object Page.
 
 [**Get Started**](./pages/GettingStarted.md){: .md-button .md-button--primary .sap-icon-initiative }
 
-See all currently supported OData and UI5 Versions [here](./pages/SupportVersions.md).  
-A quick screencast on YouTube how to integrate the control can be found [here](https://www.youtube.com/watch?v=dODt9ZWmi4A).
+See all currently supported OData and UI5 Versions [here](./pages/SupportVersions.md). A quick screencast on YouTube how to integrate the control can be found [here](https://www.youtube.com/watch?v=dODt9ZWmi4A).
 
 ## Main Features
 
-- Upload from List Report/Object Page
-- Upload with or without draft
-- Uploading with or without draft
-- Check for mandatory fields
-- Extension Points for uploading to App or sending to backend
-- Extension Points for uploading to Apps and sending to the Backend
-- Multiversion support in Fiori Launchpad (no central deployment necessary anymore)
+-   Upload from List Report or Object Page
+-   Upload with or without draft support
+-   Check for mandatory fields and show errors
+-   Extension Points for uploading to App or sending to backend (e.g. for custom validation)
+-   Multiversion support in Fiori Launchpad (no central deployment necessary)
 
 ## Live Demo
 
-It is possible to try this out directly at:  
-<https://excelupload.marianzeis.de/>
+It is possible to try this out directly at: <https://excelupload.marianzeis.de/>
 
-The app is an OData V4 app with UI5 version 1.108 and a CAP backend.  
-The data is reset every hour on the hour.
+The app is an OData V4 app with UI5 version 1.108 and a CAP backend. The data is reset every hour on the hour.
 
 ### Install
 

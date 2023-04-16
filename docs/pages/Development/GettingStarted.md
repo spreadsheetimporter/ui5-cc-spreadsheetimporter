@@ -13,7 +13,8 @@ npm i -g @sap/cds-dk
 
 ## Quick start
 
-To quickly start the test environment, see here. See detailed information below.
+To quickly start the test environment, see here. See detailed information below.  
+The following command will clone the repository, install all dependencies and start the test environment.
 
 ````sh
 git clone https://github.com/marianfoo/ui5-cc-excelUpload

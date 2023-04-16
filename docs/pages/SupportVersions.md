@@ -1,12 +1,12 @@
 # Supported Versions
 
-The goal is to support as many versions and environments as possible, especially all versions in long term maintenance. 
+The goal is to support as many versions and environments as possible, especially all versions in long-term maintenance. 
 
-Here is an overview of the apps that were created and passed the smoke test. 
+Here is an overview of the apps that were created and passed the smoke test.
 
-Another overview will be shown to you what apps are already testet automatically with wdi5 and are therefore tested on a contstant basis.
+Another overview will be shown to you what apps are already tested automatically with wdi5 and are therefore tested on a constant basis.
 
-All the examples apps are found in the [`examples`](https://github.com/marianfoo/ui5-cc-excelUpload/tree/main/examples/packages) folder. The test scripts are found in the [`test`](https://github.com/marianfoo/ui5-cc-excelUpload/tree/main/examples/test) folder.  
+All the example apps are found in the [`examples`](https://github.com/marianfoo/ui5-cc-excelUpload/tree/main/examples/packages) folder. The test scripts are found in the [`test`](https://github.com/marianfoo/ui5-cc-excelUpload/tree/main/examples/test) folder.  
 More info at [wdi5 tests](./Development/wdi5.md)
 
 ## Apps

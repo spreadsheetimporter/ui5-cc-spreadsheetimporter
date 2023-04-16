@@ -1,13 +1,13 @@
-There are extension points in form of events, where you can intervene and manipulate data.
+There are extension points in form of events, where you can intervene and manipulate data. The following events are available:
 
 | Event | Description |
 | ------ | --- |
-| `checkBeforeRead` | Check Data before data uploaded to the UI5  |
-| `changeBeforeCreate` | Change Data before send to the backend |
-| `uploadButtonPress` | Fire when `Upload` Button is pressed, possible to prevent data send to backend |
+| `checkBeforeRead` | Check data before data is uploaded to the UI5  |
+| `changeBeforeCreate` | Change data before it is sent to the backend |
+| `uploadButtonPress` | Fired when the `Upload` button is pressed, possible to prevent data send to backend |
 
-## Check Data before Upload to App
-When the file is uploaded to the App, the `checkBeforeRead` is fired.
+## Check data before upload to app
+When the file is uploaded to the app, the `checkBeforeRead` event is fired.
 
 ### Example
 This sample is from the [sample app](https://github.com/marianfoo/ui5-cc-excelUpload/blob/47d22cdc42aa1cacfd797bdc0e025b830330dc5e/examples/packages/ordersv4fe/webapp/ext/ObjectPageExtController.js#L24-L42). 
@@ -34,19 +34,19 @@ this.excelUpload.attachCheckBeforeRead(function(oEvent) {
 }, this)
 ````
 
-You can add errors to the `errorResults` property of the `ExcelUpload` control. After the event the upload is canceled and the errors are displayed in the Error Dialog.  
-With the method `addToErrorsResults` you can add errors to the `errorResults` property. It expects an array of objects with the following properties:
+You can add errors to the `errorResults` property of the `ExcelUpload` control. After the event the upload is canceled and the errors are displayed in the error dialog.  
+With the method `addToErrorsResults` you can add errors to the `errorResults` property. It expects an array of objects with the following properties: 
 
-- `title` - the title of the error
-- `row` - the row number of the error
-- `group` - if you want to group the errors, set `true` or `false`. (Grouping is by title)
+- `title` - the title of the error.
+- `row` - the row number of the error.
+- `group` - if you want to group the errors, set `true` or `false`. (Grouping is by title).
 
-The Errors with the same title will be grouped.
+The errors with the same title will be grouped.
 
 ![Error Dialog](./../images/error_dialog.png){ loading=lazy }
 
-## Manipulate Data before it is send to the backend
-When the `Upload` button is pressed, the `changeBeforeCreate` is fired.
+## Manipulate data before it is sent to the backend
+When the `Upload` button is pressed, the `changeBeforeCreate` event is fired.
 
 ### Example
 This sample is from the [sample app](https://github.com/marianfoo/ui5-cc-excelUpload/blob/47d22cdc42aa1cacfd797bdc0e025b830330dc5e/examples/packages/ordersv4fe/webapp/ext/ObjectPageExtController.js#L45-L52).
@@ -63,9 +63,9 @@ this.excelUpload.attachChangeBeforeCreate(function (oEvent) {
 }, this);
 ````
 
-## Event when Upload Button is pressed
-When the `Upload` button is pressed, the `uploadButtonPress` is fired. The Event is fired before the `changeBeforeCreate` event.  
-It is possible to prevent the data send to the backend with the method `preventDefault` of the event.
+## Event when the upload button is pressed
+When the `Upload` button is pressed, the `uploadButtonPress` event is fired. The event is fired before the `changeBeforeCreate` event.  
+It is possible to prevent the data from being sent to the backend with the method `preventDefault` of the event.
 
 
 ### Example

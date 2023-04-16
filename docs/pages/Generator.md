@@ -1,4 +1,4 @@
-To make the integration easier there is the possibility to use a yo generator to avoid manual additional steps in your project. 
+To make the integration easier there is the possibility to use a yo generator to avoid manual additional steps in your project.
 
 ## Installation
 
@@ -17,7 +17,7 @@ yo ui5-excelupload
 
 ## Support
 
-Currently following scenarios are support with the generator:
+Currently the following scenarios are supported by the generator:
 
 
 | OData Version  | List Report  | Object Page  |  Freestyle | Flexible Programming Model |

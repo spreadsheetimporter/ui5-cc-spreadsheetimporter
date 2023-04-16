@@ -9,7 +9,7 @@ With `mkdocs gh-deploy --force` the docs site will be pushed to the `gh-docs` br
 ## wdi5
 
 With wdi5 it is possible to test a E2E Scenario with UI5 automatically in GitHub Actions.  
-In order to cover as many scenarios as possible, this Worfklow will cover as many scenarios as possible.  
+In order to cover as many scenarios as possible, this Worfklow will cover as many scenarios as possible.
 
 To avoid writing a separate configuration and workflow for each scenario, we use the [matrix](https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs) function of GitHub Actions. This means that we only have to define the workflow once and it is executed as often as necessary.  
 

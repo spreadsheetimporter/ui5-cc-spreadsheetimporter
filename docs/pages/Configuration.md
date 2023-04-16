@@ -54,7 +54,7 @@ odataType: com.sap.gateway.srvd.zui_mr_create_run.v0001.AbleseauftragType
 
 ### `mandatoryFields`
 
-The selected fields are checked to see if they are present in Excel.
+The selected fields are checked to see if they are present in the Excel file.
 If not defined, they will not be checked.  
 **example:**
 
@@ -71,12 +71,10 @@ Options:
 - `label`  
 - `labelTypeBrackets`
 
-In some cases, the labels of different attributes may be identical to each other.  
-In order to assign the correct labels and types, there is an option to make the type visible in the header.  
-This way a correct assignment can be made.
+In some cases, the labels of different attributes may be identical to each other. In order to assign the correct labels and types, there is an option to make the type visible in the header. This way a correct assignment can be made.
 
-Default (with `label`) the header columns would like this: `ID, Birthday, First Name, Last Name`  
-With `labelTypeBrackets` the header columns would look like this: `ID[ID], Birthday[birth_day], First Name[FirstName], Last Name[LastName]`
+Default (with `label`) the header columns would look like this: `ID, Birthday, First Name, Last Name`  
+With `labelTypeBrackets` the header columns would look like this: `ID[ID], Birthday[birth_day], First Name[FirstName], Last Name[LastName]`.
 
 ### `activateDraft`
 
