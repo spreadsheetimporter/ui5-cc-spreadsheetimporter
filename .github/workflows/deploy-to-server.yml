@@ -18,6 +18,7 @@ jobs:
         script: |
           cd /home/ui5-cc-excelUpload/
           git reset --hard 7200e7548969bfed98c1a2076dd109416f108746
+          git checkout ${GITHUB_REF#refs/heads/}
           git pull
           npm run build
           cd /home/ui5-cc-excelUpload/examples/packages/ordersv4fe
