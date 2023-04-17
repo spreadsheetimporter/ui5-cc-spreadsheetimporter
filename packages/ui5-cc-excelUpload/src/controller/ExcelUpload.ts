@@ -47,7 +47,7 @@ export default class ExcelUpload {
 	private binding: any;
 	private payloadArray: any[];
 	private errorState: boolean;
-	private errorMessage: string;
+	private errorMessage: any;
 	private initialSetupPromise: Promise<void>;
 	public errorArray: ErrorMessage[];
 
@@ -100,9 +100,8 @@ export default class ExcelUpload {
 				await this.setContext();
 				this.errorState = false;
 			} catch (error) {
-				this.errorMessage = error.message;
+				this.errorMessage = error;
 				this.errorState = true;
-				Util.showError(error, "ExcelUpload.ts", "initialSetup");
 			}
 		}
 	}
@@ -162,7 +161,7 @@ export default class ExcelUpload {
 			(this.dialog.getContent()[0] as FileUploader).clear();
 			this.dialog.open();
 		} else {
-			MessageBox.error(this.errorMessage);
+			Util.showError(this.errorMessage, "ExcelUpload.ts", "initialSetup");
 			Log.error("ErrorState: True. Can not open dialog.", "ExcelUpload.ts.openExcelUploadDialog");
 		}
 	}
