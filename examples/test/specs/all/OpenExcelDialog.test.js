@@ -65,7 +65,7 @@ describe("Upload File List Report", () => {
 			selector: {
 				controlType: "sap.m.Dialog",
 				properties: {
-					title: "Excel Upload"
+					contentWidth: "40vw"
 				}
 			}
 		});
