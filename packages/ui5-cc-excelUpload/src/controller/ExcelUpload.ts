@@ -22,6 +22,7 @@ import Bar from "sap/m/Bar";
 import Preview from "./Preview";
 import Log from "sap/base/Log";
 import JSONModel from "sap/ui/model/json/JSONModel";
+import FlexBox from "sap/m/FlexBox";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
@@ -158,7 +159,7 @@ export default class ExcelUpload {
 			await this.initialSetup();
 		}
 		if (!this.errorState) {
-			(this.dialog.getContent()[0] as FileUploader).clear();
+			((this.dialog.getContent()[0] as FlexBox).getItems()[1] as FileUploader).clear();
 			this.dialog.open();
 		} else {
 			Util.showError(this.errorMessage, "ExcelUpload.ts", "initialSetup");
@@ -451,7 +452,7 @@ export default class ExcelUpload {
 		this.payload = [];
 		(this.dialog.getModel("info") as JSONModel).setProperty("/dataRows", 0);
 		this.odataHandler.resetContexts();
-		var fileUploader = this.dialog.getContent()[0] as FileUploader;
+		var fileUploader = this.dialog.getContent()[0].getItems()[1] as FileUploader;
 		fileUploader.setValue();
 	}
 
