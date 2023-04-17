@@ -88,6 +88,7 @@ export default class ExcelUpload {
 			})) as Dialog;
 			this.dialog.setModel(this.componentI18n, "i18n");
 			this.dialog.setModel(infoModel, "info");
+			this.dialog.setModel(this.component.getModel("device"), "device");
 		}
 		if (this.component.getStandalone() && this.component.getColumns().length === 0) {
 			(this.dialog.getSubHeader() as Bar).setVisible(false);
