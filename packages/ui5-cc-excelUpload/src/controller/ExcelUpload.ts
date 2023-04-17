@@ -101,8 +101,10 @@ export default class ExcelUpload {
 				this.errorState = false;
 			} catch (error) {
 				this.errorMessage = error.message;
-				this.errorState = true;
-				Util.showError(error, "ExcelUpload.ts", "initialSetup");
+				if (!this.errorState) {
+					this.errorState = true;
+					Util.showError(error, "ExcelUpload.ts", "initialSetup");
+				}
 			}
 		}
 	}
