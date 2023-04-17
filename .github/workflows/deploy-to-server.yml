@@ -7,10 +7,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Install SSH
-      run: apt-get update && apt-get install -y openssh-client
+    # - name: Install SSH
+    #   run: apt-get update && apt-get install -y openssh-client
     - name: Deploy to Server
       uses: appleboy/ssh-action@master
       with:
@@ -19,6 +17,8 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
           cd /home/ui5-cc-excelUpload/
+          git reset --hard 7200e7548969bfed98c1a2076dd109416f108746
+          git pull
           npm run build
           cd /home/ui5-cc-excelUpload/examples/packages/ordersv4fe
           npm run build
