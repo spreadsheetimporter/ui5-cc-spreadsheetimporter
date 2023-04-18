@@ -75,6 +75,10 @@ export default class ODataV4 extends OData {
 		return this.metaDatahandler.createLabelListV4(columns, odataType);
 	}
 
+	async getKeyList(odataType: string, tableObject: any) {
+		return this.metaDatahandler.getKeyListV4(odataType);
+	}
+
 	resetContexts() {
 		this.createContexts = [];
 		this.createPromises = [];

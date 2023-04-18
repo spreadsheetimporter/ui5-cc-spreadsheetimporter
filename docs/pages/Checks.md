@@ -3,6 +3,8 @@ The following types of errors are handled by the UI5 Excel Upload Control:
 
 - **Mandatory Fields**: The control ensures that all mandatory fields are filled in before submitting data. If a mandatory field is left blank, an error message is displayed.
 
+- **Mandatory Fields Metadata**: The control parses the metadata of the entity set and checks that all mandatory fields are filled in before submitting data. If a mandatory field is left blank, an error message is displayed ([CAP Annotation](https://cap.cloud.sap/docs/guides/providing-services#mandatory)).
+
 - **Column Names Mismatch**: The control checks that the column names in the uploaded file match the expected column names. If there is a mismatch i.e. a additional column that should not be there, an error message is displayed.
 
 - **Data Type Mismatch**: The control checks that the data types in the uploaded file match the expected data types. 

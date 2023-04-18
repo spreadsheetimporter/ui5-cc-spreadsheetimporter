@@ -74,6 +74,9 @@ export default class Component extends UIComponent {
 		if (!oCompData.columns) {
 			oCompData.columns = [];
 		}
+		if (!oCompData.mandatoryFields) {
+			oCompData.mandatoryFields = [];
+		}
 		this.setContext(oCompData.context);
 		this.setColumns(oCompData.columns);
 		this.setTableId(oCompData.tableId);

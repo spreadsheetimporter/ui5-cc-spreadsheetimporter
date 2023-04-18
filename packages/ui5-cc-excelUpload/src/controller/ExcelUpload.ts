@@ -51,6 +51,7 @@ export default class ExcelUpload {
 	private errorMessage: any;
 	private initialSetupPromise: Promise<void>;
 	public errorArray: ErrorMessage[];
+	odataKeyList: string[];
 
 	/**
 	 * Initializes ExcelUpload instance.
@@ -127,6 +128,7 @@ export default class ExcelUpload {
 		}
 		const odataType = this.odataHandler.getOdataType(this.binding, this.tableObject, this.component.getOdataType());
 		this.component.setOdataType(odataType);
+		this.odataKeyList = await this.odataHandler.getKeyList(odataType, this.tableObject);
 		this.typeLabelList = await this.odataHandler.createLabelList(this.component.getColumns(), odataType, this.tableObject);
 
 		this.model = this.tableObject.getModel();
@@ -198,7 +200,7 @@ export default class ExcelUpload {
 			}
 
 			if (!this.component.getStandalone()) {
-				this.errorHandler.checkMandatoryFields(excelSheetsData, this.component.getMandatoryFields(), this.typeLabelList);
+				this.errorHandler.checkMandatoryColumns(excelSheetsData, columnNames, this.component.getMandatoryFields(), this.odataKeyList, this.typeLabelList);
 				this.errorHandler.checkColumnNames(columnNames, this.typeLabelList);
 			}
 			this.payload = excelSheetsData;

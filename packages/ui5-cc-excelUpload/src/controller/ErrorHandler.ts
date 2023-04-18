@@ -31,6 +31,15 @@ export default class ErrorHandler {
 		return this.errorResults;
 	}
 
+	checkMandatoryColumns(data: PayloadArray, columnNames: string[], mandatoryFieldsUser: string[], mandatoryFieldsMetadata: string[], typeLabelList: ListObject) {
+		// concat mandatory fields arrays and remove duplicates
+		const mandatoryFields = [...new Set([...mandatoryFieldsUser, ...mandatoryFieldsMetadata])];
+		// check if column is in the data list
+		const availableKeyColumns = this.checkKeyColumns(columnNames, mandatoryFields, typeLabelList);
+		// check if data is filled in for available columns
+		this.checkMandatoryFields(data, availableKeyColumns, typeLabelList);
+	}
+
 	checkMandatoryFields(data: PayloadArray, mandatoryFields: string[], typeLabelList: ListObject) {
 		if (!mandatoryFields) {
 			return;
@@ -78,6 +87,31 @@ export default class ErrorHandler {
 				this.errorResults.push(errorMessage);
 			}
 		}
+	}
+
+	checkKeyColumns(columnNames: string[], odataKeyList: string[], typeLabelList: ListObject) {
+		const availableKeyColumns = [];
+		for (let index = 0; index < odataKeyList.length; index++) {
+			const columnName = odataKeyList[index];
+			let found = false;
+			for (const index in columnNames) {
+				if (columnNames[index].includes(`[${columnName}]`)) {
+					found = true;
+					availableKeyColumns.push(columnName);
+					break;
+				}
+			}
+			if (!found) {
+				const columnNameLabel = typeLabelList[columnName]?.label ? typeLabelList[columnName].label : columnName;
+				const errorMessage = {
+					title: this.excelUploadController.util.geti18nText("keyColumnNotFound", [columnNameLabel]),
+					type: ErrorTypes.ColumnNotFound,
+					counter: 1,
+				} as ErrorMessage;
+				this.errorResults.push(errorMessage);
+			}
+		}
+		return availableKeyColumns;
 	}
 
 	areErrorsPresent(): boolean {
