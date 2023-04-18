@@ -81,7 +81,7 @@ describe("Upload File Object Page", () => {
 			}
 		});
 		const fileName = "test/testFiles/TwoRowsErrors.xlsx"; // relative to wdio.conf.(j|t)s
-		const remoteFilePath = await browser.uploadFile(fileName); // this also works in CI senarios!
+		const remoteFilePath = await browser.uploadFile(fileName); // this also works in CI senarios
 		// transition from wdi5 api -> wdio api
 		const $uploader = await uploader.getWebElement(); // wdi5
 		const $fileInput = await $uploader.$("input[type=file]"); // wdio
