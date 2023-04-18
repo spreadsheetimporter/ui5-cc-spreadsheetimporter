@@ -61,13 +61,19 @@ function replaceVersionInExamples(versionSlash, version, ui5Apps, versionButton,
 		// Write back manifest file
 		fs.writeFileSync(path, manifestData, "utf8");
 		if (app.startsWith("ordersv2freestylenondraft")) {
-			replaceVersionInXML(rootPath, versionUnderscoreButton);
+			replaceVersionInXML(rootPath,"webapp/view/Detail.view.xml", versionUnderscoreButton);
+		}
+		if (app === "ordersv2freestylenondraft") {
+			replaceVersionInXML(rootPath,"webapp/view/UploadToTable.view.xml", versionUnderscoreButton);
+		}
+		if (app.startsWith("ordersv4fpm")) {
+			replaceVersionInXML(rootPath,"webapp/ext/main/Main.view.xml", versionUnderscoreButton);
 		}
 	});
 }
 
-function replaceVersionInXML(rootPath, versionUnderscoreButton) {
-	const path = rootPath + "webapp/view/Detail.view.xml";
+function replaceVersionInXML(rootPath, filePath, versionUnderscoreButton) {
+	const path = rootPath + filePath;
 	let view = fs.readFileSync(path, "utf8");
 	// Use a regular expression to replace the namespace prefix value
 	const regex = /cc\.excelUploadButton\.v\d_\d_\d/g;
