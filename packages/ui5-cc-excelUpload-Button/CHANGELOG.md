@@ -6,6 +6,12 @@
   * dependencies
     * ui5-cc-excelupload bumped from 0.13.0 to 0.14.0
 
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * ui5-cc-excelupload bumped from 0.14.0 to 0.14.1
+
 ## [0.2.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-button-v0.1.0...ui5-cc-excelupload-button-v0.2.0) (2023-04-13)
 
 

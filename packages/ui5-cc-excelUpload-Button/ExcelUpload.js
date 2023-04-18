@@ -1,5 +1,5 @@
 sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
-	return Button.extend("cc.excelUploadButton.v0_2_1.ExcelUpload", {
+	return Button.extend("cc.excelUploadButton.v0_2_2.ExcelUpload", {
 		metadata: {
 			properties: {
 				excelFileName: {
