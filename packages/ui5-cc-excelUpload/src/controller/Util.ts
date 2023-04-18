@@ -9,17 +9,12 @@ export default class Util {
 		this.resourceBundle = resourceBundle;
 	}
 
-	static getValueFromRow(row, label, type, fieldMatchType) {
+	static getValueFromRow(row, label, type) {
 		let value;
-		if (fieldMatchType === "label") {
-			value = row[label];
-		}
-		if (fieldMatchType === "labelTypeBrackets") {
-			try {
-				value = Object.entries(row).find(([key]) => key.includes(`[${type}]`))[1];
-			} catch (error) {
-				console.debug(`Not found ${type}`);
-			}
+		try {
+			value = Object.entries(row).find(([key]) => key.includes(`[${type}]`))[1];
+		} catch (error) {
+			console.debug(`Not found ${type}`);
 		}
 		return value;
 	}

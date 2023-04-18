@@ -10,7 +10,6 @@ These options are available and explained in detail below:
 | `tableId` | ID of table to upload the data to  | string |
 | `odataType` | OData Type of specified table | string |
 | `mandatoryFields`  | The selected fields are checked to see if they are present | string[] |
-| `fieldMatchType` | Defines what type of strategy is executed when matching excel columns | string |
 | `activateDraft` | Determines whether a draft should be activated immediately  | boolean |
 | `batchSize` | Determines bach sizes send to backend server  | integer |
 | `standalone` | Mode if you do not have a table and want to do the processing yourself  | boolean |
@@ -61,22 +60,6 @@ If not defined, they will not be checked.
 ````
 mandatoryFields: ["product_ID", "quantity"]`
 ````
-
-### `fieldMatchType`
-
-**default:** `label`
-
-Options:  
-
-- `label`  
-- `labelTypeBrackets`
-
-In some cases, the labels of different attributes may be identical to each other.  
-In order to assign the correct labels and types, there is an option to make the type visible in the header.  
-This way a correct assignment can be made.
-
-Default (with `label`) the header columns would like this: `ID, Birthday, First Name, Last Name`  
-With `labelTypeBrackets` the header columns would look like this: `ID[ID], Birthday[birth_day], First Name[FirstName], Last Name[LastName]`
 
 ### `activateDraft`
 

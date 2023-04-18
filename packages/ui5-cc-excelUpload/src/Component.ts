@@ -26,7 +26,6 @@ export default class Component extends UIComponent {
 			tableId: { type: "string" },
 			odataType: { type: "string" },
 			mandatoryFields: { type: "string[]" },
-			fieldMatchType: { type: "string", defaultValue: "label" },
 			activateDraft: { type: "boolean", defaultValue: false },
 			batchSize: { type: "int", defaultValue: 1000 },
 			standalone: { type: "boolean", defaultValue: false },
@@ -80,7 +79,6 @@ export default class Component extends UIComponent {
 		this.setTableId(oCompData.tableId);
 		this.setOdataType(oCompData.odataType);
 		this.setMandatoryFields(oCompData.mandatoryFields);
-		this.setFieldMatchType(oCompData.fieldMatchType);
 		this.setActivateDraft(oCompData.activateDraft);
 		this.setBatchSize(oCompData.batchSize);
 		this.setStandalone(oCompData.standalone);

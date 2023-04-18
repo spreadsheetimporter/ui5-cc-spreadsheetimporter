@@ -30,8 +30,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
 					let errorArray = [];
 					for (const [index, row] of sheetData.entries()) {
 						//check for invalid price
-						if (row.UnitPrice) {
-							if (row.UnitPrice > 100) {
+						if (row["UnitPrice[price]"]) {
+							if (row["UnitPrice[price]"] > 100) {
 								const error = {
 									title: "Price to high (max 100)",
 									row: index + 2,
