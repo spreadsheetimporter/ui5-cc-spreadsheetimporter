@@ -138,17 +138,57 @@ export default class MetadataHandler {
 		return propertyName;
 	}
 
+	/**
+	 * Creates a list of properties that are defined mandatory in the OData metadata V4
+	 * @param odataType
+	 **/
 	getKeyListV4(odataType: string): string[] {
+		let keys: string[] = [];
+
+		var annotations = this.excelUploadController.context.getModel().getMetaModel().getData()["$Annotations"];
 		const properties = this.excelUploadController.context.getModel().getMetaModel().getData()[odataType];
-		const keys = properties["$Key"];
-		const filteredkeys = keys.filter((key: string) => key !== "IsActiveEntity");
-		return filteredkeys;
+
+		const propertiesFiltered = Object.entries(properties).filter(([propertyName, propertyValue]) => propertyValue["$kind"] === "Property");
+		for (const [propertyName, propertyValue] of propertiesFiltered) {
+			const propertyLabel = annotations[`${odataType}/${propertyName}`];
+			// if property is mandatory, field should be in excel file
+			if (
+				propertyLabel["@com.sap.vocabularies.Common.v1.FieldControl"] &&
+				propertyLabel["@com.sap.vocabularies.Common.v1.FieldControl"]["$EnumMember"] &&
+				propertyLabel["@com.sap.vocabularies.Common.v1.FieldControl"]["$EnumMember"] === "com.sap.vocabularies.Common.v1.FieldControlType/Mandatory"
+			) {
+				keys.push(propertyName);
+			}
+			// if property nullable is false and hidden is false, field should be in excel file
+			if (!propertyLabel["@com.sap.vocabularies.UI.v1.Hidden"] && propertyValue["$Nullable"] === false) {
+				keys.push(propertyName);
+			}
+		}
+		return keys;
 	}
 
+	/**
+	 * Creates a list of properties that are defined mandatory in the OData metadata V2
+	 * @param odataType
+	 **/
 	getKeyListV2(oDataEntityType: any): string[] {
-		const keys = oDataEntityType.key.propertyRef;
-		// create string array and filter out IsActiveEntity
-		const filteredStringArray: string[] = keys.map((key: any) => key.name).filter((name: string) => name !== "IsActiveEntity");
-		return filteredStringArray;
+		let keys: string[] = [];
+
+		for (const property of oDataEntityType.property) {
+			// if property is mandatory, field should be in excel file
+			const propertyName = property.name;
+			if (
+				property["com.sap.vocabularies.Common.v1.FieldControl"] &&
+				property["com.sap.vocabularies.Common.v1.FieldControl"]["EnumMember"] &&
+				property["com.sap.vocabularies.Common.v1.FieldControl"]["EnumMember"] === "com.sap.vocabularies.Common.v1.FieldControlType/Mandatory"
+			) {
+				keys.push(propertyName);
+			}
+			// if property nullable is false and hidden is false, field should be in excel file
+			if (property["com.sap.vocabularies.UI.v1.Hidden"] && property["com.sap.vocabularies.UI.v1.Hidden"]["Bool"] === "false" && property.nullable === "false") {
+				keys.push(propertyName);
+			}
+		}
+		return keys;
 	}
 }
