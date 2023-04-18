@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.14.1](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.14.0...ui5-cc-excelupload-v0.14.1) (2023-04-18)
+
+
+### Bug Fixes
+
+* error message shown twice on listreport ([#152](https://github.com/marianfoo/ui5-cc-excelUpload/issues/152)) ([d0a3d12](https://github.com/marianfoo/ui5-cc-excelUpload/commit/d0a3d12b3e562af8e3ae2ee111271b77ed7fe6fc))
+* improve UX on upload dialog ([#151](https://github.com/marianfoo/ui5-cc-excelUpload/issues/151)) ([4ca9e1f](https://github.com/marianfoo/ui5-cc-excelUpload/commit/4ca9e1f4d6cc319b1c49d297ea104d823443c590))
+
 ## [0.14.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.13.0...ui5-cc-excelupload-v0.14.0) (2023-04-14)
 
 

@@ -1,4 +1,4 @@
-<mvc:View controllerName="ui.v2.ordersv2freestylenondraftopenui5.controller.Detail" xmlns="sap.m" xmlns:semantic="sap.f.semantic" xmlns:mvc="sap.ui.core.mvc" xmlns:excel="cc.excelUploadButton.v0_2_1">
+<mvc:View controllerName="ui.v2.ordersv2freestylenondraftopenui5.controller.Detail" xmlns="sap.m" xmlns:semantic="sap.f.semantic" xmlns:mvc="sap.ui.core.mvc" xmlns:excel="cc.excelUploadButton.v0_2_2">
   <semantic:SemanticPage id="detailPage" busy="{detailView>/busy}" busyIndicatorDelay="{detailView>/delay}" showFooter="true">
     <semantic:titleHeading>
       <Title text="{OrderNo}" level="H2" />
