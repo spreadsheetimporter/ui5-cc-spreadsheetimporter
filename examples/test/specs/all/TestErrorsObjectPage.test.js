@@ -91,7 +91,7 @@ describe("Upload File Object Page", () => {
 			selector: {
 				controlType: "sap.m.Dialog",
 				properties: {
-					title: "Error on Upload"
+					title: "Upload Error"
 				},
 				searchOpenDialogs: true
 			}
