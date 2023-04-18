@@ -12,6 +12,24 @@
   * dependencies
     * ui5-cc-excelupload bumped from 0.14.0 to 0.14.1
 
+## [0.3.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-button-v0.2.2...ui5-cc-excelupload-button-v0.3.0) (2023-04-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* removal of option `fieldMatchType` ([#157](https://github.com/marianfoo/ui5-cc-excelUpload/issues/157))
+
+### Features
+
+* removal of option `fieldMatchType` ([#157](https://github.com/marianfoo/ui5-cc-excelUpload/issues/157)) ([4346e1b](https://github.com/marianfoo/ui5-cc-excelUpload/commit/4346e1bb00473363167b0d24c8ebf14e40b073cb))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * ui5-cc-excelupload bumped from 0.14.1 to 0.15.0
+
 ## [0.2.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-button-v0.1.0...ui5-cc-excelupload-button-v0.2.0) (2023-04-13)
 
 
