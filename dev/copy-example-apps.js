@@ -57,10 +57,15 @@ function copyApps(versionPathRoot, versionPathNew, version, port, versionName) {
 	let startScript = packageJsonData["scripts"]["start"];
 	startScript = startScript.replace(/\b\d{1,4}\b/, port);
 	packageJsonData["scripts"]["start"] = startScript;
-	// replace port number in silent script
+	// replace port number in scripts
 	let startSilentScript = packageJsonData["scripts"]["start:silent"];
 	startSilentScript = startSilentScript.replace(/\b\d{1,4}\b/, port);
 	packageJsonData["scripts"]["start:silent"] = startSilentScript;
+	let startFLPScript = packageJsonData["scripts"]["start-flp"];
+	if (startFLPScript) {
+		startFLPScript = startFLPScript.replace(/\b\d{1,4}\b/, port);
+	packageJsonData["scripts"]["start-flp"] = startFLPScript;
+	}
 	// change package.json name
 	packageJsonData["name"] = versionName;
 	packageJsonData = JSON.stringify(packageJsonData, null, 2);

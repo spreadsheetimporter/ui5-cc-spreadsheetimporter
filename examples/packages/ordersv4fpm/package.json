@@ -14,14 +14,15 @@
     "ui5-cc-excelupload-button": "./../../../packages/ui5-cc-excelUpload-Button"
   },
   "devDependencies": {
-    "@sap-ux/ui5-middleware-fe-mockserver": "^2.1.74",
-    "@sap/ux-specification": "^1.108.1",
-    "@sap/ux-ui5-tooling": "^1.9.3",
-    "@ui5/cli": "3.0.5",
-    "ui5-middleware-simpleproxy": "0.9.5"
+    "@sap-ux/ui5-middleware-fe-mockserver": "^2.1.81",
+    "@sap/ux-specification": "^1.108.3",
+    "@sap/ux-ui5-tooling": "^1.9.4",
+    "@ui5/cli": "3.0.7",
+    "ui5-middleware-simpleproxy": "0.9.6"
   },
   "scripts": {
-    "start": "fiori run -p 8084 --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#uiv4ordersv4fpm-tile\"",
+    "start": "fiori run -p 8084 --open \"index.html?sap-ui-xx-viewCache=false&sap-language=EN\"",
+    "start-flp": "fiori run -p 8084 --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#uiv4ordersv4fpm-tile\"",
     "start:ui5": "ui5 serve",
     "start:silent": "fiori run -p 8084",
     "start-local": "fiori run --config ./ui5-local.yaml --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#uiv4ordersv4fpm-tile\"",
