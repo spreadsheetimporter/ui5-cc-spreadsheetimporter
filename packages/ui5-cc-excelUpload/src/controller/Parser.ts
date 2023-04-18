@@ -12,7 +12,7 @@ export default class Parser {
 			// check each specified column if availalble in excel data
 			for (const [columnKey, metadataColumn] of Object.entries(typeLabelList)) {
 				// depending on parse type
-				const value = Util.getValueFromRow(row, metadataColumn.label, columnKey, component.getFieldMatchType());
+				const value = Util.getValueFromRow(row, metadataColumn.label, columnKey);
 				// depending on data type
 				if (value) {
 					if (metadataColumn.type === "Edm.Boolean") {

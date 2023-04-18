@@ -18,10 +18,6 @@ sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
 				mandatoryFields: {
 					type: "string[]"
 				},
-				fieldMatchType: {
-					type: "string",
-					defaultValue: "label"
-				},
 				activateDraft: {
 					type: "boolean",
 					defaultValue: false
@@ -70,7 +66,6 @@ sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
 						tableId: oControl.getTableId(),
 						odataType: oControl.getOdataType(),
 						mandatoryFields: oControl.getMandatoryFields(),
-						fieldMatchType: oControl.getFieldMatchType(),
 						activateDraft: oControl.getActivateDraft(),
 						batchSize: oControl.getBatchSize(),
 						standalone: oControl.getStandalone()
@@ -87,7 +82,6 @@ sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
 						tableId: oControl.getTableId(),
 						odataType: oControl.getOdataType(),
 						mandatoryFields: oControl.getMandatoryFields(),
-						fieldMatchType: oControl.getFieldMatchType(),
 						activateDraft: oControl.getActivateDraft(),
 						batchSize: oControl.getBatchSize(),
 						standalone: oControl.getStandalone()

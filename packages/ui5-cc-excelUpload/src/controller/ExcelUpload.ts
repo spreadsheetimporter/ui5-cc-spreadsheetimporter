@@ -199,7 +199,7 @@ export default class ExcelUpload {
 
 			if (!this.component.getStandalone()) {
 				this.errorHandler.checkMandatoryFields(excelSheetsData, this.component.getMandatoryFields(), this.typeLabelList);
-				this.errorHandler.checkColumnNames(columnNames, this.component.getFieldMatchType(), this.typeLabelList);
+				this.errorHandler.checkColumnNames(columnNames, this.typeLabelList);
 			}
 			this.payload = excelSheetsData;
 			this.component.fireCheckBeforeRead({ sheetData: excelSheetsData });
@@ -346,7 +346,6 @@ export default class ExcelUpload {
 	 */
 	onTempDownload() {
 		// create excel column list
-		let fieldMatchType = this.component.getFieldMatchType();
 		var excelColumnList = [{}];
 		if (this.component.getStandalone()) {
 			// loop over this.component.getColumns
@@ -355,12 +354,7 @@ export default class ExcelUpload {
 			}
 		} else {
 			for (let [key, value] of Object.entries(this.typeLabelList)) {
-				if (fieldMatchType === "label") {
-					excelColumnList[0][value.label] = "";
-				}
-				if (fieldMatchType === "labelTypeBrackets") {
-					excelColumnList[0][`${value.label}[${key}]`] = "";
-				}
+				excelColumnList[0][`${value.label}[${key}]`] = "";
 			}
 		}
 
