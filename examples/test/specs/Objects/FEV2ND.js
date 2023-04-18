@@ -15,7 +15,7 @@ class FEV2ND {
 		this.objectPageExceluploadButton = this.objectPageId + "action::excelUploadButton";
 		this.objectPageSaveButton = this.objectPageId + "activate";
 		this.objectPageOrderItems = this.objectPageId + "Items::com.sap.vocabularies.UI.v1.LineItem::responsiveTable";
-		this.listReportUploadFilename = "test/testFiles/ListReportOrdersNoErrosV2.xlsx";
+		this.listReportUploadFilename = "test/testFiles/ListReportOrdersNoErros.xlsx";
 		// nav to sub object page
 		this.navToObjectPageAttribute = "OrderNo";
 		this.navToObjectPageValue = "2";
