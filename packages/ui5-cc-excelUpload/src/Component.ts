@@ -9,6 +9,7 @@ import { $ComponentSettings } from "sap/ui/core/Component";
  */
 export default class Component extends UIComponent {
 	excelUpload: ExcelUpload;
+	private _sContentDensityClass: any;
 	constructor(idOrSettings?: string | $ComponentSettings);
 	constructor(id?: string, settings?: $ComponentSettings);
 	constructor(id?: string, settings?: $ComponentSettings) {
@@ -66,6 +67,7 @@ export default class Component extends UIComponent {
 		var oModel, oCompData;
 
 		oCompData = this.getComponentData();
+		this.getContentDensityClass();
 		// if (typeof oCompData.renderButton === "boolean"){
 		// 	this.setRenderButton(oCompData.renderButton);
 		// }
@@ -83,6 +85,11 @@ export default class Component extends UIComponent {
 		this.setBatchSize(oCompData.batchSize);
 		this.setStandalone(oCompData.standalone);
 
+		// // we could create a device model and use it
+		oModel = new JSONModel(Device);
+		oModel.setDefaultBindingMode("OneWay");
+		this.setModel(oModel, "device");
+
 		// call the init function of the parent - ATTENTION: this triggers createContent()
 		// call the base component's init function
 		super.init();
@@ -90,11 +97,6 @@ export default class Component extends UIComponent {
 		// this.excelUpload = await sap.ui.core.mvc.Controller.create({ name:"cc.excelUpload.XXXnamespaceXXX.ExcelUpload"})
 		// //now this here would work:
 		// //var oRoot = this.getRootControl(); → won't work with visibility: "hidden", no getters/setters generated
-
-		// // we could create a device model and use it
-		oModel = new JSONModel(Device);
-		oModel.setDefaultBindingMode("OneWay");
-		this.setModel(oModel, "device");
 	}
 
 	// Component.prototype.setContextPublic = function(options) {

@@ -51,7 +51,7 @@ describe("Upload File Object Page", () => {
 			selector: {
 				controlType: "sap.m.Dialog",
 				properties: {
-					title: "Excel Upload"
+					contentWidth: "40vw"
 				},
 				searchOpenDialogs: true
 			}

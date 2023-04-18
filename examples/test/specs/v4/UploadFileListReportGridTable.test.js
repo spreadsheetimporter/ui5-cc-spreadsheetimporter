@@ -34,7 +34,7 @@ describe("Upload File List Report Grid Table", () => {
 			selector: {
 				controlType: "sap.m.Dialog",
 				properties: {
-					title: "Excel Upload"
+					contentWidth: "40vw"
 				},
 				searchOpenDialogs: true
 			}

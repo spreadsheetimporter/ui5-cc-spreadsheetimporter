@@ -1,29 +1,34 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:upload="sap.ui.unified">
-  <Dialog title="{i18n>excelupload}" contentWidth="40vw" contentHeight="100px" verticalScrolling="false">
-    <subHeader>
-      <Bar>
-        <contentLeft>
-          <Button press="onTempDownload" text="{i18n>downloadTemplate}" icon="sap-icon://download-from-cloud" />
-        </contentLeft>
-        <contentRight>
-          <Text text="{i18n>noDataRows}" visible="{= ${info>/dataRows} === 0}" />
-          <Text xmlns="sap.m" xmlns:core="sap.ui.core" core:require="{ formatMessage: 'sap/base/strings/formatMessage' }" 
-          visible="{= ${info>/dataRows} > 0}"
-          text="{
-              parts: [
-                'i18n>dataRows',
-                'info>/dataRows'
-              ],
-              formatter: 'formatMessage'
-            }"/>
-          <Button press="showPreview" text="{i18n>showPreview}" icon="sap-icon://display" />
-        </contentRight>
-      </Bar>
-    </subHeader>
+  <Dialog contentWidth="{= ${device>/system/phone} ? '100%' : '40vw' }" contentHeight="150px" verticalScrolling="false">
+    <customHeader >
+      <OverflowToolbar>
+        <Title text="{i18n>excelupload}" />
+        <ToolbarSpacer/>
+        <Button press="showPreview" text="{i18n>showPreview}" icon="sap-icon://display" />
+        <Button press="onTempDownload" text="{i18n>downloadTemplate}" icon="sap-icon://download-from-cloud" />
+      </OverflowToolbar>
+    </customHeader>
     <content>
-      <upload:FileUploader width="80%" placeholder="{i18n>exceluploadPlaceholder}" fileType="xlsx,xls,csv" change="onFileUpload" sameFilenameAllowed="true" class="sapUiMediumMargin" />
+      <FlexBox direction="Column" height="100%" width="80%" alignItems="Stretch" justifyContent="Center" fitContainer="true" class="centered">
+        <MessageStrip xmlns:core="sap.ui.core" core:require="{ formatMessage: 'sap/base/strings/formatMessage' }" visible="{= ${info>/dataRows} > 0}" text="{
+        parts: [
+          'i18n>dataRows',
+          'info>/dataRows'
+        ],
+        formatter: 'formatMessage'
+      }" type="Success" enableFormattedText="true" showIcon="true">
+          <layoutData>
+            <FlexItemData growFactor="1" styleClass="centeredFlex" />
+          </layoutData>
+        </MessageStrip>
+        <upload:FileUploader placeholder="{i18n>exceluploadPlaceholder}" fileType="xlsx,xls,csv" change="onFileUpload" sameFilenameAllowed="true" width="100%">
+          <upload:layoutData>
+            <FlexItemData growFactor="5" styleClass="centeredFlex"/>
+          </upload:layoutData>
+        </upload:FileUploader>
+      </FlexBox>
     </content>
     <buttons>
       <Button text="{i18n>upload}" press="onUploadSet" type="Emphasized" />
