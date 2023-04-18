@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.15.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.14.1...ui5-cc-excelupload-v0.15.0) (2023-04-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* removal of option `fieldMatchType` ([#157](https://github.com/marianfoo/ui5-cc-excelUpload/issues/157))
+
+### Features
+
+* check for mandatory fields annotation ([#162](https://github.com/marianfoo/ui5-cc-excelUpload/issues/162)) ([6c99324](https://github.com/marianfoo/ui5-cc-excelUpload/commit/6c9932407c954b31784f24fda0b44d0d5f727a83))
+* removal of option `fieldMatchType` ([#157](https://github.com/marianfoo/ui5-cc-excelUpload/issues/157)) ([4346e1b](https://github.com/marianfoo/ui5-cc-excelUpload/commit/4346e1bb00473363167b0d24c8ebf14e40b073cb))
+
 ## [0.14.1](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.14.0...ui5-cc-excelupload-v0.14.1) (2023-04-18)
 
 
