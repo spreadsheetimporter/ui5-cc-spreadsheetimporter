@@ -1,3 +1,12 @@
+# Quick Setup with GitHub Codespaces
+
+The postCreateCommand will automatically install all dependencies.  
+This will take a few minutes.
+
+[![Open Stable in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=569313224&machine=basicLinux32gb&devcontainer_path=.devcontainer%2Fdevcontainer.json&location=WestEurope) 
+
+
+# Local Setup
 ## Requirements
 - Node.js Versions 16.18.0, 18.12.0, or later
 
