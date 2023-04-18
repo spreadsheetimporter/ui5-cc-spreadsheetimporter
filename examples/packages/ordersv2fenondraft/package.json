@@ -19,7 +19,8 @@
     "@ui5/cli": "3.0.7"
   },
   "scripts": {
-    "start": "fiori run -p 8083 --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#uiv2ordersv2fenondraft-tile\"",
+    "start": "fiori run -p 8083 --open \"index.html?sap-ui-xx-viewCache=false&sap-language=EN\"",
+    "start-flp": "fiori run -p 8083 --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#uiv2ordersv2fenondraft-tile\"",
     "start:silent": "fiori run -p 8083  --config=ui5-test.yaml",
     "start-local": "fiori run --config ./ui5-local.yaml --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#uiv2ordersv2fenondraft-tile\"",
     "build": "ui5 build --config=ui5.yaml --clean-dest --dest dist",
