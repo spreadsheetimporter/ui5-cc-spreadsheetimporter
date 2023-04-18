@@ -1,0 +1,24 @@
+name: Deploy to Server
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # - name: Install SSH
+      #   run: apt-get update && apt-get install -y openssh-client
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /home/ui5-cc-excelUpload/
+            git fetch --all
+            git pull
+            npm run build
+            cd /home/ui5-cc-excelUpload/examples/packages/ordersv4fe
+            npm run build
