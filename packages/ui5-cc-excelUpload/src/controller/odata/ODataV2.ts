@@ -95,4 +95,11 @@ export default class ODataV2 extends OData {
 		this.createContexts = [];
 		this.createPromises = [];
 	}
+
+	async getKeyList(odataType: string, tableObject: any) {
+		const metaModel = tableObject.getModel().getMetaModel();
+		await metaModel.loaded();
+		const oDataEntityType = metaModel.getODataEntityType(odataType);
+		return this.metaDatahandler.getKeyListV2(oDataEntityType);
+	}
 }

@@ -80,6 +80,29 @@ export default class ErrorHandler {
 		}
 	}
 
+	checkKeyColumns(odataKeyList: string[], typeLabelList: ListObject) {
+		for (let index = 0; index < odataKeyList.length; index++) {
+			const columnName = odataKeyList[index];
+			let found = false;
+			for (const key in typeLabelList) {
+				if (typeLabelList.hasOwnProperty(key)) {
+					if (columnName.includes(`[${key}]`)) {
+						found = true;
+						break;
+					}
+				}
+			}
+			if (!found) {
+				const errorMessage = {
+					title: this.excelUploadController.util.geti18nText("columnNotFound", [columnName]),
+					type: ErrorTypes.ColumnNotFound,
+					counter: 1,
+				} as ErrorMessage;
+				this.errorResults.push(errorMessage);
+			}
+		}
+	}
+
 	areErrorsPresent(): boolean {
 		if (this.errorResults.some((error) => error.counter > 0)) {
 			return true;

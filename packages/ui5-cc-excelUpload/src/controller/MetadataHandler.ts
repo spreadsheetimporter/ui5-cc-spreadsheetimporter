@@ -137,4 +137,18 @@ export default class MetadataHandler {
 		}
 		return propertyName;
 	}
+
+	getKeyListV4(odataType: string): string[] {
+		const properties = this.excelUploadController.context.getModel().getMetaModel().getData()[odataType];
+		const keys = properties["$Key"];
+		const filteredkeys = keys.filter((key: string) => key !== "IsActiveEntity");
+		return filteredkeys;
+	}
+
+	getKeyListV2(oDataEntityType: any): string[] {
+		const keys = oDataEntityType.key.propertyRef;
+		// create string array and filter out IsActiveEntity
+		const filteredStringArray: string[] = keys.map((key: any) => key.name).filter((name: string) => name !== "IsActiveEntity");
+		return filteredStringArray;
+	}
 }
