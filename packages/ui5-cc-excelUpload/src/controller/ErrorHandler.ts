@@ -52,7 +52,7 @@ export default class ErrorHandler {
 			}
 
 			for (const [index, row] of data.entries()) {
-				const value = Util.getValueFromRow(row, fieldLabel, mandatoryField);
+				const value = Util.getValueFromRow(row, fieldLabel, mandatoryField, this.excelUploadController.component.getFieldMatchType());
 				const errorMessage = {
 					title: this.excelUploadController.util.geti18nText("mandatoryFieldNotFilled", [fieldLabel]),
 					type: ErrorTypes.MandatoryFieldNotFilled,
@@ -66,15 +66,23 @@ export default class ErrorHandler {
 		}
 	}
 
-	checkColumnNames(columnNames: string[], typeLabelList: ListObject) {
+	checkColumnNames(columnNames: string[], fieldMatchType: string, typeLabelList: ListObject) {
 		for (let index = 0; index < columnNames.length; index++) {
 			const columnName = columnNames[index];
 			let found = false;
 			for (const key in typeLabelList) {
 				if (typeLabelList.hasOwnProperty(key)) {
-					if (columnName.includes(`[${key}]`)) {
-						found = true;
-						break;
+					if (fieldMatchType === "label") {
+						if (typeLabelList[key].label === columnName) {
+							found = true;
+							break;
+						}
+					}
+					if (fieldMatchType === "labelTypeBrackets") {
+						if (columnName.includes(`[${key}]`)) {
+							found = true;
+							break;
+						}
 					}
 				}
 			}
