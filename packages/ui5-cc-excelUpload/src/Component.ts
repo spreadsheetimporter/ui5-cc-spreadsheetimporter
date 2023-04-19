@@ -26,7 +26,7 @@ export default class Component extends UIComponent {
 			tableId: { type: "string" },
 			odataType: { type: "string" },
 			mandatoryFields: { type: "string[]" },
-			fieldMatchType: { type: "string", defaultValue: "label" },
+			fieldMatchType: { type: "string", defaultValue: "labelTypeBrackets" },
 			activateDraft: { type: "boolean", defaultValue: false },
 			batchSize: { type: "int", defaultValue: 1000 },
 			standalone: { type: "boolean", defaultValue: false },
