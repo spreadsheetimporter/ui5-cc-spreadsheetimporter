@@ -20,7 +20,7 @@ sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
 				},
 				fieldMatchType: {
 					type: "string",
-					defaultValue: "label"
+					defaultValue: "labelTypeBrackets"
 				},
 				activateDraft: {
 					type: "boolean",
