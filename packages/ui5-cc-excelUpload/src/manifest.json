@@ -26,10 +26,7 @@
       "tablet": true,
       "phone": true
     },
-    "supportedThemes": [
-      "sap_hcb",
-      "sap_belize"
-    ]
+    "supportedThemes": ["sap_hcb", "sap_belize"]
   },
   "sap.ui5": {
     "componentName": "cc.excelUpload.v0_15_0",
@@ -51,10 +48,7 @@
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
           "bundleName": "cc.excelUpload.v0_15_0.i18n.i18n",
-          "supportedLocales": [
-            "en",
-            "de"
-          ],
+          "supportedLocales": ["de", "en", "es", "fr", "hi", "it", "ja", "zh"],
           "fallbackLocale": "en"
         }
       }
