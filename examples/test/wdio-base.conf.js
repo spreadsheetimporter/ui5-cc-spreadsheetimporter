@@ -15,12 +15,9 @@ const specs = testappObject["testMapping"]["specs"];
 const port = testappObject.port;
 
 module.exports.config = {
-	runner: 'local',
 	wdi5: {
-        logLevel: 'verbose',
-        platform: 'browser',
-        url: 'index.html',
-        deviceType: 'web',
+        logLevel: "error",
+        waitForUI5Timeout: 29000
     },
 	scenario: scenario,
 	specs: specs,
@@ -37,12 +34,11 @@ module.exports.config = {
 		  "binary": '/extbin/bin/firefox',
 		  "args": ['-headless'],
 		  "log": {"level": "trace"},
-		},
+			},
 	}],
 	logLevel: "error",
 	bail: 0,
-	baseUrl: 'http://localhost:8080/index.html',
-	port: 37311,
+	baseUrl: `http://localhost:${port}/index.html?sap-language=EN`,
 	waitforTimeout: 20000,
 	connectionRetryTimeout: process.argv.indexOf("--debug") > -1 ? 1200000 : 120000,
 	connectionRetryCount: 3,
