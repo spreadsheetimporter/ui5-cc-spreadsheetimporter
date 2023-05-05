@@ -17,7 +17,6 @@ const port = testappObject.port;
 module.exports.config = {
 	runner: 'local',
 	wdi5: {
-        screenshotPath: path.join('wdio-ui5-service', 'test', 'report', 'screenshots'),
         logLevel: 'verbose',
         platform: 'browser',
         url: 'index.html',
@@ -36,7 +35,7 @@ module.exports.config = {
 		"browserVersion": "102",
 		"moz:firefoxOptions": {
 		  "binary": '/extbin/bin/firefox',
-		  "args": ['-headless', '-profile', '/tmp/profile'],
+		  "args": ['-headless'],
 		  "log": {"level": "trace"},
 		},
 	}],
@@ -56,7 +55,7 @@ module.exports.config = {
 		// Check geckodriver --help for all options. Example:
 		// ['--log=debug', '--binary=/var/ff50/firefox'] 
 		// Default: empty array
-		args: ['--log=trace', '--remote-debugging-port=9222'],
+		args: ['--log=trace'],
 		
 		// The path where the output of the Geckodriver server should
 		// be stored (uses the config.outputDir by default when not set).
