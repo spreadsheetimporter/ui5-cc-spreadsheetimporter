@@ -8,6 +8,11 @@
         <ToolbarSpacer/>
         <Button press="showPreview" text="{i18n>showPreview}" icon="sap-icon://display" />
         <Button press="onTempDownload" text="{i18n>downloadTemplate}" icon="sap-icon://download-from-cloud" />
+        <Button press="onOpenOptionsDialog" text="{i18n>showOptionMenu}">
+          <layoutData>
+            <OverflowToolbarLayoutData priority="AlwaysOverflow"/>
+          </layoutData>
+        </Button>
       </OverflowToolbar>
     </customHeader>
     <content>

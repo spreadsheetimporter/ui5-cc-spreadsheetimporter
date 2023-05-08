@@ -1,0 +1,38 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:upload="sap.ui.unified"
+  xmlns:f="sap.ui.layout.form">
+  <Dialog contentWidth="{= ${device>/system/phone} ? '100%' : '40vw' }" contentHeight="150px" verticalScrolling="false">
+    <customHeader >
+      <OverflowToolbar>
+        <Title text="{i18n>optionsDialogTitle}" />
+        <ToolbarSpacer/>
+      </OverflowToolbar>
+    </customHeader>
+    <content>
+        <f:SimpleForm id="uploadOptionsForm" editable="true" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" class="centered">
+            <f:content>
+              <!-- Add the controls for the options here -->
+              <!-- For example, create a CheckBox for the "strict" option -->
+              <Label text="Strict" />
+              <CheckBox
+                id="strictCheckBox"
+                selected="{options>/strict}" />
+    
+              <!-- Add the control for the "fieldMatchType" dropdown option -->
+              <Label text="Field Match Type" />
+              <Select
+                id="fieldMatchTypeSelect"
+                selectedKey="{options>/fieldMatchType}">
+                <core:Item key="labelTypeBrackets" text="Label Type Brackets" />
+                <core:Item key="label" text="Label" />
+              </Select>
+            </f:content>
+          </f:SimpleForm>
+    </content>
+    <buttons>
+        <Button text="{i18n>saveOptionsDialog}" press=".onSave" type="Emphasized" />
+        <Button text="{i18n>closeOptionsDialog}" press=".onCancel" />
+    </buttons>
+  </Dialog>
+</core:FragmentDefinition>
