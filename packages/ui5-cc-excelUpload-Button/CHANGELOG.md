@@ -12,6 +12,21 @@
   * dependencies
     * ui5-cc-excelupload bumped from 0.14.0 to 0.14.1
 
+## [0.4.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-button-v0.3.0...ui5-cc-excelupload-button-v0.4.0) (2023-05-08)
+
+
+### Features
+
+* add `continue on error` button in error dialog ([#182](https://github.com/marianfoo/ui5-cc-excelUpload/issues/182)) ([40d7d28](https://github.com/marianfoo/ui5-cc-excelUpload/commit/40d7d2840522be0ed8d2b6edf09ad67268ed7348))
+* revert removal of option `fieldMatchType` ([#157](https://github.com/marianfoo/ui5-cc-excelUpload/issues/157)), new default `labelTypeBrackets` ([#173](https://github.com/marianfoo/ui5-cc-excelUpload/issues/173)) ([7a91c19](https://github.com/marianfoo/ui5-cc-excelUpload/commit/7a91c194c039f2fc3e5a1dbddeddc897d4fe89ab))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * ui5-cc-excelupload bumped from 0.15.0 to 0.16.0
+
 ## [0.3.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-button-v0.2.2...ui5-cc-excelupload-button-v0.3.0) (2023-04-18)
 
 

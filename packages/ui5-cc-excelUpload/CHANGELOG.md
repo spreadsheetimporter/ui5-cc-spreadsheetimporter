@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.16.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.15.0...ui5-cc-excelupload-v0.16.0) (2023-05-08)
+
+
+### Features
+
+* add `continue on error` button in error dialog ([#182](https://github.com/marianfoo/ui5-cc-excelUpload/issues/182)) ([40d7d28](https://github.com/marianfoo/ui5-cc-excelUpload/commit/40d7d2840522be0ed8d2b6edf09ad67268ed7348))
+* add options menu for config ([#183](https://github.com/marianfoo/ui5-cc-excelUpload/issues/183)) ([7533ba9](https://github.com/marianfoo/ui5-cc-excelUpload/commit/7533ba91072b10fdfa6085117b9be98eef32304a))
+* revert removal of option `fieldMatchType` ([#157](https://github.com/marianfoo/ui5-cc-excelUpload/issues/157)), new default `labelTypeBrackets` ([#173](https://github.com/marianfoo/ui5-cc-excelUpload/issues/173)) ([7a91c19](https://github.com/marianfoo/ui5-cc-excelUpload/commit/7a91c194c039f2fc3e5a1dbddeddc897d4fe89ab))
+
+
+### Bug Fixes
+
+* i18n language codes ([#179](https://github.com/marianfoo/ui5-cc-excelUpload/issues/179)) ([851a50c](https://github.com/marianfoo/ui5-cc-excelUpload/commit/851a50c5b986e95789c2dc23f32603ed6ec20379))
+* remove ids from options fragment ([#184](https://github.com/marianfoo/ui5-cc-excelUpload/issues/184)) ([be2e947](https://github.com/marianfoo/ui5-cc-excelUpload/commit/be2e947e47b75a4b6e3ebe3abe5a41022c415f3e))
+
 ## [0.15.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.14.1...ui5-cc-excelupload-v0.15.0) (2023-04-18)
 
 
