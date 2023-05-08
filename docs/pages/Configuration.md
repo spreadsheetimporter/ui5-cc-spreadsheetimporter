@@ -14,6 +14,7 @@ These options are available and explained in detail below:
 | `activateDraft` | Determines whether a draft should be activated immediately  | boolean |
 | `batchSize` | Determines bach sizes send to backend server  | integer |
 | `standalone` | Mode if you do not have a table and want to do the processing yourself  | boolean |
+| `strict` | The strict option controls the availability of the `Continue` button in the error dialog.  | boolean |
 
 ### `columns`
 
@@ -131,3 +132,11 @@ An example of an implementation to display data of an Excelupload in a freestyle
 
 [UploadToTable.controller.js](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/examples/packages/ordersv2freestylenondraft/webapp/controller/UploadToTable.controller.js)  
 [UploadToTable.view.xml](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/examples/packages/ordersv2freestylenondraft/webapp/view/UploadToTable.view.xml)
+
+### `strict`
+
+**default:** `false`
+
+When strict is set to its default value (false), the "Continue" button is displayed in the error dialog, allowing users to proceed despite encountering errors in the uploaded data.  
+
+This option defines whether the "Continue" button should be displayed in the error dialog or not. When set to true, the "Continue" button will not be displayed, and users must resolve the errors before proceeding with the next steps in the application.

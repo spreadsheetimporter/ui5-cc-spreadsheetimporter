@@ -30,6 +30,7 @@ export default class Component extends UIComponent {
 			activateDraft: { type: "boolean", defaultValue: false },
 			batchSize: { type: "int", defaultValue: 1000 },
 			standalone: { type: "boolean", defaultValue: false },
+			strict: { type: "boolean", defaultValue: false },
 		},
 		aggregations: {
 			rootControl: {
@@ -87,6 +88,7 @@ export default class Component extends UIComponent {
 		this.setActivateDraft(oCompData.activateDraft);
 		this.setBatchSize(oCompData.batchSize);
 		this.setStandalone(oCompData.standalone);
+		this.setStrict(oCompData.strict);
 
 		// // we could create a device model and use it
 		oModel = new JSONModel(Device);

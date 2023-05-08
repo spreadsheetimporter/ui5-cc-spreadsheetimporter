@@ -134,14 +134,18 @@ export default class ErrorHandler {
 	 * @param {Array} errorArray - Array containing error messages and their counters.
 	 */
 	async displayErrors() {
+		const infoModel = new JSONModel({
+			strict: this.excelUploadController.component.getStrict()
+		});
 		if (!this.errorDialog) {
 			this.errorDialog = (await Fragment.load({
 				name: "cc.excelUpload.XXXnamespaceXXX.fragment.ErrorDialog",
 				type: "XML",
 				controller: this,
 			})) as Dialog;
-			this.errorDialog.setTitle(this.excelUploadController.util.geti18nText("errorDialogTitle"));
 		}
+		this.errorDialog.setModel(this.excelUploadController.componentI18n, "i18n");
+		this.errorDialog.setModel(infoModel, "info");
 		this.errorDialog.setModel(new JSONModel(), "errorData");
 		const errorGrouped = this.groupErrors(this.errorResults);
 		const sortedErrorGrouped = this.sortErrorsByTitle(errorGrouped);
@@ -175,6 +179,14 @@ export default class ErrorHandler {
 
 	private onCloseErrorDialog() {
 		this.errorDialog.close();
+		// rest file uploader content
+		this.excelUploadController.resetContent();
+	}
+
+	private onContinue() {
+		this.errorDialog.close();
+		this.excelUploadController.setDataRows();
+		
 	}
 
 	private sortErrorsByTitle(errors: ErrorMessage[]) {

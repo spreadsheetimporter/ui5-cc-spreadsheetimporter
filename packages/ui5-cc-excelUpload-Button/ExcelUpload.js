@@ -30,7 +30,8 @@ sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
 					type: "int",
 					defaultValue: 1000
 				},
-				standalone: { type: "boolean", defaultValue: false }
+				standalone: { type: "boolean", defaultValue: false },
+				strict: { type: "boolean", defaultValue: false }
 			},
 			events: {
 				checkBeforeRead: {
@@ -73,7 +74,8 @@ sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
 						fieldMatchType: oControl.getFieldMatchType(),
 						activateDraft: oControl.getActivateDraft(),
 						batchSize: oControl.getBatchSize(),
-						standalone: oControl.getStandalone()
+						standalone: oControl.getStandalone(),
+						strict: oControl.getStrict()
 					}
 				})
 			} else {
@@ -90,7 +92,8 @@ sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
 						fieldMatchType: oControl.getFieldMatchType(),
 						activateDraft: oControl.getActivateDraft(),
 						batchSize: oControl.getBatchSize(),
-						standalone: oControl.getStandalone()
+						standalone: oControl.getStandalone(),
+						strict: oControl.getStrict()
 					}
 				})
 			}

@@ -31,7 +31,7 @@
       </FlexBox>
     </content>
     <buttons>
-      <Button text="{i18n>upload}" press="onUploadSet" type="Emphasized" />
+      <Button text="{i18n>upload}" press="onUploadSet" type="Emphasized" enabled="{= ${info>/dataRows} > 0}" />
       <Button press="onCloseDialog" text="{i18n>close}" />
     </buttons>
   </Dialog>
