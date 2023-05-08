@@ -17,7 +17,6 @@
               <Label text="Strict" />
               <CheckBox
                 selected="{options>/strict}" />
-    
               <!-- Add the control for the "fieldMatchType" dropdown option -->
               <Label text="Field Match Type" />
               <Select
