@@ -1,12 +1,13 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-  <Dialog title="{i18n>exceluploadPlaceholder}" resizable="true" state="Error" verticalScrolling="false" contentHeight="50%" contentWidth="50%">
+  <Dialog title="{i18n>errorDialogTitle}" resizable="true" state="Error" verticalScrolling="false" contentHeight="50%" contentWidth="50%">
     <content>
       <MessageView items="{errorData>/}">
         <MessageItem title="{errorData>title}" type="Error" counter="{errorData>counter}" subtitle="{errorData>subtitle}" description="{errorData>description}" />
       </MessageView>
     </content>
-    <endButton>
-      <Button press=".onCloseErrorDialog" text="Ok" />
-    </endButton>
+    <buttons>
+      <Button press=".onContinue" type="Emphasized" text="{i18n>errorDialogButtonContinue}"  />
+      <Button press=".onCloseErrorDialog" text="{i18n>errorDialogButtonClose}" />
+    </buttons>
   </Dialog>
 </core:FragmentDefinition>

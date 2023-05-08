@@ -41,7 +41,7 @@ export default class ExcelUpload {
 	private model: any;
 	private typeLabelList: ListObject;
 	private dialog: Dialog;
-	private componentI18n: ResourceModel;
+	public componentI18n: ResourceModel;
 	private UI5MinorVersion: number;
 	private odataHandler: OData;
 	private payload: any;
@@ -79,7 +79,7 @@ export default class ExcelUpload {
 	 */
 	async initialSetup(): Promise<void> {
 		const infoModel = new JSONModel({
-			dataRows: 0,
+			dataRows: 0
 		});
 		if (!this.dialog) {
 			this.dialog = (await Fragment.load({
@@ -215,14 +215,12 @@ export default class ExcelUpload {
 			if (this.errorHandler.areErrorsPresent()) {
 				// show error dialog
 				this.errorHandler.displayErrors();
-				// reset file uploader
-				this._resetContent();
 				return;
 			}
-			(this.dialog.getModel("info") as JSONModel).setProperty("/dataRows", this.payloadArray.length);
+			this.setDataRows();
 		} catch (error) {
 			Util.showError(error, "ExcelUpload.ts", "onFileUpload");
-			this._resetContent();
+			this.resetContent();
 		}
 	}
 
@@ -230,7 +228,7 @@ export default class ExcelUpload {
 	 * Closes the Excel upload dialog.
 	 */
 	onCloseDialog() {
-		this._resetContent();
+		this.resetContent();
 		this.dialog.close();
 	}
 
@@ -288,7 +286,7 @@ export default class ExcelUpload {
 				}
 			} catch (error) {
 				Util.showError(error, "ExcelUpload.ts", "onUploadSet");
-				this._resetContent();
+				this.resetContent();
 			}
 		}
 
@@ -450,7 +448,7 @@ export default class ExcelUpload {
 		});
 	}
 
-	_resetContent() {
+	resetContent() {
 		this.payloadArray = [];
 		this.payload = [];
 		(this.dialog.getModel("info") as JSONModel).setProperty("/dataRows", 0);
@@ -481,5 +479,9 @@ export default class ExcelUpload {
 			error.counter = 1;
 		});
 		this.errorHandler.addToErrorsResults(errorArray);
+	}
+
+	public setDataRows() {
+		(this.dialog.getModel("info") as JSONModel).setProperty("/dataRows", this.payloadArray.length);
 	}
 }
