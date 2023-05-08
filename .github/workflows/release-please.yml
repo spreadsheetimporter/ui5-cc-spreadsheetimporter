@@ -44,7 +44,7 @@ jobs:
         run: |
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           echo ":::: Publishing as $(npm whoami)"
-          cd ./packages/ui5-cc-excelUpload/ && npm publish
+          cd ./packages/ui5-cc-excelUpload/ && npm publish --provenance
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -57,7 +57,7 @@ jobs:
         run: |
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           echo ":::: Publishing as $(npm whoami)"
-          cd ./packages/ui5-cc-excelUpload-Button/ && npm publish
+          cd ./packages/ui5-cc-excelUpload-Button/ && npm publish --provenance
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -70,7 +70,7 @@ jobs:
         run: |
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           echo ":::: Publishing as $(npm whoami)"
-          cd ./packages/ui5-cc-excelUpload-Generator/ && npm publish
+          cd ./packages/ui5-cc-excelUpload-Generator/ && npm publish --provenance
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
