@@ -23,6 +23,7 @@ import Preview from "./Preview";
 import Log from "sap/base/Log";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import FlexBox from "sap/m/FlexBox";
+import Options from "./Options";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
@@ -52,6 +53,7 @@ export default class ExcelUpload {
 	private initialSetupPromise: Promise<void>;
 	public errorArray: ErrorMessage[];
 	odataKeyList: string[];
+	optionsHandler: Options;
 
 	/**
 	 * Initializes ExcelUpload instance.
@@ -78,6 +80,7 @@ export default class ExcelUpload {
 	 * @returns {Promise<void>} A promise that resolves when the initial setup is complete.
 	 */
 	async initialSetup(): Promise<void> {
+		this.optionsHandler = new Options(this);
 		const infoModel = new JSONModel({
 			dataRows: 0,
 			strict: this.component.getStrict()
@@ -231,6 +234,10 @@ export default class ExcelUpload {
 	onCloseDialog() {
 		this.resetContent();
 		this.dialog.close();
+	}
+
+	onOpenOptionsDialog() {
+		this.optionsHandler.openOptionsDialog();
 	}
 
 	/**
