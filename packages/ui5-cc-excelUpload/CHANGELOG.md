@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.16.1](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.16.0...ui5-cc-excelupload-v0.16.1) (2023-05-08)
+
+
+### Bug Fixes
+
+* remove empty line ([ae7bce8](https://github.com/marianfoo/ui5-cc-excelUpload/commit/ae7bce8f3cd8962e454e51239d878e1fb2301db5))
+
 ## [0.16.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.15.0...ui5-cc-excelupload-v0.16.0) (2023-05-08)
 
 
