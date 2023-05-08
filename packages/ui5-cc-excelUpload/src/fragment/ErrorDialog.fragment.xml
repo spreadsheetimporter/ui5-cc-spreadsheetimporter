@@ -6,7 +6,7 @@
       </MessageView>
     </content>
     <buttons>
-      <Button press=".onContinue" type="Emphasized" text="{i18n>errorDialogButtonContinue}"  />
+      <Button press=".onContinue" type="Emphasized" text="{i18n>errorDialogButtonContinue}" visible="{= !${info>/strict}}" />
       <Button press=".onCloseErrorDialog" text="{i18n>errorDialogButtonClose}" />
     </buttons>
   </Dialog>

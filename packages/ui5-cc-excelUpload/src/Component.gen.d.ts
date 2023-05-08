@@ -18,6 +18,7 @@ declare module "./Component" {
         activateDraft?: boolean | PropertyBindingInfo | `{${string}}`;
         batchSize?: number | PropertyBindingInfo | `{${string}}`;
         standalone?: boolean | PropertyBindingInfo | `{${string}}`;
+        strict?: boolean | PropertyBindingInfo | `{${string}}`;
         checkBeforeRead?: (event: Event) => void;
         changeBeforeCreate?: (event: Event) => void;
         uploadButtonPress?: (event: Event) => void;
@@ -64,6 +65,10 @@ declare module "./Component" {
         // property: standalone
         getStandalone(): boolean;
         setStandalone(standalone: boolean): this;
+
+        // property: strict
+        getStrict(): boolean;
+        setStrict(strict: boolean): this;
 
         // event: checkBeforeRead
         attachCheckBeforeRead(fn: (event: Event) => void, listener?: object): this;
