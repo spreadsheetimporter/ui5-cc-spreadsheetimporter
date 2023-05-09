@@ -13,10 +13,10 @@
     "ui5-cc-excelupload": "./../../../packages/ui5-cc-excelUpload"
   },
   "devDependencies": {
-    "@sap-ux/ui5-middleware-fe-mockserver": "^2.1.81",
-    "@sap/ux-specification": "^1.108.3",
-    "@sap/ux-ui5-tooling": "^1.9.4",
-    "@ui5/cli": "3.0.7"
+    "@sap-ux/ui5-middleware-fe-mockserver": "^2.1.89",
+    "@sap/ux-specification": "^1.108.4",
+    "@sap/ux-ui5-tooling": "^1.9.5",
+    "@ui5/cli": "3.1.2"
   },
   "scripts": {
     "start": "fiori run -p 8083 --open \"index.html?sap-ui-xx-viewCache=false&sap-language=EN\"",
