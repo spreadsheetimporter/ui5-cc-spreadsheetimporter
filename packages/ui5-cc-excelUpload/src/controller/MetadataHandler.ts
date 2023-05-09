@@ -151,6 +151,9 @@ export default class MetadataHandler {
 		const propertiesFiltered = Object.entries(properties).filter(([propertyName, propertyValue]) => propertyValue["$kind"] === "Property");
 		for (const [propertyName, propertyValue] of propertiesFiltered) {
 			const propertyLabel = annotations[`${odataType}/${propertyName}`];
+			if (!propertyLabel) {
+				continue;
+			}
 			// if property is mandatory, field should be in excel file
 			if (
 				propertyLabel["@com.sap.vocabularies.Common.v1.FieldControl"] &&
