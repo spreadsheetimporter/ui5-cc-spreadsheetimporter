@@ -35,9 +35,9 @@ export default class ErrorHandler {
 		// concat mandatory fields arrays and remove duplicates
 		const mandatoryFields = [...new Set([...mandatoryFieldsUser, ...mandatoryFieldsMetadata])];
 		// check if column is in the data list
-		const availableKeyColumns = this.checkKeyColumns(columnNames, mandatoryFields, typeLabelList);
+		//const availableKeyColumns = this.checkKeyColumns(columnNames, mandatoryFields, typeLabelList);
 		// check if data is filled in for available columns
-		this.checkMandatoryFields(data, availableKeyColumns, typeLabelList);
+		this.checkMandatoryFields(data, mandatoryFields, typeLabelList);
 	}
 
 	checkMandatoryFields(data: PayloadArray, mandatoryFields: string[], typeLabelList: ListObject) {
