@@ -76,12 +76,12 @@
     },
     "componentUsages": {
       "excelUpload": {
-        "name": "cc.excelUpload.v0_16_1"
+        "name": "cc.excelUpload.v0_16_2"
       }
     },
     "resourceRoots": {
-      "cc.excelUpload.v0_16_1": "./thirdparty/customControl/excelUpload/v0_16_1",
-      "cc.excelUploadButton.v0_4_1": "./thirdparty/customControl/excelUploadButton/v0_4_1"
+      "cc.excelUpload.v0_16_2": "./thirdparty/customControl/excelUpload/v0_16_2",
+      "cc.excelUploadButton.v0_4_2": "./thirdparty/customControl/excelUploadButton/v0_4_2"
     },
     "routing": {
       "config": {
