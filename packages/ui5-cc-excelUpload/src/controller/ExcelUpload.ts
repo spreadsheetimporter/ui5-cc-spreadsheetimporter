@@ -204,7 +204,7 @@ export default class ExcelUpload {
 			}
 
 			if (!this.component.getStandalone()) {
-				this.errorHandler.checkMandatoryFields(excelSheetsData, this.component.getMandatoryFields(), this.typeLabelList);
+				this.errorHandler.checkMandatoryColumns(excelSheetsData,columnNames,this.odataKeyList, this.component.getMandatoryFields(), this.typeLabelList);
 				this.errorHandler.checkColumnNames(columnNames, this.component.getFieldMatchType(), this.typeLabelList);
 			}
 			this.payload = excelSheetsData;
