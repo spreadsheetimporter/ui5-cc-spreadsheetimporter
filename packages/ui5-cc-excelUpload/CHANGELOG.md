@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.16.3](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.16.2...ui5-cc-excelupload-v0.16.3) (2023-05-09)
+
+
+### Bug Fixes
+
+* correct check for mandatory fields ([#190](https://github.com/marianfoo/ui5-cc-excelUpload/issues/190)) ([83a7d6f](https://github.com/marianfoo/ui5-cc-excelUpload/commit/83a7d6fa5f5773dc17fbf4d1d0c0b82a71c18f71))
+
 ## [0.16.2](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.16.1...ui5-cc-excelupload-v0.16.2) (2023-05-09)
 
 
