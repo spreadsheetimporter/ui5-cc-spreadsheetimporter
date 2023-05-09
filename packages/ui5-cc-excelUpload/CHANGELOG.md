@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.16.2](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.16.1...ui5-cc-excelupload-v0.16.2) (2023-05-09)
+
+
+### Bug Fixes
+
+* add check if no annotations are found ([#188](https://github.com/marianfoo/ui5-cc-excelUpload/issues/188)) ([bd440bf](https://github.com/marianfoo/ui5-cc-excelUpload/commit/bd440bf2ad5838a4d403fd07b2062ab1ab7396cf))
+
 ## [0.16.1](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.16.0...ui5-cc-excelupload-v0.16.1) (2023-05-08)
 
 
