@@ -493,5 +493,3 @@ export default class ExcelUpload {
 		(this.dialog.getModel("info") as JSONModel).setProperty("/dataRows", this.payloadArray.length);
 	}
 }
-
-
