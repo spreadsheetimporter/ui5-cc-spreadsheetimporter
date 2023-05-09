@@ -1,6 +1,6 @@
 specVersion: '2.5'
 metadata:
-  name: cc.excelUpload.v0_16_3
+  name: cc.excelUpload.v0_16_4
 type: application
 builder:
   resources:
@@ -18,7 +18,7 @@ builder:
           username: env:USER
           password: env:PW
         app:
-          name: Z_XUP_v0_16_3
+          name: Z_XUP_v0_16_4
           description: ''
           package: Z_EXCELUPLOAD
           transport: A4HK900057

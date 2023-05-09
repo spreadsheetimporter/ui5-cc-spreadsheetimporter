@@ -38,7 +38,7 @@ npm install ui5-cc-excelupload
 
 ````json
 "resourceRoots": {
-    "cc.excelUpload.v0_16_3": "./thirdparty/customControl/excelUpload/v0_16_3"
+    "cc.excelUpload.v0_16_4": "./thirdparty/customControl/excelUpload/v0_16_4"
 },
 ````
 
@@ -60,7 +60,7 @@ npm install ui5-cc-excelupload
 ````json
 "componentUsages": {
     "excelUpload": {
-        "name": "cc.excelUpload.v0_16_3"
+        "name": "cc.excelUpload.v0_16_4"
     }
 },
 ````
@@ -76,7 +76,7 @@ npm install ui5-cc-excelupload
 ````json
 "componentUsages": {
     "excelUpload": {
-        "name": "cc.excelUpload.v0_16_3"
+        "name": "cc.excelUpload.v0_16_4"
     }
 },
 ````
