@@ -87,7 +87,7 @@ npm install ui5-cc-excelupload
 !!! warning 
         There are different implementations for Fiori Elements depending on the OData Version
 
-## Starting with the Fiori Elements application
+## Starting with the Fiori Elements Application
 
 To start the Excel Upload Dialog, you need in your Fiori Elements App a Button.  
 The best way is start with the [Guided Development](https://blogs.sap.com/2021/08/16/getting-up-to-speed-with-sap-fiori-tools-guided-development-overview/) Extension to add a custom action:  

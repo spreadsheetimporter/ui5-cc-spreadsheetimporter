@@ -1,6 +1,6 @@
 ## Static Site Generator
 
-The docs are setup with [MkDocs](https://www.mkdocs.org/) and [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/).  
+The documentation is setup with [MkDocs](https://www.mkdocs.org/) and [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/).  
 
 ## Usage
 

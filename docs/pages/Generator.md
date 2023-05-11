@@ -17,7 +17,7 @@ yo ui5-excelupload
 
 ## Support
 
-Currently following scenarios are support with the generator:
+Currently the following scenarios are supported by the generator:
 
 
 | OData Version  | List Report  | Object Page  |  Freestyle | Flexible Programming Model |
