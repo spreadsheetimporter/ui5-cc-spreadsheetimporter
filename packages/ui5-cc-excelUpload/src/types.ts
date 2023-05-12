@@ -43,7 +43,21 @@ export interface ErrorMessage {
 	group?: boolean;
 }
 
-export type Payload = {
-	[key: string]: any;
-};
-export type PayloadArray = Payload[];
+// export type Payload = {
+// 	[key: string]: any;
+// };
+// export type PayloadArray = Payload[];
+
+// SheetHandler
+export type SheetDataType = 'b' | 'e' | 'n' | 'd' | 's' | 'z';
+
+export interface ValueData {
+  rawValue: any;
+  sheetDataType: SheetDataType;
+  format: string;
+  formattedValue: string;
+}
+
+export type ArrayData = {
+  [key: string]: ValueData;
+}[];

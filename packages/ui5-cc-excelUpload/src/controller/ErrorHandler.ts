@@ -1,5 +1,5 @@
 import Dialog from "sap/m/Dialog";
-import { ErrorMessage, ErrorTypes, ListObject, PayloadArray } from "../types";
+import { ErrorMessage, ErrorTypes, ListObject, ArrayData } from "../types";
 import ExcelUpload from "./ExcelUpload";
 import Util from "./Util";
 import Fragment from "sap/ui/core/Fragment";
@@ -40,7 +40,7 @@ export default class ErrorHandler {
 		this.checkMandatoryFields(data, mandatoryFields, typeLabelList);
 	}
 
-	checkMandatoryFields(data: PayloadArray, mandatoryFields: string[], typeLabelList: ListObject) {
+	checkMandatoryFields(data: ArrayData, mandatoryFields: string[], typeLabelList: ListObject) {
 		if (!mandatoryFields) {
 			return;
 		}

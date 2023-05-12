@@ -1,5 +1,5 @@
 import Component from "../Component";
-import { ErrorTypes, ListObject, Payload, PayloadArray, Property } from "../types";
+import { ErrorTypes, ListObject, Payload, PayloadArray, Property, ValueData } from "../types";
 import ErrorHandler from "./ErrorHandler";
 import Util from "./Util";
 
@@ -106,8 +106,8 @@ export default class Parser {
 		return valueDouble;
 	}
 
-	static checkInteger(value: any, metadataColumn: Property, util: Util, errorHandler: ErrorHandler, index: number) {
-		let valueInteger = value;
+	static checkInteger(value: ValueData, metadataColumn: Property, util: Util, errorHandler: ErrorHandler, index: number) {
+		let valueInteger = value.rawValue;
 		if (!Number.isInteger(valueInteger)) {
 			const valueString = value;
 			if (typeof value === "string") {

@@ -24,6 +24,7 @@ import Log from "sap/base/Log";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import FlexBox from "sap/m/FlexBox";
 import Options from "./Options";
+import SheetHandler from "./SheetHandler";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
@@ -189,7 +190,7 @@ export default class ExcelUpload {
 
 			const workbook = (await this._readWorkbook(file)) as XLSX.WorkBook;
 			const sheetName = workbook.SheetNames[0];
-			let excelSheetsData = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+			let excelSheetsData = SheetHandler.sheet_to_json(workbook.Sheets[sheetName]);
 			let columnNames = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })[0];
 
 			if (!excelSheetsData || excelSheetsData.length === 0) {
@@ -199,7 +200,7 @@ export default class ExcelUpload {
 			//remove empty spaces before and after every value
 			for (const object of excelSheetsData) {
 				for (const key in object) {
-					object[key] = typeof object[key] === "string" ? object[key].trim() : object[key];
+					object[key].rawValue = typeof object[key].rawValue === "string" ? object[key].rawValue.trim() : object[key].rawValue;
 				}
 			}
 
@@ -429,7 +430,7 @@ export default class ExcelUpload {
 		return new Promise(async (resolve, reject) => {
 			try {
 				const data = await this.buffer_RS(file.stream());
-				let workbook = XLSX.read(data);
+				let workbook = XLSX.read(data, {cellNF: true, cellDates: true, cellText: true, cellFormula: true});
 				resolve(workbook);
 			} catch (error) {
 				reject(error);
