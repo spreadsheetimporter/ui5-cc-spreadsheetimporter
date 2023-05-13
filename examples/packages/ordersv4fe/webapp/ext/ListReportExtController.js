@@ -30,7 +30,8 @@ sap.ui.define([], function () {
 								const error = {
 									title: "Price to high (max 100)",
 									row: index + 2,
-									group: true
+									group: true,
+									rawValue: row["UnitPrice[price]"].rawValue
 								};
 								errorArray.push(error);
 							}
