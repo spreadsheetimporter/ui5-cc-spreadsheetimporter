@@ -13,9 +13,9 @@ export default class Parser {
 			for (const [columnKey, metadataColumn] of Object.entries(typeLabelList)) {
 				// depending on parse type
 				const value = Util.getValueFromRow(row, metadataColumn.label, columnKey, component.getFieldMatchType() as FieldMatchType);
-				const rawValue = value.rawValue;
 				// depending on data type
-				if (rawValue) {
+				if (value) {
+					const rawValue = value.rawValue;
 					if (metadataColumn.type === "Edm.Boolean") {
 						if (typeof rawValue === "boolean" || rawValue === "true" || rawValue === "false") {
 							payload[columnKey] = `${rawValue || ""}`;
