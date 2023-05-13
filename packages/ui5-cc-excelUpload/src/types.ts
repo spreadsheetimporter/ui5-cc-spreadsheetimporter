@@ -4,6 +4,9 @@ export interface Tags {
 	type: string;
 }
 
+export type FieldMatchType = 'label' | 'labelTypeBrackets';
+
+
 export interface Property {
 	type: string;
 	label: string;
@@ -41,9 +44,29 @@ export interface ErrorMessage {
 	counter: number;
 	row?: number;
 	group?: boolean;
+	rawValue?: any;
+	formattedValue?: string;
 }
 
 export type Payload = {
 	[key: string]: any;
 };
 export type PayloadArray = Payload[];
+
+// SheetHandler
+export type SheetDataType = 'b' | 'e' | 'n' | 'd' | 's' | 'z';
+
+export interface ValueData {
+  rawValue: any;
+  sheetDataType: SheetDataType;
+  format: string;
+  formattedValue: string;
+}
+
+export type ArrayData = {
+  [key: string]: ValueData;
+}[];
+
+export type RowData = {
+	[key: string]: ValueData;
+  };

@@ -1,5 +1,5 @@
 import Dialog from "sap/m/Dialog";
-import { ErrorMessage, ErrorTypes, ListObject, PayloadArray } from "../types";
+import { ErrorMessage, ErrorTypes, ListObject, ArrayData } from "../types";
 import ExcelUpload from "./ExcelUpload";
 import Util from "./Util";
 import Fragment from "sap/ui/core/Fragment";
@@ -40,7 +40,7 @@ export default class ErrorHandler {
 		this.checkMandatoryFields(data, mandatoryFields, typeLabelList);
 	}
 
-	checkMandatoryFields(data: PayloadArray, mandatoryFields: string[], typeLabelList: ListObject) {
+	checkMandatoryFields(data: ArrayData, mandatoryFields: string[], typeLabelList: ListObject) {
 		if (!mandatoryFields) {
 			return;
 		}
@@ -135,7 +135,7 @@ export default class ErrorHandler {
 	 */
 	async displayErrors() {
 		const infoModel = new JSONModel({
-			strict: this.excelUploadController.component.getStrict()
+			strict: this.excelUploadController.component.getStrict(),
 		});
 		if (!this.errorDialog) {
 			this.errorDialog = (await Fragment.load({
@@ -157,10 +157,15 @@ export default class ErrorHandler {
 		const counterLargerThanOne = errors.filter((error) => error.counter !== 0);
 		const parsingErrors = counterLargerThanOne.filter((error) => error.type.group === true);
 		const errorGroups = parsingErrors.reduce((groups, error) => {
+			let errorText = "";
 			if (!groups[error.title]) {
 				groups[error.title] = [];
 			}
-			const errorText = this.excelUploadController.util.geti18nText("errorInRow", [error.row]);
+			if (error.rawValue) {
+				errorText = this.excelUploadController.util.geti18nText("errorInRowWithValue", [error.row, error.rawValue]);
+			} else {
+				errorText = this.excelUploadController.util.geti18nText("errorInRow", [error.row]);
+			}
 			groups[error.title].push(errorText);
 			return groups;
 		}, {});
@@ -186,7 +191,6 @@ export default class ErrorHandler {
 	private onContinue() {
 		this.errorDialog.close();
 		this.excelUploadController.setDataRows();
-		
 	}
 
 	private sortErrorsByTitle(errors: ErrorMessage[]) {

@@ -193,11 +193,12 @@ sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel", "../model/form
 					for (const [index, row] of sheetData.entries()) {
 						//check for invalid price
 						if (row["UnitPrice[price]"]) {
-							if (row["UnitPrice[price]"] > 100) {
+							if (row["UnitPrice[price]"].rawValue > 100) {
 								const error = {
 									title: "Price to high (max 100)",
 									row: index + 2,
-									group: true
+									group: true,
+									rawValue: row["UnitPrice[price]"].rawValue
 								};
 								errorArray.push(error);
 							}
