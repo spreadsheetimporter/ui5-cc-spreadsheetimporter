@@ -20,7 +20,7 @@ this.excelUpload.attachCheckBeforeRead(function(oEvent) {
     for (const [index, row] of sheetdata.entries()) {
         //check for invalid price
         if (row["UnitPrice[price]"]) {
-            if (row["UnitPrice[price]"] > 100) {
+            if (row["UnitPrice[price]"].rawValue > 100) {
                 const error = {
                     title: "Price to high (max 100)",
                     row: index + 2,
