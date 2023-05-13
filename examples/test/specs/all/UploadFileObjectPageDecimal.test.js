@@ -104,7 +104,7 @@ describe("Upload File Object Page", () => {
 	});
 
 	it("entry created and activated", async () => {
-		const pricesExpect = [1000,1001];
+		const pricesExpect = ["1000","1001"];
 		const prices = [];
 		const items = await FE.getTableItems(FE.objectPageOrderItems)
 		for (let index = 0; index < items.length; index++) {
