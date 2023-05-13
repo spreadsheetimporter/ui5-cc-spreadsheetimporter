@@ -1,6 +1,7 @@
 import Log from "sap/base/Log";
 import ResourceBundle from "sap/base/i18n/ResourceBundle";
 import MessageBox, { Action } from "sap/m/MessageBox";
+import { FieldMatchType, RowData, ValueData } from "../types";
 
 export default class Util {
 	private resourceBundle: ResourceBundle;
@@ -9,14 +10,14 @@ export default class Util {
 		this.resourceBundle = resourceBundle;
 	}
 
-	static getValueFromRow(row, label, type, fieldMatchType) {
-		let value;
+	static getValueFromRow(row:RowData, label:string, type:string, fieldMatchType:FieldMatchType):ValueData {
+		let value: ValueData | undefined;
 		if (fieldMatchType === "label") {
 			value = row[label];
 		}
 		if (fieldMatchType === "labelTypeBrackets") {
 			try {
-				value = Object.entries(row).find(([key]) => key.includes(`[${type}]`))[1];
+				value = Object.entries(row).find(([key]) => key.includes(`[${type}]`))[1] as ValueData;
 			} catch (error) {
 				console.debug(`Not found ${type}`);
 			}

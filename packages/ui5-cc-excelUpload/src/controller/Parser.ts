@@ -1,56 +1,47 @@
 import Component from "../Component";
-import { ErrorTypes, ListObject, Payload, PayloadArray, Property, ValueData } from "../types";
+import { ArrayData, ErrorTypes, FieldMatchType, ListObject, Payload, PayloadArray, Property, RowData, ValueData } from "../types";
 import ErrorHandler from "./ErrorHandler";
 import Util from "./Util";
 
 export default class Parser {
-	static parseExcelData(sheetData: PayloadArray, typeLabelList: ListObject, component: Component, errorHandler: ErrorHandler, util: Util) {
-		const payloadArray = [];
+	static parseExcelData(sheetData: ArrayData, typeLabelList: ListObject, component: Component, errorHandler: ErrorHandler, util: Util) {
+		const payloadArray:PayloadArray = [];
 		// loop over data from excel file
 		for (const [index, row] of sheetData.entries()) {
 			let payload: Payload = {};
 			// check each specified column if availalble in excel data
 			for (const [columnKey, metadataColumn] of Object.entries(typeLabelList)) {
 				// depending on parse type
-				const value = Util.getValueFromRow(row, metadataColumn.label, columnKey, component.getFieldMatchType());
+				const value = Util.getValueFromRow(row, metadataColumn.label, columnKey, component.getFieldMatchType() as FieldMatchType);
+				const rawValue = value.rawValue;
 				// depending on data type
-				if (value) {
+				if (rawValue) {
 					if (metadataColumn.type === "Edm.Boolean") {
-						if (typeof value === "boolean" || value === "true" || value === "false") {
-							payload[columnKey] = `${value || ""}`;
+						if (typeof rawValue === "boolean" || rawValue === "true" || rawValue === "false") {
+							payload[columnKey] = `${rawValue || ""}`;
 						} else {
 							this.addParsingError("valueNotABoolean", util, errorHandler, index, [metadataColumn.label]);
 						}
 					} else if (metadataColumn.type === "Edm.Date") {
 						try {
-							const excelDate = new Date(Math.round((value - 25569) * 86400 * 1000));
-							this.checkDate(excelDate, metadataColumn, util, errorHandler, index);
-							const dateString = `${excelDate.getFullYear()}-${("0" + (excelDate.getMonth() + 1)).slice(-2)}-${("0" + excelDate.getDate()).slice(-2)}`;
+							this.checkDate(rawValue, metadataColumn, util, errorHandler, index);
+							const dateString = `${rawValue.getFullYear()}-${("0" + (rawValue.getMonth() + 1)).slice(-2)}-${("0" + rawValue.getDate()).slice(-2)}`;
 							payload[columnKey] = dateString;
 						} catch (error) {
 							this.addParsingError("errorWhileParsing", util, errorHandler, index, [metadataColumn.label]);
 						}
 					} else if (metadataColumn.type === "Edm.DateTimeOffset" || metadataColumn.type === "Edm.DateTime") {
 						try {
-							const excelDate = new Date(Math.round((value - 25569) * 86400 * 1000));
-							this.checkDate(excelDate, metadataColumn, util, errorHandler, index);
-							payload[columnKey] = excelDate;
+							this.checkDate(rawValue, metadataColumn, util, errorHandler, index);
+							payload[columnKey] = rawValue;
 						} catch (error) {
 							this.addParsingError("errorWhileParsing", util, errorHandler, index, [metadataColumn.label]);
 						}
 					} else if (metadataColumn.type === "Edm.TimeOfDay" || metadataColumn.type === "Edm.Time") {
 						try {
-							if (value > 1) {
-								this.addParsingError("invalidTime", util, errorHandler, index, [metadataColumn.label]);
-							} else {
-								//convert to hh:mm:ss
-								const secondsInADay = 24 * 60 * 60;
-								const timeInSeconds = value * secondsInADay;
-								const date = new Date(timeInSeconds * 1000);
-								this.checkDate(date, metadataColumn, util, errorHandler, index);
-								const excelDate = new Date(timeInSeconds * 1000).toISOString().substring(11, 16);
-								payload[columnKey] = excelDate;
-							}
+							this.checkDate(rawValue, metadataColumn, util, errorHandler, index);
+							const excelDate = rawValue.toISOString().substring(11, 16);
+							payload[columnKey] = excelDate;
 						} catch (error) {
 							this.addParsingError("errorWhileParsing", util, errorHandler, index, [metadataColumn.label]);
 						}
@@ -69,7 +60,7 @@ export default class Parser {
 							this.addParsingError("errorWhileParsing", util, errorHandler, index, [metadataColumn.label]);
 						}
 					} else {
-						payload[columnKey] = `${value || ""}`;
+						payload[columnKey] = `${rawValue || ""}`;
 					}
 				}
 			}
@@ -85,10 +76,11 @@ export default class Parser {
 		}
 	}
 
-	static checkDouble(value: any, metadataColumn: Property, util: Util, errorHandler: ErrorHandler, index: number) {
-		let valueDouble = value;
-		if (typeof value === "string") {
-			const valueString = value;
+	static checkDouble(value: ValueData, metadataColumn: Property, util: Util, errorHandler: ErrorHandler, index: number) {
+		const rawValue = value.rawValue;
+		let valueDouble = rawValue;
+		if (typeof rawValue === "string") {
+			const valueString = rawValue;
 			// check if value is a number a does contain anything other than numbers and decimal seperator
 			if (/[^0-9.,]/.test(valueDouble)) {
 				// Error: Value does contain anything other than numbers and decimal seperator
@@ -107,10 +99,11 @@ export default class Parser {
 	}
 
 	static checkInteger(value: ValueData, metadataColumn: Property, util: Util, errorHandler: ErrorHandler, index: number) {
-		let valueInteger = value.rawValue;
+		const rawValue = value.rawValue;
+		let valueInteger = rawValue;
 		if (!Number.isInteger(valueInteger)) {
-			const valueString = value;
-			if (typeof value === "string") {
+			const valueString = rawValue;
+			if (typeof rawValue === "string") {
 				// check if value is a number a does contain anything other than numbers
 				if (/[^0-9]/.test(valueInteger)) {
 					// Error: Value does contain anything other than numbers
