@@ -25,6 +25,7 @@ this.excelUpload.attachCheckBeforeRead(function(oEvent) {
                     title: "Price to high (max 100)",
                     row: index + 2,
                     group: true,
+                    // show the faulty price in the error dialog
                     rawValue: row["UnitPrice[price]"].rawValue
                 }
                 errorArray.push(error);
