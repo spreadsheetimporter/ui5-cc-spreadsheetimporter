@@ -54,10 +54,21 @@ class FEV2ND {
 		}
 	}
 
-	async getTableObject(tableId, objectAttribute, objectValue) {
+	async getTableItems(tableId) {
 		const table = await this.BaseClass.getControlById(tableId);
-		const items = await table.exec( () => this.getItems());
-		const rootBinding = await table.exec( () => this.getBindingContext())
+		const metadata = await table.exec(() => this.getMetadata());
+		const type = await metadata.getName();
+		let items = undefined;
+		if (type === "sap.m.Table") {
+			items = await table.exec(() => this.getItems());
+		} else {
+			items = await table.exec(() => this.getRows());
+		}
+		return items;
+	}
+
+	async getTableObject(tableId, objectAttribute, objectValue) {
+		const items = await this.getTableItems(tableId);
 		for (let index = 0; index < items.length; index++) {
 			const element = items[index];
 			const item = await this.BaseClass.getControlById(element.id);

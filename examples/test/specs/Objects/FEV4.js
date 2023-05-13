@@ -84,7 +84,7 @@ class FEV4 {
 		}
 	}
 
-	async getTableObject(tableId, objectAttribute, objectValue) {
+	async getTableItems(tableId) {
 		const table = await this.BaseClass.getControlById(tableId);
 		const metadata = await table.exec(() => this.getMetadata());
 		const type = await metadata.getName();
@@ -94,6 +94,11 @@ class FEV4 {
 		} else {
 			items = await table.exec(() => this.getRows());
 		}
+		return items;
+	}
+
+	async getTableObject(tableId, objectAttribute, objectValue) {
+		const items = await this.getTableItems(tableId);
 		for (let index = 0; index < items.length; index++) {
 			const element = items[index];
 			const item = await this.BaseClass.getControlById(element.id);
