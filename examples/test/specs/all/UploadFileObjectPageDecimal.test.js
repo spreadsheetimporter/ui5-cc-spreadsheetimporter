@@ -112,7 +112,7 @@ describe("Upload File Object Page", () => {
 			const item = await BaseClass.getControlById(element.id);
 			const binding = await item.exec(() => this.getBindingContext());
 			const object = await binding.getObject();
-			prices.push(object.price);
+			prices.push(object.price.toString());
 		}
 
 		// Sort both arrays
