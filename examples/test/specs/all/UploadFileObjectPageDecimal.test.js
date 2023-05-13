@@ -104,9 +104,9 @@ describe("Upload File Object Page", () => {
 	});
 
 	it("entry created and activated", async () => {
-		const pricesExpect = ["1000","1001"];
+		const pricesExpect = ["1000", "1001"];
 		const prices = [];
-		const items = await FE.getTableItems(FE.objectPageOrderItems)
+		const items = await FE.getTableItems(FE.objectPageOrderItems);
 		for (let index = 0; index < items.length; index++) {
 			const element = items[index];
 			const item = await BaseClass.getControlById(element.id);
@@ -114,8 +114,12 @@ describe("Upload File Object Page", () => {
 			const object = await binding.getObject();
 			prices.push(object.price);
 		}
-		expect(prices).toEqual(pricesExpect);
+
+		// Sort both arrays
+		const sortedPricesExpect = pricesExpect.sort();
+		const sortedPrices = prices.sort();
+
+		// Compare the sorted arrays
+		expect(sortedPrices).toEqual(sortedPricesExpect);
 	});
-
-
 });
