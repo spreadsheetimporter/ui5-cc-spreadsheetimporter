@@ -34,15 +34,16 @@ class FEV2 {
 
 	async getRoutingHash(tableId, objectAttribute, objectValue, rootPathBool) {
 		const table = await this.BaseClass.getControlById(tableId);
-		const items = await table.getItems();
-		const rootBinding = await table.getBindingContext();
+		const items = await table.exec( () => this.getItems());
+		const rootBinding = await table.exec( () => this.getBindingContext())
 		let rootPath = "";
 		if (rootPathBool) {
 			rootPath = await rootBinding.getPath();
 		}
 		for (let index = 0; index < items.length; index++) {
 			const element = items[index];
-			const binding = await element.getBindingContext();
+			const item = await this.BaseClass.getControlById(element.id);
+			const binding = await item.exec( () => this.getBindingContext())
 			const object = await binding.getObject();
 			if (object[objectAttribute] === objectValue) {
 				const path = binding.sPath;
@@ -53,11 +54,11 @@ class FEV2 {
 
 	async getTableObject(tableId, objectAttribute, objectValue) {
 		const table = await this.BaseClass.getControlById(tableId);
-		const items = await table.getItems();
-		const rootBinding = await table.getBindingContext();
+		const items = await table.exec( () => this.getItems());
 		for (let index = 0; index < items.length; index++) {
 			const element = items[index];
-			const binding = await element.getBindingContext();
+			const item = await this.BaseClass.getControlById(element.id);
+			const binding = await item.exec( () => this.getBindingContext())
 			const object = await binding.getObject();
 			if (object[objectAttribute] === objectValue) {
 				return object;
