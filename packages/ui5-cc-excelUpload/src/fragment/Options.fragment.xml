@@ -2,7 +2,7 @@
   xmlns:core="sap.ui.core"
   xmlns:upload="sap.ui.unified"
   xmlns:f="sap.ui.layout.form">
-  <Dialog contentWidth="{= ${device>/system/phone} ? '100%' : '40vw' }" contentHeight="150px" verticalScrolling="false">
+  <Dialog contentWidth="{= ${device>/system/phone} ? '100%' : '40vw' }" contentHeight="auto" verticalScrolling="false">
     <customHeader >
       <OverflowToolbar>
         <Title text="{i18n>optionsDialogTitle}" />
@@ -23,6 +23,12 @@
                 selectedKey="{options>/fieldMatchType}">
                 <core:Item key="labelTypeBrackets" text="Label Type Brackets" />
                 <core:Item key="label" text="Label" />
+              </Select>
+              <Label text="Decimal Seperator" />
+              <Select
+                selectedKey="{options>/decimalSeparator}">
+                <core:Item key="," text="Comma `,`" />
+                <core:Item key="." text="Dot `.`" />
               </Select>
             </f:content>
           </f:SimpleForm>

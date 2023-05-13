@@ -19,6 +19,7 @@ declare module "./Component" {
         batchSize?: number | PropertyBindingInfo | `{${string}}`;
         standalone?: boolean | PropertyBindingInfo | `{${string}}`;
         strict?: boolean | PropertyBindingInfo | `{${string}}`;
+        decimalSeparator?: string | PropertyBindingInfo;
         checkBeforeRead?: (event: Event) => void;
         changeBeforeCreate?: (event: Event) => void;
         uploadButtonPress?: (event: Event) => void;
@@ -69,6 +70,10 @@ declare module "./Component" {
         // property: strict
         getStrict(): boolean;
         setStrict(strict: boolean): this;
+
+        // property: decimalSeparator
+        getDecimalSeparator(): string;
+        setDecimalSeparator(decimalSeparator: string): this;
 
         // event: checkBeforeRead
         attachCheckBeforeRead(fn: (event: Event) => void, listener?: object): this;

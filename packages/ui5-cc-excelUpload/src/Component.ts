@@ -31,6 +31,7 @@ export default class Component extends UIComponent {
 			batchSize: { type: "int", defaultValue: 1000 },
 			standalone: { type: "boolean", defaultValue: false },
 			strict: { type: "boolean", defaultValue: false },
+			decimalSeparator: { type: "string" }
 		},
 		aggregations: {
 			rootControl: {
@@ -89,6 +90,7 @@ export default class Component extends UIComponent {
 		this.setBatchSize(oCompData.batchSize);
 		this.setStandalone(oCompData.standalone);
 		this.setStrict(oCompData.strict);
+		this.setDecimalSeparator(oCompData.decimalSeparator);
 
 		// // we could create a device model and use it
 		oModel = new JSONModel(Device);

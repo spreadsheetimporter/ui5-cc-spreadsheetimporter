@@ -2,6 +2,8 @@ import Log from "sap/base/Log";
 import ResourceBundle from "sap/base/i18n/ResourceBundle";
 import MessageBox, { Action } from "sap/m/MessageBox";
 import { FieldMatchType, RowData, ValueData } from "../types";
+import { Sticky } from "sap/m/library";
+import Component from "../Component";
 
 export default class Util {
 	private resourceBundle: ResourceBundle;
@@ -10,7 +12,7 @@ export default class Util {
 		this.resourceBundle = resourceBundle;
 	}
 
-	static getValueFromRow(row:RowData, label:string, type:string, fieldMatchType:FieldMatchType):ValueData {
+	static getValueFromRow(row: RowData, label: string, type: string, fieldMatchType: FieldMatchType): ValueData {
 		let value: ValueData | undefined;
 		if (fieldMatchType === "label") {
 			value = row[label];
@@ -77,5 +79,36 @@ export default class Util {
 			initialFocus: Action.CLOSE,
 			actions: [Action.CANCEL],
 		});
+	}
+
+	static getBrowserDecimalAndThousandSeparators(componentDecimalSeparator: string) {
+		let decimalSeparator = ".";
+		let thousandSeparator = ",";
+		if (componentDecimalSeparator === ",") {
+			return { thousandSeparator, decimalSeparator };
+		}
+		if (componentDecimalSeparator === ".") {
+			return { decimalSeparator, thousandSeparator };
+		}
+		const sampleNumber = 12345.6789;
+		const formatted = new Intl.NumberFormat(navigator.language).format(sampleNumber);
+
+		const withoutDigits = formatted.replace(/\d/g, "");
+		decimalSeparator = withoutDigits.charAt(withoutDigits.length - 1);
+		thousandSeparator = withoutDigits.charAt(0);
+
+		return { decimalSeparator, thousandSeparator };
+	}
+
+	static normalizeNumberString(numberString: string, component: Component) {
+		const { decimalSeparator, thousandSeparator } = this.getBrowserDecimalAndThousandSeparators(component.getDecimalSeparator());
+
+		// Remove thousand separators
+		const stringWithoutThousandSeparators = numberString.replace(new RegExp(`\\${thousandSeparator}`, "g"), "");
+
+		// Replace the default decimal separator with the standard one
+		const standardNumberString = stringWithoutThousandSeparators.replace(decimalSeparator, ".");
+
+		return standardNumberString;
 	}
 }

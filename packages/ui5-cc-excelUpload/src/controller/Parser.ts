@@ -74,14 +74,14 @@ export default class Parser {
 						}
 					} else if (metadataColumn.type === "Edm.Int32") {
 						try {
-							const valueInteger = this.checkInteger(value, metadataColumn, util, errorHandler, index);
+							const valueInteger = this.checkInteger(value, metadataColumn, util, errorHandler, index, component);
 							payload[columnKey] = valueInteger;
 						} catch (error) {
 							this.addParsingError("errorWhileParsing", util, errorHandler, index, [metadataColumn.label]);
 						}
 					} else if (metadataColumn.type === "Edm.Double") {
 						try {
-							const valueDouble = this.checkDouble(value, metadataColumn, util, errorHandler, index);
+							const valueDouble = this.checkDouble(value, metadataColumn, util, errorHandler, index, component);
 							payload[columnKey] = valueDouble;
 						} catch (error) {
 							this.addParsingError("errorWhileParsing", util, errorHandler, index, [metadataColumn.label]);
@@ -105,16 +105,14 @@ export default class Parser {
 		return true;
 	}
 
-	static checkDouble(value: ValueData, metadataColumn: Property, util: Util, errorHandler: ErrorHandler, index: number) {
+	static checkDouble(value: ValueData, metadataColumn: Property, util: Util, errorHandler: ErrorHandler, index: number, component: Component) {
 		const rawValue = value.rawValue;
 		let valueDouble = rawValue;
 		if (typeof rawValue === "string") {
-			const valueString = rawValue;
-			// TODO: check if decimal seperator is correct
-			const valueStringDecimal = valueString.replace(",", ".");
-			valueDouble = parseFloat(valueStringDecimal);
+			const normalizedString = Util.normalizeNumberString(rawValue, component);
+			valueDouble = parseFloat(normalizedString);
 			// check if value is a number a does contain anything other than numbers and decimal seperator
-			if (/[^0-9.,]/.test(valueDouble) || parseFloat(valueStringDecimal).toString() !== valueStringDecimal) {
+			if (/[^0-9.,]/.test(valueDouble) || parseFloat(normalizedString).toString() !== normalizedString) {
 				// Error: Value does contain anything other than numbers and decimal seperator
 				this.addParsingError("parsingErrorNotNumber", util, errorHandler, index, [metadataColumn.label], rawValue);
 			}
@@ -122,15 +120,15 @@ export default class Parser {
 		return valueDouble;
 	}
 
-	static checkInteger(value: ValueData, metadataColumn: Property, util: Util, errorHandler: ErrorHandler, index: number) {
+	static checkInteger(value: ValueData, metadataColumn: Property, util: Util, errorHandler: ErrorHandler, index: number, component: Component) {
 		const rawValue = value.rawValue;
 		let valueInteger = rawValue;
 		if (!Number.isInteger(valueInteger)) {
-			const valueString = rawValue;
 			if (typeof rawValue === "string") {
-				valueInteger = parseInt(valueString);
+				const normalizedString = Util.normalizeNumberString(rawValue, component);
+				valueInteger = parseInt(normalizedString);
 				// check if value is a number a does contain anything other than numbers
-				if (/[^0-9]/.test(valueInteger) || parseInt(valueString).toString() !== valueString.toString()) {
+				if (/[^0-9]/.test(valueInteger) || parseInt(normalizedString).toString() !== normalizedString.toString()) {
 					// Error: Value does contain anything other than numbers
 					this.addParsingError("parsingErrorNotWholeNumber", util, errorHandler, index, [metadataColumn.label], rawValue);
 				}

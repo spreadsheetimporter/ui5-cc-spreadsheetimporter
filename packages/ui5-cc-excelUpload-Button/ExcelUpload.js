@@ -31,7 +31,8 @@ sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
 					defaultValue: 1000
 				},
 				standalone: { type: "boolean", defaultValue: false },
-				strict: { type: "boolean", defaultValue: false }
+				strict: { type: "boolean", defaultValue: false },
+				decimalSeparator: { type: "string" }
 			},
 			events: {
 				checkBeforeRead: {
@@ -75,7 +76,8 @@ sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
 						activateDraft: oControl.getActivateDraft(),
 						batchSize: oControl.getBatchSize(),
 						standalone: oControl.getStandalone(),
-						strict: oControl.getStrict()
+						strict: oControl.getStrict(),
+						decimalSeparator: oControl.getDecimalSeparator()
 					}
 				})
 			} else {
@@ -93,7 +95,8 @@ sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
 						activateDraft: oControl.getActivateDraft(),
 						batchSize: oControl.getBatchSize(),
 						standalone: oControl.getStandalone(),
-						strict: oControl.getStrict()
+						strict: oControl.getStrict(),
+						decimalSeparator: oControl.getDecimalSeparator()
 					}
 				})
 			}

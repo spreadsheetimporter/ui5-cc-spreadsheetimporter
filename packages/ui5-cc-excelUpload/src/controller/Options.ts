@@ -13,7 +13,8 @@ export default class Options {
     async openOptionsDialog() {
 		const optionsModel = new JSONModel({
 			strict: this.excelUploadController.component.getStrict(),
-			fieldMatchType: this.excelUploadController.component.getFieldMatchType()
+			fieldMatchType: this.excelUploadController.component.getFieldMatchType(),
+			decimalSeparator: this.excelUploadController.component.getDecimalSeparator(),
 		});
 		if (!this.optionsDialog) {
 			this.optionsDialog = (await Fragment.load({
@@ -31,6 +32,7 @@ export default class Options {
     onSave() {
         this.excelUploadController.component.setFieldMatchType((this.optionsDialog.getModel("options") as JSONModel).getProperty("/fieldMatchType"));
         this.excelUploadController.component.setStrict((this.optionsDialog.getModel("options") as JSONModel).getProperty("/strict"));
+        this.excelUploadController.component.setDecimalSeparator((this.optionsDialog.getModel("options") as JSONModel).getProperty("/decimalSeparator"));
         this.optionsDialog.close();
     }
 
