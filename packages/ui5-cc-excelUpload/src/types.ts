@@ -44,6 +44,8 @@ export interface ErrorMessage {
 	counter: number;
 	row?: number;
 	group?: boolean;
+	rawValue?: any;
+	formattedValue?: string;
 }
 
 export type Payload = {

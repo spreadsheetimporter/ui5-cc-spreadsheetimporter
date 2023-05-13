@@ -23,24 +23,51 @@ export default class Parser {
 							this.addParsingError("valueNotABoolean", util, errorHandler, index, [metadataColumn.label]);
 						}
 					} else if (metadataColumn.type === "Edm.Date") {
+						let date = rawValue
+						if(value.sheetDataType !== 'd'){
+							const parsedDate = new Date(rawValue);
+							if (isNaN(parsedDate.getTime())) {
+								this.addParsingError("valueNotADate", util, errorHandler, index, [metadataColumn.label], rawValue);
+								continue;
+							} 
+							date = parsedDate;
+						}
 						try {
-							this.checkDate(rawValue, metadataColumn, util, errorHandler, index);
-							const dateString = `${rawValue.getFullYear()}-${("0" + (rawValue.getMonth() + 1)).slice(-2)}-${("0" + rawValue.getDate()).slice(-2)}`;
+							this.checkDate(date, metadataColumn, util, errorHandler, index);
+							const dateString = `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`;
 							payload[columnKey] = dateString;
 						} catch (error) {
 							this.addParsingError("errorWhileParsing", util, errorHandler, index, [metadataColumn.label]);
 						}
 					} else if (metadataColumn.type === "Edm.DateTimeOffset" || metadataColumn.type === "Edm.DateTime") {
+						let date = rawValue
+						if(value.sheetDataType !== 'd'){
+							const parsedDate = new Date(rawValue);
+							if (isNaN(parsedDate.getTime())) {
+								this.addParsingError("valueNotADate", util, errorHandler, index, [metadataColumn.label], rawValue);
+								continue;
+							} 
+							date = parsedDate;
+						}
 						try {
-							this.checkDate(rawValue, metadataColumn, util, errorHandler, index);
-							payload[columnKey] = rawValue;
+							this.checkDate(date, metadataColumn, util, errorHandler, index);
+							payload[columnKey] = date;
 						} catch (error) {
 							this.addParsingError("errorWhileParsing", util, errorHandler, index, [metadataColumn.label]);
 						}
 					} else if (metadataColumn.type === "Edm.TimeOfDay" || metadataColumn.type === "Edm.Time") {
+						let date = rawValue
+						if(value.sheetDataType !== 'd'){
+							const parsedDate = new Date(rawValue);
+							if (isNaN(parsedDate.getTime())) {
+								this.addParsingError("valueNotADate", util, errorHandler, index, [metadataColumn.label], rawValue);
+								continue;
+							} 
+							date = parsedDate;
+						}
 						try {
-							this.checkDate(rawValue, metadataColumn, util, errorHandler, index);
-							const excelDate = rawValue.toISOString().substring(11, 16);
+							this.checkDate(date, metadataColumn, util, errorHandler, index);
+							const excelDate = date.toISOString().substring(11, 16);
 							payload[columnKey] = excelDate;
 						} catch (error) {
 							this.addParsingError("errorWhileParsing", util, errorHandler, index, [metadataColumn.label]);
@@ -73,7 +100,9 @@ export default class Parser {
 	static checkDate(value: any, metadataColumn: Property, util: Util, errorHandler: ErrorHandler, index: number) {
 		if (isNaN(value.getTime())) {
 			this.addParsingError("invalidDate", util, errorHandler, index, [metadataColumn.label]);
+			return false;
 		}
+		return true;
 	}
 
 	static checkDouble(value: ValueData, metadataColumn: Property, util: Util, errorHandler: ErrorHandler, index: number) {
@@ -81,18 +110,13 @@ export default class Parser {
 		let valueDouble = rawValue;
 		if (typeof rawValue === "string") {
 			const valueString = rawValue;
-			// check if value is a number a does contain anything other than numbers and decimal seperator
-			if (/[^0-9.,]/.test(valueDouble)) {
-				// Error: Value does contain anything other than numbers and decimal seperator
-				this.addParsingError("parsingErrorNotNumber", util, errorHandler, index, [metadataColumn.label]);
-			}
-
+			// TODO: check if decimal seperator is correct
 			const valueStringDecimal = valueString.replace(",", ".");
 			valueDouble = parseFloat(valueStringDecimal);
-
-			if (parseFloat(valueStringDecimal).toString() !== valueStringDecimal) {
-				// Error: the parsed float value is not the same as the original string value
-				this.addParsingError("parsingErrorNotSameNumber", util, errorHandler, index, [metadataColumn.label]);
+			// check if value is a number a does contain anything other than numbers and decimal seperator
+			if (/[^0-9.,]/.test(valueDouble) || parseFloat(valueStringDecimal).toString() !== valueStringDecimal) {
+				// Error: Value does contain anything other than numbers and decimal seperator
+				this.addParsingError("parsingErrorNotNumber", util, errorHandler, index, [metadataColumn.label], rawValue);
 			}
 		}
 		return valueDouble;
@@ -104,28 +128,25 @@ export default class Parser {
 		if (!Number.isInteger(valueInteger)) {
 			const valueString = rawValue;
 			if (typeof rawValue === "string") {
+				valueInteger = parseInt(valueString);
 				// check if value is a number a does contain anything other than numbers
-				if (/[^0-9]/.test(valueInteger)) {
+				if (/[^0-9]/.test(valueInteger) || parseInt(valueString).toString() !== valueString.toString()) {
 					// Error: Value does contain anything other than numbers
-					this.addParsingError("parsingErrorNotFullNumber", util, errorHandler, index, [metadataColumn.label]);
+					this.addParsingError("parsingErrorNotWholeNumber", util, errorHandler, index, [metadataColumn.label], rawValue);
 				}
-			}
-			valueInteger = parseInt(valueString);
-
-			if (parseInt(valueString).toString() !== valueString.toString()) {
-				// Error: the parsed float value is not the same as the original string value
-				this.addParsingError("parsingErrorNotSameNumber", util, errorHandler, index, [metadataColumn.label]);
 			}
 		}
 		return valueInteger;
 	}
 
-	static addParsingError(text: string, util: Util, errorHandler: ErrorHandler, index: number, array?: any) {
+	static addParsingError(text: string, util: Util, errorHandler: ErrorHandler, index: number, array?: any, rawValue?: any, formattedValue?: any) {
 		errorHandler.addParsingError({
 			title: util.geti18nText(text, array),
 			row: index + 2,
 			type: ErrorTypes.ParsingError,
 			counter: 1,
+			rawValue: rawValue,
+			formattedValue: formattedValue
 		});
 	}
 }

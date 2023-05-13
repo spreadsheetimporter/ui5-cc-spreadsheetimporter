@@ -135,7 +135,7 @@ export default class ErrorHandler {
 	 */
 	async displayErrors() {
 		const infoModel = new JSONModel({
-			strict: this.excelUploadController.component.getStrict()
+			strict: this.excelUploadController.component.getStrict(),
 		});
 		if (!this.errorDialog) {
 			this.errorDialog = (await Fragment.load({
@@ -157,10 +157,15 @@ export default class ErrorHandler {
 		const counterLargerThanOne = errors.filter((error) => error.counter !== 0);
 		const parsingErrors = counterLargerThanOne.filter((error) => error.type.group === true);
 		const errorGroups = parsingErrors.reduce((groups, error) => {
+			let errorText = "";
 			if (!groups[error.title]) {
 				groups[error.title] = [];
 			}
-			const errorText = this.excelUploadController.util.geti18nText("errorInRow", [error.row]);
+			if (error.rawValue) {
+				errorText = this.excelUploadController.util.geti18nText("errorInRowWithValue", [error.row, error.rawValue]);
+			} else {
+				errorText = this.excelUploadController.util.geti18nText("errorInRow", [error.row]);
+			}
 			groups[error.title].push(errorText);
 			return groups;
 		}, {});
@@ -186,7 +191,6 @@ export default class ErrorHandler {
 	private onContinue() {
 		this.errorDialog.close();
 		this.excelUploadController.setDataRows();
-		
 	}
 
 	private sortErrorsByTitle(errors: ErrorMessage[]) {
