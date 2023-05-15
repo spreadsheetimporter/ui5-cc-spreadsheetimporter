@@ -31,7 +31,7 @@ export default class Component extends UIComponent {
 			batchSize: { type: "int", defaultValue: 1000 },
 			standalone: { type: "boolean", defaultValue: false },
 			strict: { type: "boolean", defaultValue: false },
-			decimalSeparator: { type: "string" }
+			decimalSeparator: { type: "string", defaultValue: "" }
 		},
 		aggregations: {
 			rootControl: {
