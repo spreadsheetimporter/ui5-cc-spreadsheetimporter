@@ -25,6 +25,7 @@ import JSONModel from "sap/ui/model/json/JSONModel";
 import FlexBox from "sap/m/FlexBox";
 import Options from "./Options";
 import SheetHandler from "./SheetHandler";
+import ExcelDialog from "../control/ExcelDialog";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
@@ -91,10 +92,11 @@ export default class ExcelUpload {
 				name: "cc.excelUpload.XXXnamespaceXXX.fragment.ExcelUpload",
 				type: "XML",
 				controller: this,
-			})) as Dialog;
+			})) as ExcelDialog;
 			this.dialog.setModel(this.componentI18n, "i18n");
 			this.dialog.setModel(infoModel, "info");
 			this.dialog.setModel(this.component.getModel("device"), "device");
+			this.dialog.attachDecimalSeparatorChanged(this.onDecimalSeparatorChanged.bind(this));
 		}
 		if (this.component.getStandalone() && this.component.getColumns().length === 0) {
 			(this.dialog.getSubHeader() as Bar).setVisible(false);
@@ -492,5 +494,9 @@ export default class ExcelUpload {
 
 	public setDataRows() {
 		(this.dialog.getModel("info") as JSONModel).setProperty("/dataRows", this.payloadArray.length);
+	}
+
+	onDecimalSeparatorChanged(event:Event) {
+		this.component.setDecimalSeparator(event.getParameter("decimalSeparator"));
 	}
 }

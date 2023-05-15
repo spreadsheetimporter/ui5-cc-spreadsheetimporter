@@ -3,3 +3,4 @@ ID;createdAt;createdBy;buyer;OrderNo;currency_code
 64e718c9-ff99-47f1-8ca3-950c850777d4;2019-01-30;jane.doe@test.com;jane.doe@test.com;2;EUR
 64e718c9-ff99-47f1-8ca3-950c850777d5;2019-01-29;jane.doe2@test.com;jane.doe2@test.com;200;EUR
 64e718c9-ff99-47f1-8ca3-950c850777d6;2019-01-28;jane.doe4@test.com;jane.doe4@test.com;201;EUR
+64e718c9-ff99-47f1-8ca3-950c850777d7;2019-01-28;jane.doe4@test.com;jane.doe4@test.com;202;EUR

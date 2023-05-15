@@ -2,7 +2,7 @@ import Event from "sap/ui/base/Event";
 import { PropertyBindingInfo } from "sap/ui/base/ManagedObject";
 import { $UIComponentSettings } from "sap/ui/core/UIComponent";
 
-declare module "./Component" {
+declare module "./Dialog" {
 
     /**
      * Interface defining the settings object used in constructor calls

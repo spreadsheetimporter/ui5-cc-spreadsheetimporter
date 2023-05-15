@@ -15,6 +15,7 @@ These options are available and explained in detail below:
 | `batchSize` | Determines bach sizes send to backend server  | integer |
 | `standalone` | Mode if you do not have a table and want to do the processing yourself  | boolean |
 | `strict` | The strict option controls the availability of the `Continue` button in the error dialog.  | boolean |
+| `decimalSeparator` | Determines the decimal separator for numbers as string.  | string |
 
 ### `columns`
 
@@ -140,3 +141,10 @@ An example of an implementation to display data of an Excelupload in a freestyle
 When strict is set to its default value (false), the "Continue" button is displayed in the error dialog, allowing users to proceed despite encountering errors in the uploaded data.  
 
 This option defines whether the "Continue" button should be displayed in the error dialog or not. When set to true, the "Continue" button will not be displayed, and users must resolve the errors before proceeding with the next steps in the application.
+
+### `decimalSeparator`
+
+**default:** ``
+
+This option defines the decimal separator for numbers as string.  
+This option is only needed if in the Excel File are numbers as strings or when importing a CSV. When the datatype in the Excel File is number, the decimal separator is automatically recognized.

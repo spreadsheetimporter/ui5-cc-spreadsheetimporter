@@ -37,7 +37,7 @@ class FEV4 {
 		let valueText = "";
 		try {
 			// const content = await field.getContent()
-			const contentDisplay = await field.getContentDisplay();
+			const contentDisplay = await field.exec(() => this.getContentDisplay());
 			valueText = await contentDisplay.getText();
 		} catch (error) {
 			// only for version 84
@@ -52,7 +52,7 @@ class FEV4 {
 				id: `ui.v4.ordersv4fe::Orders_ItemsObjectPage--fe::FormContainer::Identification::FormElement::DataField::${attribute}::Field`
 			}
 		});
-		const binding = await field.getBindingContext();
+		const binding = await field.exec(() => this.getBindingContext());
 		const object = await binding.getObject();
 		const date = new Date(object[attribute]);
 		const formattedDate = await date.toLocaleString("en-US", options);
@@ -60,7 +60,7 @@ class FEV4 {
 		let valueText = "";
 		try {
 			// const content = await field.getContent()
-			const contentDisplay = await field.getContentDisplay();
+			const contentDisplay = await field.exec(() => this.getContentDisplay());
 			valueText = await contentDisplay.getText();
 		} catch (error) {
 			// only for version 84
@@ -71,11 +71,11 @@ class FEV4 {
 
 	async getRoutingHash(tableId, objectAttribute, objectValue, rootPath) {
 		const table = await this.BaseClass.getControlById(tableId);
-		const items = await table.getItems();
-		const rootBinding = await table.getBindingContext();
+		const items = await table.exec(() => this.getItems());
 		for (let index = 0; index < items.length; index++) {
 			const element = items[index];
-			const binding = await element.getBindingContext();
+			const item = await this.BaseClass.getControlById(element.id);
+			const binding = await item.exec(() => this.getBindingContext());
 			const object = await binding.getObject();
 			if (object[objectAttribute] === objectValue) {
 				const path = binding.sPath;
@@ -84,19 +84,25 @@ class FEV4 {
 		}
 	}
 
-	async getTableObject(tableId, objectAttribute, objectValue) {
+	async getTableItems(tableId) {
 		const table = await this.BaseClass.getControlById(tableId);
-		const metadata = await table.getMetadata();
+		const metadata = await table.exec(() => this.getMetadata());
 		const type = await metadata.getName();
 		let items = undefined;
 		if (type === "sap.m.Table") {
-			items = await table.getItems();
+			items = await table.exec(() => this.getItems());
 		} else {
-			items = await table.getRows();
+			items = await table.exec(() => this.getRows());
 		}
+		return items;
+	}
+
+	async getTableObject(tableId, objectAttribute, objectValue) {
+		const items = await this.getTableItems(tableId);
 		for (let index = 0; index < items.length; index++) {
 			const element = items[index];
-			const binding = await element.getBindingContext();
+			const item = await this.BaseClass.getControlById(element.id);
+			const binding = await item.exec(() => this.getBindingContext());
 			const object = await binding.getObject();
 			if (object[objectAttribute] === objectValue) {
 				return object;

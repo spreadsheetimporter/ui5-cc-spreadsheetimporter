@@ -36,15 +36,16 @@ class FEV2ND {
 
 	async getRoutingHash(tableId, objectAttribute, objectValue, rootPathBool) {
 		const table = await this.BaseClass.getControlById(tableId);
-		const items = await table.getItems();
-		const rootBinding = await table.getBindingContext();
+		const items = await table.exec( () => this.getItems());
+		const rootBinding = await table.exec( () => this.getBindingContext())
 		let rootPath = "";
 		if (rootPathBool) {
 			rootPath = await rootBinding.getPath();
 		}
 		for (let index = 0; index < items.length; index++) {
 			const element = items[index];
-			const binding = await element.getBindingContext();
+			const item = await this.BaseClass.getControlById(element.id);
+			const binding = await item.exec( () => this.getBindingContext())
 			const object = await binding.getObject();
 			if (object[objectAttribute] === objectValue) {
 				const path = binding.sPath;
@@ -53,13 +54,25 @@ class FEV2ND {
 		}
 	}
 
-	async getTableObject(tableId, objectAttribute, objectValue) {
+	async getTableItems(tableId) {
 		const table = await this.BaseClass.getControlById(tableId);
-		const items = await table.getItems();
-		const rootBinding = await table.getBindingContext();
+		const metadata = await table.exec(() => this.getMetadata());
+		const type = await metadata.getName();
+		let items = undefined;
+		if (type === "sap.m.Table") {
+			items = await table.exec(() => this.getItems());
+		} else {
+			items = await table.exec(() => this.getRows());
+		}
+		return items;
+	}
+
+	async getTableObject(tableId, objectAttribute, objectValue) {
+		const items = await this.getTableItems(tableId);
 		for (let index = 0; index < items.length; index++) {
 			const element = items[index];
-			const binding = await element.getBindingContext();
+			const item = await this.BaseClass.getControlById(element.id);
+			const binding = await item.exec( () => this.getBindingContext())
 			const object = await binding.getObject();
 			if (object[objectAttribute] === objectValue) {
 				return object;
