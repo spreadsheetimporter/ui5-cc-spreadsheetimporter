@@ -121,6 +121,6 @@ describe("Upload File Object Page", () => {
 		const sortedPrices = prices.sort();
 
 		// Compare the sorted arrays
-		expect(sortedPrices).toEqual(sortedPricesExpect);
+		expect(sortedPricesExpect).toEqual(sortedPrices);
 	});
 });
