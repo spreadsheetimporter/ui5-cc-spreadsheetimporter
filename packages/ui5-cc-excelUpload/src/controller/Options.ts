@@ -23,8 +23,8 @@ export default class Options {
 				controller: this,
 			})) as Dialog;
             this.optionsDialog.setModel(this.excelUploadController.componentI18n, "i18n");
-            this.optionsDialog.setModel(optionsModel, "options");
 		}
+		this.optionsDialog.setModel(optionsModel, "options");
 		this.optionsDialog.open();
 	}
 
