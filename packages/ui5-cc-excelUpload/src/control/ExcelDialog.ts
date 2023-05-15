@@ -24,11 +24,12 @@ export default class ExcelDialog extends Dialog {
 
 	public setDecimalSeparator(sDecimalSeparator: string) {
 		if (sDecimalSeparator === "," || sDecimalSeparator === ".") {
-			return this;
-		}
-		this.setProperty("decimalSeparator", sDecimalSeparator);
+			this.setProperty("decimalSeparator", sDecimalSeparator);
 		this.fireDecimalSeparatorChanged({decimalSeparator: sDecimalSeparator});
-      	return this;
+			return this;
+		} else {
+			throw new Error("Decimal separator must be either ',' or '.'");
+		}
 	}
 
 	static renderer = {

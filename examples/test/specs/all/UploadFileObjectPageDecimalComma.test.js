@@ -57,6 +57,7 @@ describe("Upload File Object Page", () => {
 			}
 		});
 		expect(excelUploadDialog.isOpen()).toBeTruthy();
+		excelUploadDialog.setDecimalSeparator(",")
 		try {
 			browser.execute(function () {
 				const blockLayerPopup = document.getElementById("sap-ui-blocklayer-popup");
@@ -79,7 +80,7 @@ describe("Upload File Object Page", () => {
 				id: "__uploader0"
 			}
 		});
-		const fileName = "test/testFiles/TwoRowsNoErrorsNumberFormatsDecimal.xlsx"; // relative to wdio.conf.(j|t)s
+		const fileName = "test/testFiles/TwoRowsNoErrorsNumberFormatsDecimalComma.xlsx"; // relative to wdio.conf.(j|t)s
 		const remoteFilePath = await browser.uploadFile(fileName); // this also works in CI senarios!
 		// transition from wdi5 api -> wdio api
 		const $uploader = await uploader.getWebElement(); // wdi5

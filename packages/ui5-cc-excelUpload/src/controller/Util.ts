@@ -82,12 +82,16 @@ export default class Util {
 	}
 
 	static getBrowserDecimalAndThousandSeparators(componentDecimalSeparator: string) {
-		let decimalSeparator = ".";
-		let thousandSeparator = ",";
+		let decimalSeparator = "";
+		let thousandSeparator = "";
 		if (componentDecimalSeparator === ",") {
+			thousandSeparator = ".";
+			decimalSeparator = ",";
 			return { thousandSeparator, decimalSeparator };
 		}
 		if (componentDecimalSeparator === ".") {
+			thousandSeparator = ",";
+			decimalSeparator = ".";
 			return { decimalSeparator, thousandSeparator };
 		}
 		const sampleNumber = 12345.6789;

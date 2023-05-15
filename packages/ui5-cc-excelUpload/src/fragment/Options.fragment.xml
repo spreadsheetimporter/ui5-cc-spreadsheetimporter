@@ -27,6 +27,7 @@
               <Label text="Decimal Seperator" />
               <Select
                 selectedKey="{options>/decimalSeparator}">
+                <core:Item key="" text="Browser Default" />
                 <core:Item key="," text="Comma `,`" />
                 <core:Item key="." text="Dot `.`" />
               </Select>
