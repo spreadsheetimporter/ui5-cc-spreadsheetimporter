@@ -33,7 +33,8 @@ sap.ui.define([], function () {
 									title: "Price to high (max 100)",
 									row: index + 2,
 									group: true,
-									rawValue: row["UnitPrice[price]"].rawValue
+									rawValue: row["UnitPrice[price]"].rawValue,
+									ui5type: "Error"
 								};
 								errorArray.push(error);
 							}

@@ -2,7 +2,7 @@ import UIComponent from "sap/ui/core/UIComponent";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Device from "sap/ui/Device";
 import ExcelUpload from "./controller/ExcelUpload";
-import { ErrorMessage } from "./types";
+import { Messages } from "./types";
 import { $ComponentSettings } from "sap/ui/core/Component";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
@@ -154,11 +154,11 @@ export default class Component extends UIComponent {
 	 * add to error array
 	 * @public
 	 */
-	addToErrorsResults(errorArray: ErrorMessage[]) {
+	addToErrorsResults(errorArray: Messages[]) {
 		this.excelUpload.addToErrorsResults(errorArray);
 	}
 
-	getErrorsResults(): ErrorMessage[] {
+	getErrorsResults(): Messages[] {
 		return this.excelUpload.getErrorResults();
 	}
 

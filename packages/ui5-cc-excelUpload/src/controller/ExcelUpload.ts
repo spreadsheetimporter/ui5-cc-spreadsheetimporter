@@ -4,7 +4,7 @@ import * as XLSX from "xlsx";
 import MetadataHandler from "./MetadataHandler";
 import Component from "../Component";
 import XMLView from "sap/ui/core/mvc/XMLView";
-import { ListObject, ErrorMessage, ErrorTypes } from "../types";
+import { ListObject, Messages, ErrorTypes } from "../types";
 import Dialog from "sap/m/Dialog";
 import Event from "sap/ui/base/Event";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
@@ -17,7 +17,7 @@ import MessageBox from "sap/m/MessageBox";
 import Button from "sap/m/Button";
 import Util from "./Util";
 import Parser from "./Parser";
-import ErrorHandler from "./ErrorHandler";
+import ErrorHandler from "./MessageHandler";
 import Bar from "sap/m/Bar";
 import Preview from "./Preview";
 import Log from "sap/base/Log";
@@ -53,7 +53,7 @@ export default class ExcelUpload {
 	private errorState: boolean;
 	private errorMessage: any;
 	private initialSetupPromise: Promise<void>;
-	public errorArray: ErrorMessage[];
+	public errorArray: Messages[];
 	odataKeyList: string[];
 	optionsHandler: Options;
 
@@ -207,6 +207,7 @@ export default class ExcelUpload {
 			}
 
 			if (!this.component.getStandalone()) {
+				this.errorHandler.checkFormat(excelSheetsData);
 				this.errorHandler.checkMandatoryColumns(excelSheetsData,columnNames,this.odataKeyList, this.component.getMandatoryFields(), this.typeLabelList);
 				this.errorHandler.checkColumnNames(columnNames, this.component.getFieldMatchType(), this.typeLabelList);
 			}
@@ -449,10 +450,10 @@ export default class ExcelUpload {
 		return new Promise(function (resolve, reject) {
 			sap.ui.require(
 				["sap/ui/generic/app/transaction/DraftController"],
-				function (DraftController) {
+				function (DraftController: unknown) {
 					resolve(DraftController);
 				},
-				function (err) {
+				function (err: any) {
 					reject(err);
 				}
 			);
@@ -470,7 +471,7 @@ export default class ExcelUpload {
 
 	/**
 	 * Returns error results from the ErrorHandler.
-	 * @returns {ErrorMessage[]} - An array of error messages.
+	 * @returns {Messages[]} - An array of error messages.
 	 */
 	getErrorResults() {
 		return this.errorHandler.getErrorResults();
@@ -478,9 +479,9 @@ export default class ExcelUpload {
 
 	/**
 	 * Adds error messages to the ErrorHandler's error results.
-	 * @param {ErrorMessage[]} errorArray - An array of error messages to add.
+	 * @param {Messages[]} errorArray - An array of error messages to add.
 	 */
-	addToErrorsResults(errorArray: ErrorMessage[]) {
+	addToErrorsResults(errorArray: Messages[]) {
 		errorArray.forEach((error) => {
 			if (error.group) {
 				error.type = ErrorTypes.CustomErrorGroup;

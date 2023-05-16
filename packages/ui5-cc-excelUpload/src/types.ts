@@ -1,3 +1,5 @@
+import { MessageType } from "sap/ui/core/library";
+
 export interface Tags {
 	name: string;
 	count: number;
@@ -5,7 +7,6 @@ export interface Tags {
 }
 
 export type FieldMatchType = 'label' | 'labelTypeBrackets';
-
 
 export interface Property {
 	type: string;
@@ -36,9 +37,13 @@ export enum ErrorTypes {
 		title: "CustomError",
 		group: false,
 	},
+	Formatting = {
+		title: "Formatting",
+		group: true,
+	}
 }
 
-export interface ErrorMessage {
+export interface Messages {
 	title: string;
 	type: ErrorTypes;
 	counter: number;
@@ -46,6 +51,7 @@ export interface ErrorMessage {
 	group?: boolean;
 	rawValue?: any;
 	formattedValue?: string;
+	ui5type: MessageType;
 }
 
 export type Payload = {
@@ -69,4 +75,4 @@ export type ArrayData = {
 
 export type RowData = {
 	[key: string]: ValueData;
-  };
+};

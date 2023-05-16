@@ -19,5 +19,5 @@
       "cc/excelUpload/XXXnamespaceXXX/*": ["./packages/ui5-cc-excelUpload/src/*"]
     }
   },
-  "include": ["./packages/**/*"]
+  "include": ["./packages/ui5-cc-excelUpload/**/*"]
 }

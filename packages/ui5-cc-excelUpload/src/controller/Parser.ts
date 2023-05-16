@@ -1,6 +1,7 @@
+import { MessageType } from "sap/ui/core/library";
 import Component from "../Component";
 import { ArrayData, ErrorTypes, FieldMatchType, ListObject, Payload, PayloadArray, Property, RowData, ValueData } from "../types";
-import ErrorHandler from "./ErrorHandler";
+import ErrorHandler from "./MessageHandler";
 import Util from "./Util";
 
 export default class Parser {
@@ -144,7 +145,8 @@ export default class Parser {
 			type: ErrorTypes.ParsingError,
 			counter: 1,
 			rawValue: rawValue,
-			formattedValue: formattedValue
+			formattedValue: formattedValue,
+			ui5type: MessageType.Error,
 		});
 	}
 }
