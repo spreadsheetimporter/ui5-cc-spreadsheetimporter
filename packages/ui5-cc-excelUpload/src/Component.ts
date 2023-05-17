@@ -2,7 +2,7 @@ import UIComponent from "sap/ui/core/UIComponent";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Device from "sap/ui/Device";
 import ExcelUpload from "./controller/ExcelUpload";
-import { ErrorMessage } from "./types";
+import { Messages } from "./types";
 import { $ComponentSettings } from "sap/ui/core/Component";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
@@ -44,7 +44,7 @@ export default class Component extends UIComponent {
 			checkBeforeRead: {
 				parameters: {
 					sheetData: { type: "object" },
-					errorResults: { type: "object" },
+					messages: { type: "object" },
 				},
 			},
 			changeBeforeCreate: {
@@ -154,12 +154,12 @@ export default class Component extends UIComponent {
 	 * add to error array
 	 * @public
 	 */
-	addToErrorsResults(errorArray: ErrorMessage[]) {
-		this.excelUpload.addToErrorsResults(errorArray);
+	addToErrorsResults(errorArray: Messages[]) {
+		this.excelUpload.addToMessages(errorArray);
 	}
 
-	getErrorsResults(): ErrorMessage[] {
-		return this.excelUpload.getErrorResults();
+	getErrorsResults(): Messages[] {
+		return this.excelUpload.getMessages();
 	}
 
 	//=============================================================================

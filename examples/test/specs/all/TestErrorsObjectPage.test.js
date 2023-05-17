@@ -87,7 +87,7 @@ describe("Upload File Object Page", () => {
 		const $fileInput = await $uploader.$("input[type=file]"); // wdio
 		await $fileInput.setValue(remoteFilePath); // wdio
 		await BaseClass.dummyWait(200);
-		const errorDialog = await browser.asControl({
+		const messageDialog = await browser.asControl({
 			selector: {
 				controlType: "sap.m.Dialog",
 				properties: {
@@ -96,7 +96,7 @@ describe("Upload File Object Page", () => {
 				searchOpenDialogs: true
 			}
 		});
-		const modelData = await errorDialog.getModel("errorData");
+		const modelData = await messageDialog.getModel("messages");
 		const errorData = await modelData.getData();
 		const lengthErrorArray = Object.keys(errorData._baseObject).length;
 		expect(lengthErrorArray).toEqual(9);

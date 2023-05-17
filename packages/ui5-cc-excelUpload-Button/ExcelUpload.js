@@ -38,7 +38,7 @@ sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
 				checkBeforeRead: {
 					parameters: {
 						sheetData: { type: "object" },
-						errorResults: { type: "object" }
+						messages: { type: "object" }
 					}
 				},
 				changeBeforeCreate: {

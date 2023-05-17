@@ -1,3 +1,5 @@
+import { MessageType } from "sap/ui/core/library";
+
 export interface Tags {
 	name: string;
 	count: number;
@@ -5,7 +7,6 @@ export interface Tags {
 }
 
 export type FieldMatchType = 'label' | 'labelTypeBrackets';
-
 
 export interface Property {
 	type: string;
@@ -15,7 +16,7 @@ export type ListObject = { [key: string]: Property };
 export type PropertyArray = { [key: string]: any }[];
 export type Columns = string[];
 
-export enum ErrorTypes {
+export enum MessageTypes {
 	MandatoryFieldNotFilled = {
 		title: "MandatoryFieldNotFilled",
 		group: true,
@@ -36,16 +37,21 @@ export enum ErrorTypes {
 		title: "CustomError",
 		group: false,
 	},
+	Formatting = {
+		title: "Formatting",
+		group: true,
+	}
 }
 
-export interface ErrorMessage {
+export interface Messages {
 	title: string;
-	type: ErrorTypes;
+	type: MessageTypes;
 	counter: number;
 	row?: number;
 	group?: boolean;
 	rawValue?: any;
 	formattedValue?: string;
+	ui5type: MessageType;
 }
 
 export type Payload = {
@@ -69,4 +75,4 @@ export type ArrayData = {
 
 export type RowData = {
 	[key: string]: ValueData;
-  };
+};

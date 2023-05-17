@@ -1,0 +1,13 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+  <Dialog title="{i18n>messageDialogTitle}" resizable="true" state="{info>/dialogState}" verticalScrolling="false" contentHeight="50%" contentWidth="50%">
+    <content>
+      <MessageView items="{messages>/}">
+        <MessageItem title="{messages>title}" type="{messages>ui5type}" counter="{messages>counter}" subtitle="{messages>subtitle}" description="{messages>description}" />
+      </MessageView>
+    </content>
+    <buttons>
+      <Button press=".onContinue" type="Emphasized" text="{= ${info>/dialogState} === 'Error' ? ${i18n>messageDialogButtonContinueAnyway} : ${i18n>messageDialogButtonContinue} }" visible="{= !${info>/strict}}" />
+      <Button press=".onCloseMessageDialog" text="{i18n>messageDialogButtonClose}" />
+    </buttons>
+  </Dialog>
+</core:FragmentDefinition>

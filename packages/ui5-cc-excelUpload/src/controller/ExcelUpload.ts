@@ -4,7 +4,7 @@ import * as XLSX from "xlsx";
 import MetadataHandler from "./MetadataHandler";
 import Component from "../Component";
 import XMLView from "sap/ui/core/mvc/XMLView";
-import { ListObject, ErrorMessage, ErrorTypes } from "../types";
+import { ListObject, Messages, MessageTypes } from "../types";
 import Dialog from "sap/m/Dialog";
 import Event from "sap/ui/base/Event";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
@@ -17,7 +17,7 @@ import MessageBox from "sap/m/MessageBox";
 import Button from "sap/m/Button";
 import Util from "./Util";
 import Parser from "./Parser";
-import ErrorHandler from "./ErrorHandler";
+import MessageHandler from "./MessageHandler";
 import Bar from "sap/m/Bar";
 import Preview from "./Preview";
 import Log from "sap/base/Log";
@@ -38,7 +38,7 @@ export default class ExcelUpload {
 	private view: XMLView;
 	private tableObject: any;
 	private metadataHandler: MetadataHandler;
-	private errorHandler: ErrorHandler;
+	private messageHandler: MessageHandler;
 	private previewHandler: Preview;
 	public util: Util;
 	private model: any;
@@ -53,7 +53,7 @@ export default class ExcelUpload {
 	private errorState: boolean;
 	private errorMessage: any;
 	private initialSetupPromise: Promise<void>;
-	public errorArray: ErrorMessage[];
+	public messageArray: Messages[];
 	odataKeyList: string[];
 	optionsHandler: Options;
 
@@ -102,7 +102,7 @@ export default class ExcelUpload {
 			(this.dialog.getSubHeader() as Bar).setVisible(false);
 			(this.dialog.getSubHeader() as Bar).getContentLeft()[0].setVisible(false);
 		}
-		this.errorHandler = new ErrorHandler(this);
+		this.messageHandler = new MessageHandler(this);
 		if (!this.component.getStandalone()) {
 			this.metadataHandler = new MetadataHandler(this);
 			this.odataHandler.metaDatahandler = this.metadataHandler;
@@ -187,7 +187,7 @@ export default class ExcelUpload {
 	 */
 	async onFileUpload(event: Event) {
 		try {
-			this.errorHandler.setErrorResults([]);
+			this.messageHandler.setMessages([]);
 			const file = event.getParameter("files")[0];
 
 			const workbook = (await this._readWorkbook(file)) as XLSX.WorkBook;
@@ -207,21 +207,22 @@ export default class ExcelUpload {
 			}
 
 			if (!this.component.getStandalone()) {
-				this.errorHandler.checkMandatoryColumns(excelSheetsData,columnNames,this.odataKeyList, this.component.getMandatoryFields(), this.typeLabelList);
-				this.errorHandler.checkColumnNames(columnNames, this.component.getFieldMatchType(), this.typeLabelList);
+				this.messageHandler.checkFormat(excelSheetsData);
+				this.messageHandler.checkMandatoryColumns(excelSheetsData,columnNames,this.odataKeyList, this.component.getMandatoryFields(), this.typeLabelList);
+				this.messageHandler.checkColumnNames(columnNames, this.component.getFieldMatchType(), this.typeLabelList);
 			}
 			this.payload = excelSheetsData;
 			this.component.fireCheckBeforeRead({ sheetData: excelSheetsData });
 			if (!this.component.getStandalone()) {
 				this.payloadArray = [];
-				this.payloadArray = Parser.parseExcelData(this.payload, this.typeLabelList, this.component, this.errorHandler, this.util);
+				this.payloadArray = Parser.parseExcelData(this.payload, this.typeLabelList, this.component, this.messageHandler, this.util);
 			} else {
 				this.payloadArray = this.payload;
 			}
 
-			if (this.errorHandler.areErrorsPresent()) {
+			if (this.messageHandler.areMessagesPresent()) {
 				// show error dialog
-				this.errorHandler.displayErrors();
+				this.messageHandler.displayMessages();
 				return;
 			}
 			this.setDataRows();
@@ -449,10 +450,10 @@ export default class ExcelUpload {
 		return new Promise(function (resolve, reject) {
 			sap.ui.require(
 				["sap/ui/generic/app/transaction/DraftController"],
-				function (DraftController) {
+				function (DraftController: unknown) {
 					resolve(DraftController);
 				},
-				function (err) {
+				function (err: any) {
 					reject(err);
 				}
 			);
@@ -469,27 +470,27 @@ export default class ExcelUpload {
 	}
 
 	/**
-	 * Returns error results from the ErrorHandler.
-	 * @returns {ErrorMessage[]} - An array of error messages.
+	 * Returns messages from the MessageHandler.
+	 * @returns {Messages[]} - An array of messages.
 	 */
-	getErrorResults() {
-		return this.errorHandler.getErrorResults();
+	getMessages() {
+		return this.messageHandler.getMessages();
 	}
 
 	/**
-	 * Adds error messages to the ErrorHandler's error results.
-	 * @param {ErrorMessage[]} errorArray - An array of error messages to add.
+	 * Adds messages to the MessageHandler's messages.
+	 * @param {Messages[]} messagesArray - An array of messages to add.
 	 */
-	addToErrorsResults(errorArray: ErrorMessage[]) {
-		errorArray.forEach((error) => {
-			if (error.group) {
-				error.type = ErrorTypes.CustomErrorGroup;
+	addToMessages(messagesArray: Messages[]) {
+		messagesArray.forEach((message) => {
+			if (message.group) {
+				message.type = MessageTypes.CustomErrorGroup;
 			} else {
-				error.type = ErrorTypes.CustomError;
+				message.type = MessageTypes.CustomError;
 			}
-			error.counter = 1;
+			message.counter = 1;
 		});
-		this.errorHandler.addToErrorsResults(errorArray);
+		this.messageHandler.addToErrorsResults(messagesArray);
 	}
 
 	public setDataRows() {

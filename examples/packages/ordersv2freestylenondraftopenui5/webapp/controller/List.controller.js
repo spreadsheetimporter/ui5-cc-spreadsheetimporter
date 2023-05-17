@@ -81,17 +81,18 @@ sap.ui.define(
 						let errorArray = [];
 						for (const [index, row] of sheetData.entries()) {
 							//check for invalid price
-							if (row["UnitPrice[price]"]) {
-								if (row["UnitPrice[price]"].rawValue > 100) {
-									const error = {
-										title: "Price to high (max 100)",
-										row: index + 2,
-										group: true,
-										rawValue: row["UnitPrice[price]"].rawValue
-									};
-									errorArray.push(error);
-								}
+							for (const key in row) {
+							if (key.endsWith("[price]") && row[key].rawValue > 100) {
+								const error = {
+									title: "Price too high (max 100)",
+									row: index + 2,
+									group: true,
+									rawValue: row[key].rawValue,
+									ui5type: "Error"
+								};
+								errorArray.push(error);
 							}
+						}
 						}
 						oEvent.getSource().addToErrorsResults(errorArray);
 					}, this);

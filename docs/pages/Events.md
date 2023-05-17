@@ -19,15 +19,15 @@ this.excelUpload.attachCheckBeforeRead(function(oEvent) {
     let errorArray = [];
     for (const [index, row] of sheetdata.entries()) {
         //check for invalid price
-        if (row["UnitPrice[price]"]) {
-            if (row["UnitPrice[price]"].rawValue > 100) {
+        for (const key in row) {
+            if (key.endsWith("[price]") && row[key].rawValue > 100) {
                 const error = {
-                    title: "Price to high (max 100)",
+                    title: "Price too high (max 100)",
                     row: index + 2,
                     group: true,
-                    // show the faulty price in the error dialog
-                    rawValue: row["UnitPrice[price]"].rawValue
-                }
+                    rawValue: row[key].rawValue,
+                    ui5type: "Error"
+                };
                 errorArray.push(error);
             }
         }
@@ -36,8 +36,8 @@ this.excelUpload.attachCheckBeforeRead(function(oEvent) {
 }, this)
 ````
 
-You can add errors to the `errorResults` property of the `ExcelUpload` control. After the event the upload is canceled and the errors are displayed in the error dialog.  
-With the method `addToErrorsResults` you can add errors to the `errorResults` property. It expects an array of objects with the following properties:
+You can add errors to the `messages` property of the `ExcelUpload` control. After the event the upload is canceled and the errors are displayed in the error dialog.  
+With the method `addToErrorsResults` you can add errors to the `messages` property. It expects an array of objects with the following properties:
 
 - `title` - the title of the error
 - `row` - the row number of the error

@@ -1,10 +1,11 @@
+import { MessageType } from "sap/ui/core/library";
 import Component from "../Component";
-import { ArrayData, ErrorTypes, FieldMatchType, ListObject, Payload, PayloadArray, Property, RowData, ValueData } from "../types";
-import ErrorHandler from "./ErrorHandler";
+import { ArrayData, MessageTypes, FieldMatchType, ListObject, Payload, PayloadArray, Property, RowData, ValueData } from "../types";
+import MessageHandler from "./MessageHandler";
 import Util from "./Util";
 
 export default class Parser {
-	static parseExcelData(sheetData: ArrayData, typeLabelList: ListObject, component: Component, errorHandler: ErrorHandler, util: Util) {
+	static parseExcelData(sheetData: ArrayData, typeLabelList: ListObject, component: Component, messageHandler: MessageHandler, util: Util) {
 		const payloadArray:PayloadArray = [];
 		// loop over data from excel file
 		for (const [index, row] of sheetData.entries()) {
@@ -20,71 +21,71 @@ export default class Parser {
 						if (typeof rawValue === "boolean" || rawValue === "true" || rawValue === "false") {
 							payload[columnKey] = `${rawValue || ""}`;
 						} else {
-							this.addParsingError("valueNotABoolean", util, errorHandler, index, [metadataColumn.label]);
+							this.addMessageToMessages("valueNotABoolean", util, messageHandler, index, [metadataColumn.label]);
 						}
 					} else if (metadataColumn.type === "Edm.Date") {
 						let date = rawValue
 						if(value.sheetDataType !== 'd'){
 							const parsedDate = new Date(rawValue);
 							if (isNaN(parsedDate.getTime())) {
-								this.addParsingError("valueNotADate", util, errorHandler, index, [metadataColumn.label], rawValue);
+								this.addMessageToMessages("valueNotADate", util, messageHandler, index, [metadataColumn.label], rawValue);
 								continue;
 							} 
 							date = parsedDate;
 						}
 						try {
-							this.checkDate(date, metadataColumn, util, errorHandler, index);
+							this.checkDate(date, metadataColumn, util, messageHandler, index);
 							const dateString = `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`;
 							payload[columnKey] = dateString;
 						} catch (error) {
-							this.addParsingError("errorWhileParsing", util, errorHandler, index, [metadataColumn.label]);
+							this.addMessageToMessages("errorWhileParsing", util, messageHandler, index, [metadataColumn.label]);
 						}
 					} else if (metadataColumn.type === "Edm.DateTimeOffset" || metadataColumn.type === "Edm.DateTime") {
 						let date = rawValue
 						if(value.sheetDataType !== 'd'){
 							const parsedDate = new Date(rawValue);
 							if (isNaN(parsedDate.getTime())) {
-								this.addParsingError("valueNotADate", util, errorHandler, index, [metadataColumn.label], rawValue);
+								this.addMessageToMessages("valueNotADate", util, messageHandler, index, [metadataColumn.label], rawValue);
 								continue;
 							} 
 							date = parsedDate;
 						}
 						try {
-							this.checkDate(date, metadataColumn, util, errorHandler, index);
+							this.checkDate(date, metadataColumn, util, messageHandler, index);
 							payload[columnKey] = date;
 						} catch (error) {
-							this.addParsingError("errorWhileParsing", util, errorHandler, index, [metadataColumn.label]);
+							this.addMessageToMessages("errorWhileParsing", util, messageHandler, index, [metadataColumn.label]);
 						}
 					} else if (metadataColumn.type === "Edm.TimeOfDay" || metadataColumn.type === "Edm.Time") {
 						let date = rawValue
 						if(value.sheetDataType !== 'd'){
 							const parsedDate = new Date(rawValue);
 							if (isNaN(parsedDate.getTime())) {
-								this.addParsingError("valueNotADate", util, errorHandler, index, [metadataColumn.label], rawValue);
+								this.addMessageToMessages("valueNotADate", util, messageHandler, index, [metadataColumn.label], rawValue);
 								continue;
 							} 
 							date = parsedDate;
 						}
 						try {
-							this.checkDate(date, metadataColumn, util, errorHandler, index);
+							this.checkDate(date, metadataColumn, util, messageHandler, index);
 							const excelDate = date.toISOString().substring(11, 16);
 							payload[columnKey] = excelDate;
 						} catch (error) {
-							this.addParsingError("errorWhileParsing", util, errorHandler, index, [metadataColumn.label]);
+							this.addMessageToMessages("errorWhileParsing", util, messageHandler, index, [metadataColumn.label]);
 						}
 					} else if (metadataColumn.type === "Edm.Int32") {
 						try {
-							const valueInteger = this.checkInteger(value, metadataColumn, util, errorHandler, index, component);
+							const valueInteger = this.checkInteger(value, metadataColumn, util, messageHandler, index, component);
 							payload[columnKey] = valueInteger;
 						} catch (error) {
-							this.addParsingError("errorWhileParsing", util, errorHandler, index, [metadataColumn.label]);
+							this.addMessageToMessages("errorWhileParsing", util, messageHandler, index, [metadataColumn.label]);
 						}
 					} else if (metadataColumn.type === "Edm.Double") {
 						try {
-							const valueDouble = this.checkDouble(value, metadataColumn, util, errorHandler, index, component);
+							const valueDouble = this.checkDouble(value, metadataColumn, util, messageHandler, index, component);
 							payload[columnKey] = valueDouble;
 						} catch (error) {
-							this.addParsingError("errorWhileParsing", util, errorHandler, index, [metadataColumn.label]);
+							this.addMessageToMessages("errorWhileParsing", util, messageHandler, index, [metadataColumn.label]);
 						}
 					} else {
 						payload[columnKey] = `${rawValue || ""}`;
@@ -97,15 +98,15 @@ export default class Parser {
 		return payloadArray;
 	}
 
-	static checkDate(value: any, metadataColumn: Property, util: Util, errorHandler: ErrorHandler, index: number) {
+	static checkDate(value: any, metadataColumn: Property, util: Util, messageHandler: MessageHandler, index: number) {
 		if (isNaN(value.getTime())) {
-			this.addParsingError("invalidDate", util, errorHandler, index, [metadataColumn.label]);
+			this.addMessageToMessages("invalidDate", util, messageHandler, index, [metadataColumn.label]);
 			return false;
 		}
 		return true;
 	}
 
-	static checkDouble(value: ValueData, metadataColumn: Property, util: Util, errorHandler: ErrorHandler, index: number, component: Component) {
+	static checkDouble(value: ValueData, metadataColumn: Property, util: Util, messageHandler: MessageHandler, index: number, component: Component) {
 		const rawValue = value.rawValue;
 		let valueDouble = rawValue;
 		if (typeof rawValue === "string") {
@@ -114,13 +115,13 @@ export default class Parser {
 			// check if value is a number a does contain anything other than numbers and decimal seperator
 			if (/[^0-9.,]/.test(valueDouble) || parseFloat(normalizedString).toString() !== normalizedString) {
 				// Error: Value does contain anything other than numbers and decimal seperator
-				this.addParsingError("parsingErrorNotNumber", util, errorHandler, index, [metadataColumn.label], rawValue);
+				this.addMessageToMessages("parsingErrorNotNumber", util, messageHandler, index, [metadataColumn.label], rawValue);
 			}
 		}
 		return valueDouble;
 	}
 
-	static checkInteger(value: ValueData, metadataColumn: Property, util: Util, errorHandler: ErrorHandler, index: number, component: Component) {
+	static checkInteger(value: ValueData, metadataColumn: Property, util: Util, messageHandler: MessageHandler, index: number, component: Component) {
 		const rawValue = value.rawValue;
 		let valueInteger = rawValue;
 		if (!Number.isInteger(valueInteger)) {
@@ -130,21 +131,22 @@ export default class Parser {
 				// check if value is a number a does contain anything other than numbers
 				if (/[^0-9]/.test(valueInteger) || parseInt(normalizedString).toString() !== normalizedString.toString()) {
 					// Error: Value does contain anything other than numbers
-					this.addParsingError("parsingErrorNotWholeNumber", util, errorHandler, index, [metadataColumn.label], rawValue);
+					this.addMessageToMessages("parsingErrorNotWholeNumber", util, messageHandler, index, [metadataColumn.label], rawValue);
 				}
 			}
 		}
 		return valueInteger;
 	}
 
-	static addParsingError(text: string, util: Util, errorHandler: ErrorHandler, index: number, array?: any, rawValue?: any, formattedValue?: any) {
-		errorHandler.addParsingError({
+	static addMessageToMessages(text: string, util: Util, messageHandler: MessageHandler, index: number, array?: any, rawValue?: any, formattedValue?: any) {
+		messageHandler.addMessageToMessages({
 			title: util.geti18nText(text, array),
 			row: index + 2,
-			type: ErrorTypes.ParsingError,
+			type: MessageTypes.ParsingError,
 			counter: 1,
 			rawValue: rawValue,
-			formattedValue: formattedValue
+			formattedValue: formattedValue,
+			ui5type: MessageType.Error,
 		});
 	}
 }
