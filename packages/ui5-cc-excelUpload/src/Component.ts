@@ -31,7 +31,8 @@ export default class Component extends UIComponent {
 			batchSize: { type: "int", defaultValue: 1000 },
 			standalone: { type: "boolean", defaultValue: false },
 			strict: { type: "boolean", defaultValue: false },
-			decimalSeparator: { type: "string", defaultValue: "" }
+			decimalSeparator: { type: "string", defaultValue: "" },
+			hidePreview: { type: "boolean", defaultValue: false },
 		},
 		aggregations: {
 			rootControl: {
@@ -80,6 +81,7 @@ export default class Component extends UIComponent {
 		if (!oCompData.mandatoryFields) {
 			oCompData.mandatoryFields = [];
 		}
+		this.setExcelFileName(oCompData.excelFileName);
 		this.setContext(oCompData.context);
 		this.setColumns(oCompData.columns);
 		this.setTableId(oCompData.tableId);
@@ -91,6 +93,7 @@ export default class Component extends UIComponent {
 		this.setStandalone(oCompData.standalone);
 		this.setStrict(oCompData.strict);
 		this.setDecimalSeparator(oCompData.decimalSeparator);
+		this.setHidePreview(oCompData.hidePreview);
 
 		// // we could create a device model and use it
 		oModel = new JSONModel(Device);

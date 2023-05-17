@@ -1,4 +1,4 @@
-sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
+sap.ui.define(["sap/m/Button"], (Button) => {
 	return Button.extend("cc.excelUploadButton.v0_4_4.ExcelUpload", {
 		metadata: {
 			properties: {
@@ -32,7 +32,8 @@ sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
 				},
 				standalone: { type: "boolean", defaultValue: false },
 				strict: { type: "boolean", defaultValue: false },
-				decimalSeparator: { type: "string" }
+				decimalSeparator: { type: "string" },
+				hidePreview: { type: "boolean", defaultValue: false }
 			},
 			events: {
 				checkBeforeRead: {
@@ -77,7 +78,8 @@ sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
 						batchSize: oControl.getBatchSize(),
 						standalone: oControl.getStandalone(),
 						strict: oControl.getStrict(),
-						decimalSeparator: oControl.getDecimalSeparator()
+						decimalSeparator: oControl.getDecimalSeparator(),
+						hidePreview: oControl.getHidePreview()
 					}
 				})
 			} else {
@@ -96,7 +98,8 @@ sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
 						batchSize: oControl.getBatchSize(),
 						standalone: oControl.getStandalone(),
 						strict: oControl.getStrict(),
-						decimalSeparator: oControl.getDecimalSeparator()
+						decimalSeparator: oControl.getDecimalSeparator(),
+						hidePreview: oControl.getHidePreview()
 					}
 				})
 			}
