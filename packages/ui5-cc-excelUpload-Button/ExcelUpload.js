@@ -38,7 +38,7 @@ sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
 				checkBeforeRead: {
 					parameters: {
 						sheetData: { type: "object" },
-						errorResults: { type: "object" }
+						messages: { type: "object" }
 					}
 				},
 				changeBeforeCreate: {
@@ -117,8 +117,8 @@ sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
 			this.excelUpload.openExcelUploadDialog()
 		},
 
-		addToErrorsResults: function (errorArray) {
-			this.excelUpload.addToErrorsResults(errorArray)
+		addArrayToMessages: function (errorArray) {
+			this.excelUpload.addArrayToMessages(errorArray)
 		},
 		setPayload: function (payload) {
 			this.excelUpload.setPayload(payload)

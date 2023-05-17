@@ -43,7 +43,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
 							}
 						}
 					}
-					oEvent.getSource().addToErrorsResults(errorArray);
+					oEvent.getSource().addArrayToMessages(errorArray);
 				}, this);
 
 				// event to change data before send to backend

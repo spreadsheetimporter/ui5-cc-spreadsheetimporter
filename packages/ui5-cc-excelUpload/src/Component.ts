@@ -44,7 +44,7 @@ export default class Component extends UIComponent {
 			checkBeforeRead: {
 				parameters: {
 					sheetData: { type: "object" },
-					errorResults: { type: "object" },
+					messages: { type: "object" },
 				},
 			},
 			changeBeforeCreate: {
@@ -154,12 +154,12 @@ export default class Component extends UIComponent {
 	 * add to error array
 	 * @public
 	 */
-	addToErrorsResults(errorArray: Messages[]) {
-		this.excelUpload.addToErrorsResults(errorArray);
+	addArrayToMessages(errorArray: Messages[]) {
+		this.excelUpload.addToMessages(errorArray);
 	}
 
 	getErrorsResults(): Messages[] {
-		return this.excelUpload.getErrorResults();
+		return this.excelUpload.getMessages();
 	}
 
 	//=============================================================================

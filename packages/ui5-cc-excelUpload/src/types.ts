@@ -16,7 +16,7 @@ export type ListObject = { [key: string]: Property };
 export type PropertyArray = { [key: string]: any }[];
 export type Columns = string[];
 
-export enum ErrorTypes {
+export enum MessageTypes {
 	MandatoryFieldNotFilled = {
 		title: "MandatoryFieldNotFilled",
 		group: true,
@@ -45,7 +45,7 @@ export enum ErrorTypes {
 
 export interface Messages {
 	title: string;
-	type: ErrorTypes;
+	type: MessageTypes;
 	counter: number;
 	row?: number;
 	group?: boolean;

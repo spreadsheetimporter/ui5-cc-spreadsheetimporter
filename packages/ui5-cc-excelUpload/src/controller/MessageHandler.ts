@@ -1,35 +1,35 @@
 import Dialog from "sap/m/Dialog";
-import { Messages, ErrorTypes, ListObject, ArrayData, PayloadArray } from "../types";
+import { Messages, MessageTypes, ListObject, ArrayData, PayloadArray } from "../types";
 import ExcelUpload from "./ExcelUpload";
 import Util from "./Util";
 import Fragment from "sap/ui/core/Fragment";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import { MessageType, ValueState } from "sap/ui/core/library";
 
-export default class ErrorHandler {
-	private errorResults: Messages[] = [];
+export default class MessageHandler {
+	private messages: Messages[] = [];
 	private excelUploadController: ExcelUpload;
-	private errorDialog: Dialog;
+	private messageDialog: Dialog;
 
 	constructor(excelUploadController: any) {
-		this.errorResults = [];
+		this.messages = [];
 		this.excelUploadController = excelUploadController;
 	}
 
-	setErrorResults(errorResults: Messages[]) {
-		this.errorResults = errorResults;
+	setMessages(messages: Messages[]) {
+		this.messages = messages;
 	}
 
-	addToErrorsResults(errorResults: Messages[]) {
-		this.errorResults = this.errorResults.concat(errorResults);
+	addArrayToMessages(messages: Messages[]) {
+		this.messages = this.messages.concat(messages);
 	}
 
-	addParsingError(errorResults: Messages) {
-		this.errorResults.push(errorResults);
+	addMessageToMessages(messages: Messages) {
+		this.messages.push(messages);
 	}
 
-	getErrorResults() {
-		return this.errorResults;
+	getMessages() {
+		return this.messages;
 	}
 
 	checkMandatoryColumns(data: PayloadArray, columnNames: string[], mandatoryFieldsUser: string[], mandatoryFieldsMetadata: string[], typeLabelList: ListObject) {
@@ -56,14 +56,14 @@ export default class ErrorHandler {
 				const value = Util.getValueFromRow(row, fieldLabel, mandatoryField, this.excelUploadController.component.getFieldMatchType());
 				const errorMessage = {
 					title: this.excelUploadController.util.geti18nText("mandatoryFieldNotFilled", [fieldLabel]),
-					type: ErrorTypes.MandatoryFieldNotFilled,
+					type: MessageTypes.MandatoryFieldNotFilled,
 					row: index + 2,
 					counter: 1,
 					ui5type: MessageType.Error
 				} as Messages;
 				// no value found or value is empty, create error message
 				if (!value || value.rawValue === "" || value.rawValue === undefined) {
-					this.errorResults.push(errorMessage);
+					this.messages.push(errorMessage);
 				}
 			}
 		}
@@ -75,14 +75,14 @@ export default class ErrorHandler {
 				if (sheetDataType === 'n' && format !== 'General' && rawValue !== Number(formattedValue)) {
 					const warningMessage = {
 						title: "Format",
-						type: ErrorTypes.Formatting,
+						type: MessageTypes.Formatting,
 						row: index + 2,
 						counter: 1,
 						ui5type: MessageType.Warning,
 						rawValue: rawValue,
 						formattedValue: formattedValue
 					} as Messages;
-					this.errorResults.push(warningMessage);
+					this.messages.push(warningMessage);
 				}
 			});
 		}
@@ -111,11 +111,11 @@ export default class ErrorHandler {
 			if (!found) {
 				const errorMessage = {
 					title: this.excelUploadController.util.geti18nText("columnNotFound", [columnName]),
-					type: ErrorTypes.ColumnNotFound,
+					type: MessageTypes.ColumnNotFound,
 					counter: 1,
 					ui5type: MessageType.Error
 				} as Messages;
-				this.errorResults.push(errorMessage);
+				this.messages.push(errorMessage);
 			}
 		}
 	}
@@ -136,95 +136,94 @@ export default class ErrorHandler {
 				const columnNameLabel = typeLabelList[columnName]?.label ? typeLabelList[columnName].label : columnName;
 				const errorMessage: Messages = {
 					title: this.excelUploadController.util.geti18nText("keyColumnNotFound", [columnNameLabel]),
-					type: ErrorTypes.ColumnNotFound,
+					type: MessageTypes.ColumnNotFound,
 					counter: 1,
 					ui5type: MessageType.Error,
 				};
-				this.errorResults.push(errorMessage);
+				this.messages.push(errorMessage);
 			}
 		}
 		return availableKeyColumns;
 	}
 
-	areErrorsPresent(): boolean {
-		if (this.errorResults.some((error) => error.counter > 0)) {
+	areMessagesPresent(): boolean {
+		if (this.messages.some((message) => message.counter > 0)) {
 			return true;
 		}
 		return false;
 	}
 
 	/**
-	 * Display errors in the errorArray.
-	 * @param {Array} errorArray - Array containing error messages and their counters.
+	 * Display messages.
 	 */
-	async displayErrors() {
-		if (!this.errorDialog) {
-			this.errorDialog = (await Fragment.load({
+	async displayMessages() {
+		if (!this.messageDialog) {
+			this.messageDialog = (await Fragment.load({
 				name: "cc.excelUpload.XXXnamespaceXXX.fragment.MessagesDialog",
 				type: "XML",
 				controller: this,
 			})) as Dialog;
 		}
-		this.errorDialog.setModel(this.excelUploadController.componentI18n, "i18n");
-		this.errorDialog.setModel(new JSONModel(), "errorData");
-		const errorGrouped = this.groupErrors(this.errorResults);
-		const sortedErrorGrouped = this.sortErrorsByTitle(errorGrouped);
-		(this.errorDialog.getModel("errorData") as JSONModel).setData(sortedErrorGrouped);
-		const dialogState = this.getWorstType(sortedErrorGrouped);
+		this.messageDialog.setModel(this.excelUploadController.componentI18n, "i18n");
+		this.messageDialog.setModel(new JSONModel(), "messages");
+		const messagesGrouped = this.groupMessages(this.messages);
+		const sortedMessagesGrouped = this.sortMessagesByTitle(messagesGrouped);
+		(this.messageDialog.getModel("messages") as JSONModel).setData(sortedMessagesGrouped);
+		const dialogState = this.getWorstType(sortedMessagesGrouped);
 		const infoModel = new JSONModel({
 			strict: this.excelUploadController.component.getStrict(),
 			dialogState: dialogState,
 		});
-		this.errorDialog.setModel(infoModel, "info");
-		this.errorDialog.open();
+		this.messageDialog.setModel(infoModel, "info");
+		this.messageDialog.open();
 	}
 
-	groupErrors(errors: Messages[]): Messages[] {
-		const counterLargerThanOne = errors.filter((error) => error.counter !== 0);
-		const parsingErrors = counterLargerThanOne.filter((error) => error.type.group === true);
-		const errorGroups = parsingErrors.reduce((groups, error) => {
-			let errorText = "";
-			if (!groups[error.title]) {
-				groups[error.title] = [];
+	groupMessages(messages: Messages[]): Messages[] {
+		const counterLargerThanOne = messages.filter((message) => message.counter !== 0);
+		const parsingMessages = counterLargerThanOne.filter((message) => message.type.group === true);
+		const messageGroups = parsingMessages.reduce((groups, message) => {
+			let messageText = "";
+			if (!groups[message.title]) {
+				groups[message.title] = [];
 			}
-			if (error.rawValue && error.formattedValue) {
-				errorText = this.excelUploadController.util.geti18nText("errorInRowWithValueFormatted", [error.row, error.formattedValue, error.rawValue]);
-			} else if (error.rawValue) {
-				errorText = this.excelUploadController.util.geti18nText("errorInRowWithValue", [error.row, error.rawValue]);
+			if (message.rawValue && message.formattedValue) {
+				messageText = this.excelUploadController.util.geti18nText("errorInRowWithValueFormatted", [message.row, message.formattedValue, message.rawValue]);
+			} else if (message.rawValue) {
+				messageText = this.excelUploadController.util.geti18nText("errorInRowWithValue", [message.row, message.rawValue]);
 			} else {
-				errorText = this.excelUploadController.util.geti18nText("errorInRow", [error.row]);
+				messageText = this.excelUploadController.util.geti18nText("errorInRow", [message.row]);
 			}
-			groups[error.title].push(errorText);
+			groups[message.title].push(messageText);
 			return groups;
 		}, {});
 
-		const groupedErrors = [];
-		for (const title in errorGroups) {
-			const ui5type = errors.find(error => error.title === title)?.ui5type || "";
-			groupedErrors.push({
+		const groupedMessages = [];
+		for (const title in messageGroups) {
+			const ui5type = messages.find(message => message.title === title)?.ui5type || "";
+			groupedMessages.push({
 				title: title,
-				description: errorGroups[title].join("\n"),
+				description: messageGroups[title].join("\n"),
 				ui5type: ui5type
 			});
 		}
-		const allErrors = groupedErrors.concat(counterLargerThanOne.filter((error) => error.type.group === false));
+		const allMessages = groupedMessages.concat(counterLargerThanOne.filter((message) => message.type.group === false));
 
-		return allErrors;
+		return allMessages;
 	}
 
-	private onCloseErrorDialog() {
-		this.errorDialog.close();
+	private onCloseMessageDialog() {
+		this.messageDialog.close();
 		// rest file uploader content
 		this.excelUploadController.resetContent();
 	}
 
 	private onContinue() {
-		this.errorDialog.close();
+		this.messageDialog.close();
 		this.excelUploadController.setDataRows();
 	}
 
-	private sortErrorsByTitle(errors: Messages[]) {
-		return errors.sort((a, b) => {
+	private sortMessagesByTitle(messages: Messages[]) {
+		return messages.sort((a, b) => {
 			if (a.title < b.title) {
 				return -1;
 			}
