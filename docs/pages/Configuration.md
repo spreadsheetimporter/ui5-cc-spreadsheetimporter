@@ -16,6 +16,7 @@ These options are available and explained in detail below:
 | `standalone` | Mode if you do not have a table and want to do the processing yourself  | boolean |
 | `strict` | The strict option controls the availability of the `Continue` button in the error dialog.  | boolean |
 | `decimalSeparator` | Determines the decimal separator for numbers as string.  | string |
+| `hidePreview` | Hide the button to preview the uploaded data in the table dialog.  | string |
 
 ### `columns`
 
@@ -148,3 +149,9 @@ This option defines whether the "Continue" button should be displayed in the err
 
 This option defines the decimal separator for numbers as string.  
 This option is only needed if in the Excel File are numbers as strings or when importing a CSV. When the datatype in the Excel File is number, the decimal separator is automatically recognized.
+
+### `hidePreview`
+
+**default:** `false`
+
+This option defines whether the button to preview the uploaded data in the table dialog should be hidden or not.

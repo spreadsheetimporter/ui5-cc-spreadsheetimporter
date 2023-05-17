@@ -20,6 +20,7 @@ declare module "./Component" {
         standalone?: boolean | PropertyBindingInfo | `{${string}}`;
         strict?: boolean | PropertyBindingInfo | `{${string}}`;
         decimalSeparator?: string | PropertyBindingInfo;
+        hidePreview?: boolean | PropertyBindingInfo | `{${string}}`;
         checkBeforeRead?: (event: Event) => void;
         changeBeforeCreate?: (event: Event) => void;
         uploadButtonPress?: (event: Event) => void;
@@ -74,6 +75,10 @@ declare module "./Component" {
         // property: decimalSeparator
         getDecimalSeparator(): string;
         setDecimalSeparator(decimalSeparator: string): this;
+
+        // property: hidePreview
+        getHidePreview(): boolean;
+        setHidePreview(hidePreview: boolean): this;
 
         // event: checkBeforeRead
         attachCheckBeforeRead(fn: (event: Event) => void, listener?: object): this;
