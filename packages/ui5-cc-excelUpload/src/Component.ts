@@ -154,11 +154,11 @@ export default class Component extends UIComponent {
 	 * add to error array
 	 * @public
 	 */
-	addToErrorsResults(errorArray: Messages[]) {
+	addArrayToMessages(errorArray: Messages[]) {
 		this.excelUpload.addToMessages(errorArray);
 	}
 
-	getErrorsResults(): Messages[] {
+	getMessages(): Messages[] {
 		return this.excelUpload.getMessages();
 	}
 
