@@ -96,7 +96,7 @@ describe("Upload File Object Page", () => {
 				searchOpenDialogs: true
 			}
 		});
-		const modelData = await messageDialog.getModel("errorData");
+		const modelData = await messageDialog.getModel("messages");
 		const errorData = await modelData.getData();
 		const lengthErrorArray = Object.keys(errorData._baseObject).length;
 		expect(lengthErrorArray).toEqual(9);
