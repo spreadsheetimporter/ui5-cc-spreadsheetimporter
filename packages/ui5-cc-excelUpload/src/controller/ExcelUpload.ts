@@ -464,6 +464,7 @@ export default class ExcelUpload {
 		this.payload = [];
 		(this.dialog.getModel("info") as JSONModel).setProperty("/dataRows", 0);
 		this.odataHandler.resetContexts();
+		this.tableObject.getModel().resetChanges();
 		var fileUploader = this.dialog.getContent()[0].getItems()[1] as FileUploader;
 		fileUploader.setValue();
 	}
