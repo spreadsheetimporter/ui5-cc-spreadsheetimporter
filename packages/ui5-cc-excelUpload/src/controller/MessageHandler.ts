@@ -61,7 +61,8 @@ export default class ErrorHandler {
 					counter: 1,
 					ui5type: MessageType.Error
 				} as Messages;
-				if ( value && (value.rawValue === "" || value.rawValue === undefined)) {
+				// no value found or value is empty, create error message
+				if (!value || value.rawValue === "" || value.rawValue === undefined) {
 					this.errorResults.push(errorMessage);
 				}
 			}
