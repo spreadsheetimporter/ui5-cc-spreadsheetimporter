@@ -20,7 +20,7 @@ export default class MessageHandler {
 		this.messages = messages;
 	}
 
-	addArrayToMessages(messages: Messages[]) {
+	addToErrorsResults(messages: Messages[]) {
 		this.messages = this.messages.concat(messages);
 	}
 

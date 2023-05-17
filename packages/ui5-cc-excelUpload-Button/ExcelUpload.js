@@ -117,8 +117,8 @@ sap.ui.define(["sap/m/Button"], (Button /*, marked */) => {
 			this.excelUpload.openExcelUploadDialog()
 		},
 
-		addArrayToMessages: function (errorArray) {
-			this.excelUpload.addArrayToMessages(errorArray)
+		addToErrorsResults: function (errorArray) {
+			this.excelUpload.addToErrorsResults(errorArray)
 		},
 		setPayload: function (payload) {
 			this.excelUpload.setPayload(payload)

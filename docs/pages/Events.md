@@ -32,12 +32,12 @@ this.excelUpload.attachCheckBeforeRead(function(oEvent) {
             }
         }
     }
-    oEvent.getSource().addArrayToMessages(errorArray)
+    oEvent.getSource().addToErrorsResults(errorArray)
 }, this)
 ````
 
 You can add errors to the `messages` property of the `ExcelUpload` control. After the event the upload is canceled and the errors are displayed in the error dialog.  
-With the method `addArrayToMessages` you can add errors to the `messages` property. It expects an array of objects with the following properties:
+With the method `addToErrorsResults` you can add errors to the `messages` property. It expects an array of objects with the following properties:
 
 - `title` - the title of the error
 - `row` - the row number of the error

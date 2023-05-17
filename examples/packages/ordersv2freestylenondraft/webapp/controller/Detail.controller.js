@@ -178,7 +178,7 @@ sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel", "../model/form
 							}
 						}
 					}
-					oEvent.getSource().addArrayToMessages(errorArray);
+					oEvent.getSource().addToErrorsResults(errorArray);
 				}, this);
 
 				// event to change data before send to backend
@@ -213,7 +213,7 @@ sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel", "../model/form
 					}
 				}
 			}
-			oEvent.getSource().addArrayToMessages(errorArray);
+			oEvent.getSource().addToErrorsResults(errorArray);
 		},
 
 		changeBeforeCreate(oEvent) {

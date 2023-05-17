@@ -490,7 +490,7 @@ export default class ExcelUpload {
 			}
 			message.counter = 1;
 		});
-		this.messageHandler.addArrayToMessages(messagesArray);
+		this.messageHandler.addToErrorsResults(messagesArray);
 	}
 
 	public setDataRows() {

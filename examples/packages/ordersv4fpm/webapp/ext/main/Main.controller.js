@@ -38,7 +38,7 @@ sap.ui.define(["sap/fe/core/PageController"], function (PageController) {
 							}
 						}
 					}
-					oEvent.getSource().addArrayToMessages(errorArray);
+					oEvent.getSource().addToErrorsResults(errorArray);
 				}, this);
 
 				// event to change data before send to backend
