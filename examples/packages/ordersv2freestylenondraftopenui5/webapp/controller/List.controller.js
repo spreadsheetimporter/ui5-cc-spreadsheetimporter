@@ -94,7 +94,7 @@ sap.ui.define(
 							}
 						}
 						}
-						oEvent.getSource().addToErrorsResults(errorArray);
+						oEvent.getSource().addArrayToMessages(errorArray);
 					}, this);
 
 					// event to change data before send to backend

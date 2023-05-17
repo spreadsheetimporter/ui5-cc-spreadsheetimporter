@@ -38,7 +38,7 @@ sap.ui.define([], function () {
 							}
 						}
 					}
-					oEvent.getSource().addToErrorsResults(errorArray);
+					oEvent.getSource().addArrayToMessages(errorArray);
 				}, this);
 
 				// event example to prevent uploading data to backend

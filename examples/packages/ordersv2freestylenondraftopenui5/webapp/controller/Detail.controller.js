@@ -205,7 +205,7 @@ sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel", "../model/form
 							}
 						}
 					}
-					oEvent.getSource().addToErrorsResults(errorArray);
+					oEvent.getSource().addArrayToMessages(errorArray);
 				}, this);
 
 				// event to change data before send to backend
