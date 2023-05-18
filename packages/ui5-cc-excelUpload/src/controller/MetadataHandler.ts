@@ -163,7 +163,11 @@ export default class MetadataHandler {
 				keys.push(propertyName);
 			}
 			// if property nullable is false and hidden is false, field should be in excel file
-			if (!propertyLabel["@com.sap.vocabularies.UI.v1.Hidden"] && propertyValue["$Nullable"] === false) {
+			if (!this.excelUploadController.component.getSkipNullCheck() && 
+				!propertyLabel.type?.startsWith("Collection") && 
+				!propertyLabel["@com.sap.vocabularies.UI.v1.Hidden"] && 
+				propertyValue["$Nullable"] === false
+				) {
 				keys.push(propertyName);
 			}
 		}
@@ -188,7 +192,11 @@ export default class MetadataHandler {
 				keys.push(propertyName);
 			}
 			// if property nullable is false and hidden is false, field should be in excel file
-			if (property["com.sap.vocabularies.UI.v1.Hidden"] && property["com.sap.vocabularies.UI.v1.Hidden"]["Bool"] === "false" && property.nullable === "false") {
+			if (!this.excelUploadController.component.getSkipNullCheck() && 
+				!property.type?.startsWith("Collection") && 
+				property["com.sap.vocabularies.UI.v1.Hidden"] && 
+				property["com.sap.vocabularies.UI.v1.Hidden"]["Bool"] === "false" && 
+				property.nullable === "false") {
 				keys.push(propertyName);
 			}
 		}
