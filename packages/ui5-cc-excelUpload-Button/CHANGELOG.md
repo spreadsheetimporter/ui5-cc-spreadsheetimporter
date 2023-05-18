@@ -36,6 +36,28 @@
   * dependencies
     * ui5-cc-excelupload bumped from 0.16.3 to 0.16.4
 
+## [0.5.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-button-v0.4.4...ui5-cc-excelupload-button-v0.5.0) (2023-05-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* change API to add messages to Error Dialog ([#211](https://github.com/marianfoo/ui5-cc-excelUpload/issues/211))
+
+### Features
+
+* add option to hide the "preview data" button ([#212](https://github.com/marianfoo/ui5-cc-excelUpload/issues/212)) ([65bcb5b](https://github.com/marianfoo/ui5-cc-excelUpload/commit/65bcb5b0c5581f3e8f2ec48ac14bc8dfe9e6a983))
+* add option to set decimal seperator ([#199](https://github.com/marianfoo/ui5-cc-excelUpload/issues/199)) ([ba4a4f2](https://github.com/marianfoo/ui5-cc-excelUpload/commit/ba4a4f275211af7754d8b11069c26aa666d5fc75))
+* add option to skip Fields with `Nullable=false` ([#216](https://github.com/marianfoo/ui5-cc-excelUpload/issues/216)) ([28ded2d](https://github.com/marianfoo/ui5-cc-excelUpload/commit/28ded2d5db457a145ec3462f0120482dc631193a))
+* change API to add messages to Error Dialog ([#211](https://github.com/marianfoo/ui5-cc-excelUpload/issues/211)) ([a06ec4e](https://github.com/marianfoo/ui5-cc-excelUpload/commit/a06ec4e1b845db4636842536c2611c3027798092))
+* warning when numbers are formatted in file ([#205](https://github.com/marianfoo/ui5-cc-excelUpload/issues/205)) ([701b31e](https://github.com/marianfoo/ui5-cc-excelUpload/commit/701b31e3e126b25c3a8cde8dcb7b48513498f3fe))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * ui5-cc-excelupload bumped from 0.16.4 to 0.17.0
+
 ## [0.4.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-button-v0.3.0...ui5-cc-excelupload-button-v0.4.0) (2023-05-08)
 
 
