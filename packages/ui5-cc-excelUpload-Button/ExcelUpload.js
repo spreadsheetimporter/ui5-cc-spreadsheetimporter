@@ -33,7 +33,8 @@ sap.ui.define(["sap/m/Button"], (Button) => {
 				standalone: { type: "boolean", defaultValue: false },
 				strict: { type: "boolean", defaultValue: false },
 				decimalSeparator: { type: "string" },
-				hidePreview: { type: "boolean", defaultValue: false }
+				hidePreview: { type: "boolean", defaultValue: false },
+				skipNullCheck: { type: "boolean", defaultValue: false },
 			},
 			events: {
 				checkBeforeRead: {
@@ -79,7 +80,8 @@ sap.ui.define(["sap/m/Button"], (Button) => {
 						standalone: oControl.getStandalone(),
 						strict: oControl.getStrict(),
 						decimalSeparator: oControl.getDecimalSeparator(),
-						hidePreview: oControl.getHidePreview()
+						hidePreview: oControl.getHidePreview(),
+						skipNullCheck: oControl.getSkipNullCheck()
 					}
 				})
 			} else {
@@ -99,7 +101,8 @@ sap.ui.define(["sap/m/Button"], (Button) => {
 						standalone: oControl.getStandalone(),
 						strict: oControl.getStrict(),
 						decimalSeparator: oControl.getDecimalSeparator(),
-						hidePreview: oControl.getHidePreview()
+						hidePreview: oControl.getHidePreview(),
+						skipNullCheck: oControl.getSkipNullCheck()
 					}
 				})
 			}
