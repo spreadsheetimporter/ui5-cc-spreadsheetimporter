@@ -17,7 +17,7 @@ These options are available and explained in detail below:
 | `strict` | The strict option controls the availability of the `Continue` button in the error dialog.  | boolean |
 | `decimalSeparator` | Determines the decimal separator for numbers as string.  | string |
 | `hidePreview` | Hide the button to preview the uploaded data in the table dialog.  | string |
-| `skipNullCheck` | Skip check if fields with `Nullable=false` are filled in excel file. | string |
+| `skipMandatoryFieldCheck` | Skip check if fields with `Nullable=false` are filled in excel file. | string |
 
 ### `columns`
 
@@ -157,8 +157,9 @@ This option is only needed if in the Excel File are numbers as strings or when i
 
 This option defines whether the button to preview the uploaded data in the table dialog should be hidden or not.
 
-### `skipNullCheck`
+### `skipMandatoryFieldCheck`
 
 **default:** `false`
 
-This option defines whether the check if fields with `Nullable=false` are filled in excel file should be skipped or not. This will not affect the check for mandatory fields from user and metadata.
+This options defines wether mandatory fields defined in the metadata should be checked or not.  
+Only the option `mandatoryFields` will be checked.
