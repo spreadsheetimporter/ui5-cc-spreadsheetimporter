@@ -73,7 +73,7 @@ export default class Parser {
 						} catch (error) {
 							this.addMessageToMessages("errorWhileParsing", util, messageHandler, index, [metadataColumn.label]);
 						}
-					} else if (metadataColumn.type === "Edm.Int32") {
+					} else if (metadataColumn.type === "Edm.UInt8" || metadataColumn.type === "Edm.Int16" || metadataColumn.type === "Edm.Int32" || metadataColumn.type === "Edm.Integer" || metadataColumn.type === "Edm.Int64" || metadataColumn.type === "Edm.Integer64") {
 						try {
 							const valueInteger = this.checkInteger(value, metadataColumn, util, messageHandler, index, component);
 							payload[columnKey] = valueInteger;
