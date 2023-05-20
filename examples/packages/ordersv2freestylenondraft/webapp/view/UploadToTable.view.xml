@@ -2,7 +2,7 @@
   xmlns="sap.m"
   xmlns:semantic="sap.f.semantic"
   xmlns:mvc="sap.ui.core.mvc"
-  xmlns:excel="cc.excelUploadButton.v0_5_1">
+  xmlns:excel="cc.excelUploadButton.v0_5_2">
   <semantic:SemanticPage id="detailPage2" busy="{detailView>/busy}" busyIndicatorDelay="{detailView>/delay}" showFooter="true">
     <semantic:titleHeading>
       <Title text="{OrderNo}" level="H2" />
