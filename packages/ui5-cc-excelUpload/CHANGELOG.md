@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.17.3](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.17.2...ui5-cc-excelupload-v0.17.3) (2023-05-20)
+
+
+### Bug Fixes
+
+* remove popup in FE scenario when uploading ([#223](https://github.com/marianfoo/ui5-cc-excelUpload/issues/223)) ([f7d12b3](https://github.com/marianfoo/ui5-cc-excelUpload/commit/f7d12b3f63c96dee508d246e0c1f5964fc80331f))
+
 ## [0.17.2](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.17.1...ui5-cc-excelupload-v0.17.2) (2023-05-20)
 
 
