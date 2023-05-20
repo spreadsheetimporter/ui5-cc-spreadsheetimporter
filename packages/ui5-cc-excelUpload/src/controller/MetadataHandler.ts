@@ -147,11 +147,16 @@ export default class MetadataHandler {
 
 		var annotations = this.excelUploadController.context.getModel().getMetaModel().getData()["$Annotations"];
 		const properties = this.excelUploadController.context.getModel().getMetaModel().getData()[odataType];
+		const messagesPath = annotations[odataType]["@com.sap.vocabularies.Common.v1.Messages"];
 
 		const propertiesFiltered = Object.entries(properties).filter(([propertyName, propertyValue]) => propertyValue["$kind"] === "Property");
 		for (const [propertyName, propertyValue] of propertiesFiltered) {
 			const propertyLabel = annotations[`${odataType}/${propertyName}`];
 			if (!propertyLabel) {
+				continue;
+			}
+			// skip messages property
+			if(propertyName === messagesPath?.$Path) {
 				continue;
 			}
 			// if property is mandatory, field should be in excel file
