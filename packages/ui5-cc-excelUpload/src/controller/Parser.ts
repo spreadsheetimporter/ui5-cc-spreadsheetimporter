@@ -15,11 +15,11 @@ export default class Parser {
 				// depending on parse type
 				const value = Util.getValueFromRow(row, metadataColumn.label, columnKey, component.getFieldMatchType() as FieldMatchType);
 				// depending on data type
-				if (value) {
+				if (value && value.rawValue !== undefined && value.rawValue !== null && value.rawValue !== "") {
 					const rawValue = value.rawValue;
 					if (metadataColumn.type === "Edm.Boolean") {
 						if (typeof rawValue === "boolean" || rawValue === "true" || rawValue === "false") {
-							payload[columnKey] = `${rawValue || ""}`;
+							payload[columnKey] = Boolean(rawValue);
 						} else {
 							this.addMessageToMessages("valueNotABoolean", util, messageHandler, index, [metadataColumn.label]);
 						}
