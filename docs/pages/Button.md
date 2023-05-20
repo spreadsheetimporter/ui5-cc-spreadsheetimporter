@@ -45,8 +45,8 @@ https://www.npmjs.com/package/ui5-cc-excelupload-button/v/0.4.4?activeTab=code
 
 ````json
 "resourceRoots": {
-   "cc.excelUploadButton.v0_5_2": "./thirdparty/customControl/excelUploadButton/v0_5_2",
-    "cc.excelUpload.v0_17_2": "./thirdparty/customControl/excelUpload/v0_17_2"
+   "cc.excelUploadButton.v0_5_3": "./thirdparty/customControl/excelUploadButton/v0_5_3",
+    "cc.excelUpload.v0_17_3": "./thirdparty/customControl/excelUpload/v0_17_3"
 },
 ````
 
@@ -57,7 +57,7 @@ https://www.npmjs.com/package/ui5-cc-excelupload-button/v/0.4.4?activeTab=code
 ````json
 "componentUsages": {
     "excelUpload": {
-        "name": "cc.excelUpload.v0_17_2"
+        "name": "cc.excelUpload.v0_17_3"
     }
 },
 ````
@@ -69,7 +69,7 @@ https://www.npmjs.com/package/ui5-cc-excelupload-button/v/0.4.4?activeTab=code
    controllerName="sap.ui.demo.walkthrough.controller.HelloPanel"
    xmlns="sap.m"
    xmlns:mvc="sap.ui.core.mvc"
-   xmlns:excel="cc.excelUploadButton.v0_5_2">
+   xmlns:excel="cc.excelUploadButton.v0_5_3">
 ...
 </mvc:View>
 ````
