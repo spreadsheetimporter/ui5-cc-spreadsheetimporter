@@ -26,6 +26,7 @@ entity OrderItems : cuid {
   date      : Date;
   time      : Time;
   boolean   : Boolean;
+  decimal   : Decimal(15, 3);
 }
 
 /**
@@ -55,6 +56,7 @@ entity OrderItemsND : cuid {
   date      : Date;
   time      : Time;
   boolean   : Boolean;
+  decimal   : Decimal(15, 3);
 }
 
 /**
