@@ -34,7 +34,7 @@ sap.ui.define(["sap/m/Button"], (Button) => {
 				strict: { type: "boolean", defaultValue: false },
 				decimalSeparator: { type: "string" },
 				hidePreview: { type: "boolean", defaultValue: false },
-				skipNullCheck: { type: "boolean", defaultValue: false },
+				skipMandatoryFieldCheck: { type: "boolean", defaultValue: false },
 			},
 			events: {
 				checkBeforeRead: {
@@ -81,7 +81,7 @@ sap.ui.define(["sap/m/Button"], (Button) => {
 						strict: oControl.getStrict(),
 						decimalSeparator: oControl.getDecimalSeparator(),
 						hidePreview: oControl.getHidePreview(),
-						skipNullCheck: oControl.getSkipNullCheck()
+						skipMandatoryFieldCheck: oControl.getSkipMandatoryFieldCheck()
 					}
 				})
 			} else {
@@ -102,7 +102,7 @@ sap.ui.define(["sap/m/Button"], (Button) => {
 						strict: oControl.getStrict(),
 						decimalSeparator: oControl.getDecimalSeparator(),
 						hidePreview: oControl.getHidePreview(),
-						skipNullCheck: oControl.getSkipNullCheck()
+						skipMandatoryFieldCheck: oControl.getSkipMandatoryFieldCheck()
 					}
 				})
 			}

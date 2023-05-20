@@ -21,7 +21,7 @@ declare module "./Component" {
         strict?: boolean | PropertyBindingInfo | `{${string}}`;
         decimalSeparator?: string | PropertyBindingInfo;
         hidePreview?: boolean | PropertyBindingInfo | `{${string}}`;
-        skipNullCheck?: boolean | PropertyBindingInfo | `{${string}}`;
+        skipMandatoryFieldCheck?: boolean | PropertyBindingInfo | `{${string}}`;
         checkBeforeRead?: (event: Event) => void;
         changeBeforeCreate?: (event: Event) => void;
         uploadButtonPress?: (event: Event) => void;
@@ -81,9 +81,9 @@ declare module "./Component" {
         getHidePreview(): boolean;
         setHidePreview(hidePreview: boolean): this;
 
-        // property: skipNullCheck
-        getSkipNullCheck(): boolean;
-        setSkipNullCheck(skipNullCheck: boolean): this;
+        // property: skipMandatoryFieldCheck
+        getSkipMandatoryFieldCheck(): boolean;
+        setSkipMandatoryFieldCheck(skipMandatoryFieldCheck: boolean): this;
 
         // event: checkBeforeRead
         attachCheckBeforeRead(fn: (event: Event) => void, listener?: object): this;
