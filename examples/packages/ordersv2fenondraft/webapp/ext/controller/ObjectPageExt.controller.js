@@ -10,7 +10,7 @@ sap.ui.define([], function () {
 					async: true,
 					componentData: {
 						context: this,
-						columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time", "boolean"],
+						columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time", "boolean", "decimal"],
 						mandatoryFields: ["product_ID", "quantity"],
 						excelFileName: "Test.xlsx"
 					}
