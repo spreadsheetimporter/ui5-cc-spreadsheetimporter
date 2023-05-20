@@ -1,2 +1,2 @@
-ID[product_ID];Quantity[quantity];ProductTitle[title];UnitPrice[price];validFrom[validFrom];timestamp[timestamp];date[date];time[time]
-256;2;Product Test 1;12.55;2023-11-25T00:00:00.000Z;2023-11-24T00:00:00.000Z;2023-11-23T00:00:00.000Z;2023-11-25T15:00:00.000Z
+ID[product_ID];Quantity[quantity];ProductTitle[title];UnitPrice[price];validFrom[validFrom];timestamp[timestamp];date[date];time[time];boolean[boolean]
+256;2;Product Test 1;12.55;2023-11-25T00:00:00.000Z;2023-11-24T00:00:00.000Z;2023-11-23T00:00:00.000Z;2023-11-25T15:00:00.000Z;true
