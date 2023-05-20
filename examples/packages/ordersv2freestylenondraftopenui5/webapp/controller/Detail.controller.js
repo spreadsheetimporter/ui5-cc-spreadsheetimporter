@@ -179,7 +179,7 @@ sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel", "../model/form
 					async: true,
 					componentData: {
 						context: this,
-						columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time"],
+						ccolumns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time", "boolean"],
 						mandatoryFields: ["product_ID", "quantity"],
 						excelFileName: "Test.xlsx"
 					}
