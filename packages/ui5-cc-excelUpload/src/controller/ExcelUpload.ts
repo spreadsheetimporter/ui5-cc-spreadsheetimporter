@@ -282,7 +282,7 @@ export default class ExcelUpload {
 				check: false,
 			},
 			dataloss: {
-				popup: true,
+				popup: false,
 				navigation: false,
 			},
 			sActionLabel: this.util.geti18nText("uploadingFile"),
