@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.17.2](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.17.1...ui5-cc-excelupload-v0.17.2) (2023-05-20)
+
+
+### Bug Fixes
+
+* add missing Edm Types (Decimal, Integer) ([#221](https://github.com/marianfoo/ui5-cc-excelUpload/issues/221)) ([7bda6d5](https://github.com/marianfoo/ui5-cc-excelUpload/commit/7bda6d5a3801844bad96d4ea47454ddfaabf874c))
+* rename option to skip all metadata mandatory field checks ([#220](https://github.com/marianfoo/ui5-cc-excelUpload/issues/220)) ([a7ac5e4](https://github.com/marianfoo/ui5-cc-excelUpload/commit/a7ac5e470f4ff2854a87feed89feb86ce29ee30f))
+
 ## [0.17.1](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.17.0...ui5-cc-excelupload-v0.17.1) (2023-05-20)
 
 

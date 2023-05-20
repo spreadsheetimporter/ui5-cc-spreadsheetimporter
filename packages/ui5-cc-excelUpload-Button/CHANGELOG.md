@@ -42,6 +42,20 @@
   * dependencies
     * ui5-cc-excelupload bumped from 0.17.0 to 0.17.1
 
+## [0.5.2](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-button-v0.5.1...ui5-cc-excelupload-button-v0.5.2) (2023-05-20)
+
+
+### Bug Fixes
+
+* rename option to skip all metadata mandatory field checks ([#220](https://github.com/marianfoo/ui5-cc-excelUpload/issues/220)) ([a7ac5e4](https://github.com/marianfoo/ui5-cc-excelUpload/commit/a7ac5e470f4ff2854a87feed89feb86ce29ee30f))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * ui5-cc-excelupload bumped from 0.17.1 to 0.17.2
+
 ## [0.5.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-button-v0.4.4...ui5-cc-excelupload-button-v0.5.0) (2023-05-18)
 
 
