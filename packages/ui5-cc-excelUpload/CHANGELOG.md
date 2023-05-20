@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.17.1](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.17.0...ui5-cc-excelupload-v0.17.1) (2023-05-20)
+
+
+### Bug Fixes
+
+* messages are not a mandatory field ([#217](https://github.com/marianfoo/ui5-cc-excelUpload/issues/217)) ([bc20e5c](https://github.com/marianfoo/ui5-cc-excelUpload/commit/bc20e5cad4cf9e6d234bff70c994f8b08da805fb))
+* parsing booleans ([#219](https://github.com/marianfoo/ui5-cc-excelUpload/issues/219)) ([82777f9](https://github.com/marianfoo/ui5-cc-excelUpload/commit/82777f90f73a982acf3a3bcd7aef5920ddf16865))
+
 ## [0.17.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.16.4...ui5-cc-excelupload-v0.17.0) (2023-05-18)
 
 
