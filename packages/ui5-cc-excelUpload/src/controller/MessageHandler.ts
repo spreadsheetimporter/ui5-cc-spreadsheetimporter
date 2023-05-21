@@ -178,7 +178,7 @@ export default class MessageHandler {
 		this.messageDialog.open();
 	}
 
-	groupMessages(messages: Messages[]): (Messages | GroupedMessage)[] {
+	groupMessages(messages: Messages[]): (GroupedMessage)[] {
 		const counterLargerThanOne = messages.filter((message) => message.counter !== 0);
 		const parsingMessages = counterLargerThanOne.filter((message) => message.type.group === true);
 		
@@ -224,7 +224,7 @@ export default class MessageHandler {
 		this.excelUploadController.setDataRows();
 	}
 
-	private sortMessagesByTitle(messages: Messages[]) {
+	private sortMessagesByTitle(messages: GroupedMessage[]) {
 		return messages.sort((a, b) => {
 			if (a.title < b.title) {
 				return -1;
@@ -236,7 +236,7 @@ export default class MessageHandler {
 		});
 	}
 
-	private getWorstType(messages: Messages[]): ValueState {
+	private getWorstType(messages: GroupedMessage[]): ValueState {
 		let worstType = MessageType.None;
 	
 		// Map MessageType to severity levels
