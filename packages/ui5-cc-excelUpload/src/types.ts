@@ -6,7 +6,10 @@ export interface Tags {
 	type: string;
 }
 
-export type FieldMatchType = 'label' | 'labelTypeBrackets';
+export enum FieldMatchType {
+	Label = 'label',
+	LabelTypeBrackets = 'labelTypeBrackets'
+}
 
 export interface Property {
 	type: string;

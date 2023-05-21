@@ -53,7 +53,7 @@ export default class MessageHandler {
 			}
 
 			for (const [index, row] of data.entries()) {
-				const value = Util.getValueFromRow(row, fieldLabel, mandatoryField, this.excelUploadController.component.getFieldMatchType());
+				const value = Util.getValueFromRow(row, fieldLabel, mandatoryField, this.excelUploadController.component.getFieldMatchType() as FieldMatchType);
 				const errorMessage = {
 					title: this.excelUploadController.util.geti18nText("mandatoryFieldNotFilled", [fieldLabel]),
 					type: CustomMessageTypes.MandatoryFieldNotFilled,
