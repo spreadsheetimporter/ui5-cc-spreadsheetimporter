@@ -181,7 +181,8 @@ export default class MessageHandler {
 	groupMessages(messages: Messages[]): Messages[] {
 		const counterLargerThanOne = messages.filter((message) => message.counter !== 0);
 		const parsingMessages = counterLargerThanOne.filter((message) => message.type.group === true);
-		const messageGroups = parsingMessages.reduce((groups, message) => {
+		const messageGroups = parsingMessages.reduce<{[key: string]: string[]}>((groups, message) => {
+
 			let messageText = "";
 			if (!groups[message.title]) {
 				groups[message.title] = [];
