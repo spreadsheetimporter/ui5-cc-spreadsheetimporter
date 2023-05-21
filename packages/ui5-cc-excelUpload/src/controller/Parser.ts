@@ -1,6 +1,6 @@
 import { MessageType } from "sap/ui/core/library";
 import Component from "../Component";
-import { ArrayData, MessageTypes, FieldMatchType, ListObject, Payload, PayloadArray, Property, RowData, ValueData } from "../types";
+import { ArrayData, CustomMessageTypes, FieldMatchType, ListObject, Payload, PayloadArray, Property, RowData, ValueData } from "../types";
 import MessageHandler from "./MessageHandler";
 import Util from "./Util";
 
@@ -142,7 +142,7 @@ export default class Parser {
 		messageHandler.addMessageToMessages({
 			title: util.geti18nText(text, array),
 			row: index + 2,
-			type: MessageTypes.ParsingError,
+			type: CustomMessageTypes.ParsingError,
 			counter: 1,
 			rawValue: rawValue,
 			formattedValue: formattedValue,

@@ -4,7 +4,7 @@ import * as XLSX from "xlsx";
 import MetadataHandler from "./MetadataHandler";
 import Component from "../Component";
 import XMLView from "sap/ui/core/mvc/XMLView";
-import { ListObject, Messages, MessageTypes } from "../types";
+import { ListObject, Messages, CustomMessageTypes } from "../types";
 import Dialog from "sap/m/Dialog";
 import Event from "sap/ui/base/Event";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
@@ -485,9 +485,9 @@ export default class ExcelUpload {
 	addToMessages(messagesArray: Messages[]) {
 		messagesArray.forEach((message) => {
 			if (message.group) {
-				message.type = MessageTypes.CustomErrorGroup;
+				message.type = CustomMessageTypes.CustomErrorGroup;
 			} else {
-				message.type = MessageTypes.CustomError;
+				message.type = CustomMessageTypes.CustomError;
 			}
 			message.counter = 1;
 		});

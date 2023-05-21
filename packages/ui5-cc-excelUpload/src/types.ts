@@ -16,28 +16,34 @@ export type ListObject = { [key: string]: Property };
 export type PropertyArray = { [key: string]: any }[];
 export type Columns = string[];
 
-export enum MessageTypes {
-	MandatoryFieldNotFilled = {
+type CustomMessageType = {
+	title: string;
+	group: boolean;
+}
+
+
+export const CustomMessageTypes: { [key: string]: CustomMessageType } = {
+	MandatoryFieldNotFilled: {
 		title: "MandatoryFieldNotFilled",
 		group: true,
 	},
-	ColumnNotFound = {
+	ColumnNotFound: {
 		title: "ColumnNotFound",
 		group: false,
 	},
-	ParsingError = {
+	ParsingError: {
 		title: "ParsingError",
 		group: true,
 	},
-	CustomErrorGroup = {
+	CustomErrorGroup: {
 		title: "CustomErrorGroup",
 		group: true,
 	},
-	CustomError = {
+	CustomError: {
 		title: "CustomError",
 		group: false,
 	},
-	Formatting = {
+	Formatting: {
 		title: "Formatting",
 		group: true,
 	}
@@ -45,7 +51,7 @@ export enum MessageTypes {
 
 export interface Messages {
 	title: string;
-	type: MessageTypes;
+	type: CustomMessageType;
 	counter: number;
 	row?: number;
 	group?: boolean;

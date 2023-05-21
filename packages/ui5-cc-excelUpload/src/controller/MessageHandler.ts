@@ -1,5 +1,5 @@
 import Dialog from "sap/m/Dialog";
-import { Messages, MessageTypes, ListObject, ArrayData, PayloadArray } from "../types";
+import { Messages, CustomMessageTypes, ListObject, ArrayData, PayloadArray, FieldMatchType } from "../types";
 import ExcelUpload from "./ExcelUpload";
 import Util from "./Util";
 import Fragment from "sap/ui/core/Fragment";
@@ -56,7 +56,7 @@ export default class MessageHandler {
 				const value = Util.getValueFromRow(row, fieldLabel, mandatoryField, this.excelUploadController.component.getFieldMatchType());
 				const errorMessage = {
 					title: this.excelUploadController.util.geti18nText("mandatoryFieldNotFilled", [fieldLabel]),
-					type: MessageTypes.MandatoryFieldNotFilled,
+					type: CustomMessageTypes.MandatoryFieldNotFilled,
 					row: index + 2,
 					counter: 1,
 					ui5type: MessageType.Error
@@ -75,7 +75,7 @@ export default class MessageHandler {
 				if (sheetDataType === 'n' && format !== 'General' && rawValue !== Number(formattedValue)) {
 					const warningMessage = {
 						title: "Format",
-						type: MessageTypes.Formatting,
+						type: CustomMessageTypes.Formatting,
 						row: index + 2,
 						counter: 1,
 						ui5type: MessageType.Warning,
@@ -111,7 +111,7 @@ export default class MessageHandler {
 			if (!found) {
 				const errorMessage = {
 					title: this.excelUploadController.util.geti18nText("columnNotFound", [columnName]),
-					type: MessageTypes.ColumnNotFound,
+					type: CustomMessageTypes.ColumnNotFound,
 					counter: 1,
 					ui5type: MessageType.Error
 				} as Messages;
@@ -136,7 +136,7 @@ export default class MessageHandler {
 				const columnNameLabel = typeLabelList[columnName]?.label ? typeLabelList[columnName].label : columnName;
 				const errorMessage: Messages = {
 					title: this.excelUploadController.util.geti18nText("keyColumnNotFound", [columnNameLabel]),
-					type: MessageTypes.ColumnNotFound,
+					type: CustomMessageTypes.ColumnNotFound,
 					counter: 1,
 					ui5type: MessageType.Error,
 				};
