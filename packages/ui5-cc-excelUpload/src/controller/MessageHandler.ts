@@ -1,5 +1,5 @@
 import Dialog from "sap/m/Dialog";
-import { Messages, CustomMessageTypes, ListObject, ArrayData, PayloadArray, FieldMatchType } from "../types";
+import { Messages, CustomMessageTypes, ListObject, ArrayData, PayloadArray, FieldMatchType, GroupedMessage } from "../types";
 import ExcelUpload from "./ExcelUpload";
 import Util from "./Util";
 import Fragment from "sap/ui/core/Fragment";
@@ -178,39 +178,40 @@ export default class MessageHandler {
 		this.messageDialog.open();
 	}
 
-	groupMessages(messages: Messages[]): Messages[] {
+	groupMessages(messages: Messages[]): (Messages | GroupedMessage)[] {
 		const counterLargerThanOne = messages.filter((message) => message.counter !== 0);
 		const parsingMessages = counterLargerThanOne.filter((message) => message.type.group === true);
+		
 		const messageGroups = parsingMessages.reduce<{[key: string]: string[]}>((groups, message) => {
-
-			let messageText = "";
-			if (!groups[message.title]) {
-				groups[message.title] = [];
-			}
-			if (message.rawValue && message.formattedValue) {
-				messageText = this.excelUploadController.util.geti18nText("errorInRowWithValueFormatted", [message.row, message.formattedValue, message.rawValue]);
-			} else if (message.rawValue) {
-				messageText = this.excelUploadController.util.geti18nText("errorInRowWithValue", [message.row, message.rawValue]);
-			} else {
-				messageText = this.excelUploadController.util.geti18nText("errorInRow", [message.row]);
-			}
-			groups[message.title].push(messageText);
-			return groups;
+		  let messageText = "";
+		  if (!groups[message.title]) {
+			groups[message.title] = [];
+		  }
+		  if (message.rawValue && message.formattedValue) {
+			messageText = this.excelUploadController.util.geti18nText("errorInRowWithValueFormatted", [message.row, message.formattedValue, message.rawValue]);
+		  } else if (message.rawValue) {
+			messageText = this.excelUploadController.util.geti18nText("errorInRowWithValue", [message.row, message.rawValue]);
+		  } else {
+			messageText = this.excelUploadController.util.geti18nText("errorInRow", [message.row]);
+		  }
+		  groups[message.title].push(messageText);
+		  return groups;
 		}, {});
-
-		const groupedMessages = [];
+	  
+		const groupedMessages: GroupedMessage[] = [];
 		for (const title in messageGroups) {
-			const ui5type = messages.find(message => message.title === title)?.ui5type || "";
-			groupedMessages.push({
-				title: title,
-				description: messageGroups[title].join("\n"),
-				ui5type: ui5type
-			});
+		  const ui5type = messages.find(message => message.title === title)?.ui5type || "" as MessageType;
+		  groupedMessages.push({
+			title: title,
+			description: messageGroups[title].join("\n"),
+			ui5type: ui5type
+		  });
 		}
+	  
 		const allMessages = groupedMessages.concat(counterLargerThanOne.filter((message) => message.type.group === false));
-
+	  
 		return allMessages;
-	}
+	  }
 
 	private onCloseMessageDialog() {
 		this.messageDialog.close();

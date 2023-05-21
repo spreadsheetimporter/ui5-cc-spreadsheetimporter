@@ -61,7 +61,14 @@ export interface Messages {
 	rawValue?: any;
 	formattedValue?: string;
 	ui5type: MessageType;
-}
+	description?: string;
+  }
+  
+  export interface GroupedMessage {
+	title: string;
+	description?: string;
+	ui5type: MessageType;
+  }
 
 export type Payload = {
 	[key: string]: any;
