@@ -21,7 +21,7 @@ export default class Parser {
 						if (typeof rawValue === "boolean" || rawValue === "true" || rawValue === "false") {
 							payload[columnKey] = Boolean(rawValue);
 						} else {
-							this.addMessageToMessages("valueNotABoolean", util, messageHandler, index, [metadataColumn.label]);
+							this.addMessageToMessages("valueNotABoolean", util, messageHandler, index, [metadataColumn.label], rawValue);
 						}
 					} else if (metadataColumn.type === "Edm.Date") {
 						let date = rawValue
@@ -38,7 +38,7 @@ export default class Parser {
 							const dateString = `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`;
 							payload[columnKey] = dateString;
 						} catch (error) {
-							this.addMessageToMessages("errorWhileParsing", util, messageHandler, index, [metadataColumn.label]);
+							this.addMessageToMessages("errorWhileParsing", util, messageHandler, index, [metadataColumn.label], rawValue);
 						}
 					} else if (metadataColumn.type === "Edm.DateTimeOffset" || metadataColumn.type === "Edm.DateTime") {
 						let date = rawValue
@@ -54,7 +54,7 @@ export default class Parser {
 							this.checkDate(date, metadataColumn, util, messageHandler, index);
 							payload[columnKey] = date;
 						} catch (error) {
-							this.addMessageToMessages("errorWhileParsing", util, messageHandler, index, [metadataColumn.label]);
+							this.addMessageToMessages("errorWhileParsing", util, messageHandler, index, [metadataColumn.label],rawValue);
 						}
 					} else if (metadataColumn.type === "Edm.TimeOfDay" || metadataColumn.type === "Edm.Time") {
 						let date = rawValue
@@ -71,21 +71,21 @@ export default class Parser {
 							const excelDate = date.toISOString().substring(11, 16);
 							payload[columnKey] = excelDate;
 						} catch (error) {
-							this.addMessageToMessages("errorWhileParsing", util, messageHandler, index, [metadataColumn.label]);
+							this.addMessageToMessages("errorWhileParsing", util, messageHandler, index, [metadataColumn.label],rawValue);
 						}
 					} else if (metadataColumn.type === "Edm.UInt8" || metadataColumn.type === "Edm.Int16" || metadataColumn.type === "Edm.Int32" || metadataColumn.type === "Edm.Integer" || metadataColumn.type === "Edm.Int64" || metadataColumn.type === "Edm.Integer64") {
 						try {
 							const valueInteger = this.checkInteger(value, metadataColumn, util, messageHandler, index, component);
 							payload[columnKey] = valueInteger;
 						} catch (error) {
-							this.addMessageToMessages("errorWhileParsing", util, messageHandler, index, [metadataColumn.label]);
+							this.addMessageToMessages("errorWhileParsing", util, messageHandler, index, [metadataColumn.label],rawValue);
 						}
 					} else if (metadataColumn.type === "Edm.Double" || metadataColumn.type === "Edm.Decimal") {
 						try {
 							const valueDouble = this.checkDouble(value, metadataColumn, util, messageHandler, index, component);
 							payload[columnKey] = valueDouble;
 						} catch (error) {
-							this.addMessageToMessages("errorWhileParsing", util, messageHandler, index, [metadataColumn.label]);
+							this.addMessageToMessages("errorWhileParsing", util, messageHandler, index, [metadataColumn.label],rawValue);
 						}
 					} else {
 						payload[columnKey] = `${rawValue || ""}`;
@@ -100,7 +100,7 @@ export default class Parser {
 
 	static checkDate(value: any, metadataColumn: Property, util: Util, messageHandler: MessageHandler, index: number) {
 		if (isNaN(value.getTime())) {
-			this.addMessageToMessages("invalidDate", util, messageHandler, index, [metadataColumn.label]);
+			this.addMessageToMessages("invalidDate", util, messageHandler, index, [metadataColumn.label],value.rawValue);
 			return false;
 		}
 		return true;
