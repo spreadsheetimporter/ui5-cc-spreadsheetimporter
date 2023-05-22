@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.17.4](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.17.3...ui5-cc-excelupload-v0.17.4) (2023-05-22)
+
+
+### Bug Fixes
+
+* show raw value on parser error ([#227](https://github.com/marianfoo/ui5-cc-excelUpload/issues/227)) ([50142bf](https://github.com/marianfoo/ui5-cc-excelUpload/commit/50142bf61490bf1e302f7150e48157339ed553bc))
+
 ## [0.17.3](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.17.2...ui5-cc-excelupload-v0.17.3) (2023-05-20)
 
 
