@@ -41,13 +41,13 @@ export default class MetadataHandler {
 		} else {
 			for (const property of properties) {
 				let hiddenProperty = false;
+				const propertyName = property.name;
 				try {
 					hiddenProperty = property["com.sap.vocabularies.UI.v1.Hidden"].Bool === "true";
 				} catch (error) {
 					console.debug(`No hidden property on ${property.name}`);
 				}
-				if (!hiddenProperty) {
-					const propertyName = property.name;
+				if (!hiddenProperty && !propertyName.startsWith("SAP__")) {
 					listObject[propertyName] = {} as Property;
 					listObject[propertyName].label = this._getLabelV2(oDataEntityType, properties, property, propertyName, this._options);
 					listObject[propertyName].type = property["type"];
@@ -111,7 +111,7 @@ export default class MetadataHandler {
 			const propertiesFiltered = Object.entries(properties).filter(([propertyName, propertyValue]) => propertyValue["$kind"] === "Property");
 			for (const [propertyName, propertyValue] of propertiesFiltered) {
 				const propertyLabel = annotations[`${odataType}/${propertyName}`];
-				if (!propertyLabel["@com.sap.vocabularies.UI.v1.Hidden"]) {
+				if (!propertyLabel["@com.sap.vocabularies.UI.v1.Hidden"] && !propertyName.startsWith("SAP__")) {
 					listObject[propertyName] = {} as Property;
 					listObject[propertyName].label = this._getLabelV4(annotations, properties, propertyName, propertyLabel, this._options, odataType);
 					if (!listObject[propertyName].label) {
@@ -159,7 +159,7 @@ export default class MetadataHandler {
 				continue;
 			}
 			// skip messages property
-			if(propertyName === messagesPath?.$Path) {
+			if(propertyName === messagesPath?.$Path || propertyName.startsWith("SAP__") ) {
 				continue;
 			}
 			// if property is mandatory, field should be in excel file
@@ -194,6 +194,10 @@ export default class MetadataHandler {
 		for (const property of oDataEntityType.property) {
 			// if property is mandatory, field should be in excel file
 			const propertyName = property.name;
+			// skip sap property
+			if(propertyName.startsWith("SAP__") ) {
+				continue;
+			}
 			if (
 				property["com.sap.vocabularies.Common.v1.FieldControl"] &&
 				property["com.sap.vocabularies.Common.v1.FieldControl"]["EnumMember"] &&
