@@ -1,4 +1,4 @@
-<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:macros="sap.fe.macros" xmlns:excel="cc.excelUploadButton.v0_5_3" xmlns:html="http://www.w3.org/1999/xhtml" controllerName="ui.v4.ordersv4fpm.ext.main.Main">
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:macros="sap.fe.macros" xmlns:excel="cc.excelUploadButton.v0_5_4" xmlns:html="http://www.w3.org/1999/xhtml" controllerName="ui.v4.ordersv4fpm.ext.main.Main">
   <Page id="Main" title="Main">
     <Panel headerText="{i18n>pageSettings}">
       <Panel headerText="{i18n>tableEditFlow}">
