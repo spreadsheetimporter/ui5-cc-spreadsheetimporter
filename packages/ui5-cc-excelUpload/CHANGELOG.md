@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.17.5](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.17.4...ui5-cc-excelupload-v0.17.5) (2023-05-22)
+
+
+### Bug Fixes
+
+* add missing check on option "skip checks mandatory field" in v2 ([#229](https://github.com/marianfoo/ui5-cc-excelUpload/issues/229)) ([6c7f53b](https://github.com/marianfoo/ui5-cc-excelUpload/commit/6c7f53bdc72210f9f91a1322a6603846d1fc889e))
+* skip sap properties ([#228](https://github.com/marianfoo/ui5-cc-excelUpload/issues/228)) ([69bbe03](https://github.com/marianfoo/ui5-cc-excelUpload/commit/69bbe0355169dc129ef288524ee33f274bafa16a))
+
 ## [0.17.4](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.17.3...ui5-cc-excelupload-v0.17.4) (2023-05-22)
 
 
