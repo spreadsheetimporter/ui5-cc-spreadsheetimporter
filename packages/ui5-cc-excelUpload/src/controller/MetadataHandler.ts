@@ -171,7 +171,8 @@ export default class MetadataHandler {
 				keys.push(propertyName);
 			}
 			// if property nullable is false and hidden is false, field should be in excel file
-			if (!propertyLabel.type?.startsWith("Collection") && 
+			if (!this.excelUploadController.component.getSkipMandatoryFieldCheck() && 
+				!propertyLabel.type?.startsWith("Collection") && 
 				!propertyLabel["@com.sap.vocabularies.UI.v1.Hidden"] && 
 				propertyValue["$Nullable"] === false
 				) {
