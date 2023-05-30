@@ -80,7 +80,11 @@ export default class Parser {
 							if (isODataV4) {
 								payload[columnKey] = valueInteger;
 							} else {
-								payload[columnKey] = valueInteger.toString();
+								if(metadataColumn.type === "Edm.Int16" || metadataColumn.type === "Edm.Int32"){
+									payload[columnKey] = valueInteger;
+								} else {
+									payload[columnKey] = valueInteger.toString();
+								}
 							}
 						} catch (error) {
 							this.addMessageToMessages("errorWhileParsing", util, messageHandler, index, [metadataColumn.label],rawValue);
