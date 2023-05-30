@@ -83,7 +83,7 @@ export default class Parser {
 					} else if (metadataColumn.type === "Edm.Double" || metadataColumn.type === "Edm.Decimal") {
 						try {
 							const valueDouble = this.checkDouble(value, metadataColumn, util, messageHandler, index, component);
-							payload[columnKey] = valueDouble;
+							payload[columnKey] = valueDouble.toString();
 						} catch (error) {
 							this.addMessageToMessages("errorWhileParsing", util, messageHandler, index, [metadataColumn.label],rawValue);
 						}
