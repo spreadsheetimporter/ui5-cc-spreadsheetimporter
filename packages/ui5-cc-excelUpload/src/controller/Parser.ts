@@ -5,7 +5,7 @@ import MessageHandler from "./MessageHandler";
 import Util from "./Util";
 
 export default class Parser {
-	static parseExcelData(sheetData: ArrayData, typeLabelList: ListObject, component: Component, messageHandler: MessageHandler, util: Util) {
+	static parseExcelData(sheetData: ArrayData, typeLabelList: ListObject, component: Component, messageHandler: MessageHandler, util: Util, isODataV4: Boolean) {
 		const payloadArray:PayloadArray = [];
 		// loop over data from excel file
 		for (const [index, row] of sheetData.entries()) {
@@ -76,14 +76,24 @@ export default class Parser {
 					} else if (metadataColumn.type === "Edm.UInt8" || metadataColumn.type === "Edm.Int16" || metadataColumn.type === "Edm.Int32" || metadataColumn.type === "Edm.Integer" || metadataColumn.type === "Edm.Int64" || metadataColumn.type === "Edm.Integer64") {
 						try {
 							const valueInteger = this.checkInteger(value, metadataColumn, util, messageHandler, index, component);
-							payload[columnKey] = valueInteger;
+							// according to odata v2 spec, integer values are strings, v4 are numbers
+							if (isODataV4) {
+								payload[columnKey] = valueInteger;
+							} else {
+								payload[columnKey] = valueInteger.toString();
+							}
 						} catch (error) {
 							this.addMessageToMessages("errorWhileParsing", util, messageHandler, index, [metadataColumn.label],rawValue);
 						}
 					} else if (metadataColumn.type === "Edm.Double" || metadataColumn.type === "Edm.Decimal") {
 						try {
 							const valueDouble = this.checkDouble(value, metadataColumn, util, messageHandler, index, component);
-							payload[columnKey] = valueDouble.toString();
+							// according to odata v2 spec, integer values are strings, v4 are numbers
+							if (isODataV4) {
+								payload[columnKey] = valueDouble;
+							} else {
+								payload[columnKey] = valueDouble.toString();
+							}
 						} catch (error) {
 							this.addMessageToMessages("errorWhileParsing", util, messageHandler, index, [metadataColumn.label],rawValue);
 						}

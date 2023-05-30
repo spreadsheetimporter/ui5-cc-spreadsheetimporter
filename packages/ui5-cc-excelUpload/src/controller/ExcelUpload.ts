@@ -216,7 +216,7 @@ export default class ExcelUpload {
 			this.component.fireCheckBeforeRead({ sheetData: excelSheetsData });
 			if (!this.component.getStandalone()) {
 				this.payloadArray = [];
-				this.payloadArray = Parser.parseExcelData(this.payload, this.typeLabelList, this.component, this.messageHandler, this.util);
+				this.payloadArray = Parser.parseExcelData(this.payload, this.typeLabelList, this.component, this.messageHandler, this.util, this.isODataV4);
 			} else {
 				this.payloadArray = this.payload;
 			}
