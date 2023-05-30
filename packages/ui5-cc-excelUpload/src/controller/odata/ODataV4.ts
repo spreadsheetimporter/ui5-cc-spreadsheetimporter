@@ -1,16 +1,20 @@
+import Event from "sap/ui/base/Event";
 import { Columns } from "../../types";
 import OData from "./OData";
+import MetadataHandler from "../MetadataHandler";
+import ExcelUpload from "../ExcelUpload";
 
 export default class ODataV4 extends OData {
 	public createPromises: Promise<any>[] = [];
 	public createContexts: any[] = [];
+	customBinding: any;
 
-	constructor(ui5version: number) {
-		super(ui5version);
+	constructor(ui5version: number, metaDatahandler: MetadataHandler, excelUploadController: ExcelUpload) {
+		super(ui5version,metaDatahandler,excelUploadController);
 	}
 
 	create(model: any, binding: any, payload: any) {
-		const context = binding.create(payload);
+		const context = this.customBinding.create(payload);
 		return {
 			context: context,
 			promise: context.created(),
@@ -18,14 +22,35 @@ export default class ODataV4 extends OData {
 	}
 
 	createAsync(model: any, binding: any, payload: any) {
-		const returnObject = this.create(model, binding, payload);
+		const returnObject = this.create(model, this.customBinding, payload);
 		this.createContexts.push(returnObject.context);
 		this.createPromises.push(returnObject.promise);
 	}
 
-	async waitForCreation(model: any): Promise<any[]> {
-		await model.submitBatch(model.getUpdateGroupId());
-		return Promise.all(this.createPromises);
+	async submitChanges(model: any): Promise<any> {
+		return model.submitBatch("create");
+	}
+
+	async waitForCreation(): Promise<any> {
+		await Promise.all(this.createPromises);
+	}
+
+	async checkForErrors(model: any, binding: any): Promise<boolean> {
+		// if the binding has pending changes, a error occured
+		if(this.customBinding.hasPendingChanges()){
+			// delete all the created context
+            this.createContexts.forEach(async context => {
+              await context.delete("create");
+            });
+			// show messages from the Messages Manager Model
+            this.odataMessageHandler.displayMessages();
+			return true;
+        }
+		return false;
+	}
+
+	createCustomBinding(binding: any) {
+		this.customBinding = binding.getModel().bindList(binding.getPath(),null,[],[],{$$updateGroupId: "create"});
 	}
 
 	async waitForDraft(): Promise<any[]> {

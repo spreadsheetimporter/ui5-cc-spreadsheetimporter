@@ -1,19 +1,23 @@
 import DraftController from "sap/ui/generic/app/transaction/DraftController";
 import { Columns, ListObject } from "../../types";
 import MetadataHandler from "../MetadataHandler";
+import ODataMessageHandler from "../ODataMessageHandler";
+import ExcelUpload from "../ExcelUpload";
 
 export default abstract class OData {
 	UI5MinorVersion: number;
 	draftController: DraftController;
 	metaDatahandler: MetadataHandler;
+	odataMessageHandler: ODataMessageHandler;
 
-	constructor(ui5version: number, metaDatahandler: MetadataHandler) {
+	constructor(ui5version: number, metaDatahandler: MetadataHandler, excelUploadController: ExcelUpload) {
 		this.UI5MinorVersion = ui5version;
 		this.metaDatahandler = metaDatahandler;
+		this.odataMessageHandler = new ODataMessageHandler(excelUploadController);
 	}
 
 	public getBinding(tableObject: any): any {
-		if (tableObject.getMetadata().getName() === "sap.m.Table") {
+		if (tableObject.getMetadata().getName() === "sap.m.Table" || tableObject.getMetadata().getName() === "sap.m.List") {
 			return tableObject.getBinding("items");
 		}
 		if (tableObject.getMetadata().getName() === "sap.ui.table.Table") {
@@ -62,11 +66,14 @@ export default abstract class OData {
 
 	abstract create(model: any, binding: any, payload: any): any;
 	abstract createAsync(model: any, binding: any, payload: any): any;
-	abstract waitForCreation(model: any): void;
+	abstract submitChanges(model: any): Promise<any>;
+	abstract waitForCreation(): Promise<any>;
 	abstract waitForDraft(): void;
 	abstract resetContexts(): void;
 	abstract getView(context: any): any;
 	abstract createLabelList(columns: Columns, odataType: string, tableObject: any): Promise<ListObject>;
 	abstract getKeyList(odataType: string, tableObject: any): Promise<string[]>;
 	abstract getOdataType(binding: any, tableObject: any, odataType: any): string;
+	abstract checkForErrors(model: any, binding: any): Promise<boolean>;
+	abstract createCustomBinding(binding: any): any;
 }

@@ -72,7 +72,7 @@ export default class ExcelUpload {
 		this.isODataV4 = this._checkIfODataIsV4();
 		// check if "sap.ui.generic" is available, if false it is OpenUI5
 		this.isOpenUI5 = sap.ui.generic ? false : true;
-		this.odataHandler = this.getODataHandler(this.UI5MinorVersion);
+		this.odataHandler = this.getODataHandler(this.UI5MinorVersion, undefined, this);
 		this.initialSetupPromise = this.initialSetup();
 		this.previewHandler = new Preview(this.util);
 	}
@@ -140,6 +140,7 @@ export default class ExcelUpload {
 		this.typeLabelList = await this.odataHandler.createLabelList(this.component.getColumns(), odataType, this.tableObject);
 
 		this.model = this.tableObject.getModel();
+		this.odataHandler.createCustomBinding(this.binding)
 		try {
 			// Load the DraftController asynchronously using the loadDraftController function
 			const DraftController: sap.ui.generic.app.transaction.DraftController = await this._loadDraftController();
@@ -153,11 +154,11 @@ export default class ExcelUpload {
 	 * @param {number} version - UI5 version number.
 	 * @returns {OData} OData handler instance.
 	 */
-	getODataHandler(version: number): OData {
+	getODataHandler(version: number, metaDatahandler: MetadataHandler, excelUploadController: ExcelUpload): OData {
 		if (this.isODataV4) {
-			return new ODataV4(version);
+			return new ODataV4(version, metaDatahandler, excelUploadController);
 		} else {
-			return new ODataV2(version);
+			return new ODataV2(version,metaDatahandler, excelUploadController);
 		}
 	}
 
@@ -216,7 +217,7 @@ export default class ExcelUpload {
 			this.component.fireCheckBeforeRead({ sheetData: excelSheetsData });
 			if (!this.component.getStandalone()) {
 				this.payloadArray = [];
-				this.payloadArray = Parser.parseExcelData(this.payload, this.typeLabelList, this.component, this.messageHandler, this.util);
+				this.payloadArray = Parser.parseExcelData(this.payload, this.typeLabelList, this.component, this.messageHandler, this.util, this.isODataV4);
 			} else {
 				this.payloadArray = this.payload;
 			}
@@ -298,7 +299,6 @@ export default class ExcelUpload {
 					await fnAddMessage();
 				}
 			} catch (error) {
-				Util.showError(error, "ExcelUpload.ts", "onUploadSet");
 				this.resetContent();
 			}
 		}
@@ -332,10 +332,16 @@ export default class ExcelUpload {
 					this.odataHandler.createAsync(model, this.binding, this.payload);
 				}
 				// wait for all drafts to be created
-				await this.odataHandler.waitForCreation(model);
+				await this.odataHandler.submitChanges(model);
+				let errorsFound = await this.odataHandler.checkForErrors(model, this.binding);
+				if(errorsFound){
+					break;
+				} else {
+					await this.odataHandler.waitForCreation();
+				}
 
 				// check for and activate all drafts and wait for all draft to be created
-				if (this.component.getActivateDraft()) {
+				if (this.component.getActivateDraft() && !errorsFound) {
 					await this.odataHandler.waitForDraft();
 				}
 
