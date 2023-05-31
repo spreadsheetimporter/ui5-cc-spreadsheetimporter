@@ -4,11 +4,12 @@ import OData from "./OData";
 import MetadataHandler from "../MetadataHandler";
 import ExcelUpload from "../ExcelUpload";
 import Util from "../Util";
+import ODataListBinding from "sap/ui/model/odata/v4/ODataListBinding";
 
 export default class ODataV4 extends OData {
 	public createPromises: Promise<any>[] = [];
 	public createContexts: any[] = [];
-	customBinding: any;
+	customBinding: ODataListBinding;
 	updateGroupId: string;
 
 	constructor(ui5version: number, metaDatahandler: MetadataHandler, excelUploadController: ExcelUpload) {
@@ -17,7 +18,7 @@ export default class ODataV4 extends OData {
 	}
 
 	create(model: any, binding: any, payload: any) {
-		const context = this.customBinding.create(payload);
+		const context = this.customBinding.create(payload, true);
 		return {
 			context: context,
 			promise: context.created(),

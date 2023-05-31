@@ -19,7 +19,7 @@
     "@ui5/cli": "3.1.2"
   },
   "scripts": {
-    "start": "fiori run -p 8082 --open index.html?sap-ui-xx-viewCache=false&sap-language=EN",
+    "start": "fiori run -p 8082 --open index.html?sap-ui-xx-viewCache=false",
     "start:silent": "fiori run -p 8082",
     "start-local": "fiori run --config ./ui5-local.yaml --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#uiv2ordersv2freestyle-display\"",
     "build": "ui5 build --config=ui5.yaml --clean-dest --dest dist",

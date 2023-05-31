@@ -348,7 +348,13 @@ export default class ExcelUpload {
 				this.odataHandler.resetContexts();
 			}
 			try {
-				this.binding.refresh();
+				// try to refresh binding in all contexts, only one of them should work
+				// refresh binding in V4 FE context
+				this.context._controller?.getExtensionAPI()?.refresh(this.binding.getPath())
+				// refresh binding in V2 FE context
+				this.context.extensionAPI?.refresh(this.binding.getPath(this.tableObject.getId()));
+				// refresh binding in other contexts
+				this.binding.refresh(true);
 			} catch (error) {
 				Log.error(error);
 			}
