@@ -54,7 +54,14 @@ export default class ODataV4 extends OData {
 	}
 
 	createCustomBinding(binding: any) {
-		this.customBinding = binding.getModel().bindList(binding.getResolvedPath(),null,[],[],{$$updateGroupId: this.updateGroupId});
+		let path = binding.getPath();
+		if(binding.getResolvedPath){
+			path = binding.getResolvedPath();
+		} else {
+			// workaround for getResolvedPath only available from 1.88
+			path = binding.getModel().resolve(binding.getPath(),binding.getContext())
+		}
+		this.customBinding = binding.getModel().bindList(path,null,[],[],{$$updateGroupId: this.updateGroupId});
 	}
 
 	async waitForDraft(): Promise<any[]> {
