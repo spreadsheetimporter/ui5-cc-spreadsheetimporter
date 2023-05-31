@@ -347,17 +347,7 @@ export default class ExcelUpload {
 
 				this.odataHandler.resetContexts();
 			}
-			try {
-				// try to refresh binding in all contexts, only one of them should work
-				// refresh binding in V4 FE context
-				this.context._controller?.getExtensionAPI()?.refresh(this.binding.getPath())
-				// refresh binding in V2 FE context
-				this.context.extensionAPI?.refresh(this.binding.getPath(this.tableObject.getId()));
-				// refresh binding in other contexts
-				this.binding.refresh(true);
-			} catch (error) {
-				Log.error(error);
-			}
+			this.refreshBinding(this.context, this.binding, this.tableObject.getId());
 			fnResolve();
 		} catch (error) {
 			this.odataHandler.resetContexts();
@@ -413,6 +403,40 @@ export default class ExcelUpload {
 
 	_setPayload(payload) {
 		this.payload = payload;
+	}
+
+	refreshBinding(context: any, binding:any, id: any) {
+		if (context._controller?.getExtensionAPI()) {
+			// refresh binding in V4 FE context
+			try {
+				context._controller.getExtensionAPI().refresh(binding.getPath());
+			} catch (error) {
+				Log.error("Failed to refresh binding in V4 FE context: " + error);
+			}
+		} else if (context.extensionAPI) {
+			// refresh binding in V2 FE context
+			if(context.extensionAPI.refresh){
+				try {
+					context.extensionAPI.refresh(binding.getPath(id));
+				} catch (error) {
+					Log.error("Failed to refresh binding in Object Page V2 FE context: " + error);
+				}
+			}
+			if(context.extensionAPI.refreshTable){
+				try {
+					context.extensionAPI.refreshTable(id);
+				} catch (error) {
+					Log.error("Failed to refresh binding in List Report V2 FE context: " + error);
+				}
+			}
+		} else {
+			// refresh binding in other contexts
+			try {
+				binding.refresh(true);
+			} catch (error) {
+				Log.error("Failed to refresh binding in other contexts: " + error);
+			}
+		}
 	}
 
 	async buffer_RS(stream: ReadableStream) {
