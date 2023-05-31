@@ -3,14 +3,17 @@ import { Columns } from "../../types";
 import OData from "./OData";
 import MetadataHandler from "../MetadataHandler";
 import ExcelUpload from "../ExcelUpload";
+import Util from "../Util";
 
 export default class ODataV4 extends OData {
 	public createPromises: Promise<any>[] = [];
 	public createContexts: any[] = [];
 	customBinding: any;
+	updateGroupId: string;
 
 	constructor(ui5version: number, metaDatahandler: MetadataHandler, excelUploadController: ExcelUpload) {
 		super(ui5version,metaDatahandler,excelUploadController);
+		this.updateGroupId = Util.getRandomString(10)
 	}
 
 	create(model: any, binding: any, payload: any) {
@@ -28,7 +31,7 @@ export default class ODataV4 extends OData {
 	}
 
 	async submitChanges(model: any): Promise<any> {
-		return model.submitBatch("create");
+		return model.submitBatch(this.updateGroupId);
 	}
 
 	async waitForCreation(): Promise<any> {
@@ -40,7 +43,7 @@ export default class ODataV4 extends OData {
 		if(this.customBinding.hasPendingChanges()){
 			// delete all the created context
             this.createContexts.forEach(async context => {
-              await context.delete("create");
+              await context.delete(this.updateGroupId);
             });
 			// show messages from the Messages Manager Model
             this.odataMessageHandler.displayMessages();
@@ -50,7 +53,7 @@ export default class ODataV4 extends OData {
 	}
 
 	createCustomBinding(binding: any) {
-		this.customBinding = binding.getModel().bindList(binding.getPath(),null,[],[],{$$updateGroupId: "create"});
+		this.customBinding = binding.getModel().bindList(binding.getResolvedPath(),null,[],[],{$$updateGroupId: this.updateGroupId});
 	}
 
 	async waitForDraft(): Promise<any[]> {
