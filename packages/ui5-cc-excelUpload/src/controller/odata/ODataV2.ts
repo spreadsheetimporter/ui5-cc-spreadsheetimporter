@@ -1,12 +1,16 @@
+import Log from "sap/base/Log";
 import { Columns } from "../../types";
+import ExcelUpload from "../ExcelUpload";
+import MetadataHandler from "../MetadataHandler";
 import OData from "./OData";
 
 export default class ODataV2 extends OData {
 	public createPromises: Promise<any>[] = [];
 	public createContexts: any[] = [];
+	submitChangesResponse: any;
 
-	constructor(ui5version: number) {
-		super(ui5version);
+	constructor(ui5version: number, metaDatahandler: MetadataHandler, excelUploadController: ExcelUpload) {
+		super(ui5version, metaDatahandler, excelUploadController);
 	}
 	create(model: any, binding: any, payload: any) {
 		const submitChangesPromise = (binding, payload) => {
@@ -30,7 +34,23 @@ export default class ODataV2 extends OData {
 		this.createPromises.push(returnObject);
 	}
 
-	async waitForCreation(model: any) {
+	async checkForErrors(model: any, binding: any): Promise<boolean> {
+		// check if this.submitChangesResponse and this.submitChangesResponse.__batchResponses exist
+		if (this.submitChangesResponse && this.submitChangesResponse.__batchResponses) {
+			const firstResponse = this.submitChangesResponse.__batchResponses[0];
+			// check if firstResponse and firstResponse.response exist and that statusCode is >= 400
+			if (firstResponse && firstResponse.response && firstResponse.response.statusCode >= 400) {
+				// show messages from the Messages Manager Model
+				this.odataMessageHandler.displayMessages();
+				return true;
+			}
+		}
+		return false;
+	}
+
+	createCustomBinding(model: any) {}
+
+	async submitChanges(model: any) {
 		const submitChangesPromise = (model) => {
 			return new Promise((resolve, reject) => {
 				model.submitChanges({
@@ -45,12 +65,13 @@ export default class ODataV2 extends OData {
 		};
 
 		try {
-			const oData = await submitChangesPromise(model);
-			console.log(oData);
-			// handle success
+			this.submitChangesResponse = await submitChangesPromise(model);
 		} catch (oError) {
-			// handle error
+			Log.error(oError);
 		}
+	}
+
+	async waitForCreation() {
 		this.createContexts = await Promise.all(this.createPromises);
 	}
 

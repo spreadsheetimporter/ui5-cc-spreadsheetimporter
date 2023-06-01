@@ -1,4 +1,4 @@
-<mvc:View controllerName="ui.v2.ordersv2freestylenondraft.controller.List" xmlns="sap.m" xmlns:semantic="sap.f.semantic" xmlns:mvc="sap.ui.core.mvc">
+<mvc:View controllerName="ui.v2.ordersv2freestylenondraft.controller.List" xmlns="sap.m" xmlns:semantic="sap.f.semantic" xmlns:mvc="sap.ui.core.mvc" xmlns:excel="cc.excelUploadButton.v0_5_5">
   <semantic:SemanticPage id="listPage" preserveHeaderStateOnScroll="true" toggleHeaderOnTitleClick="false">
     <semantic:titleHeading>
       <Title id="listPageTitle" text="{listView>/title}" level="H2" />
@@ -6,6 +6,9 @@
     <semantic:addAction>
       <semantic:AddAction press="openExcelUpload" />
     </semantic:addAction>
+    <semantic:titleCustomTextActions>
+      <excel:ExcelUpload id="excelUploadButton" text="Excel Upload Button" tableId="container-todo---list--list" changeBeforeCreate="changeBeforeCreate" checkBeforeRead="checkBeforeRead" uploadButtonPress="uploadButtonPress"/>
+    </semantic:titleCustomTextActions>
     <semantic:content>
       <!-- For client side filtering add this to the items attribute: parameters: {operationMode: 'Client'}}" -->
       <List
