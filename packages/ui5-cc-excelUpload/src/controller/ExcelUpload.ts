@@ -415,27 +415,26 @@ export default class ExcelUpload {
 			}
 		} else if (context.extensionAPI) {
 			// refresh binding in V2 FE context
-			if(context.extensionAPI.refresh){
+			if (context.extensionAPI.refresh) {
 				try {
 					context.extensionAPI.refresh(binding.getPath(id));
 				} catch (error) {
 					Log.error("Failed to refresh binding in Object Page V2 FE context: " + error);
 				}
 			}
-			if(context.extensionAPI.refreshTable){
+			if (context.extensionAPI.refreshTable) {
 				try {
 					context.extensionAPI.refreshTable(id);
 				} catch (error) {
 					Log.error("Failed to refresh binding in List Report V2 FE context: " + error);
 				}
 			}
-		} else {
-			// refresh binding in other contexts
-			try {
-				binding.refresh(true);
-			} catch (error) {
-				Log.error("Failed to refresh binding in other contexts: " + error);
-			}
+		}
+		// try refresh binding either way
+		try {
+			binding.refresh(true);
+		} catch (error) {
+			Log.error("Failed to refresh binding in other contexts: " + error);
 		}
 	}
 
