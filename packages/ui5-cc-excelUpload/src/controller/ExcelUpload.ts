@@ -333,7 +333,7 @@ export default class ExcelUpload {
 				}
 				// wait for all drafts to be created
 				await this.odataHandler.submitChanges(model);
-				let errorsFound = await this.odataHandler.checkForErrors(model, this.binding);
+				let errorsFound = await this.odataHandler.checkForErrors(model, this.binding, this.component.getShowBackendErrorMessages());
 				if(errorsFound){
 					break;
 				} else {

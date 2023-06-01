@@ -74,6 +74,6 @@ export default abstract class OData {
 	abstract createLabelList(columns: Columns, odataType: string, tableObject: any): Promise<ListObject>;
 	abstract getKeyList(odataType: string, tableObject: any): Promise<string[]>;
 	abstract getOdataType(binding: any, tableObject: any, odataType: any): string;
-	abstract checkForErrors(model: any, binding: any): Promise<boolean>;
+	abstract checkForErrors(model: any, binding: any, showBackendErrorMessages: Boolean): Promise<boolean>;
 	abstract createCustomBinding(binding: any): any;
 }

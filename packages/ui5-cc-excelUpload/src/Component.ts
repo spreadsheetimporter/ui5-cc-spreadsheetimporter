@@ -34,6 +34,7 @@ export default class Component extends UIComponent {
 			decimalSeparator: { type: "string", defaultValue: "" },
 			hidePreview: { type: "boolean", defaultValue: false },
 			skipMandatoryFieldCheck: { type: "boolean", defaultValue: false },
+			showBackendErrorMessages: { type: "boolean", defaultValue: false },
 		},
 		aggregations: {
 			rootControl: {
@@ -96,6 +97,7 @@ export default class Component extends UIComponent {
 		this.setDecimalSeparator(oCompData.decimalSeparator);
 		this.setHidePreview(oCompData.hidePreview);
 		this.setSkipMandatoryFieldCheck(oCompData.skipMandatoryFieldCheck);
+		this.setShowBackendErrorMessages(oCompData.showBackendErrorMessages);
 
 		// // we could create a device model and use it
 		oModel = new JSONModel(Device);

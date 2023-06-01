@@ -39,7 +39,7 @@ export default class ODataV4 extends OData {
 		await Promise.all(this.createPromises);
 	}
 
-	async checkForErrors(model: any, binding: any): Promise<boolean> {
+	async checkForErrors(model: any, binding: any, showBackendErrorMessages: Boolean): Promise<boolean> {
 		// if the binding has pending changes, a error occured
 		if(this.customBinding.hasPendingChanges()){
 			// delete all the created context
@@ -47,7 +47,9 @@ export default class ODataV4 extends OData {
               await context.delete(this.updateGroupId);
             });
 			// show messages from the Messages Manager Model
-            this.odataMessageHandler.displayMessages();
+            if(showBackendErrorMessages){
+				this.odataMessageHandler.displayMessages();
+			}
 			return true;
         }
 		return false;

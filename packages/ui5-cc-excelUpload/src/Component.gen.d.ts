@@ -22,6 +22,7 @@ declare module "./Component" {
         decimalSeparator?: string | PropertyBindingInfo;
         hidePreview?: boolean | PropertyBindingInfo | `{${string}}`;
         skipMandatoryFieldCheck?: boolean | PropertyBindingInfo | `{${string}}`;
+        showBackendErrorMessages?: boolean | PropertyBindingInfo | `{${string}}`;
         checkBeforeRead?: (event: Event) => void;
         changeBeforeCreate?: (event: Event) => void;
         uploadButtonPress?: (event: Event) => void;
@@ -84,6 +85,10 @@ declare module "./Component" {
         // property: skipMandatoryFieldCheck
         getSkipMandatoryFieldCheck(): boolean;
         setSkipMandatoryFieldCheck(skipMandatoryFieldCheck: boolean): this;
+
+        // property: showBackendErrorMessages
+        getShowBackendErrorMessages(): boolean;
+        setShowBackendErrorMessages(showBackendErrorMessages: boolean): this;
 
         // event: checkBeforeRead
         attachCheckBeforeRead(fn: (event: Event) => void, listener?: object): this;

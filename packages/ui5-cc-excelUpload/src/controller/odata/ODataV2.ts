@@ -34,14 +34,16 @@ export default class ODataV2 extends OData {
 		this.createPromises.push(returnObject);
 	}
 
-	async checkForErrors(model: any, binding: any): Promise<boolean> {
+	async checkForErrors(model: any, binding: any, showBackendErrorMessages: Boolean): Promise<boolean> {
 		// check if this.submitChangesResponse and this.submitChangesResponse.__batchResponses exist
 		if (this.submitChangesResponse && this.submitChangesResponse.__batchResponses) {
 			const firstResponse = this.submitChangesResponse.__batchResponses[0];
 			// check if firstResponse and firstResponse.response exist and that statusCode is >= 400
 			if (firstResponse && firstResponse.response && firstResponse.response.statusCode >= 400) {
 				// show messages from the Messages Manager Model
-				this.odataMessageHandler.displayMessages();
+				if(showBackendErrorMessages){
+					this.odataMessageHandler.displayMessages();
+				}
 				return true;
 			}
 		}

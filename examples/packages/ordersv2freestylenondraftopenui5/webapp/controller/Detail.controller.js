@@ -181,7 +181,8 @@ sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel", "../model/form
 						context: this,
 						columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time", "boolean", "decimal"],
 						mandatoryFields: ["product_ID", "quantity"],
-						excelFileName: "Test.xlsx"
+						excelFileName: "Test.xlsx",
+						showBackendErrorMessages: true
 					}
 				});
 
