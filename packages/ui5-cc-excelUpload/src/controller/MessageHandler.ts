@@ -1,5 +1,5 @@
 import Dialog from "sap/m/Dialog";
-import { Messages, MessageTypes, ListObject, ArrayData, PayloadArray } from "../types";
+import { Messages, CustomMessageTypes, ListObject, ArrayData, PayloadArray, FieldMatchType, GroupedMessage } from "../types";
 import ExcelUpload from "./ExcelUpload";
 import Util from "./Util";
 import Fragment from "sap/ui/core/Fragment";
@@ -53,10 +53,10 @@ export default class MessageHandler {
 			}
 
 			for (const [index, row] of data.entries()) {
-				const value = Util.getValueFromRow(row, fieldLabel, mandatoryField, this.excelUploadController.component.getFieldMatchType());
+				const value = Util.getValueFromRow(row, fieldLabel, mandatoryField, this.excelUploadController.component.getFieldMatchType() as FieldMatchType);
 				const errorMessage = {
 					title: this.excelUploadController.util.geti18nText("mandatoryFieldNotFilled", [fieldLabel]),
-					type: MessageTypes.MandatoryFieldNotFilled,
+					type: CustomMessageTypes.MandatoryFieldNotFilled,
 					row: index + 2,
 					counter: 1,
 					ui5type: MessageType.Error
@@ -75,7 +75,7 @@ export default class MessageHandler {
 				if (sheetDataType === 'n' && format !== 'General' && rawValue !== Number(formattedValue)) {
 					const warningMessage = {
 						title: "Format",
-						type: MessageTypes.Formatting,
+						type: CustomMessageTypes.Formatting,
 						row: index + 2,
 						counter: 1,
 						ui5type: MessageType.Warning,
@@ -111,7 +111,7 @@ export default class MessageHandler {
 			if (!found) {
 				const errorMessage = {
 					title: this.excelUploadController.util.geti18nText("columnNotFound", [columnName]),
-					type: MessageTypes.ColumnNotFound,
+					type: CustomMessageTypes.ColumnNotFound,
 					counter: 1,
 					ui5type: MessageType.Error
 				} as Messages;
@@ -136,7 +136,7 @@ export default class MessageHandler {
 				const columnNameLabel = typeLabelList[columnName]?.label ? typeLabelList[columnName].label : columnName;
 				const errorMessage: Messages = {
 					title: this.excelUploadController.util.geti18nText("keyColumnNotFound", [columnNameLabel]),
-					type: MessageTypes.ColumnNotFound,
+					type: CustomMessageTypes.ColumnNotFound,
 					counter: 1,
 					ui5type: MessageType.Error,
 				};
@@ -178,38 +178,40 @@ export default class MessageHandler {
 		this.messageDialog.open();
 	}
 
-	groupMessages(messages: Messages[]): Messages[] {
+	groupMessages(messages: Messages[]): (GroupedMessage)[] {
 		const counterLargerThanOne = messages.filter((message) => message.counter !== 0);
 		const parsingMessages = counterLargerThanOne.filter((message) => message.type.group === true);
-		const messageGroups = parsingMessages.reduce((groups, message) => {
-			let messageText = "";
-			if (!groups[message.title]) {
-				groups[message.title] = [];
-			}
-			if (message.rawValue && message.formattedValue) {
-				messageText = this.excelUploadController.util.geti18nText("errorInRowWithValueFormatted", [message.row, message.formattedValue, message.rawValue]);
-			} else if (message.rawValue) {
-				messageText = this.excelUploadController.util.geti18nText("errorInRowWithValue", [message.row, message.rawValue]);
-			} else {
-				messageText = this.excelUploadController.util.geti18nText("errorInRow", [message.row]);
-			}
-			groups[message.title].push(messageText);
-			return groups;
+		
+		const messageGroups = parsingMessages.reduce<{[key: string]: string[]}>((groups, message) => {
+		  let messageText = "";
+		  if (!groups[message.title]) {
+			groups[message.title] = [];
+		  }
+		  if (message.rawValue && message.formattedValue) {
+			messageText = this.excelUploadController.util.geti18nText("errorInRowWithValueFormatted", [message.row, message.formattedValue, message.rawValue]);
+		  } else if (message.rawValue) {
+			messageText = this.excelUploadController.util.geti18nText("errorInRowWithValue", [message.row, message.rawValue]);
+		  } else {
+			messageText = this.excelUploadController.util.geti18nText("errorInRow", [message.row]);
+		  }
+		  groups[message.title].push(messageText);
+		  return groups;
 		}, {});
-
-		const groupedMessages = [];
+	  
+		const groupedMessages: GroupedMessage[] = [];
 		for (const title in messageGroups) {
-			const ui5type = messages.find(message => message.title === title)?.ui5type || "";
-			groupedMessages.push({
-				title: title,
-				description: messageGroups[title].join("\n"),
-				ui5type: ui5type
-			});
+		  const ui5type = messages.find(message => message.title === title)?.ui5type || "" as MessageType;
+		  groupedMessages.push({
+			title: title,
+			description: messageGroups[title].join("\n"),
+			ui5type: ui5type
+		  });
 		}
+	  
 		const allMessages = groupedMessages.concat(counterLargerThanOne.filter((message) => message.type.group === false));
-
+	  
 		return allMessages;
-	}
+	  }
 
 	private onCloseMessageDialog() {
 		this.messageDialog.close();
@@ -222,7 +224,7 @@ export default class MessageHandler {
 		this.excelUploadController.setDataRows();
 	}
 
-	private sortMessagesByTitle(messages: Messages[]) {
+	private sortMessagesByTitle(messages: GroupedMessage[]) {
 		return messages.sort((a, b) => {
 			if (a.title < b.title) {
 				return -1;
@@ -234,7 +236,7 @@ export default class MessageHandler {
 		});
 	}
 
-	private getWorstType(messages: Messages[]): ValueState {
+	private getWorstType(messages: GroupedMessage[]): ValueState {
 		let worstType = MessageType.None;
 	
 		// Map MessageType to severity levels

@@ -29,7 +29,7 @@ export default class MetadataHandler {
 				const property = properties.find((property: any) => property.name === propertyName);
 				if (property) {
 					listObject[propertyName] = {} as Property;
-					listObject[propertyName].label = this._getLabelV2(oDataEntityType, properties, property, propertyName, this._options);
+					listObject[propertyName].label = this._getLabelV2(oDataEntityType, properties, property, propertyName);
 					if (!listObject[propertyName].label) {
 						listObject[propertyName].label = propertyName;
 					}
@@ -49,7 +49,7 @@ export default class MetadataHandler {
 				}
 				if (!hiddenProperty && !propertyName.startsWith("SAP__")) {
 					listObject[propertyName] = {} as Property;
-					listObject[propertyName].label = this._getLabelV2(oDataEntityType, properties, property, propertyName, this._options);
+					listObject[propertyName].label = this._getLabelV2(oDataEntityType, properties, property, propertyName);
 					listObject[propertyName].type = property["type"];
 				}
 			}
@@ -58,7 +58,7 @@ export default class MetadataHandler {
 		return listObject;
 	}
 
-	_getLabelV2(oDataEntityType: { [x: string]: any }, properties: any, property: { [x: string]: any }, propertyName: string, options: any) {
+	_getLabelV2(oDataEntityType: { [x: string]: any }, properties: any, property: { [x: string]: any }, propertyName: string) {
 		if (property["sap:label"]) {
 			return property["sap:label"];
 		}
@@ -98,7 +98,7 @@ export default class MetadataHandler {
 				if (property) {
 					const propertyLabel = annotations[`${odataType}/${propertyName}`];
 					listObject[propertyName] = {} as Property;
-					listObject[propertyName].label = this._getLabelV4(annotations, properties, propertyName, propertyLabel, this._options, odataType);
+					listObject[propertyName].label = this._getLabelV4(annotations, properties, propertyName, propertyLabel, odataType);
 					if (!listObject[propertyName].label) {
 						listObject[propertyName].label = propertyName;
 					}
@@ -113,7 +113,7 @@ export default class MetadataHandler {
 				const propertyLabel = annotations[`${odataType}/${propertyName}`];
 				if (!propertyLabel["@com.sap.vocabularies.UI.v1.Hidden"] && !propertyName.startsWith("SAP__")) {
 					listObject[propertyName] = {} as Property;
-					listObject[propertyName].label = this._getLabelV4(annotations, properties, propertyName, propertyLabel, this._options, odataType);
+					listObject[propertyName].label = this._getLabelV4(annotations, properties, propertyName, propertyLabel, odataType);
 					if (!listObject[propertyName].label) {
 						listObject[propertyName].label = propertyName;
 					}
@@ -125,7 +125,7 @@ export default class MetadataHandler {
 		return listObject;
 	}
 
-	_getLabelV4(annotations: { [x: string]: { [x: string]: any } }, properties: any, propertyName: string, propertyLabel: { [x: string]: any }, options: any, odataType: string) {
+	_getLabelV4(annotations: { [x: string]: { [x: string]: any } }, properties: any, propertyName: string, propertyLabel: { [x: string]: any }, odataType: string) {
 		if (propertyLabel && propertyLabel["@com.sap.vocabularies.Common.v1.Label"]) {
 			return propertyLabel["@com.sap.vocabularies.Common.v1.Label"];
 		}
