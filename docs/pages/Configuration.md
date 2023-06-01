@@ -16,8 +16,9 @@ These options are available and explained in detail below:
 | `standalone` | Mode if you do not have a table and want to do the processing yourself  | boolean |
 | `strict` | The strict option controls the availability of the `Continue` button in the error dialog.  | boolean |
 | `decimalSeparator` | Determines the decimal separator for numbers as string.  | string |
-| `hidePreview` | Hide the button to preview the uploaded data in the table dialog.  | string |
-| `skipMandatoryFieldCheck` | Skip check if fields with `Nullable=false` are filled in excel file. | string |
+| `hidePreview` | Hide the button to preview the uploaded data in the table dialog.  | boolean |
+| `skipMandatoryFieldCheck` | Skip check if fields with `Nullable=false` are filled in excel file. | boolean |
+| `showBackendErrorMessages` | Show Backend Error Messages | boolean |
 
 ### `columns`
 
@@ -163,3 +164,11 @@ This option defines whether the button to preview the uploaded data in the table
 
 This options defines wether mandatory fields defined in the metadata should be checked or not.  
 Only the option `mandatoryFields` will be checked.
+
+### `showBackendErrorMessages`
+
+**default:** `false`
+
+This option defines whether backend error messages should be displayed or not.  
+In Fiori Elements scenarios, the error messages are displayed automatically. In FreeStyle scenarios, the error messages are not displayed automatically.  
+If this option is set to `false`, only the error message `Error while uploading data` will be displayed.

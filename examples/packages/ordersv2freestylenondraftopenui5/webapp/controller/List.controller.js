@@ -70,7 +70,8 @@ sap.ui.define(
 							componentData: {
 								context: this,
 								activateDraft: true,
-								tableId: "application-uiv2ordersv2freestyle-display-component---list--list"
+								tableId: "application-uiv2ordersv2freestyle-display-component---list--list",
+								showBackendErrorMessages: true
 							}
 						});
 
