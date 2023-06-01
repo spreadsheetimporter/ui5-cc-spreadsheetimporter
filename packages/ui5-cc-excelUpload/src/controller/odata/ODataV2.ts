@@ -10,7 +10,7 @@ export default class ODataV2 extends OData {
 	submitChangesResponse: any;
 
 	constructor(ui5version: number, metaDatahandler: MetadataHandler, excelUploadController: ExcelUpload) {
-		super(ui5version,metaDatahandler,excelUploadController);
+		super(ui5version, metaDatahandler, excelUploadController);
 	}
 	create(model: any, binding: any, payload: any) {
 		const submitChangesPromise = (binding, payload) => {
@@ -35,17 +35,20 @@ export default class ODataV2 extends OData {
 	}
 
 	async checkForErrors(model: any, binding: any): Promise<boolean> {
-		if(this.submitChangesResponse.__batchResponses[0]?.response?.statusCode >= 400){
-			// show messages from the Messages Manager Model
-            this.odataMessageHandler.displayMessages();
-			return true;
+		// check if this.submitChangesResponse and this.submitChangesResponse.__batchResponses exist
+		if (this.submitChangesResponse && this.submitChangesResponse.__batchResponses) {
+			const firstResponse = this.submitChangesResponse.__batchResponses[0];
+			// check if firstResponse and firstResponse.response exist and that statusCode is >= 400
+			if (firstResponse && firstResponse.response && firstResponse.response.statusCode >= 400) {
+				// show messages from the Messages Manager Model
+				this.odataMessageHandler.displayMessages();
+				return true;
+			}
 		}
 		return false;
-		
 	}
-	createCustomBinding(model: any) {
-		
-	}
+
+	createCustomBinding(model: any) {}
 
 	async submitChanges(model: any) {
 		const submitChangesPromise = (model) => {
