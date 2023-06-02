@@ -95,6 +95,7 @@ export default class ExcelUpload {
 				type: "XML",
 				controller: this,
 			})) as ExcelDialog;
+			this.dialog.setBusyIndicatorDelay(0);
 			this.dialog.setModel(this.componentI18n, "i18n");
 			this.dialog.setModel(infoModel, "info");
 			this.dialog.setModel(this.component.getModel("device"), "device");
