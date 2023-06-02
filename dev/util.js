@@ -62,6 +62,7 @@ function replaceVersionInExamples(versionSlash, version, ui5Apps, versionButton,
 		fs.writeFileSync(path, manifestData, "utf8");
 		if (app.startsWith("ordersv2freestylenondraft")) {
 			replaceVersionInXML(rootPath,"webapp/view/Detail.view.xml", versionUnderscoreButton);
+			replaceVersionInXML(rootPath,"webapp/view/List.view.xml", versionUnderscoreButton);
 		}
 		if (app === "ordersv2freestylenondraft") {
 			replaceVersionInXML(rootPath,"webapp/view/UploadToTable.view.xml", versionUnderscoreButton);
