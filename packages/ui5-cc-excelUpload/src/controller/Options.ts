@@ -11,6 +11,7 @@ export default class Options {
 	}
 
     async openOptionsDialog() {
+		this.excelUploadController.dialog.setBusy(true)
 		const optionsModel = new JSONModel({
 			strict: this.excelUploadController.component.getStrict(),
 			fieldMatchType: this.excelUploadController.component.getFieldMatchType(),
@@ -26,6 +27,7 @@ export default class Options {
 		}
 		this.optionsDialog.setModel(optionsModel, "options");
 		this.optionsDialog.open();
+		this.excelUploadController.dialog.setBusy(false)
 	}
 
 
