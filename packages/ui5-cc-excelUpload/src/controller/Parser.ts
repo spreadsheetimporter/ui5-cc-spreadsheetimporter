@@ -78,8 +78,14 @@ export default class Parser {
 							const valueInteger = this.checkInteger(value, metadataColumn, util, messageHandler, index, component);
 							// according to odata v2 spec, integer values are strings, v4 are numbers
 							if (isODataV4) {
-								payload[columnKey] = valueInteger;
+								// int64 are always strings
+								if(metadataColumn.type === "Edm.Int64" || metadataColumn.type === "Edm.Integer64"){
+									payload[columnKey] = valueInteger.toString();
+								} else {
+									payload[columnKey] = valueInteger;
+								}
 							} else {
+								// for OData V2
 								if(metadataColumn.type === "Edm.Int16" || metadataColumn.type === "Edm.Int32"){
 									payload[columnKey] = valueInteger;
 								} else {
@@ -94,8 +100,14 @@ export default class Parser {
 							const valueDouble = this.checkDouble(value, metadataColumn, util, messageHandler, index, component);
 							// according to odata v2 spec, integer values are strings, v4 are numbers
 							if (isODataV4) {
-								payload[columnKey] = valueDouble;
+								if(metadataColumn.type === "Edm.Double"){
+									payload[columnKey] = valueDouble;
+								}
+								if(metadataColumn.type === "Edm.Decimal"){
+									payload[columnKey] = valueDouble.toString();
+								}
 							} else {
+								// for OData V2
 								payload[columnKey] = valueDouble.toString();
 							}
 						} catch (error) {
