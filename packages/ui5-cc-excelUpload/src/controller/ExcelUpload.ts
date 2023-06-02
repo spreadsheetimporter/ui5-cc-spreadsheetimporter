@@ -86,7 +86,8 @@ export default class ExcelUpload {
 		const infoModel = new JSONModel({
 			dataRows: 0,
 			strict: this.component.getStrict(),
-			hidePreview: this.component.getHidePreview()
+			hidePreview: this.component.getHidePreview(),
+			showOptions: this.component.getShowOptions(),
 		});
 		if (!this.dialog) {
 			this.dialog = (await Fragment.load({

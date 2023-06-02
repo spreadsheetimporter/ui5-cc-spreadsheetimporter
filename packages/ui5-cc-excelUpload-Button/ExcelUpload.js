@@ -35,7 +35,8 @@ sap.ui.define(["sap/m/Button"], (Button) => {
 				decimalSeparator: { type: "string" },
 				hidePreview: { type: "boolean", defaultValue: false },
 				skipMandatoryFieldCheck: { type: "boolean", defaultValue: false },
-				showBackendErrorMessages: { type: "boolean", defaultValue: true }
+				showBackendErrorMessages: { type: "boolean", defaultValue: true },
+				showOptions: { type: "boolean", defaultValue: false },
 			},
 			events: {
 				checkBeforeRead: {
@@ -83,7 +84,8 @@ sap.ui.define(["sap/m/Button"], (Button) => {
 						decimalSeparator: oControl.getDecimalSeparator(),
 						hidePreview: oControl.getHidePreview(),
 						skipMandatoryFieldCheck: oControl.getSkipMandatoryFieldCheck(),
-						showBackendErrorMessages: oControl.getShowBackendErrorMessages()
+						showBackendErrorMessages: oControl.getShowBackendErrorMessages(),
+						showOptions: oControl.getShowOptions()
 					}
 				})
 			} else {
@@ -105,7 +107,8 @@ sap.ui.define(["sap/m/Button"], (Button) => {
 						decimalSeparator: oControl.getDecimalSeparator(),
 						hidePreview: oControl.getHidePreview(),
 						skipMandatoryFieldCheck: oControl.getSkipMandatoryFieldCheck(),
-						showBackendErrorMessages: oControl.getShowBackendErrorMessages()
+						showBackendErrorMessages: oControl.getShowBackendErrorMessages(),
+						showOptions: oControl.getShowOptions()
 					}
 				})
 			}

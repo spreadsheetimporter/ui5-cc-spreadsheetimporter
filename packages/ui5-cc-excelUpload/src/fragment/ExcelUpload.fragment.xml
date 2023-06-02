@@ -9,7 +9,7 @@
         <ToolbarSpacer/>
         <Button press="showPreview" text="{i18n>showPreview}" icon="sap-icon://display" visible="{= !${info>/hidePreview}}"/>
         <Button press="onTempDownload" text="{i18n>downloadTemplate}" icon="sap-icon://download-from-cloud" />
-        <Button press="onOpenOptionsDialog" text="{i18n>showOptionMenu}">
+        <Button press="onOpenOptionsDialog" text="{i18n>showOptionMenu}" visible="{= ${info>/showOptions}}">
           <layoutData>
             <OverflowToolbarLayoutData priority="AlwaysOverflow"/>
           </layoutData>
