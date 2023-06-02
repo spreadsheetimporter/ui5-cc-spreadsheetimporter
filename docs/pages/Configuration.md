@@ -19,6 +19,7 @@ These options are available and explained in detail below:
 | `hidePreview` | Hide the button to preview the uploaded data in the table dialog.  | boolean |
 | `skipMandatoryFieldCheck` | Skip check if fields with `Nullable=false` are filled in excel file. | boolean |
 | `showBackendErrorMessages` | Show Backend Error Messages | boolean |
+| `showOptions` | Show Options Menu to change a few of these configurations in runtime. | boolean |
 
 ### `columns`
 
@@ -172,3 +173,12 @@ Only the option `mandatoryFields` will be checked.
 This option defines whether backend error messages should be displayed or not.  
 In Fiori Elements scenarios, the error messages are displayed automatically. In FreeStyle scenarios, the error messages are not displayed automatically.  
 If this option is set to `false`, only the error message `Error while uploading data` will be displayed.
+
+### `showOptions`
+
+**default:** `false`
+
+This option defines whether the button to show the options dialog should be displayed or not.  
+Currently, the menu is more for the development process.
+Later, this should also be able to be used by the user.  
+There are also only a few selected configurations available.

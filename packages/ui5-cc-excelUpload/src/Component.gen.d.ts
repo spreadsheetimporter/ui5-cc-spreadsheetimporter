@@ -23,6 +23,7 @@ declare module "./Component" {
         hidePreview?: boolean | PropertyBindingInfo | `{${string}}`;
         skipMandatoryFieldCheck?: boolean | PropertyBindingInfo | `{${string}}`;
         showBackendErrorMessages?: boolean | PropertyBindingInfo | `{${string}}`;
+        showOptions?: boolean | PropertyBindingInfo | `{${string}}`;
         checkBeforeRead?: (event: Event) => void;
         changeBeforeCreate?: (event: Event) => void;
         uploadButtonPress?: (event: Event) => void;
@@ -89,6 +90,10 @@ declare module "./Component" {
         // property: showBackendErrorMessages
         getShowBackendErrorMessages(): boolean;
         setShowBackendErrorMessages(showBackendErrorMessages: boolean): this;
+
+        // property: showOptions
+        getShowOptions(): boolean;
+        setShowOptions(showOptions: boolean): this;
 
         // event: checkBeforeRead
         attachCheckBeforeRead(fn: (event: Event) => void, listener?: object): this;
