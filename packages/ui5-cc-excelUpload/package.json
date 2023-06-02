@@ -1,6 +1,6 @@
 {
   "name": "ui5-cc-excelupload",
-  "version": "0.17.5",
+  "version": "0.18.0",
   "description": "A UI5 Module to integrate a Excel Upload for Fiori Element Apps.",
   "main": "Component.js",
   "keywords": [

@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.18.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.17.5...ui5-cc-excelupload-v0.18.0) (2023-06-02)
+
+
+### Features
+
+* add new option to show backend error message ([#236](https://github.com/marianfoo/ui5-cc-excelUpload/issues/236)) ([f2a38dd](https://github.com/marianfoo/ui5-cc-excelUpload/commit/f2a38dd412cf341c3848b1e422a5c3fce3ceb258))
+* show options menu for some configurations ([#241](https://github.com/marianfoo/ui5-cc-excelUpload/issues/241)) ([8bfae76](https://github.com/marianfoo/ui5-cc-excelUpload/commit/8bfae768d9971888a3b0519f86b8fe36cf013ee4))
+
+
+### Bug Fixes
+
+* different format in float and integer for v4 ([#240](https://github.com/marianfoo/ui5-cc-excelUpload/issues/240)) ([23b1b9a](https://github.com/marianfoo/ui5-cc-excelUpload/commit/23b1b9acca8ee9ce0dc4d90067d716d29799f4cf))
+* improve handling of backend errors ([#213](https://github.com/marianfoo/ui5-cc-excelUpload/issues/213)) ([5d06db6](https://github.com/marianfoo/ui5-cc-excelUpload/commit/5d06db6e7183bb3dcf6b71cac3a11fc779bcd2b0))
+* send double as string value ([#234](https://github.com/marianfoo/ui5-cc-excelUpload/issues/234)) ([799a3ef](https://github.com/marianfoo/ui5-cc-excelUpload/commit/799a3ef4c42da2cbeb3db3eb752ba80f49032aef))
+* use busy indicator on opening options menu ([#242](https://github.com/marianfoo/ui5-cc-excelUpload/issues/242)) ([0151700](https://github.com/marianfoo/ui5-cc-excelUpload/commit/0151700de0f6e85260b903f59283046de787cee1))
+
 ## [0.17.5](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.17.4...ui5-cc-excelupload-v0.17.5) (2023-05-22)
 
 
