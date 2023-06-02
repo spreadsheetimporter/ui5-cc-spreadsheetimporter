@@ -30,11 +30,11 @@ See below the configurations for this version:
 ```json
 "componentUsages": {
     "excelUpload": {
-        "name": "cc.excelUpload.v0_17_5"
+        "name": "cc.excelUpload.v0_18_0"
     }
 },
 "resourceRoots": {
-      "cc.excelUpload.v0_17_5": "./thirdparty/customControl/excelUpload/v0_17_5"
+      "cc.excelUpload.v0_18_0": "./thirdparty/customControl/excelUpload/v0_18_0"
     },
 ```
 

@@ -60,6 +60,26 @@
   * dependencies
     * ui5-cc-excelupload bumped from 0.17.4 to 0.17.5
 
+## [0.6.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-button-v0.5.5...ui5-cc-excelupload-button-v0.6.0) (2023-06-02)
+
+
+### Features
+
+* add new option to show backend error message ([#236](https://github.com/marianfoo/ui5-cc-excelUpload/issues/236)) ([f2a38dd](https://github.com/marianfoo/ui5-cc-excelUpload/commit/f2a38dd412cf341c3848b1e422a5c3fce3ceb258))
+* show options menu for some configurations ([#241](https://github.com/marianfoo/ui5-cc-excelUpload/issues/241)) ([8bfae76](https://github.com/marianfoo/ui5-cc-excelUpload/commit/8bfae768d9971888a3b0519f86b8fe36cf013ee4))
+
+
+### Bug Fixes
+
+* set default text for button ([#243](https://github.com/marianfoo/ui5-cc-excelUpload/issues/243)) ([5a314c0](https://github.com/marianfoo/ui5-cc-excelUpload/commit/5a314c09d98659c637bebf6995fb46642866cb1d))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * ui5-cc-excelupload bumped from 0.17.5 to 0.18.0
+
 ## [0.5.2](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-button-v0.5.1...ui5-cc-excelupload-button-v0.5.2) (2023-05-20)
 
 

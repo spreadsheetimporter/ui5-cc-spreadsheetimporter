@@ -1,6 +1,6 @@
 {
   "name": "ui5-cc-excelupload-button",
-  "version": "0.5.5",
+  "version": "0.6.0",
   "description": "A UI5 Button to integrate a Excel Upload for Fiori Element Apps.",
   "main": "ExcelUpload.js",
   "scripts": {
@@ -24,7 +24,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "ui5-cc-excelupload": "0.17.5"
+    "ui5-cc-excelupload": "0.18.0"
   },
   "devDependencies": {
     "eslint": "^8.40.0",
