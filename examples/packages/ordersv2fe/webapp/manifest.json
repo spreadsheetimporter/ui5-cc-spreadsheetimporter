@@ -20,9 +20,7 @@
         "uri": "/v2/orders/",
         "type": "OData",
         "settings": {
-          "annotations": [
-            "annotation"
-          ],
+          "annotations": ["annotation"],
           "localUri": "localService/metadata.xml",
           "odataVersion": "2.0"
         }
@@ -126,6 +124,20 @@
                       "text": "Excel Upload",
                       "applicablePath": "ui>/editable",
                       "press": "openExcelUploadDialog",
+                      "requiresSelection": false
+                    }
+                  }
+                }
+              },
+              "OrderItems": {
+                "EntitySet": "OrderItems",
+                "Header": {
+                  "Actions": {
+                    "test": {
+                      "id": "excelUploadButton",
+                      "text": "Excel Upload",
+                      "applicablePath": "ui>/editable",
+                      "press": "openExcelUploadDialogInfo",
                       "requiresSelection": false
                     }
                   }

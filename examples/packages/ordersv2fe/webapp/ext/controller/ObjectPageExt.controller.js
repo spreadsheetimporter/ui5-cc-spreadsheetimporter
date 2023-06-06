@@ -59,6 +59,27 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
 			}
 			this.excelUpload.openExcelUploadDialog();
 			this.getView().setBusy(false);
-		}
-	};
+		},
+        openExcelUploadDialogInfo: async function(oEvent) {
+			this.getView().setBusyIndicatorDelay(0);
+			// this.getView().setBusy(true)
+			if (!this.excelUpload) {
+				this.excelUpload = await this.getView()
+					.getController()
+					.getOwnerComponent()
+					.createComponent({
+						usage: "excelUpload",
+						async: true,
+						componentData: {
+							context: this,
+							excelFileName: "Test.xlsx",
+							hidePreview: false,
+						}
+					});
+
+			}
+			this.excelUpload.openExcelUploadDialog();
+			this.getView().setBusy(false);
+        }
+    };
 });
