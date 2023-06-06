@@ -26,8 +26,8 @@ body:
       label: Draft
       description: Are you using draft?
       options:
-        - Yes
-        - No
+        - 'Yes'
+        - 'No'
         - not relevant
     validations:
       required: true
