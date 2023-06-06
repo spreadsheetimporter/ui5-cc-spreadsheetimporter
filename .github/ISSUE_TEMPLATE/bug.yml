@@ -1,7 +1,7 @@
 name: Bug Report
 description: File a bug report
 title: "[Bug]: "
-labels: ["bug"]
+labels: ["bug", "external"]
 assignees:
   - marianfoo
 body:
@@ -66,6 +66,8 @@ body:
       label: Excel Component Init
       description: Please copy here how you initialize the ui5 component including all options.
       render: js
+    validations:
+      required: true
   - type: textarea
     id: manifest
     attributes:
@@ -75,4 +77,4 @@ body:
   - type: markdown
     attributes:
       value: |
-        To make things easier for me, you can send me your metadata.xml with a link to this issue at marian@marianzeis.de
+        To make things easier for me, you can send me your metadata.xml with a link to this issue at [marian@marianzeis.de](mailto:marian@marianzeis.de)
