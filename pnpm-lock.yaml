@@ -603,9 +603,16 @@ importers:
       '@sap/cds-odata-v2-adapter-proxy':
         specifier: ^1.9.21
         version: 1.9.21
+    devDependencies:
+      cds-plugin-ui5:
+        specifier: 0.1.1
+        version: 0.1.1(@sap/cds@6.8.2)(bluebird@3.7.2)(express@4.18.2)
+
+  examples/packages/server/app/ordersv4fe:
+    dependencies:
       ui5-cc-excelupload:
-        specifier: ./../../../packages/ui5-cc-excelUpload
-        version: link:../../../packages/ui5-cc-excelUpload
+        specifier: ./../../../../../packages/ui5-cc-excelUpload
+        version: link:../../../../../packages/ui5-cc-excelUpload
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
         specifier: ^2.1.101
@@ -619,9 +626,6 @@ importers:
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
-      cds-plugin-ui5:
-        specifier: 0.1.1
-        version: 0.1.1(@sap/cds@6.8.2)(bluebird@3.7.2)(express@4.18.2)
 
   packages/ui5-cc-excelUpload:
     dependencies:
