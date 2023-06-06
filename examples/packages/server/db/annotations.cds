@@ -93,6 +93,7 @@ annotate OrdersService.OrderItems with @(
 		],
 		Facets: [
 			{$Type: 'UI.ReferenceFacet', Label: '{i18n>OrderItems}', Target: '@UI.Identification'},
+			{$Type: 'UI.ReferenceFacet', Label: '{i18n>OrderItems}', Target: 'Infos/@UI.LineItem'},
 		],
 	},
 ) {
@@ -104,6 +105,19 @@ annotate OrdersService.OrderItems with @(
 
 };
 
+annotate OrdersService.OrderItemsInfo with @(
+	UI: {
+		LineItem: [
+			{Value: comment, Label:'comment'}
+		],
+		Identification: [ //Is the main field group
+			{Value: comment, Label:'Comment'},
+		],
+		Facets: [
+			{$Type: 'UI.ReferenceFacet', Label: 'OrderItemsInfo', Target: '@UI.Identification'},
+		],
+	},
+);
 
 annotate OrdersService.OrdersND with @(
 	UI: {
@@ -194,3 +208,17 @@ annotate OrdersService.OrderItemsND with @(
         order    @UI.Hidden;
 
 };
+
+annotate OrdersService.OrderItemsInfoND with @(
+	UI: {
+		LineItem: [
+			{Value: comment, Label:'comment'}
+		],
+		Identification: [ //Is the main field group
+			{Value: comment, Label:'Comment'},
+		],
+		Facets: [
+			{$Type: 'UI.ReferenceFacet', Label: 'OrderItemsInfo', Target: '@UI.Identification'},
+		],
+	},
+);

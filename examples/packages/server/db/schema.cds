@@ -18,6 +18,8 @@ entity Orders : cuid, managed {
 entity OrderItems : cuid {
   order     : Association to Orders;
   product   : Association to Products;
+  Infos : Composition of many OrderItemsInfo
+               on Infos.orderItem = $self;
   quantity  : Integer;
   title     : String; //> intentionally replicated as snapshot from product.title
   price     : Double; //> materialized calculated field
@@ -27,6 +29,11 @@ entity OrderItems : cuid {
   time      : Time;
   boolean   : Boolean;
   decimal   : Decimal(15, 3);
+}
+
+entity OrderItemsInfo : cuid {
+  orderItem     : Association to OrderItems;
+  comment       : String;
 }
 
 /**
@@ -57,6 +64,11 @@ entity OrderItemsND : cuid {
   time      : Time;
   boolean   : Boolean;
   decimal   : Decimal(15, 3);
+}
+
+entity OrderItemsInfoND : cuid {
+  orderItem     : Association to OrderItemsND;
+  comment       : String;
 }
 
 /**
