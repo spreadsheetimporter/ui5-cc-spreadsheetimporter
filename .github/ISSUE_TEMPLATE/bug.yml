@@ -60,3 +60,19 @@ body:
       label: Relevant log output
       description: Please copy and paste any relevant log output, error popups or console errors. This will be automatically formatted into code, so no need for backticks.
       render: shell
+  - type: textarea
+    id: init
+    attributes:
+      label: Excel Component Init
+      description: Please copy here how you initialize the ui5 component including all options.
+      render: js
+  - type: textarea
+    id: manifest
+    attributes:
+      label: Manifest
+      description: Please copy here the `resourceRoots` and `componentUsages` section of your manifest.json
+      render: json
+  - type: markdown
+    attributes:
+      value: |
+        To make things easier for me, you can send me your metadata.xml with a link to this issue at marian@marianzeis.de
