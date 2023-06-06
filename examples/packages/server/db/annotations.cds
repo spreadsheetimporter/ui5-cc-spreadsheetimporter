@@ -93,7 +93,7 @@ annotate OrdersService.OrderItems with @(
 		],
 		Facets: [
 			{$Type: 'UI.ReferenceFacet', Label: '{i18n>OrderItems}', Target: '@UI.Identification'},
-			{$Type: 'UI.ReferenceFacet', Label: '{i18n>OrderItems}', Target: 'Infos/@UI.LineItem'},
+			{$Type: 'UI.ReferenceFacet', Label: 'Infos', Target: 'Infos/@UI.LineItem'},
 		],
 	},
 ) {
@@ -198,6 +198,7 @@ annotate OrdersService.OrderItemsND with @(
 		],
 		Facets: [
 			{$Type: 'UI.ReferenceFacet', Label: '{i18n>OrderItems}', Target: '@UI.Identification'},
+			{$Type: 'UI.ReferenceFacet', Label: '{i18n>OrderItems}', Target: 'Infos/@UI.LineItem'}
 		],
 	},
 ) {

@@ -55,6 +55,8 @@ entity OrdersND : cuid, managed {
 entity OrderItemsND : cuid {
   order     : Association to OrdersND;
   product   : Association to ProductsND;
+  Infos : Composition of many OrderItemsInfoND
+               on Infos.orderItem = $self;
   quantity  : Integer;
   title     : String; //> intentionally replicated as snapshot from product.title
   price     : Double; //> materialized calculated field
