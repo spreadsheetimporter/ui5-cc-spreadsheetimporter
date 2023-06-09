@@ -164,18 +164,11 @@ export default class MetadataHandler {
 			}
 			// if property is mandatory, field should be in excel file
 			if (
+				!this.excelUploadController.component.getSkipMandatoryFieldCheck() && 
 				propertyLabel["@com.sap.vocabularies.Common.v1.FieldControl"] &&
 				propertyLabel["@com.sap.vocabularies.Common.v1.FieldControl"]["$EnumMember"] &&
 				propertyLabel["@com.sap.vocabularies.Common.v1.FieldControl"]["$EnumMember"] === "com.sap.vocabularies.Common.v1.FieldControlType/Mandatory"
 			) {
-				keys.push(propertyName);
-			}
-			// if property nullable is false and hidden is false, field should be in excel file
-			if (!this.excelUploadController.component.getSkipMandatoryFieldCheck() && 
-				!propertyLabel.type?.startsWith("Collection") && 
-				!propertyLabel["@com.sap.vocabularies.UI.v1.Hidden"] && 
-				propertyValue["$Nullable"] === false
-				) {
 				keys.push(propertyName);
 			}
 		}
@@ -200,18 +193,11 @@ export default class MetadataHandler {
 				continue;
 			}
 			if (
+				!this.excelUploadController.component.getSkipMandatoryFieldCheck() && 
 				property["com.sap.vocabularies.Common.v1.FieldControl"] &&
 				property["com.sap.vocabularies.Common.v1.FieldControl"]["EnumMember"] &&
 				property["com.sap.vocabularies.Common.v1.FieldControl"]["EnumMember"] === "com.sap.vocabularies.Common.v1.FieldControlType/Mandatory"
 			) {
-				keys.push(propertyName);
-			}
-			// if property nullable is false and hidden is false, field should be in excel file
-			if (!this.excelUploadController.component.getSkipMandatoryFieldCheck() && 
-				!property.type?.startsWith("Collection") && 
-				property["com.sap.vocabularies.UI.v1.Hidden"] && 
-				property["com.sap.vocabularies.UI.v1.Hidden"]["Bool"] === "false" && 
-				property.nullable === "false") {
 				keys.push(propertyName);
 			}
 		}
