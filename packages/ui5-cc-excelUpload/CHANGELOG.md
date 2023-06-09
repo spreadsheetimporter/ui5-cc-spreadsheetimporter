@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.18.1](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.18.0...ui5-cc-excelupload-v0.18.1) (2023-06-09)
+
+
+### Bug Fixes
+
+* removed check for nullable fields ([#255](https://github.com/marianfoo/ui5-cc-excelUpload/issues/255)) ([f4b569a](https://github.com/marianfoo/ui5-cc-excelUpload/commit/f4b569a41a1580f67a085c14c29250f0865423e6))
+
 ## [0.18.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.17.5...ui5-cc-excelupload-v0.18.0) (2023-06-02)
 
 
