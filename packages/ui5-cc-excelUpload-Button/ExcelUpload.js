@@ -38,6 +38,7 @@ sap.ui.define(["sap/m/Button"], (Button) => {
 				skipMandatoryFieldCheck: { type: "boolean", defaultValue: false },
 				showBackendErrorMessages: { type: "boolean", defaultValue: true },
 				showOptions: { type: "boolean", defaultValue: false },
+				debug: { type: "boolean", defaultValue: false }
 			},
 			events: {
 				checkBeforeRead: {
@@ -86,7 +87,8 @@ sap.ui.define(["sap/m/Button"], (Button) => {
 						hidePreview: oControl.getHidePreview(),
 						skipMandatoryFieldCheck: oControl.getSkipMandatoryFieldCheck(),
 						showBackendErrorMessages: oControl.getShowBackendErrorMessages(),
-						showOptions: oControl.getShowOptions()
+						showOptions: oControl.getShowOptions(),
+						debug: oControl.getDebug()
 					}
 				})
 			} else {
@@ -109,7 +111,8 @@ sap.ui.define(["sap/m/Button"], (Button) => {
 						hidePreview: oControl.getHidePreview(),
 						skipMandatoryFieldCheck: oControl.getSkipMandatoryFieldCheck(),
 						showBackendErrorMessages: oControl.getShowBackendErrorMessages(),
-						showOptions: oControl.getShowOptions()
+						showOptions: oControl.getShowOptions(),
+						debug: oControl.getDebug()
 					}
 				})
 			}

@@ -3,6 +3,7 @@ import { Columns, ListObject } from "../../types";
 import MetadataHandler from "../MetadataHandler";
 import ODataMessageHandler from "../ODataMessageHandler";
 import ExcelUpload from "../ExcelUpload";
+import Log from "sap/base/Log";
 
 export default abstract class OData {
 	UI5MinorVersion: number;
@@ -51,11 +52,11 @@ export default abstract class OData {
 	public getTableObject(tableId: string, view: any) {
 		// try get object page table
 		if (!tableId) {
-			let tables = view.findAggregatedObjects(true, function (o) {
-				return o.isA("sap.m.Table") || o.isA("sap.ui.table.Table");
+			let tables = view.findAggregatedObjects(true, function (object) {
+				return object.isA("sap.m.Table") || object.isA("sap.ui.table.Table");
 			});
 			if (tables.length > 1) {
-				console.error("Found more than one table on Object Page.\n Please specify table in option 'tableId'");
+				Log.error("Found more than one table on Object Page.\n Please specify table in option 'tableId'",undefined,"ExcelUpload: OData");
 			} else {
 				return tables[0];
 			}

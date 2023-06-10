@@ -90,7 +90,7 @@ export default class ODataV2 extends OData {
 						activateActionsPromises.push(activationPromise);
 					}
 				} catch (error) {
-					console.debug("Activate Draft failed");
+					Log.error("Activate Draft failed",error as Error,"ExcelUpload: OdataV2")
 				}
 			}
 		}

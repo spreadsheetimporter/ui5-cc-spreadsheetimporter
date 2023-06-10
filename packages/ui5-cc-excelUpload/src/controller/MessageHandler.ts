@@ -5,6 +5,7 @@ import Util from "./Util";
 import Fragment from "sap/ui/core/Fragment";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import { MessageType, ValueState } from "sap/ui/core/library";
+import Log from "sap/base/Log";
 
 export default class MessageHandler {
 	private messages: Messages[] = [];
@@ -21,11 +22,13 @@ export default class MessageHandler {
 	}
 
 	addArrayToMessages(messages: Messages[]) {
+		Log.debug("addArrayToMessages",undefined,"ExcelUpload: MessageHandler",() => this.excelUploadController.component.logger.returnObject(messages))
 		this.messages = this.messages.concat(messages);
 	}
 
-	addMessageToMessages(messages: Messages) {
-		this.messages.push(messages);
+	addMessageToMessages(message: Messages) {
+		Log.debug("addMessageToMessages",undefined,"ExcelUpload: MessageHandler",() => this.excelUploadController.component.logger.returnObject(message))
+		this.messages.push(message);
 	}
 
 	getMessages() {
@@ -48,7 +51,7 @@ export default class MessageHandler {
 		for (const mandatoryField of mandatoryFields) {
 			const fieldLabel = typeLabelList[mandatoryField]?.label;
 			if (!fieldLabel) {
-				console.error(`Mandatory Field ${mandatoryField} not found for checking mandatory fields`);
+				Log.error(`Mandatory Field ${mandatoryField} not found for checking mandatory fields`,undefined,"ExcelUpload: MessageHandler");
 				continue;
 			}
 
@@ -63,7 +66,7 @@ export default class MessageHandler {
 				} as Messages;
 				// no value found or value is empty, create error message
 				if (!value || value.rawValue === "" || value.rawValue === undefined) {
-					this.messages.push(errorMessage);
+					this.addMessageToMessages(errorMessage);
 				}
 			}
 		}
@@ -82,7 +85,7 @@ export default class MessageHandler {
 						rawValue: rawValue,
 						formattedValue: formattedValue
 					} as Messages;
-					this.messages.push(warningMessage);
+					this.addMessageToMessages(warningMessage);
 				}
 			});
 		}
@@ -115,7 +118,7 @@ export default class MessageHandler {
 					counter: 1,
 					ui5type: MessageType.Error
 				} as Messages;
-				this.messages.push(errorMessage);
+				this.addMessageToMessages(errorMessage);
 			}
 		}
 	}
@@ -140,7 +143,7 @@ export default class MessageHandler {
 					counter: 1,
 					ui5type: MessageType.Error,
 				};
-				this.messages.push(errorMessage);
+				this.addMessageToMessages(errorMessage);
 			}
 		}
 		return availableKeyColumns;
@@ -168,6 +171,7 @@ export default class MessageHandler {
 		this.messageDialog.setModel(new JSONModel(), "messages");
 		const messagesGrouped = this.groupMessages(this.messages);
 		const sortedMessagesGrouped = this.sortMessagesByTitle(messagesGrouped);
+		Log.debug("sortedMessagesGrouped", undefined, "ExcelUpload: MessageHandler", () => this.excelUploadController.component.logger.returnObject({ sortedMessagesGrouped: sortedMessagesGrouped }));
 		(this.messageDialog.getModel("messages") as JSONModel).setData(sortedMessagesGrouped);
 		const dialogState = this.getWorstType(sortedMessagesGrouped);
 		const infoModel = new JSONModel({

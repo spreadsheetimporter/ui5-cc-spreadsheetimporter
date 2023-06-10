@@ -14,7 +14,8 @@ sap.ui.define([], function () {
 					async: true,
 					componentData: {
 						context: this,
-						activateDraft: true
+						activateDraft: true,
+						debug: true,
 					}
 				});
 

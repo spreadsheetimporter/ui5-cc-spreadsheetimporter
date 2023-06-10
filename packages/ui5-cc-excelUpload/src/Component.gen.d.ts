@@ -24,6 +24,7 @@ declare module "./Component" {
         skipMandatoryFieldCheck?: boolean | PropertyBindingInfo | `{${string}}`;
         showBackendErrorMessages?: boolean | PropertyBindingInfo | `{${string}}`;
         showOptions?: boolean | PropertyBindingInfo | `{${string}}`;
+        debug?: boolean | PropertyBindingInfo | `{${string}}`;
         checkBeforeRead?: (event: Event) => void;
         changeBeforeCreate?: (event: Event) => void;
         uploadButtonPress?: (event: Event) => void;
@@ -356,6 +357,27 @@ declare module "./Component" {
          * @returns Reference to "this" in order to allow method chaining
          */
         setShowOptions(showOptions: boolean): this;
+
+        // property: debug
+
+        /**
+         * Gets current value of property "debug".
+         *
+         * Default value is: false
+         * @returns Value of property "debug"
+         */
+        getDebug(): boolean;
+
+        /**
+         * Sets a new value for property "debug".
+         *
+         * When called with a value of "null" or "undefined", the default value of the property will be restored.
+         *
+         * Default value is: false
+         * @param [debug=false] New value for property "debug"
+         * @returns Reference to "this" in order to allow method chaining
+         */
+        setDebug(debug: boolean): this;
 
         // event: checkBeforeRead
 

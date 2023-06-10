@@ -4,12 +4,16 @@ import Device from "sap/ui/Device";
 import ExcelUpload from "./controller/ExcelUpload";
 import { Messages } from "./types";
 import { $ComponentSettings } from "sap/ui/core/Component";
+import Log from "sap/base/Log";
+import ResourceModel from "sap/ui/model/resource/ResourceModel";
+import Logger from "./controller/Logger";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
 export default class Component extends UIComponent {
 	excelUpload: ExcelUpload;
 	private _sContentDensityClass: any;
+	public logger: Logger;
 	constructor(idOrSettings?: string | $ComponentSettings);
 	constructor(id?: string, settings?: $ComponentSettings);
 	constructor(id?: string, settings?: $ComponentSettings) {
@@ -36,6 +40,7 @@ export default class Component extends UIComponent {
 			skipMandatoryFieldCheck: { type: "boolean", defaultValue: false },
 			showBackendErrorMessages: { type: "boolean", defaultValue: false },
 			showOptions: { type: "boolean", defaultValue: false },
+			debug: { type: "boolean", defaultValue: false },
 		},
 		aggregations: {
 			rootControl: {
@@ -100,39 +105,31 @@ export default class Component extends UIComponent {
 		this.setSkipMandatoryFieldCheck(oCompData.skipMandatoryFieldCheck);
 		this.setShowBackendErrorMessages(oCompData.showBackendErrorMessages);
 		this.setShowOptions(oCompData.showOptions);
+		this.setDebug(oCompData.debug);
 
 		// // we could create a device model and use it
 		oModel = new JSONModel(Device);
 		oModel.setDefaultBindingMode("OneWay");
 		this.setModel(oModel, "device");
 
+		this.logger = new Logger();
+
 		// call the init function of the parent - ATTENTION: this triggers createContent()
 		// call the base component's init function
 		super.init();
-
-		// this.excelUpload = await sap.ui.core.mvc.Controller.create({ name:"cc.excelUpload.XXXnamespaceXXX.ExcelUpload"})
-		// //now this here would work:
-		// //var oRoot = this.getRootControl(); → won't work with visibility: "hidden", no getters/setters generated
 	}
 
-	// Component.prototype.setContextPublic = function(options) {
-	//     this.excelUpload.setContext(options)
-	// };
 
 	createContent() {
-		this.excelUpload = new ExcelUpload(this, this.getModel("i18n"));
-		// this.excelUpload = await Controller.create({ name:"cc.excelUpload.XXXnamespaceXXX.controller.ExcelUpload"})
-
-		// var oBtn, oTSD;
-
-		// oTSD = this._getCustomerSelectDialog();
-
-		// if (this.getRenderButton()) {
-		// 	oBtn = this._getOpenButton();
-		// 	oBtn.addDependent(oTSD);
-		// 	return oBtn;
-		// }
-		// return oTSD;
+		if(this.getDebug() || Log.getLevel() >= Log.Level.DEBUG){
+			Log.setLevel(Log.Level.DEBUG);
+			Log.logSupportInfo(true)
+			this.setShowOptions(true)
+		}
+		const componentData = Object.assign({}, this.getComponentData());
+		delete componentData.context;
+		Log.debug("Component Data",undefined,"ExcelUpload: Component",() => this.logger.returnObject(componentData))
+		this.excelUpload = new ExcelUpload(this, this.getModel("i18n") as ResourceModel);
 	}
 
 	//=============================================================================
@@ -148,6 +145,7 @@ export default class Component extends UIComponent {
 	 * @public
 	 */
 	openExcelUploadDialog() {
+		Log.debug("openExcelUploadDialog",undefined,"ExcelUpload: Component")
 		this.excelUpload.openExcelUploadDialog();
 	}
 
