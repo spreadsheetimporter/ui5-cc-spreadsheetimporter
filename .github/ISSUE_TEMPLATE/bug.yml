@@ -35,7 +35,7 @@ body:
     id: scenario
     attributes:
       label: Scenario
-      description: In what Scenario are you using? (Fiori Elements, Freestyle)
+      description: In what Scenario are you using? (Fiori Elements/Freestyle, Object Page/List Report)
     validations:
       required: true
   - type: input
@@ -49,22 +49,22 @@ body:
     id: what-happened
     attributes:
       label: What happened?
-      description: Also tell us, what did you expect to happen?
-      placeholder: Tell us what you see!
-      value: "A bug happened!"
+      description: Also tell us, what did you expect to happen and attach screenshots if possible?
     validations:
       required: true
   - type: textarea
     id: logs
     attributes:
       label: Relevant log output
-      description: Please copy and paste any relevant log output, error popups or console errors. This will be automatically formatted into code, so no need for backticks.
+      description: Please attach the log output described [here](https://marianfoo.github.io/ui5-cc-excelUpload/pages/Troubleshooting/#activate-debug-mode-and-copy-error-messages)
       render: shell
+    validations:
+      required: true
   - type: textarea
     id: init
     attributes:
       label: Excel Component Init
-      description: Please copy here how you initialize the ui5 component including all options.
+      description: Please copy here how you initialize the ui5 component including all options like show [here](https://marianfoo.github.io/ui5-cc-excelUpload/pages/GettingStarted/#extension-in-manifestjson).
       render: js
     validations:
       required: true
@@ -72,9 +72,9 @@ body:
     id: manifest
     attributes:
       label: Manifest
-      description: Please copy here the `resourceRoots` and `componentUsages` section of your manifest.json
+      description: Please copy here the `resourceRoots` and `componentUsages` section of your manifest.json so i can make sure this config is correct.
       render: json
   - type: markdown
     attributes:
       value: |
-        To make things easier for me, you can send me your metadata.xml with a link to this issue at [marian@marianzeis.de](mailto:marian@marianzeis.de)
+        To make things easier for me, you can send me your metadata.xml with a link to this issue at [marian@marianzeis.de](mailto:marian@marianzeis.de). Better way would be to attach it here directly.
