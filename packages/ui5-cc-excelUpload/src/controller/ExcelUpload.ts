@@ -43,7 +43,7 @@ export default class ExcelUpload {
 	public util: Util;
 	private model: any;
 	private typeLabelList: ListObject;
-	private dialog: Dialog;
+	private dialog: ExcelDialog;
 	public componentI18n: ResourceModel;
 	private UI5MinorVersion: number;
 	private odataHandler: OData;
@@ -71,10 +71,11 @@ export default class ExcelUpload {
 		this.util = new Util(componentI18n.getResourceBundle() as ResourceBundle);
 		this.isODataV4 = this._checkIfODataIsV4();
 		// check if "sap.ui.generic" is available, if false it is OpenUI5
-		this.isOpenUI5 = sap.ui.generic ? false : true;
+		this.isOpenUI5 = sap.ui.generic ? true : false;
 		this.odataHandler = this.getODataHandler(this.UI5MinorVersion, undefined, this);
 		this.initialSetupPromise = this.initialSetup();
 		this.previewHandler = new Preview(this.util);
+		Log.debug("constructor",undefined,"ExcelUpload: ExcelUpload",() => this.component.logger.returnObject({ui5version: this.UI5MinorVersion, isODataV4: this.isODataV4, isOpenUI5: this.isOpenUI5}))
 	}
 
 	/**
@@ -115,6 +116,9 @@ export default class ExcelUpload {
 			} catch (error) {
 				this.errorMessage = error;
 				this.errorState = true;
+				Log.error("Error setting 'setContext'", error as Error, "ExcelUpload: ExcelUpload", () =>
+					this.component.logger.returnObject({ error: error })
+				);
 			}
 		}
 	}
@@ -129,26 +133,35 @@ export default class ExcelUpload {
 		}
 
 		this.view = this.odataHandler.getView(this.context);
+		Log.debug("View", undefined, "ExcelUpload: ExcelUpload", () => this.component.logger.returnObject({ view: this.view }));
+		this.view.addDependent(this.dialog);
 		this.tableObject = this.odataHandler.getTableObject(this.component.getTableId(), this.view);
+		Log.debug("tableObject", undefined, "ExcelUpload: ExcelUpload", () => this.component.logger.returnObject({ tableObject: this.tableObject }));
 		this.component.setTableId(this.tableObject.getId());
-
+		Log.debug("table Id", undefined, "ExcelUpload: ExcelUpload", () => this.component.logger.returnObject({ tableID: this.tableObject.getId() }));
 		this.binding = this.odataHandler.getBinding(this.tableObject);
 		if (!this.binding) {
 			throw new Error(this.util.geti18nText("bindingError"));
 		}
 		const odataType = this.odataHandler.getOdataType(this.binding, this.tableObject, this.component.getOdataType());
+		Log.debug("odataType", undefined, "ExcelUpload: ExcelUpload", () => this.component.logger.returnObject({ odataType: odataType }));
 		this.component.setOdataType(odataType);
 		this.odataKeyList = await this.odataHandler.getKeyList(odataType, this.tableObject);
+		Log.debug("odataKeyList", undefined, "ExcelUpload: ExcelUpload", () => this.component.logger.returnObject({ odataKeyList: this.odataKeyList }));
 		this.typeLabelList = await this.odataHandler.createLabelList(this.component.getColumns(), odataType, this.tableObject);
+		Log.debug("typeLabelList", undefined, "ExcelUpload: ExcelUpload", () => this.component.logger.returnObject({ typeLabelList: this.typeLabelList }));
 
 		this.model = this.tableObject.getModel();
+		Log.debug("model", undefined, "ExcelUpload: ExcelUpload", () => this.component.logger.returnObject({ model: this.model }));
 		this.odataHandler.createCustomBinding(this.binding)
 		try {
 			// Load the DraftController asynchronously using the loadDraftController function
 			const DraftController: sap.ui.generic.app.transaction.DraftController = await this._loadDraftController();
 			// Create an instance of the DraftController
 			this.odataHandler.draftController = new DraftController(this.model, undefined);
-		} catch (error) {}
+		} catch (error) {
+			Log.error("Error setting the draft controller", error as Error, "ExcelUpload: ExcelUpload");
+		}
 	}
 
 	/**
@@ -177,7 +190,7 @@ export default class ExcelUpload {
 			this.dialog.open();
 		} else {
 			Util.showError(this.errorMessage, "ExcelUpload.ts", "initialSetup");
-			Log.error("ErrorState: True. Can not open dialog.", "ExcelUpload.ts.openExcelUploadDialog");
+			Log.error("Error opening the dialog", undefined, "ExcelUpload: ExcelUpload");
 		}
 	}
 
@@ -197,7 +210,9 @@ export default class ExcelUpload {
 			const workbook = (await this._readWorkbook(file)) as XLSX.WorkBook;
 			const sheetName = workbook.SheetNames[0];
 			let excelSheetsData = SheetHandler.sheet_to_json(workbook.Sheets[sheetName]);
-			let columnNames = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })[0];
+			let columnNames = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })[0] as string[];
+
+			Log.debug("columnNames of uploaded excel file", undefined, "ExcelUpload: onFileUpload", () => this.component.logger.returnObject({ columnNames: columnNames }));
 
 			if (!excelSheetsData || excelSheetsData.length === 0) {
 				throw new Error(this.util.geti18nText("emptySheet"));
@@ -301,6 +316,7 @@ export default class ExcelUpload {
 					await fnAddMessage();
 				}
 			} catch (error) {
+				Log.error("Error while calling the odata service", error as Error, "ExcelUpload: onUploadSet");
 				this.resetContent();
 			}
 		}
@@ -353,7 +369,7 @@ export default class ExcelUpload {
 			fnResolve();
 		} catch (error) {
 			this.odataHandler.resetContexts();
-			Log.error(error, error);
+			Log.error("Error while calling the odata service", error as Error, "ExcelUpload: callOdata");
 			fnReject(error);
 		}
 	}
@@ -474,6 +490,7 @@ export default class ExcelUpload {
 				let workbook = XLSX.read(data, {cellNF: true, cellDates: true, cellText: true, cellFormula: true});
 				resolve(workbook);
 			} catch (error) {
+				Log.error("Error while reading the uploaded workbook", error as Error, "ExcelUpload: _readWorkbook");
 				reject(error);
 			}
 		});

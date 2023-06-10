@@ -20,6 +20,7 @@ These options are available and explained in detail below:
 | `skipMandatoryFieldCheck` | Skip check if fields with `Nullable=false` are filled in excel file. | boolean |
 | `showBackendErrorMessages` | Show Backend Error Messages | boolean |
 | `showOptions` | Show Options Menu to change a few of these configurations in runtime. | boolean |
+| `debug` | Option to show more console statements and set Log Level to Debug | boolean |
 
 ### `columns`
 
@@ -182,3 +183,10 @@ This option defines whether the button to show the options dialog should be disp
 Currently, the menu is more for the development process.
 Later, this should also be able to be used by the user.  
 There are also only a few selected configurations available.
+
+### `debug`
+
+**default:** `false`
+
+This option defines whether the debug mode should be activated or not.  
+If set to true, it will set the log level to `debug` (Log.Level.DEBUG) and activate the options menu with all options available.

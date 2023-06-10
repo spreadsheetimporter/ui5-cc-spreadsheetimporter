@@ -5,6 +5,7 @@ import MetadataHandler from "../MetadataHandler";
 import ExcelUpload from "../ExcelUpload";
 import Util from "../Util";
 import ODataListBinding from "sap/ui/model/odata/v4/ODataListBinding";
+import Log from "sap/base/Log";
 
 export default class ODataV4 extends OData {
 	public createPromises: Promise<any>[] = [];
@@ -93,7 +94,7 @@ export default class ODataV4 extends OData {
 				const metaDataObject = metaModel.getObject(tableBindingPath);
 				return metaDataObject["$Type"];
 			} catch (error) {
-				console.debug();
+				Log.debug("Error while getting OData Type for List Report",error as Error, "ExcelUpload: ODataV4");
 			}
 			// for object page
 			if (!odataType) {
@@ -104,7 +105,7 @@ export default class ODataV4 extends OData {
 				}
 			}
 			if (!odataType) {
-				console.error("No OData Type found. Please specify 'odataType' in options");
+				Log.error("Error while getting OData Type. Please specify 'odataType' in options",undefined, "ExcelUpload: ODataV4");
 			}
 		}
 	}

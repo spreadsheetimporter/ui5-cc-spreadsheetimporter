@@ -1,3 +1,4 @@
+import Log from "sap/base/Log";
 import Dialog from "sap/m/Dialog";
 import Fragment from "sap/ui/core/Fragment";
 import JSONModel from "sap/ui/model/json/JSONModel";
@@ -17,6 +18,11 @@ export default class Options {
 			fieldMatchType: this.excelUploadController.component.getFieldMatchType(),
 			decimalSeparator: this.excelUploadController.component.getDecimalSeparator(),
 		});
+		Log.debug("openOptionsDialog",undefined,"ExcelUpload: Options",() => this.excelUploadController.component.logger.returnObject({
+			strict: this.excelUploadController.component.getStrict(),
+			fieldMatchType: this.excelUploadController.component.getFieldMatchType(),
+			decimalSeparator: this.excelUploadController.component.getDecimalSeparator()
+		}))
 		if (!this.optionsDialog) {
 			this.optionsDialog = (await Fragment.load({
 				name: "cc.excelUpload.XXXnamespaceXXX.fragment.Options",

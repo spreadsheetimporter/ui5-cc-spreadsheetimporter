@@ -21,7 +21,7 @@ export default class Util {
 			try {
 				value = Object.entries(row).find(([key]) => key.includes(`[${type}]`))[1] as ValueData;
 			} catch (error) {
-				console.debug(`Not found ${type}`);
+				Log.debug(`Not found ${type}`,undefined,"ExcelUpload: Util");
 			}
 		}
 		return value;
@@ -127,4 +127,33 @@ export default class Util {
 	  
 		return randomString;
 	  }
+
+	  static stringify(obj: any): string {
+		const seen = new WeakSet();
+
+		return JSON.stringify(obj, (key, value) => {
+			// Check if value is an object and not null
+			if (typeof value === 'object' && value !== null) {
+				// Handle circular references
+				if (seen.has(value)) {
+					return;
+				}
+				seen.add(value);
+				
+				// Handle first-level objects
+				const keys = Object.keys(value);
+				if (keys.every(k => typeof value[k] !== 'object' || value[k] === null)) {
+					let simpleObject = {};
+					for (let k in value) {
+						if (typeof value[k] !== 'object' || value[k] === null) {
+							simpleObject[k] = value[k];
+						}
+					}
+					return simpleObject;
+				}
+			}
+			return value;
+		});
+	}
+	
 }

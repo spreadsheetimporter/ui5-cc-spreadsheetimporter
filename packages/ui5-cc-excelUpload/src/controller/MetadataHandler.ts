@@ -1,3 +1,4 @@
+import Log from "sap/base/Log";
 import { Columns, Property, ListObject, PropertyArray } from "../types";
 import ExcelUpload from "./ExcelUpload";
 /**
@@ -16,6 +17,7 @@ export default class MetadataHandler {
 		// get the property list of the entity for which we need to download the template
 		const properties: PropertyArray = oDataEntityType.property;
 		const entityTypeLabel: string = oDataEntityType["sap:label"];
+		Log.debug("ExcelUpload: Annotations", undefined, "ExcelUpload: MetadataHandler", () => this.excelUploadController.component.logger.returnObject(oDataEntityType));
 
 		// check if file name is not set
 		if (!this.excelUploadController.component.getExcelFileName() && entityTypeLabel) {
@@ -35,7 +37,7 @@ export default class MetadataHandler {
 					}
 					listObject[propertyName].type = property["type"];
 				} else {
-					console.error(`ExcelUpload: Property ${propertyName} not found`);
+					Log.warning(`ExcelUpload: Property ${propertyName} not found`);
 				}
 			}
 		} else {
@@ -45,7 +47,7 @@ export default class MetadataHandler {
 				try {
 					hiddenProperty = property["com.sap.vocabularies.UI.v1.Hidden"].Bool === "true";
 				} catch (error) {
-					console.debug(`No hidden property on ${property.name}`);
+					Log.debug(`No hidden property on ${property.name}`,undefined,"ExcelUpload: MetadataHandler");
 				}
 				if (!hiddenProperty && !propertyName.startsWith("SAP__")) {
 					listObject[propertyName] = {} as Property;
@@ -66,7 +68,7 @@ export default class MetadataHandler {
 			const lineItemsAnnotations = oDataEntityType["com.sap.vocabularies.UI.v1.LineItem"];
 			return lineItemsAnnotations.find((dataField: { Value: { Path: any } }) => dataField.Value.Path === propertyName).Label.String;
 		} catch (error) {
-			console.debug(`${propertyName} not found as a LineItem Label`);
+			Log.debug(`ExcelUpload: ${propertyName} not found as a LineItem Label`,undefined,"ExcelUpload: MetadataHandler");
 		}
 		return propertyName;
 	}
@@ -78,11 +80,12 @@ export default class MetadataHandler {
 		// get the property list of the entity for which we need to download the template
 		var annotations = this.excelUploadController.context.getModel().getMetaModel().getData()["$Annotations"];
 		const properties = this.excelUploadController.context.getModel().getMetaModel().getData()[odataType];
+		Log.debug("ExcelUpload: Annotations", undefined, "ExcelUpload: MetadataHandler", () => this.excelUploadController.component.logger.returnObject(this.excelUploadController.context.getModel().getMetaModel().getData()));
 		// try get facet label
 		try {
 			entityTypeLabel = annotations[odataType]["@com.sap.vocabularies.UI.v1.Facets"][0].Label;
 		} catch (error) {
-			console.debug("Facet Label not found");
+			Log.debug(`ExcelUpload: Facet Label not found`,undefined,"ExcelUpload: MetadataHandler");
 		}
 
 		// check if file name is not set
@@ -104,7 +107,7 @@ export default class MetadataHandler {
 					}
 					listObject[propertyName].type = property.$Type;
 				} else {
-					console.error(`ExcelUpload: Property ${propertyName} not found`);
+					Log.warning(`ExcelUpload: Property ${propertyName} not found`,undefined,"ExcelUpload: MetadataHandler");
 				}
 			}
 		} else {
@@ -133,7 +136,7 @@ export default class MetadataHandler {
 			const lineItemsAnnotations = annotations[odataType]["@com.sap.vocabularies.UI.v1.LineItem"];
 			return lineItemsAnnotations.find((dataField: { Value: { $Path: any } }) => dataField.Value.$Path === propertyName).Label;
 		} catch (error) {
-			console.debug(`${propertyName} not found as a LineItem Label`);
+			Log.debug(`ExcelUpload: ${propertyName} not found as a LineItem Label`,undefined,"ExcelUpload: MetadataHandler");
 		}
 		return propertyName;
 	}
