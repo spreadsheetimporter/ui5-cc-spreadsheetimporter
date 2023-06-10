@@ -66,6 +66,20 @@
   * dependencies
     * ui5-cc-excelupload bumped from 0.18.0 to 0.18.1
 
+## [0.7.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-button-v0.6.1...ui5-cc-excelupload-button-v0.7.0) (2023-06-10)
+
+
+### Features
+
+* add debugging option ([#257](https://github.com/marianfoo/ui5-cc-excelUpload/issues/257)) ([61a5f3f](https://github.com/marianfoo/ui5-cc-excelUpload/commit/61a5f3f8a3fe1e1e732ca5b1b58ae7a3e5cfbf8a))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * ui5-cc-excelupload bumped from 0.18.1 to 0.19.0
+
 ## [0.6.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-button-v0.5.5...ui5-cc-excelupload-button-v0.6.0) (2023-06-02)
 
 
