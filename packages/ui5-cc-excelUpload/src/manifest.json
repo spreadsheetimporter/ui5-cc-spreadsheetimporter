@@ -1,7 +1,7 @@
 {
   "_version": "1.9.0",
   "sap.app": {
-    "id": "cc.excelUpload.v0_18_1",
+    "id": "cc.excelUpload.v0_19_0",
     "type": "component",
     "i18n": "i18n/i18n.properties",
     "title": "{{compTitle}}",
@@ -32,7 +32,7 @@
     ]
   },
   "sap.ui5": {
-    "componentName": "cc.excelUpload.v0_18_1",
+    "componentName": "cc.excelUpload.v0_19_0",
     "dependencies": {
       "minUI5Version": "1.44.0",
       "libs": {
@@ -50,7 +50,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "cc.excelUpload.v0_18_1.i18n.i18n",
+          "bundleName": "cc.excelUpload.v0_19_0.i18n.i18n",
           "supportedLocales": [
             "de",
             "en",

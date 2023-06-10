@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.19.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.18.1...ui5-cc-excelupload-v0.19.0) (2023-06-10)
+
+
+### Features
+
+* add debugging option ([#257](https://github.com/marianfoo/ui5-cc-excelUpload/issues/257)) ([61a5f3f](https://github.com/marianfoo/ui5-cc-excelUpload/commit/61a5f3f8a3fe1e1e732ca5b1b58ae7a3e5cfbf8a))
+
 ## [0.18.1](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.18.0...ui5-cc-excelupload-v0.18.1) (2023-06-09)
 
 
