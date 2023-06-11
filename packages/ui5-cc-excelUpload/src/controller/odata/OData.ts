@@ -17,6 +17,59 @@ export default abstract class OData {
 		this.odataMessageHandler = new ODataMessageHandler(excelUploadController);
 	}
 
+	/**
+	 * Helper method to call OData service.
+	 * @param {*} fnResolve - The resolve function for the Promise.
+	 * @param {*} fnReject - The reject function for the Promise.
+	 */
+	async callOdata(fnResolve: any, fnReject: any, excelUploadController: ExcelUpload): Promise<void> {
+		const component = excelUploadController.component;
+		const tableObject = excelUploadController.tableObject;
+		const payloadArray = excelUploadController.payloadArray;
+		const binding = excelUploadController.binding;
+		const context = excelUploadController.context;
+
+		// intializing the message manager for displaying the odata response messages
+		try {
+			// get binding of table to create rows
+			const model = tableObject.getModel();
+
+			// Slice the array into chunks of 'batchSize' if necessary
+			const slicedPayloadArray = this.processPayloadArray(component.getBatchSize(), payloadArray);
+
+			// Loop over the sliced array
+			for (const batch of slicedPayloadArray) {
+				// loop over data from excel file
+				for (const payload of batch) {
+					// Extension method to manipulate payload
+					component.fireChangeBeforeCreate({ payload: payload });
+					this.createAsync(model, binding, payload);
+				}
+				// wait for all drafts to be created
+				await this.submitChanges(model);
+				let errorsFound = await this.checkForErrors(model, binding, component.getShowBackendErrorMessages());
+				if (errorsFound) {
+					break;
+				} else {
+					await this.waitForCreation();
+				}
+
+				// check for and activate all drafts and wait for all draft to be created
+				if (component.getActivateDraft() && !errorsFound) {
+					await this.waitForDraft();
+				}
+
+				this.resetContexts();
+			}
+			excelUploadController.refreshBinding(context, binding, tableObject.getId());
+			fnResolve();
+		} catch (error) {
+			this.resetContexts();
+			Log.error("Error while calling the odata service", error as Error, "ExcelUpload: callOdata");
+			fnReject(error);
+		}
+	}
+
 	public getBinding(tableObject: any): any {
 		if (tableObject.getMetadata().getName() === "sap.m.Table" || tableObject.getMetadata().getName() === "sap.m.List") {
 			return tableObject.getBinding("items");
@@ -56,7 +109,7 @@ export default abstract class OData {
 				return object.isA("sap.m.Table") || object.isA("sap.ui.table.Table");
 			});
 			if (tables.length > 1) {
-				Log.error("Found more than one table on Object Page.\n Please specify table in option 'tableId'",undefined,"ExcelUpload: OData");
+				Log.error("Found more than one table on Object Page.\n Please specify table in option 'tableId'", undefined, "ExcelUpload: OData");
 			} else {
 				return tables[0];
 			}
@@ -65,7 +118,6 @@ export default abstract class OData {
 		}
 	}
 
-
 	abstract create(model: any, binding: any, payload: any): any;
 	abstract createAsync(model: any, binding: any, payload: any): any;
 	abstract submitChanges(model: any): Promise<any>;
@@ -73,7 +125,7 @@ export default abstract class OData {
 	abstract waitForDraft(): void;
 	abstract resetContexts(): void;
 	abstract getView(context: any): any;
-	abstract getMetadataHandler(): MetadataHandlerV2 | MetadataHandlerV4
+	abstract getMetadataHandler(): MetadataHandlerV2 | MetadataHandlerV4;
 	abstract getLabelList(columns: Columns, odataType: string, tableObject: any): Promise<ListObject>;
 	abstract getKeyList(odataType: string, tableObject: any): Promise<string[]>;
 	abstract getOdataType(binding: any, tableObject: any, odataType: any): string;

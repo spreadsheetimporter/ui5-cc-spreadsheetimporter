@@ -17,6 +17,7 @@ import MessageHandler from "../MessageHandler";
 import Log from "sap/base/Log";
 import SheetHandler from "../SheetHandler";
 import Parser from "../Parser";
+import Button from "sap/m/Button";
 
 export default class ExcelUploadDialog {
 	excelUploadController: ExcelUpload;
@@ -117,9 +118,72 @@ export default class ExcelUploadDialog {
 		}
 	}
 
-    onUploadSet(event: Event) {
-        this.excelUploadController.onUploadSet(event);
-    }
+		/**
+	 * Sending extracted data to backend
+	 * @param {*} event
+	 */
+		async onUploadSet(event: Event) {
+			const isDefaultNotPrevented = this.component.fireUploadButtonPress({ payload: this.excelUploadController.payloadArray });
+			if (!isDefaultNotPrevented || this.component.getStandalone()) {
+				this.onCloseDialog();
+				return;
+			}
+			// checking if excel file contains data or not
+			if (!this.excelUploadController.payloadArray.length) {
+				MessageToast.show(this.util.geti18nText("selectFileUpload"));
+				return;
+			}
+	
+			var that = this;
+			const source = event.getSource() as Button;
+			const sourceParent = source.getParent() as ExcelDialog;
+	
+			sourceParent.setBusyIndicatorDelay(0);
+			sourceParent.setBusy(true);
+			await Util.sleep(50);
+	
+			// creating a promise as the extension api accepts odata call in form of promise only
+			var fnAddMessage = function () {
+				return new Promise((fnResolve, fnReject) => {
+					that.excelUploadController.getODataHandler().callOdata(fnResolve, fnReject, that.excelUploadController);
+				});
+			};
+	
+			var mParameters = {
+				busy: {
+					set: true,
+					check: false,
+				},
+				dataloss: {
+					popup: false,
+					navigation: false,
+				},
+				sActionLabel: this.util.geti18nText("uploadingFile"),
+			};
+			// calling the oData service using extension api
+			if (this.excelUploadController.isODataV4) {
+				await this.excelUploadController.context.editFlow.securedExecution(fnAddMessage, mParameters);
+			} else {
+				try {
+					if (this.excelUploadController.context.extensionAPI) {
+						await this.excelUploadController.context.extensionAPI.securedExecution(fnAddMessage, mParameters);
+					} else {
+						await fnAddMessage();
+					}
+				} catch (error) {
+					Log.error("Error while calling the odata service", error as Error, "ExcelUpload: onUploadSet");
+					this.resetContent();
+				}
+			}
+	
+			sourceParent.setBusy(false);
+	
+			this.onCloseDialog();
+		}
+
+    // onUploadSet(event: Event) {
+    //     this.excelUploadController.onUploadSet(event);
+    // }
 
     openExcelUploadDialog() {
         this.excelUploadDialog.open();

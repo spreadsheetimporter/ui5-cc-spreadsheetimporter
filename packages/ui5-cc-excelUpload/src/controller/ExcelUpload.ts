@@ -63,7 +63,7 @@ export default class ExcelUpload {
 		this.isODataV4 = this._checkIfODataIsV4();
 		// check if "sap.ui.generic" is available, if false it is OpenUI5
 		this.isOpenUI5 = sap.ui.generic ? true : false;
-		this.odataHandler = this.getODataHandler(this.UI5MinorVersion, this);
+		this.odataHandler = this.createODataHandler(this.UI5MinorVersion, this);
 		this.initialSetupPromise = this.initialSetup();
 		
 		Log.debug("constructor",undefined,"ExcelUpload: ExcelUpload",() => this.component.logger.returnObject({ui5version: this.UI5MinorVersion, isODataV4: this.isODataV4, isOpenUI5: this.isOpenUI5}))
@@ -135,7 +135,7 @@ export default class ExcelUpload {
 	 * @param {number} version - UI5 version number.
 	 * @returns {OData} OData handler instance.
 	 */
-	getODataHandler(version: number, excelUploadController: ExcelUpload): OData {
+	createODataHandler(version: number, excelUploadController: ExcelUpload): OData {
 		if (this.isODataV4) {
 			return new ODataV4(version, excelUploadController);
 		} else {
@@ -157,117 +157,6 @@ export default class ExcelUpload {
 		} else {
 			Util.showError(this.errorMessage, "ExcelUpload.ts", "initialSetup");
 			Log.error("Error opening the dialog", undefined, "ExcelUpload: ExcelUpload");
-		}
-	}
-
-	/**
-	 * Sending extracted data to backend
-	 * @param {*} event
-	 */
-	async onUploadSet(event: Event) {
-		const isDefaultNotPrevented = this.component.fireUploadButtonPress({ payload: this.payloadArray });
-		if (!isDefaultNotPrevented || this.component.getStandalone()) {
-			this.excelUploadDialogHandler.onCloseDialog();
-			return;
-		}
-		// checking if excel file contains data or not
-		if (!this.payloadArray.length) {
-			MessageToast.show(this.util.geti18nText("selectFileUpload"));
-			return;
-		}
-
-		var that = this;
-		const source = event.getSource() as Button;
-		const sourceParent = source.getParent() as Dialog;
-
-		sourceParent.setBusyIndicatorDelay(0);
-		sourceParent.setBusy(true);
-		await Util.sleep(50);
-
-		// creating a promise as the extension api accepts odata call in form of promise only
-		var fnAddMessage = function () {
-			return new Promise((fnResolve, fnReject) => {
-				that.callOdata(fnResolve, fnReject);
-			});
-		};
-
-		var mParameters = {
-			busy: {
-				set: true,
-				check: false,
-			},
-			dataloss: {
-				popup: false,
-				navigation: false,
-			},
-			sActionLabel: this.util.geti18nText("uploadingFile"),
-		};
-		// calling the oData service using extension api
-		if (this.isODataV4) {
-			await this.context.editFlow.securedExecution(fnAddMessage, mParameters);
-		} else {
-			try {
-				if (this.context.extensionAPI) {
-					await this.context.extensionAPI.securedExecution(fnAddMessage, mParameters);
-				} else {
-					await fnAddMessage();
-				}
-			} catch (error) {
-				Log.error("Error while calling the odata service", error as Error, "ExcelUpload: onUploadSet");
-				this.resetContent();
-			}
-		}
-
-		sourceParent.setBusy(false);
-
-		this.excelUploadDialogHandler.onCloseDialog();
-	}
-
-	/**
-	 * Helper method to call OData service.
-	 * @param {*} fnResolve - The resolve function for the Promise.
-	 * @param {*} fnReject - The reject function for the Promise.
-	 */
-	async callOdata(fnResolve: any, fnReject: any) {
-		// intializing the message manager for displaying the odata response messages
-		try {
-			// get binding of table to create rows
-			const model = this.tableObject.getModel();
-
-			// Slice the array into chunks of 'batchSize' if necessary
-			const slicedPayloadArray = this.odataHandler.processPayloadArray(this.component.getBatchSize(), this.payloadArray);
-
-			// Loop over the sliced array
-			for (const batch of slicedPayloadArray) {
-				// loop over data from excel file
-				for (const payload of batch) {
-					this.payload = payload;
-					// Extension method to manipulate payload
-					this.component.fireChangeBeforeCreate({ payload: this.payload });
-					this.odataHandler.createAsync(model, this.binding, this.payload);
-				}
-				// wait for all drafts to be created
-				await this.odataHandler.submitChanges(model);
-				let errorsFound = await this.odataHandler.checkForErrors(model, this.binding, this.component.getShowBackendErrorMessages());
-				if(errorsFound){
-					break;
-				} else {
-					await this.odataHandler.waitForCreation();
-				}
-
-				// check for and activate all drafts and wait for all draft to be created
-				if (this.component.getActivateDraft() && !errorsFound) {
-					await this.odataHandler.waitForDraft();
-				}
-
-				this.odataHandler.resetContexts();
-			}
-			this.refreshBinding(this.context, this.binding, this.tableObject.getId());
-			fnResolve();
-		} catch (error) {
-			this.odataHandler.resetContexts();
-			Log.error("Error while calling the odata service", error as Error, "ExcelUpload: callOdata");
-			fnReject(error);
 		}
 	}
 
@@ -375,6 +264,10 @@ export default class ExcelUpload {
 
 	public getPayloadArray(): any[] {
 		return this.payloadArray;
+	}
+
+	public getODataHandler(): OData {
+		return this.odataHandler;
 	}
 
 	
