@@ -75,7 +75,7 @@ export default class ExcelUpload {
 	 * @returns {Promise<void>} A promise that resolves when the initial setup is complete.
 	 */
 	async initialSetup(): Promise<void> {
-		this.excelUploadDialogHandler.createExcelUploadDialog();
+		await this.excelUploadDialogHandler.createExcelUploadDialog();
 		if (!this.component.getStandalone()) {
 			try {
 				await this.setContext();
