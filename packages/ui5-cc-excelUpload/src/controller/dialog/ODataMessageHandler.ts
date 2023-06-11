@@ -1,7 +1,7 @@
 import Dialog from "sap/m/Dialog";
-import { Messages, MessageTypes, ListObject, ArrayData, PayloadArray } from "../types";
-import ExcelUpload from "./ExcelUpload";
-import Util from "./Util";
+import { Messages, MessageTypes, ListObject, ArrayData, PayloadArray } from "../../types";
+import ExcelUpload from "../ExcelUpload";
+import Util from "../Util";
 import Fragment from "sap/ui/core/Fragment";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import { MessageType, ValueState } from "sap/ui/core/library";

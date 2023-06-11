@@ -15,10 +15,9 @@ import Util from "./Util";
 import MessageHandler from "./MessageHandler";
 import Log from "sap/base/Log";
 import FlexBox from "sap/m/FlexBox";
-import OptionsDialog from "./OptionsDialog";
+import OptionsDialog from "./dialog/OptionsDialog";
 import ExcelDialog from "../control/ExcelDialog";
-import ExcelUploadDialog from "./ExcelUploadDialog";
-import * as XLSX from "xlsx";
+import ExcelUploadDialog from "./dialog/ExcelUploadDialog";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */

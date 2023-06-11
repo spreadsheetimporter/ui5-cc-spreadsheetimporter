@@ -2,7 +2,7 @@ import Log from "sap/base/Log";
 import Dialog from "sap/m/Dialog";
 import Fragment from "sap/ui/core/Fragment";
 import JSONModel from "sap/ui/model/json/JSONModel";
-import ExcelUpload from "./ExcelUpload";
+import ExcelUpload from "../ExcelUpload";
 
 export default class OptionsDialog {
     excelUploadController: ExcelUpload;

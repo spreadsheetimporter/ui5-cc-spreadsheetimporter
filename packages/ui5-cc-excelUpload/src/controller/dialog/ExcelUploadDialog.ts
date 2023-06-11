@@ -1,22 +1,22 @@
 import Fragment from "sap/ui/core/Fragment";
 import JSONModel from "sap/ui/model/json/JSONModel";
-import ExcelUpload from "./ExcelUpload";
-import ExcelDialog from "../control/ExcelDialog";
+import ExcelUpload from "../ExcelUpload";
+import ExcelDialog from "../../control/ExcelDialog";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
-import Component from "../Component";
+import Component from "../../Component";
 import Event from "sap/ui/base/Event";
 import Bar from "sap/m/Bar";
 import FileUploader from "sap/ui/unified/FileUploader";
 import MessageToast from "sap/m/MessageToast";
-import Preview from "./Preview";
-import Util from "./Util";
+import Preview from "../Preview";
+import Util from "../Util";
 import ResourceBundle from "sap/base/i18n/ResourceBundle";
 import * as XLSX from "xlsx";
 import OptionsDialog from "./OptionsDialog";
-import MessageHandler from "./MessageHandler";
+import MessageHandler from "../MessageHandler";
 import Log from "sap/base/Log";
-import SheetHandler from "./SheetHandler";
-import Parser from "./Parser";
+import SheetHandler from "../SheetHandler";
+import Parser from "../Parser";
 
 export default class ExcelUploadDialog {
 	excelUploadController: ExcelUpload;

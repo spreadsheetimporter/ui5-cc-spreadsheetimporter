@@ -1,7 +1,7 @@
 import DraftController from "sap/ui/generic/app/transaction/DraftController";
 import { Columns, ListObject } from "../../types";
 import MetadataHandler from "./MetadataHandler";
-import ODataMessageHandler from "../ODataMessageHandler";
+import ODataMessageHandler from "../dialog/ODataMessageHandler";
 import ExcelUpload from "../ExcelUpload";
 import Log from "sap/base/Log";
 import MetadataHandlerV2 from "./MetadataHandlerV2";
