@@ -1,7 +1,7 @@
 import Fragment from "sap/ui/core/Fragment";
 import MessageToast from "sap/m/MessageToast";
 import * as XLSX from "xlsx";
-import MetadataHandler from "./MetadataHandler";
+import MetadataHandler from "./odata/MetadataHandler";
 import Component from "../Component";
 import XMLView from "sap/ui/core/mvc/XMLView";
 import { ListObject, Messages, CustomMessageTypes } from "../types";
@@ -13,7 +13,6 @@ import OData from "./odata/OData";
 import ODataV2 from "./odata/ODataV2";
 import ODataV4 from "./odata/ODataV4";
 import FileUploader from "sap/ui/unified/FileUploader";
-import MessageBox from "sap/m/MessageBox";
 import Button from "sap/m/Button";
 import Util from "./Util";
 import Parser from "./Parser";
@@ -37,7 +36,6 @@ export default class ExcelUpload {
 	private isOpenUI5: boolean;
 	private view: XMLView;
 	private tableObject: any;
-	private metadataHandler: MetadataHandler;
 	private messageHandler: MessageHandler;
 	private previewHandler: Preview;
 	public util: Util;
@@ -72,7 +70,7 @@ export default class ExcelUpload {
 		this.isODataV4 = this._checkIfODataIsV4();
 		// check if "sap.ui.generic" is available, if false it is OpenUI5
 		this.isOpenUI5 = sap.ui.generic ? true : false;
-		this.odataHandler = this.getODataHandler(this.UI5MinorVersion, undefined, this);
+		this.odataHandler = this.getODataHandler(this.UI5MinorVersion, this);
 		this.initialSetupPromise = this.initialSetup();
 		this.previewHandler = new Preview(this.util);
 		Log.debug("constructor",undefined,"ExcelUpload: ExcelUpload",() => this.component.logger.returnObject({ui5version: this.UI5MinorVersion, isODataV4: this.isODataV4, isOpenUI5: this.isOpenUI5}))
@@ -108,8 +106,6 @@ export default class ExcelUpload {
 		}
 		this.messageHandler = new MessageHandler(this);
 		if (!this.component.getStandalone()) {
-			this.metadataHandler = new MetadataHandler(this);
-			this.odataHandler.metaDatahandler = this.metadataHandler;
 			try {
 				await this.setContext();
 				this.errorState = false;
@@ -148,7 +144,7 @@ export default class ExcelUpload {
 		this.component.setOdataType(odataType);
 		this.odataKeyList = await this.odataHandler.getKeyList(odataType, this.tableObject);
 		Log.debug("odataKeyList", undefined, "ExcelUpload: ExcelUpload", () => this.component.logger.returnObject({ odataKeyList: this.odataKeyList }));
-		this.typeLabelList = await this.odataHandler.createLabelList(this.component.getColumns(), odataType, this.tableObject);
+		this.typeLabelList = await this.odataHandler.getLabelList(this.component.getColumns(), odataType, this.tableObject);
 		Log.debug("typeLabelList", undefined, "ExcelUpload: ExcelUpload", () => this.component.logger.returnObject({ typeLabelList: this.typeLabelList }));
 
 		this.model = this.tableObject.getModel();
@@ -169,11 +165,11 @@ export default class ExcelUpload {
 	 * @param {number} version - UI5 version number.
 	 * @returns {OData} OData handler instance.
 	 */
-	getODataHandler(version: number, metaDatahandler: MetadataHandler, excelUploadController: ExcelUpload): OData {
+	getODataHandler(version: number, excelUploadController: ExcelUpload): OData {
 		if (this.isODataV4) {
-			return new ODataV4(version, metaDatahandler, excelUploadController);
+			return new ODataV4(version, excelUploadController);
 		} else {
-			return new ODataV2(version,metaDatahandler, excelUploadController);
+			return new ODataV2(version, excelUploadController);
 		}
 	}
 

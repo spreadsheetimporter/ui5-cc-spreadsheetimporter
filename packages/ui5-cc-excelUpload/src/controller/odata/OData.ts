@@ -1,19 +1,19 @@
 import DraftController from "sap/ui/generic/app/transaction/DraftController";
 import { Columns, ListObject } from "../../types";
-import MetadataHandler from "../MetadataHandler";
+import MetadataHandler from "./MetadataHandler";
 import ODataMessageHandler from "../ODataMessageHandler";
 import ExcelUpload from "../ExcelUpload";
 import Log from "sap/base/Log";
+import MetadataHandlerV2 from "./MetadataHandlerV2";
+import MetadataHandlerV4 from "./MetadataHandlerV4";
 
 export default abstract class OData {
 	UI5MinorVersion: number;
 	draftController: DraftController;
-	metaDatahandler: MetadataHandler;
 	odataMessageHandler: ODataMessageHandler;
 
-	constructor(ui5version: number, metaDatahandler: MetadataHandler, excelUploadController: ExcelUpload) {
+	constructor(ui5version: number, excelUploadController: ExcelUpload) {
 		this.UI5MinorVersion = ui5version;
-		this.metaDatahandler = metaDatahandler;
 		this.odataMessageHandler = new ODataMessageHandler(excelUploadController);
 	}
 
@@ -65,6 +65,7 @@ export default abstract class OData {
 		}
 	}
 
+
 	abstract create(model: any, binding: any, payload: any): any;
 	abstract createAsync(model: any, binding: any, payload: any): any;
 	abstract submitChanges(model: any): Promise<any>;
@@ -72,7 +73,8 @@ export default abstract class OData {
 	abstract waitForDraft(): void;
 	abstract resetContexts(): void;
 	abstract getView(context: any): any;
-	abstract createLabelList(columns: Columns, odataType: string, tableObject: any): Promise<ListObject>;
+	abstract getMetadataHandler(): MetadataHandlerV2 | MetadataHandlerV4
+	abstract getLabelList(columns: Columns, odataType: string, tableObject: any): Promise<ListObject>;
 	abstract getKeyList(odataType: string, tableObject: any): Promise<string[]>;
 	abstract getOdataType(binding: any, tableObject: any, odataType: any): string;
 	abstract checkForErrors(model: any, binding: any, showBackendErrorMessages: Boolean): Promise<boolean>;
