@@ -1,7 +1,4 @@
-import Fragment from "sap/ui/core/Fragment";
 import MessageToast from "sap/m/MessageToast";
-import * as XLSX from "xlsx";
-import MetadataHandler from "./MetadataHandler";
 import Component from "../Component";
 import XMLView from "sap/ui/core/mvc/XMLView";
 import { ListObject, Messages, CustomMessageTypes } from "../types";
@@ -13,19 +10,14 @@ import OData from "./odata/OData";
 import ODataV2 from "./odata/ODataV2";
 import ODataV4 from "./odata/ODataV4";
 import FileUploader from "sap/ui/unified/FileUploader";
-import MessageBox from "sap/m/MessageBox";
 import Button from "sap/m/Button";
 import Util from "./Util";
-import Parser from "./Parser";
 import MessageHandler from "./MessageHandler";
-import Bar from "sap/m/Bar";
-import Preview from "./Preview";
 import Log from "sap/base/Log";
-import JSONModel from "sap/ui/model/json/JSONModel";
 import FlexBox from "sap/m/FlexBox";
-import Options from "./Options";
-import SheetHandler from "./SheetHandler";
+import OptionsDialog from "./dialog/OptionsDialog";
 import ExcelDialog from "../control/ExcelDialog";
+import ExcelUploadDialog from "./dialog/ExcelUploadDialog";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
@@ -37,25 +29,23 @@ export default class ExcelUpload {
 	private isOpenUI5: boolean;
 	private view: XMLView;
 	private tableObject: any;
-	private metadataHandler: MetadataHandler;
 	private messageHandler: MessageHandler;
-	private previewHandler: Preview;
 	public util: Util;
 	private model: any;
-	private typeLabelList: ListObject;
-	private dialog: ExcelDialog;
+	public typeLabelList: ListObject;
 	public componentI18n: ResourceModel;
 	private UI5MinorVersion: number;
 	private odataHandler: OData;
-	private payload: any;
+	public payload: any;
 	private binding: any;
-	private payloadArray: any[];
+	public payloadArray: any[];
 	private errorState: boolean;
 	private errorMessage: any;
 	private initialSetupPromise: Promise<void>;
 	public messageArray: Messages[];
 	odataKeyList: string[];
-	optionsHandler: Options;
+	optionsHandler: OptionsDialog;
+	excelUploadDialogHandler: ExcelUploadDialog;
 
 	/**
 	 * Initializes ExcelUpload instance.
@@ -63,18 +53,19 @@ export default class ExcelUpload {
 	 * @param {ResourceModel} componentI18n - The i18n resource model for the component.
 	 */
 	constructor(component: Component, componentI18n: ResourceModel) {
-		this.dialog = null;
 		this.errorState = false;
 		this.UI5MinorVersion = sap.ui.version.split(".")[1];
 		this.component = component;
 		this.componentI18n = componentI18n;
 		this.util = new Util(componentI18n.getResourceBundle() as ResourceBundle);
+		this.messageHandler = new MessageHandler(this);
+		this.excelUploadDialogHandler = new ExcelUploadDialog(this, component, componentI18n, this.messageHandler);
 		this.isODataV4 = this._checkIfODataIsV4();
 		// check if "sap.ui.generic" is available, if false it is OpenUI5
 		this.isOpenUI5 = sap.ui.generic ? true : false;
-		this.odataHandler = this.getODataHandler(this.UI5MinorVersion, undefined, this);
+		this.odataHandler = this.createODataHandler(this.UI5MinorVersion, this);
 		this.initialSetupPromise = this.initialSetup();
-		this.previewHandler = new Preview(this.util);
+		
 		Log.debug("constructor",undefined,"ExcelUpload: ExcelUpload",() => this.component.logger.returnObject({ui5version: this.UI5MinorVersion, isODataV4: this.isODataV4, isOpenUI5: this.isOpenUI5}))
 	}
 
@@ -83,33 +74,8 @@ export default class ExcelUpload {
 	 * @returns {Promise<void>} A promise that resolves when the initial setup is complete.
 	 */
 	async initialSetup(): Promise<void> {
-		this.optionsHandler = new Options(this);
-		const infoModel = new JSONModel({
-			dataRows: 0,
-			strict: this.component.getStrict(),
-			hidePreview: this.component.getHidePreview(),
-			showOptions: this.component.getShowOptions(),
-		});
-		if (!this.dialog) {
-			this.dialog = (await Fragment.load({
-				name: "cc.excelUpload.XXXnamespaceXXX.fragment.ExcelUpload",
-				type: "XML",
-				controller: this,
-			})) as ExcelDialog;
-			this.dialog.setBusyIndicatorDelay(0);
-			this.dialog.setModel(this.componentI18n, "i18n");
-			this.dialog.setModel(infoModel, "info");
-			this.dialog.setModel(this.component.getModel("device"), "device");
-			this.dialog.attachDecimalSeparatorChanged(this.onDecimalSeparatorChanged.bind(this));
-		}
-		if (this.component.getStandalone() && this.component.getColumns().length === 0) {
-			(this.dialog.getSubHeader() as Bar).setVisible(false);
-			(this.dialog.getSubHeader() as Bar).getContentLeft()[0].setVisible(false);
-		}
-		this.messageHandler = new MessageHandler(this);
+		await this.excelUploadDialogHandler.createExcelUploadDialog();
 		if (!this.component.getStandalone()) {
-			this.metadataHandler = new MetadataHandler(this);
-			this.odataHandler.metaDatahandler = this.metadataHandler;
 			try {
 				await this.setContext();
 				this.errorState = false;
@@ -134,7 +100,7 @@ export default class ExcelUpload {
 
 		this.view = this.odataHandler.getView(this.context);
 		Log.debug("View", undefined, "ExcelUpload: ExcelUpload", () => this.component.logger.returnObject({ view: this.view }));
-		this.view.addDependent(this.dialog);
+		this.view.addDependent(this.excelUploadDialogHandler.getDialog());
 		this.tableObject = this.odataHandler.getTableObject(this.component.getTableId(), this.view);
 		Log.debug("tableObject", undefined, "ExcelUpload: ExcelUpload", () => this.component.logger.returnObject({ tableObject: this.tableObject }));
 		this.component.setTableId(this.tableObject.getId());
@@ -148,7 +114,7 @@ export default class ExcelUpload {
 		this.component.setOdataType(odataType);
 		this.odataKeyList = await this.odataHandler.getKeyList(odataType, this.tableObject);
 		Log.debug("odataKeyList", undefined, "ExcelUpload: ExcelUpload", () => this.component.logger.returnObject({ odataKeyList: this.odataKeyList }));
-		this.typeLabelList = await this.odataHandler.createLabelList(this.component.getColumns(), odataType, this.tableObject);
+		this.typeLabelList = await this.odataHandler.getLabelList(this.component.getColumns(), odataType, this.tableObject);
 		Log.debug("typeLabelList", undefined, "ExcelUpload: ExcelUpload", () => this.component.logger.returnObject({ typeLabelList: this.typeLabelList }));
 
 		this.model = this.tableObject.getModel();
@@ -169,11 +135,11 @@ export default class ExcelUpload {
 	 * @param {number} version - UI5 version number.
 	 * @returns {OData} OData handler instance.
 	 */
-	getODataHandler(version: number, metaDatahandler: MetadataHandler, excelUploadController: ExcelUpload): OData {
+	createODataHandler(version: number, excelUploadController: ExcelUpload): OData {
 		if (this.isODataV4) {
-			return new ODataV4(version, metaDatahandler, excelUploadController);
+			return new ODataV4(version, excelUploadController);
 		} else {
-			return new ODataV2(version,metaDatahandler, excelUploadController);
+			return new ODataV2(version, excelUploadController);
 		}
 	}
 
@@ -186,228 +152,14 @@ export default class ExcelUpload {
 			await this.initialSetup();
 		}
 		if (!this.errorState) {
-			((this.dialog.getContent()[0] as FlexBox).getItems()[1] as FileUploader).clear();
-			this.dialog.open();
+			((this.excelUploadDialogHandler.getDialog().getContent()[0] as FlexBox).getItems()[1] as FileUploader).clear();
+			this.excelUploadDialogHandler.openExcelUploadDialog();
 		} else {
 			Util.showError(this.errorMessage, "ExcelUpload.ts", "initialSetup");
 			Log.error("Error opening the dialog", undefined, "ExcelUpload: ExcelUpload");
 		}
 	}
 
-	async showPreview() {
-		this.previewHandler.showPreview(this.payloadArray);
-	}
-
-	/**
-	 * Handles file upload event.
-	 * @param {Event} event - The file upload event.
-	 */
-	async onFileUpload(event: Event) {
-		try {
-			this.messageHandler.setMessages([]);
-			const file = event.getParameter("files")[0];
-
-			const workbook = (await this._readWorkbook(file)) as XLSX.WorkBook;
-			const sheetName = workbook.SheetNames[0];
-			let excelSheetsData = SheetHandler.sheet_to_json(workbook.Sheets[sheetName]);
-			let columnNames = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })[0] as string[];
-
-			Log.debug("columnNames of uploaded excel file", undefined, "ExcelUpload: onFileUpload", () => this.component.logger.returnObject({ columnNames: columnNames }));
-
-			if (!excelSheetsData || excelSheetsData.length === 0) {
-				throw new Error(this.util.geti18nText("emptySheet"));
-			}
-
-			//remove empty spaces before and after every value
-			for (const object of excelSheetsData) {
-				for (const key in object) {
-					object[key].rawValue = typeof object[key].rawValue === "string" ? object[key].rawValue.trim() : object[key].rawValue;
-				}
-			}
-
-			if (!this.component.getStandalone()) {
-				this.messageHandler.checkFormat(excelSheetsData);
-				this.messageHandler.checkMandatoryColumns(excelSheetsData,columnNames,this.odataKeyList, this.component.getMandatoryFields(), this.typeLabelList);
-				this.messageHandler.checkColumnNames(columnNames, this.component.getFieldMatchType(), this.typeLabelList);
-			}
-			this.payload = excelSheetsData;
-			this.component.fireCheckBeforeRead({ sheetData: excelSheetsData });
-			if (!this.component.getStandalone()) {
-				this.payloadArray = [];
-				this.payloadArray = Parser.parseExcelData(this.payload, this.typeLabelList, this.component, this.messageHandler, this.util, this.isODataV4);
-			} else {
-				this.payloadArray = this.payload;
-			}
-
-			if (this.messageHandler.areMessagesPresent()) {
-				// show error dialog
-				this.messageHandler.displayMessages();
-				return;
-			}
-			this.setDataRows();
-		} catch (error) {
-			Util.showError(error, "ExcelUpload.ts", "onFileUpload");
-			this.resetContent();
-		}
-	}
-
-	/**
-	 * Closes the Excel upload dialog.
-	 */
-	onCloseDialog() {
-		this.resetContent();
-		this.dialog.close();
-	}
-
-	onOpenOptionsDialog() {
-		this.optionsHandler.openOptionsDialog();
-	}
-
-	/**
-	 * Sending extracted data to backend
-	 * @param {*} event
-	 */
-	async onUploadSet(event: Event) {
-		const isDefaultNotPrevented = this.component.fireUploadButtonPress({ payload: this.payload });
-		if (!isDefaultNotPrevented || this.component.getStandalone()) {
-			this.onCloseDialog();
-			return;
-		}
-		// checking if excel file contains data or not
-		if (!this.payloadArray.length) {
-			MessageToast.show(this.util.geti18nText("selectFileUpload"));
-			return;
-		}
-
-		var that = this;
-		const source = event.getSource() as Button;
-		const sourceParent = source.getParent() as Dialog;
-
-		sourceParent.setBusyIndicatorDelay(0);
-		sourceParent.setBusy(true);
-		await Util.sleep(50);
-
-		// creating a promise as the extension api accepts odata call in form of promise only
-		var fnAddMessage = function () {
-			return new Promise((fnResolve, fnReject) => {
-				that.callOdata(fnResolve, fnReject);
-			});
-		};
-
-		var mParameters = {
-			busy: {
-				set: true,
-				check: false,
-			},
-			dataloss: {
-				popup: false,
-				navigation: false,
-			},
-			sActionLabel: this.util.geti18nText("uploadingFile"),
-		};
-		// calling the oData service using extension api
-		if (this.isODataV4) {
-			await this.context.editFlow.securedExecution(fnAddMessage, mParameters);
-		} else {
-			try {
-				if (this.context.extensionAPI) {
-					await this.context.extensionAPI.securedExecution(fnAddMessage, mParameters);
-				} else {
-					await fnAddMessage();
-				}
-			} catch (error) {
-				Log.error("Error while calling the odata service", error as Error, "ExcelUpload: onUploadSet");
-				this.resetContent();
-			}
-		}
-
-		sourceParent.setBusy(false);
-
-		this.onCloseDialog();
-	}
-
-	/**
-	 * Helper method to call OData service.
-	 * @param {*} fnResolve - The resolve function for the Promise.
-	 * @param {*} fnReject - The reject function for the Promise.
-	 */
-	async callOdata(fnResolve: any, fnReject: any) {
-		// intializing the message manager for displaying the odata response messages
-		try {
-			// get binding of table to create rows
-			const model = this.tableObject.getModel();
-
-			// Slice the array into chunks of 'batchSize' if necessary
-			const slicedPayloadArray = this.odataHandler.processPayloadArray(this.component.getBatchSize(), this.payloadArray);
-
-			// Loop over the sliced array
-			for (const batch of slicedPayloadArray) {
-				// loop over data from excel file
-				for (const payload of batch) {
-					this.payload = payload;
-					// Extension method to manipulate payload
-					this.component.fireChangeBeforeCreate({ payload: this.payload });
-					this.odataHandler.createAsync(model, this.binding, this.payload);
-				}
-				// wait for all drafts to be created
-				await this.odataHandler.submitChanges(model);
-				let errorsFound = await this.odataHandler.checkForErrors(model, this.binding, this.component.getShowBackendErrorMessages());
-				if(errorsFound){
-					break;
-				} else {
-					await this.odataHandler.waitForCreation();
-				}
-
-				// check for and activate all drafts and wait for all draft to be created
-				if (this.component.getActivateDraft() && !errorsFound) {
-					await this.odataHandler.waitForDraft();
-				}
-
-				this.odataHandler.resetContexts();
-			}
-			this.refreshBinding(this.context, this.binding, this.tableObject.getId());
-			fnResolve();
-		} catch (error) {
-			this.odataHandler.resetContexts();
-			Log.error("Error while calling the odata service", error as Error, "ExcelUpload: callOdata");
-			fnReject(error);
-		}
-	}
-
-	/**
-	 * Create Excel Template File with specific columns
-	 */
-	onTempDownload() {
-		// create excel column list
-		let fieldMatchType = this.component.getFieldMatchType();
-		var excelColumnList = [{}];
-		if (this.component.getStandalone()) {
-			// loop over this.component.getColumns
-			for (let column of this.component.getColumns()) {
-				excelColumnList[0][column] = "";
-			}
-		} else {
-			for (let [key, value] of Object.entries(this.typeLabelList)) {
-				if (fieldMatchType === "label") {
-					excelColumnList[0][value.label] = "";
-				}
-				if (fieldMatchType === "labelTypeBrackets") {
-					excelColumnList[0][`${value.label}[${key}]`] = "";
-				}
-			}
-		}
-
-		// initialising the excel work sheet
-		const ws = XLSX.utils.json_to_sheet(excelColumnList);
-		// creating the new excel work book
-		const wb = XLSX.utils.book_new();
-		// set the file value
-		XLSX.utils.book_append_sheet(wb, ws, "Tabelle1");
-		// download the created excel file
-		XLSX.writeFile(wb, this.component.getExcelFileName());
-
-		MessageToast.show(this.util.geti18nText("downloadingTemplate"));
-	}
 
 	_checkIfODataIsV4() {
 		try {
@@ -420,7 +172,7 @@ export default class ExcelUpload {
 	}
 
 	_setPayload(payload) {
-		this.payload = payload;
+		this.payloadArray = payload;
 	}
 
 	refreshBinding(context: any, binding:any, id: any) {
@@ -456,46 +208,6 @@ export default class ExcelUpload {
 		}
 	}
 
-	async buffer_RS(stream: ReadableStream) {
-		/* collect data */
-		const buffers = [];
-		const reader = stream.getReader();
-		for (;;) {
-			const res = await reader.read();
-			if (res.value) buffers.push(res.value);
-			if (res.done) break;
-		}
-
-		/* concat */
-		const out = new Uint8Array(buffers.reduce((acc, v) => acc + v.length, 0));
-
-		let off = 0;
-		for (const u8 of buffers) {
-			out.set(u8, off);
-			off += u8.length;
-		}
-
-		return out;
-	}
-
-	/**
-	 * Read the uploaded workbook from the file.
-	 * @param {File} file - The uploaded file.
-	 * @returns {Promise} - Promise object representing the workbook.
-	 */
-	async _readWorkbook(file: Blob) {
-		return new Promise(async (resolve, reject) => {
-			try {
-				const data = await this.buffer_RS(file.stream());
-				let workbook = XLSX.read(data, {cellNF: true, cellDates: true, cellText: true, cellFormula: true});
-				resolve(workbook);
-			} catch (error) {
-				Log.error("Error while reading the uploaded workbook", error as Error, "ExcelUpload: _readWorkbook");
-				reject(error);
-			}
-		});
-	}
-
 	/**
 	 * Dynamically loads the `sap.ui.generic.app.transaction.DraftController` module.
 	 * @returns {Promise<sap.ui.generic.app.transaction.DraftController>} A Promise that resolves to an instance of the `DraftController` class.
@@ -518,10 +230,8 @@ export default class ExcelUpload {
 	resetContent() {
 		this.payloadArray = [];
 		this.payload = [];
-		(this.dialog.getModel("info") as JSONModel).setProperty("/dataRows", 0);
 		this.odataHandler.resetContexts();
-		var fileUploader = this.dialog.getContent()[0].getItems()[1] as FileUploader;
-		fileUploader.setValue();
+		this.excelUploadDialogHandler.resetContent();
 	}
 
 	/**
@@ -548,11 +258,17 @@ export default class ExcelUpload {
 		this.messageHandler.addArrayToMessages(messagesArray);
 	}
 
-	public setDataRows() {
-		(this.dialog.getModel("info") as JSONModel).setProperty("/dataRows", this.payloadArray.length);
+	public getExcelUploadDialog(): ExcelDialog {
+		return this.excelUploadDialogHandler.getDialog();
 	}
 
-	onDecimalSeparatorChanged(event:Event) {
-		this.component.setDecimalSeparator(event.getParameter("decimalSeparator"));
+	public getPayloadArray(): any[] {
+		return this.payloadArray;
 	}
+
+	public getODataHandler(): OData {
+		return this.odataHandler;
+	}
+
+	
 }

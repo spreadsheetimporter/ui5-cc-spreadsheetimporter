@@ -1,21 +1,22 @@
-import Event from "sap/ui/base/Event";
 import { Columns } from "../../types";
 import OData from "./OData";
-import MetadataHandler from "../MetadataHandler";
 import ExcelUpload from "../ExcelUpload";
 import Util from "../Util";
 import ODataListBinding from "sap/ui/model/odata/v4/ODataListBinding";
 import Log from "sap/base/Log";
+import MetadataHandlerV4 from "./MetadataHandlerV4";
 
 export default class ODataV4 extends OData {
 	public createPromises: Promise<any>[] = [];
 	public createContexts: any[] = [];
 	customBinding: ODataListBinding;
 	updateGroupId: string;
+	private metadataHandler: MetadataHandlerV4;
 
-	constructor(ui5version: number, metaDatahandler: MetadataHandler, excelUploadController: ExcelUpload) {
-		super(ui5version,metaDatahandler,excelUploadController);
+	constructor(ui5version: number, excelUploadController: ExcelUpload) {
+		super(ui5version,excelUploadController);
 		this.updateGroupId = Util.getRandomString(10)
+		this.metadataHandler = new MetadataHandlerV4(excelUploadController);
 	}
 
 	create(model: any, binding: any, payload: any) {
@@ -110,16 +111,20 @@ export default class ODataV4 extends OData {
 		}
 	}
 
-	async createLabelList(columns: Columns, odataType: string) {
-		return this.metaDatahandler.createLabelListV4(columns, odataType);
+	async getLabelList(columns: Columns, odataType: string) {
+		return this.getMetadataHandler().getLabelList(columns, odataType);
 	}
 
 	async getKeyList(odataType: string, tableObject: any) {
-		return this.metaDatahandler.getKeyListV4(odataType);
+		return this.getMetadataHandler().getKeyList(odataType);
 	}
 
 	resetContexts() {
 		this.createContexts = [];
 		this.createPromises = [];
+	}
+
+	getMetadataHandler(): MetadataHandlerV4 {
+		return this.metadataHandler;
 	}
 }

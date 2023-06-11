@@ -1,16 +1,19 @@
 import Log from "sap/base/Log";
 import { Columns } from "../../types";
 import ExcelUpload from "../ExcelUpload";
-import MetadataHandler from "../MetadataHandler";
 import OData from "./OData";
+import MetadataHandlerV2 from "./MetadataHandlerV2";
+import MetadataHandler from "./MetadataHandlerV4";
 
 export default class ODataV2 extends OData {
 	public createPromises: Promise<any>[] = [];
 	public createContexts: any[] = [];
 	submitChangesResponse: any;
+	private metadataHandler: MetadataHandlerV2;
 
-	constructor(ui5version: number, metaDatahandler: MetadataHandler, excelUploadController: ExcelUpload) {
-		super(ui5version, metaDatahandler, excelUploadController);
+	constructor(ui5version: number, excelUploadController: ExcelUpload) {
+		super(ui5version, excelUploadController);
+		this.metadataHandler = new MetadataHandlerV2(excelUploadController);
 	}
 	create(model: any, binding: any, payload: any) {
 		const submitChangesPromise = (binding, payload) => {
@@ -107,11 +110,18 @@ export default class ODataV2 extends OData {
 		}
 	}
 
-	async createLabelList(columns: Columns, odataType: string, tableObject: any) {
+	async getLabelList(columns: Columns, odataType: string, tableObject: any) {
 		const metaModel = tableObject.getModel().getMetaModel();
 		await metaModel.loaded();
 		const oDataEntityType = metaModel.getODataEntityType(odataType);
-		return this.metaDatahandler.createLabelListV2(columns, odataType, oDataEntityType);
+		return this.getMetadataHandler().getLabelList(columns, odataType, oDataEntityType);
+	}
+
+	async getKeyList(odataType: string, tableObject: any) {
+		const metaModel = tableObject.getModel().getMetaModel();
+		await metaModel.loaded();
+		const oDataEntityType = metaModel.getODataEntityType(odataType);
+		return this.getMetadataHandler().getKeyList(oDataEntityType);
 	}
 
 	resetContexts() {
@@ -119,10 +129,7 @@ export default class ODataV2 extends OData {
 		this.createPromises = [];
 	}
 
-	async getKeyList(odataType: string, tableObject: any) {
-		const metaModel = tableObject.getModel().getMetaModel();
-		await metaModel.loaded();
-		const oDataEntityType = metaModel.getODataEntityType(odataType);
-		return this.metaDatahandler.getKeyListV2(oDataEntityType);
+	getMetadataHandler(): MetadataHandlerV2 {
+		return this.metadataHandler;
 	}
 }

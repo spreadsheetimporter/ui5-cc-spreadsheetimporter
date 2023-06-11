@@ -2,17 +2,18 @@ import Log from "sap/base/Log";
 import Dialog from "sap/m/Dialog";
 import Fragment from "sap/ui/core/Fragment";
 import JSONModel from "sap/ui/model/json/JSONModel";
+import ExcelUpload from "../ExcelUpload";
 
-export default class Options {
-    excelUploadController: any;
-    optionsDialog: any;
+export default class OptionsDialog {
+    excelUploadController: ExcelUpload;
+    optionsDialog: Dialog;
 
 	constructor(excelUploadController: any) {
 		this.excelUploadController = excelUploadController;
 	}
 
     async openOptionsDialog() {
-		this.excelUploadController.dialog.setBusy(true)
+		this.excelUploadController.excelUploadDialogHandler.getDialog().setBusy(true)
 		const optionsModel = new JSONModel({
 			strict: this.excelUploadController.component.getStrict(),
 			fieldMatchType: this.excelUploadController.component.getFieldMatchType(),
@@ -25,7 +26,7 @@ export default class Options {
 		}))
 		if (!this.optionsDialog) {
 			this.optionsDialog = (await Fragment.load({
-				name: "cc.excelUpload.XXXnamespaceXXX.fragment.Options",
+				name: "cc.excelUpload.XXXnamespaceXXX.fragment.OptionsDialog",
 				type: "XML",
 				controller: this,
 			})) as Dialog;
@@ -33,7 +34,7 @@ export default class Options {
 		}
 		this.optionsDialog.setModel(optionsModel, "options");
 		this.optionsDialog.open();
-		this.excelUploadController.dialog.setBusy(false)
+		this.excelUploadController.excelUploadDialogHandler.getDialog().setBusy(false)
 	}
 
 

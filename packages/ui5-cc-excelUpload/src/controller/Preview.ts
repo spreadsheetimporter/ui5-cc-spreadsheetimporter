@@ -6,7 +6,6 @@ import Table from "sap/m/Table";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Text from "sap/m/Text";
 import Util from "./Util";
-import DateTimeField from "sap/m/DateTimeField";
 
 export default class Preview {
 	dialog: Dialog;
