@@ -53,6 +53,7 @@ export default class ExcelUploadDialog {
 				type: "XML",
 				controller: this,
 			})) as ExcelDialog;
+			this.excelUploadDialog.setComponent(this.component);
 			this.excelUploadDialog.setBusyIndicatorDelay(0);
 			this.excelUploadDialog.setModel(this.componentI18n, "i18n");
 			this.excelUploadDialog.setModel(infoModel, "info");

@@ -9,6 +9,7 @@ declare module "./ExcelDialog" {
      */
     interface $ExcelDialogSettings extends $DialogSettings {
         decimalSeparator?: string | PropertyBindingInfo;
+        component?: object | PropertyBindingInfo | `{${string}}`;
         decimalSeparatorChanged?: (event: Event) => void;
     }
 
@@ -32,6 +33,25 @@ declare module "./ExcelDialog" {
          * @returns Reference to "this" in order to allow method chaining
          */
         setDecimalSeparator(decimalSeparator: string): this;
+
+        // property: component
+
+        /**
+         * Gets current value of property "component".
+         *
+         * @returns Value of property "component"
+         */
+        getComponent(): object;
+
+        /**
+         * Sets a new value for property "component".
+         *
+         * When called with a value of "null" or "undefined", the default value of the property will be restored.
+         *
+         * @param component New value for property "component"
+         * @returns Reference to "this" in order to allow method chaining
+         */
+        setComponent(component: object): this;
 
         // event: decimalSeparatorChanged
 

@@ -15,7 +15,8 @@ export default class ExcelDialog extends Dialog {
 		interfaces: ["sap.ui.core.IAsyncContentCreation"],
 		manifest: "json",
 		properties: {
-			decimalSeparator: { type: "string" }
+			decimalSeparator: { type: "string" },
+			component  : { type: "object" }
 		},
 		events: {
 			decimalSeparatorChanged: {}
