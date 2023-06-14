@@ -1,4 +1,4 @@
-name: wdi5 tests
+name: opa5 tests
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  test-wdi5:
+  test-opa5:
     runs-on: ubuntu-latest
     if: "github.event.pull_request.title != 'chore: release main'"
     strategy:
@@ -93,7 +93,7 @@ jobs:
 
       - name: start app ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
         run: |
-          pnpm --filter  start:silent&
+          pnpm --filter ${{ matrix.scenario }}${{ matrix.ui5version }} start:silent&
 
       # run opa5 tests
       - name: test opa5 ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}

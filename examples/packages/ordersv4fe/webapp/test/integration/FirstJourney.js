@@ -39,7 +39,7 @@ sap.ui.define(["sap/ui/test/Opa5", "sap/ui/test/opaQunit", "sap/ui/test/actions/
 					success: function () {
 						const util = window[0].cc.excelUpload.v0_19_0.Util;
 						var input = "5,6";
-						var expectedOutput = 5;
+						var expectedOutput = 5.6;
 						// Call 'changeDecimalSeperator' method and check its output
 						var output = util.changeDecimalSeperator(input);
 						if (output !== expectedOutput) {
