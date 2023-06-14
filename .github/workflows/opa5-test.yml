@@ -101,3 +101,4 @@ jobs:
           while ! nc -z localhost 4004; do sleep 0.1; done
           while ! nc -z localhost ${{ env.TESTAPPPORT }}; do sleep 0.1; done
           pnpm --filter ${{ matrix.scenario }}${{ matrix.ui5version }} karma
+          pnpm --filter ui5-cc-excelupload-sample karma-headless -- -- ${{ matrix.scenario }} ${{ matrix.ui5version }}
