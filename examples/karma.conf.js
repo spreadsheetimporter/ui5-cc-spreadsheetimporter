@@ -18,11 +18,13 @@ let rootAppName = "";
 
 if(testappObject.rootAppObject){
 	id = testappObject.rootAppObject.id;
-	rootAppName = testappObject.rootAppObject.rootAppName;
+	rootAppName = testappObject.rootAppObject.rootAppName + testappObject.versionMinor;
 } else {
 	id = testappObject.id;
 	rootAppName = testappObject.rootAppName;
 }
+
+console.log("rootAppName: " + rootAppName)
 
 module.exports = function (config) {
 	let configuration = {
@@ -31,7 +33,7 @@ module.exports = function (config) {
 		ui5: {
 			url: `http://localhost:${port}`,
 			mode: "html",
-			testpage: "../test/integration/opaTests.qunit.html",
+			testpage: "./../test/integration/opaTests.qunit.html",
 			type: "application",
 			paths: {
 				webapp: `packages/${rootAppName}/webapp/`
@@ -45,6 +47,8 @@ module.exports = function (config) {
 	};
 
 	configuration.ui5.config.resourceRoots[id] = "./";
+
+	console.log(configuration.ui5)
 
 	config.set(configuration);
 };
