@@ -18,12 +18,12 @@ server:
         backend:
           - path: /ordersv4fe
             url: http://localhost:4004
-    - name: fiori-tools-appreload
-      afterMiddleware: compression
-      configuration:
-        port: 35729
-        path: webapp
-        delay: 300
+    # - name: fiori-tools-appreload
+    #   afterMiddleware: compression
+    #   configuration:
+    #     port: 35729
+    #     path: webapp
+    #     delay: 300
     - name: sap-fe-mockserver
       beforeMiddleware: csp
       configuration:
