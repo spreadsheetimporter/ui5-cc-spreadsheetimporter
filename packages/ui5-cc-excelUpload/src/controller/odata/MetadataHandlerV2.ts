@@ -1,14 +1,14 @@
 import Log from "sap/base/Log";
 import { Columns, Property, ListObject, PropertyArray } from "../../types";
-import ExcelUpload from "../ExcelUpload";
+import MetadataHandler from "./MetadataHandler";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
-export default class MetadataHandler {
-	private excelUploadController: ExcelUpload;
+export default class MetadataHandlerV2 extends MetadataHandler {
+	//private excelUploadController: ExcelUpload;
 
 	constructor(excelUploadController: any) {
-		this.excelUploadController = excelUploadController;
+		super(excelUploadController);
 	}
 
 	public getLabelList(colums: Columns, odataType: string, oDataEntityType: any): ListObject {

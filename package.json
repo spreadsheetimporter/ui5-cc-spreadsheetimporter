@@ -17,6 +17,7 @@
     "start:v2fe:108": "pnpm --filter ordersv2fe108 start",
     "start:v4fe:108": "pnpm --filter ordersv4fe108 start",
     "test:v4fe:108": "pnpm --filter ui5-cc-excelupload-sample test -- -- ordersv4fe 108",
+    "test:opa:v4fe:108": "pnpm --filter ui5-cc-excelupload-sample karma -- -- ordersv4fe 108",
     "test:v2fe:108": "pnpm --filter ui5-cc-excelupload-sample test -- -- ordersv2fe 108",
     "start:server": "pnpm --filter ui5-cc-excelupload-sample watch:server",
     "lint": "eslint .",

@@ -1,17 +1,19 @@
+import ManagedObject from "sap/ui/base/ManagedObject";
 import Dialog from "sap/m/Dialog";
-import { Messages, MessageTypes, ListObject, ArrayData, PayloadArray } from "../../types";
+import { Messages} from "../../types";
 import ExcelUpload from "../ExcelUpload";
-import Util from "../Util";
 import Fragment from "sap/ui/core/Fragment";
-import JSONModel from "sap/ui/model/json/JSONModel";
-import { MessageType, ValueState } from "sap/ui/core/library";
 
-export default class ODataMessageHandler {
+/**
+ * @namespace cc.excelUpload.XXXnamespaceXXX
+ */
+export default class ODataMessageHandler extends ManagedObject{
 	private messages: Messages[] = [];
 	private excelUploadController: ExcelUpload;
 	private messageDialog: Dialog;
 
 	constructor(excelUploadController: ExcelUpload) {
+		super();
 		this.messages = [];
 		this.excelUploadController = excelUploadController;
 	}

@@ -3,6 +3,7 @@
     "rootAppName": "ordersv2fe",
     "appTitel": "Orders V2 FE 108",
     "port": "8081",
+    "id": "ui.v2.ordersv2fe",
     "versionMinor": 108,
     "testMapping": {
       "specs": [
@@ -185,6 +186,7 @@
   },
   {
     "rootAppName": "ordersv4fe",
+    "id": "ui.v4.ordersv4fe",
     "port": "8080",
     "versionMinor": 108,
     "appTitel": "Orders V4 FE 108",

@@ -1,14 +1,17 @@
+import ManagedObject from "sap/ui/base/ManagedObject";
 import Log from "sap/base/Log";
 import ResourceBundle from "sap/base/i18n/ResourceBundle";
 import MessageBox, { Action } from "sap/m/MessageBox";
 import { FieldMatchType, RowData, ValueData } from "../types";
-import { Sticky } from "sap/m/library";
 import Component from "../Component";
-
-export default class Util {
+/**
+ * @namespace cc.excelUpload.XXXnamespaceXXX
+ */
+export default class Util extends ManagedObject {
 	private resourceBundle: ResourceBundle;
 
 	constructor(resourceBundle: ResourceBundle) {
+		super();
 		this.resourceBundle = resourceBundle;
 	}
 
@@ -143,7 +146,7 @@ export default class Util {
 				// Handle first-level objects
 				const keys = Object.keys(value);
 				if (keys.every(k => typeof value[k] !== 'object' || value[k] === null)) {
-					let simpleObject = {};
+					let simpleObject: { [key: string]: any } = {};
 					for (let k in value) {
 						if (typeof value[k] !== 'object' || value[k] === null) {
 							simpleObject[k] = value[k];

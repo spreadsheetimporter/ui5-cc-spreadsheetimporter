@@ -1,31 +1,87 @@
-sap.ui.define(["sap/ui/test/opaQunit"], function (opaTest) {
-	"use strict";
+/* global QUnit */
 
-	var Journey = {
-		run: function () {
-			QUnit.module("First journey");
+QUnit.config.autostart = false;
 
-			opaTest("Start application", function (Given, When, Then) {
-				Given.iStartMyApp();
+sap.ui.require(
+	["sap/ui/test/Opa5", "sap/ui/test/opaQunit", "sap/ui/test/actions/Press", "sap/ui/test/matchers/Properties", "sap/ui/test/matchers/BindingPath"],
+	function (Opa5, opaTest, Press, Properties, BindingPath) {
+		"use strict";
+		QUnit.module("First journey");
+		// in QUnit start page, before all OPA tests
+		Opa5.extendConfig({
+			autoWait: true
+		});
 
-				Then.onTheOrdersList.iSeeThisPage();
+		opaTest("Open Excel Upload Dialog", function (Given, When, Then) {
+			const url = sap.ui.require.toUrl("ui/v4/orders") + "/index.html";
+			Given.iStartMyAppInAFrame(url);
+			When.waitFor({
+				id: "ui.v4.ordersv4fe::OrdersList--fe::FilterBar::Orders-btnSearch",
+				controlType: "sap.m.Button",
+				visible: true,
+				actions: new Press(),
+				success: function (oControl) {
+					Opa5.assert.ok(true, "Go Button pressed");
+				},
+				errorMessage: "Can not select 'sap.m.Button'"
 			});
-
-			opaTest("Navigate to ObjectPage", function (Given, When, Then) {
-				// Note: this test will fail if the ListReport page doesn't show any data
-				When.onTheOrdersList.onFilterBar().iExecuteSearch();
-				Then.onTheOrdersList.onTable().iCheckRows();
-
-				When.onTheOrdersList.onTable().iPressRow(0);
-				Then.onTheOrdersObjectPage.iSeeThisPage();
+			Then.waitFor({
+				id: "ui.v4.ordersv4fe::OrdersList--fe::CustomAction::excelUploadListReport",
+				controlType: "sap.m.Button",
+				visible: true,
+				actions: new Press(),
+				success: function (oControl) {
+					Opa5.assert.ok(true, "Excel Upload Button pressed");
+				},
+				errorMessage: "Can not select 'sap.m.Button'"
 			});
+			Then.waitFor({
+				controlType: "cc.excelUpload.v0_19_0.ExcelDialog",
+				success: function (dialog) {
+					const util = window[0].cc.excelUpload.v0_19_0.Util;
+					Opa5.getContext().util = util;
+					Opa5.getContext().component = dialog[0].getComponent();
+					Opa5.assert.ok(true, "Context set");
+				},
+				errorMessage: "Incorrect decimal seperator"
+			});
+		});
 
-			opaTest("Teardown", function (Given, When, Then) {
-				// Cleanup
-				Given.iTearDownMyApp();
+		opaTest("Test Util normalizeNumberString comma", function (Given, When, Then) {
+			testNormalizeNumberString(Then, ",", "5,6", 5.6);
+			testNormalizeNumberString(Then, ",", "1.234,56", 1234.56);
+			testNormalizeNumberString(Then, ",", "1.234", 1234);
+			testNormalizeNumberString(Then, ",", "1234,56", 1234.56);
+			testNormalizeNumberString(Then, ",", "1.234.567,89", 1234567.89);
+			testNormalizeNumberString(Then, ",", "-1234,56", -1234.56);
+		});
+
+		opaTest("Test Util normalizeNumberString point", function (Given, When, Then) {
+			testNormalizeNumberString(Then, ".", "5.6", 5.6);
+			testNormalizeNumberString(Then, ".", "1,234.56", 1234.56);
+			testNormalizeNumberString(Then, ".", "1,234", 1234);
+			testNormalizeNumberString(Then, ".", "1234.56", 1234.56);
+			testNormalizeNumberString(Then, ".", "1,234,567.89", 1234567.89);
+			testNormalizeNumberString(Then, ".", "-1234.56", -1234.56);
+		});
+
+		function testNormalizeNumberString(Then, decimalSeparator, input, expectedOutput) {
+			Then.waitFor({
+				controlType: "cc.excelUpload.v0_19_0.ExcelDialog",
+				success: function (dialog) {
+					Opa5.getContext().component.setDecimalSeparator(decimalSeparator);
+					// Call 'normalizeNumberString' method and check its output
+					var output = Opa5.getContext().util.normalizeNumberString(input, Opa5.getContext().component);
+					if (parseFloat(output) !== expectedOutput) {
+						Opa5.assert.ok(false, "Incorrect decimal separator");
+					} else {
+						Opa5.assert.ok(true, "Correct decimal separator");
+					}
+				},
+				errorMessage: "Incorrect decimal separator"
 			});
 		}
-	};
 
-	return Journey;
-});
+		QUnit.start();
+	}
+);

@@ -6,6 +6,9 @@ import ODataListBinding from "sap/ui/model/odata/v4/ODataListBinding";
 import Log from "sap/base/Log";
 import MetadataHandlerV4 from "./MetadataHandlerV4";
 
+/**
+ * @namespace cc.excelUpload.XXXnamespaceXXX
+ */
 export default class ODataV4 extends OData {
 	public createPromises: Promise<any>[] = [];
 	public createContexts: any[] = [];

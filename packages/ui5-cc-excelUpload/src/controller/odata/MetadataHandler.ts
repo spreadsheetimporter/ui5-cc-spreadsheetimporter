@@ -1,14 +1,15 @@
-import Log from "sap/base/Log";
-import { Columns, Property, ListObject, PropertyArray } from "../../types";
+import ManagedObject from "sap/ui/base/ManagedObject";
+import { Columns, ListObject } from "../../types";
 import ExcelUpload from "../ExcelUpload";
-import List from "sap/m/List";
+
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
-export default abstract class MetadataHandler {
-	private excelUploadController: ExcelUpload;
+export default abstract class MetadataHandler extends ManagedObject{
+	public excelUploadController: ExcelUpload;
 
 	constructor(excelUploadController: any) {
+		super();
 		this.excelUploadController = excelUploadController;
 	}
 

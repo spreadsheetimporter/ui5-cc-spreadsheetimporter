@@ -1,16 +1,13 @@
-import MessageToast from "sap/m/MessageToast";
+import ManagedObject from "sap/ui/base/ManagedObject";
 import Component from "../Component";
 import XMLView from "sap/ui/core/mvc/XMLView";
 import { ListObject, Messages, CustomMessageTypes } from "../types";
-import Dialog from "sap/m/Dialog";
-import Event from "sap/ui/base/Event";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import ResourceBundle from "sap/base/i18n/ResourceBundle";
 import OData from "./odata/OData";
 import ODataV2 from "./odata/ODataV2";
 import ODataV4 from "./odata/ODataV4";
 import FileUploader from "sap/ui/unified/FileUploader";
-import Button from "sap/m/Button";
 import Util from "./Util";
 import MessageHandler from "./MessageHandler";
 import Log from "sap/base/Log";
@@ -21,7 +18,7 @@ import ExcelUploadDialog from "./dialog/ExcelUploadDialog";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
-export default class ExcelUpload {
+export default class ExcelUpload extends ManagedObject{
 	public oDataEntityType: any;
 	public component: Component;
 	public context: any;
@@ -53,6 +50,7 @@ export default class ExcelUpload {
 	 * @param {ResourceModel} componentI18n - The i18n resource model for the component.
 	 */
 	constructor(component: Component, componentI18n: ResourceModel) {
+		super();
 		this.errorState = false;
 		this.UI5MinorVersion = sap.ui.version.split(".")[1];
 		this.component = component;
