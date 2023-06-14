@@ -141,6 +141,7 @@ function getTestappObject(scenario, version) {
 				for (let index = 0; index < rootVersions.length; index++) {
 					const subObject = rootVersions[index];
 					if (subObject.versionMinor === version) {
+						subObject.rootAppObject = rootObject;
 						return subObject;
 					}
 				}

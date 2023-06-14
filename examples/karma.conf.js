@@ -13,10 +13,16 @@ for (let index = 0; index < process.argv.length; index++) {
 const testappObject = util.getTestappObject(scenario, version);
 const specs = testappObject["testMapping"]["specs"];
 const port = testappObject.port;
-const id = testappObject.id;
-const rootAppName = testappObject.rootAppName;
-// replace point with slashes from id
-const idSlash = id.replace(/\./g, "/");
+let id = "";
+let rootAppName = "";
+
+if(testappObject.rootAppObject){
+	id = testappObject.rootAppObject.id;
+	rootAppName = testappObject.rootAppObject.rootAppName;
+} else {
+	id = testappObject.id;
+	rootAppName = testappObject.rootAppName;
+}
 
 module.exports = function (config) {
 	let configuration = {
