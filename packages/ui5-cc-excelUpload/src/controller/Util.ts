@@ -143,7 +143,7 @@ export default class Util {
 				// Handle first-level objects
 				const keys = Object.keys(value);
 				if (keys.every(k => typeof value[k] !== 'object' || value[k] === null)) {
-					let simpleObject = {};
+					let simpleObject: { [key: string]: any } = {};
 					for (let k in value) {
 						if (typeof value[k] !== 'object' || value[k] === null) {
 							simpleObject[k] = value[k];
