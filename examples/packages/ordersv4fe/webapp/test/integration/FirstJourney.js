@@ -35,210 +35,53 @@ sap.ui.require(
 				},
 				errorMessage: "Can not select 'sap.m.Button'"
 			});
-		});
-
-		opaTest("Test Util normalizeNumberString comma", function (Given, When, Then) {
 			Then.waitFor({
 				controlType: "cc.excelUpload.v0_19_0.ExcelDialog",
 				success: function (dialog) {
-					dialog[0].getComponent().setDecimalSeparator(",")
 					const util = window[0].cc.excelUpload.v0_19_0.Util;
 					Opa5.getContext().util = util;
 					Opa5.getContext().component = dialog[0].getComponent();
-					var input = "5,6";
-					var expectedOutput = 5.6;
-					// Call 'normalizeNumberString' method and check its output
-					var output = util.normalizeNumberString(input,Opa5.getContext().component);
-					if (parseFloat(output) !== expectedOutput) {
-						Opa5.assert.ok(false, "Incorrect decimal seperator");
-					} else {
-						Opa5.assert.ok(true, "Correct decimal seperator");
-					}
-				},
-				errorMessage: "Incorrect decimal seperator"
-			});
-			Then.waitFor({
-				controlType: "cc.excelUpload.v0_19_0.ExcelDialog",
-				success: function () {
-					const util = Opa5.getContext().util
-					var input = "1.234,56";
-					var expectedOutput = 1234.56;
-					// Call 'normalizeNumberString' method and check its output
-					var output = util.normalizeNumberString(input,Opa5.getContext().component);
-					if (parseFloat(output) !== expectedOutput) {
-						Opa5.assert.ok(false, "Incorrect decimal seperator");
-					} else {
-						Opa5.assert.ok(true, "Correct decimal seperator");
-					}
-				},
-				errorMessage: "Incorrect decimal seperator"
-			});
-			Then.waitFor({
-				controlType: "cc.excelUpload.v0_19_0.ExcelDialog",
-				success: function () {
-					const util = Opa5.getContext().util
-					var input = "1.234";
-					var expectedOutput = 1234;
-					// Call 'normalizeNumberString' method and check its output
-					var output = util.normalizeNumberString(input,Opa5.getContext().component);
-					if (parseFloat(output) !== expectedOutput) {
-						Opa5.assert.ok(false, "Incorrect decimal seperator");
-					} else {
-						Opa5.assert.ok(true, "Correct decimal seperator");
-					}
-				},
-				errorMessage: "Incorrect decimal seperator"
-			});
-			Then.waitFor({
-				controlType: "cc.excelUpload.v0_19_0.ExcelDialog",
-				success: function () {
-					const util = Opa5.getContext().util
-					var input = "1234,56";
-					var expectedOutput = 1234.56;
-					// Call 'normalizeNumberString' method and check its output
-					var output = util.normalizeNumberString(input,Opa5.getContext().component);
-					if (parseFloat(output) !== expectedOutput) {
-						Opa5.assert.ok(false, "Incorrect decimal seperator");
-					} else {
-						Opa5.assert.ok(true, "Correct decimal seperator");
-					}
-				},
-				errorMessage: "Incorrect decimal seperator"
-			});
-			Then.waitFor({
-				controlType: "cc.excelUpload.v0_19_0.ExcelDialog",
-				success: function () {
-					const util = Opa5.getContext().util
-					var input = "1.234.567,89";
-					var expectedOutput = 1234567.89
-					// Call 'normalizeNumberString' method and check its output
-					var output = util.normalizeNumberString(input,Opa5.getContext().component);
-					if (parseFloat(output) !== expectedOutput) {
-						Opa5.assert.ok(false, "Incorrect decimal seperator");
-					} else {
-						Opa5.assert.ok(true, "Correct decimal seperator");
-					}
-				},
-				errorMessage: "Incorrect decimal seperator"
-			});
-			Then.waitFor({
-				controlType: "cc.excelUpload.v0_19_0.ExcelDialog",
-				success: function () {
-					const util = Opa5.getContext().util
-					var input = "-1234,56";
-					var expectedOutput = -1234.56;
-					// Call 'normalizeNumberString' method and check its output
-					var output = util.normalizeNumberString(input,Opa5.getContext().component);
-					if (parseFloat(output) !== expectedOutput) {
-						Opa5.assert.ok(false, "Incorrect decimal seperator");
-					} else {
-						Opa5.assert.ok(true, "Correct decimal seperator");
-					}
+					Opa5.assert.ok(true, "Context set");
 				},
 				errorMessage: "Incorrect decimal seperator"
 			});
 		});
 
+		opaTest("Test Util normalizeNumberString comma", function (Given, When, Then) {
+			testNormalizeNumberString(Then, ",", "5,6", 5.6);
+			testNormalizeNumberString(Then, ",", "1.234,56", 1234.56);
+			testNormalizeNumberString(Then, ",", "1.234", 1234);
+			testNormalizeNumberString(Then, ",", "1234,56", 1234.56);
+			testNormalizeNumberString(Then, ",", "1.234.567,89", 1234567.89);
+			testNormalizeNumberString(Then, ",", "-1234,56", -1234.56);
+		});
+
 		opaTest("Test Util normalizeNumberString point", function (Given, When, Then) {
+			testNormalizeNumberString(Then, ".", "5.6", 5.6);
+			testNormalizeNumberString(Then, ".", "1,234.56", 1234.56);
+			testNormalizeNumberString(Then, ".", "1,234", 1234);
+			testNormalizeNumberString(Then, ".", "1234.56", 1234.56);
+			testNormalizeNumberString(Then, ".", "1,234,567.89", 1234567.89);
+			testNormalizeNumberString(Then, ".", "-1234.56", -1234.56);
+		});
+
+		function testNormalizeNumberString(Then, decimalSeparator, input, expectedOutput) {
 			Then.waitFor({
 				controlType: "cc.excelUpload.v0_19_0.ExcelDialog",
 				success: function (dialog) {
-					dialog[0].getComponent().setDecimalSeparator(".")
-					const util = window[0].cc.excelUpload.v0_19_0.Util;
-					Opa5.getContext().util = util;
-					var input = "5.6";
-					var expectedOutput = 5.6;
+					Opa5.getContext().component.setDecimalSeparator(decimalSeparator);
 					// Call 'normalizeNumberString' method and check its output
-					var output = util.normalizeNumberString(input,Opa5.getContext().component);
+					var output = Opa5.getContext().util.normalizeNumberString(input, Opa5.getContext().component);
 					if (parseFloat(output) !== expectedOutput) {
-						Opa5.assert.ok(false, "Incorrect decimal seperator");
+						Opa5.assert.ok(false, "Incorrect decimal separator");
 					} else {
-						Opa5.assert.ok(true, "Correct decimal seperator");
+						Opa5.assert.ok(true, "Correct decimal separator");
 					}
 				},
-				errorMessage: "Incorrect decimal seperator"
+				errorMessage: "Incorrect decimal separator"
 			});
-			Then.waitFor({
-				controlType: "cc.excelUpload.v0_19_0.ExcelDialog",
-				success: function () {
-					const util = Opa5.getContext().util
-					var input = "1,234.56";
-					var expectedOutput = 1234.56;
-					// Call 'normalizeNumberString' method and check its output
-					var output = util.normalizeNumberString(input,Opa5.getContext().component);
-					if (parseFloat(output) !== expectedOutput) {
-						Opa5.assert.ok(false, "Incorrect decimal seperator");
-					} else {
-						Opa5.assert.ok(true, "Correct decimal seperator");
-					}
-				},
-				errorMessage: "Incorrect decimal seperator"
-			});
-			Then.waitFor({
-				controlType: "cc.excelUpload.v0_19_0.ExcelDialog",
-				success: function () {
-					const util = Opa5.getContext().util
-					var input = "1,234";
-					var expectedOutput = 1234;
-					// Call 'normalizeNumberString' method and check its output
-					var output = util.normalizeNumberString(input,Opa5.getContext().component);
-					if (parseFloat(output) !== expectedOutput) {
-						Opa5.assert.ok(false, "Incorrect decimal seperator");
-					} else {
-						Opa5.assert.ok(true, "Correct decimal seperator");
-					}
-				},
-				errorMessage: "Incorrect decimal seperator"
-			});
-			Then.waitFor({
-				controlType: "cc.excelUpload.v0_19_0.ExcelDialog",
-				success: function () {
-					const util = Opa5.getContext().util
-					var input = "1234.56";
-					var expectedOutput = 1234.56;
-					// Call 'normalizeNumberString' method and check its output
-					var output = util.normalizeNumberString(input,Opa5.getContext().component);
-					if (parseFloat(output) !== expectedOutput) {
-						Opa5.assert.ok(false, "Incorrect decimal seperator");
-					} else {
-						Opa5.assert.ok(true, "Correct decimal seperator");
-					}
-				},
-				errorMessage: "Incorrect decimal seperator"
-			});
-			Then.waitFor({
-				controlType: "cc.excelUpload.v0_19_0.ExcelDialog",
-				success: function () {
-					const util = Opa5.getContext().util
-					var input = "1,234,567.89";
-					var expectedOutput = 1234567.89
-					// Call 'normalizeNumberString' method and check its output
-					var output = util.normalizeNumberString(input,Opa5.getContext().component);
-					if (parseFloat(output) !== expectedOutput) {
-						Opa5.assert.ok(false, "Incorrect decimal seperator");
-					} else {
-						Opa5.assert.ok(true, "Correct decimal seperator");
-					}
-				},
-				errorMessage: "Incorrect decimal seperator"
-			});
-			Then.waitFor({
-				controlType: "cc.excelUpload.v0_19_0.ExcelDialog",
-				success: function () {
-					const util = Opa5.getContext().util
-					var input = "-1234.56";
-					var expectedOutput = -1234.56;
-					// Call 'normalizeNumberString' method and check its output
-					var output = util.normalizeNumberString(input,Opa5.getContext().component);
-					if (parseFloat(output) !== expectedOutput) {
-						Opa5.assert.ok(false, "Incorrect decimal seperator");
-					} else {
-						Opa5.assert.ok(true, "Correct decimal seperator");
-					}
-				},
-				errorMessage: "Incorrect decimal seperator"
-			});
-		});
+		}
+
 		QUnit.start();
 	}
 );
