@@ -1,3 +1,4 @@
+import ManagedObject from "sap/ui/base/ManagedObject";
 import Dialog from "sap/m/Dialog";
 import { Messages, CustomMessageTypes, ListObject, ArrayData, PayloadArray, FieldMatchType, GroupedMessage } from "../types";
 import ExcelUpload from "./ExcelUpload";
@@ -7,12 +8,16 @@ import JSONModel from "sap/ui/model/json/JSONModel";
 import { MessageType, ValueState } from "sap/ui/core/library";
 import Log from "sap/base/Log";
 
-export default class MessageHandler {
+/**
+ * @namespace cc.excelUpload.XXXnamespaceXXX
+ */
+export default class MessageHandler extends ManagedObject{
 	private messages: Messages[] = [];
 	private excelUploadController: ExcelUpload;
 	private messageDialog: Dialog;
 
 	constructor(excelUploadController: any) {
+		super();
 		this.messages = [];
 		this.excelUploadController = excelUploadController;
 	}

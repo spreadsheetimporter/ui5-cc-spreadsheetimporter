@@ -1,18 +1,22 @@
+import ManagedObject from "sap/ui/base/ManagedObject";
 import DraftController from "sap/ui/generic/app/transaction/DraftController";
 import { Columns, ListObject } from "../../types";
-import MetadataHandler from "./MetadataHandler";
 import ODataMessageHandler from "../dialog/ODataMessageHandler";
 import ExcelUpload from "../ExcelUpload";
 import Log from "sap/base/Log";
 import MetadataHandlerV2 from "./MetadataHandlerV2";
 import MetadataHandlerV4 from "./MetadataHandlerV4";
 
-export default abstract class OData {
+/**
+ * @namespace cc.excelUpload.XXXnamespaceXXX
+ */
+export default abstract class OData extends ManagedObject {
 	UI5MinorVersion: number;
 	draftController: DraftController;
 	odataMessageHandler: ODataMessageHandler;
 
 	constructor(ui5version: number, excelUploadController: ExcelUpload) {
+		super();
 		this.UI5MinorVersion = ui5version;
 		this.odataMessageHandler = new ODataMessageHandler(excelUploadController);
 	}

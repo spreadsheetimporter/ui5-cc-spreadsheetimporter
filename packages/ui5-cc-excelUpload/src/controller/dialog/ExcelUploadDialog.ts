@@ -1,3 +1,4 @@
+import ManagedObject from "sap/ui/base/ManagedObject";
 import Fragment from "sap/ui/core/Fragment";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import ExcelUpload from "../ExcelUpload";
@@ -19,7 +20,10 @@ import SheetHandler from "../SheetHandler";
 import Parser from "../Parser";
 import Button from "sap/m/Button";
 
-export default class ExcelUploadDialog {
+/**
+ * @namespace cc.excelUpload.XXXnamespaceXXX
+ */
+export default class ExcelUploadDialog extends ManagedObject{
 	excelUploadController: ExcelUpload;
 	excelUploadDialog: ExcelDialog;
     component: Component;
@@ -30,6 +34,7 @@ export default class ExcelUploadDialog {
     messageHandler: MessageHandler;
 
 	constructor(excelUploadController: ExcelUpload, component: Component, componentI18n: ResourceModel, messageHandler: MessageHandler) {
+		super();
 		this.excelUploadController = excelUploadController;
         this.component = component;
         this.componentI18n = componentI18n;

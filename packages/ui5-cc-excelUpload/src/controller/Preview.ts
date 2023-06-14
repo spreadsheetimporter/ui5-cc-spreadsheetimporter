@@ -1,3 +1,4 @@
+import ManagedObject from "sap/ui/base/ManagedObject";
 import Button from "sap/m/Button";
 import Column from "sap/m/Column";
 import ColumnListItem from "sap/m/ColumnListItem";
@@ -7,10 +8,14 @@ import JSONModel from "sap/ui/model/json/JSONModel";
 import Text from "sap/m/Text";
 import Util from "./Util";
 
-export default class Preview {
+/**
+ * @namespace cc.excelUpload.XXXnamespaceXXX
+ */
+export default class Preview extends ManagedObject {
 	dialog: Dialog;
 	util: Util;
 	constructor(util: Util) {
+		super();
 		this.util = util;
 	}
 

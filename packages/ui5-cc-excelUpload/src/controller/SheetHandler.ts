@@ -1,11 +1,14 @@
+import ManagedObject from "sap/ui/base/ManagedObject";
 import * as XLSX from "xlsx";
 import { Sheet2JSONOpts, WorkSheet } from "xlsx";
 import { ArrayData } from "../types";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
-export default class SheetHandler {
-	constructor() {}
+export default class SheetHandler extends ManagedObject {
+	constructor() {
+        super();
+    }
 
 	static sheet_to_json(sheet: WorkSheet, opts?: Sheet2JSONOpts): ArrayData {
 		if (sheet == null || sheet["!ref"] == null) return [];

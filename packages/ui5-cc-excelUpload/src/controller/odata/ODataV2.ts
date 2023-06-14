@@ -3,8 +3,10 @@ import { Columns } from "../../types";
 import ExcelUpload from "../ExcelUpload";
 import OData from "./OData";
 import MetadataHandlerV2 from "./MetadataHandlerV2";
-import MetadataHandler from "./MetadataHandlerV4";
 
+/**
+ * @namespace cc.excelUpload.XXXnamespaceXXX
+ */
 export default class ODataV2 extends OData {
 	public createPromises: Promise<any>[] = [];
 	public createContexts: any[] = [];
