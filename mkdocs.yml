@@ -20,6 +20,7 @@ nav:
   - Development:
       - Getting Started: pages/Development/GettingStarted.md
       - wdi5 Tests: pages/Development/wdi5.md
+      - OPA5 Tests: pages/Development/opa5.md
       - Docs: pages/Development/Docs.md
       - GitHub Actions: pages/Development/GitHubActions.md
   - Troubleshooting: pages/Troubleshooting.md

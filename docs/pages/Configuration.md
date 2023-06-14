@@ -149,7 +149,7 @@ This option defines whether the "Continue" button should be displayed in the err
 
 ### `decimalSeparator`
 
-**default:** ``
+**default:** Browser Default
 
 This option defines the decimal separator for numbers as string.  
 This option is only needed if in the Excel File are numbers as strings or when importing a CSV. When the datatype in the Excel File is number, the decimal separator is automatically recognized.
