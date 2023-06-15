@@ -26,10 +26,10 @@ export default class Component extends UIComponent {
 		properties: {
 			excelFileName: { type: "string", defaultValue: "Template.xlsx" },
 			context: { type: "object" },
-			columns: { type: "string[]" },
+			columns: { type: "string[]" , defaultValue: [] as string[]},
 			tableId: { type: "string" },
 			odataType: { type: "string" },
-			mandatoryFields: { type: "string[]" },
+			mandatoryFields: { type: "string[]", defaultValue: [] as string[] },
 			fieldMatchType: { type: "string", defaultValue: "labelTypeBrackets" },
 			activateDraft: { type: "boolean", defaultValue: false },
 			batchSize: { type: "int", defaultValue: 1000 },
@@ -40,6 +40,7 @@ export default class Component extends UIComponent {
 			skipMandatoryFieldCheck: { type: "boolean", defaultValue: false },
 			showBackendErrorMessages: { type: "boolean", defaultValue: false },
 			showOptions: { type: "boolean", defaultValue: false },
+			availableOptions: { type: "string[]", defaultValue: [] as string[]},
 			debug: { type: "boolean", defaultValue: false },
 		},
 		aggregations: {
@@ -75,20 +76,11 @@ export default class Component extends UIComponent {
 	//=============================================================================
 
 	public async init(): Promise<void> {
-		var oModel, oCompData;
+		var oModel;
+		let oCompData: Component;
 
 		oCompData = this.getComponentData();
 		this.getContentDensityClass();
-		// if (typeof oCompData.renderButton === "boolean"){
-		// 	this.setRenderButton(oCompData.renderButton);
-		// }
-		// if oCompData.columns is undefined, then set it to an empty array
-		if (!oCompData.columns) {
-			oCompData.columns = [];
-		}
-		if (!oCompData.mandatoryFields) {
-			oCompData.mandatoryFields = [];
-		}
 		this.setExcelFileName(oCompData.excelFileName);
 		this.setContext(oCompData.context);
 		this.setColumns(oCompData.columns);
@@ -106,6 +98,15 @@ export default class Component extends UIComponent {
 		this.setShowBackendErrorMessages(oCompData.showBackendErrorMessages);
 		this.setShowOptions(oCompData.showOptions);
 		this.setDebug(oCompData.debug);
+		this.setAvailableOptions(oCompData.availableOptions);
+		if(oCompData.availableOptions && oCompData.availableOptions.length > 0){
+			// if availableOptions is set show the Options Menu
+			this.setShowOptions(true)
+		}
+		if(oCompData.availableOptions && oCompData.availableOptions.length > 0){
+			// if availableOptions is set show the Options Menu
+			this.setShowOptions(true)
+		}
 
 		// // we could create a device model and use it
 		oModel = new JSONModel(Device);

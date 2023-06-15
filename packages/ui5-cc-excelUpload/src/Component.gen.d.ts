@@ -24,6 +24,7 @@ declare module "./Component" {
         skipMandatoryFieldCheck?: boolean | PropertyBindingInfo | `{${string}}`;
         showBackendErrorMessages?: boolean | PropertyBindingInfo | `{${string}}`;
         showOptions?: boolean | PropertyBindingInfo | `{${string}}`;
+        availableOptions?: string[] | PropertyBindingInfo | `{${string}}`;
         debug?: boolean | PropertyBindingInfo | `{${string}}`;
         checkBeforeRead?: (event: Event) => void;
         changeBeforeCreate?: (event: Event) => void;
@@ -357,6 +358,25 @@ declare module "./Component" {
          * @returns Reference to "this" in order to allow method chaining
          */
         setShowOptions(showOptions: boolean): this;
+
+        // property: availableOptions
+
+        /**
+         * Gets current value of property "availableOptions".
+         *
+         * @returns Value of property "availableOptions"
+         */
+        getAvailableOptions(): string[];
+
+        /**
+         * Sets a new value for property "availableOptions".
+         *
+         * When called with a value of "null" or "undefined", the default value of the property will be restored.
+         *
+         * @param availableOptions New value for property "availableOptions"
+         * @returns Reference to "this" in order to allow method chaining
+         */
+        setAvailableOptions(availableOptions: string[]): this;
 
         // property: debug
 

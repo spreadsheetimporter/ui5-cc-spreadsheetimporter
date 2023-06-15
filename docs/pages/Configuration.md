@@ -20,6 +20,7 @@ These options are available and explained in detail below:
 | `skipMandatoryFieldCheck` | Skip check if fields with `Nullable=false` are filled in excel file. | boolean |
 | `showBackendErrorMessages` | Show Backend Error Messages | boolean |
 | `showOptions` | Show Options Menu to change a few of these configurations in runtime. | boolean |
+| `availableOptions` | List of available Options to show to the user. | string[] |
 | `debug` | Option to show more console statements and set Log Level to Debug | boolean |
 
 ### `columns`
@@ -183,6 +184,17 @@ This option defines whether the button to show the options dialog should be disp
 Currently, the menu is more for the development process.
 Later, this should also be able to be used by the user.  
 There are also only a few selected configurations available.
+
+### `availableOptions`
+
+**default:** `[]`
+
+#### Available Options
+- `strict`
+- `fieldMatchType`
+- `decimalSeperator`
+
+This Option defines which option the user can influence.
 
 ### `debug`
 
