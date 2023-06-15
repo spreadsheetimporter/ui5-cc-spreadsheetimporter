@@ -24,7 +24,8 @@
     "test": "wdio run ./test/wdio-base.conf.js",
     "test:single": "npm run test -- ordersv2fe  96 --spec OpenExcelDialog",
     "karma": "karma start",
-    "karma-headless": "karma start --browsers=ChromeHeadless --singleRun=true"
+    "karma-headless": "karma start --browsers=ChromeHeadless --singleRun=true",
+    "ui5-test-runner" : "ui5-test-runner"
   },
   "devDependencies": {
     "@wdio/cli": "v7",
@@ -40,7 +41,8 @@
     "karma": "6.4.2",
     "karma-ui5" : "3.0.3",
     "karma-chrome-launcher": "3.2.0",
-    "karma-qunit": "4.1.2"
+    "karma-qunit": "4.1.2",
+    "ui5-test-runner": "3.2.0"
     
   }
 }
