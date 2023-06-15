@@ -23,8 +23,7 @@
     "watch:server": "pnpm --filter @capire/orders watch",
     "test": "wdio run ./test/wdio-base.conf.js",
     "test:single": "npm run test -- ordersv2fe  96 --spec OpenExcelDialog",
-    "karma": "karma start",
-    "karma-headless": "karma start --browsers=ChromeHeadless --singleRun=true"
+    "ui5-test-runner" : "ui5-test-runner"
   },
   "devDependencies": {
     "@wdio/cli": "v7",
@@ -36,11 +35,8 @@
     "wdio-chromedriver-service": "7.3.2",
     "wdio-ui5-service": "1.5.0",
     "webdriverio": "v7",
-    "karma-cli" : "2.0.0",
-    "karma": "6.4.2",
-    "karma-ui5" : "3.0.3",
-    "karma-chrome-launcher": "3.2.0",
-    "karma-qunit": "4.1.2"
+    "ui5-test-runner": "3.2.0",
+    "puppeteer": "latest"
     
   }
 }

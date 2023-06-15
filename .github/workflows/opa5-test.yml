@@ -100,5 +100,10 @@ jobs:
         run: |
           while ! nc -z localhost 4004; do sleep 0.1; done
           while ! nc -z localhost ${{ env.TESTAPPPORT }}; do sleep 0.1; done
-          pnpm --filter ${{ matrix.scenario }}${{ matrix.ui5version }} karma
-          pnpm --filter ui5-cc-excelupload-sample karma-headless -- -- ${{ matrix.scenario }} ${{ matrix.ui5version }}
+          pnpm --filter ui5-cc-excelupload-sample ui5-test-runner --url http://localhost:${{ env.TESTAPPPORT }}/test/integration/opaTests.qunit.html --screenshot false
+
+      - name: upload artifact of report folder
+        uses: actions/upload-artifact@v3
+        with:
+          name: ui5testrunner-report-${{ matrix.scenario }}-${{ matrix.ui5version }}
+          path: ./examples/report
