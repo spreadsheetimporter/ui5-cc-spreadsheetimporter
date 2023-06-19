@@ -1,22 +1,19 @@
 {
   "compilerOptions": {
-    "target": "es2015",
-    "module": "es2015",
+    "target": "es2022",
+    "module": "es2022",
     "moduleResolution": "node",
     "skipLibCheck": true,
-    "preserveConstEnums": true,
-    "removeComments": false,
-    "sourceMap": false,
     "allowJs": true,
     "strict": true,
     "strictNullChecks": false,
     "strictPropertyInitialization": false,
-    "rootDir": "./packages/ui5-cc-excelUpload/src",
-    "outDir": "./packages/ui5-cc-excelUpload/dist",
+    "rootDir": "./packages/",
     "baseUrl": "./",
     "typeRoots": ["node_modules/@types", "node_modules/@sapui5/ts-types-esm"],
     "paths": {
-      "cc/excelUpload/XXXnamespaceXXX/*": ["./packages/ui5-cc-excelUpload/src/*"]
+      "cc/excelUpload/XXXnamespaceXXX/*": ["./packages/ui5-cc-excelUpload/src/*"],
+      "cc/excelUploadButton/XXXnamespaceXXX/*": ["./packages/ui5-cc-excelUpload-Button/*"]
     }
   },
   "include": ["./packages/**/*"]

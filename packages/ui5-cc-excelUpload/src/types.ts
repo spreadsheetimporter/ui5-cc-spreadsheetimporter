@@ -1,14 +1,23 @@
 import { MessageType } from "sap/ui/core/library";
 
+export enum FieldMatchType {
+	/**
+	 * Default match type, property names in square brackets
+	 * @public
+	 */
+	LabelTypeBrackets = "labelTypeBrackets",
+
+	/**
+	 * match type with only labels
+	 * @public
+	 */
+	Label = "label"
+}
+
 export interface Tags {
 	name: string;
 	count: number;
 	type: string;
-}
-
-export enum FieldMatchType {
-	Label = 'label',
-	LabelTypeBrackets = 'labelTypeBrackets'
 }
 
 export interface Property {

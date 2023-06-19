@@ -2,7 +2,7 @@ import UIComponent from "sap/ui/core/UIComponent";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Device from "sap/ui/Device";
 import ExcelUpload from "./controller/ExcelUpload";
-import { Messages, AvailableOptionsType } from "./types";
+import { FieldMatchType, Messages } from "./types";
 import { $ComponentSettings } from "sap/ui/core/Component";
 import Log from "sap/base/Log";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
@@ -29,8 +29,8 @@ export default class Component extends UIComponent {
 			columns: { type: "string[]" , defaultValue: [] },
 			tableId: { type: "string" },
 			odataType: { type: "string" },
-			mandatoryFields: { type: "string[]", defaultValue: []},
-			fieldMatchType: { type: "string", defaultValue: "labelTypeBrackets" },
+			mandatoryFields: { type: "string[]" },
+			fieldMatchType: { type: "string", defaultValue: FieldMatchType.LabelTypeBrackets },
 			activateDraft: { type: "boolean", defaultValue: false },
 			batchSize: { type: "int", defaultValue: 1000 },
 			standalone: { type: "boolean", defaultValue: false },
