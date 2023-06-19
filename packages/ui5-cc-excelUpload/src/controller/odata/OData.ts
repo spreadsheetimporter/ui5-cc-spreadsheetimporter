@@ -113,7 +113,9 @@ export default abstract class OData extends ManagedObject {
 				return object.isA("sap.m.Table") || object.isA("sap.ui.table.Table");
 			});
 			if (tables.length > 1) {
-				Log.error("Found more than one table on Object Page.\n Please specify table in option 'tableId'", undefined, "ExcelUpload: OData");
+				throw new Error("Found more than one table on Object Page.\n Please specify table in option 'tableId'");
+			} else if (tables.length === 0) {
+				throw new Error("Found more than one table on Object Page.\n Please specify table in option 'tableId'");
 			} else {
 				return tables[0];
 			}
