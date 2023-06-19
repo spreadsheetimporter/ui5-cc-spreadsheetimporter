@@ -15,7 +15,8 @@ sap.ui.define([], function () {
 					componentData: {
 						context: this,
 						activateDraft: true,
-						debug: true,
+						// showOptions: true,
+						availableOptions : ["fieldMatchType", "decimalSeperator"]
 					}
 				});
 
