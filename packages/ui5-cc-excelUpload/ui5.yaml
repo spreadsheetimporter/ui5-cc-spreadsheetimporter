@@ -5,4 +5,4 @@ metadata:
 resources:
   configuration:
     paths:
-      /thirdparty/customControl/excelUpload/v0_19_0/: ./dist/
+      /thirdparty/customControl/excelUpload/v0_19_1/: ./dist/
