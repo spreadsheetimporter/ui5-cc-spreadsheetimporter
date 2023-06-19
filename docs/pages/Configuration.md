@@ -17,7 +17,7 @@ These options are available and explained in detail below:
 | `strict` | The strict option controls the availability of the `Continue` button in the error dialog.  | boolean |
 | `decimalSeparator` | Determines the decimal separator for numbers as string.  | string |
 | `hidePreview` | Hide the button to preview the uploaded data in the table dialog.  | boolean |
-| `skipMandatoryFieldCheck` | Skip check if fields with `Nullable=false` are filled in excel file. | boolean |
+| `skipMandatoryFieldCheck` | Skip check if fields with `mandatory` are not filled in excel file. | boolean |
 | `showBackendErrorMessages` | Show Backend Error Messages | boolean |
 | `showOptions` | Show Options Menu to change a few of these configurations in runtime. | boolean |
 | `availableOptions` | List of available Options to show to the user. | string[] |

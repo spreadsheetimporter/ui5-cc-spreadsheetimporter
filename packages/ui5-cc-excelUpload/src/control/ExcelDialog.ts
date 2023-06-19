@@ -1,5 +1,6 @@
 import Dialog from "sap/m/Dialog";
 import RenderManager from "sap/ui/core/RenderManager";
+import { AvailableOptions, AvailableOptionsType } from "../types";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
@@ -16,10 +17,12 @@ export default class ExcelDialog extends Dialog {
 		manifest: "json",
 		properties: {
 			decimalSeparator: { type: "string" },
+			availableOptions: { type: "string[]"},
 			component  : { type: "object" }
 		},
 		events: {
-			decimalSeparatorChanged: {}
+			decimalSeparatorChanged: {},
+			availableOptionsChanged: {},
 		  }
 	};
 
@@ -31,6 +34,16 @@ export default class ExcelDialog extends Dialog {
 		} else {
 			throw new Error("Decimal separator must be either ',' or '.'");
 		}
+	}
+
+	public setAvailableOptions(aAvailableOptions: AvailableOptions[]) {
+		for (let option of aAvailableOptions) {
+			if (!Object.values(AvailableOptions).includes(option as AvailableOptions)) {
+				throw new Error("Invalid option: " + option);
+			}
+		}
+		this.fireAvailableOptionsChanged({availableOptions : aAvailableOptions});
+		return this;
 	}
 
 	static renderer = {

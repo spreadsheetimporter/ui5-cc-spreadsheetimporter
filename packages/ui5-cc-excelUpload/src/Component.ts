@@ -2,7 +2,7 @@ import UIComponent from "sap/ui/core/UIComponent";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Device from "sap/ui/Device";
 import ExcelUpload from "./controller/ExcelUpload";
-import { Messages } from "./types";
+import { Messages, AvailableOptionsType } from "./types";
 import { $ComponentSettings } from "sap/ui/core/Component";
 import Log from "sap/base/Log";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
@@ -40,7 +40,7 @@ export default class Component extends UIComponent {
 			skipMandatoryFieldCheck: { type: "boolean", defaultValue: false },
 			showBackendErrorMessages: { type: "boolean", defaultValue: false },
 			showOptions: { type: "boolean", defaultValue: false },
-			availableOptions: { type: "string[]", defaultValue: [] as string[]},
+			availableOptions: { type: "string[]", defaultValue: [] as AvailableOptionsType[] },
 			debug: { type: "boolean", defaultValue: false },
 		},
 		aggregations: {
@@ -99,10 +99,6 @@ export default class Component extends UIComponent {
 		this.setShowOptions(oCompData.showOptions);
 		this.setDebug(oCompData.debug);
 		this.setAvailableOptions(oCompData.availableOptions);
-		if(oCompData.availableOptions && oCompData.availableOptions.length > 0){
-			// if availableOptions is set show the Options Menu
-			this.setShowOptions(true)
-		}
 		if(oCompData.availableOptions && oCompData.availableOptions.length > 0){
 			// if availableOptions is set show the Options Menu
 			this.setShowOptions(true)
