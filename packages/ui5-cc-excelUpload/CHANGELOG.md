@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.19.1](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.19.0...ui5-cc-excelupload-v0.19.1) (2023-06-19)
+
+
+### Bug Fixes
+
+* improve error Message on table discovery ([#270](https://github.com/marianfoo/ui5-cc-excelUpload/issues/270)) ([0215ba0](https://github.com/marianfoo/ui5-cc-excelUpload/commit/0215ba0789c15626d51f48206fe8591f4e32a273))
+
 ## [0.19.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.18.1...ui5-cc-excelupload-v0.19.0) (2023-06-10)
 
 
