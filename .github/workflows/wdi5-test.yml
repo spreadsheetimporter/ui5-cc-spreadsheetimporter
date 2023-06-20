@@ -38,7 +38,7 @@ jobs:
         with:
           version: 8.6.0
 
-      - name: use node 16
+      - name: use node 18
         uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -67,8 +67,12 @@ jobs:
           npm pkg delete scripts.prepare
           pnpm install --no-frozen-lockfile --verbose
 
-      - name: copy test apps
-        run: npm run copyTestApps
+      - name: Log package.json
+        run: cat packages/ui5-cc-excelUpload/package.json
+        
+
+      # - name: copy test apps
+      #   run: npm run copyTestApps
 
       # - name: pnpm install for test apps
       #   run: |
