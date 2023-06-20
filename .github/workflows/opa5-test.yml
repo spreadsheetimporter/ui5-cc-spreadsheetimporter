@@ -97,6 +97,7 @@ jobs:
 
       # run opa5 tests
       - name: test opa5 ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
+        continue-on-error: true  # The job will not stop if this step fails
         run: |
           while ! nc -z localhost 4004; do sleep 0.1; done
           while ! nc -z localhost ${{ env.TESTAPPPORT }}; do sleep 0.1; done
@@ -107,3 +108,11 @@ jobs:
         with:
           name: ui5testrunner-report-${{ matrix.scenario }}-${{ matrix.ui5version }}
           path: ./examples/report
+      
+      # Fail the job if the 'test opa5' step failed
+      - name: Check test status
+        run: |
+          if [[ "${{ steps.test.outputs.status }}" == "fail" ]]; then
+            echo "::error::Test failed"  # This will create an error message
+            exit 1  # This will fail the job
+          fi
