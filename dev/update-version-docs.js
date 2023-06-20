@@ -54,7 +54,9 @@ function updateVersionInDir(dirPath, excelUploadVersion, excelUploadButtonVersio
 
 function updateVersions(excelUploadVersion, excelUploadButtonVersion) {
   const docsPath = './docs';
+  const examplesPath = './examples';
   updateVersionInDir(docsPath, excelUploadVersion, excelUploadButtonVersion);
+  updateVersionInDir(examplesPath, excelUploadVersion, excelUploadButtonVersion);
 }
 
 

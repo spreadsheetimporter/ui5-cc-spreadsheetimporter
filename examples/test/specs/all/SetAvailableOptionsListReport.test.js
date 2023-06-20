@@ -63,16 +63,16 @@ describe("Upload File List Report", () => {
 	});
 
 	it("Check only strict available", async () => {
-		const form = await browser.asControl({
+		const grid = await browser.asControl({
+			forceSelect: true,
 			selector: {
-				interaction: "root",
-				id: "__form0--Form"
+				// ancestor: {
+				// 	id: "optionsDialogSimpleForm"
+				// },
+				controlType: "sap.ui.layout.Grid"
 			}
 		});
-		const formContainers = await form.getFormContainers();	
-		const formContainer = await formContainers[0]	
-		const formElements = await formContainer.getVisibleFormElements();
-
-		expect(formElements.length).toBe(1);
+		const content = await grid.getContent();
+		expect(content.length).toBe(2);
 	});
 });
