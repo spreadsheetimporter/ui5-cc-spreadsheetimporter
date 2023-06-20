@@ -65,14 +65,14 @@ jobs:
       - name: pnpm install
         run: |
           npm pkg delete scripts.prepare
-          pnpm install --no-frozen-lockfile
+          pnpm install --no-frozen-lockfile --verbose
 
       - name: copy test apps
         run: npm run copyTestApps
 
-      - name: pnpm install for test apps
-        run: |
-          pnpm install --no-frozen-lockfile
+      # - name: pnpm install for test apps
+      #   run: |
+      #     pnpm install --no-frozen-lockfile --verbose
 
       - name: Run Build
         run: npm run build
