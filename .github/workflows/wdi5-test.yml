@@ -64,21 +64,14 @@ jobs:
           TESTAPPPORT=$(node ./dev/get-port.js ${{ matrix.scenario }} ${{ matrix.ui5version }})
           echo "TESTAPPPORT=$TESTAPPPORT" >> $GITHUB_ENV
 
-      - name: Log package.json
-        run: cat packages/ui5-cc-excelUpload/package.json
-
       - name: pnpm install
         run: |
           npm pkg delete scripts.prepare
-          pnpm install --no-frozen-lockfile --verbose
+          pnpm install --no-frozen-lockfile
         
 
       - name: copy test apps
         run: npm run copyTestApps
-
-      # - name: pnpm install for test apps
-      #   run: |
-      #     pnpm install --no-frozen-lockfile --verbose
 
       - name: Run Build
         run: npm run build
