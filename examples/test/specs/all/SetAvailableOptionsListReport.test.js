@@ -66,9 +66,6 @@ describe("Upload File List Report", () => {
 		const grid = await browser.asControl({
 			forceSelect: true,
 			selector: {
-				// ancestor: {
-				// 	id: "optionsDialogSimpleForm"
-				// },
 				controlType: "sap.ui.layout.Grid"
 			}
 		});

@@ -37,6 +37,9 @@ sap.ui.require(
 			});
 			Then.waitFor({
 				id : "__dialog3",
+				check : function (dialog) {
+					return dialog.isOpen()
+				},
 				success: function (dialog) {
 					const util = window[0].cc.excelUpload.v0_19_0.Util;
 					Opa5.getContext().util = util;
