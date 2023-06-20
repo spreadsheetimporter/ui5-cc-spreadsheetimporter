@@ -78,6 +78,7 @@ declare module "./Component" {
         /**
          * Gets current value of property "columns".
          *
+         * Default value is: []
          * @returns Value of property "columns"
          */
         getColumns(): string[];
@@ -87,7 +88,8 @@ declare module "./Component" {
          *
          * When called with a value of "null" or "undefined", the default value of the property will be restored.
          *
-         * @param columns New value for property "columns"
+         * Default value is: []
+         * @param [columns=[]] New value for property "columns"
          * @returns Reference to "this" in order to allow method chaining
          */
         setColumns(columns: string[]): this;
@@ -135,6 +137,7 @@ declare module "./Component" {
         /**
          * Gets current value of property "mandatoryFields".
          *
+         * Default value is: []
          * @returns Value of property "mandatoryFields"
          */
         getMandatoryFields(): string[];
@@ -144,7 +147,8 @@ declare module "./Component" {
          *
          * When called with a value of "null" or "undefined", the default value of the property will be restored.
          *
-         * @param mandatoryFields New value for property "mandatoryFields"
+         * Default value is: []
+         * @param [mandatoryFields=[]] New value for property "mandatoryFields"
          * @returns Reference to "this" in order to allow method chaining
          */
         setMandatoryFields(mandatoryFields: string[]): this;
@@ -364,6 +368,7 @@ declare module "./Component" {
         /**
          * Gets current value of property "availableOptions".
          *
+         * Default value is: []
          * @returns Value of property "availableOptions"
          */
         getAvailableOptions(): string[];
@@ -373,7 +378,8 @@ declare module "./Component" {
          *
          * When called with a value of "null" or "undefined", the default value of the property will be restored.
          *
-         * @param availableOptions New value for property "availableOptions"
+         * Default value is: []
+         * @param [availableOptions=[]] New value for property "availableOptions"
          * @returns Reference to "this" in order to allow method chaining
          */
         setAvailableOptions(availableOptions: string[]): this;

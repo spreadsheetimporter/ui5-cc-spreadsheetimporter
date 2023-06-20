@@ -26,10 +26,10 @@ export default class Component extends UIComponent {
 		properties: {
 			excelFileName: { type: "string", defaultValue: "Template.xlsx" },
 			context: { type: "object" },
-			columns: { type: "string[]" , defaultValue: [] as string[]},
+			columns: { type: "string[]" , defaultValue: [] },
 			tableId: { type: "string" },
 			odataType: { type: "string" },
-			mandatoryFields: { type: "string[]", defaultValue: [] as string[] },
+			mandatoryFields: { type: "string[]", defaultValue: []},
 			fieldMatchType: { type: "string", defaultValue: "labelTypeBrackets" },
 			activateDraft: { type: "boolean", defaultValue: false },
 			batchSize: { type: "int", defaultValue: 1000 },
@@ -40,7 +40,7 @@ export default class Component extends UIComponent {
 			skipMandatoryFieldCheck: { type: "boolean", defaultValue: false },
 			showBackendErrorMessages: { type: "boolean", defaultValue: false },
 			showOptions: { type: "boolean", defaultValue: false },
-			availableOptions: { type: "string[]", defaultValue: [] as AvailableOptionsType[] },
+			availableOptions: { type: "string[]", defaultValue: [] },
 			debug: { type: "boolean", defaultValue: false },
 		},
 		aggregations: {
