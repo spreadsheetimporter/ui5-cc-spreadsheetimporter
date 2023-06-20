@@ -59,7 +59,15 @@ describe("Upload File List Report", () => {
 
 	it("Open Options Menu", async () => {
 		await BaseClass.pressById("__toolbar0-overflowButton");
-		await BaseClass.pressById("__button4");
+		const button = await browser.asControl({
+			selector: {
+				controlType: "sap.m.Button",
+				properties: {
+					text: "Show options"
+				}
+			}
+		});
+		await button.press();
 	});
 
 	it("Check only strict available", async () => {
