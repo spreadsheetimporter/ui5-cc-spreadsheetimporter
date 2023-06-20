@@ -44,7 +44,7 @@ describe("Upload File List Report", () => {
 			}
 		});
 		expect(excelUploadDialog.isOpen()).toBeTruthy();
-		excelUploadDialog.setAvailableOptions(["strict"])
+		excelUploadDialog.setAvailableOptions(["strict"]);
 		try {
 			browser.execute(function () {
 				const blockLayerPopup = document.getElementById("sap-ui-blocklayer-popup");
@@ -58,8 +58,19 @@ describe("Upload File List Report", () => {
 	});
 
 	it("Open Options Menu", async () => {
+		await BaseClass.pressById("__toolbar0-overflowButton");
+		await BaseClass.pressById("__button4");
 	});
 
 	it("Check only strict available", async () => {
+		const formContainer = await browser.asControl({
+			selector: {
+				interaction: "root",
+				id: "__form0--FC-NoHead"
+			}
+		});
+		const formElements = await formContainer.getVisibleFormElements();
+
+		expect(formElements.length).toBe(1);
 	});
 });
