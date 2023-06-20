@@ -36,7 +36,8 @@ sap.ui.require(
 				errorMessage: "Can not select 'sap.m.Button'"
 			});
 			Then.waitFor({
-				controlType: "cc.excelUpload.v0_19_0.ExcelDialog",
+				// controlType: "cc.excelUpload.v0_19_0.ExcelDialog",
+				id : "__dialog3",
 				success: function (dialog) {
 					const util = window[0].cc.excelUpload.v0_19_0.Util;
 					Opa5.getContext().util = util;
