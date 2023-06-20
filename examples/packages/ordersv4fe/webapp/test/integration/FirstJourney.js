@@ -41,7 +41,8 @@ sap.ui.require(
 					return dialog.isOpen()
 				},
 				success: function (dialog) {
-					const util = window[0].cc.excelUpload.v0_19_0.Util;
+					const util = Opa5.getWindow().cc.excelUpload.v0_19_0.Util;
+					console.log("Util", util);
 					Opa5.getContext().util = util;
 					Opa5.getContext().component = dialog.getComponent();
 					Opa5.assert.ok(true, "Context set");
