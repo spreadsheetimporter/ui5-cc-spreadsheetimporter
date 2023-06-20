@@ -36,12 +36,12 @@ jobs:
       - name: use pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 7.17.1
+          version: 8.6.0
 
       - name: use node 16
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
           cache: "pnpm"
 
       # we need this for workspace mgmt
