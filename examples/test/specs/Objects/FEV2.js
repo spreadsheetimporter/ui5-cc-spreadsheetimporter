@@ -25,6 +25,8 @@ class FEV2 {
 		// check file upload list report
 		this.checkFileuploadListreportAttribute = "OrderNo";
 		this.checkFileuploadListreportValue = "4";
+
+		this.overflowButton = "__toolbar2-overflowButton"
 	}
 	async getFieldValue(fieldName) {
 		const field = await $(`//*[@id="ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::OrderItems--com.sap.vocabularies.UI.v1.Identification::${fieldName}::Field-text"]`);

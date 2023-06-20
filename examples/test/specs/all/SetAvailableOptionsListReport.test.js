@@ -58,7 +58,7 @@ describe("Upload File List Report", () => {
 	});
 
 	it("Open Options Menu", async () => {
-		await BaseClass.pressById("__toolbar0-overflowButton");
+		await BaseClass.pressById(FE.overflowButton);
 		const button = await browser.asControl({
 			selector: {
 				controlType: "sap.m.Button",
@@ -75,6 +75,9 @@ describe("Upload File List Report", () => {
 		const grid = await browser.asControl({
 			forceSelect: true,
 			selector: {
+				ancestor: {
+					id: "__form0"
+				},
 				controlType: "sap.ui.layout.Grid"
 			}
 		});
