@@ -63,6 +63,7 @@ describe("Upload File List Report", () => {
 	});
 
 	it("Check only strict available", async () => {
+		await BaseClass.dummyWait(500);
 		const grid = await browser.asControl({
 			forceSelect: true,
 			selector: {
