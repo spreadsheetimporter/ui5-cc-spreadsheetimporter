@@ -112,8 +112,5 @@ jobs:
       
       # Fail the job if the 'test opa5' step failed
       - name: Check test status
-        run: |
-          if [[ "${{ steps.opa5test.outputs.status }}" == "fail" ]]; then
-            echo "::error::Test failed"  # This will create an error message
-            exit 1  # This will fail the job
-          fi
+        if: steps.opa5test.outcome != 'success'
+        run: exit 1
