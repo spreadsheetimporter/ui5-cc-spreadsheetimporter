@@ -32,6 +32,8 @@ jobs:
 
       - name: checkout excelUpload Repo
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
 
       - name: use pnpm
         uses: pnpm/action-setup@v2
@@ -53,9 +55,9 @@ jobs:
           npm i -g npm@latest
           npm --version
 
-      # - name: link excel button
-      #   run: |
-      #     cd packages/ui5-cc-excelUpload-Button && npm link && cd ../..
+      - name: link excel button
+        run: |
+          cd packages/ui5-cc-excelUpload-Button && npm link && cd ../..
 
       - name: get port
         run: |
@@ -69,13 +71,10 @@ jobs:
         run: |
           npm pkg delete scripts.prepare
           pnpm install --no-frozen-lockfile --verbose
-
-      - name: Log package.json
-        run: cat packages/ui5-cc-excelUpload/package.json
         
 
-      # - name: copy test apps
-      #   run: npm run copyTestApps
+      - name: copy test apps
+        run: npm run copyTestApps
 
       # - name: pnpm install for test apps
       #   run: |
