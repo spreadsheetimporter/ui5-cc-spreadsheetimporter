@@ -63,12 +63,14 @@ describe("Upload File List Report", () => {
 	});
 
 	it("Check only strict available", async () => {
-		const formContainer = await browser.asControl({
+		const form = await browser.asControl({
 			selector: {
 				interaction: "root",
-				id: "__form0--FC-NoHead"
+				id: "__form0--Form"
 			}
 		});
+		const formContainers = await form.getFormContainers();	
+		const formContainer = await formContainers[0]	
 		const formElements = await formContainer.getVisibleFormElements();
 
 		expect(formElements.length).toBe(1);
