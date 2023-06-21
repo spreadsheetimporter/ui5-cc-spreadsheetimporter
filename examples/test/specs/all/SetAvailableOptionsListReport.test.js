@@ -84,7 +84,7 @@ describe("Upload File List Report", () => {
 		const grid = await browser.asControl({
 			forceSelect: true,
 			selector: {
-				id: new RegExp('^__container.*', 'gm'),
+				id: new RegExp('^(__container|__form0--FC-NoHead--Grid).*', 'gm'),
 				controlType: "sap.ui.layout.Grid"
 			}
 		});
