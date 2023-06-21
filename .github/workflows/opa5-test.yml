@@ -80,6 +80,10 @@ jobs:
       - name: install @sap/cds-dk
         run: |
           npm i -g @sap/cds-dk
+      
+      - name: install ui5-test-runner
+        run: |
+          npm i -g ui5-test-runner
 
       - name: pnpm install
         run: |
@@ -105,7 +109,8 @@ jobs:
         run: |
           while ! nc -z localhost 4004; do sleep 0.1; done
           while ! nc -z localhost ${{ env.TESTAPPPORT }}; do sleep 0.1; done
-          pnpm --filter ui5-cc-excelupload-sample ui5-test-runner --url http://localhost:${{ env.TESTAPPPORT }}/test/integration/opaTests.qunit.html --screenshot false
+          ui5-test-runner --url http://localhost:${{ env.TESTAPPPORT }}/test/integration/opaTests.qunit.html --screenshot false
+      # pnpm --filter ui5-cc-excelupload-sample ui5-test-runner --url http://localhost:${{ env.TESTAPPPORT }}/test/integration/opaTests.qunit.html --screenshot false
 
       - name: upload artifact of report folder
         uses: actions/upload-artifact@v3
