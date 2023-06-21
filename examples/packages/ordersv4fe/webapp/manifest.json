@@ -189,8 +189,19 @@
                                         "ObjectPageExtController": {
                                             "press": "ui.v4.ordersv4fe.ext.ObjectPageExtController.openExcelUploadDialogTable",
                                             "visible": true,
-                                            "enabled": true,
                                             "requiresSelection": false,
+                                            "enabled": "{ui>/isEditable}",
+                                            "text": "Excel Upload"
+                                        }
+                                    }
+                                },
+                                "Shipping/@com.sap.vocabularies.UI.v1.LineItem": {
+                                    "actions": {
+                                        "ObjectPageExtController": {
+                                            "press": "ui.v4.ordersv4fe.ext.ObjectPageExtController.openExcelUploadDialogTableShipping",
+                                            "visible": true,
+                                            "requiresSelection": false,
+                                            "enabled": "{ui>/isEditable}",
                                             "text": "Excel Upload"
                                         }
                                     }
@@ -206,7 +217,20 @@
                     "options": {
                         "settings": {
                             "editableHeaderContent": false,
-                            "entitySet": "OrderItems"
+                            "entitySet": "OrderItems",
+                            "controlConfiguration": {
+                                "Infos/@com.sap.vocabularies.UI.v1.LineItem": {
+                                    "actions": {
+                                        "ObjectPageExtController": {
+                                            "press": "ui.v4.ordersv4fe.ext.ObjectPageExtController.openExcelUploadDialogTableInfo",
+                                            "visible": true,
+                                            "requiresSelection": false,
+                                            "enabled": "{ui>/isEditable}",
+                                            "text": "Excel Upload"
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 },
