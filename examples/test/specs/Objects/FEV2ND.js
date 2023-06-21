@@ -25,8 +25,6 @@ class FEV2ND {
 		// check file upload list report
 		this.checkFileuploadListreportAttribute = "OrderNo";
 		this.checkFileuploadListreportValue = "4";
-
-		this.overflowButton = "__toolbar2-overflowButton"
 	}
 	async getFieldValue(fieldName) {
 		const field = await $(

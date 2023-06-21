@@ -2,7 +2,7 @@ import UIComponent from "sap/ui/core/UIComponent";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Device from "sap/ui/Device";
 import ExcelUpload from "./controller/ExcelUpload";
-import { Messages, AvailableOptionsType } from "./types";
+import { Messages } from "./types";
 import { $ComponentSettings } from "sap/ui/core/Component";
 import Log from "sap/base/Log";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
