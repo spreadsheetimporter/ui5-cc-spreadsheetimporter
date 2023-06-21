@@ -36,7 +36,7 @@ sap.ui.require(
 				errorMessage: "Can not select 'sap.m.Button'"
 			});
 			Then.waitFor({
-				id : "__dialog3",
+				controlType : "cc.excelUpload.v0_19_0.ExcelDialog",
 				check : function (dialog) {
 					return dialog.isOpen()
 				},
