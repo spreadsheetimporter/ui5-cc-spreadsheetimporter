@@ -43,6 +43,7 @@ describe("Upload File List Report", () => {
 				searchOpenDialogs: true
 			}
 		});
+		this.excelUploadDialogId = await excelUploadDialog.getId();
 		expect(excelUploadDialog.isOpen()).toBeTruthy();
 		excelUploadDialog.setAvailableOptions(["strict"]);
 		try {
@@ -59,12 +60,10 @@ describe("Upload File List Report", () => {
 
 	it("Open Options Menu", async () => {
 		const overflowToolbar = await browser.asControl({
-			forceSelect: true,
 			selector: {
-				ancestor: {
-					controlType: "cc.excelUpload.v0_19_0.ExcelDialog"
-				},
-				controlType: "sap.m.OverflowToolbar"
+				controlType: "sap.m.OverflowToolbar",
+				id: new RegExp('^__toolbar.*', 'gm')
+				
 			}
 		});
 		const overflowToolbarId = await overflowToolbar.getId();
@@ -85,9 +84,7 @@ describe("Upload File List Report", () => {
 		const grid = await browser.asControl({
 			forceSelect: true,
 			selector: {
-				ancestor: {
-					id: "__form0"
-				},
+				id: new RegExp('^__container.*', 'gm'),
 				controlType: "sap.ui.layout.Grid"
 			}
 		});
