@@ -72,9 +72,6 @@ jobs:
       - name: copy test apps
         run: npm run copyTestApps
 
-      - name: Run Build
-        run: npm run build
-
       # update chromedriver
       - name: update chromedriver to latest
         run: |
@@ -83,6 +80,14 @@ jobs:
       - name: install @sap/cds-dk
         run: |
           npm i -g @sap/cds-dk
+
+      - name: pnpm install
+        run: |
+          npm pkg delete scripts.prepare
+          pnpm install --no-frozen-lockfile
+      
+      - name: Run Build
+        run: npm run build
 
       # run app
       - name: start cap server
