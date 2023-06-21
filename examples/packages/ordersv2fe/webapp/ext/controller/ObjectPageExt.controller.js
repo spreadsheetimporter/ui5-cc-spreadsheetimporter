@@ -17,6 +17,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
 						async: true,
 						componentData: {
 							context: this,
+							tableId: "ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders--Items::com.sap.vocabularies.UI.v1.LineItem::responsiveTable",
 							columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time", "boolean", "decimal"],
 							mandatoryFields: ["product_ID", "quantity"],
 							excelFileName: "Test.xlsx",
