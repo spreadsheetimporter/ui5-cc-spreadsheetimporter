@@ -101,7 +101,10 @@ If you have done that, you can continue with the implementation of your Custom C
 ### Extension in manifest.json
 
 As a example, here is how your custom action can look like.  
-This example is from the [sample app](https://github.com/marianfoo/ui5-cc-excelUpload/blob/47d22cdc42aa1cacfd797bdc0e025b830330dc5e/examples/packages/ordersv4fe/webapp/manifest.json#L158-L188) for the object page.
+This example is from the [sample app](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/examples/packages/ordersv4fe/webapp/manifest.json) for the object page and will add the button to the object page header.  
+You can also add the button on the object page table directly. A example is also in this manifest.
+It is important to always specify the relevant option [`tableId`](Configuration.md#tableid  ) if there are multiple tables on the object page.  
+Using `"enabled": "{ui>/isEditable}"` will automatically disable the button if the object page is not in edit mode.
 
 ````json
 "OrdersObjectPage": {
@@ -132,6 +135,10 @@ This example is from the [sample app](https://github.com/marianfoo/ui5-cc-excelU
 
 ### Custom Code
 
+This will set the busy indicator and create the component if it is not already created.  
+Then the Dialog will be opened.  
+The attribute `context` is mandatory and must be set so the component can access the context of the app, including binding paths and the model.  
+
 ````javascript
 openExcelUploadDialog: async function (oEvent) {
     this._view.setBusyIndicatorDelay(0)
@@ -149,6 +156,12 @@ openExcelUploadDialog: async function (oEvent) {
     this._view.setBusy(false)
 }
 ````
+
+### How could this look like
+
+see also this at the live demo https://excelupload.marianzeis.de/
+
+![Object Page with Buttons](./../images/object_page.png){ loading=lazy }
 
 
 ## Starting with Fiori Elements (OData V2)

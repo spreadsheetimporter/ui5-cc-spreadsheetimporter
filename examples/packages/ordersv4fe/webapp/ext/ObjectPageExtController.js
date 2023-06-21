@@ -14,6 +14,7 @@ sap.ui.define([], function () {
 					async: true,
 					componentData: {
 						context: this,
+						tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable",
 						columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time", "boolean", "decimal"],
 						mandatoryFields: ["product_ID", "quantity"],
 						excelFileName: "Test.xlsx"
@@ -54,6 +55,57 @@ sap.ui.define([], function () {
 				}, this);
 			}
 			this.excelUpload.openExcelUploadDialog();
+			this._view.setBusy(false);
+		},
+		openExcelUploadDialogTable: async function (oEvent) {
+			this._view.setBusyIndicatorDelay(0);
+			this._view.setBusy(true);
+			if (!this.excelUploadTable) {
+				this.excelUploadTable = await this._controller.getAppComponent().createComponent({
+					usage: "excelUpload",
+					async: true,
+					componentData: {
+						context: this,
+						columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time", "boolean", "decimal"],
+						mandatoryFields: ["product_ID", "quantity"],
+						excelFileName: "Test.xlsx",
+						tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable"
+					}
+				});
+			}
+			this.excelUploadTable.openExcelUploadDialog();
+			this._view.setBusy(false);
+		},
+		openExcelUploadDialogTableShipping: async function (oEvent) {
+			this._view.setBusyIndicatorDelay(0);
+			this._view.setBusy(true);
+			if (!this.excelUploadTableShipping) {
+				this.excelUploadTableShipping = await this._controller.getAppComponent().createComponent({
+					usage: "excelUpload",
+					async: true,
+					componentData: {
+						context: this,
+						tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Shipping::LineItem-innerTable"
+					}
+				});
+			}
+			this.excelUploadTableShipping.openExcelUploadDialog();
+			this._view.setBusy(false);
+		},
+		openExcelUploadDialogTableInfo: async function (oEvent) {
+			this._view.setBusyIndicatorDelay(0);
+			this._view.setBusy(true);
+			if (!this.excelUploadTableShippingInfo) {
+				this.excelUploadTableShippingInfo = await this._controller.getAppComponent().createComponent({
+					usage: "excelUpload",
+					async: true,
+					componentData: {
+						context: this,
+						tableId: "ui.v4.ordersv4fe::Orders_ItemsObjectPage--fe::table::Infos::LineItem-innerTable"
+					}
+				});
+			}
+			this.excelUploadTableShippingInfo.openExcelUploadDialog();
 			this._view.setBusy(false);
 		}
 	};

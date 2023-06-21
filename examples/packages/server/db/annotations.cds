@@ -43,6 +43,7 @@ annotate OrdersService.Orders with @(
 		Facets: [
 			{$Type: 'UI.ReferenceFacet', Label: '{i18n>Details}', Target: '@UI.FieldGroup#Details'},
 			{$Type: 'UI.ReferenceFacet', Label: '{i18n>OrderItems}', Target: 'Items/@UI.LineItem'},
+			{$Type: 'UI.ReferenceFacet', Label: 'Shipping Details', Target: 'Shipping/@UI.LineItem'},
 		],
 		FieldGroup#Details: {
 			Data: [
@@ -118,6 +119,35 @@ annotate OrdersService.OrderItemsInfo with @(
 		],
 	},
 );
+
+annotate OrdersService.ShippingDetails with @(
+	UI: {
+		LineItem: [
+			{Value: order_ID, Label:'ID'},
+			{Value: address, Label:'address'},
+			{Value: city, Label:'city'},
+			{Value: state, Label:'state'},
+			{Value: country, Label:'country'},
+            {Value: shipmentDate, Label:'shipmentDate'},
+            {Value: arrivalDate, Label:'arrivalDate'}
+		],
+		Identification: [ //Is the main field group
+			{Value: address, Label:'address'},
+			{Value: city, Label:'city'},
+			{Value: state, Label:'state'},
+			{Value: country, Label:'country'},
+            {Value: shipmentDate, Label:'shipmentDate'},
+            {Value: arrivalDate, Label:'arrivalDate'}
+		],
+		Facets: [
+			{$Type: 'UI.ReferenceFacet', Label: '{i18n>OrderItems}', Target: '@UI.Identification'}
+		],
+	},
+) {
+        ID       @UI.Hidden;
+        order    @UI.Hidden;
+
+};
 
 annotate OrdersService.OrdersND with @(
 	UI: {

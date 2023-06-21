@@ -11,6 +11,8 @@ entity Orders : cuid, managed {
   OrderNo  : String(22) @title: 'Order Number'; //> readable key
   Items    : Composition of many OrderItems
                on Items.order = $self;
+  Shipping : Composition of many ShippingDetails
+              on Shipping.order = $self;
   buyer    : User;
   currency : Currency;
 }
@@ -34,6 +36,18 @@ entity OrderItems : cuid {
 entity OrderItemsInfo : cuid {
   orderItem     : Association to OrderItems;
   comment       : String;
+}
+
+entity ShippingDetails : cuid {
+  order         : Association to Orders;
+  address       : String;
+  city          : String;
+  state         : String;
+  postalCode    : String;
+  country       : String;
+  shipmentDate  : DateTime;
+  arrivalDate   : DateTime;
+  shipmentStatus: String;
 }
 
 /**
