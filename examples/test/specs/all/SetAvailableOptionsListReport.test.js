@@ -58,7 +58,17 @@ describe("Upload File List Report", () => {
 	});
 
 	it("Open Options Menu", async () => {
-		await BaseClass.pressById(FE.overflowButton);
+		const overflowToolbar = await browser.asControl({
+			forceSelect: true,
+			selector: {
+				ancestor: {
+					controlType: "cc.excelUpload.v0_19_0.ExcelDialog"
+				},
+				controlType: "sap.m.OverflowToolbar"
+			}
+		});
+		const overflowToolbarId = await overflowToolbar.getId();
+		await BaseClass.pressById(overflowToolbarId + "-overflowButton");
 		const button = await browser.asControl({
 			selector: {
 				controlType: "sap.m.Button",
