@@ -35,8 +35,7 @@
     "wdio-chromedriver-service": "7.3.2",
     "wdio-ui5-service": "1.5.0",
     "webdriverio": "v7",
-    "ui5-test-runner": "3.2.0",
-    "puppeteer": "latest"
+    "ui5-test-runner": "3.2.0"
     
   }
 }

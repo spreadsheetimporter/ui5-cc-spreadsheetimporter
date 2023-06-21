@@ -92,3 +92,25 @@ export type ArrayData = {
 export type RowData = {
 	[key: string]: ValueData;
 };
+
+export enum AvailableOptions {
+	/**
+	 * Option for `strict` mode
+	 * @public
+	 */
+	Strict = "strict",
+
+	/**
+	 * Changing the field match type
+	 * @public
+	 */
+	FieldMatchType = "fieldMatchType",
+
+	/**
+	 * Changing the decimal seperator for number fields
+	 * @public
+	 */
+	DecimalSeperator = "decimalSeperator"
+}
+
+export type AvailableOptionsType = keyof typeof AvailableOptions;

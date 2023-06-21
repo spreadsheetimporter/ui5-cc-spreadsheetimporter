@@ -11,6 +11,7 @@ import ExcelUpload from "../ExcelUpload";
 export default class OptionsDialog extends ManagedObject{
     excelUploadController: ExcelUpload;
     optionsDialog: Dialog;
+	availableOptions = ["strict", "fieldMatchType", "decimalSeperator"];
 
 	constructor(excelUploadController: any) {
 		super();
@@ -18,12 +19,21 @@ export default class OptionsDialog extends ManagedObject{
 	}
 
     async openOptionsDialog() {
+		let showOptionsToUser = this.excelUploadController.component.getAvailableOptions();
+		if(showOptionsToUser.length === 0) {
+			showOptionsToUser = this.availableOptions
+		}
+		const availableOptionsData = this.availableOptions.reduce((acc, key) => {
+			acc[key] = showOptionsToUser.includes(key);
+			return acc;
+		  }, {} as Record<string, boolean>);
 		this.excelUploadController.excelUploadDialogHandler.getDialog().setBusy(true)
 		const optionsModel = new JSONModel({
 			strict: this.excelUploadController.component.getStrict(),
 			fieldMatchType: this.excelUploadController.component.getFieldMatchType(),
 			decimalSeparator: this.excelUploadController.component.getDecimalSeparator(),
 		});
+		const showOptionsModel = new JSONModel(availableOptionsData)
 		Log.debug("openOptionsDialog",undefined,"ExcelUpload: Options",() => this.excelUploadController.component.logger.returnObject({
 			strict: this.excelUploadController.component.getStrict(),
 			fieldMatchType: this.excelUploadController.component.getFieldMatchType(),
@@ -38,6 +48,7 @@ export default class OptionsDialog extends ManagedObject{
             this.optionsDialog.setModel(this.excelUploadController.componentI18n, "i18n");
 		}
 		this.optionsDialog.setModel(optionsModel, "options");
+		this.optionsDialog.setModel(showOptionsModel, "availableOptions");
 		this.optionsDialog.open();
 		this.excelUploadController.excelUploadDialogHandler.getDialog().setBusy(false)
 	}

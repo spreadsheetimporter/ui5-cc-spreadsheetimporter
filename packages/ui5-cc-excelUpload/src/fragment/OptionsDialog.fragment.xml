@@ -12,24 +12,21 @@
     <content>
         <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" class="centered">
             <f:content>
-              <!-- Add the controls for the options here -->
-              <!-- For example, create a CheckBox for the "strict" option -->
-              <Label text="Strict" />
+              <Label text="{i18n>optionsDialogStrict}" visible="{= ${availableOptions>/strict}}" />
               <CheckBox
-                selected="{options>/strict}" />
-              <!-- Add the control for the "fieldMatchType" dropdown option -->
-              <Label text="Field Match Type" />
+                selected="{options>/strict}" visible="{= ${availableOptions>/strict}}" />
+              <Label text="{i18n>optionsDialogFieldMatchType}" visible="{= ${availableOptions>/fieldMatchType}}"/>
               <Select
-                selectedKey="{options>/fieldMatchType}">
-                <core:Item key="labelTypeBrackets" text="Label Type Brackets" />
-                <core:Item key="label" text="Label" />
+                selectedKey="{options>/fieldMatchType}" visible="{= ${availableOptions>/fieldMatchType}}">
+                <core:Item key="labelTypeBrackets" text="{i18n>optionsDialogLabelTypeBrackets}" />
+                <core:Item key="label" text="{i18n>optionsDialogLabel}" />
               </Select>
-              <Label text="Decimal Seperator" />
+              <Label text="{i18n>optionsDialogDecimalSeperator}" visible="{= ${availableOptions>/decimalSeperator}}"/>
               <Select
-                selectedKey="{options>/decimalSeparator}">
-                <core:Item key="" text="Browser Default" />
-                <core:Item key="," text="Comma `,`" />
-                <core:Item key="." text="Dot `.`" />
+                selectedKey="{options>/decimalSeparator}" visible="{= ${availableOptions>/decimalSeperator}}">
+                <core:Item key="" text="{i18n>optionsDialogBrowserDefault}" />
+                <core:Item key="," text="{i18n>optionsDialogComma} `,`" />
+                <core:Item key="." text="{i18n>optionsDialogDot} `.`" />
               </Select>
             </f:content>
           </f:SimpleForm>

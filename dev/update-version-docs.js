@@ -45,7 +45,7 @@ function updateVersionInDir(dirPath, excelUploadVersion, excelUploadButtonVersio
       const fullPath = path.join(dirPath, entry.name);
       if (entry.isDirectory()) {
         updateVersionInDir(fullPath, excelUploadVersion, excelUploadButtonVersion);
-      } else if (entry.isFile() && path.extname(fullPath) === '.md') {
+      } else if (entry.isFile() && (path.extname(fullPath) === '.md') || (path.extname(fullPath) === '.js')) {
         updateVersionInFile(fullPath, excelUploadVersion, excelUploadButtonVersion);
       }
     });
@@ -54,7 +54,9 @@ function updateVersionInDir(dirPath, excelUploadVersion, excelUploadButtonVersio
 
 function updateVersions(excelUploadVersion, excelUploadButtonVersion) {
   const docsPath = './docs';
+  const examplesPath = './examples';
   updateVersionInDir(docsPath, excelUploadVersion, excelUploadButtonVersion);
+  updateVersionInDir(examplesPath, excelUploadVersion, excelUploadButtonVersion);
 }
 
 
