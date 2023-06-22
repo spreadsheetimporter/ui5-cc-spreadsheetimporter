@@ -22,7 +22,8 @@ export default class ODataV2 extends OData {
 	create(model: any, binding: any, payload: any) {
 		const submitChangesPromise = (binding: ODataListBinding, payload: any) => {
 			return new Promise((resolve, reject) => {
-				let context = (binding.getModel() as ODataModel).createEntry(binding.getPath(), {
+				// @ts-ignore
+				let context = (binding.getModel() as ODataModel).createEntry(binding.sDeepPath, {
 					properties: payload,
 					success: () => {
 						resolve(context);
