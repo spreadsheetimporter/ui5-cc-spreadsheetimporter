@@ -279,6 +279,35 @@ export default class ExcelUploadDialog extends ManagedObject {
 				if (fieldMatchType === "labelTypeBrackets") {
 					excelColumnList[0][`${value.label}[${key}]`] = "";
 				}
+				// option to add line of data
+				if (value.type === "Edm.Boolean") {
+				} else if (value.type === "Edm.String") {
+					let newStr;
+					if (value.maxLength) {
+						newStr = "test string".substring(0, value.maxLength);
+					} else {
+						newStr = "test string";
+					}
+					excelColumnList[0][`${value.label}[${key}]`] = newStr;
+				} else if (value.type === "Edm.Date") {
+					excelColumnList[0][`${value.label}[${key}]`] = new Date().toLocaleDateString();
+				} else if (value.type === "Edm.DateTimeOffset" || value.type === "Edm.DateTime") {
+					excelColumnList[0][`${value.label}[${key}]`] = new Date().toLocaleDateString();
+				} else if (value.type === "Edm.TimeOfDay" || value.type === "Edm.Time") {
+					excelColumnList[0][`${value.label}[${key}]`] = new Date().toLocaleDateString();
+				} else if (
+					value.type === "Edm.UInt8" ||
+					value.type === "Edm.Int16" ||
+					value.type === "Edm.Int32" ||
+					value.type === "Edm.Integer" ||
+					value.type === "Edm.Int64" ||
+					value.type === "Edm.Integer64"
+				) {
+					excelColumnList[0][`${value.label}[${key}]`] = "123";
+				} else if (value.type === "Edm.Double" || value.type === "Edm.Decimal") {
+					// get the decimal separator from browser
+					excelColumnList[0][`${value.label}[${key}]`] = "123,4";
+				}
 			}
 		}
 	

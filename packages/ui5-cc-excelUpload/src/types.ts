@@ -21,6 +21,7 @@ export interface Tags {
 }
 
 export interface Property {
+	maxLength: number;
 	type: string;
 	label: string;
 }

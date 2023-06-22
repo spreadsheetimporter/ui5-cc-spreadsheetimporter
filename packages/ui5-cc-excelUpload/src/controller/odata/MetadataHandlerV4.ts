@@ -44,6 +44,7 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 						propertyObject.label = propertyName;
 					}
 					propertyObject.type = property.$Type;
+					propertyObject.maxLength = property.$MaxLength;
 					listObject.set(propertyName, propertyObject);
 				} else {
 					Log.warning(`ExcelUpload: Property ${propertyName} not found`, undefined, "ExcelUpload: MetadataHandler");
@@ -66,6 +67,7 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 						propertyObject.label = propertyName;
 					}
 					propertyObject.type = propertyValue.$Type;
+					propertyObject.maxLength = propertyValue.$MaxLength;
 					listObject.set(propertyName, propertyObject);
 				}
 			}

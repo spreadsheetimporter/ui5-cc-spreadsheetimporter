@@ -36,6 +36,7 @@ export default class MetadataHandlerV2 extends MetadataHandler {
 						propertyObject.label = propertyName;
 					}
 					propertyObject.type = property["type"];
+					propertyObject.maxLength = property["maxLength"];
 					listObject.set(propertyName, propertyObject);
 				} else {
 					Log.warning(`ExcelUpload: Property ${propertyName} not found`);
@@ -54,6 +55,7 @@ export default class MetadataHandlerV2 extends MetadataHandler {
 					let propertyObject: Property = {} as Property;
 					propertyObject.label = this.getLabel(oDataEntityType, properties, property, propertyName);
 					propertyObject.type = property["type"];
+					propertyObject.maxLength = property["maxLength"];
 					listObject.set(propertyName, propertyObject);
 				}
 			}
