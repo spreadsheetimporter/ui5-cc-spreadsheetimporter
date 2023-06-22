@@ -48,7 +48,7 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 				}
 			}
 		} else {
-			const propertiesFiltered = Object.entries(properties).filter(([propertyName, propertyValue]) => propertyValue["$kind"] === "Property");
+			const propertiesFiltered = Object.entries(properties).filter(([propertyName, propertyValue]) => (propertyValue as any)["$kind"] === "Property");
 			for (const [propertyName, propertyValue] of propertiesFiltered) {
 				const propertyLabel = annotations[`${odataType}/${propertyName}`];
 				if (!propertyLabel["@com.sap.vocabularies.UI.v1.Hidden"] && !propertyName.startsWith("SAP__")) {
@@ -57,7 +57,7 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 					if (!listObject[propertyName].label) {
 						listObject[propertyName].label = propertyName;
 					}
-					listObject[propertyName].type = propertyValue.$Type;
+					listObject[propertyName].type = (propertyValue as any).$Type;
 				}
 			}
 		}
@@ -92,7 +92,7 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 		const properties = this.excelUploadController.context.getModel().getMetaModel().getData()[odataType];
 		const messagesPath = annotations[odataType]["@com.sap.vocabularies.Common.v1.Messages"];
 
-		const propertiesFiltered = Object.entries(properties).filter(([propertyName, propertyValue]) => propertyValue["$kind"] === "Property");
+		const propertiesFiltered = Object.entries(properties).filter(([propertyName, propertyValue]) => (propertyValue as any)["$kind"] === "Property");
 		for (const [propertyName, propertyValue] of propertiesFiltered) {
 			const propertyLabel = annotations[`${odataType}/${propertyName}`];
 			if (!propertyLabel) {

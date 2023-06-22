@@ -1,3 +1,4 @@
+// @ts-nocheck
 import ManagedObject from "sap/ui/base/ManagedObject";
 import * as XLSX from "xlsx";
 import { Sheet2JSONOpts, WorkSheet } from "xlsx";

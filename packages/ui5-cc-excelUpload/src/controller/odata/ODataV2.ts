@@ -3,6 +3,8 @@ import { Columns } from "../../types";
 import ExcelUpload from "../ExcelUpload";
 import OData from "./OData";
 import MetadataHandlerV2 from "./MetadataHandlerV2";
+import ODataListBinding from "sap/ui/model/odata/v2/ODataListBinding";
+import ODataModel from "sap/ui/model/odata/v2/ODataModel";
 
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
@@ -18,15 +20,15 @@ export default class ODataV2 extends OData {
 		this.metadataHandler = new MetadataHandlerV2(excelUploadController);
 	}
 	create(model: any, binding: any, payload: any) {
-		const submitChangesPromise = (binding, payload) => {
+		const submitChangesPromise = (binding: ODataListBinding, payload: any) => {
 			return new Promise((resolve, reject) => {
-				let context = binding.getModel().createEntry(binding.sDeepPath, {
+				let context = (binding.getModel() as ODataModel).createEntry(binding.getPath(), {
 					properties: payload,
-					success: (data) => {
+					success: () => {
 						resolve(context);
 					},
-					error: (oError) => {
-						reject(oError);
+					error: (error: Error) => {
+						reject(error);
 					},
 				});
 			});
@@ -57,15 +59,15 @@ export default class ODataV2 extends OData {
 
 	createCustomBinding(model: any) {}
 
-	async submitChanges(model: any) {
-		const submitChangesPromise = (model) => {
+	async submitChanges(model: ODataModel) {
+		const submitChangesPromise = (model: ODataModel) => {
 			return new Promise((resolve, reject) => {
 				model.submitChanges({
-					success: (data) => {
+					success: (data: any) => {
 						resolve(data);
 					},
-					error: (oError) => {
-						reject(oError);
+					error: (error: Error) => {
+						reject(error);
 					},
 				});
 			});
@@ -73,8 +75,8 @@ export default class ODataV2 extends OData {
 
 		try {
 			this.submitChangesResponse = await submitChangesPromise(model);
-		} catch (oError) {
-			Log.error(oError);
+		} catch (error: any) {
+			Log.error(error);
 		}
 	}
 
@@ -91,7 +93,7 @@ export default class ODataV2 extends OData {
 				try {
 					const checkImport = this.draftController.getDraftContext().getODataDraftFunctionImportName(element, "ActivationAction");
 					if (checkImport !== null) {
-						const activationPromise = this.draftController.activateDraftEntity(element, true);
+						const activationPromise = this.draftController.activateDraftEntity(element, true, undefined);
 						activateActionsPromises.push(activationPromise);
 					}
 				} catch (error) {

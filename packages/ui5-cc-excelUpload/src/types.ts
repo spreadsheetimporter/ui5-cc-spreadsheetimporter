@@ -123,3 +123,25 @@ export enum AvailableOptions {
 }
 
 export type AvailableOptionsType = keyof typeof AvailableOptions;
+
+export interface ComponentData {
+    excelFileName?: string;
+    context?: object;
+    columns?: string[];
+    tableId?: string;
+    odataType?: string;
+    mandatoryFields?: string[];
+    fieldMatchType?: FieldMatchType;
+    activateDraft?: boolean;
+    batchSize?: number;
+    standalone?: boolean;
+    strict?: boolean;
+    decimalSeparator?: string;
+    hidePreview?: boolean;
+    skipMandatoryFieldCheck?: boolean;
+    showBackendErrorMessages?: boolean;
+    showOptions?: boolean;
+    availableOptions?: AvailableOptionsType[];
+    debug?: boolean;
+}
+
