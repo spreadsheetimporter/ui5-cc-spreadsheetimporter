@@ -15,7 +15,7 @@ export default class Parser extends ManagedObject {
 		for (const [index, row] of sheetData.entries()) {
 			let payload: Payload = {};
 			// check each specified column if availalble in excel data
-			for (const [columnKey, metadataColumn] of Object.entries(typeLabelList)) {
+			for (const [columnKey, metadataColumn] of typeLabelList.entries()) {
 				// depending on parse type
 				const value = Util.getValueFromRow(row, metadataColumn.label, columnKey, component.getFieldMatchType() as FieldMatchType);
 				// depending on data type
