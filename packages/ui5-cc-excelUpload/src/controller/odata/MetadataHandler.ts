@@ -1,5 +1,5 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
-import { Columns, ListObject } from "../../types";
+import { Columns, ListObject, Property } from "../../types";
 import ExcelUpload from "../ExcelUpload";
 
 /**

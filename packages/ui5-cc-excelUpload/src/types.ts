@@ -24,7 +24,7 @@ export interface Property {
 	type: string;
 	label: string;
 }
-export type ListObject = { [key: string]: Property };
+export type ListObject = Map<string, Property>;
 export type PropertyArray = { [key: string]: any }[];
 export type Columns = string[];
 

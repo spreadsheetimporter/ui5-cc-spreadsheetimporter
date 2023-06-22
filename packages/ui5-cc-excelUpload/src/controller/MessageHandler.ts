@@ -1,6 +1,6 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 import Dialog from "sap/m/Dialog";
-import { Messages, CustomMessageTypes, ListObject, ArrayData, PayloadArray, FieldMatchType, GroupedMessage } from "../types";
+import { Messages, CustomMessageTypes, ListObject, ArrayData, PayloadArray, FieldMatchType, GroupedMessage, Property } from "../types";
 import ExcelUpload from "./ExcelUpload";
 import Util from "./Util";
 import Fragment from "sap/ui/core/Fragment";
@@ -54,12 +54,12 @@ export default class MessageHandler extends ManagedObject{
 			return;
 		}
 		for (const mandatoryField of mandatoryFields) {
-			const fieldLabel = typeLabelList[mandatoryField]?.label;
+			const fieldLabel = typeLabelList.get(mandatoryField)?.label;
 			if (!fieldLabel) {
 				Log.error(`Mandatory Field ${mandatoryField} not found for checking mandatory fields`,undefined,"ExcelUpload: MessageHandler");
 				continue;
 			}
-
+	
 			for (const [index, row] of data.entries()) {
 				const value = Util.getValueFromRow(row, fieldLabel, mandatoryField, this.excelUploadController.component.getFieldMatchType() as FieldMatchType);
 				const errorMessage = {
@@ -76,6 +76,7 @@ export default class MessageHandler extends ManagedObject{
 			}
 		}
 	}
+	
 
 	checkFormat(data: ArrayData) {
 		for (const [index, row] of data.entries()) {
@@ -100,19 +101,17 @@ export default class MessageHandler extends ManagedObject{
 		for (let index = 0; index < columnNames.length; index++) {
 			const columnName = columnNames[index];
 			let found = false;
-			for (const key in typeLabelList) {
-				if (typeLabelList.hasOwnProperty(key)) {
-					if (fieldMatchType === "label") {
-						if (typeLabelList[key].label === columnName) {
-							found = true;
-							break;
-						}
+			for (const [key, value] of typeLabelList) {
+				if (fieldMatchType === "label") {
+					if (value.label === columnName) {
+						found = true;
+						break;
 					}
-					if (fieldMatchType === "labelTypeBrackets") {
-						if (columnName.includes(`[${key}]`)) {
-							found = true;
-							break;
-						}
+				}
+				if (fieldMatchType === "labelTypeBrackets") {
+					if (columnName.includes(`[${key}]`)) {
+						found = true;
+						break;
 					}
 				}
 			}
@@ -141,7 +140,7 @@ export default class MessageHandler extends ManagedObject{
 				}
 			}
 			if (!found) {
-				const columnNameLabel = typeLabelList[columnName]?.label ? typeLabelList[columnName].label : columnName;
+				const columnNameLabel = typeLabelList.get(columnName)?.label ? typeLabelList.get(columnName).label : columnName;
 				const errorMessage: Messages = {
 					title: this.excelUploadController.util.geti18nText("keyColumnNotFound", [columnNameLabel]),
 					type: CustomMessageTypes.ColumnNotFound,

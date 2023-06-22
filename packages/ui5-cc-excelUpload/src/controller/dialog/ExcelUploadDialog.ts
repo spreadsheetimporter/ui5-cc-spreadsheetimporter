@@ -1,13 +1,12 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 import Fragment from "sap/ui/core/Fragment";
-import JSONModel from "sap/ui/model/json/JSONModel";
 import ExcelUpload from "../ExcelUpload";
 import ExcelDialog from "../../control/ExcelDialog";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import Component from "../../Component";
 import Event from "sap/ui/base/Event";
 import Bar from "sap/m/Bar";
-import FileUploader from "sap/ui/unified/FileUploader";
+import FileUploader, { $FileUploaderChangeEventParameters } from "sap/ui/unified/FileUploader";
 import MessageToast from "sap/m/MessageToast";
 import Preview from "../Preview";
 import Util from "../Util";
@@ -21,6 +20,7 @@ import Parser from "../Parser";
 import Button from "sap/m/Button";
 import { AvailableOptionsType } from "../../types";
 import FlexBox from "sap/m/FlexBox";
+import JSONModel from "sap/ui/model/json/JSONModel";
 
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
@@ -76,12 +76,12 @@ export default class ExcelUploadDialog extends ManagedObject {
 
 	/**
 	 * Handles file upload event.
-	 * @param {Event} event - The file upload event.
+	 * @param {Event} event - The file upload event
 	 */
-	async onFileUpload(event: Event) {
+	async onFileUpload(event: Event<$FileUploaderChangeEventParameters>) {
 		try {
 			this.messageHandler.setMessages([]);
-			const file = event.getParameter("files")[0];
+			const file = event.getParameter("files")[0] as Blob;
 
 			const workbook = (await this._readWorkbook(file)) as XLSX.WorkBook;
 			const sheetName = workbook.SheetNames[0];
@@ -220,10 +220,14 @@ export default class ExcelUploadDialog extends ManagedObject {
 	}
 
 	onDecimalSeparatorChanged(event: Event) {
+		// TODO: add custom event for decimal separator like at onFileUpload
+		// @ts-ignore
 		this.component.setDecimalSeparator(event.getParameter("decimalSeparator"));
 	}
 
 	onAvailableOptionsChanged(event: Event) {
+		// TODO: add custom event for decimal separator like at onFileUpload
+		// @ts-ignore
 		const availableOptions = event.getParameter("availableOptions") as AvailableOptionsType[];
 		if (availableOptions.length > 0) {
 			this.component.setShowOptions(true);
@@ -241,9 +245,11 @@ export default class ExcelUploadDialog extends ManagedObject {
 		fileUploader.setValue();
 	}
 
+
 	setDataRows(length: number) {
 		(this.excelUploadDialog.getModel("info") as JSONModel).setProperty("/dataRows", length);
 	}
+
 
 	getDialog(): ExcelDialog {
 		return this.excelUploadDialog;
@@ -254,7 +260,7 @@ export default class ExcelUploadDialog extends ManagedObject {
 	}
 
 	/**
-	 * Create Excel Template File with specific columns
+	 * Create Excel Template File with specific column
 	 */
 	onTempDownload() {
 		// create excel column list
@@ -266,7 +272,7 @@ export default class ExcelUploadDialog extends ManagedObject {
 				excelColumnList[0][column] = "";
 			}
 		} else {
-			for (let [key, value] of Object.entries(this.excelUploadController.typeLabelList)) {
+			for (let [key, value] of this.excelUploadController.typeLabelList.entries()) {
 				if (fieldMatchType === "label") {
 					excelColumnList[0][value.label] = "";
 				}
@@ -275,7 +281,7 @@ export default class ExcelUploadDialog extends ManagedObject {
 				}
 			}
 		}
-
+	
 		// initialising the excel work sheet
 		const ws = XLSX.utils.json_to_sheet(excelColumnList);
 		// creating the new excel work book
@@ -284,7 +290,7 @@ export default class ExcelUploadDialog extends ManagedObject {
 		XLSX.utils.book_append_sheet(wb, ws, "Tabelle1");
 		// download the created excel file
 		XLSX.writeFile(wb, this.component.getExcelFileName());
-
+	
 		MessageToast.show(this.util.geti18nText("downloadingTemplate"));
 	}
 

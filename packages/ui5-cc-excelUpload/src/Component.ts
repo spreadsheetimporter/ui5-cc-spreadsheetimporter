@@ -1,10 +1,10 @@
 import UIComponent from "sap/ui/core/UIComponent";
 import JSONModel from "sap/ui/model/json/JSONModel";
-import Device, { support } from "sap/ui/Device";
+import Device from "sap/ui/Device";
 import ExcelUpload from "./controller/ExcelUpload";
 import { ComponentData, FieldMatchType, Messages } from "./types";
 import { $ComponentSettings } from "sap/ui/core/Component";
-import Log, { Level } from "sap/base/Log";
+import Log from "sap/base/Log";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import Logger from "./controller/Logger";
 import Event from "sap/ui/base/Event";
@@ -120,8 +120,8 @@ export default class Component extends UIComponent {
 
 
 	createContent() {
-		if(this.getDebug() || Log.getLevel() >= Level.DEBUG){
-			Log.setLevel(Level.DEBUG);
+		if(this.getDebug() || Log.getLevel() >= Log.Level.DEBUG){
+			Log.setLevel(Log.Level.DEBUG);
 			// @ts-ignore
 			Log.logSupportInfo(true)
 			this.setShowOptions(true)
@@ -180,7 +180,8 @@ export default class Component extends UIComponent {
 
 	onChangeBeforeCreate(event: Event) {
 		var aContexts, oCustomer;
-
+		// TODO: add custom event for decimal separator like at onFileUpload
+		// @ts-ignore
 		aContexts = event.getParameter("selectedContexts");
 	}
 
@@ -199,7 +200,7 @@ export default class Component extends UIComponent {
 			// check whether FLP has already set the content density class; do nothing in this case
 			if (document.body.classList.contains("sapUiSizeCozy") || document.body.classList.contains("sapUiSizeCompact")) {
 				this._sContentDensityClass = "";
-			} else if (!support.touch) {
+			} else if (!Device.support.touch) {
 				// apply "compact" mode if touch is not supported
 				this._sContentDensityClass = "sapUiSizeCompact";
 			} else {

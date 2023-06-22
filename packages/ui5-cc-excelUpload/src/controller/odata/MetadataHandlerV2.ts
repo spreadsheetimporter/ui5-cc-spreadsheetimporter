@@ -12,30 +12,31 @@ export default class MetadataHandlerV2 extends MetadataHandler {
 	}
 
 	public getLabelList(colums: Columns, odataType: string, oDataEntityType: any): ListObject {
-		let listObject: ListObject = {};
-
+		let listObject: ListObject = new Map();
+	
 		// get the property list of the entity for which we need to download the template
 		const properties: PropertyArray = oDataEntityType.property;
 		const entityTypeLabel: string = oDataEntityType["sap:label"];
 		Log.debug("ExcelUpload: Annotations", undefined, "ExcelUpload: MetadataHandler", () => this.excelUploadController.component.logger.returnObject(oDataEntityType));
-
+	
 		// check if file name is not set
 		if (!this.excelUploadController.component.getExcelFileName() && entityTypeLabel) {
 			this.excelUploadController.component.setExcelFileName(`${entityTypeLabel}.xlsx`);
 		} else if (!this.excelUploadController.component.getExcelFileName() && !entityTypeLabel) {
 			this.excelUploadController.component.setExcelFileName(`Template.xlsx`);
 		}
-
+	
 		if (colums.length > 0) {
 			for (const propertyName of colums) {
 				const property = properties.find((property: any) => property.name === propertyName);
 				if (property) {
-					listObject[propertyName] = {} as Property;
-					listObject[propertyName].label = this.getLabel(oDataEntityType, properties, property, propertyName);
-					if (!listObject[propertyName].label) {
-						listObject[propertyName].label = propertyName;
+					let propertyObject: Property = {} as Property;
+					propertyObject.label = this.getLabel(oDataEntityType, properties, property, propertyName);
+					if (!propertyObject.label) {
+						propertyObject.label = propertyName;
 					}
-					listObject[propertyName].type = property["type"];
+					propertyObject.type = property["type"];
+					listObject.set(propertyName, propertyObject);
 				} else {
 					Log.warning(`ExcelUpload: Property ${propertyName} not found`);
 				}
@@ -50,13 +51,14 @@ export default class MetadataHandlerV2 extends MetadataHandler {
 					Log.debug(`No hidden property on ${property.name}`,undefined,"ExcelUpload: MetadataHandler");
 				}
 				if (!hiddenProperty && !propertyName.startsWith("SAP__")) {
-					listObject[propertyName] = {} as Property;
-					listObject[propertyName].label = this.getLabel(oDataEntityType, properties, property, propertyName);
-					listObject[propertyName].type = property["type"];
+					let propertyObject: Property = {} as Property;
+					propertyObject.label = this.getLabel(oDataEntityType, properties, property, propertyName);
+					propertyObject.type = property["type"];
+					listObject.set(propertyName, propertyObject);
 				}
 			}
 		}
-
+	
 		return listObject;
 	}
 
