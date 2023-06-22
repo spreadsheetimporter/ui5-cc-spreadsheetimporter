@@ -50,7 +50,13 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 				}
 			}
 		} else {
-			const propertiesFiltered = Object.entries(properties).filter(([propertyName, propertyValue]) => (propertyValue as any)["$kind"] === "Property");
+			const propertiesFiltered = [];
+			for (const propertyName in properties) {
+				const propertyValue = properties[propertyName];
+				if (propertyValue["$kind"] === "Property") {
+					propertiesFiltered.push([propertyName, propertyValue]);
+				}
+			}
 			for (const [propertyName, propertyValue] of propertiesFiltered) {
 				const propertyLabel = annotations[`${odataType}/${propertyName}`];
 				if (!propertyLabel["@com.sap.vocabularies.UI.v1.Hidden"] && !propertyName.startsWith("SAP__")) {
@@ -59,7 +65,7 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 					if (!propertyObject.label) {
 						propertyObject.label = propertyName;
 					}
-					propertyObject.type = (propertyValue as any).$Type;
+					propertyObject.type = propertyValue.$Type;
 					listObject.set(propertyName, propertyObject);
 				}
 			}

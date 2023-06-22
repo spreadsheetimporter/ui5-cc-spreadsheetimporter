@@ -1,4 +1,5 @@
-import Base from "./../Objects/Base";
+const Base = require("../Objects/Base");
+let BaseClass = undefined;
 
 describe("Upload File Object Page", () => {
 	before(async () => {
