@@ -109,7 +109,7 @@ export default abstract class OData extends ManagedObject {
 	public getTableObject(tableId: string, view: any) {
 		// try get object page table
 		if (!tableId) {
-			let tables = view.findAggregatedObjects(true, function (object) {
+			let tables = view.findAggregatedObjects(true, function (object:any) {
 				return object.isA("sap.m.Table") || object.isA("sap.ui.table.Table");
 			});
 			if (tables.length > 1) {

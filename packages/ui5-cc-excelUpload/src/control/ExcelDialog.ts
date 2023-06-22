@@ -50,6 +50,6 @@ export default class ExcelDialog extends Dialog {
 		this.fireAvailableOptionsChanged({ availableOptions: aAvailableOptions });
 		return this;
 	}
-
+// @ts-ignore
 	static renderer: typeof sap.m.DialogRenderer = sap.m.DialogRenderer;
 }

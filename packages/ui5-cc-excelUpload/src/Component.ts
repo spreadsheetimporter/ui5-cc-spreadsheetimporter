@@ -1,12 +1,13 @@
 import UIComponent from "sap/ui/core/UIComponent";
 import JSONModel from "sap/ui/model/json/JSONModel";
-import Device from "sap/ui/Device";
+import Device, { support } from "sap/ui/Device";
 import ExcelUpload from "./controller/ExcelUpload";
-import { Messages, AvailableOptionsType } from "./types";
+import { ComponentData, FieldMatchType, Messages } from "./types";
 import { $ComponentSettings } from "sap/ui/core/Component";
-import Log from "sap/base/Log";
+import Log, { Level } from "sap/base/Log";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import Logger from "./controller/Logger";
+import Event from "sap/ui/base/Event";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
@@ -26,10 +27,12 @@ export default class Component extends UIComponent {
 		properties: {
 			excelFileName: { type: "string", defaultValue: "Template.xlsx" },
 			context: { type: "object" },
-			columns: { type: "string[]" , defaultValue: [] },
+			// @ts-ignore
+			columns: { type: "string[]" , defaultValue: []},
 			tableId: { type: "string" },
 			odataType: { type: "string" },
-			mandatoryFields: { type: "string[]", defaultValue: []},
+			// @ts-ignore
+			mandatoryFields: { type: "string[]", defaultValue: [] },
 			fieldMatchType: { type: "string", defaultValue: "labelTypeBrackets" },
 			activateDraft: { type: "boolean", defaultValue: false },
 			batchSize: { type: "int", defaultValue: 1000 },
@@ -40,7 +43,8 @@ export default class Component extends UIComponent {
 			skipMandatoryFieldCheck: { type: "boolean", defaultValue: false },
 			showBackendErrorMessages: { type: "boolean", defaultValue: false },
 			showOptions: { type: "boolean", defaultValue: false },
-			availableOptions: { type: "string[]", defaultValue: [] },
+			// @ts-ignore
+			availableOptions: { type: "string[]", defaultValue: []},
 			debug: { type: "boolean", defaultValue: false },
 		},
 		aggregations: {
@@ -77,9 +81,7 @@ export default class Component extends UIComponent {
 
 	public async init(): Promise<void> {
 		var oModel;
-		let oCompData: Component;
-
-		oCompData = this.getComponentData();
+		const oCompData = this.getComponentData() as ComponentData;
 		this.getContentDensityClass();
 		this.setExcelFileName(oCompData.excelFileName);
 		this.setContext(oCompData.context);
@@ -118,15 +120,17 @@ export default class Component extends UIComponent {
 
 
 	createContent() {
-		if(this.getDebug() || Log.getLevel() >= Log.Level.DEBUG){
-			Log.setLevel(Log.Level.DEBUG);
+		if(this.getDebug() || Log.getLevel() >= Level.DEBUG){
+			Log.setLevel(Level.DEBUG);
+			// @ts-ignore
 			Log.logSupportInfo(true)
 			this.setShowOptions(true)
 		}
-		const componentData = Object.assign({}, this.getComponentData());
+		const componentData = Object.assign({}, this.getComponentData()) as ComponentData;
 		delete componentData.context;
 		Log.debug("Component Data",undefined,"ExcelUpload: Component",() => this.logger.returnObject(componentData))
 		this.excelUpload = new ExcelUpload(this, this.getModel("i18n") as ResourceModel);
+		return this.excelUpload.getExcelUploadDialog()
 	}
 
 	//=============================================================================
@@ -150,7 +154,7 @@ export default class Component extends UIComponent {
 	 * Set Payload for Event
 	 * @public
 	 */
-	setPayload(payload) {
+	setPayload(payload: any) {
 		this.excelUpload._setPayload(payload);
 	}
 
@@ -174,10 +178,10 @@ export default class Component extends UIComponent {
 	// 		this.fireCheckBeforeRead({sheetData:firstSheet})
 	// };
 
-	onChangeBeforeCreate(oEvent) {
+	onChangeBeforeCreate(event: Event) {
 		var aContexts, oCustomer;
 
-		aContexts = oEvent.getParameter("selectedContexts");
+		aContexts = event.getParameter("selectedContexts");
 	}
 
 	//=============================================================================
@@ -195,7 +199,7 @@ export default class Component extends UIComponent {
 			// check whether FLP has already set the content density class; do nothing in this case
 			if (document.body.classList.contains("sapUiSizeCozy") || document.body.classList.contains("sapUiSizeCompact")) {
 				this._sContentDensityClass = "";
-			} else if (!Device.support.touch) {
+			} else if (!support.touch) {
 				// apply "compact" mode if touch is not supported
 				this._sContentDensityClass = "sapUiSizeCompact";
 			} else {

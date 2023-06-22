@@ -1,14 +1,23 @@
 import { MessageType } from "sap/ui/core/library";
 
+export enum FieldMatchType {
+	/**
+	 * Default match type, property names in square brackets
+	 * @public
+	 */
+	LabelTypeBrackets = "labelTypeBrackets",
+
+	/**
+	 * match type with only labels
+	 * @public
+	 */
+	Label = "label"
+}
+
 export interface Tags {
 	name: string;
 	count: number;
 	type: string;
-}
-
-export enum FieldMatchType {
-	Label = 'label',
-	LabelTypeBrackets = 'labelTypeBrackets'
 }
 
 export interface Property {
@@ -114,3 +123,25 @@ export enum AvailableOptions {
 }
 
 export type AvailableOptionsType = keyof typeof AvailableOptions;
+
+export interface ComponentData {
+    excelFileName?: string;
+    context?: object;
+    columns?: string[];
+    tableId?: string;
+    odataType?: string;
+    mandatoryFields?: string[];
+    fieldMatchType?: FieldMatchType;
+    activateDraft?: boolean;
+    batchSize?: number;
+    standalone?: boolean;
+    strict?: boolean;
+    decimalSeparator?: string;
+    hidePreview?: boolean;
+    skipMandatoryFieldCheck?: boolean;
+    showBackendErrorMessages?: boolean;
+    showOptions?: boolean;
+    availableOptions?: AvailableOptionsType[];
+    debug?: boolean;
+}
+

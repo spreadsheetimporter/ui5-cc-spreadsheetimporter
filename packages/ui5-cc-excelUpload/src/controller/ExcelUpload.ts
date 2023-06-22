@@ -22,10 +22,10 @@ export default class ExcelUpload extends ManagedObject{
 	public oDataEntityType: any;
 	public component: Component;
 	public context: any;
-	private isODataV4: boolean;
+	private _isODataV4: boolean;
 	private isOpenUI5: boolean;
 	private view: XMLView;
-	private tableObject: any;
+	private _tableObject: any;
 	private messageHandler: MessageHandler;
 	public util: Util;
 	private model: any;
@@ -34,7 +34,8 @@ export default class ExcelUpload extends ManagedObject{
 	private UI5MinorVersion: number;
 	private odataHandler: OData;
 	public payload: any;
-	private binding: any;
+	private _binding: any;
+
 	public payloadArray: any[];
 	private errorState: boolean;
 	private errorMessage: any;
@@ -42,7 +43,7 @@ export default class ExcelUpload extends ManagedObject{
 	public messageArray: Messages[];
 	odataKeyList: string[];
 	optionsHandler: OptionsDialog;
-	excelUploadDialogHandler: ExcelUploadDialog;
+	private _excelUploadDialogHandler: ExcelUploadDialog;
 
 	/**
 	 * Initializes ExcelUpload instance.
@@ -52,6 +53,7 @@ export default class ExcelUpload extends ManagedObject{
 	constructor(component: Component, componentI18n: ResourceModel) {
 		super();
 		this.errorState = false;
+		// @ts-ignore
 		this.UI5MinorVersion = sap.ui.version.split(".")[1];
 		this.component = component;
 		this.componentI18n = componentI18n;
@@ -60,6 +62,7 @@ export default class ExcelUpload extends ManagedObject{
 		this.excelUploadDialogHandler = new ExcelUploadDialog(this, component, componentI18n, this.messageHandler);
 		this.isODataV4 = this._checkIfODataIsV4();
 		// check if "sap.ui.generic" is available, if false it is OpenUI5
+		// @ts-ignore
 		this.isOpenUI5 = sap.ui.generic ? true : false;
 		this.odataHandler = this.createODataHandler(this.UI5MinorVersion, this);
 		this.initialSetupPromise = this.initialSetup();
@@ -120,6 +123,7 @@ export default class ExcelUpload extends ManagedObject{
 		this.odataHandler.createCustomBinding(this.binding)
 		try {
 			// Load the DraftController asynchronously using the loadDraftController function
+			// @ts-ignore
 			const DraftController: sap.ui.generic.app.transaction.DraftController = await this._loadDraftController();
 			// Create an instance of the DraftController
 			this.odataHandler.draftController = new DraftController(this.model, undefined);
@@ -161,6 +165,7 @@ export default class ExcelUpload extends ManagedObject{
 
 	_checkIfODataIsV4() {
 		try {
+			// @ts-ignore
 			if (this.component.getContext().getModel().getODataVersion() === "4.0") {
 				return true;
 			}
@@ -169,7 +174,7 @@ export default class ExcelUpload extends ManagedObject{
 		}
 	}
 
-	_setPayload(payload) {
+	_setPayload(payload:any) {
 		this.payloadArray = payload;
 	}
 
@@ -266,6 +271,31 @@ export default class ExcelUpload extends ManagedObject{
 
 	public getODataHandler(): OData {
 		return this.odataHandler;
+	}
+
+	public get isODataV4(): boolean {
+		return this._isODataV4;
+	}
+	public set isODataV4(value: boolean) {
+		this._isODataV4 = value;
+	}
+	public get tableObject(): any {
+		return this._tableObject;
+	}
+	public set tableObject(value: any) {
+		this._tableObject = value;
+	}
+	public get binding(): any {
+		return this._binding;
+	}
+	public set binding(value: any) {
+		this._binding = value;
+	}
+	public get excelUploadDialogHandler(): ExcelUploadDialog {
+		return this._excelUploadDialogHandler;
+	}
+	public set excelUploadDialogHandler(value: ExcelUploadDialog) {
+		this._excelUploadDialogHandler = value;
 	}
 
 	

@@ -20,6 +20,7 @@ import SheetHandler from "../SheetHandler";
 import Parser from "../Parser";
 import Button from "sap/m/Button";
 import { AvailableOptionsType } from "../../types";
+import FlexBox from "sap/m/FlexBox";
 
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
@@ -236,7 +237,7 @@ export default class ExcelUploadDialog extends ManagedObject {
 
 	resetContent() {
 		(this.excelUploadDialog.getModel("info") as JSONModel).setProperty("/dataRows", 0);
-		var fileUploader = this.excelUploadDialog.getContent()[0].getItems()[1] as FileUploader;
+		var fileUploader = (this.excelUploadDialog.getContent()[0] as FlexBox).getItems()[1] as FileUploader;
 		fileUploader.setValue();
 	}
 
@@ -258,7 +259,7 @@ export default class ExcelUploadDialog extends ManagedObject {
 	onTempDownload() {
 		// create excel column list
 		let fieldMatchType = this.component.getFieldMatchType();
-		var excelColumnList = [{}];
+		var excelColumnList: { [key: string]: string }[] = [{}];
 		if (this.component.getStandalone()) {
 			// loop over this.component.getColumns
 			for (let column of this.component.getColumns()) {

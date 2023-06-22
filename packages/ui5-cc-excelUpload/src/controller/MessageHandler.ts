@@ -230,7 +230,7 @@ export default class MessageHandler extends ManagedObject{
 
 	private onContinue() {
 		this.messageDialog.close();
-		this.excelUploadController.setDataRows();
+		this.excelUploadController.excelUploadDialogHandler.setDataRows(0);
 	}
 
 	private sortMessagesByTitle(messages: GroupedMessage[]) {

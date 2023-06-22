@@ -91,7 +91,7 @@ export default class ODataV4 extends OData {
 	getOdataType(binding: any, tableObject: any, odataType: any) {
 		const tableBindingPath = binding.getPath();
 		const metaModel = tableObject.getModel().getMetaModel();
-		const metaModelData = tableObject.getModel().getMetaModel().getData();
+		const metaModelData = tableObject.getModel().getMetaModel().getData() as any;
 		if (!odataType) {
 			// for list report
 			try {
@@ -103,8 +103,8 @@ export default class ODataV4 extends OData {
 			// for object page
 			if (!odataType) {
 				for (const [key, value] of Object.entries(metaModelData)) {
-					if (value["$kind"] === "EntityType" && value[tableBindingPath]) {
-						return value[tableBindingPath]["$Type"];
+					if ((value as any)["$kind"] === "EntityType" && (value as any)[tableBindingPath]) {
+						return (value as any)[tableBindingPath]["$Type"];
 					}
 				}
 			}
