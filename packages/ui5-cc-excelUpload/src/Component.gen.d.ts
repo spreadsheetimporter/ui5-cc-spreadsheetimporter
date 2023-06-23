@@ -1,3 +1,4 @@
+import EventProvider from "sap/ui/base/EventProvider";
 import Event from "sap/ui/base/Event";
 import { PropertyBindingInfo } from "sap/ui/base/ManagedObject";
 import { $UIComponentSettings } from "sap/ui/core/UIComponent";
@@ -25,10 +26,11 @@ declare module "./Component" {
         showBackendErrorMessages?: boolean | PropertyBindingInfo | `{${string}}`;
         showOptions?: boolean | PropertyBindingInfo | `{${string}}`;
         availableOptions?: string[] | PropertyBindingInfo | `{${string}}`;
+        hideSampleData?: boolean | PropertyBindingInfo | `{${string}}`;
         debug?: boolean | PropertyBindingInfo | `{${string}}`;
-        checkBeforeRead?: (event: Event) => void;
-        changeBeforeCreate?: (event: Event) => void;
-        uploadButtonPress?: (event: Event) => void;
+        checkBeforeRead?: (event: Component$CheckBeforeReadEvent) => void;
+        changeBeforeCreate?: (event: Component$ChangeBeforeCreateEvent) => void;
+        uploadButtonPress?: (event: Component$UploadButtonPressEvent) => void;
     }
 
     export default interface Component {
@@ -384,6 +386,27 @@ declare module "./Component" {
          */
         setAvailableOptions(availableOptions: string[]): this;
 
+        // property: hideSampleData
+
+        /**
+         * Gets current value of property "hideSampleData".
+         *
+         * Default value is: false
+         * @returns Value of property "hideSampleData"
+         */
+        getHideSampleData(): boolean;
+
+        /**
+         * Sets a new value for property "hideSampleData".
+         *
+         * When called with a value of "null" or "undefined", the default value of the property will be restored.
+         *
+         * Default value is: false
+         * @param [hideSampleData=false] New value for property "hideSampleData"
+         * @returns Reference to "this" in order to allow method chaining
+         */
+        setHideSampleData(hideSampleData: boolean): this;
+
         // property: debug
 
         /**
@@ -418,7 +441,7 @@ declare module "./Component" {
          *
          * @returns Reference to "this" in order to allow method chaining
          */
-        attachCheckBeforeRead(fn: (event: Event) => void, listener?: object): this;
+        attachCheckBeforeRead(fn: (event: Component$CheckBeforeReadEvent) => void, listener?: object): this;
 
         /**
          * Attaches event handler "fn" to the "checkBeforeRead" event of this "Component".
@@ -432,7 +455,7 @@ declare module "./Component" {
          *
          * @returns Reference to "this" in order to allow method chaining
          */
-        attachCheckBeforeRead<CustomDataType extends object>(data: CustomDataType, fn: (event: Event, data: CustomDataType) => void, listener?: object): this;
+        attachCheckBeforeRead<CustomDataType extends object>(data: CustomDataType, fn: (event: Component$CheckBeforeReadEvent, data: CustomDataType) => void, listener?: object): this;
 
         /**
          * Detaches event handler "fn" from the "checkBeforeRead" event of this "Component".
@@ -443,7 +466,7 @@ declare module "./Component" {
          * @param listener Context object on which the given function had to be called
          * @returns Reference to "this" in order to allow method chaining
          */
-        detachCheckBeforeRead(fn: (event: Event) => void, listener?: object): this;
+        detachCheckBeforeRead(fn: (event: Component$CheckBeforeReadEvent) => void, listener?: object): this;
 
         /**
          * Fires event "checkBeforeRead" to attached listeners.
@@ -454,7 +477,7 @@ declare module "./Component" {
          *
          * @returns Reference to "this" in order to allow method chaining
          */
-        fireCheckBeforeRead(parameters?: object): this;
+        fireCheckBeforeRead(parameters?: Component$CheckBeforeReadEventParameters): this;
 
         // event: changeBeforeCreate
 
@@ -469,7 +492,7 @@ declare module "./Component" {
          *
          * @returns Reference to "this" in order to allow method chaining
          */
-        attachChangeBeforeCreate(fn: (event: Event) => void, listener?: object): this;
+        attachChangeBeforeCreate(fn: (event: Component$ChangeBeforeCreateEvent) => void, listener?: object): this;
 
         /**
          * Attaches event handler "fn" to the "changeBeforeCreate" event of this "Component".
@@ -483,7 +506,7 @@ declare module "./Component" {
          *
          * @returns Reference to "this" in order to allow method chaining
          */
-        attachChangeBeforeCreate<CustomDataType extends object>(data: CustomDataType, fn: (event: Event, data: CustomDataType) => void, listener?: object): this;
+        attachChangeBeforeCreate<CustomDataType extends object>(data: CustomDataType, fn: (event: Component$ChangeBeforeCreateEvent, data: CustomDataType) => void, listener?: object): this;
 
         /**
          * Detaches event handler "fn" from the "changeBeforeCreate" event of this "Component".
@@ -494,7 +517,7 @@ declare module "./Component" {
          * @param listener Context object on which the given function had to be called
          * @returns Reference to "this" in order to allow method chaining
          */
-        detachChangeBeforeCreate(fn: (event: Event) => void, listener?: object): this;
+        detachChangeBeforeCreate(fn: (event: Component$ChangeBeforeCreateEvent) => void, listener?: object): this;
 
         /**
          * Fires event "changeBeforeCreate" to attached listeners.
@@ -504,7 +527,7 @@ declare module "./Component" {
          *
          * @returns Reference to "this" in order to allow method chaining
          */
-        fireChangeBeforeCreate(parameters?: object): this;
+        fireChangeBeforeCreate(parameters?: Component$ChangeBeforeCreateEventParameters): this;
 
         // event: uploadButtonPress
 
@@ -519,7 +542,7 @@ declare module "./Component" {
          *
          * @returns Reference to "this" in order to allow method chaining
          */
-        attachUploadButtonPress(fn: (event: Event) => void, listener?: object): this;
+        attachUploadButtonPress(fn: (event: Component$UploadButtonPressEvent) => void, listener?: object): this;
 
         /**
          * Attaches event handler "fn" to the "uploadButtonPress" event of this "Component".
@@ -533,7 +556,7 @@ declare module "./Component" {
          *
          * @returns Reference to "this" in order to allow method chaining
          */
-        attachUploadButtonPress<CustomDataType extends object>(data: CustomDataType, fn: (event: Event, data: CustomDataType) => void, listener?: object): this;
+        attachUploadButtonPress<CustomDataType extends object>(data: CustomDataType, fn: (event: Component$UploadButtonPressEvent, data: CustomDataType) => void, listener?: object): this;
 
         /**
          * Detaches event handler "fn" from the "uploadButtonPress" event of this "Component".
@@ -544,7 +567,7 @@ declare module "./Component" {
          * @param listener Context object on which the given function had to be called
          * @returns Reference to "this" in order to allow method chaining
          */
-        detachUploadButtonPress(fn: (event: Event) => void, listener?: object): this;
+        detachUploadButtonPress(fn: (event: Component$UploadButtonPressEvent) => void, listener?: object): this;
 
         /**
          * Fires event "uploadButtonPress" to attached listeners.
@@ -557,6 +580,51 @@ declare module "./Component" {
          *
          * @returns Whether or not to prevent the default action
          */
-        fireUploadButtonPress(parameters?: object): boolean;
+        fireUploadButtonPress(parameters?: Component$UploadButtonPressEventParameters): boolean;
+    }
+
+    /**
+     * Interface describing the parameters of Component's 'checkBeforeRead' event.
+     */
+    export interface Component$CheckBeforeReadEventParameters {
+        sheetData?: object;
+        messages?: object;
+    }
+
+    /**
+     * Interface describing the parameters of Component's 'changeBeforeCreate' event.
+     */
+    export interface Component$ChangeBeforeCreateEventParameters {
+        payload?: object;
+    }
+
+    /**
+     * Interface describing the parameters of Component's 'uploadButtonPress' event.
+     */
+    export interface Component$UploadButtonPressEventParameters {
+        payload?: object;
+    }
+
+    /**
+     * Type describing the Component's 'checkBeforeRead' event.
+     */
+    export type Component$CheckBeforeReadEvent = Event<Component$CheckBeforeReadEventParameters>;
+
+    /**
+     * Type describing the Component's 'changeBeforeCreate' event.
+     */
+    export type Component$ChangeBeforeCreateEvent = Event<Component$ChangeBeforeCreateEventParameters>;
+
+    /**
+     * Type describing the Component's 'uploadButtonPress' event.
+     */
+    export type Component$UploadButtonPressEvent = Event<Component$UploadButtonPressEventParameters>;
+}
+// This module enhances sap.ui.base.Event with Generics, which is needed in UI5 type definition versions below 1.115
+declare module "sap/ui/base/Event" {
+    export default interface Event<ParamsType extends Record<string, any> = object> {
+        constructor(id: string, oSource: EventProvider, parameters: ParamsType);
+        getParameters(): ParamsType;
+        getParameter<ParamName extends keyof ParamsType>(name: ParamName): ParamsType[ParamName];
     }
 }

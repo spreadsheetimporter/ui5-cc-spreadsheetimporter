@@ -25,15 +25,23 @@ export default class ExcelDialog extends Dialog {
 			component: { type: "object" },
 		},
 		events: {
-			decimalSeparatorChanged: {},
-			availableOptionsChanged: {},
+			decimalSeparatorChanged: {
+				parameters: {
+					decimalSeparator: { type: "string" },
+				},
+			},
+			availableOptionsChanged: {
+				parameters: {
+					availableOptions: { type: "string[]" },
+				},
+			},
 		},
 	};
 
 	public setDecimalSeparator(sDecimalSeparator: string) {
 		if (sDecimalSeparator === "," || sDecimalSeparator === ".") {
 			this.setProperty("decimalSeparator", sDecimalSeparator);
-			this.fireDecimalSeparatorChanged({ decimalSeparator: sDecimalSeparator });
+			this.fireDecimalSeparatorChanged({ decimalSeparator: sDecimalSeparator } as ExcelDialog$DecimalSeparatorChangedEventParameters);
 			return this;
 		} else {
 			throw new Error("Decimal separator must be either ',' or '.'");
@@ -47,9 +55,9 @@ export default class ExcelDialog extends Dialog {
 			}
 		}
 		this.setProperty("availableOptions", aAvailableOptions);
-		this.fireAvailableOptionsChanged({ availableOptions: aAvailableOptions });
+		this.fireAvailableOptionsChanged({ availableOptions: aAvailableOptions }) as ExcelDialog$AvailableOptionsChangedEventParameters;
 		return this;
 	}
-// @ts-ignore
+	// @ts-ignore
 	static renderer: typeof sap.m.DialogRenderer = sap.m.DialogRenderer;
 }

@@ -1,13 +1,12 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 import Fragment from "sap/ui/core/Fragment";
-import JSONModel from "sap/ui/model/json/JSONModel";
 import ExcelUpload from "../ExcelUpload";
-import ExcelDialog from "../../control/ExcelDialog";
+import ExcelDialog, { ExcelDialog$AvailableOptionsChangedEvent, ExcelDialog$DecimalSeparatorChangedEvent, ExcelDialog$DecimalSeparatorChangedEventParameters } from "../../control/ExcelDialog";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import Component from "../../Component";
 import Event from "sap/ui/base/Event";
 import Bar from "sap/m/Bar";
-import FileUploader from "sap/ui/unified/FileUploader";
+import FileUploader, { $FileUploaderChangeEventParameters } from "sap/ui/unified/FileUploader";
 import MessageToast from "sap/m/MessageToast";
 import Preview from "../Preview";
 import Util from "../Util";
@@ -21,6 +20,7 @@ import Parser from "../Parser";
 import Button from "sap/m/Button";
 import { AvailableOptionsType } from "../../types";
 import FlexBox from "sap/m/FlexBox";
+import JSONModel from "sap/ui/model/json/JSONModel";
 
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
@@ -76,12 +76,12 @@ export default class ExcelUploadDialog extends ManagedObject {
 
 	/**
 	 * Handles file upload event.
-	 * @param {Event} event - The file upload event.
+	 * @param {Event} event - The file upload event
 	 */
-	async onFileUpload(event: Event) {
+	async onFileUpload(event: Event<$FileUploaderChangeEventParameters>) {
 		try {
 			this.messageHandler.setMessages([]);
-			const file = event.getParameter("files")[0];
+			const file = event.getParameter("files")[0] as Blob;
 
 			const workbook = (await this._readWorkbook(file)) as XLSX.WorkBook;
 			const sheetName = workbook.SheetNames[0];
@@ -219,11 +219,11 @@ export default class ExcelUploadDialog extends ManagedObject {
 		this.excelUploadDialog.close();
 	}
 
-	onDecimalSeparatorChanged(event: Event) {
+	onDecimalSeparatorChanged(event: ExcelDialog$DecimalSeparatorChangedEvent) {
 		this.component.setDecimalSeparator(event.getParameter("decimalSeparator"));
 	}
 
-	onAvailableOptionsChanged(event: Event) {
+	onAvailableOptionsChanged(event: ExcelDialog$AvailableOptionsChangedEvent) {
 		const availableOptions = event.getParameter("availableOptions") as AvailableOptionsType[];
 		if (availableOptions.length > 0) {
 			this.component.setShowOptions(true);
@@ -253,35 +253,89 @@ export default class ExcelUploadDialog extends ManagedObject {
 		this.previewHandler.showPreview(this.excelUploadController.getPayloadArray());
 	}
 
-	/**
-	 * Create Excel Template File with specific columns
-	 */
 	onTempDownload() {
 		// create excel column list
 		let fieldMatchType = this.component.getFieldMatchType();
-		var excelColumnList: { [key: string]: string }[] = [{}];
+		var worksheet = {} as XLSX.WorkSheet;
+		let colWidths: { wch: number }[] = []; // array to store column widths
+		const colWidthDefault = 15;
+		const colWidthDate = 20;
+		let col = 0;
 		if (this.component.getStandalone()) {
 			// loop over this.component.getColumns
 			for (let column of this.component.getColumns()) {
-				excelColumnList[0][column] = "";
+				worksheet[XLSX.utils.encode_cell({ c: 0, r: 0 })] = { v: column, t: "s" };
 			}
 		} else {
-			for (let [key, value] of Object.entries(this.excelUploadController.typeLabelList)) {
+			for (let [key, value] of this.excelUploadController.typeLabelList.entries()) {
+				let cell = { v: "", t: "s" } as XLSX.CellObject;
+				let label = "";
 				if (fieldMatchType === "label") {
-					excelColumnList[0][value.label] = "";
+					label = value.label;
 				}
 				if (fieldMatchType === "labelTypeBrackets") {
-					excelColumnList[0][`${value.label}[${key}]`] = "";
+					label = `${value.label}[${key}]`;
 				}
+				
+				if (value.type === "Edm.Boolean") {
+					cell = { v: "true", t: "b" };
+					colWidths.push({ wch: colWidthDefault });
+				} else if (value.type === "Edm.String") {
+					let newStr;
+					if (value.maxLength) {
+						newStr = "test string".substring(0, value.maxLength);
+					} else {
+						newStr = "test string";
+					}
+					cell = { v: newStr, t: "s" };
+					colWidths.push({ wch: colWidthDefault });
+				} else if (value.type === "Edm.DateTimeOffset" || value.type === "Edm.DateTime") {
+					let format;
+					const currentLang = sap.ui.getCore().getConfiguration().getLanguage();
+					if (currentLang.startsWith("en")) {
+						format = "mm/dd/yyyy hh:mm AM/PM";
+					} else {
+						format = "dd.mm.yyyy hh:mm";
+					}
+
+					cell = { v: new Date(), t: "d", z: format };
+					colWidths.push({ wch: colWidthDate }); // set column width to 20 for this column
+				} else if (value.type === "Edm.Date") {
+					cell = { v: new Date(), t: "d" };
+					colWidths.push({ wch: colWidthDefault });
+				} else if (value.type === "Edm.TimeOfDay" || value.type === "Edm.Time") {
+					cell = { v: new Date(), t: "d", z: "hh:mm" };
+					colWidths.push({ wch: colWidthDefault });
+				} else if (
+					value.type === "Edm.UInt8" ||
+					value.type === "Edm.Int16" ||
+					value.type === "Edm.Int32" ||
+					value.type === "Edm.Integer" ||
+					value.type === "Edm.Int64" ||
+					value.type === "Edm.Integer64"
+				) {
+					cell = { v: 85, t: "n" };
+					colWidths.push({ wch: colWidthDefault });
+				} else if (value.type === "Edm.Double" || value.type === "Edm.Decimal") {
+					const decimalSeparator = this.component.getDecimalSeparator();
+					cell = { v: `123${decimalSeparator}4`, t: "n" };
+					colWidths.push({ wch: colWidthDefault });
+				}
+				worksheet[XLSX.utils.encode_cell({ c: col, r: 0 })] = { v: label, t: "s" };
+				if(!this.component.getHideSampleData()) {
+					worksheet[XLSX.utils.encode_cell({ c: col, r: 1 })] = cell;
+				}
+				
+				col++;
 			}
 		}
+		worksheet["!ref"] = XLSX.utils.encode_range({ s: { c: 0, r: 0 }, e: { c: col, r: 1 } });
+		worksheet["!cols"] = colWidths; // assign the column widths to the worksheet
 
-		// initialising the excel work sheet
-		const ws = XLSX.utils.json_to_sheet(excelColumnList);
 		// creating the new excel work book
 		const wb = XLSX.utils.book_new();
 		// set the file value
-		XLSX.utils.book_append_sheet(wb, ws, "Tabelle1");
+		XLSX.utils.book_append_sheet(wb, worksheet, "Tabelle1");
 		// download the created excel file
 		XLSX.writeFile(wb, this.component.getExcelFileName());
 

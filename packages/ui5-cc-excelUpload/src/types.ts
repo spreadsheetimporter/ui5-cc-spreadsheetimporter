@@ -21,10 +21,11 @@ export interface Tags {
 }
 
 export interface Property {
+	maxLength: number;
 	type: string;
 	label: string;
 }
-export type ListObject = { [key: string]: Property };
+export type ListObject = Map<string, Property>;
 export type PropertyArray = { [key: string]: any }[];
 export type Columns = string[];
 
@@ -143,5 +144,6 @@ export interface ComponentData {
     showOptions?: boolean;
     availableOptions?: AvailableOptionsType[];
     debug?: boolean;
+	hideSampleData?: boolean;
 }
 

@@ -5,24 +5,25 @@ import MetadataHandler from "./MetadataHandler";
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
 export default class MetadataHandlerV4 extends MetadataHandler {
-
 	constructor(excelUploadController: any) {
 		super(excelUploadController);
 	}
 
 	public getLabelList(colums: Columns, odataType: string): ListObject {
-		let listObject: ListObject = {};
+		let listObject: ListObject = new Map();
 		let entityTypeLabel;
 
 		// get the property list of the entity for which we need to download the template
 		var annotations = this.excelUploadController.context.getModel().getMetaModel().getData()["$Annotations"];
 		const properties = this.excelUploadController.context.getModel().getMetaModel().getData()[odataType];
-		Log.debug("ExcelUpload: Annotations", undefined, "ExcelUpload: MetadataHandler", () => this.excelUploadController.component.logger.returnObject(this.excelUploadController.context.getModel().getMetaModel().getData()));
+		Log.debug("ExcelUpload: Annotations", undefined, "ExcelUpload: MetadataHandler", () =>
+			this.excelUploadController.component.logger.returnObject(this.excelUploadController.context.getModel().getMetaModel().getData())
+		);
 		// try get facet label
 		try {
 			entityTypeLabel = annotations[odataType]["@com.sap.vocabularies.UI.v1.Facets"][0].Label;
 		} catch (error) {
-			Log.debug(`ExcelUpload: Facet Label not found`,undefined,"ExcelUpload: MetadataHandler");
+			Log.debug(`ExcelUpload: Facet Label not found`, undefined, "ExcelUpload: MetadataHandler");
 		}
 
 		// check if file name is not set
@@ -37,27 +38,37 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 				const property = properties[propertyName];
 				if (property) {
 					const propertyLabel = annotations[`${odataType}/${propertyName}`];
-					listObject[propertyName] = {} as Property;
-					listObject[propertyName].label = this.getLabel(annotations, properties, propertyName, propertyLabel, odataType);
-					if (!listObject[propertyName].label) {
-						listObject[propertyName].label = propertyName;
+					let propertyObject: Property = {} as Property;
+					propertyObject.label = this.getLabel(annotations, properties, propertyName, propertyLabel, odataType);
+					if (!propertyObject.label) {
+						propertyObject.label = propertyName;
 					}
-					listObject[propertyName].type = property.$Type;
+					propertyObject.type = property.$Type;
+					propertyObject.maxLength = property.$MaxLength;
+					listObject.set(propertyName, propertyObject);
 				} else {
-					Log.warning(`ExcelUpload: Property ${propertyName} not found`,undefined,"ExcelUpload: MetadataHandler");
+					Log.warning(`ExcelUpload: Property ${propertyName} not found`, undefined, "ExcelUpload: MetadataHandler");
 				}
 			}
 		} else {
-			const propertiesFiltered = Object.entries(properties).filter(([propertyName, propertyValue]) => (propertyValue as any)["$kind"] === "Property");
+			const propertiesFiltered = [];
+			for (const propertyName in properties) {
+				const propertyValue = properties[propertyName];
+				if (propertyValue["$kind"] === "Property") {
+					propertiesFiltered.push([propertyName, propertyValue]);
+				}
+			}
 			for (const [propertyName, propertyValue] of propertiesFiltered) {
 				const propertyLabel = annotations[`${odataType}/${propertyName}`];
 				if (!propertyLabel["@com.sap.vocabularies.UI.v1.Hidden"] && !propertyName.startsWith("SAP__")) {
-					listObject[propertyName] = {} as Property;
-					listObject[propertyName].label = this.getLabel(annotations, properties, propertyName, propertyLabel, odataType);
-					if (!listObject[propertyName].label) {
-						listObject[propertyName].label = propertyName;
+					let propertyObject: Property = {} as Property;
+					propertyObject.label = this.getLabel(annotations, properties, propertyName, propertyLabel, odataType);
+					if (!propertyObject.label) {
+						propertyObject.label = propertyName;
 					}
-					listObject[propertyName].type = (propertyValue as any).$Type;
+					propertyObject.type = propertyValue.$Type;
+					propertyObject.maxLength = propertyValue.$MaxLength;
+					listObject.set(propertyName, propertyObject);
 				}
 			}
 		}
@@ -73,7 +84,7 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 			const lineItemsAnnotations = annotations[odataType]["@com.sap.vocabularies.UI.v1.LineItem"];
 			return lineItemsAnnotations.find((dataField: { Value: { $Path: any } }) => dataField.Value.$Path === propertyName).Label;
 		} catch (error) {
-			Log.debug(`ExcelUpload: ${propertyName} not found as a LineItem Label`,undefined,"ExcelUpload: MetadataHandler");
+			Log.debug(`ExcelUpload: ${propertyName} not found as a LineItem Label`, undefined, "ExcelUpload: MetadataHandler");
 		}
 		return propertyName;
 	}
@@ -84,7 +95,7 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 	 **/
 	getKeyList(odataType: string): string[] {
 		let keys: string[] = [];
-		if(this.excelUploadController.component.getSkipMandatoryFieldCheck()){
+		if (this.excelUploadController.component.getSkipMandatoryFieldCheck()) {
 			return keys;
 		}
 
@@ -99,12 +110,12 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 				continue;
 			}
 			// skip messages property
-			if(propertyName === messagesPath?.$Path || propertyName.startsWith("SAP__") ) {
+			if (propertyName === messagesPath?.$Path || propertyName.startsWith("SAP__")) {
 				continue;
 			}
 			// if property is mandatory, field should be in excel file
 			if (
-				!this.excelUploadController.component.getSkipMandatoryFieldCheck() && 
+				!this.excelUploadController.component.getSkipMandatoryFieldCheck() &&
 				propertyLabel["@com.sap.vocabularies.Common.v1.FieldControl"] &&
 				propertyLabel["@com.sap.vocabularies.Common.v1.FieldControl"]["$EnumMember"] &&
 				propertyLabel["@com.sap.vocabularies.Common.v1.FieldControl"]["$EnumMember"] === "com.sap.vocabularies.Common.v1.FieldControlType/Mandatory"
@@ -114,5 +125,4 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 		}
 		return keys;
 	}
-
 }

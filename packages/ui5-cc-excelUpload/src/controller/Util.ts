@@ -1,7 +1,7 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 import Log from "sap/base/Log";
 import ResourceBundle from "sap/base/i18n/ResourceBundle";
-import MessageBox, { Action } from "sap/m/MessageBox";
+import MessageBox from "sap/m/MessageBox";
 import { FieldMatchType, RowData, ValueData } from "../types";
 import Component from "../Component";
 /**
@@ -71,16 +71,16 @@ export default class Util extends ManagedObject {
 		Log.error(errorMessage, error, `${className}.${methodName}`);
 		MessageBox.error(errorMessage, {
 			details: detailsContent,
-			initialFocus: Action.CLOSE,
-			actions: [Action.OK],
+			initialFocus: MessageBox.Action.CLOSE,
+			actions: [MessageBox.Action.OK],
 		});
 	}
 
 	static showErrorMessage(errorMessage: string, className: string, methodName: string) {
 		Log.error(errorMessage, `${className}.${methodName}`);
 		MessageBox.error(errorMessage, {
-			initialFocus: Action.CLOSE,
-			actions: [Action.CANCEL],
+			initialFocus: MessageBox.Action.CLOSE,
+			actions: [MessageBox.Action.CANCEL],
 		});
 	}
 

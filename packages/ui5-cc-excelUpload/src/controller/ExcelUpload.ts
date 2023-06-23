@@ -1,7 +1,7 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 import Component from "../Component";
 import XMLView from "sap/ui/core/mvc/XMLView";
-import { ListObject, Messages, CustomMessageTypes } from "../types";
+import { Messages, CustomMessageTypes, Property, ListObject } from "../types";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import ResourceBundle from "sap/base/i18n/ResourceBundle";
 import OData from "./odata/OData";

@@ -1,6 +1,6 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 import DraftController from "sap/ui/generic/app/transaction/DraftController";
-import { Columns, ListObject } from "../../types";
+import { Columns, ListObject, Property } from "../../types";
 import ODataMessageHandler from "../dialog/ODataMessageHandler";
 import ExcelUpload from "../ExcelUpload";
 import Log from "sap/base/Log";

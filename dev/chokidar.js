@@ -14,7 +14,8 @@ chokidar
 			stabilityThreshold: 1000,
 			pollInterval: 100,
 		},
-		ignoreInitial: true
+		ignoreInitial: true,
+		ignored: '**/*.dt.ts'
 	})
 	.on("change", (event, path) => {
 		clearTimeout(timeoutId)
