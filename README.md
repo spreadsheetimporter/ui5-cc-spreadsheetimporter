@@ -30,19 +30,16 @@ The demo app uses OData V4 and UI5 version 1.108 with a CAP backend. The data re
 
 For discussions about the suitability of the component for your use case, you can schedule an appointment [here](https://outlook.office365.com/owa/calendar/UI5ExcelUploadComponent@marianzeis.de/bookings/) free of charge.
 
-<<<<<<< HEAD
 If you encounter implementation issues or bugs, you can open an issue [here](https://github.com/marianfoo/ui5-cc-excelUpload/issues/new/choose).  
 For urgent assistance or special requirements, please schedule an appointment [here](https://outlook.office365.com/owa/calendar/UI5ExcelUploadComponent@marianzeis.de/bookings/) at a fixed rate.
-=======
-If you have problems with the implementation or found a bug, you can always open an issue [here](https://github.com/marianfoo/ui5-cc-excelUpload/issues/new/choose).  
-If you need urgent help or have a special requirement, you can make an appointment [here](https://outlook.office365.com/owa/calendar/UI5ExcelUploadComponent@marianzeis.de/bookings/) for a fixed rate.
->>>>>>> aeab5a9a7ea4d04bc26f9f9bedb5d6519d9cf7ed
 
 # Development
 
 The development documentation can be found here:
 
 https://marianfoo.github.io/ui5-cc-excelUpload/pages/Development/GettingStarted/
+
+# Changelogs
 
 ## Changelog `ui5-cc-excelupload`
 
@@ -56,7 +53,7 @@ Refer to the [CHANGELOG.md](https://github.com/marianfoo/ui5-cc-excelUpload/blob
 
 Check the [CHANGELOG.md](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/packages/ui5-cc-excelUpload-Generator/CHANGELOG.md)
 
-## Open in GitHub Codespaces
+# Open in GitHub Codespaces
 
 The postCreateCommand will automatically install all dependencies, which might take a few minutes.
 
