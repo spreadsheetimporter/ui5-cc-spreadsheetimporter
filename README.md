@@ -2,7 +2,7 @@
 
 This monorepo houses the UI5 Component `ui5-cc-excelupload`, the Button `ui5-cc-excelupload-button`, and the generator for seamless integration of the component into your app.
 
-> :warning: **Beta Version Alert**: While core functionality is provided, bugs may still occur and APIs may change!
+> :warning: **Beta Version**: While core functionality is provided, bugs may still occur and APIs may change!
 
 `ui5-cc-excelupload` is a UI5 Component designed for the integration of Excel Upload functionality into Fiori Elements and other UI5 Apps.  
 It enables the bulk upload of data, independent of the backend, OData version, and Fiori scenario, by extracting data from an Excel file and leveraging standard APIs.  
