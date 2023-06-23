@@ -255,28 +255,30 @@ export default class ExcelUploadDialog extends ManagedObject {
 		this.previewHandler.showPreview(this.excelUploadController.getPayloadArray());
 	}
 
-	/**
-	 * Create Excel Template File with specific column
-	 */
 	onTempDownload() {
 		// create excel column list
 		let fieldMatchType = this.component.getFieldMatchType();
-		var excelColumnList: { [key: string]: string }[] = [{}];
+		var worksheet = {};
+		let col = 0;
 		if (this.component.getStandalone()) {
 			// loop over this.component.getColumns
 			for (let column of this.component.getColumns()) {
-				excelColumnList[0][column] = "";
+				worksheet[XLSX.utils.encode_cell({c: 0, r: 0})] = {v: column, t: 's'};
 			}
 		} else {
+			
 			for (let [key, value] of this.excelUploadController.typeLabelList.entries()) {
+				let cell = {v: '', t: 's'};
+				let label = '';
 				if (fieldMatchType === "label") {
-					excelColumnList[0][value.label] = "";
+					label = value.label;
 				}
 				if (fieldMatchType === "labelTypeBrackets") {
-					excelColumnList[0][`${value.label}[${key}]`] = "";
+					label = `${value.label}[${key}]`;
 				}
 				// option to add line of data
 				if (value.type === "Edm.Boolean") {
+					cell = {v: "true", t: 'b'};
 				} else if (value.type === "Edm.String") {
 					let newStr;
 					if (value.maxLength) {
@@ -284,13 +286,11 @@ export default class ExcelUploadDialog extends ManagedObject {
 					} else {
 						newStr = "test string";
 					}
-					excelColumnList[0][`${value.label}[${key}]`] = newStr;
-				} else if (value.type === "Edm.Date") {
-					excelColumnList[0][`${value.label}[${key}]`] = new Date().toLocaleDateString();
-				} else if (value.type === "Edm.DateTimeOffset" || value.type === "Edm.DateTime") {
-					excelColumnList[0][`${value.label}[${key}]`] = new Date().toLocaleDateString();
+					cell = {v: newStr, t: 's'};
+				} else if (value.type === "Edm.Date" || value.type === "Edm.DateTimeOffset" || value.type === "Edm.DateTime") {
+					cell = {v: new Date(), t: 'd'};
 				} else if (value.type === "Edm.TimeOfDay" || value.type === "Edm.Time") {
-					excelColumnList[0][`${value.label}[${key}]`] = new Date().toLocaleDateString();
+					cell = {v: new Date(), t: 'd'};
 				} else if (
 					value.type === "Edm.UInt8" ||
 					value.type === "Edm.Int16" ||
@@ -299,25 +299,29 @@ export default class ExcelUploadDialog extends ManagedObject {
 					value.type === "Edm.Int64" ||
 					value.type === "Edm.Integer64"
 				) {
-					excelColumnList[0][`${value.label}[${key}]`] = "123";
+					cell = {v: 123, t: 'n'};
 				} else if (value.type === "Edm.Double" || value.type === "Edm.Decimal") {
 					// get the decimal separator from browser
-					excelColumnList[0][`${value.label}[${key}]`] = "123,4";
+					const decimalSeparator = this.component.getDecimalSeparator()
+					cell = {v: `123${decimalSeparator}4`, t: 'n'};
 				}
+				worksheet[XLSX.utils.encode_cell({c: col, r: 0})] = {v: label, t: 's'};
+				worksheet[XLSX.utils.encode_cell({c: col, r: 1})] = cell;
+				col++;
 			}
 		}
+		worksheet['!ref'] = XLSX.utils.encode_range({s: {c: 0, r: 0}, e: {c: col, r: 1}});
 	
-		// initialising the excel work sheet
-		const ws = XLSX.utils.json_to_sheet(excelColumnList);
 		// creating the new excel work book
 		const wb = XLSX.utils.book_new();
 		// set the file value
-		XLSX.utils.book_append_sheet(wb, ws, "Tabelle1");
+		XLSX.utils.book_append_sheet(wb, worksheet, "Tabelle1");
 		// download the created excel file
 		XLSX.writeFile(wb, this.component.getExcelFileName());
 	
 		MessageToast.show(this.util.geti18nText("downloadingTemplate"));
 	}
+	
 
 	onOpenOptionsDialog() {
 		this.optionsHandler.openOptionsDialog();
