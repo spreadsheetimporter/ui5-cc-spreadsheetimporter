@@ -241,11 +241,9 @@ export default class ExcelUploadDialog extends ManagedObject {
 		fileUploader.setValue();
 	}
 
-
 	setDataRows(length: number) {
 		(this.excelUploadDialog.getModel("info") as JSONModel).setProperty("/dataRows", length);
 	}
-
 
 	getDialog(): ExcelDialog {
 		return this.excelUploadDialog;
@@ -258,27 +256,30 @@ export default class ExcelUploadDialog extends ManagedObject {
 	onTempDownload() {
 		// create excel column list
 		let fieldMatchType = this.component.getFieldMatchType();
-		var worksheet = {};
+		var worksheet = {} as XLSX.WorkSheet;
+		let colWidths: { wch: number }[] = []; // array to store column widths
+		const colWidthDefault = 15;
+		const colWidthDate = 20;
 		let col = 0;
 		if (this.component.getStandalone()) {
 			// loop over this.component.getColumns
 			for (let column of this.component.getColumns()) {
-				worksheet[XLSX.utils.encode_cell({c: 0, r: 0})] = {v: column, t: 's'};
+				worksheet[XLSX.utils.encode_cell({ c: 0, r: 0 })] = { v: column, t: "s" };
 			}
 		} else {
-			
 			for (let [key, value] of this.excelUploadController.typeLabelList.entries()) {
-				let cell = {v: '', t: 's'};
-				let label = '';
+				let cell = { v: "", t: "s" } as XLSX.CellObject;
+				let label = "";
 				if (fieldMatchType === "label") {
 					label = value.label;
 				}
 				if (fieldMatchType === "labelTypeBrackets") {
 					label = `${value.label}[${key}]`;
 				}
-				// option to add line of data
+				
 				if (value.type === "Edm.Boolean") {
-					cell = {v: "true", t: 'b'};
+					cell = { v: "true", t: "b" };
+					colWidths.push({ wch: colWidthDefault });
 				} else if (value.type === "Edm.String") {
 					let newStr;
 					if (value.maxLength) {
@@ -286,11 +287,25 @@ export default class ExcelUploadDialog extends ManagedObject {
 					} else {
 						newStr = "test string";
 					}
-					cell = {v: newStr, t: 's'};
-				} else if (value.type === "Edm.Date" || value.type === "Edm.DateTimeOffset" || value.type === "Edm.DateTime") {
-					cell = {v: new Date(), t: 'd'};
+					cell = { v: newStr, t: "s" };
+					colWidths.push({ wch: colWidthDefault });
+				} else if (value.type === "Edm.DateTimeOffset" || value.type === "Edm.DateTime") {
+					let format;
+					const currentLang = sap.ui.getCore().getConfiguration().getLanguage();
+					if (currentLang.startsWith("en")) {
+						format = "mm/dd/yyyy hh:mm AM/PM";
+					} else {
+						format = "dd.mm.yyyy hh:mm";
+					}
+
+					cell = { v: new Date(), t: "d", z: format };
+					colWidths.push({ wch: colWidthDate }); // set column width to 20 for this column
+				} else if (value.type === "Edm.Date") {
+					cell = { v: new Date(), t: "d" };
+					colWidths.push({ wch: colWidthDefault });
 				} else if (value.type === "Edm.TimeOfDay" || value.type === "Edm.Time") {
-					cell = {v: new Date(), t: 'd'};
+					cell = { v: new Date(), t: "d", z: "hh:mm" };
+					colWidths.push({ wch: colWidthDefault });
 				} else if (
 					value.type === "Edm.UInt8" ||
 					value.type === "Edm.Int16" ||
@@ -299,29 +314,30 @@ export default class ExcelUploadDialog extends ManagedObject {
 					value.type === "Edm.Int64" ||
 					value.type === "Edm.Integer64"
 				) {
-					cell = {v: 123, t: 'n'};
+					cell = { v: 85, t: "n" };
+					colWidths.push({ wch: colWidthDefault });
 				} else if (value.type === "Edm.Double" || value.type === "Edm.Decimal") {
-					// get the decimal separator from browser
-					const decimalSeparator = this.component.getDecimalSeparator()
-					cell = {v: `123${decimalSeparator}4`, t: 'n'};
+					const decimalSeparator = this.component.getDecimalSeparator();
+					cell = { v: `123${decimalSeparator}4`, t: "n" };
+					colWidths.push({ wch: colWidthDefault });
 				}
-				worksheet[XLSX.utils.encode_cell({c: col, r: 0})] = {v: label, t: 's'};
-				worksheet[XLSX.utils.encode_cell({c: col, r: 1})] = cell;
+				worksheet[XLSX.utils.encode_cell({ c: col, r: 0 })] = { v: label, t: "s" };
+				worksheet[XLSX.utils.encode_cell({ c: col, r: 1 })] = cell;
 				col++;
 			}
 		}
-		worksheet['!ref'] = XLSX.utils.encode_range({s: {c: 0, r: 0}, e: {c: col, r: 1}});
-	
+		worksheet["!ref"] = XLSX.utils.encode_range({ s: { c: 0, r: 0 }, e: { c: col, r: 1 } });
+		worksheet["!cols"] = colWidths; // assign the column widths to the worksheet
+
 		// creating the new excel work book
 		const wb = XLSX.utils.book_new();
 		// set the file value
 		XLSX.utils.book_append_sheet(wb, worksheet, "Tabelle1");
 		// download the created excel file
 		XLSX.writeFile(wb, this.component.getExcelFileName());
-	
+
 		MessageToast.show(this.util.geti18nText("downloadingTemplate"));
 	}
-	
 
 	onOpenOptionsDialog() {
 		this.optionsHandler.openOptionsDialog();
