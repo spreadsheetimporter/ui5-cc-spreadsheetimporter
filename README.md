@@ -4,9 +4,9 @@ This is a monorepo for the UI5 Component `ui5-cc-excelupload`, the Button `ui5-c
 
 > :warning: **This control is still in beta**: Core functionality is given, but bugs may still occur and APIs may change!
 
-A UI5 Module to integrate a Excel Upload for Fiori Element Apps.  
+A UI5 Component to integrate Excel Upload for Fiori Element and other UI5 Apps.  
 This control simply enables the mass upload of data, independent of the backend, OData version and Fiori scenario.  
-This is made possible by reading the Excel file and using the standard APIs.  
+This is made possible by extracting the data of the Excel file and using the standard APIs.  
 The control will submit not the file, but just the data from the Excel File.  
 The integration of the control is designed to be as simple as possible and, in the best case, requires no configuration.
 
@@ -14,6 +14,12 @@ The aim is to support as many Fiori Scenarios and UI5 Versions as possibile.
 See here for all currently [supported Versions](https://marianfoo.github.io/ui5-cc-excelUpload/pages/SupportVersions/).
 
 ![Excel Upload Dialog](/images/ExcelUploadDialog.png "Excel Upload Dialog")
+
+## Getting Started
+
+You can find the documentation here:
+
+https://marianfoo.github.io/ui5-cc-excelUpload/
 
 ## Live Demo
 
@@ -23,14 +29,14 @@ https://excelupload.marianzeis.de/
 The app is an OData V4 app with UI5 version 1.108 and a CAP backend.  
 The data is reset every hour on the hour.
 
+# **Support**
 
-## Getting Started
+If you have a use case and just want to discuss whether the component is suitable for it, you can make an appointment [here](https://outlook.office365.com/owa/calendar/UI5ExcelUploadComponent@marianzeis.de/bookings/) free of charge.
 
-You can find the official documentation here:
+If you have problems with the implementation or found a bug, you can always open an issue [here](https://github.com/marianfoo/ui5-cc-excelUpload/issues/new/choose).  
+If you need urgent help or have a special requirement, you can make an appointment [here](https://outlook.office365.com/owa/calendar/UI5ExcelUploadComponent@marianzeis.de/bookings/) for a fixed rate.
 
-https://marianfoo.github.io/ui5-cc-excelUpload/
-
-## Development
+# Development
 
 You find the documentation for the development here:
 
