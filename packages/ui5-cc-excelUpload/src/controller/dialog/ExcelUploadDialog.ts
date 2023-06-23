@@ -1,7 +1,7 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 import Fragment from "sap/ui/core/Fragment";
 import ExcelUpload from "../ExcelUpload";
-import ExcelDialog from "../../control/ExcelDialog";
+import ExcelDialog, { ExcelDialog$AvailableOptionsChangedEvent, ExcelDialog$DecimalSeparatorChangedEvent, ExcelDialog$DecimalSeparatorChangedEventParameters } from "../../control/ExcelDialog";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import Component from "../../Component";
 import Event from "sap/ui/base/Event";
@@ -219,15 +219,11 @@ export default class ExcelUploadDialog extends ManagedObject {
 		this.excelUploadDialog.close();
 	}
 
-	onDecimalSeparatorChanged(event: Event) {
-		// TODO: add custom event for decimal separator like at onFileUpload
-		// @ts-ignore
+	onDecimalSeparatorChanged(event: ExcelDialog$DecimalSeparatorChangedEvent) {
 		this.component.setDecimalSeparator(event.getParameter("decimalSeparator"));
 	}
 
-	onAvailableOptionsChanged(event: Event) {
-		// TODO: add custom event for decimal separator like at onFileUpload
-		// @ts-ignore
+	onAvailableOptionsChanged(event: ExcelDialog$AvailableOptionsChangedEvent) {
 		const availableOptions = event.getParameter("availableOptions") as AvailableOptionsType[];
 		if (availableOptions.length > 0) {
 			this.component.setShowOptions(true);

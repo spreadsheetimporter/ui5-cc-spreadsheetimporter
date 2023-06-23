@@ -36,8 +36,8 @@ importers:
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
       '@ui5/ts-interface-generator':
-        specifier: 0.6.3
-        version: 0.6.3
+        specifier: 0.7.0
+        version: 0.7.0
       babel-preset-transform-ui5:
         specifier: ^7.2.0
         version: 7.2.0
@@ -4290,8 +4290,8 @@ packages:
       yargs: 17.7.2
     dev: true
 
-  /@ui5/ts-interface-generator@0.6.3:
-    resolution: {integrity: sha512-cLDu8E3k/oWLTGu02v439YblIp00EP86yKyo9HUJR+C13VyWXqLDSY5QkF3nFTy/k2WMseHZNQkLOy/va5Ys0A==}
+  /@ui5/ts-interface-generator@0.7.0:
+    resolution: {integrity: sha512-3dCDGr05UnnjMCFm89Mj7m5q2rBtI+zDZ3p3aSbWD463XkC7G3xwXcJ/ynFa8cdWH64H7M+66qQmStuYQ/zHXg==}
     hasBin: true
     dependencies:
       hjson: 3.2.2

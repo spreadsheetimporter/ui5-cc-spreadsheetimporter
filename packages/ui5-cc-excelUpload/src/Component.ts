@@ -178,12 +178,11 @@ export default class Component extends UIComponent {
 	// 		this.fireCheckBeforeRead({sheetData:firstSheet})
 	// };
 
-	onChangeBeforeCreate(event: Event) {
-		var aContexts, oCustomer;
-		// TODO: add custom event for decimal separator like at onFileUpload
-		// @ts-ignore
-		aContexts = event.getParameter("selectedContexts");
-	}
+	// onChangeBeforeCreate(event: Component$ChangeBeforeCreateEvent) {
+	// 	var aContexts, oCustomer;
+
+	// 	aContexts = event.getParameter("selectedContexts");
+	// }
 
 	//=============================================================================
 	//PRIVATE APIS

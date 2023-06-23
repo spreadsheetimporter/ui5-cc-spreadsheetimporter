@@ -1,3 +1,4 @@
+import EventProvider from "sap/ui/base/EventProvider";
 import Event from "sap/ui/base/Event";
 import { PropertyBindingInfo } from "sap/ui/base/ManagedObject";
 import { $DialogSettings } from "sap/m/Dialog";
@@ -11,8 +12,8 @@ declare module "./ExcelDialog" {
         decimalSeparator?: string | PropertyBindingInfo;
         availableOptions?: string[] | PropertyBindingInfo | `{${string}}`;
         component?: object | PropertyBindingInfo | `{${string}}`;
-        decimalSeparatorChanged?: (event: Event) => void;
-        availableOptionsChanged?: (event: Event) => void;
+        decimalSeparatorChanged?: (event: ExcelDialog$DecimalSeparatorChangedEvent) => void;
+        availableOptionsChanged?: (event: ExcelDialog$AvailableOptionsChangedEvent) => void;
     }
 
     export default interface ExcelDialog {
@@ -87,7 +88,7 @@ declare module "./ExcelDialog" {
          *
          * @returns Reference to "this" in order to allow method chaining
          */
-        attachDecimalSeparatorChanged(fn: (event: Event) => void, listener?: object): this;
+        attachDecimalSeparatorChanged(fn: (event: ExcelDialog$DecimalSeparatorChangedEvent) => void, listener?: object): this;
 
         /**
          * Attaches event handler "fn" to the "decimalSeparatorChanged" event of this "ExcelDialog".
@@ -101,7 +102,7 @@ declare module "./ExcelDialog" {
          *
          * @returns Reference to "this" in order to allow method chaining
          */
-        attachDecimalSeparatorChanged<CustomDataType extends object>(data: CustomDataType, fn: (event: Event, data: CustomDataType) => void, listener?: object): this;
+        attachDecimalSeparatorChanged<CustomDataType extends object>(data: CustomDataType, fn: (event: ExcelDialog$DecimalSeparatorChangedEvent, data: CustomDataType) => void, listener?: object): this;
 
         /**
          * Detaches event handler "fn" from the "decimalSeparatorChanged" event of this "ExcelDialog".
@@ -112,15 +113,17 @@ declare module "./ExcelDialog" {
          * @param listener Context object on which the given function had to be called
          * @returns Reference to "this" in order to allow method chaining
          */
-        detachDecimalSeparatorChanged(fn: (event: Event) => void, listener?: object): this;
+        detachDecimalSeparatorChanged(fn: (event: ExcelDialog$DecimalSeparatorChangedEvent) => void, listener?: object): this;
 
         /**
          * Fires event "decimalSeparatorChanged" to attached listeners.
          *
          * @param parameters Parameters to pass along with the event
+         * @param [mParameters.decimalSeparator]
+         *
          * @returns Reference to "this" in order to allow method chaining
          */
-        fireDecimalSeparatorChanged(parameters?: object): this;
+        fireDecimalSeparatorChanged(parameters?: ExcelDialog$DecimalSeparatorChangedEventParameters): this;
 
         // event: availableOptionsChanged
 
@@ -135,7 +138,7 @@ declare module "./ExcelDialog" {
          *
          * @returns Reference to "this" in order to allow method chaining
          */
-        attachAvailableOptionsChanged(fn: (event: Event) => void, listener?: object): this;
+        attachAvailableOptionsChanged(fn: (event: ExcelDialog$AvailableOptionsChangedEvent) => void, listener?: object): this;
 
         /**
          * Attaches event handler "fn" to the "availableOptionsChanged" event of this "ExcelDialog".
@@ -149,7 +152,7 @@ declare module "./ExcelDialog" {
          *
          * @returns Reference to "this" in order to allow method chaining
          */
-        attachAvailableOptionsChanged<CustomDataType extends object>(data: CustomDataType, fn: (event: Event, data: CustomDataType) => void, listener?: object): this;
+        attachAvailableOptionsChanged<CustomDataType extends object>(data: CustomDataType, fn: (event: ExcelDialog$AvailableOptionsChangedEvent, data: CustomDataType) => void, listener?: object): this;
 
         /**
          * Detaches event handler "fn" from the "availableOptionsChanged" event of this "ExcelDialog".
@@ -160,14 +163,48 @@ declare module "./ExcelDialog" {
          * @param listener Context object on which the given function had to be called
          * @returns Reference to "this" in order to allow method chaining
          */
-        detachAvailableOptionsChanged(fn: (event: Event) => void, listener?: object): this;
+        detachAvailableOptionsChanged(fn: (event: ExcelDialog$AvailableOptionsChangedEvent) => void, listener?: object): this;
 
         /**
          * Fires event "availableOptionsChanged" to attached listeners.
          *
          * @param parameters Parameters to pass along with the event
+         * @param [mParameters.availableOptions]
+         *
          * @returns Reference to "this" in order to allow method chaining
          */
-        fireAvailableOptionsChanged(parameters?: object): this;
+        fireAvailableOptionsChanged(parameters?: ExcelDialog$AvailableOptionsChangedEventParameters): this;
+    }
+
+    /**
+     * Interface describing the parameters of ExcelDialog's 'decimalSeparatorChanged' event.
+     */
+    export interface ExcelDialog$DecimalSeparatorChangedEventParameters {
+        decimalSeparator?: string;
+    }
+
+    /**
+     * Interface describing the parameters of ExcelDialog's 'availableOptionsChanged' event.
+     */
+    export interface ExcelDialog$AvailableOptionsChangedEventParameters {
+        availableOptions?: string[];
+    }
+
+    /**
+     * Type describing the ExcelDialog's 'decimalSeparatorChanged' event.
+     */
+    export type ExcelDialog$DecimalSeparatorChangedEvent = Event<ExcelDialog$DecimalSeparatorChangedEventParameters>;
+
+    /**
+     * Type describing the ExcelDialog's 'availableOptionsChanged' event.
+     */
+    export type ExcelDialog$AvailableOptionsChangedEvent = Event<ExcelDialog$AvailableOptionsChangedEventParameters>;
+}
+// This module enhances sap.ui.base.Event with Generics, which is needed in UI5 type definition versions below 1.115
+declare module "sap/ui/base/Event" {
+    export default interface Event<ParamsType extends Record<string, any> = object> {
+        constructor(id: string, oSource: EventProvider, parameters: ParamsType);
+        getParameters(): ParamsType;
+        getParameter<ParamName extends keyof ParamsType>(name: ParamName): ParamsType[ParamName];
     }
 }
