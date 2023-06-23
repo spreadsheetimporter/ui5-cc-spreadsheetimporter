@@ -21,6 +21,7 @@ These options are available and explained in detail below:
 | `showBackendErrorMessages` | Show Backend Error Messages | boolean |
 | `showOptions` | Show Options Menu to change a few of these configurations in runtime. | boolean |
 | `availableOptions` | List of available Options to show to the user. | string[] |
+| `hideSampleData` | Leave the template file empty and do not add any sample data | boolean |
 | `debug` | Option to show more console statements and set Log Level to Debug | boolean |
 
 ### `columns`
@@ -196,9 +197,47 @@ There are also only a few selected configurations available.
 
 This Option defines which option the user can influence.
 
+### `hideSampleData`
+
+**default:** `false`
+
+Leave the template file empty and do not add any sample data.
+
 ### `debug`
 
 **default:** `false`
 
 This option defines whether the debug mode should be activated or not.  
 If set to true, it will set the log level to `debug` (Log.Level.DEBUG) and activate the options menu with all options available.
+
+
+## Example Code with all options
+
+```js 
+this.excelUpload = await this._controller.getAppComponent().createComponent({
+    usage: "excelUpload",
+    async: true,
+    componentData: {
+        context: this,
+        tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable",
+        columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time", "boolean", "decimal"],
+        mandatoryFields: ["product_ID", "quantity"],
+        excelFileName: "Test.xlsx",
+        odataType: "com.sap.gateway.srvd.zui_mr_create_run.v0001.AbleseauftragType",
+        fieldMatchType: "label",
+        activateDraft: false,
+        batchSize: 1000,
+        standalone: false,
+        strict: false,
+        decimalSeparator: ",",
+        hidePreview: false,
+        skipMandatoryFieldCheck: false,
+        showBackendErrorMessages: false,
+        showOptions: false,
+        availableOptions: ["strict", "fieldMatchType", "decimalSeperator"],
+        hideSampleData: false,
+        debug: false
+    }
+});
+
+```
