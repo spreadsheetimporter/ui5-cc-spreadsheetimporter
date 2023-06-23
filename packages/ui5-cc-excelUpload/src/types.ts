@@ -144,5 +144,6 @@ export interface ComponentData {
     showOptions?: boolean;
     availableOptions?: AvailableOptionsType[];
     debug?: boolean;
+	hideSampleData?: boolean;
 }
 

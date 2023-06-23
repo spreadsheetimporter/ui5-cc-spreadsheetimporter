@@ -322,7 +322,10 @@ export default class ExcelUploadDialog extends ManagedObject {
 					colWidths.push({ wch: colWidthDefault });
 				}
 				worksheet[XLSX.utils.encode_cell({ c: col, r: 0 })] = { v: label, t: "s" };
-				worksheet[XLSX.utils.encode_cell({ c: col, r: 1 })] = cell;
+				if(!this.component.getHideSampleData()) {
+					worksheet[XLSX.utils.encode_cell({ c: col, r: 1 })] = cell;
+				}
+				
 				col++;
 			}
 		}

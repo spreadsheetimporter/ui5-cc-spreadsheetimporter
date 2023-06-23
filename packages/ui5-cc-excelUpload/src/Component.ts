@@ -45,6 +45,7 @@ export default class Component extends UIComponent {
 			showOptions: { type: "boolean", defaultValue: false },
 			// @ts-ignore
 			availableOptions: { type: "string[]", defaultValue: []},
+			hideSampleData: { type: "boolean", defaultValue: false },
 			debug: { type: "boolean", defaultValue: false },
 		},
 		aggregations: {
@@ -101,6 +102,7 @@ export default class Component extends UIComponent {
 		this.setShowOptions(oCompData.showOptions);
 		this.setDebug(oCompData.debug);
 		this.setAvailableOptions(oCompData.availableOptions);
+		this.setHideSampleData(oCompData.hideSampleData);
 		if(oCompData.availableOptions && oCompData.availableOptions.length > 0){
 			// if availableOptions is set show the Options Menu
 			this.setShowOptions(true)

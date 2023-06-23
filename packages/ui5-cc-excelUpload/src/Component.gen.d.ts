@@ -26,6 +26,7 @@ declare module "./Component" {
         showBackendErrorMessages?: boolean | PropertyBindingInfo | `{${string}}`;
         showOptions?: boolean | PropertyBindingInfo | `{${string}}`;
         availableOptions?: string[] | PropertyBindingInfo | `{${string}}`;
+        hideSampleData?: boolean | PropertyBindingInfo | `{${string}}`;
         debug?: boolean | PropertyBindingInfo | `{${string}}`;
         checkBeforeRead?: (event: Component$CheckBeforeReadEvent) => void;
         changeBeforeCreate?: (event: Component$ChangeBeforeCreateEvent) => void;
@@ -384,6 +385,27 @@ declare module "./Component" {
          * @returns Reference to "this" in order to allow method chaining
          */
         setAvailableOptions(availableOptions: string[]): this;
+
+        // property: hideSampleData
+
+        /**
+         * Gets current value of property "hideSampleData".
+         *
+         * Default value is: false
+         * @returns Value of property "hideSampleData"
+         */
+        getHideSampleData(): boolean;
+
+        /**
+         * Sets a new value for property "hideSampleData".
+         *
+         * When called with a value of "null" or "undefined", the default value of the property will be restored.
+         *
+         * Default value is: false
+         * @param [hideSampleData=false] New value for property "hideSampleData"
+         * @returns Reference to "this" in order to allow method chaining
+         */
+        setHideSampleData(hideSampleData: boolean): this;
 
         // property: debug
 
