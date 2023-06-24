@@ -8,6 +8,7 @@
     "strict": true,
     "strictNullChecks": false,
     "strictPropertyInitialization": false,
+    "declaration": true,
     "rootDir": "./packages/",
     "baseUrl": "./",
     "typeRoots": ["./node_modules/@types", "./node_modules/@sapui5/types"],

@@ -3,12 +3,12 @@ import Event from "sap/ui/base/Event";
 import { PropertyBindingInfo } from "sap/ui/base/ManagedObject";
 import { $UIComponentSettings } from "sap/ui/core/UIComponent";
 
-declare module "./Component" {
+declare module "./ExcelUploadComponent" {
 
     /**
      * Interface defining the settings object used in constructor calls
      */
-    interface $ComponentSettings extends $UIComponentSettings {
+    interface $ExcelUploadComponentSettings extends $UIComponentSettings {
         excelFileName?: string | PropertyBindingInfo;
         context?: object | PropertyBindingInfo | `{${string}}`;
         columns?: string[] | PropertyBindingInfo | `{${string}}`;
@@ -28,12 +28,12 @@ declare module "./Component" {
         availableOptions?: string[] | PropertyBindingInfo | `{${string}}`;
         hideSampleData?: boolean | PropertyBindingInfo | `{${string}}`;
         debug?: boolean | PropertyBindingInfo | `{${string}}`;
-        checkBeforeRead?: (event: Component$CheckBeforeReadEvent) => void;
-        changeBeforeCreate?: (event: Component$ChangeBeforeCreateEvent) => void;
-        uploadButtonPress?: (event: Component$UploadButtonPressEvent) => void;
+        checkBeforeRead?: (event: ExcelUploadComponent$CheckBeforeReadEvent) => void;
+        changeBeforeCreate?: (event: ExcelUploadComponent$ChangeBeforeCreateEvent) => void;
+        uploadButtonPress?: (event: ExcelUploadComponent$UploadButtonPressEvent) => void;
     }
 
-    export default interface Component {
+    export default interface ExcelUploadComponent {
 
         // property: excelFileName
 
@@ -431,34 +431,34 @@ declare module "./Component" {
         // event: checkBeforeRead
 
         /**
-         * Attaches event handler "fn" to the "checkBeforeRead" event of this "Component".
+         * Attaches event handler "fn" to the "checkBeforeRead" event of this "ExcelUploadComponent".
          *
          * When called, the context of the event handler (its "this") will be bound to "oListener" if specified,
-         * otherwise it will be bound to this "Component" itself.
+         * otherwise it will be bound to this "ExcelUploadComponent" itself.
          *
          * @param fn The function to be called when the event occurs
-         * @param listener Context object to call the event handler with. Defaults to this "Component" itself
+         * @param listener Context object to call the event handler with. Defaults to this "ExcelUploadComponent" itself
          *
          * @returns Reference to "this" in order to allow method chaining
          */
-        attachCheckBeforeRead(fn: (event: Component$CheckBeforeReadEvent) => void, listener?: object): this;
+        attachCheckBeforeRead(fn: (event: ExcelUploadComponent$CheckBeforeReadEvent) => void, listener?: object): this;
 
         /**
-         * Attaches event handler "fn" to the "checkBeforeRead" event of this "Component".
+         * Attaches event handler "fn" to the "checkBeforeRead" event of this "ExcelUploadComponent".
          *
          * When called, the context of the event handler (its "this") will be bound to "oListener" if specified,
-         * otherwise it will be bound to this "Component" itself.
+         * otherwise it will be bound to this "ExcelUploadComponent" itself.
          *
          * @param data An application-specific payload object that will be passed to the event handler along with the event object when firing the event
          * @param fn The function to be called when the event occurs
-         * @param listener Context object to call the event handler with. Defaults to this "Component" itself
+         * @param listener Context object to call the event handler with. Defaults to this "ExcelUploadComponent" itself
          *
          * @returns Reference to "this" in order to allow method chaining
          */
-        attachCheckBeforeRead<CustomDataType extends object>(data: CustomDataType, fn: (event: Component$CheckBeforeReadEvent, data: CustomDataType) => void, listener?: object): this;
+        attachCheckBeforeRead<CustomDataType extends object>(data: CustomDataType, fn: (event: ExcelUploadComponent$CheckBeforeReadEvent, data: CustomDataType) => void, listener?: object): this;
 
         /**
-         * Detaches event handler "fn" from the "checkBeforeRead" event of this "Component".
+         * Detaches event handler "fn" from the "checkBeforeRead" event of this "ExcelUploadComponent".
          *
          * The passed function and listener object must match the ones used for event registration.
          *
@@ -466,7 +466,7 @@ declare module "./Component" {
          * @param listener Context object on which the given function had to be called
          * @returns Reference to "this" in order to allow method chaining
          */
-        detachCheckBeforeRead(fn: (event: Component$CheckBeforeReadEvent) => void, listener?: object): this;
+        detachCheckBeforeRead(fn: (event: ExcelUploadComponent$CheckBeforeReadEvent) => void, listener?: object): this;
 
         /**
          * Fires event "checkBeforeRead" to attached listeners.
@@ -477,39 +477,39 @@ declare module "./Component" {
          *
          * @returns Reference to "this" in order to allow method chaining
          */
-        fireCheckBeforeRead(parameters?: Component$CheckBeforeReadEventParameters): this;
+        fireCheckBeforeRead(parameters?: ExcelUploadComponent$CheckBeforeReadEventParameters): this;
 
         // event: changeBeforeCreate
 
         /**
-         * Attaches event handler "fn" to the "changeBeforeCreate" event of this "Component".
+         * Attaches event handler "fn" to the "changeBeforeCreate" event of this "ExcelUploadComponent".
          *
          * When called, the context of the event handler (its "this") will be bound to "oListener" if specified,
-         * otherwise it will be bound to this "Component" itself.
+         * otherwise it will be bound to this "ExcelUploadComponent" itself.
          *
          * @param fn The function to be called when the event occurs
-         * @param listener Context object to call the event handler with. Defaults to this "Component" itself
+         * @param listener Context object to call the event handler with. Defaults to this "ExcelUploadComponent" itself
          *
          * @returns Reference to "this" in order to allow method chaining
          */
-        attachChangeBeforeCreate(fn: (event: Component$ChangeBeforeCreateEvent) => void, listener?: object): this;
+        attachChangeBeforeCreate(fn: (event: ExcelUploadComponent$ChangeBeforeCreateEvent) => void, listener?: object): this;
 
         /**
-         * Attaches event handler "fn" to the "changeBeforeCreate" event of this "Component".
+         * Attaches event handler "fn" to the "changeBeforeCreate" event of this "ExcelUploadComponent".
          *
          * When called, the context of the event handler (its "this") will be bound to "oListener" if specified,
-         * otherwise it will be bound to this "Component" itself.
+         * otherwise it will be bound to this "ExcelUploadComponent" itself.
          *
          * @param data An application-specific payload object that will be passed to the event handler along with the event object when firing the event
          * @param fn The function to be called when the event occurs
-         * @param listener Context object to call the event handler with. Defaults to this "Component" itself
+         * @param listener Context object to call the event handler with. Defaults to this "ExcelUploadComponent" itself
          *
          * @returns Reference to "this" in order to allow method chaining
          */
-        attachChangeBeforeCreate<CustomDataType extends object>(data: CustomDataType, fn: (event: Component$ChangeBeforeCreateEvent, data: CustomDataType) => void, listener?: object): this;
+        attachChangeBeforeCreate<CustomDataType extends object>(data: CustomDataType, fn: (event: ExcelUploadComponent$ChangeBeforeCreateEvent, data: CustomDataType) => void, listener?: object): this;
 
         /**
-         * Detaches event handler "fn" from the "changeBeforeCreate" event of this "Component".
+         * Detaches event handler "fn" from the "changeBeforeCreate" event of this "ExcelUploadComponent".
          *
          * The passed function and listener object must match the ones used for event registration.
          *
@@ -517,7 +517,7 @@ declare module "./Component" {
          * @param listener Context object on which the given function had to be called
          * @returns Reference to "this" in order to allow method chaining
          */
-        detachChangeBeforeCreate(fn: (event: Component$ChangeBeforeCreateEvent) => void, listener?: object): this;
+        detachChangeBeforeCreate(fn: (event: ExcelUploadComponent$ChangeBeforeCreateEvent) => void, listener?: object): this;
 
         /**
          * Fires event "changeBeforeCreate" to attached listeners.
@@ -527,39 +527,39 @@ declare module "./Component" {
          *
          * @returns Reference to "this" in order to allow method chaining
          */
-        fireChangeBeforeCreate(parameters?: Component$ChangeBeforeCreateEventParameters): this;
+        fireChangeBeforeCreate(parameters?: ExcelUploadComponent$ChangeBeforeCreateEventParameters): this;
 
         // event: uploadButtonPress
 
         /**
-         * Attaches event handler "fn" to the "uploadButtonPress" event of this "Component".
+         * Attaches event handler "fn" to the "uploadButtonPress" event of this "ExcelUploadComponent".
          *
          * When called, the context of the event handler (its "this") will be bound to "oListener" if specified,
-         * otherwise it will be bound to this "Component" itself.
+         * otherwise it will be bound to this "ExcelUploadComponent" itself.
          *
          * @param fn The function to be called when the event occurs
-         * @param listener Context object to call the event handler with. Defaults to this "Component" itself
+         * @param listener Context object to call the event handler with. Defaults to this "ExcelUploadComponent" itself
          *
          * @returns Reference to "this" in order to allow method chaining
          */
-        attachUploadButtonPress(fn: (event: Component$UploadButtonPressEvent) => void, listener?: object): this;
+        attachUploadButtonPress(fn: (event: ExcelUploadComponent$UploadButtonPressEvent) => void, listener?: object): this;
 
         /**
-         * Attaches event handler "fn" to the "uploadButtonPress" event of this "Component".
+         * Attaches event handler "fn" to the "uploadButtonPress" event of this "ExcelUploadComponent".
          *
          * When called, the context of the event handler (its "this") will be bound to "oListener" if specified,
-         * otherwise it will be bound to this "Component" itself.
+         * otherwise it will be bound to this "ExcelUploadComponent" itself.
          *
          * @param data An application-specific payload object that will be passed to the event handler along with the event object when firing the event
          * @param fn The function to be called when the event occurs
-         * @param listener Context object to call the event handler with. Defaults to this "Component" itself
+         * @param listener Context object to call the event handler with. Defaults to this "ExcelUploadComponent" itself
          *
          * @returns Reference to "this" in order to allow method chaining
          */
-        attachUploadButtonPress<CustomDataType extends object>(data: CustomDataType, fn: (event: Component$UploadButtonPressEvent, data: CustomDataType) => void, listener?: object): this;
+        attachUploadButtonPress<CustomDataType extends object>(data: CustomDataType, fn: (event: ExcelUploadComponent$UploadButtonPressEvent, data: CustomDataType) => void, listener?: object): this;
 
         /**
-         * Detaches event handler "fn" from the "uploadButtonPress" event of this "Component".
+         * Detaches event handler "fn" from the "uploadButtonPress" event of this "ExcelUploadComponent".
          *
          * The passed function and listener object must match the ones used for event registration.
          *
@@ -567,7 +567,7 @@ declare module "./Component" {
          * @param listener Context object on which the given function had to be called
          * @returns Reference to "this" in order to allow method chaining
          */
-        detachUploadButtonPress(fn: (event: Component$UploadButtonPressEvent) => void, listener?: object): this;
+        detachUploadButtonPress(fn: (event: ExcelUploadComponent$UploadButtonPressEvent) => void, listener?: object): this;
 
         /**
          * Fires event "uploadButtonPress" to attached listeners.
@@ -580,45 +580,45 @@ declare module "./Component" {
          *
          * @returns Whether or not to prevent the default action
          */
-        fireUploadButtonPress(parameters?: Component$UploadButtonPressEventParameters): boolean;
+        fireUploadButtonPress(parameters?: ExcelUploadComponent$UploadButtonPressEventParameters): boolean;
     }
 
     /**
-     * Interface describing the parameters of Component's 'checkBeforeRead' event.
+     * Interface describing the parameters of ExcelUploadComponent's 'checkBeforeRead' event.
      */
-    export interface Component$CheckBeforeReadEventParameters {
+    export interface ExcelUploadComponent$CheckBeforeReadEventParameters {
         sheetData?: object;
         messages?: object;
     }
 
     /**
-     * Interface describing the parameters of Component's 'changeBeforeCreate' event.
+     * Interface describing the parameters of ExcelUploadComponent's 'changeBeforeCreate' event.
      */
-    export interface Component$ChangeBeforeCreateEventParameters {
+    export interface ExcelUploadComponent$ChangeBeforeCreateEventParameters {
         payload?: object;
     }
 
     /**
-     * Interface describing the parameters of Component's 'uploadButtonPress' event.
+     * Interface describing the parameters of ExcelUploadComponent's 'uploadButtonPress' event.
      */
-    export interface Component$UploadButtonPressEventParameters {
+    export interface ExcelUploadComponent$UploadButtonPressEventParameters {
         payload?: object;
     }
 
     /**
-     * Type describing the Component's 'checkBeforeRead' event.
+     * Type describing the ExcelUploadComponent's 'checkBeforeRead' event.
      */
-    export type Component$CheckBeforeReadEvent = Event<Component$CheckBeforeReadEventParameters>;
+    export type ExcelUploadComponent$CheckBeforeReadEvent = Event<ExcelUploadComponent$CheckBeforeReadEventParameters>;
 
     /**
-     * Type describing the Component's 'changeBeforeCreate' event.
+     * Type describing the ExcelUploadComponent's 'changeBeforeCreate' event.
      */
-    export type Component$ChangeBeforeCreateEvent = Event<Component$ChangeBeforeCreateEventParameters>;
+    export type ExcelUploadComponent$ChangeBeforeCreateEvent = Event<ExcelUploadComponent$ChangeBeforeCreateEventParameters>;
 
     /**
-     * Type describing the Component's 'uploadButtonPress' event.
+     * Type describing the ExcelUploadComponent's 'uploadButtonPress' event.
      */
-    export type Component$UploadButtonPressEvent = Event<Component$UploadButtonPressEventParameters>;
+    export type ExcelUploadComponent$UploadButtonPressEvent = Event<ExcelUploadComponent$UploadButtonPressEventParameters>;
 }
 // This module enhances sap.ui.base.Event with Generics, which is needed in UI5 type definition versions below 1.115
 declare module "sap/ui/base/Event" {

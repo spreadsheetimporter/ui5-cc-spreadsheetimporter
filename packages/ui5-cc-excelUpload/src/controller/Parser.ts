@@ -1,6 +1,6 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 import { MessageType } from "sap/ui/core/library";
-import Component from "../Component";
+import ExcelUploadComponent from "../ExcelUploadComponent";
 import { ArrayData, CustomMessageTypes, FieldMatchType, ListObject, Payload, PayloadArray, Property, RowData, ValueData } from "../types";
 import MessageHandler from "./MessageHandler";
 import Util from "./Util";
@@ -9,7 +9,7 @@ import Util from "./Util";
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
 export default class Parser extends ManagedObject {
-	static parseExcelData(sheetData: ArrayData, typeLabelList: ListObject, component: Component, messageHandler: MessageHandler, util: Util, isODataV4: Boolean) {
+	static parseExcelData(sheetData: ArrayData, typeLabelList: ListObject, component: ExcelUploadComponent, messageHandler: MessageHandler, util: Util, isODataV4: Boolean) {
 		const payloadArray:PayloadArray = [];
 		// loop over data from excel file
 		for (const [index, row] of sheetData.entries()) {
@@ -136,7 +136,7 @@ export default class Parser extends ManagedObject {
 		return true;
 	}
 
-	static checkDouble(value: ValueData, metadataColumn: Property, util: Util, messageHandler: MessageHandler, index: number, component: Component) {
+	static checkDouble(value: ValueData, metadataColumn: Property, util: Util, messageHandler: MessageHandler, index: number, component: ExcelUploadComponent) {
 		const rawValue = value.rawValue;
 		let valueDouble = rawValue;
 		if (typeof rawValue === "string") {
@@ -151,7 +151,7 @@ export default class Parser extends ManagedObject {
 		return valueDouble;
 	}
 
-	static checkInteger(value: ValueData, metadataColumn: Property, util: Util, messageHandler: MessageHandler, index: number, component: Component) {
+	static checkInteger(value: ValueData, metadataColumn: Property, util: Util, messageHandler: MessageHandler, index: number, component: ExcelUploadComponent) {
 		const rawValue = value.rawValue;
 		let valueInteger = rawValue;
 		if (!Number.isInteger(valueInteger)) {

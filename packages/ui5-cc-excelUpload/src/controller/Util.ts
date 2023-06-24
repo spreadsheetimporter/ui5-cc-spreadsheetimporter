@@ -3,7 +3,7 @@ import Log from "sap/base/Log";
 import ResourceBundle from "sap/base/i18n/ResourceBundle";
 import MessageBox from "sap/m/MessageBox";
 import { FieldMatchType, RowData, ValueData } from "../types";
-import Component from "../Component";
+import ExcelUploadComponent from "../ExcelUploadComponent";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
@@ -107,7 +107,7 @@ export default class Util extends ManagedObject {
 		return { decimalSeparator, thousandSeparator };
 	}
 
-	static normalizeNumberString(numberString: string, component: Component) {
+	static normalizeNumberString(numberString: string, component: ExcelUploadComponent) {
 		const { decimalSeparator, thousandSeparator } = this.getBrowserDecimalAndThousandSeparators(component.getDecimalSeparator());
 
 		// Remove thousand separators
