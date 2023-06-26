@@ -135,15 +135,14 @@
                                     }
                                 }
                             },
-                            "controlConfiguration": {
-                                "@com.sap.vocabularies.UI.v1.LineItem": {
+                            "content": {
+                                "header": {
                                     "actions": {
-                                        "ObjectPageExtController": {
+                                        "excelUploadListReport": {
+                                            "id": "excelUploadListReportButton",
+                                            "text": "Excel Upload",
                                             "press": "ui.v4.ordersv4fets.ext.objectPageExtController.ObjectPageExtController.openExcelUploadDialog",
-                                            "visible": true,
-                                            "enabled": true,
-                                            "requiresSelection": false,
-                                            "text": "Excel Upload"
+                                            "requiresSelection": false
                                         }
                                     }
                                 }
