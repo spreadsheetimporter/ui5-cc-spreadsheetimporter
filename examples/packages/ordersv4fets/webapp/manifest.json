@@ -1,7 +1,7 @@
 {
     "_version": "1.48.0",
     "sap.app": {
-        "id": "ui.v4.ordersv4fets",
+        "id": "ui.v4.ordersv4fe",
         "type": "application",
         "i18n": "i18n/i18n.properties",
         "applicationVersion": {
@@ -71,7 +71,7 @@
             "i18n": {
                 "type": "sap.ui.model.resource.ResourceModel",
                 "settings": {
-                    "bundleName": "ui.v4.ordersv4fets.i18n.i18n"
+                    "bundleName": "ui.v4.ordersv4fe.i18n.i18n"
                 }
             },
             "": {
@@ -141,7 +141,7 @@
                                         "excelUploadListReport": {
                                             "id": "excelUploadListReportButton",
                                             "text": "Excel Upload",
-                                            "press": "ui.v4.ordersv4fets.ext.objectPageExtController.ObjectPageExtController.openExcelUploadDialog",
+                                            "press": "ui.v4.ordersv4fe.ext.objectPageExtController.ObjectPageExtController.openExcelUploadDialog",
                                             "requiresSelection": false
                                         }
                                     }

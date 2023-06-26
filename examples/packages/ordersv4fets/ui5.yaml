@@ -2,7 +2,7 @@
 
 specVersion: "2.6"
 metadata:
-  name: ui.v4.ordersv4fets
+  name: ui.v4.ordersv4fe
 type: application
 server:
   customMiddleware:
@@ -35,7 +35,7 @@ server:
     - name: fiori-tools-preview
       afterMiddleware: fiori-tools-appreload
       configuration:
-        component: ui.v4.ordersv4fets
+        component: ui.v4.ordersv4fe
         ui5Theme: sap_horizon
 builder:
   customTasks:

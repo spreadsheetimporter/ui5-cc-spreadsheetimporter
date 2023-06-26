@@ -1,7 +1,7 @@
 import BaseComponent from 'sap/fe/core/AppComponent';
 
 /**
- * @namespace ui.v4.ordersv4fets
+ * @namespace ui.v4.ordersv4fe
  */
 export default class Component extends BaseComponent {
 

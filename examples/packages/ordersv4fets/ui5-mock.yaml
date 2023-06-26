@@ -2,7 +2,7 @@
 
 specVersion: "2.6"
 metadata:
-  name: ui.v4.ordersv4fets
+  name: ui.v4.ordersv4fe
 type: application
 server:
   customMiddleware:
