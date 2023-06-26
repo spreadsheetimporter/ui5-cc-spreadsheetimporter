@@ -1,5 +1,6 @@
-import ExcelUploadComponent, { ExcelUploadComponent$CheckBeforeReadEvent } from "cc/excelUpload/v0_19_1/ExcelUploadComponent";
+import ExcelUploadComponent, { ExcelUploadComponent$CheckBeforeReadEventParameters } from "cc/excelUpload/v0_19_1/ExcelUploadComponent";
 import ExtensionAPI from "sap/fe/core/ExtensionAPI";
+import Event from "sap/ui/base/Event";
 /**
  * Generated event handler.
  *
@@ -7,10 +8,12 @@ import ExtensionAPI from "sap/fe/core/ExtensionAPI";
  * @param pageContext the context of the page on which the event was fired
  */
 export async function openExcelUploadDialog(this: ExtensionAPI) {
-	let excelUpload = this.getRouting().getView().getController().excelUpload as ExcelUploadComponent;
-	this.getRouting().getView().setBusyIndicatorDelay(0);
-	this.getRouting().getView().setBusy(true);
-	if (!this.getRouting().getView().getController().excelUpload) {
+    const view = this.getRouting().getView();
+    const controller = view.getController()
+	let excelUpload = controller.excelUpload as ExcelUploadComponent;
+	view.setBusyIndicatorDelay(0);
+	view.setBusy(true);
+	if (!controller.excelUpload) {
 		excelUpload = await this.getRouting()
 			.getView()
 			.getController()
@@ -23,9 +26,9 @@ export async function openExcelUploadDialog(this: ExtensionAPI) {
 					activateDraft: true
 				}
 			});
-		this.getRouting().getView().getController().excelUpload = excelUpload;
+		controller.excelUpload = excelUpload;
 		// event to check before uploaded to app
-		excelUpload.attachCheckBeforeRead(function (event: ExcelUploadComponent$CheckBeforeReadEvent) {
+		excelUpload.attachCheckBeforeRead(function (event: Event<ExcelUploadComponent$CheckBeforeReadEventParameters>) {
 			// example
 			const sheetData = event.getParameter("sheetData");
 			let errorArray = [];
@@ -44,24 +47,9 @@ export async function openExcelUploadDialog(this: ExtensionAPI) {
 					}
 				}
 			}
-			oEvent.getSource().addArrayToMessages(errorArray);
-		}, this);
-
-		// event example to prevent uploading data to backend
-		excelUpload.attachUploadButtonPress(function (event) {
-			//event.preventDefault();
-		}, this);
-
-		// event to change data before send to backend
-		excelUpload.attachChangeBeforeCreate(function (oEvent) {
-			let payload = oEvent.getParameter("payload");
-			// round number from 12,56 to 12,6
-			if (payload.price) {
-				payload.price = Number(payload.price.toFixed(1));
-			}
-			oEvent.getSource().setPayload(payload);
+			(event.getSource() as ExcelUploadComponent).addArrayToMessages(errorArray);
 		}, this);
 	}
 	excelUpload.openExcelUploadDialog();
-	this.getRouting().getView().setBusy(false);
+	view.setBusy(false);
 }
