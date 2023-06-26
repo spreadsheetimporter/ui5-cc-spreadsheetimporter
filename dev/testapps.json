@@ -246,7 +246,8 @@
         "./test/specs/all/**.test.js",
         "./test/specs/v4/**.test.js"
       ]
-    }
+    },
+    "copyVersions": []
   },
   {
     "rootAppName": "ordersv4fpm",
