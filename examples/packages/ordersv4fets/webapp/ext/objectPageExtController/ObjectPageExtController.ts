@@ -1,5 +1,5 @@
+import ExcelUploadComponent, { ExcelUploadComponent$CheckBeforeReadEvent } from "cc/excelUpload/v0_19_1/ExcelUploadComponent";
 import ExtensionAPI from "sap/fe/core/ExtensionAPI";
-import { ExcelUploadComponent } from "ui5-cc-excelupload";
 /**
  * Generated event handler.
  *
@@ -25,9 +25,9 @@ export async function openExcelUploadDialog(this: ExtensionAPI) {
 			});
 		this.getRouting().getView().getController().excelUpload = excelUpload;
 		// event to check before uploaded to app
-		excelUpload.attachCheckBeforeRead(function (oEvent) {
+		excelUpload.attachCheckBeforeRead(function (event: ExcelUploadComponent$CheckBeforeReadEvent) {
 			// example
-			const sheetData = oEvent.getParameter("sheetData");
+			const sheetData = event.getParameter("sheetData");
 			let errorArray = [];
 			for (const [index, row] of sheetData.entries()) {
 				//check for invalid price

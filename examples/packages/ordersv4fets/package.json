@@ -17,7 +17,7 @@
     "@sap/ux-ui5-tooling": "1",
     "@sap/ux-specification": "UI5-1.108",
     "@sapui5/ts-types-esm": "~1.108.0",
-    "ui5-tooling-transpile": "^0.3.7",
+    "ui5-tooling-transpile": "^0.7.13",
     "typescript": "^4.6.3",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",

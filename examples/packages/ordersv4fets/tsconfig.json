@@ -18,7 +18,8 @@
         "webapp/*"
       ]
     },
-    "types": [ "@sapui5/ts-types-esm", "ui5-cc-excelupload/types" ]
+    "types": [ "@sapui5/ts-types-esm", "ui5-cc-excelupload" ],
+    "typeRoots": ["./node_modules"]
   },
   "include": [
     "webapp/**/*"

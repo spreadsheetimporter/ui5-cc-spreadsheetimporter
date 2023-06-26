@@ -3,7 +3,7 @@
   "version": "0.19.1",
   "description": "A UI5 Module to integrate a Excel Upload for Fiori Element Apps.",
   "main": "dist/ExcelUploadComponent.js",
-  "types": "types/index.d.ts",
+  "types": "dist/index.d.ts",
   "keywords": [
     "ui5",
     "custom control",
@@ -19,8 +19,7 @@
   },
   "files": [
     "dist",
-    "ui5.yaml",
-    "types"
+    "ui5.yaml"
   ],
   "license": "Apache-2.0",
   "scripts": {

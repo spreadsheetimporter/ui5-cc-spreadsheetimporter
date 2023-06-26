@@ -59,5 +59,5 @@ export default class ExcelDialog extends Dialog {
 		return this;
 	}
 	// @ts-ignore
-	static renderer: typeof sap.m.DialogRenderer = sap.m.DialogRenderer;
+	// static renderer: typeof sap.m.DialogRenderer = sap.m.DialogRenderer;
 }

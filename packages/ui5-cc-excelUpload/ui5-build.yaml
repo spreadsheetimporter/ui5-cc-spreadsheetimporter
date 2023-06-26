@@ -11,9 +11,11 @@ builder:
     - name: ui5-tooling-transpile-task
       afterTask: replaceVersion
       configuration:
+        debug: true
         filePattern: .+(ts|tsx)
         transpileTypeScript: true
         transpileAsync: false
+        generateDts: true
         removeConsoleStatements: true
     - name: ui5-tooling-stringreplace-task
       afterTask: ui5-tooling-transpile-task
