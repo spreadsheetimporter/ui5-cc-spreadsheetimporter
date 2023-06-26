@@ -1,9 +1,9 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 import Fragment from "sap/ui/core/Fragment";
 import ExcelUpload from "../ExcelUpload";
-import ExcelDialog, { ExcelDialog$AvailableOptionsChangedEvent, ExcelDialog$DecimalSeparatorChangedEvent, ExcelDialog$DecimalSeparatorChangedEventParameters } from "../../control/ExcelDialog";
+import ExcelDialog, { ExcelDialog$AvailableOptionsChangedEvent, ExcelDialog$DecimalSeparatorChangedEvent } from "../../control/ExcelDialog";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
-import ExcelUploadComponent from "../../ExcelUploadComponent";
+import Component from "../../Component";
 import Event from "sap/ui/base/Event";
 import Bar from "sap/m/Bar";
 import FileUploader, { $FileUploaderChangeEventParameters } from "sap/ui/unified/FileUploader";
@@ -28,7 +28,7 @@ import JSONModel from "sap/ui/model/json/JSONModel";
 export default class ExcelUploadDialog extends ManagedObject {
 	excelUploadController: ExcelUpload;
 	excelUploadDialog: ExcelDialog;
-	component: ExcelUploadComponent;
+	component: Component;
 	previewHandler: Preview;
 	util: Util;
 	componentI18n: ResourceModel;
@@ -36,7 +36,7 @@ export default class ExcelUploadDialog extends ManagedObject {
 	messageHandler: MessageHandler;
 	infoModel: JSONModel;
 
-	constructor(excelUploadController: ExcelUpload, component: ExcelUploadComponent, componentI18n: ResourceModel, messageHandler: MessageHandler) {
+	constructor(excelUploadController: ExcelUpload, component: Component, componentI18n: ResourceModel, messageHandler: MessageHandler) {
 		super();
 		this.excelUploadController = excelUploadController;
 		this.component = component;

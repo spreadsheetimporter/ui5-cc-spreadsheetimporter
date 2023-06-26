@@ -1,12 +1,13 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 import Dialog from "sap/m/Dialog";
-import { Messages, CustomMessageTypes, ListObject, ArrayData, PayloadArray, FieldMatchType, GroupedMessage, Property } from "../types";
+import { Messages, ListObject, ArrayData, PayloadArray, GroupedMessage } from "../types";
 import ExcelUpload from "./ExcelUpload";
 import Util from "./Util";
 import Fragment from "sap/ui/core/Fragment";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import { MessageType, ValueState } from "sap/ui/core/library";
 import Log from "sap/base/Log";
+import { CustomMessageTypes, FieldMatchType } from "../enums";
 
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX

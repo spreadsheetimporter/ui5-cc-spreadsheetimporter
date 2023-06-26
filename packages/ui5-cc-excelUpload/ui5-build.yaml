@@ -11,7 +11,6 @@ builder:
     - name: ui5-tooling-transpile-task
       afterTask: replaceVersion
       configuration:
-        debug: true
         filePattern: .+(ts|tsx)
         transpileTypeScript: true
         transpileAsync: false

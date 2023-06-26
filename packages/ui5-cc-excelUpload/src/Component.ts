@@ -2,20 +2,20 @@ import UIComponent from "sap/ui/core/UIComponent";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Device from "sap/ui/Device";
 import ExcelUpload from "./controller/ExcelUpload";
-import { ComponentData, FieldMatchType, Messages } from "./types";
+import { ComponentData, Messages } from "./types";
 import Log from "sap/base/Log";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import Logger from "./controller/Logger";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
-export default class ExcelUploadComponent extends UIComponent {
+export default class Component extends UIComponent {
 	excelUpload: ExcelUpload;
 	private _sContentDensityClass: any;
 	public logger: Logger;
-	constructor(idOrSettings?: string | $ExcelUploadComponentSettings);
-	constructor(id?: string, settings?: $ExcelUploadComponentSettings);
-	constructor(id?: string, settings?: $ExcelUploadComponentSettings) {
+	constructor(idOrSettings?: string | $ComponentSettings);
+	constructor(id?: string, settings?: $ComponentSettings);
+	constructor(id?: string, settings?: $ComponentSettings) {
 		super(id, settings);
 	}
 
@@ -210,4 +210,3 @@ export default class ExcelUploadComponent extends UIComponent {
 		return this._sContentDensityClass;
 	}
 }
-

@@ -1,4 +1,4 @@
-import ExcelUploadComponent, { ExcelUploadComponent$CheckBeforeReadEventParameters } from "cc/excelUpload/v0_19_1/ExcelUploadComponent";
+import Component, { Component$CheckBeforeReadEventParameters } from "cc/excelUpload/v0_19_1/Component";
 import ExtensionAPI from "sap/fe/core/ExtensionAPI";
 import Event from "sap/ui/base/Event";
 /**
@@ -10,7 +10,7 @@ import Event from "sap/ui/base/Event";
 export async function openExcelUploadDialog(this: ExtensionAPI) {
     const view = this.getRouting().getView();
     const controller = view.getController()
-	let excelUpload = controller.excelUpload as ExcelUploadComponent;
+	let excelUpload = controller.excelUpload as Component;
 	view.setBusyIndicatorDelay(0);
 	view.setBusy(true);
 	if (!controller.excelUpload) {
@@ -28,7 +28,7 @@ export async function openExcelUploadDialog(this: ExtensionAPI) {
 			});
 		controller.excelUpload = excelUpload;
 		// event to check before uploaded to app
-		excelUpload.attachCheckBeforeRead(function (event: Event<ExcelUploadComponent$CheckBeforeReadEventParameters>) {
+		excelUpload.attachCheckBeforeRead(function (event: Event<Component$CheckBeforeReadEventParameters>) {
 			// example
 			const sheetData = event.getParameter("sheetData");
 			let errorArray = [];
@@ -47,7 +47,7 @@ export async function openExcelUploadDialog(this: ExtensionAPI) {
 					}
 				}
 			}
-			(event.getSource() as ExcelUploadComponent).addArrayToMessages(errorArray);
+			(event.getSource() as Component).addArrayToMessages(errorArray);
 		}, this);
 	}
 	excelUpload.openExcelUploadDialog();

@@ -1,6 +1,7 @@
 import Dialog from "sap/m/Dialog";
-import { AvailableOptions, AvailableOptionsType } from "../types";
 import type { MetadataOptions } from "sap/ui/core/Element";
+import { AvailableOptions } from "../enums";
+import ExcelDialogRenderer from "./ExcelDialogRenderer";
 /**
  * Constructor for a new <code>cc.excelUpload.XXXnamespaceXXX.ExcelDialog</code> control.
  *
@@ -58,6 +59,12 @@ export default class ExcelDialog extends Dialog {
 		this.fireAvailableOptionsChanged({ availableOptions: aAvailableOptions }) as ExcelDialog$AvailableOptionsChangedEventParameters;
 		return this;
 	}
-	// @ts-ignore
-	// static renderer: typeof sap.m.DialogRenderer = sap.m.DialogRenderer;
+	
+	//static renderer: typeof sap.m.DialogRenderer = sap.m.DialogRenderer;
+
+	//InputRenderer =  // Renderer is sap/ui/core/Renderer !
+
+
+
+	static renderer: typeof ExcelDialogRenderer = ExcelDialogRenderer;
 }

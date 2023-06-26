@@ -1,7 +1,7 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
-import ExcelUploadComponent from "../ExcelUploadComponent";
+import Component from "../Component";
 import XMLView from "sap/ui/core/mvc/XMLView";
-import { Messages, CustomMessageTypes, Property, ListObject } from "../types";
+import { Messages, ListObject } from "../types";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import ResourceBundle from "sap/base/i18n/ResourceBundle";
 import OData from "./odata/OData";
@@ -15,12 +15,13 @@ import FlexBox from "sap/m/FlexBox";
 import OptionsDialog from "./dialog/OptionsDialog";
 import ExcelDialog from "../control/ExcelDialog";
 import ExcelUploadDialog from "./dialog/ExcelUploadDialog";
+import { CustomMessageTypes } from "../enums";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */
 export default class ExcelUpload extends ManagedObject{
 	public oDataEntityType: any;
-	public component: ExcelUploadComponent;
+	public component: Component;
 	public context: any;
 	private _isODataV4: boolean;
 	private isOpenUI5: boolean;
@@ -47,10 +48,10 @@ export default class ExcelUpload extends ManagedObject{
 
 	/**
 	 * Initializes ExcelUpload instance.
-	 * @param {ExcelUploadComponent} component - The component to be used.
+	 * @param {Component} component - The component to be used.
 	 * @param {ResourceModel} componentI18n - The i18n resource model for the component.
 	 */
-	constructor(component: ExcelUploadComponent, componentI18n: ResourceModel) {
+	constructor(component: Component, componentI18n: ResourceModel) {
 		super();
 		this.errorState = false;
 		// @ts-ignore
