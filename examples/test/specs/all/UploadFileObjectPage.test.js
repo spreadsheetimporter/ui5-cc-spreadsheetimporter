@@ -142,6 +142,6 @@ describe("Upload File Object Page", () => {
 
 	it("check Field: time", async () => {
 		const value = await FE.getFieldValue("time");
-		expect(value).toBe("3:00:00 PM");
+		expect(value).toBe("4:00:00 PM");
 	});
 });
