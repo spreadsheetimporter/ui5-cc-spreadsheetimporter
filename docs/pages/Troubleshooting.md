@@ -14,7 +14,7 @@ or set the [`debug`](Configuration.md#debug) parameter in the initialization of 
 This is only possible if the component can be opened at all, so please use the url parameter if possible.
 
 ```js
-this.excelUpload = await this._controller.getAppComponent().createComponent({
+this.excelUpload = await this.getView().getController().getAppComponent().createComponent({
     usage: "excelUpload",
     async: true,
     componentData: {
