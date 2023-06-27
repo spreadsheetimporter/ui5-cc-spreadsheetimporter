@@ -117,6 +117,11 @@
                     "pattern": "Orders({key})/Items({key2}):?query:",
                     "name": "Orders_ItemsObjectPage",
                     "target": "Orders_ItemsObjectPage"
+                },
+                {
+                    "pattern": "Orders:?query:",
+                    "name": "OrdersListGridTable",
+                    "target": "OrdersListGridTable"
                 }
             ],
             "targets": {
@@ -189,6 +194,36 @@
                         "settings": {
                             "editableHeaderContent": false,
                             "entitySet": "OrderItems"
+                        }
+                    }
+                },
+                "OrdersListGridTable": {
+                    "type": "Component",
+                    "id": "OrdersListGridTable",
+                    "name": "sap.fe.templates.ListReport",
+                    "options": {
+                        "settings": {
+                            "entitySet": "Orders",
+                            "variantManagement": "Page",
+                            "navigation": {
+                                "Orders": {
+                                    "detail": {
+                                        "route": "OrdersObjectPage"
+                                    }
+                                }
+                            },
+                            "content": {
+                                "header": {
+                                    "actions": {
+                                        "excelUploadListReport": {
+                                            "id": "excelUploadListReportButton",
+                                            "text": "Excel Upload",
+                                            "press": "ui.v4.ordersv4fe.ext.ListReportExtController.openExcelUploadDialog",
+                                            "requiresSelection": false
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
