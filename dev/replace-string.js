@@ -32,7 +32,7 @@ updateVersionDocs.updateVersions(versionUnderscore,versionUnderscoreButton)
 replaceButton(versionUnderscoreButton)
 
 if (!develop) {
-	let ui5Apps = ["ordersv2fe", "ordersv2fenondraft", "ordersv2freestylenondraft", "ordersv2freestylenondraftopenui5", "ordersv4fe", "ordersv4fpm"];
+	let ui5Apps = ["ordersv2fe", "ordersv2fenondraft", "ordersv2freestylenondraft", "ordersv2freestylenondraftopenui5", "ordersv4fe", "ordersv4fpm", "ordersv4fets"];
 	util.replaceVersionInExamples(versionUnderscore, versionUnderscore, ui5Apps,versionButton, versionUnderscoreButton);
 }
 

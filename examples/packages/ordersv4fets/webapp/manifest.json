@@ -94,12 +94,12 @@
         },
         "componentUsages": {
             "spreadsheetImporter": {
-                "name": "cc.spreadsheetimporter.v0_19_1"
+                "name": "cc.spreadsheetimporter.v0_20_0"
             }
         },
         "resourceRoots": {
-            "cc.spreadsheetimporter.v0_19_1": "./thirdparty/customControl/spreadsheetImporter/v0_19_1",
-            "cc.spreadsheetimporter.button.v0_7_1": "./thirdparty/customControl/spreadsheetUploadButton/v0_7_1"
+            "cc.spreadsheetimporter.v0_20_0": "./thirdparty/customControl/spreadsheetImporter/v0_20_0",
+            "cc.spreadsheetimporter.button.v0_8_0": "./thirdparty/customControl/spreadsheetImporterButton/v0_8_0"
         },
         "routing": {
             "routes": [
