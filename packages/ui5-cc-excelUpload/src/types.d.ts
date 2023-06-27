@@ -1,18 +1,6 @@
 import { MessageType } from "sap/ui/core/library";
+import { AvailableOptions } from "./enums";
 
-export enum FieldMatchType {
-	/**
-	 * Default match type, property names in square brackets
-	 * @public
-	 */
-	LabelTypeBrackets = "labelTypeBrackets",
-
-	/**
-	 * match type with only labels
-	 * @public
-	 */
-	Label = "label"
-}
 
 export interface Tags {
 	name: string;
@@ -29,38 +17,11 @@ export type ListObject = Map<string, Property>;
 export type PropertyArray = { [key: string]: any }[];
 export type Columns = string[];
 
-type CustomMessageType = {
+export type CustomMessageType = {
 	title: string;
 	group: boolean;
 }
 
-
-export const CustomMessageTypes: { [key: string]: CustomMessageType } = {
-	MandatoryFieldNotFilled: {
-		title: "MandatoryFieldNotFilled",
-		group: true,
-	},
-	ColumnNotFound: {
-		title: "ColumnNotFound",
-		group: false,
-	},
-	ParsingError: {
-		title: "ParsingError",
-		group: true,
-	},
-	CustomErrorGroup: {
-		title: "CustomErrorGroup",
-		group: true,
-	},
-	CustomError: {
-		title: "CustomError",
-		group: false,
-	},
-	Formatting: {
-		title: "Formatting",
-		group: true,
-	}
-}
 
 export interface Messages {
 	title: string;
@@ -102,26 +63,6 @@ export type ArrayData = {
 export type RowData = {
 	[key: string]: ValueData;
 };
-
-export enum AvailableOptions {
-	/**
-	 * Option for `strict` mode
-	 * @public
-	 */
-	Strict = "strict",
-
-	/**
-	 * Changing the field match type
-	 * @public
-	 */
-	FieldMatchType = "fieldMatchType",
-
-	/**
-	 * Changing the decimal seperator for number fields
-	 * @public
-	 */
-	DecimalSeperator = "decimalSeperator"
-}
 
 export type AvailableOptionsType = keyof typeof AvailableOptions;
 

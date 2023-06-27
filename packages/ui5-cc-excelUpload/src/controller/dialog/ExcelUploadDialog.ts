@@ -1,7 +1,7 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 import Fragment from "sap/ui/core/Fragment";
 import ExcelUpload from "../ExcelUpload";
-import ExcelDialog, { ExcelDialog$AvailableOptionsChangedEvent, ExcelDialog$DecimalSeparatorChangedEvent, ExcelDialog$DecimalSeparatorChangedEventParameters } from "../../control/ExcelDialog";
+import ExcelDialog, { ExcelDialog$AvailableOptionsChangedEvent, ExcelDialog$DecimalSeparatorChangedEvent } from "../../control/ExcelDialog";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import Component from "../../Component";
 import Event from "sap/ui/base/Event";

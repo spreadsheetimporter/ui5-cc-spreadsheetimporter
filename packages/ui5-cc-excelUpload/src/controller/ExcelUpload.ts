@@ -1,7 +1,7 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 import Component from "../Component";
 import XMLView from "sap/ui/core/mvc/XMLView";
-import { Messages, CustomMessageTypes, Property, ListObject } from "../types";
+import { Messages, ListObject } from "../types";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import ResourceBundle from "sap/base/i18n/ResourceBundle";
 import OData from "./odata/OData";
@@ -15,6 +15,7 @@ import FlexBox from "sap/m/FlexBox";
 import OptionsDialog from "./dialog/OptionsDialog";
 import ExcelDialog from "../control/ExcelDialog";
 import ExcelUploadDialog from "./dialog/ExcelUploadDialog";
+import { CustomMessageTypes } from "../enums";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */

@@ -236,6 +236,20 @@
     ]
   },
   {
+    "rootAppName": "ordersv4fets",
+    "id": "ui.v4.ordersv4fets",
+    "port": "8101",
+    "versionMinor": 108,
+    "appTitel": "Orders V4 FE TS 108",
+    "testMapping": {
+      "specs": [
+        "./test/specs/all/**.test.js",
+        "./test/specs/v4/**.test.js"
+      ]
+    },
+    "copyVersions": []
+  },
+  {
     "rootAppName": "ordersv4fpm",
     "port": "8084",
     "versionMinor": 108,

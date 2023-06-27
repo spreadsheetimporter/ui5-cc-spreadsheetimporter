@@ -1,9 +1,10 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 import { MessageType } from "sap/ui/core/library";
 import Component from "../Component";
-import { ArrayData, CustomMessageTypes, FieldMatchType, ListObject, Payload, PayloadArray, Property, RowData, ValueData } from "../types";
+import { ArrayData, ListObject, Payload, PayloadArray, Property, ValueData } from "../types";
 import MessageHandler from "./MessageHandler";
 import Util from "./Util";
+import { CustomMessageTypes, FieldMatchType } from "../enums";
 
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX

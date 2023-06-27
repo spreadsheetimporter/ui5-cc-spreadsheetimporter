@@ -2,12 +2,10 @@ import UIComponent from "sap/ui/core/UIComponent";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Device from "sap/ui/Device";
 import ExcelUpload from "./controller/ExcelUpload";
-import { ComponentData, FieldMatchType, Messages } from "./types";
-import { $ComponentSettings } from "sap/ui/core/Component";
+import { ComponentData, Messages } from "./types";
 import Log from "sap/base/Log";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import Logger from "./controller/Logger";
-import Event from "sap/ui/base/Event";
 /**
  * @namespace cc.excelUpload.XXXnamespaceXXX
  */

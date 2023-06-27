@@ -3,6 +3,8 @@ const FE = require("./FE");
 
 class FEV4 {
 	constructor() {
+		this.unicodeSpaceRegex = /[\u0020\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\u202F]/g;
+
 		this.BaseClass = new Base();
 		this.rootId = "ui.v4.ordersv4fe::";
 		this.listReportId = this.rootId + "OrdersList--fe::";
@@ -32,7 +34,7 @@ class FEV4 {
 		this.gridTablePageDynamicPageTitle = this.gridTablePageId + "ListReport-header";
 		this.gridTablePageExceluploadButton = this.gridTablePageId + "CustomAction::excelUploadListReport";
 
-		this.overflowButton = "__toolbar0-overflowButton"
+		this.overflowButton = "__toolbar0-overflowButton";
 	}
 	async getFieldValue(fieldName) {
 		const field = await this.BaseClass.getControlById(`ui.v4.ordersv4fe::Orders_ItemsObjectPage--fe::FormContainer::Identification::FormElement::DataField::${fieldName}::Field`);
@@ -57,7 +59,7 @@ class FEV4 {
 		const binding = await field.exec(() => this.getBindingContext());
 		const object = await binding.getObject();
 		const date = new Date(object[attribute]);
-		const formattedDate = await date.toLocaleString("en-US", options);
+		let formattedDate = await date.toLocaleString("en-US", options);
 		// check printend value
 		let valueText = "";
 		try {
@@ -68,6 +70,9 @@ class FEV4 {
 			// only for version 84
 			valueText = await field.getText();
 		}
+		// Replace unicode space characters with normal space
+		valueText = valueText.replace(this.unicodeSpaceRegex, " ");
+		formattedDate = formattedDate.replace(this.unicodeSpaceRegex, " ");
 		return { valueText: valueText, formattedDate: formattedDate };
 	}
 

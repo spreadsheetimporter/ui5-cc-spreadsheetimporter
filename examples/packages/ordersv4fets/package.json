@@ -1,0 +1,43 @@
+{
+  "name": "ordersv4fets108",
+  "version": "0.0.1",
+  "private": true,
+  "description": "",
+  "keywords": [
+    "ui5",
+    "openui5",
+    "sapui5"
+  ],
+  "main": "webapp/index.html",
+  "dependencies": {
+    "ui5-cc-excelupload": "./../../../packages/ui5-cc-excelUpload"
+  },
+  "devDependencies": {
+    "@ui5/cli": "^3.0.0",
+    "@sap/ux-ui5-tooling": "1",
+    "@sap/ux-specification": "UI5-1.108",
+    "@sapui5/ts-types-esm": "~1.108.0",
+    "ui5-tooling-transpile": "^0.7.13",
+    "typescript": "^4.6.3",
+    "@typescript-eslint/eslint-plugin": "^5.17.0",
+    "@typescript-eslint/parser": "^5.17.0",
+    "@sap-ux/ui5-middleware-fe-mockserver": "2"
+  },
+  "scripts": {
+    "start": "fiori run -p 8101 --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#uiv4ordersv4fets-tile\"",
+    "start-local": "fiori run --config ./ui5-local.yaml --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#uiv4ordersv4fets-tile\"",
+    "start:silent": "fiori run -p 8101 --config=ui5-test.yaml",
+    "build": "ui5 build --config=ui5.yaml --clean-dest --dest dist",
+    "ts-typecheck": "tsc --noEmit",
+    "prestart": "npm run ts-typecheck",
+    "prebuild": "npm run ts-typecheck",
+    "deploy": "fiori verify",
+    "deploy-config": "fiori add deploy-config",
+    "start-noflp": "fiori run -p 8101 --open \"index.html?sap-ui-xx-viewCache=false\"",
+    "start-mock": "fiori run --config ./ui5-mock.yaml --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#uiv4ordersv4fets-tile\"",
+    "int-test": "fiori run --config ./ui5-mock.yaml --open \"test/integration/opaTests.qunit.html\"",
+    "start-variants-management": "fiori run --open \"preview.html?sap-ui-xx-viewCache=false&fiori-tools-rta-mode=true&sap-ui-rta-skip-flex-validation=true#preview-app\""
+  },
+  "sapux": true,
+  "sapuxLayer": "CUSTOMER_BASE"
+}
