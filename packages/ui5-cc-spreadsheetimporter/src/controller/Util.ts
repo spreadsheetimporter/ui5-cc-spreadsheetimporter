@@ -25,7 +25,7 @@ export default class Util extends ManagedObject {
 			try {
 				value = Object.entries(row).find(([key]) => key.includes(`[${type}]`))[1] as ValueData;
 			} catch (error) {
-				Log.debug(`Not found ${type}`,undefined,"ExcelUpload: Util");
+				Log.debug(`Not found ${type}`,undefined,"SpreadsheetUpload: Util");
 			}
 		}
 		return value;

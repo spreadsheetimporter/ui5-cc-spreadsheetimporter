@@ -75,7 +75,7 @@ sap.ui.define(["sap/m/Button"], (Button) => {
 					async: true,
 					componentData: {
 						context: view,
-						spreadsheetFileName: oControl.getExcelFileName(),
+						spreadsheetFileName: oControl.getSpreadsheetFileName(),
 						columns: oControl.getColumns(),
 						tableId: oControl.getTableId(),
 						odataType: oControl.getOdataType(),
@@ -101,7 +101,7 @@ sap.ui.define(["sap/m/Button"], (Button) => {
 					async: true,
 					componentData: {
 						context: view,
-						spreadsheetFileName: oControl.getExcelFileName(),
+						spreadsheetFileName: oControl.getSpreadsheetFileName(),
 						columns: oControl.getColumns(),
 						tableId: oControl.getTableId(),
 						odataType: oControl.getOdataType(),

@@ -159,7 +159,7 @@ openSpreadsheetUploadDialog: async function (oEvent) {
 
 ### How could this look like
 
-see also this at the live demo https://excelupload.marianzeis.de/
+see also this at the live demo https://livedemo.spreadsheet-importer.com/
 
 ![Object Page with Buttons](./../images/object_page.png){ loading=lazy }
 
@@ -184,7 +184,7 @@ This example is from the [sample app](https://github.com/marianfoo/ui5-cc-spread
                             "Actions": {
                                 "spreadsheetImporter": {
                                     "id": "spreadsheetUploadButton",
-                                    "text": "Excel Upload",
+                                    "text": "Spreadsheet Upload",
                                     "applicablePath": "ui>/editable",
                                     "press": "openSpreadsheetUploadDialog",
                                     "requiresSelection": false

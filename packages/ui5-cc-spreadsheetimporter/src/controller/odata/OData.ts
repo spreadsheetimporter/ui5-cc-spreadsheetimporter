@@ -69,7 +69,7 @@ export default abstract class OData extends ManagedObject {
 			fnResolve();
 		} catch (error) {
 			this.resetContexts();
-			Log.error("Error while calling the odata service", error as Error, "ExcelUpload: callOdata");
+			Log.error("Error while calling the odata service", error as Error, "SpreadsheetUpload: callOdata");
 			fnReject(error);
 		}
 	}

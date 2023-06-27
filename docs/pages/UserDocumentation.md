@@ -4,7 +4,7 @@ This User Documentation provides a brief overview of the Fiori Element Object Pa
 
 1\. Open the Spreadsheet Upload Dialog
 
-![Open Spreadsheet Upload Dialog](./../images/open_excelupload_dialog.png){ loading=lazy }
+![Open Spreadsheet Upload Dialog](./../images/open_spreadsheetupload_dialog.png){ loading=lazy }
 
 2\. Download the Template
 
@@ -16,7 +16,7 @@ To ensure a smooth process without errors, it is recommended to always download 
 
 Now, fill the template with the necessary data and save the file.
 
-![Fill out Spreadsheet File](./../images/fill_out_excel_file.png){ loading=lazy }
+![Fill out Spreadsheet File](./../images/fill_out_spreadsheet_file.png){ loading=lazy }
 
 4\. Upload File to Application
 

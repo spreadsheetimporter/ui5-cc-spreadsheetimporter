@@ -1,16 +1,16 @@
 import Dialog from "sap/m/Dialog";
 import type { MetadataOptions } from "sap/ui/core/Element";
 import { AvailableOptions } from "../enums";
-import ExcelDialogRenderer from "./SpreadsheetDialogRenderer";
+import SpreadsheetDialogRenderer from "./SpreadsheetDialogRenderer";
 /**
- * Constructor for a new <code>cc.spreadsheetimporter.XXXnamespaceXXX.ExcelDialog</code> control.
+ * Constructor for a new <code>cc.spreadsheetimporter.XXXnamespaceXXX.SpreadsheetDialog</code> control.
  *
  * Some class description goes here.
  * @extends Dialog
  *
  * @constructor
  * @public
- * @name cc.spreadsheetimporter.XXXnamespaceXXX.ExcelDialog
+ * @name cc.spreadsheetimporter.XXXnamespaceXXX.SpreadsheetDialog
  */
 export default class SpreadsheetDialog extends Dialog {
 	constructor(id?: string | $SpreadsheetDialogSettings);
@@ -66,5 +66,5 @@ export default class SpreadsheetDialog extends Dialog {
 
 
 
-	static renderer: typeof ExcelDialogRenderer = ExcelDialogRenderer;
+	static renderer: typeof SpreadsheetDialogRenderer = SpreadsheetDialogRenderer;
 }

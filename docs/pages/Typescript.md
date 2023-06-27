@@ -77,7 +77,7 @@ export async function openSpreadsheetUploadDialog(this: ExtensionAPI) {
 					}
 				}
 			}
-			(event.getSource() as ExcelUploadComponent).addArrayToMessages(errorArray);
+			(event.getSource() as Component).addArrayToMessages(errorArray);
 		}, this);
 	}
 	spreadsheetUpload.openSpreadsheetUploadDialog();

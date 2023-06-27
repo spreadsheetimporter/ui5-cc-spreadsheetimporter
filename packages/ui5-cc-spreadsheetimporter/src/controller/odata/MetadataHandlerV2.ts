@@ -5,7 +5,6 @@ import MetadataHandler from "./MetadataHandler";
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
 export default class MetadataHandlerV2 extends MetadataHandler {
-	//private spreadsheetUploadController: ExcelUpload;
 
 	constructor(spreadsheetUploadController: any) {
 		super(spreadsheetUploadController);
@@ -17,7 +16,7 @@ export default class MetadataHandlerV2 extends MetadataHandler {
 		// get the property list of the entity for which we need to download the template
 		const properties: PropertyArray = oDataEntityType.property;
 		const entityTypeLabel: string = oDataEntityType["sap:label"];
-		Log.debug("ExcelUpload: Annotations", undefined, "ExcelUpload: MetadataHandler", () => this.spreadsheetUploadController.component.logger.returnObject(oDataEntityType));
+		Log.debug("SpreadsheetUpload: Annotations", undefined, "SpreadsheetUpload: MetadataHandler", () => this.spreadsheetUploadController.component.logger.returnObject(oDataEntityType));
 	
 		// check if file name is not set
 		if (!this.spreadsheetUploadController.component.getSpreadsheetFileName() && entityTypeLabel) {
@@ -39,7 +38,7 @@ export default class MetadataHandlerV2 extends MetadataHandler {
 					propertyObject.maxLength = property["maxLength"];
 					listObject.set(propertyName, propertyObject);
 				} else {
-					Log.warning(`ExcelUpload: Property ${propertyName} not found`);
+					Log.warning(`SpreadsheetUpload: Property ${propertyName} not found`);
 				}
 			}
 		} else {
@@ -49,7 +48,7 @@ export default class MetadataHandlerV2 extends MetadataHandler {
 				try {
 					hiddenProperty = property["com.sap.vocabularies.UI.v1.Hidden"].Bool === "true";
 				} catch (error) {
-					Log.debug(`No hidden property on ${property.name}`,undefined,"ExcelUpload: MetadataHandler");
+					Log.debug(`No hidden property on ${property.name}`,undefined,"SpreadsheetUpload: MetadataHandler");
 				}
 				if (!hiddenProperty && !propertyName.startsWith("SAP__")) {
 					let propertyObject: Property = {} as Property;
@@ -72,7 +71,7 @@ export default class MetadataHandlerV2 extends MetadataHandler {
 			const lineItemsAnnotations = oDataEntityType["com.sap.vocabularies.UI.v1.LineItem"];
 			return lineItemsAnnotations.find((dataField: { Value: { Path: any } }) => dataField.Value.Path === propertyName).Label.String;
 		} catch (error) {
-			Log.debug(`ExcelUpload: ${propertyName} not found as a LineItem Label`,undefined,"ExcelUpload: MetadataHandler");
+			Log.debug(`SpreadsheetUpload: ${propertyName} not found as a LineItem Label`,undefined,"SpreadsheetUpload: MetadataHandler");
 		}
 		return propertyName;
 	}

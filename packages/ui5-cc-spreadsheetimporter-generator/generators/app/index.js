@@ -5,7 +5,7 @@ path = require("path");
 glob = require("glob");
 
 module.exports = class extends Generator {
-	static displayName = "Enable the UI5 Excel Upload Custom Control";
+	static displayName = "Enable the UI5 Spreadsheet Upload Custom Control";
 
 	async prompting() {
 		const data = this.config.getAll();
@@ -24,7 +24,7 @@ module.exports = class extends Generator {
 		const questionTemplate = await this.prompt({
 			type: "list",
 			name: "templateType",
-			message: "On which page would you like to add Excel Upload?",
+			message: "On which page would you like to add Spreadsheet Upload?",
 			choices: [
 				{ name: "Object Page", value: "sap.fe.templates.ObjectPage" },
 				{ name: "List Report", value: "sap.fe.templates.ListReport" }
@@ -50,7 +50,7 @@ module.exports = class extends Generator {
 				type: "input",
 				name: "buttonText",
 				message: "Button Text?",
-				default: "Excel Upload"
+				default: "Spreadsheet Upload"
 			}
 		];
 

@@ -22,7 +22,7 @@ https://spreadsheet-importer.com/
 ## Live Demo
 
 Give this a try directly at:  
-https://excelupload.marianzeis.de/
+https://livedemo.spreadsheet-importer.com/
 
 The demo app uses OData V4 and UI5 version 1.108 with a CAP backend. The data resets every hour on the hour.
 

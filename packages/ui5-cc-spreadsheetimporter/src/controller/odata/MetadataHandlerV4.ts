@@ -16,14 +16,14 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 		// get the property list of the entity for which we need to download the template
 		var annotations = this.spreadsheetUploadController.context.getModel().getMetaModel().getData()["$Annotations"];
 		const properties = this.spreadsheetUploadController.context.getModel().getMetaModel().getData()[odataType];
-		Log.debug("ExcelUpload: Annotations", undefined, "ExcelUpload: MetadataHandler", () =>
+		Log.debug("SpreadsheetUpload: Annotations", undefined, "SpreadsheetUpload: MetadataHandler", () =>
 			this.spreadsheetUploadController.component.logger.returnObject(this.spreadsheetUploadController.context.getModel().getMetaModel().getData())
 		);
 		// try get facet label
 		try {
 			entityTypeLabel = annotations[odataType]["@com.sap.vocabularies.UI.v1.Facets"][0].Label;
 		} catch (error) {
-			Log.debug(`ExcelUpload: Facet Label not found`, undefined, "ExcelUpload: MetadataHandler");
+			Log.debug(`SpreadsheetUpload: Facet Label not found`, undefined, "SpreadsheetUpload: MetadataHandler");
 		}
 
 		// check if file name is not set
@@ -47,7 +47,7 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 					propertyObject.maxLength = property.$MaxLength;
 					listObject.set(propertyName, propertyObject);
 				} else {
-					Log.warning(`ExcelUpload: Property ${propertyName} not found`, undefined, "ExcelUpload: MetadataHandler");
+					Log.warning(`SpreadsheetUpload: Property ${propertyName} not found`, undefined, "SpreadsheetUpload: MetadataHandler");
 				}
 			}
 		} else {
@@ -84,7 +84,7 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 			const lineItemsAnnotations = annotations[odataType]["@com.sap.vocabularies.UI.v1.LineItem"];
 			return lineItemsAnnotations.find((dataField: { Value: { $Path: any } }) => dataField.Value.$Path === propertyName).Label;
 		} catch (error) {
-			Log.debug(`ExcelUpload: ${propertyName} not found as a LineItem Label`, undefined, "ExcelUpload: MetadataHandler");
+			Log.debug(`SpreadsheetUpload: ${propertyName} not found as a LineItem Label`, undefined, "SpreadsheetUpload: MetadataHandler");
 		}
 		return propertyName;
 	}

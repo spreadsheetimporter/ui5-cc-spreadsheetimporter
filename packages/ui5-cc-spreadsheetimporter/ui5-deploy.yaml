@@ -20,7 +20,7 @@ builder:
         app:
           name: Z_XUP_v0_20_0
           description: ''
-          package: Z_EXCELUPLOAD
+          package: Z_SHEETUPLOAD
           transport: A4HK900057
         exclude:
           - .*\.ts

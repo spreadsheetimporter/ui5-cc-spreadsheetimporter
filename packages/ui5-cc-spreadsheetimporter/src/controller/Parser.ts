@@ -10,7 +10,7 @@ import { CustomMessageTypes, FieldMatchType } from "../enums";
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
 export default class Parser extends ManagedObject {
-	static parseExcelData(sheetData: ArrayData, typeLabelList: ListObject, component: Component, messageHandler: MessageHandler, util: Util, isODataV4: Boolean) {
+	static parseSpreadsheetData(sheetData: ArrayData, typeLabelList: ListObject, component: Component, messageHandler: MessageHandler, util: Util, isODataV4: Boolean) {
 		const payloadArray:PayloadArray = [];
 		// loop over data from spreadsheet file
 		for (const [index, row] of sheetData.entries()) {

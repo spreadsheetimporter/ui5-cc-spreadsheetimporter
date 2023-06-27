@@ -33,10 +33,10 @@ pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- ordersv4fe 84
 ### Run single spec
 
 You can also run single test specs. You need to go in the `examples` folder for this.  
-For example you can run the test spec `OpenExcelDialog` with OData V2 FE UI5 Version 96 with:  
+For example you can run the test spec `OpenSpreadsheetUploadDialog` with OData V2 FE UI5 Version 96 with:  
 
 ````sh
-npm run test -- ordersv2fe  96 --spec OpenExcelDialog
+npm run test -- ordersv2fe  96 --spec OpenSpreadsheetUploadDialog
 ````
 
 ### Run headless

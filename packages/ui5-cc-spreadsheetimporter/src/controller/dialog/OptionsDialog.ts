@@ -34,7 +34,7 @@ export default class OptionsDialog extends ManagedObject{
 			decimalSeparator: this.spreadsheetUploadController.component.getDecimalSeparator(),
 		});
 		const showOptionsModel = new JSONModel(availableOptionsData)
-		Log.debug("openOptionsDialog",undefined,"ExcelUpload: Options",() => this.spreadsheetUploadController.component.logger.returnObject({
+		Log.debug("openOptionsDialog",undefined,"SpreadsheetUpload: Options",() => this.spreadsheetUploadController.component.logger.returnObject({
 			strict: this.spreadsheetUploadController.component.getStrict(),
 			fieldMatchType: this.spreadsheetUploadController.component.getFieldMatchType(),
 			decimalSeparator: this.spreadsheetUploadController.component.getDecimalSeparator()

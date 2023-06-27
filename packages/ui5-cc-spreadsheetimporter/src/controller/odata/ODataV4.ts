@@ -98,7 +98,7 @@ export default class ODataV4 extends OData {
 				const metaDataObject = metaModel.getObject(tableBindingPath);
 				return metaDataObject["$Type"];
 			} catch (error) {
-				Log.debug("Error while getting OData Type for List Report",error as Error, "ExcelUpload: ODataV4");
+				Log.debug("Error while getting OData Type for List Report",error as Error, "SpreadsheetUpload: ODataV4");
 			}
 			// for object page
 			if (!odataType) {
@@ -109,7 +109,7 @@ export default class ODataV4 extends OData {
 				}
 			}
 			if (!odataType) {
-				Log.error("Error while getting OData Type. Please specify 'odataType' in options",undefined, "ExcelUpload: ODataV4");
+				Log.error("Error while getting OData Type. Please specify 'odataType' in options",undefined, "SpreadsheetUpload: ODataV4");
 			}
 		}
 	}

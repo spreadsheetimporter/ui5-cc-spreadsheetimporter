@@ -5,7 +5,7 @@
   <spreadsheetdialog:SpreadsheetDialog contentWidth="{= ${device>/system/phone} ? '100%' : '40vw' }" contentHeight="150px" verticalScrolling="false">
     <spreadsheetdialog:customHeader >
       <OverflowToolbar>
-        <Title text="{i18n>excelupload}" />
+        <Title text="{i18n>spreadsheetupload}" />
         <ToolbarSpacer/>
         <Button press="showPreview" text="{i18n>showPreview}" icon="sap-icon://display" visible="{= !${info>/hidePreview}}"/>
         <Button press="onTempDownload" text="{i18n>downloadTemplate}" icon="sap-icon://download-from-cloud" />
@@ -29,7 +29,7 @@
             <FlexItemData growFactor="1" styleClass="centeredFlex" />
           </layoutData>
         </MessageStrip>
-        <upload:FileUploader placeholder="{i18n>exceluploadPlaceholder}" fileType="xlsx,xls,csv" change="onFileUpload" sameFilenameAllowed="true" width="100%">
+        <upload:FileUploader placeholder="{i18n>spreadsheetuploadPlaceholder}" fileType="xlsx,xls,csv" change="onFileUpload" sameFilenameAllowed="true" width="100%">
           <upload:layoutData>
             <FlexItemData growFactor="5" styleClass="centeredFlex"/>
           </upload:layoutData>

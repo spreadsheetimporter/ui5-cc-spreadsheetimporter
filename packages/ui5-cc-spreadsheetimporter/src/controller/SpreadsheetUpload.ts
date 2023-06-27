@@ -47,7 +47,7 @@ export default class SpreadsheetUpload extends ManagedObject{
 	private _spreadsheetUploadDialogHandler: SpreadsheetUploadDialog;
 
 	/**
-	 * Initializes ExcelUpload instance.
+	 * Initializes SpreadsheetUpload instance.
 	 * @param {Component} component - The component to be used.
 	 * @param {ResourceModel} componentI18n - The i18n resource model for the component.
 	 */
@@ -68,7 +68,7 @@ export default class SpreadsheetUpload extends ManagedObject{
 		this.odataHandler = this.createODataHandler(this.UI5MinorVersion, this);
 		this.initialSetupPromise = this.initialSetup();
 		
-		Log.debug("constructor",undefined,"ExcelUpload: ExcelUpload",() => this.component.logger.returnObject({ui5version: this.UI5MinorVersion, isODataV4: this.isODataV4, isOpenUI5: this.isOpenUI5}))
+		Log.debug("constructor",undefined,"SpreadsheetUpload: SpreadsheetUpload",() => this.component.logger.returnObject({ui5version: this.UI5MinorVersion, isODataV4: this.isODataV4, isOpenUI5: this.isOpenUI5}))
 	}
 
 	/**
@@ -76,7 +76,7 @@ export default class SpreadsheetUpload extends ManagedObject{
 	 * @returns {Promise<void>} A promise that resolves when the initial setup is complete.
 	 */
 	async initialSetup(): Promise<void> {
-		await this.spreadsheetUploadDialogHandler.createExcelUploadDialog();
+		await this.spreadsheetUploadDialogHandler.createSpreadsheetUploadDialog();
 		if (!this.component.getStandalone()) {
 			try {
 				await this.setContext();
@@ -84,7 +84,7 @@ export default class SpreadsheetUpload extends ManagedObject{
 			} catch (error) {
 				this.errorMessage = error;
 				this.errorState = true;
-				Log.error("Error setting 'setContext'", error as Error, "ExcelUpload: ExcelUpload", () =>
+				Log.error("Error setting 'setContext'", error as Error, "SpreadsheetUpload: SpreadsheetUpload", () =>
 					this.component.logger.returnObject({ error: error })
 				);
 			}
@@ -101,26 +101,26 @@ export default class SpreadsheetUpload extends ManagedObject{
 		}
 
 		this.view = this.odataHandler.getView(this.context);
-		Log.debug("View", undefined, "ExcelUpload: ExcelUpload", () => this.component.logger.returnObject({ view: this.view }));
+		Log.debug("View", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ view: this.view }));
 		this.view.addDependent(this.spreadsheetUploadDialogHandler.getDialog());
 		this.tableObject = this.odataHandler.getTableObject(this.component.getTableId(), this.view);
-		Log.debug("tableObject", undefined, "ExcelUpload: ExcelUpload", () => this.component.logger.returnObject({ tableObject: this.tableObject }));
+		Log.debug("tableObject", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ tableObject: this.tableObject }));
 		this.component.setTableId(this.tableObject.getId());
-		Log.debug("table Id", undefined, "ExcelUpload: ExcelUpload", () => this.component.logger.returnObject({ tableID: this.tableObject.getId() }));
+		Log.debug("table Id", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ tableID: this.tableObject.getId() }));
 		this.binding = this.odataHandler.getBinding(this.tableObject);
 		if (!this.binding) {
 			throw new Error(this.util.geti18nText("bindingError"));
 		}
 		const odataType = this.odataHandler.getOdataType(this.binding, this.tableObject, this.component.getOdataType());
-		Log.debug("odataType", undefined, "ExcelUpload: ExcelUpload", () => this.component.logger.returnObject({ odataType: odataType }));
+		Log.debug("odataType", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ odataType: odataType }));
 		this.component.setOdataType(odataType);
 		this.odataKeyList = await this.odataHandler.getKeyList(odataType, this.tableObject);
-		Log.debug("odataKeyList", undefined, "ExcelUpload: ExcelUpload", () => this.component.logger.returnObject({ odataKeyList: this.odataKeyList }));
+		Log.debug("odataKeyList", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ odataKeyList: this.odataKeyList }));
 		this.typeLabelList = await this.odataHandler.getLabelList(this.component.getColumns(), odataType, this.tableObject);
-		Log.debug("typeLabelList", undefined, "ExcelUpload: ExcelUpload", () => this.component.logger.returnObject({ typeLabelList: this.typeLabelList }));
+		Log.debug("typeLabelList", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ typeLabelList: this.typeLabelList }));
 
 		this.model = this.tableObject.getModel();
-		Log.debug("model", undefined, "ExcelUpload: ExcelUpload", () => this.component.logger.returnObject({ model: this.model }));
+		Log.debug("model", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ model: this.model }));
 		this.odataHandler.createCustomBinding(this.binding)
 		try {
 			// Load the DraftController asynchronously using the loadDraftController function
@@ -129,7 +129,7 @@ export default class SpreadsheetUpload extends ManagedObject{
 			// Create an instance of the DraftController
 			this.odataHandler.draftController = new DraftController(this.model, undefined);
 		} catch (error) {
-			Log.error("Error setting the draft controller", error as Error, "ExcelUpload: ExcelUpload");
+			Log.error("Error setting the draft controller", error as Error, "SpreadsheetUpload: SpreadsheetUpload");
 		}
 	}
 
@@ -147,7 +147,7 @@ export default class SpreadsheetUpload extends ManagedObject{
 	}
 
 	/**
-	 * Opens the Excel upload dialog.
+	 * Opens the Spreadsheet upload dialog.
 	 */
 	async openSpreadsheetUploadDialog() {
 		await this.initialSetupPromise;
@@ -158,8 +158,8 @@ export default class SpreadsheetUpload extends ManagedObject{
 			((this.spreadsheetUploadDialogHandler.getDialog().getContent()[0] as FlexBox).getItems()[1] as FileUploader).clear();
 			this.spreadsheetUploadDialogHandler.openSpreadsheetUploadDialog();
 		} else {
-			Util.showError(this.errorMessage, "ExcelUpload.ts", "initialSetup");
-			Log.error("Error opening the dialog", undefined, "ExcelUpload: ExcelUpload");
+			Util.showError(this.errorMessage, "SpreadsheetUpload.ts", "initialSetup");
+			Log.error("Error opening the dialog", undefined, "SpreadsheetUpload: SpreadsheetUpload");
 		}
 	}
 
@@ -262,7 +262,7 @@ export default class SpreadsheetUpload extends ManagedObject{
 		this.messageHandler.addArrayToMessages(messagesArray);
 	}
 
-	public getExcelUploadDialog(): SpreadsheetDialog {
+	public getSpreadsheetUploadDialog(): SpreadsheetDialog {
 		return this.spreadsheetUploadDialogHandler.getDialog();
 	}
 

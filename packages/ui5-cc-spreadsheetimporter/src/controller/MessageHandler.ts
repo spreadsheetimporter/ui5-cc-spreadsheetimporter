@@ -28,12 +28,12 @@ export default class MessageHandler extends ManagedObject{
 	}
 
 	addArrayToMessages(messages: Messages[]) {
-		Log.debug("addArrayToMessages",undefined,"ExcelUpload: MessageHandler",() => this.spreadsheetUploadController.component.logger.returnObject(messages))
+		Log.debug("addArrayToMessages",undefined,"SpreadsheetUpload: MessageHandler",() => this.spreadsheetUploadController.component.logger.returnObject(messages))
 		this.messages = this.messages.concat(messages);
 	}
 
 	addMessageToMessages(message: Messages) {
-		Log.debug("addMessageToMessages",undefined,"ExcelUpload: MessageHandler",() => this.spreadsheetUploadController.component.logger.returnObject(message))
+		Log.debug("addMessageToMessages",undefined,"SpreadsheetUpload: MessageHandler",() => this.spreadsheetUploadController.component.logger.returnObject(message))
 		this.messages.push(message);
 	}
 
@@ -57,7 +57,7 @@ export default class MessageHandler extends ManagedObject{
 		for (const mandatoryField of mandatoryFields) {
 			const fieldLabel = typeLabelList.get(mandatoryField)?.label;
 			if (!fieldLabel) {
-				Log.error(`Mandatory Field ${mandatoryField} not found for checking mandatory fields`,undefined,"ExcelUpload: MessageHandler");
+				Log.error(`Mandatory Field ${mandatoryField} not found for checking mandatory fields`,undefined,"SpreadsheetUpload: MessageHandler");
 				continue;
 			}
 	
@@ -176,7 +176,7 @@ export default class MessageHandler extends ManagedObject{
 		this.messageDialog.setModel(new JSONModel(), "messages");
 		const messagesGrouped = this.groupMessages(this.messages);
 		const sortedMessagesGrouped = this.sortMessagesByTitle(messagesGrouped);
-		Log.debug("sortedMessagesGrouped", undefined, "ExcelUpload: MessageHandler", () => this.spreadsheetUploadController.component.logger.returnObject({ sortedMessagesGrouped: sortedMessagesGrouped }));
+		Log.debug("sortedMessagesGrouped", undefined, "SpreadsheetUpload: MessageHandler", () => this.spreadsheetUploadController.component.logger.returnObject({ sortedMessagesGrouped: sortedMessagesGrouped }));
 		(this.messageDialog.getModel("messages") as JSONModel).setData(sortedMessagesGrouped);
 		const dialogState = this.getWorstType(sortedMessagesGrouped);
 		const infoModel = new JSONModel({

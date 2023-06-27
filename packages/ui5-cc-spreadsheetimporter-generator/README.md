@@ -1,4 +1,4 @@
-# Generator for UI5 Excel Upload Custom Control
+# Generator for UI5 Spreadsheet Upload Custom Control
 
 ## Documentation
 

@@ -128,9 +128,9 @@ export default class Component extends UIComponent {
 		}
 		const componentData = Object.assign({}, this.getComponentData()) as ComponentData;
 		delete componentData.context;
-		Log.debug("Component Data",undefined,"ExcelUpload: Component",() => this.logger.returnObject(componentData))
+		Log.debug("Component Data",undefined,"SpreadsheetUpload: Component",() => this.logger.returnObject(componentData))
 		this.spreadsheetUpload = new SpreadsheetUpload(this, this.getModel("i18n") as ResourceModel);
-		return this.spreadsheetUpload.getExcelUploadDialog()
+		return this.spreadsheetUpload.getSpreadsheetUploadDialog()
 	}
 
 	//=============================================================================
@@ -146,7 +146,7 @@ export default class Component extends UIComponent {
 	 * @public
 	 */
 	openSpreadsheetUploadDialog() {
-		Log.debug("openSpreadsheetUploadDialog",undefined,"ExcelUpload: Component")
+		Log.debug("openSpreadsheetUploadDialog",undefined,"SpreadsheetUpload: Component")
 		this.spreadsheetUpload.openSpreadsheetUploadDialog();
 	}
 

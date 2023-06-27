@@ -47,7 +47,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 		this.messageHandler = messageHandler;
 	}
 
-	async createExcelUploadDialog() {
+	async createSpreadsheetUploadDialog() {
 		if (!this.spreadsheetUploadDialog) {
 			this.infoModel = new JSONModel({
 				dataRows: 0,
@@ -88,7 +88,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 			let spreadsheetSheetsData = SheetHandler.sheet_to_json(workbook.Sheets[sheetName]);
 			let columnNames = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })[0] as string[];
 
-			Log.debug("columnNames of uploaded spreadsheet file", undefined, "ExcelUpload: onFileUpload", () => this.component.logger.returnObject({ columnNames: columnNames }));
+			Log.debug("columnNames of uploaded spreadsheet file", undefined, "SpreadsheetUpload: onFileUpload", () => this.component.logger.returnObject({ columnNames: columnNames }));
 
 			if (!spreadsheetSheetsData || spreadsheetSheetsData.length === 0) {
 				throw new Error(this.util.geti18nText("emptySheet"));
@@ -116,7 +116,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 			this.component.fireCheckBeforeRead({ sheetData: spreadsheetSheetsData });
 			if (!this.component.getStandalone()) {
 				this.spreadsheetUploadController.payloadArray = [];
-				this.spreadsheetUploadController.payloadArray = Parser.parseExcelData(
+				this.spreadsheetUploadController.payloadArray = Parser.parseSpreadsheetData(
 					this.spreadsheetUploadController.payload,
 					this.spreadsheetUploadController.typeLabelList,
 					this.component,
@@ -135,7 +135,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 			}
 			this.setDataRows(this.spreadsheetUploadController.payloadArray.length);
 		} catch (error) {
-			Util.showError(error, "ExcelUpload.ts", "onFileUpload");
+			Util.showError(error, "SpreadsheetUpload.ts", "onFileUpload");
 			this.resetContent();
 		}
 	}
@@ -193,7 +193,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 					await fnAddMessage();
 				}
 			} catch (error) {
-				Log.error("Error while calling the odata service", error as Error, "ExcelUpload: onUploadSet");
+				Log.error("Error while calling the odata service", error as Error, "SpreadsheetUpload: onUploadSet");
 				this.resetContent();
 			}
 		}
@@ -212,7 +212,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	}
 
 	/**
-	 * Closes the Excel upload dialog.
+	 * Closes the Spreadsheet upload dialog.
 	 */
 	onCloseDialog() {
 		this.resetContent();
@@ -358,7 +358,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 				let workbook = XLSX.read(data, { cellNF: true, cellDates: true, cellText: true, cellFormula: true });
 				resolve(workbook);
 			} catch (error) {
-				Log.error("Error while reading the uploaded workbook", error as Error, "ExcelUpload: _readWorkbook");
+				Log.error("Error while reading the uploaded workbook", error as Error, "SpreadsheetUpload: _readWorkbook");
 				reject(error);
 			}
 		});
