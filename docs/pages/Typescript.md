@@ -1,10 +1,14 @@
-
+Since the component is written in Typescript, we can also provide the generated types.
+The GitHub repository contains a sample Typescript application created with the Fiori Generator.  
+You can find the example app in the [example folder](https://github.com/marianfoo/ui5-cc-excelUpload/tree/main/examples/packages/ordersv4fets).
 
 ## Setup
 
-with Fiori Generator or easy ui5
+Generate a app with the Fiori Tools Generator in Typescript or use the [Easy UI5 TS Generator](https://github.com/ui5-community/generator-ui5-ts-app).
 
 ### ts-config.json
+
+You can consume the types from the `@sapui5/ts-types-esm` and the `ui5-cc-excelupload` package.
 
 ```json
     "types": [ "@sapui5/ts-types-esm", "ui5-cc-excelupload" ],
@@ -12,6 +16,8 @@ with Fiori Generator or easy ui5
 ```
 
 ### manifest.json 
+
+Add the component usage and the resource roots to the manifest.json as described in the [Getting Started](GettingStarted.md) Section.
 
 ```json
         "componentUsages": {
@@ -26,12 +32,16 @@ with Fiori Generator or easy ui5
 ```
 ### Custom Action
 
+This is a example how you could create the component and attach a event handler to the `checkBeforeRead` event with the types `Component` and `Component$CheckBeforeReadEventParameters` for the Event Parameters.
+
 
 ```typescript
+import Component, { Component$CheckBeforeReadEventParameters } from "cc/excelUpload/v0_19_1/Component";
+
 export async function openExcelUploadDialog(this: ExtensionAPI) {
     const view = this.getRouting().getView();
     const controller = view.getController()
-	let excelUpload = controller.excelUpload as ExcelUploadComponent;
+	let excelUpload = controller.excelUpload as Component;
 	view.setBusyIndicatorDelay(0);
 	view.setBusy(true);
 	if (!controller.excelUpload) {
@@ -49,7 +59,7 @@ export async function openExcelUploadDialog(this: ExtensionAPI) {
 			});
 		controller.excelUpload = excelUpload;
 		// event to check before uploaded to app
-		excelUpload.attachCheckBeforeRead(function (event: Event<ExcelUploadComponent$CheckBeforeReadEventParameters>) {
+		excelUpload.attachCheckBeforeRead(function (event: Event<Component$CheckBeforeReadEventParameters>) {
 			// example
 			const sheetData = event.getParameter("sheetData");
 			let errorArray = [];

@@ -8,8 +8,8 @@ import Event from "sap/ui/base/Event";
  * @param pageContext the context of the page on which the event was fired
  */
 export async function openExcelUploadDialog(this: ExtensionAPI) {
-    const view = this.getRouting().getView();
-    const controller = view.getController()
+	const view = this.getRouting().getView();
+	const controller = view.getController();
 	let excelUpload = controller.excelUpload as Component;
 	view.setBusyIndicatorDelay(0);
 	view.setBusy(true);
@@ -47,7 +47,22 @@ export async function openExcelUploadDialog(this: ExtensionAPI) {
 					}
 				}
 			}
-			(event.getSource() as Component).addArrayToMessages(errorArray);
+			event.getSource().addArrayToMessages(errorArray);
+		}, this);
+
+		// event example to prevent uploading data to backend
+		excelUpload.attachUploadButtonPress(function (event: Event<Component$UploadButtonPressEventParameters>) {
+			//event.preventDefault();
+		}, this);
+
+		// event to change data before send to backend
+		excelUpload.attachChangeBeforeCreate(function (event: Event<Component$ChangeBeforeCreateEventParameters>) {
+			let payload = event.getParameter("payload");
+			// round number from 12,56 to 12,6
+			if (payload.price) {
+				payload.price = Number(payload.price.toFixed(1));
+			}
+			event.getSource().setPayload(payload);
 		}, this);
 	}
 	excelUpload.openExcelUploadDialog();

@@ -141,7 +141,7 @@
                                         "excelUploadListReport": {
                                             "id": "excelUploadListReportButton",
                                             "text": "Excel Upload",
-                                            "press": "ui.v4.ordersv4fe.ext.objectPageExtController.ObjectPageExtController.openExcelUploadDialog",
+                                            "press": "ui.v4.ordersv4fe.ext.ListReportExtController.openExcelUploadDialog",
                                             "requiresSelection": false
                                         }
                                     }
@@ -158,6 +158,19 @@
                         "settings": {
                             "editableHeaderContent": false,
                             "entitySet": "Orders",
+                            "content": {
+                                "header": {
+                                    "actions": {
+                                        "excelUpload": {
+                                            "id": "excelUploadButton",
+                                            "text": "Excel Upload",
+                                            "enabled": "{ui>/isEditable}",
+                                            "press": "ui.v4.ordersv4fe.ext.ObjectPageExtController.openExcelUploadDialog",
+                                            "requiresSelection": false
+                                        }
+                                    }
+                                }
+                            },
                             "navigation": {
                                 "Items": {
                                     "detail": {
