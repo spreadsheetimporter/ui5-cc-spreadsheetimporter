@@ -1,6 +1,6 @@
 {
   "name": "generator-ui5-excelupload",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Generator for a Custom Control Excel Upload",
   "main": "generators/app/index.js",
   "scripts": {
