@@ -1,4 +1,4 @@
-<mvc:View controllerName="ui.v2.ordersv2freestylenondraft.controller.List" xmlns="sap.m" xmlns:semantic="sap.f.semantic" xmlns:mvc="sap.ui.core.mvc" xmlns:excel="cc.excelUploadButton.v0_7_1">
+<mvc:View controllerName="ui.v2.ordersv2freestylenondraft.controller.List" xmlns="sap.m" xmlns:semantic="sap.f.semantic" xmlns:mvc="sap.ui.core.mvc" xmlns:excel="cc.excelUploadButton.v0_8_0">
   <semantic:SemanticPage id="listPage" preserveHeaderStateOnScroll="true" toggleHeaderOnTitleClick="false">
     <semantic:titleHeading>
       <Title id="listPageTitle" text="{listView>/title}" level="H2" />

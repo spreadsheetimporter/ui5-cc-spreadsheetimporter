@@ -22,12 +22,12 @@ Add the component usage and the resource roots to the manifest.json as described
 ```json
         "componentUsages": {
             "excelUpload": {
-                "name": "cc.excelUpload.v0_19_1"
+                "name": "cc.excelUpload.v0_20_0"
             }
         },
         "resourceRoots": {
-            "cc.excelUpload.v0_19_1": "./thirdparty/customControl/excelUpload/v0_19_1",
-            "cc.excelUploadButton.v0_7_1": "./thirdparty/customControl/excelUploadButton/v0_7_1"
+            "cc.excelUpload.v0_20_0": "./thirdparty/customControl/excelUpload/v0_20_0",
+            "cc.excelUploadButton.v0_8_0": "./thirdparty/customControl/excelUploadButton/v0_8_0"
         },
 ```
 ### Custom Action

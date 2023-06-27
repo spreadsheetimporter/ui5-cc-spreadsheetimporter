@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.20.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.19.1...ui5-cc-excelupload-v0.20.0) (2023-06-27)
+
+
+### Features
+
+* added sample data to template including formats and option to hide it ([#275](https://github.com/marianfoo/ui5-cc-excelUpload/issues/275)) ([3766049](https://github.com/marianfoo/ui5-cc-excelUpload/commit/3766049fcab72c92d31d87b70826432756789775))
+* export ts types and new ts sample app ([#278](https://github.com/marianfoo/ui5-cc-excelUpload/issues/278)) ([46fbaee](https://github.com/marianfoo/ui5-cc-excelUpload/commit/46fbaee5c0440cb9ca81c8ba421470169dfb85e4))
+* option to define available options for user ([#264](https://github.com/marianfoo/ui5-cc-excelUpload/issues/264)) ([e6abe2d](https://github.com/marianfoo/ui5-cc-excelUpload/commit/e6abe2df8afe470ce883be54d472dec32872febe))
+
 ## [0.19.1](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-excelupload-v0.19.0...ui5-cc-excelupload-v0.19.1) (2023-06-19)
 
 

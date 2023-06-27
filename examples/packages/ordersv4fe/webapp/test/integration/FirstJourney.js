@@ -36,12 +36,12 @@ sap.ui.require(
 				errorMessage: "Can not select 'sap.m.Button'"
 			});
 			Then.waitFor({
-				controlType : "cc.excelUpload.v0_19_1.ExcelDialog",
+				controlType : "cc.excelUpload.v0_20_0.ExcelDialog",
 				check : function (dialog) {
 					return dialog[0].isOpen()
 				},
 				success: function (dialog) {
-					const util = Opa5.getWindow().cc.excelUpload.v0_19_1.Util;
+					const util = Opa5.getWindow().cc.excelUpload.v0_20_0.Util;
 					console.log("Util", util);
 					Opa5.getContext().util = util;
 					Opa5.getContext().component = dialog[0].getComponent();
@@ -71,7 +71,7 @@ sap.ui.require(
 
 		function testNormalizeNumberString(Then, decimalSeparator, input, expectedOutput) {
 			Then.waitFor({
-				controlType: "cc.excelUpload.v0_19_1.ExcelDialog",
+				controlType: "cc.excelUpload.v0_20_0.ExcelDialog",
 				success: function (dialog) {
 					Opa5.getContext().component.setDecimalSeparator(decimalSeparator);
 					// Call 'normalizeNumberString' method and check its output
