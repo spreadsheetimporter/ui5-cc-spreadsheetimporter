@@ -214,7 +214,7 @@ If set to true, it will set the log level to `debug` (Log.Level.DEBUG) and activ
 ## Example Code with all options
 
 ```js 
-this.excelUpload = await this._controller.getAppComponent().createComponent({
+this.excelUpload = await this.getView().getController().getAppComponent().createComponent({
     usage: "excelUpload",
     async: true,
     componentData: {

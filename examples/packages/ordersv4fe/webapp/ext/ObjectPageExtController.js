@@ -6,10 +6,10 @@ sap.ui.define([], function () {
 		 * @param {*} oEvent
 		 */
 		openExcelUploadDialog: async function (oEvent) {
-			this._view.setBusyIndicatorDelay(0);
-			this._view.setBusy(true);
+			this.getView().setBusyIndicatorDelay(0);
+			this.getView().setBusy(true);
 			if (!this.excelUpload) {
-				this.excelUpload = await this._controller.getAppComponent().createComponent({
+				this.excelUpload = await this.getView().getController().getAppComponent().createComponent({
 					usage: "excelUpload",
 					async: true,
 					componentData: {
@@ -55,13 +55,13 @@ sap.ui.define([], function () {
 				}, this);
 			}
 			this.excelUpload.openExcelUploadDialog();
-			this._view.setBusy(false);
+			this.getView().setBusy(false);
 		},
 		openExcelUploadDialogTable: async function (oEvent) {
-			this._view.setBusyIndicatorDelay(0);
-			this._view.setBusy(true);
+			this.getView().setBusyIndicatorDelay(0);
+			this.getView().setBusy(true);
 			if (!this.excelUploadTable) {
-				this.excelUploadTable = await this._controller.getAppComponent().createComponent({
+				this.excelUploadTable = await this.getView().getController().getAppComponent().createComponent({
 					usage: "excelUpload",
 					async: true,
 					componentData: {
@@ -74,13 +74,13 @@ sap.ui.define([], function () {
 				});
 			}
 			this.excelUploadTable.openExcelUploadDialog();
-			this._view.setBusy(false);
+			this.getView().setBusy(false);
 		},
 		openExcelUploadDialogTableShipping: async function (oEvent) {
-			this._view.setBusyIndicatorDelay(0);
-			this._view.setBusy(true);
+			this.getView().setBusyIndicatorDelay(0);
+			this.getView().setBusy(true);
 			if (!this.excelUploadTableShipping) {
-				this.excelUploadTableShipping = await this._controller.getAppComponent().createComponent({
+				this.excelUploadTableShipping = await this.getView().getController().getAppComponent().createComponent({
 					usage: "excelUpload",
 					async: true,
 					componentData: {
@@ -90,13 +90,13 @@ sap.ui.define([], function () {
 				});
 			}
 			this.excelUploadTableShipping.openExcelUploadDialog();
-			this._view.setBusy(false);
+			this.getView().setBusy(false);
 		},
 		openExcelUploadDialogTableInfo: async function (oEvent) {
-			this._view.setBusyIndicatorDelay(0);
-			this._view.setBusy(true);
+			this.getView().setBusyIndicatorDelay(0);
+			this.getView().setBusy(true);
 			if (!this.excelUploadTableShippingInfo) {
-				this.excelUploadTableShippingInfo = await this._controller.getAppComponent().createComponent({
+				this.excelUploadTableShippingInfo = await this.getView().getController().getAppComponent().createComponent({
 					usage: "excelUpload",
 					async: true,
 					componentData: {
@@ -106,7 +106,7 @@ sap.ui.define([], function () {
 				});
 			}
 			this.excelUploadTableShippingInfo.openExcelUploadDialog();
-			this._view.setBusy(false);
+			this.getView().setBusy(false);
 		}
 	};
 });

@@ -6,10 +6,10 @@ sap.ui.define([], function () {
 		 * @param {*} oEvent
 		 */
 		openExcelUploadDialog: async function (oEvent) {
-			this._view.setBusyIndicatorDelay(0);
-			this._view.setBusy(true);
+			this.getView().setBusyIndicatorDelay(0);
+			this.getView().setBusy(true);
 			if (!this.excelUpload) {
-				this.excelUpload = await this._controller.getAppComponent().createComponent({
+				this.excelUpload = await this.getView().getController().getAppComponent().createComponent({
 					usage: "excelUpload",
 					async: true,
 					componentData: {
@@ -57,7 +57,7 @@ sap.ui.define([], function () {
 				}, this);
 			}
 			this.excelUpload.openExcelUploadDialog();
-			this._view.setBusy(false);
+			this.getView().setBusy(false);
 		}
 	};
 });
