@@ -6,10 +6,10 @@ sap.ui.define([], function () {
 		 * @param {*} oEvent
 		 */
 		openSpreadsheetUploadDialog: async function (oEvent) {
-			this.getView().setBusyIndicatorDelay(0);
-			this.getView().setBusy(true);
+			this.getEditFlow().getView().setBusyIndicatorDelay(0);
+			this.getEditFlow().getView().setBusy(true);
 			if (!this.spreadsheetUpload) {
-				this.spreadsheetUpload = await this.getView().getController().getAppComponent().createComponent({
+				this.spreadsheetUpload = await this.getEditFlow().getView().getController().getAppComponent().createComponent({
 					usage: "spreadsheetImporter",
 					async: true,
 					componentData: {
@@ -55,13 +55,13 @@ sap.ui.define([], function () {
 				}, this);
 			}
 			this.spreadsheetUpload.openSpreadsheetUploadDialog();
-			this.getView().setBusy(false);
+			this.getEditFlow().getView().setBusy(false);
 		},
 		openSpreadsheetUploadDialogTable: async function (oEvent) {
-			this.getView().setBusyIndicatorDelay(0);
-			this.getView().setBusy(true);
+			this.getEditFlow().getView().setBusyIndicatorDelay(0);
+			this.getEditFlow().getView().setBusy(true);
 			if (!this.spreadsheetUploadTable) {
-				this.spreadsheetUploadTable = await this.getView().getController().getAppComponent().createComponent({
+				this.spreadsheetUploadTable = await this.getEditFlow().getView().getController().getAppComponent().createComponent({
 					usage: "spreadsheetImporter",
 					async: true,
 					componentData: {
@@ -74,13 +74,13 @@ sap.ui.define([], function () {
 				});
 			}
 			this.spreadsheetUploadTable.openSpreadsheetUploadDialog();
-			this.getView().setBusy(false);
+			this.getEditFlow().getView().setBusy(false);
 		},
 		openSpreadsheetUploadDialogTableShipping: async function (oEvent) {
-			this.getView().setBusyIndicatorDelay(0);
-			this.getView().setBusy(true);
+			this.getEditFlow().getView().setBusyIndicatorDelay(0);
+			this.getEditFlow().getView().setBusy(true);
 			if (!this.spreadsheetUploadTableShipping) {
-				this.spreadsheetUploadTableShipping = await this.getView().getController().getAppComponent().createComponent({
+				this.spreadsheetUploadTableShipping = await this.getEditFlow().getView().getController().getAppComponent().createComponent({
 					usage: "spreadsheetImporter",
 					async: true,
 					componentData: {
@@ -90,13 +90,13 @@ sap.ui.define([], function () {
 				});
 			}
 			this.spreadsheetUploadTableShipping.openSpreadsheetUploadDialog();
-			this.getView().setBusy(false);
+			this.getEditFlow().getView().setBusy(false);
 		},
 		openSpreadsheetUploadDialogTableInfo: async function (oEvent) {
-			this.getView().setBusyIndicatorDelay(0);
-			this.getView().setBusy(true);
+			this.getEditFlow().getView().setBusyIndicatorDelay(0);
+			this.getEditFlow().getView().setBusy(true);
 			if (!this.spreadsheetUploadTableShippingInfo) {
-				this.spreadsheetUploadTableShippingInfo = await this.getView().getController().getAppComponent().createComponent({
+				this.spreadsheetUploadTableShippingInfo = await this.getEditFlow().getView().getController().getAppComponent().createComponent({
 					usage: "spreadsheetImporter",
 					async: true,
 					componentData: {
@@ -106,7 +106,7 @@ sap.ui.define([], function () {
 				});
 			}
 			this.spreadsheetUploadTableShippingInfo.openSpreadsheetUploadDialog();
-			this.getView().setBusy(false);
+			this.getEditFlow().getView().setBusy(false);
 		}
 	};
 });

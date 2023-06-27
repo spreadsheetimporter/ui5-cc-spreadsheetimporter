@@ -14,7 +14,7 @@ class FEV4 {
 		this.listReportDynamicPageTitle = this.listReportId + "ListReport-header";
 		this.listReportTable = this.listReportId + "table::Orders::LineItem-innerTable";
 		this.objectPageEditButton = this.objectPageId + "StandardAction::Edit";
-		this.objectPageSpreadsheetuploadButton = this.objectPageId + "CustomAction::spreadsheetUpload";
+		this.objectPageSpreadsheetuploadButton = this.objectPageId + "CustomAction::spreadsheetImporter";
 		this.objectPageSaveButton = this.objectPageId + "FooterBar::StandardAction::Save";
 		this.objectPageOrderItems = this.objectPageId + "table::Items::LineItem-innerTable";
 		this.listReportUploadFilename = "test/testFiles/ListReportOrdersNoErros.xlsx";
