@@ -6,10 +6,10 @@ sap.ui.define([], function () {
 		 * @param {*} oEvent
 		 */
 		openSpreadsheetUploadDialog: async function (oEvent) {
-			this.getEditFlow().getView().setBusyIndicatorDelay(0);
-			this.getEditFlow().getView().setBusy(true);
+			this.editFlow.getView().setBusyIndicatorDelay(0);
+			this.editFlow.getView().setBusy(true);
 			if (!this.spreadsheetUpload) {
-				this.spreadsheetUpload = await this.getEditFlow().getView().getController().getAppComponent().createComponent({
+				this.spreadsheetUpload = await this.editFlow.getView().getController().getAppComponent().createComponent({
 					usage: "spreadsheetImporter",
 					async: true,
 					componentData: {
@@ -57,7 +57,7 @@ sap.ui.define([], function () {
 				}, this);
 			}
 			this.spreadsheetUpload.openSpreadsheetUploadDialog();
-			this.getEditFlow().getView().setBusy(false);
+			this.editFlow.getView().setBusy(false);
 		}
 	};
 });
