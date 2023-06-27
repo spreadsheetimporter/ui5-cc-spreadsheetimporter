@@ -52,6 +52,16 @@ export async function openExcelUploadDialog(this: ExtensionAPI) {
 			}
 			(event.getSource() as Component).addArrayToMessages(errorArray);
 		}, this);
+
+		// event to change data before send to backend
+		excelUpload.attachChangeBeforeCreate(function (event: Event<Component$ChangeBeforeCreateEventParameters>) {
+			let payload = event.getParameter("payload");
+			// round number from 12,56 to 12,6
+			if (payload.price) {
+				payload.price = Number(payload.price.toFixed(1))
+			}
+			event.getSource().setPayload(payload);
+		}, this);
 	}
 	excelUpload.openExcelUploadDialog();
 	view.setBusy(false);

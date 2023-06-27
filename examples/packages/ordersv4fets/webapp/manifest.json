@@ -115,8 +115,8 @@
                 },
                 {
                     "pattern": "Orders({key})/Items({key2}):?query:",
-                    "name": "OrderItemsObjectPage",
-                    "target": "OrderItemsObjectPage"
+                    "name": "Orders_ItemsObjectPage",
+                    "target": "Orders_ItemsObjectPage"
                 }
             ],
             "targets": {
@@ -174,16 +174,16 @@
                             "navigation": {
                                 "Items": {
                                     "detail": {
-                                        "route": "OrderItemsObjectPage"
+                                        "route": "Orders_ItemsObjectPage"
                                     }
                                 }
                             }
                         }
                     }
                 },
-                "OrderItemsObjectPage": {
+                "Orders_ItemsObjectPage": {
                     "type": "Component",
-                    "id": "OrderItemsObjectPage",
+                    "id": "Orders_ItemsObjectPage",
                     "name": "sap.fe.templates.ObjectPage",
                     "options": {
                         "settings": {
