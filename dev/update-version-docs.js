@@ -1,29 +1,29 @@
 const fs = require('fs');
 const path = require('path');
 
-function updateVersionInContent(content, excelUploadVersion, excelUploadButtonVersion) {
-  const excelUploadRegex = /(cc\.excelUpload\.|customControl\/excelUpload\/)v\d+_\d+_\d+/g;
-  const excelUploadButtonRegex = /(cc\.excelUploadButton\.|customControl\/excelUploadButton\/)v\d+_\d+_\d+/g;
+function updateVersionInContent(content, spreadsheetUploadVersion, spreadsheetUploadButtonVersion) {
+  const spreadsheetImporterRegex = /(cc\.spreadsheetimporter\.|customControl\/spreadsheetimporter\/)v\d+_\d+_\d+/g;
+  const spreadsheetImporterButtonRegex = /(cc\.spreadsheetimporter.button\.|customControl\/spreadsheetimporter.button\/)v\d+_\d+_\d+/g;
 
-  content = content.replace(excelUploadRegex, (match, p1) => {
-    return `${p1}${excelUploadVersion}`;
+  content = content.replace(spreadsheetImporterRegex, (match, p1) => {
+    return `${p1}${spreadsheetUploadVersion}`;
   });
 
-  content = content.replace(excelUploadButtonRegex, (match, p1) => {
-    return `${p1}${excelUploadButtonVersion}`;
+  content = content.replace(spreadsheetImporterButtonRegex, (match, p1) => {
+    return `${p1}${spreadsheetUploadButtonVersion}`;
   });
 
   return content;
 }
 
-function updateVersionInFile(filePath, excelUploadVersion, excelUploadButtonVersion) {
+function updateVersionInFile(filePath, spreadsheetUploadVersion, spreadsheetUploadButtonVersion) {
   fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {
       console.error(err);
       return;
     }
 
-    const updatedContent = updateVersionInContent(data, excelUploadVersion, excelUploadButtonVersion);
+    const updatedContent = updateVersionInContent(data, spreadsheetUploadVersion, spreadsheetUploadButtonVersion);
     fs.writeFile(filePath, updatedContent, 'utf8', (err) => {
       if (err) {
         console.error(err);
@@ -34,7 +34,7 @@ function updateVersionInFile(filePath, excelUploadVersion, excelUploadButtonVers
   });
 }
 
-function updateVersionInDir(dirPath, excelUploadVersion, excelUploadButtonVersion) {
+function updateVersionInDir(dirPath, spreadsheetUploadVersion, spreadsheetUploadButtonVersion) {
   fs.readdir(dirPath, { withFileTypes: true }, (err, entries) => {
     if (err) {
       console.error(err);
@@ -44,19 +44,19 @@ function updateVersionInDir(dirPath, excelUploadVersion, excelUploadButtonVersio
     entries.forEach((entry) => {
       const fullPath = path.join(dirPath, entry.name);
       if (entry.isDirectory()) {
-        updateVersionInDir(fullPath, excelUploadVersion, excelUploadButtonVersion);
+        updateVersionInDir(fullPath, spreadsheetUploadVersion, spreadsheetUploadButtonVersion);
       } else if (entry.isFile() && (path.extname(fullPath) === '.md') || (path.extname(fullPath) === '.js')) {
-        updateVersionInFile(fullPath, excelUploadVersion, excelUploadButtonVersion);
+        updateVersionInFile(fullPath, spreadsheetUploadVersion, spreadsheetUploadButtonVersion);
       }
     });
   });
 }
 
-function updateVersions(excelUploadVersion, excelUploadButtonVersion) {
+function updateVersions(spreadsheetUploadVersion, spreadsheetUploadButtonVersion) {
   const docsPath = './docs';
   const examplesPath = './examples';
-  updateVersionInDir(docsPath, excelUploadVersion, excelUploadButtonVersion);
-  updateVersionInDir(examplesPath, excelUploadVersion, excelUploadButtonVersion);
+  updateVersionInDir(docsPath, spreadsheetUploadVersion, spreadsheetUploadButtonVersion);
+  updateVersionInDir(examplesPath, spreadsheetUploadVersion, spreadsheetUploadButtonVersion);
 }
 
 

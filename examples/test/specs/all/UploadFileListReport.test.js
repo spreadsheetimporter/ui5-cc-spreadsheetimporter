@@ -32,9 +32,9 @@ describe("Upload File List Report", () => {
 		}
 	});
 
-	it("Open ExcelUpload Dialog", async () => {
-		await BaseClass.pressById(FE.listReportExceluploadButton);
-		const excelUploadDialog = await browser.asControl({
+	it("Open Spreadsheet Upload Dialog", async () => {
+		await BaseClass.pressById(FE.listReportSpreadsheetuploadButton);
+		const spreadsheetUploadDialog = await browser.asControl({
 			selector: {
 				controlType: "sap.m.Dialog",
 				properties: {
@@ -43,7 +43,7 @@ describe("Upload File List Report", () => {
 				searchOpenDialogs: true
 			}
 		});
-		expect(excelUploadDialog.isOpen()).toBeTruthy();
+		expect(spreadsheetUploadDialog.isOpen()).toBeTruthy();
 		try {
 			browser.execute(function () {
 				const blockLayerPopup = document.getElementById("sap-ui-blocklayer-popup");

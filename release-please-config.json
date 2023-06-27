@@ -3,14 +3,14 @@
   "prerelease": true,
   "plugins": ["node-workspace"],
   "packages": {
-    "packages/ui5-cc-excelUpload": {
-      "package-name": "ui5-cc-excelupload"
+    "packages/ui5-cc-spreadsheetimporter": {
+      "package-name": "ui5-cc-spreadsheetimporter"
     },
-    "packages/ui5-cc-excelUpload-Button": {
-      "package-name": "ui5-cc-excelupload-button"
+    "packages/ui5-cc-spreadsheetimporter-button": {
+      "package-name": "ui5-cc-spreadsheetimporter-button"
     },
-    "packages/ui5-cc-excelUpload-Generator": {
-      "package-name": "generator-ui5-excelupload"
+    "packages/ui5-cc-spreadsheetimporter-generator": {
+      "package-name": "generator-ui5-spreadsheetimporter"
     }
   },
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"

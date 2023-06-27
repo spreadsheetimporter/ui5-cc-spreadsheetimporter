@@ -1,22 +1,22 @@
 ## Deployment Strategy
 
-There are two ways to use the Excel Upload Control.
+There are two ways to use the Spreadsheet Upload Control.
 Since a Reuse Component (library) is basically utilised, this results in two deployment strategies that can be used.  
 ### Decentralized deployment
 The library is attached directly to each app and deployed with it.  
 ### Central deployment
-The Excel upload is stored directly as a library centrally, e.g. in the on-premise ABAP system.  
+The Spreadsheet upload is stored directly as a library centrally, e.g. in the on-premise ABAP system.  
 For more information, please see the Page [Central Deployment](CentralDeployment.md).
 
 ## Setup
 
-Here are the manual steps how to integrate the ui5-cc-excelUpload component. For a simplified integration, a [yo generator](Generator.md) is also available.
+Here are the manual steps how to integrate the ui5-cc-spreadsheetimporter component. For a simplified integration, a [yo generator](Generator.md) is also available.
 ### Setup Decentralized deployment
 
 1\. Install from npm
 
 ```sh
-npm install ui5-cc-excelupload
+npm install ui5-cc-spreadsheetimporter
 ```
 
 2\.  Add to your `package.json`:  
@@ -26,7 +26,7 @@ npm install ui5-cc-excelupload
 "ui5": {
   "dependencies": [
     //...
-    "ui5-cc-excelupload"
+    "ui5-cc-spreadsheetimporter"
     //...
   ]
 }
@@ -34,11 +34,11 @@ npm install ui5-cc-excelupload
 
 3\. Add `resourceRoots` to you `manifest.json` under `sap.ui5`
    
-⚠️ You must always keep your ui5-cc-excelUpload version up to date here when updating the module.
+⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module.
 
 ````json
 "resourceRoots": {
-    "cc.excelUpload.v0_20_0": "./thirdparty/customControl/excelUpload/v0_20_0"
+    "cc.spreadsheetimporter.v0_20_0": "./thirdparty/customControl/spreadsheetImporter/v0_20_0"
 },
 ````
 
@@ -55,12 +55,12 @@ npm install ui5-cc-excelupload
 
 5\. Add `componentUsages` to you `manifest.json` under `sap.ui5`
    
-⚠️ You must always keep your ui5-cc-excelUpload version up to date here when updating the module.
+⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module.
 
 ````json
 "componentUsages": {
-    "excelUpload": {
-        "name": "cc.excelUpload.v0_20_0"
+    "spreadsheetImporter": {
+        "name": "cc.spreadsheetimporter.v0_20_0"
     }
 },
 ````
@@ -71,12 +71,12 @@ npm install ui5-cc-excelupload
 
 2\. Add `componentUsages` to you `manifest.json` under `sap.ui5`
    
-⚠️ You must always keep your ui5-cc-excelUpload version up to date here when updating the module.
+⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module.
 
 ````json
 "componentUsages": {
-    "excelUpload": {
-        "name": "cc.excelUpload.v0_20_0"
+    "spreadsheetImporter": {
+        "name": "cc.spreadsheetimporter.v0_20_0"
     }
 },
 ````
@@ -89,7 +89,7 @@ npm install ui5-cc-excelupload
 
 ## Starting with the Fiori Elements Application
 
-To start the Excel Upload Dialog, you need in your Fiori Elements App a Button.  
+To start the Spreadsheet Upload Dialog, you need in your Fiori Elements App a Button.  
 The best way is start with the [Guided Development](https://blogs.sap.com/2021/08/16/getting-up-to-speed-with-sap-fiori-tools-guided-development-overview/) Extension to add a custom action:  
 
 ![Guided Development](./../images/guided_development.png){ loading=lazy }
@@ -101,7 +101,7 @@ If you have done that, you can continue with the implementation of your Custom C
 ### Extension in manifest.json
 
 As a example, here is how your custom action can look like.  
-This example is from the [sample app](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/examples/packages/ordersv4fe/webapp/manifest.json) for the object page and will add the button to the object page header.  
+This example is from the [sample app](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv4fe/webapp/manifest.json) for the object page and will add the button to the object page header.  
 You can also add the button on the object page table directly. A example is also in this manifest.
 It is important to always specify the relevant option [`tableId`](Configuration.md#tableid  ) if there are multiple tables on the object page.  
 Using `"enabled": "{ui>/isEditable}"` will automatically disable the button if the object page is not in edit mode.
@@ -118,11 +118,11 @@ Using `"enabled": "{ui>/isEditable}"` will automatically disable the button if t
             "content": {
                 "header": {
                     "actions": {
-                        "excelUpload": {
-                            "id": "excelUploadButton",
-                            "text": "Excel Upload",
+                        "spreadsheetImporter": {
+                            "id": "spreadsheetUploadButton",
+                            "text": "Spreadsheet Upload",
                             "enabled": "{ui>/isEditable}",
-                            "press": "ui.v4.orders.ext.ObjectPageExtController.openExcelUploadDialog",
+                            "press": "ui.v4.orders.ext.ObjectPageExtController.openSpreadsheetUploadDialog",
                             "requiresSelection": false
                         }
                     }
@@ -140,19 +140,19 @@ Then the Dialog will be opened.
 The attribute `context` is mandatory and must be set so the component can access the context of the app, including binding paths and the model.  
 
 ````javascript
-openExcelUploadDialog: async function (oEvent) {
+openSpreadsheetUploadDialog: async function (oEvent) {
     this.getView().setBusyIndicatorDelay(0)
     this.getView().setBusy(true)
-    if (!this.excelUpload) {
-        this.excelUpload = await this.getView().getController().getAppComponent().createComponent({
-            usage: "excelUpload",
+    if (!this.spreadsheetUpload) {
+        this.spreadsheetUpload = await this.getView().getController().getAppComponent().createComponent({
+            usage: "spreadsheetImporter",
             async: true,
             componentData: {
                 context: this
             }
         });
     }
-    this.excelUpload.openExcelUploadDialog()
+    this.spreadsheetUpload.openSpreadsheetUploadDialog()
     this.getView().setBusy(false)
 }
 ````
@@ -169,7 +169,7 @@ see also this at the live demo https://excelupload.marianzeis.de/
 ### Extension in manifest.json
 
 As a example, here is how your custom action can look like.  
-This example is from the [sample app](https://github.com/marianfoo/ui5-cc-excelUpload/blob/47d22cdc42aa1cacfd797bdc0e025b830330dc5e/examples/packages/ordersv2fe/webapp/manifest.json#L115-L135) for the object page.
+This example is from the [sample app](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/47d22cdc42aa1cacfd797bdc0e025b830330dc5e/examples/packages/ordersv2fe/webapp/manifest.json#L115-L135) for the object page.
 
 ````json
 "extends": {
@@ -182,11 +182,11 @@ This example is from the [sample app](https://github.com/marianfoo/ui5-cc-excelU
                         "EntitySet": "Orders",
                         "Header": {
                             "Actions": {
-                                "excelUpload": {
-                                    "id": "excelUploadButton",
+                                "spreadsheetImporter": {
+                                    "id": "spreadsheetUploadButton",
                                     "text": "Excel Upload",
                                     "applicablePath": "ui>/editable",
-                                    "press": "openExcelUploadDialog",
+                                    "press": "openSpreadsheetUploadDialog",
                                     "requiresSelection": false
                                 }
                             }
@@ -202,19 +202,19 @@ This example is from the [sample app](https://github.com/marianfoo/ui5-cc-excelU
 ### Custom Code
 
 ````javascript
-openExcelUploadDialog: async function (oEvent) {
+openSpreadsheetUploadDialog: async function (oEvent) {
     this.getView().setBusyIndicatorDelay(0)
     this.getView().setBusy(true)
-    if (!this.excelUpload) {
-        this.excelUpload = await this.getView().getController().getOwnerComponent().createComponent({
-            usage: "excelUpload",
+    if (!this.spreadsheetUpload) {
+        this.spreadsheetUpload = await this.getView().getController().getOwnerComponent().createComponent({
+            usage: "spreadsheetImporter",
             async: true,
             componentData: {
                 context: this
             }
         });
     }
-    this.excelUpload.openExcelUploadDialog()
+    this.spreadsheetUpload.openSpreadsheetUploadDialog()
     this.getView().setBusy(false)
 }
 ````

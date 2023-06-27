@@ -1,7 +1,7 @@
 ## Issues
 
 If you have issues that are not covered in this documentation, suggestions or ideas for improvements, just create an issue in the GitHub repository:  
-<https://github.com/marianfoo/ui5-cc-excelUpload/issues>
+<https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues>
 
 ## Activate Debug Mode and Copy Error Messages
 
@@ -10,12 +10,12 @@ If you have issues that are not covered in this documentation, suggestions or id
 To activate the debug mode, you have to add the following parameter to the URL:  
 `?sap-ui-debug=true`
 
-or set the [`debug`](Configuration.md#debug) parameter in the initialization of the Excel Upload component to `true`.  
+or set the [`debug`](Configuration.md#debug) parameter in the initialization of the Spreadsheet Upload component to `true`.  
 This is only possible if the component can be opened at all, so please use the url parameter if possible.
 
 ```js
-this.excelUpload = await this.getView().getController().getAppComponent().createComponent({
-    usage: "excelUpload",
+this.spreadsheetUpload = await this.getView().getController().getAppComponent().createComponent({
+    usage: "spreadsheetImporter",
     async: true,
     componentData: {
       context: this,
@@ -40,7 +40,7 @@ As a alternative, try to select all messages and copy them to a text file.
 A error similar to the following:
 
 `
-ui5loader-dbg.js:1042 Uncaught (in promise) ModuleError: failed to load 'cc/excelUpload/v0_16_3/Component.js' from resources/cc/excelUpload/v0_16_3/Component.js: script load error
+ui5loader-dbg.js:1042 Uncaught (in promise) ModuleError: failed to load 'cc/spreadsheet/v0_16_3/Component.js' from resources/cc/spreadsheetimporter/v0_16_3/Component.js: script load error
 `
 
 Since the component is designed to always use a specific version, this version must also be used after an update.  
@@ -52,7 +52,7 @@ See below the configurations for this version:
 
 ```json
   "dependencies": {
-    "ui5-cc-excelupload": "0.16.4"
+    "ui5-cc-spreadsheetimporter": "0.16.4"
   },
 ```
 
@@ -60,12 +60,12 @@ See below the configurations for this version:
 
 ```json
 "componentUsages": {
-    "excelUpload": {
-        "name": "cc.excelUpload.v0_20_0"
+    "spreadsheetImporter": {
+        "name": "cc.spreadsheetimporter.v0_20_0"
     }
 },
 "resourceRoots": {
-      "cc.excelUpload.v0_20_0": "./thirdparty/customControl/excelUpload/v0_20_0"
+      "cc.spreadsheetimporter.v0_20_0": "./thirdparty/customControl/spreadsheetImporter/v0_20_0"
     },
 ```
 
@@ -74,4 +74,4 @@ See below the configurations for this version:
 In the button, the button and the component must also be defined in the resource roots for in-app deployment.  
 In the package.json on npmjs.com you can check which version matches the button version.  
 For example you can look it up here for version 0.4.2:  
-<https://www.npmjs.com/package/ui5-cc-excelupload-button/v/0.4.2?activeTab=code>
+<https://www.npmjs.com/package/ui5-cc-spreadsheetimporter-button/v/0.4.2?activeTab=code>

@@ -1,12 +1,12 @@
 sap.ui.define([], function () {
 	"use strict";
 	return {
-		openExcelUpload: async function (oEvent) {
+		openSpreadsheetUpload: async function (oEvent) {
 			this.getView().setBusyIndicatorDelay(0);
 			this.getView().setBusy(true);
-			if (!this.excelUpload) {
-				this.excelUpload = await this.getOwnerComponent().createComponent({
-					usage: "excelUpload",
+			if (!this.spreadsheetUpload) {
+				this.spreadsheetUpload = await this.getOwnerComponent().createComponent({
+					usage: "spreadsheetImporter",
 					async: true,
 					componentData: {
 						context: this,
@@ -16,7 +16,7 @@ sap.ui.define([], function () {
 				});
 
 				// event to check before uploaded to app
-				this.excelUpload.attachCheckBeforeRead(function (oEvent) {
+				this.spreadsheetUpload.attachCheckBeforeRead(function (oEvent) {
 					// example
 					const sheetData = oEvent.getParameter("sheetData");
 					let errorArray = [];
@@ -39,7 +39,7 @@ sap.ui.define([], function () {
 				}, this);
 
 				// event to change data before send to backend
-				this.excelUpload.attachChangeBeforeCreate(function (oEvent) {
+				this.spreadsheetUpload.attachChangeBeforeCreate(function (oEvent) {
 					let payload = oEvent.getParameter("payload");
 					// round number from 12,56 to 12,6
 					if (payload.price) {
@@ -48,7 +48,7 @@ sap.ui.define([], function () {
 					oEvent.getSource().setPayload(payload);
 				}, this);
 			}
-			this.excelUpload.openExcelUploadDialog();
+			this.spreadsheetUpload.openSpreadsheetUploadDialog();
 			this.getView().setBusy(false);
 		}
 	};

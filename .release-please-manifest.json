@@ -1,5 +1,5 @@
 {
-  "packages/ui5-cc-excelUpload": "0.20.0",
-  "packages/ui5-cc-excelUpload-Button": "0.8.0",
-  "packages/ui5-cc-excelUpload-Generator": "0.2.5"
+  "packages/ui5-cc-spreadsheetimporter": "0.20.0",
+  "packages/ui5-cc-spreadsheetimporter-button": "0.8.0",
+  "packages/ui5-cc-spreadsheetimporter-generator": "0.2.5"
 }

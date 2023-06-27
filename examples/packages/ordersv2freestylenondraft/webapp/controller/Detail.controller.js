@@ -143,24 +143,24 @@ sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel", "../model/form
 			oViewModel.setProperty("/shareSendEmailSubject", oResourceBundle.getText("shareSendEmailObjectSubject", [sObjectId]));
 			oViewModel.setProperty("/shareSendEmailMessage", oResourceBundle.getText("shareSendEmailObjectMessage", [sObjectName, sObjectId, location.href]));
 		},
-		openExcelUpload: async function (oEvent) {
+		openSpreadsheetUpload: async function (oEvent) {
 			this.getView().setBusyIndicatorDelay(0);
 			this.getView().setBusy(true);
-			if (!this.excelUpload) {
-				this.excelUpload = await this.getOwnerComponent().createComponent({
-					usage: "excelUpload",
+			if (!this.spreadsheetUpload) {
+				this.spreadsheetUpload = await this.getOwnerComponent().createComponent({
+					usage: "spreadsheetImporter",
 					async: true,
 					componentData: {
 						context: this,
 						columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time", "boolean", "decimal"],
 						mandatoryFields: ["product_ID", "quantity"],
-						excelFileName: "Test.xlsx",
+						spreadsheetFileName: "Test.xlsx",
 						showBackendErrorMessages: true
 					}
 				});
 
 				// event to check before uploaded to app
-				this.excelUpload.attachCheckBeforeRead(function (oEvent) {
+				this.spreadsheetUpload.attachCheckBeforeRead(function (oEvent) {
 					// example
 					const sheetData = oEvent.getParameter("sheetData");
 					let errorArray = [];
@@ -183,7 +183,7 @@ sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel", "../model/form
 				}, this);
 
 				// event to change data before send to backend
-				this.excelUpload.attachChangeBeforeCreate(function (oEvent) {
+				this.spreadsheetUpload.attachChangeBeforeCreate(function (oEvent) {
 					let payload = oEvent.getParameter("payload");
 					// round number from 12,56 to 12,6
 					if (payload.price) {
@@ -192,7 +192,7 @@ sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel", "../model/form
 					oEvent.getSource().setPayload(payload);
 				}, this);
 			}
-			this.excelUpload.openExcelUploadDialog();
+			this.spreadsheetUpload.openSpreadsheetUploadDialog();
 			this.getView().setBusy(false);
 		},
 

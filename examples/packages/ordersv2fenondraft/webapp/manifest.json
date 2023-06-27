@@ -98,13 +98,13 @@
       "css": []
     },
     "componentUsages": {
-      "excelUpload": {
-        "name": "cc.excelUpload.v0_20_0"
+      "spreadsheetImporter": {
+        "name": "cc.spreadsheetimporter.v0_20_0"
       }
     },
     "resourceRoots": {
-      "cc.excelUpload.v0_20_0": "./thirdparty/customControl/excelUpload/v0_20_0",
-      "cc.excelUploadButton.v0_8_0": "./thirdparty/customControl/excelUploadButton/v0_8_0"
+      "cc.spreadsheetimporter.v0_20_0": "./thirdparty/customControl/spreadsheetImporter/v0_20_0",
+      "cc.spreadsheetimporter.button.v0_8_0": "./thirdparty/customControl/spreadsheetUploadButton/v0_8_0"
     },
     "routing": {
       "config": {},
@@ -121,10 +121,10 @@
                 "EntitySet": "OrdersND",
                 "Header": {
                   "Actions": {
-                    "excelUpload": {
-                      "id": "excelUploadButton",
-                      "text": "Excel Upload",
-                      "press": "openExcelUploadDialog",
+                    "spreadsheetImporter": {
+                      "id": "spreadsheetUploadButton",
+                      "text": "Spreadsheet Upload",
+                      "press": "openSpreadsheetUploadDialog",
                       "applicablePath": "ui>/editable",
                       "requiresSelection": false
                     }
@@ -139,10 +139,10 @@
               "OrdersND": {
                 "EntitySet": "OrdersND",
                 "Actions": {
-                  "excelUpload": {
-                    "id": "excelUploadButtonListReport",
-                    "text": "Excel Upload",
-                    "press": "openExcelUpload",
+                  "spreadsheetImporter": {
+                    "id": "spreadsheetUploadButtonListReport",
+                    "text": "Spreadsheet Upload",
+                    "press": "openSpreadsheetUpload",
                     "global": true
                   }
                 }

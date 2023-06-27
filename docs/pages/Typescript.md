@@ -1,6 +1,6 @@
 Since the component is written in Typescript, we can also provide the generated types.
 The GitHub repository contains a sample Typescript application created with the Fiori Generator.  
-You can find the example app in the [example folder](https://github.com/marianfoo/ui5-cc-excelUpload/tree/main/examples/packages/ordersv4fets).
+You can find the example app in the [example folder](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/tree/main/examples/packages/ordersv4fets).
 
 ## Setup
 
@@ -8,10 +8,10 @@ Generate a app with the Fiori Tools Generator in Typescript or use the [Easy UI5
 
 ### ts-config.json
 
-You can consume the types from the `@sapui5/ts-types-esm` and the `ui5-cc-excelupload` package.
+You can consume the types from the `@sapui5/ts-types-esm` and the `ui5-cc-spreadsheetimporter` package.
 
 ```json
-    "types": [ "@sapui5/ts-types-esm", "ui5-cc-excelupload" ],
+    "types": [ "@sapui5/ts-types-esm", "ui5-cc-spreadsheetimporter" ],
     "typeRoots": ["./node_modules"]
 ```
 
@@ -21,13 +21,12 @@ Add the component usage and the resource roots to the manifest.json as described
 
 ```json
         "componentUsages": {
-            "excelUpload": {
-                "name": "cc.excelUpload.v0_20_0"
+            "spreadsheetImporter": {
+                "name": "cc.spreadsheetimporter.v0_20_0"
             }
         },
         "resourceRoots": {
-            "cc.excelUpload.v0_20_0": "./thirdparty/customControl/excelUpload/v0_20_0",
-            "cc.excelUploadButton.v0_8_0": "./thirdparty/customControl/excelUploadButton/v0_8_0"
+            "cc.spreadsheetimporter.v0_20_0": "./thirdparty/customControl/spreadsheetImporter/v0_20_0"
         },
 ```
 ### Custom Action
@@ -36,30 +35,30 @@ This is a example how you could create the component and attach a event handler 
 
 
 ```typescript
-import Component, { Component$CheckBeforeReadEventParameters } from "cc/excelUpload/v0_19_1/Component";
+import Component, { Component$CheckBeforeReadEventParameters } from "cc/spreadsheetimporter/v0_19_1/Component";
 
-export async function openExcelUploadDialog(this: ExtensionAPI) {
+export async function openSpreadsheetUploadDialog(this: ExtensionAPI) {
     const view = this.getRouting().getView();
     const controller = view.getController()
-	let excelUpload = controller.excelUpload as Component;
+	let spreadsheetUpload = controller.spreadsheetUpload as Component;
 	view.setBusyIndicatorDelay(0);
 	view.setBusy(true);
-	if (!controller.excelUpload) {
-		excelUpload = await this.getRouting()
+	if (!controller.spreadsheetUpload) {
+		spreadsheetUpload = await this.getRouting()
 			.getView()
 			.getController()
 			.getAppComponent()
 			.createComponent({
-				usage: "excelUpload",
+				usage: "spreadsheetImporter",
 				async: true,
 				componentData: {
 					context: this,
 					activateDraft: true
 				}
 			});
-		controller.excelUpload = excelUpload;
+		controller.spreadsheetUpload = spreadsheetUpload;
 		// event to check before uploaded to app
-		excelUpload.attachCheckBeforeRead(function (event: Event<Component$CheckBeforeReadEventParameters>) {
+		spreadsheetUpload.attachCheckBeforeRead(function (event: Event<Component$CheckBeforeReadEventParameters>) {
 			// example
 			const sheetData = event.getParameter("sheetData");
 			let errorArray = [];
@@ -81,7 +80,7 @@ export async function openExcelUploadDialog(this: ExtensionAPI) {
 			(event.getSource() as ExcelUploadComponent).addArrayToMessages(errorArray);
 		}, this);
 	}
-	excelUpload.openExcelUploadDialog();
+	spreadsheetUpload.openSpreadsheetUploadDialog();
 	view.setBusy(false);
 }
 ```

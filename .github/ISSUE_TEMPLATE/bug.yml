@@ -39,10 +39,10 @@ body:
     validations:
       required: true
   - type: input
-    id: excelversion
+    id: spreadsheetuploadversion
     attributes:
-      label: UI5 Excel Component
-      description: What is your UI5 Excel Component Version?
+      label: UI5 Spreadsheet Component
+      description: What is your UI5 Spreadsheet Component Version?
     validations:
       required: false
   - type: textarea
@@ -56,15 +56,15 @@ body:
     id: logs
     attributes:
       label: Relevant log output
-      description: Please attach the log output described [here](https://marianfoo.github.io/ui5-cc-excelUpload/pages/Troubleshooting/#activate-debug-mode-and-copy-error-messages)
+      description: Please attach the log output described [here](https://spreadsheet-importer.com/pages/Troubleshooting/#activate-debug-mode-and-copy-error-messages)
       render: shell
     validations:
       required: true
   - type: textarea
     id: init
     attributes:
-      label: Excel Component Init
-      description: Please copy here how you initialize the ui5 component including all options like show [here](https://marianfoo.github.io/ui5-cc-excelUpload/pages/GettingStarted/#extension-in-manifestjson).
+      label: Spreadsheet Component Init
+      description: Please copy here how you initialize the ui5 component including all options like show [here](https://spreadsheet-importer.com/pages/GettingStarted/#extension-in-manifestjson).
       render: js
     validations:
       required: true

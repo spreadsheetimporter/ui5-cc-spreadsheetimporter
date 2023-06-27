@@ -2,14 +2,14 @@ sap.ui.define(["sap/fe/core/PageController"], function (PageController) {
 	"use strict";
 
 	return PageController.extend("ui.v4.ordersv4fpm.ext.main.Main", {
-		openExcelUploadDialog: async function (oEvent) {
+		openSpreadsheetUploadDialog: async function (oEvent) {
 			this.getView().setBusyIndicatorDelay(0);
 			this.getView().setBusy(true);
-			if (!this.excelUpload) {
-				this.excelUpload = await this.getController()
+			if (!this.spreadsheetUpload) {
+				this.spreadsheetUpload = await this.getController()
 					.getAppComponent()
 					.createComponent({
-						name: "cc.excelUpload",
+						name: "cc.spreadsheetimporter",
 						async: false,
 						componentData: {
 							context: this,
@@ -19,7 +19,7 @@ sap.ui.define(["sap/fe/core/PageController"], function (PageController) {
 					});
 
 				// event to check before uploaded to app
-				this.excelUpload.attachCheckBeforeRead(function (oEvent) {
+				this.spreadsheetUpload.attachCheckBeforeRead(function (oEvent) {
 					// example
 					const sheetData = oEvent.getParameter("sheetData");
 					let errorArray = [];
@@ -42,7 +42,7 @@ sap.ui.define(["sap/fe/core/PageController"], function (PageController) {
 				}, this);
 
 				// event to change data before send to backend
-				this.excelUpload.attachChangeBeforeCreate(function (oEvent) {
+				this.spreadsheetUpload.attachChangeBeforeCreate(function (oEvent) {
 					let payload = oEvent.getParameter("payload");
 					// round number from 12,56 to 12,6
 					if (payload.price) {
@@ -51,7 +51,7 @@ sap.ui.define(["sap/fe/core/PageController"], function (PageController) {
 					oEvent.getSource().setPayload(payload);
 				}, this);
 			}
-			this.excelUpload.openExcelUploadDialog();
+			this.spreadsheetUpload.openSpreadsheetUploadDialog();
 			this.getView().setBusy(false);
 		}
 		/**

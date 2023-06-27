@@ -2,27 +2,27 @@ sap.ui.define([], function () {
 	"use strict";
 	return {
 		/**
-		 * Create Dialog to Upload Excel and open it
+		 * Create Dialog to Upload Spreadsheet and open it
 		 * @param {*} oEvent
 		 */
-		openExcelUploadDialog: async function (oEvent) {
+		openSpreadsheetUploadDialog: async function (oEvent) {
 			this.getView().setBusyIndicatorDelay(0);
 			this.getView().setBusy(true);
-			if (!this.excelUpload) {
-				this.excelUpload = await this.getView().getController().getAppComponent().createComponent({
-					usage: "excelUpload",
+			if (!this.spreadsheetUpload) {
+				this.spreadsheetUpload = await this.getView().getController().getAppComponent().createComponent({
+					usage: "spreadsheetImporter",
 					async: true,
 					componentData: {
 						context: this,
 						tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable",
 						columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time", "boolean", "decimal"],
 						mandatoryFields: ["product_ID", "quantity"],
-						excelFileName: "Test.xlsx"
+						spreadsheetFileName: "Test.xlsx"
 					}
 				});
 
 				// event to check before uploaded to app
-				this.excelUpload.attachCheckBeforeRead(function (oEvent) {
+				this.spreadsheetUpload.attachCheckBeforeRead(function (oEvent) {
 					// example
 					const sheetData = oEvent.getParameter("sheetData");
 					let errorArray = [];
@@ -45,7 +45,7 @@ sap.ui.define([], function () {
 				}, this);
 
 				// event to change data before send to backend
-				this.excelUpload.attachChangeBeforeCreate(function (oEvent) {
+				this.spreadsheetUpload.attachChangeBeforeCreate(function (oEvent) {
 					let payload = oEvent.getParameter("payload");
 					// round number from 12,56 to 12,6
 					if (payload.price) {
@@ -54,34 +54,34 @@ sap.ui.define([], function () {
 					oEvent.getSource().setPayload(payload);
 				}, this);
 			}
-			this.excelUpload.openExcelUploadDialog();
+			this.spreadsheetUpload.openSpreadsheetUploadDialog();
 			this.getView().setBusy(false);
 		},
-		openExcelUploadDialogTable: async function (oEvent) {
+		openSpreadsheetUploadDialogTable: async function (oEvent) {
 			this.getView().setBusyIndicatorDelay(0);
 			this.getView().setBusy(true);
-			if (!this.excelUploadTable) {
-				this.excelUploadTable = await this.getView().getController().getAppComponent().createComponent({
-					usage: "excelUpload",
+			if (!this.spreadsheetUploadTable) {
+				this.spreadsheetUploadTable = await this.getView().getController().getAppComponent().createComponent({
+					usage: "spreadsheetImporter",
 					async: true,
 					componentData: {
 						context: this,
 						columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time", "boolean", "decimal"],
 						mandatoryFields: ["product_ID", "quantity"],
-						excelFileName: "Test.xlsx",
+						spreadsheetFileName: "Test.xlsx",
 						tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable"
 					}
 				});
 			}
-			this.excelUploadTable.openExcelUploadDialog();
+			this.spreadsheetUploadTable.openSpreadsheetUploadDialog();
 			this.getView().setBusy(false);
 		},
-		openExcelUploadDialogTableShipping: async function (oEvent) {
+		openSpreadsheetUploadDialogTableShipping: async function (oEvent) {
 			this.getView().setBusyIndicatorDelay(0);
 			this.getView().setBusy(true);
-			if (!this.excelUploadTableShipping) {
-				this.excelUploadTableShipping = await this.getView().getController().getAppComponent().createComponent({
-					usage: "excelUpload",
+			if (!this.spreadsheetUploadTableShipping) {
+				this.spreadsheetUploadTableShipping = await this.getView().getController().getAppComponent().createComponent({
+					usage: "spreadsheetImporter",
 					async: true,
 					componentData: {
 						context: this,
@@ -89,15 +89,15 @@ sap.ui.define([], function () {
 					}
 				});
 			}
-			this.excelUploadTableShipping.openExcelUploadDialog();
+			this.spreadsheetUploadTableShipping.openSpreadsheetUploadDialog();
 			this.getView().setBusy(false);
 		},
-		openExcelUploadDialogTableInfo: async function (oEvent) {
+		openSpreadsheetUploadDialogTableInfo: async function (oEvent) {
 			this.getView().setBusyIndicatorDelay(0);
 			this.getView().setBusy(true);
-			if (!this.excelUploadTableShippingInfo) {
-				this.excelUploadTableShippingInfo = await this.getView().getController().getAppComponent().createComponent({
-					usage: "excelUpload",
+			if (!this.spreadsheetUploadTableShippingInfo) {
+				this.spreadsheetUploadTableShippingInfo = await this.getView().getController().getAppComponent().createComponent({
+					usage: "spreadsheetImporter",
 					async: true,
 					componentData: {
 						context: this,
@@ -105,7 +105,7 @@ sap.ui.define([], function () {
 					}
 				});
 			}
-			this.excelUploadTableShippingInfo.openExcelUploadDialog();
+			this.spreadsheetUploadTableShippingInfo.openSpreadsheetUploadDialog();
 			this.getView().setBusy(false);
 		}
 	};

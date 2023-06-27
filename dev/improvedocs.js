@@ -9,7 +9,7 @@ const openai = new OpenAIApi(configuration);
 
 async function main() {
 	//const files = glob.sync("docs/**/*.md");
-	const files = glob.sync("packages/ui5-cc-excelUpload/src/**/*.ts");
+	const files = glob.sync("packages/ui5-cc-spreadsheetimporter/src/**/*.ts");
 	for (const file of files) {
 		try {
 			const content = fs.readFileSync(file, "utf-8");

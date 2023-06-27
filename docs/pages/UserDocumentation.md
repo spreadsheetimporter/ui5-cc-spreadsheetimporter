@@ -2,9 +2,9 @@
 
 This User Documentation provides a brief overview of the Fiori Element Object Page scenario and uploading Order Items.
 
-1\. Open the Excel Upload Dialog
+1\. Open the Spreadsheet Upload Dialog
 
-![Open Excel Upload Dialog](./../images/open_excelupload_dialog.png){ loading=lazy }
+![Open Spreadsheet Upload Dialog](./../images/open_excelupload_dialog.png){ loading=lazy }
 
 2\. Download the Template
 
@@ -16,14 +16,14 @@ To ensure a smooth process without errors, it is recommended to always download 
 
 Now, fill the template with the necessary data and save the file.
 
-![Fill out Excel File](./../images/fill_out_excel_file.png){ loading=lazy }
+![Fill out Spreadsheet File](./../images/fill_out_excel_file.png){ loading=lazy }
 
 4\. Upload File to Application
 
 Click on the "Browse" button to upload the file.
 If the upload is successful, a message will appear saying "Upload Successful."
 
-![Upload Excel File to App](./../images/upload_file_to_app.png){ loading=lazy }
+![Upload Spreadsheet File to App](./../images/upload_file_to_app.png){ loading=lazy }
 
 5\. Error Dialog
 

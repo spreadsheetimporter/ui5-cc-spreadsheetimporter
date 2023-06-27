@@ -1,4 +1,4 @@
-<mvc:View controllerName="ui.v2.ordersv2freestylenondraft.controller.Detail" xmlns="sap.m" xmlns:semantic="sap.f.semantic" xmlns:mvc="sap.ui.core.mvc" xmlns:excel="cc.excelUploadButton.v0_8_0">
+<mvc:View controllerName="ui.v2.ordersv2freestylenondraft.controller.Detail" xmlns="sap.m" xmlns:semantic="sap.f.semantic" xmlns:mvc="sap.ui.core.mvc" xmlns:spreadsheet="cc.spreadsheetimporter.button.v0_8_0">
   <semantic:SemanticPage id="detailPage" busy="{detailView>/busy}" busyIndicatorDelay="{detailView>/delay}" showFooter="true">
     <semantic:titleHeading>
       <Title text="{OrderNo}" level="H2" />
@@ -8,8 +8,8 @@
       <ObjectNumber />
     </semantic:headerContent>
     <semantic:titleCustomTextActions>
-      <Button text="Excel Upload Code" press="openExcelUpload" />
-      <excel:ExcelUpload id="excelUploadButton" text="Excel Upload Button" tableId="container-todo---detail--lineItemsList" changeBeforeCreate="changeBeforeCreate" checkBeforeRead="checkBeforeRead" uploadButtonPress="uploadButtonPress" showBackendErrorMessages="true"/>
+      <Button text="Spreadsheet Upload Code" press="openSpreadsheetUpload" />
+      <spreadsheet:SpreadsheetUpload id="spreadsheetUploadButton" text="Spreadsheet Upload Button" tableId="container-todo---detail--lineItemsList" changeBeforeCreate="changeBeforeCreate" checkBeforeRead="checkBeforeRead" uploadButtonPress="uploadButtonPress" showBackendErrorMessages="true"/>
     </semantic:titleCustomTextActions>
     <semantic:content>
       <Table

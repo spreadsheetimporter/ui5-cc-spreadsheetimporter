@@ -1,0 +1,446 @@
+# Changelog
+
+## [0.20.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.19.1...ui5-cc-spreadsheetimporter-v0.20.0) (2023-06-27)
+
+
+### Features
+
+* added sample data to template including formats and option to hide it ([#275](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/275)) ([3766049](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/3766049fcab72c92d31d87b70826432756789775))
+* export ts types and new ts sample app ([#278](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/278)) ([46fbaee](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/46fbaee5c0440cb9ca81c8ba421470169dfb85e4))
+* option to define available options for user ([#264](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/264)) ([e6abe2d](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/e6abe2df8afe470ce883be54d472dec32872febe))
+
+## [0.19.1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.19.0...ui5-cc-spreadsheetimporter-v0.19.1) (2023-06-19)
+
+
+### Bug Fixes
+
+* improve error Message on table discovery ([#270](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/270)) ([0215ba0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/0215ba0789c15626d51f48206fe8591f4e32a273))
+
+## [0.19.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.18.1...ui5-cc-spreadsheetimporter-v0.19.0) (2023-06-10)
+
+
+### Features
+
+* add debugging option ([#257](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/257)) ([61a5f3f](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/61a5f3f8a3fe1e1e732ca5b1b58ae7a3e5cfbf8a))
+
+## [0.18.1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.18.0...ui5-cc-spreadsheetimporter-v0.18.1) (2023-06-09)
+
+
+### Bug Fixes
+
+* removed check for nullable fields ([#255](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/255)) ([f4b569a](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/f4b569a41a1580f67a085c14c29250f0865423e6))
+
+## [0.18.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.17.5...ui5-cc-spreadsheetimporter-v0.18.0) (2023-06-02)
+
+
+### Features
+
+* add new option to show backend error message ([#236](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/236)) ([f2a38dd](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/f2a38dd412cf341c3848b1e422a5c3fce3ceb258))
+* show options menu for some configurations ([#241](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/241)) ([8bfae76](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/8bfae768d9971888a3b0519f86b8fe36cf013ee4))
+
+
+### Bug Fixes
+
+* different format in float and integer for v4 ([#240](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/240)) ([23b1b9a](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/23b1b9acca8ee9ce0dc4d90067d716d29799f4cf))
+* improve handling of backend errors ([#213](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/213)) ([5d06db6](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/5d06db6e7183bb3dcf6b71cac3a11fc779bcd2b0))
+* send double as string value ([#234](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/234)) ([799a3ef](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/799a3ef4c42da2cbeb3db3eb752ba80f49032aef))
+* use busy indicator on opening options menu ([#242](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/242)) ([0151700](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/0151700de0f6e85260b903f59283046de787cee1))
+
+## [0.17.5](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.17.4...ui5-cc-spreadsheetimporter-v0.17.5) (2023-05-22)
+
+
+### Bug Fixes
+
+* add missing check on option "skip checks mandatory field" in v2 ([#229](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/229)) ([6c7f53b](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/6c7f53bdc72210f9f91a1322a6603846d1fc889e))
+* skip sap properties ([#228](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/228)) ([69bbe03](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/69bbe0355169dc129ef288524ee33f274bafa16a))
+
+## [0.17.4](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.17.3...ui5-cc-spreadsheetimporter-v0.17.4) (2023-05-22)
+
+
+### Bug Fixes
+
+* show raw value on parser error ([#227](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/227)) ([50142bf](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/50142bf61490bf1e302f7150e48157339ed553bc))
+
+## [0.17.3](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.17.2...ui5-cc-spreadsheetimporter-v0.17.3) (2023-05-20)
+
+
+### Bug Fixes
+
+* remove popup in FE scenario when uploading ([#223](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/223)) ([f7d12b3](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/f7d12b3f63c96dee508d246e0c1f5964fc80331f))
+
+## [0.17.2](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.17.1...ui5-cc-spreadsheetimporter-v0.17.2) (2023-05-20)
+
+
+### Bug Fixes
+
+* add missing Edm Types (Decimal, Integer) ([#221](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/221)) ([7bda6d5](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/7bda6d5a3801844bad96d4ea47454ddfaabf874c))
+* rename option to skip all metadata mandatory field checks ([#220](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/220)) ([a7ac5e4](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/a7ac5e470f4ff2854a87feed89feb86ce29ee30f))
+
+## [0.17.1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.17.0...ui5-cc-spreadsheetimporter-v0.17.1) (2023-05-20)
+
+
+### Bug Fixes
+
+* messages are not a mandatory field ([#217](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/217)) ([bc20e5c](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/bc20e5cad4cf9e6d234bff70c994f8b08da805fb))
+* parsing booleans ([#219](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/219)) ([82777f9](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/82777f90f73a982acf3a3bcd7aef5920ddf16865))
+
+## [0.17.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.16.4...ui5-cc-spreadsheetimporter-v0.17.0) (2023-05-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* change API to add messages to Error Dialog ([#211](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/211))
+
+### Features
+
+* add option to hide the "preview data" button ([#212](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/212)) ([65bcb5b](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/65bcb5b0c5581f3e8f2ec48ac14bc8dfe9e6a983))
+* add option to set decimal seperator ([#199](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/199)) ([ba4a4f2](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/ba4a4f275211af7754d8b11069c26aa666d5fc75))
+* add option to skip Fields with `Nullable=false` ([#216](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/216)) ([28ded2d](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/28ded2d5db457a145ec3462f0120482dc631193a))
+* change API to add messages to Error Dialog ([#211](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/211)) ([a06ec4e](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/a06ec4e1b845db4636842536c2611c3027798092))
+* show faulty value in the error dialog ([#197](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/197)) ([8e09745](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/8e09745310700027f4cf1ee52885fb5525107666))
+* warning when numbers are formatted in file ([#205](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/205)) ([701b31e](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/701b31e3e126b25c3a8cde8dcb7b48513498f3fe))
+
+## [0.16.4](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.16.3...ui5-cc-spreadsheetimporter-v0.16.4) (2023-05-09)
+
+
+### Bug Fixes
+
+* check on mandatory fields ([#192](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/192)) ([05dbcc9](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/05dbcc924109fd0c43302cc875a04e5ba83f14d4))
+
+## [0.16.3](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.16.2...ui5-cc-spreadsheetimporter-v0.16.3) (2023-05-09)
+
+
+### Bug Fixes
+
+* correct check for mandatory fields ([#190](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/190)) ([83a7d6f](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/83a7d6fa5f5773dc17fbf4d1d0c0b82a71c18f71))
+
+## [0.16.2](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.16.1...ui5-cc-spreadsheetimporter-v0.16.2) (2023-05-09)
+
+
+### Bug Fixes
+
+* add check if no annotations are found ([#188](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/188)) ([bd440bf](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/bd440bf2ad5838a4d403fd07b2062ab1ab7396cf))
+
+## [0.16.1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.16.0...ui5-cc-spreadsheetimporter-v0.16.1) (2023-05-08)
+
+
+### Bug Fixes
+
+* remove empty line ([ae7bce8](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/ae7bce8f3cd8962e454e51239d878e1fb2301db5))
+
+## [0.16.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.15.0...ui5-cc-spreadsheetimporter-v0.16.0) (2023-05-08)
+
+
+### Features
+
+* add `continue on error` button in error dialog ([#182](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/182)) ([40d7d28](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/40d7d2840522be0ed8d2b6edf09ad67268ed7348))
+* add options menu for config ([#183](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/183)) ([7533ba9](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/7533ba91072b10fdfa6085117b9be98eef32304a))
+* revert removal of option `fieldMatchType` ([#157](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/157)), new default `labelTypeBrackets` ([#173](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/173)) ([7a91c19](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/7a91c194c039f2fc3e5a1dbddeddc897d4fe89ab))
+
+
+### Bug Fixes
+
+* i18n language codes ([#179](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/179)) ([851a50c](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/851a50c5b986e95789c2dc23f32603ed6ec20379))
+* remove ids from options fragment ([#184](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/184)) ([be2e947](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/be2e947e47b75a4b6e3ebe3abe5a41022c415f3e))
+
+## [0.15.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.14.1...ui5-cc-spreadsheetimporter-v0.15.0) (2023-04-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* removal of option `fieldMatchType` ([#157](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/157))
+
+### Features
+
+* check for mandatory fields annotation ([#162](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/162)) ([6c99324](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/6c9932407c954b31784f24fda0b44d0d5f727a83))
+* removal of option `fieldMatchType` ([#157](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/157)) ([4346e1b](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/4346e1bb00473363167b0d24c8ebf14e40b073cb))
+
+## [0.14.1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.14.0...ui5-cc-spreadsheetimporter-v0.14.1) (2023-04-18)
+
+
+### Bug Fixes
+
+* error message shown twice on listreport ([#152](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/152)) ([d0a3d12](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/d0a3d12b3e562af8e3ae2ee111271b77ed7fe6fc))
+* improve UX on upload dialog ([#151](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/151)) ([4ca9e1f](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/4ca9e1f4d6cc319b1c49d297ea104d823443c590))
+
+## [0.14.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.13.0...ui5-cc-spreadsheetimporter-v0.14.0) (2023-04-14)
+
+
+### Features
+
+* handle backend error ([#110](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/110)) ([3abc24a](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/3abc24a3bdcc6fb201197581a702cbcac42d9a22))
+* preview of data uploaded to app and row counter ([#148](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/148)) ([fb57789](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/fb5778954c5897e6e0b054e7d0771eae2c420598))
+
+## [0.13.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.12.3...ui5-cc-spreadsheetimporter-v0.13.0) (2023-04-13)
+
+
+### Features
+
+* add event `uploadButtonPress` ([#143](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/143)) ([23b918c](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/23b918c42369bc3607a239037beb540b0ec90c60))
+* new option to upload in standalone mode ([#145](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/145)) ([ead496f](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/ead496fab2329723df23e40b7873b9e54d481413))
+
+## [0.12.3](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.12.2...ui5-cc-spreadsheetimporter-v0.12.3) (2023-04-11)
+
+
+### Bug Fixes
+
+* enablement for V4 FPM ([#135](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/135)) ([1bf89ba](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/1bf89bae4375f202ed04113fa183da7fcc0a55ba))
+
+## [0.12.2](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.12.1...ui5-cc-spreadsheetimporter-v0.12.2) (2023-04-10)
+
+
+### Bug Fixes
+
+* update correct versions in code ([#124](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/124)) ([71f106e](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/71f106e908e85f444a8f8a1fe5974d3aedbeca25))
+
+## 0.12.1 (2023-04-07)
+
+
+### Bug Fixes
+
+* remove unused imports ([#119](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/119)) ([2eea092](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/2eea0929757be965c1011abad4b82aa5f58a0a45))
+
+## [0.12.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/v0.11.4...v0.12.0) (2023-04-04)
+
+
+### Features
+
+* add Support for OpenUI5 ([#97](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/97)) ([9f1ed6c](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/9f1ed6c471c9d42e70fa265340df7c2dcaaa1ab3))
+  * including [Sample App for OpenUI5](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/tree/main/examples/packages/ordersv2freestylenondraftopenui5) and wdi5 Tests
+* improve checks for all Edm Types ([#105](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/105)) ([dc91ee2](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/dc91ee252e1b9c2d204a1486ff8cf1f13ec3109e))
+  * Documentation for the improved Error Handling can be found [here](https://spreadsheet-importer.com/pages/Checks/)
+* improved checks on the data formats and error handling ([#103](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/103)) ([801cfcb](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/801cfcb9b5ed24807144707d03d1db5b0247178e))
+  * Improvements for custom error handling. Documentation can be found [here](https://spreadsheet-importer.com/pages/Events/#check-data-before-upload-to-app)
+* new automatically translated languages added ([#107](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/107)) ([477e899](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/477e899d0dbd91149b2bad608bc12579e5ef6ac4))
+  * the english language was automatic translated to following languages: `Chinese`, `French`, `Spanish`, `Italien`, `Hindi`, `Japanese`
+
+## [0.11.4](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/v0.11.3...v0.11.4) (2023-03-27)
+
+
+### Bug Fixes
+
+* namespace at manifest was not replaced correctly ([#91](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/91)) ([f60c19b](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/f60c19b99d5e9a6c2607d76386dea7f710a52d31))
+
+## [0.11.3](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/v0.11.2...v0.11.3) (2023-03-20)
+
+
+### Bug Fixes
+
+* use attribute tableId to get tableObject ([#84](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/84)) ([0860373](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/0860373725854a3bcc613925453933051a4e5a2a))
+
+## [0.11.2](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/v0.11.1...v0.11.2) (2023-03-18)
+
+
+### Bug Fixes
+
+* missing check for active draft option ([#81](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/81)) ([e15e2eb](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/e15e2ebd79d2f59f6597c7f9923ea3dc95493395))
+
+## [0.11.1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/v0.11.0...v0.11.1) (2023-03-17)
+
+
+### Bug Fixes
+
+* use batchSize even when payload has less  then 1000 lines ([#77](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/77)) ([c0926d1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/c0926d12d9a224e48d0ca5d1b20f00ada693f89e))
+
+## [0.11.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/v0.10.0...v0.11.0) (2023-03-17)
+
+
+### Features
+
+* new option `batchSizes` to slice batch calls to backend ([#75](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/75)) ([8f7684f](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/8f7684f8ec9efb840a58bb8e970821f92f0230f5))
+
+## [0.10.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/v0.9.1...v0.10.0) (2023-03-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* use namespace with underscores ([#72](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/72))
+
+
+## [0.9.1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/v0.9.0...v0.9.1) (2023-03-02)
+
+
+### Bug Fixes
+
+* check for binding before open dialog ([#62](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/62)) ([c1f545f](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/c1f545f830c4a6d0ed5ef3be2f07285e4551b926))
+
+## [0.9.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/v0.8.1...v0.9.0) (2023-02-18)
+
+
+### Features
+
+* check if all columns name in file match metadata ([#57](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/57)) ([7c538a0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/7c538a0d68e1fb7a4ea9d09dff560fccc08a09ec))
+* support for UI5 Tooling V3 ([#47](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/47)) ([d9f52e9](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/d9f52e9c02c8060c284f47ef1a12f322879b4169))
+
+
+### Bug Fixes
+
+* Align Dialogs more with Fiori Guidelines ([#54](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/54)) ([4f74eeb](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/4f74eeb66b6b64e6574632eea6837f88915c28ab))
+* horizontal scrollbar in dialog on mobile view ([#55](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/55)) ([3288a25](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/3288a25b28230655c805552ff14ca8d16f57e990))
+
+## [0.8.1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/v0.8.0...v0.8.1) (2023-02-10)
+
+### Bug Fixes
+
+* remove scrollbar from dialog ([#45](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/45)) ([bb1b197](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/bb1b1979ef9a49a8c26477970f6a03d411ba93e8))
+
+## [0.8.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/v0.7.0...v0.8.0) (2023-02-10)
+
+### Features
+
+* setup for central deployment abap ([#41](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/41)) ([54bc904](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/54bc904f1e79faf7639218692b5e7e01a86dd4eb))
+
+## [0.7.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/v0.6.0...v0.7.0) (2023-02-03)
+
+**Breaking Changes**
+
+Changes involving in the manifest and custom code implementation.  
+See [Documenation](https://spreadsheet-importer.com/pages/GettingStarted/#general-setup)
+### Bug Fixes
+
+* component-preload.js and componentUsages in examples apps ([#40](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/40)) ([33c6e88](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/33c6e880b32b13d36638e6dfaddbf69cd5263701))
+* upload same file two times ([#37](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/37)), closes [#36](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/36) ([553e5a8](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/553e5a8f84f12b96f6e6f04f83efef009fc3a23b))
+* using component-preload.js ([#31](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/31)) ([4b223bb](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/4b223bbb044ef441435d6733e857574c7e5775d4))
+
+
+### Features
+
+* add intial csv support ([#33](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/33)) ([f7ec051](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/f7ec051ad20c5304764f97d3d1b89358cee279f1))
+
+
+
+## [0.6.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/v0.5.0...v0.6.0) (2023-01-14)
+
+
+### Bug Fixes
+
+* open  dialog twice again ([#20](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/20)) ([7a37483](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/7a37483d93f07e7b9a9c72ab774a045a06d2766d))
+
+
+### Features
+
+Created compatibility and wdi5 tests for List Report and Object Page in Draft Mode for OData V2 (Versions 108,96,84,71) and OData V4 (Versions 108,96,84)  
+More info see [Supported Versions](https://spreadsheet-importer.com/pages/SupportVersions/)
+
+* compatibility/wdi5 tests with v2 FE 96/84/71 ([3f010d9](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/3f010d9a1a360702972552b647f8f20368d72640))
+* support for v4 96/84 ([#16](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/16)) ([109813f](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/109813f8e20acc16d351da04c80b0208b90008c7))
+* working in Draft List Report V2/V4 ([#17](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/17)) ([cc07d38](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/cc07d387e8af2afb45877887911a68f726945646))
+* works in ListReport/ObjectPage V4/V2 and Freestyle V2([#10](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/10)) ([d9432d2](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/d9432d25142addd8ff7fbe804f9a832692588ef4))
+
+
+
+## [0.5.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/v0.4.0...v0.5.0) (2023-01-04)
+
+
+### Features
+
+* init i18n ([#8](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/8)) ([593b009](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/593b009298bfc61c2bedce1e23573e96e8ff9e3a))
+* multiversion support ([#6](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/6)) ([68aa9ca](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/68aa9ca2dab84bac0bcd81406636d87038fc1b2e))
+* works in ListReport/ObjectPage V4/V2, V4 FPM and Freestyle V2([#10](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/10)) ([d9432d2](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/d9432d25142addd8ff7fbe804f9a832692588ef4))
+* new option for draft Activation ([#10](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/10)) ([d9432d2](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/d9432d25142addd8ff7fbe804f9a832692588ef4))
+
+
+
+## [0.4.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/v0.3.4...v0.4.0) (2022-12-23)
+
+**Breaking Changes**
+
+Changes involving in the manifest and custom code implementation.  
+See [Documenation](https://spreadsheet-importer.com/pages/GettingStarted/#general-setup)
+
+### Features
+
+* multiversion support ([#6](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/6)) ([68aa9ca](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/68aa9ca2dab84bac0bcd81406636d87038fc1b2e))
+
+
+
+## [0.3.4](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/v0.3.3...v0.3.4) (2022-12-09)
+
+
+### Bug Fixes
+
+* change console output statement to debug ([cd19150](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/cd19150f7b0f816f8b624a9f52eb572b12b15598))
+* Type "Edm.DateTime parsed in false format ([8fb6541](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/8fb6541d1fd2a90fc4a40aaf742f7bda14b0eb6e))
+
+
+### Features
+
+* add dedicated docs with mkdocs ([#3](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/3)) ([77a6e06](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/77a6e065eb1f41adf7cdeccfdd241d513a943451))
+
+
+
+## [0.3.3](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/v0.3.2...v0.3.3) (2022-12-07)
+
+
+### Bug Fixes
+
+* check did not work with fieldMatchType:label ([dde0bf9](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/dde0bf9a83ee159c3e70616d25e288a288b19c4e))
+
+
+### Features
+
+* convertion for date/time types before creation ([65823aa](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/65823aa3921a272fdd206b2fca2b9837006eef7d))
+
+
+
+## [0.3.2](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/v0.3.1...v0.3.2) (2022-12-07)
+
+
+### Features
+
+* new parsing type of  column header ([713e8a1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/713e8a118334f76e62b21deb9ab9aba625f53cd9))
+
+
+
+## [0.3.1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/v0.3.0...v0.3.1) (2022-12-06)
+
+
+### Bug Fixes
+
+* xlsx not in build ([e3296c0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/e3296c07c31eb17f7ead0e1e5c38a8c78e8a8b02))
+
+
+
+## [0.3.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/v0.2.2...v0.3.0) (2022-12-06)
+
+### Breaking Changes
+
+- Move to reuse component, change in implementation
+
+## [0.2.2](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/v0.2.1...v0.2.2) (2022-12-01)
+
+
+### Bug Fixes
+
+* change path, only dist folder for app build ([300e2c5](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/300e2c59734802baf8dc6b5e6fcd59544ec57adc))
+
+
+
+## [0.2.1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/v0.2.0...v0.2.1) (2022-12-01)
+
+
+### Bug Fixes
+
+* remove wrong apostrophes from string ([b1d31dc](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/b1d31dc52c2f055b3c1b9a74fa7e4a9816de2832))
+
+
+
+## [0.2.0](/compare/v0.1.2...v0.2.0) (2022-11-30)
+
+
+### Features
+
+* check for mandatory fields 0520ada
+* try get file name from v4 model fa9a349
+
+
+
+## [0.1.2](/compare/v0.1.1...v0.1.2) (2022-11-29)
+
+
+
+## [0.1.1](/compare/v0.1.0...v0.1.1) (2022-11-29)
+
+
+
+# 0.1.0 (2022-11-29)

@@ -4,7 +4,7 @@ To make the integration easier there is the possibility to use a yo generator to
 
 ````
 npm i -g yo
-npm i -g generator-ui5-excelupload
+npm i -g generator-ui5-spreadsheetimporter
 ````
 
 ## Usage
@@ -12,7 +12,7 @@ npm i -g generator-ui5-excelupload
  Start from your UI5 app and then run:
 
 ````
-yo ui5-excelupload
+yo ui5-spreadsheetimporter
 ````
 
 ## Support

@@ -17,13 +17,13 @@ npm run start:v4fe:108
 npm run test:opa:v4fe:108
 ````
 
-which will run `pnpm --filter ui5-cc-excelupload-sample ui5-test-runner --url http://localhost:8080/test/integration/opaTests.qunit.html`.  
+which will run `pnpm --filter ui5-cc-spreadsheetimporter-sample ui5-test-runner --url http://localhost:8080/test/integration/opaTests.qunit.html`.  
 All informations about the run are in the folder `./examples/report`.  
 So you can run all the other versions like 96 and 84 with the right port.  
 
 
 ## GitHub Actions
 
-The GitHub Action Workflow will run on every Pull Request push, testing the V4 Versions and is written down in [`opa5-test.yml`](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/.github/workflows/opa5-test.yml).
+The GitHub Action Workflow will run on every Pull Request push, testing the V4 Versions and is written down in [`opa5-test.yml`](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/.github/workflows/opa5-test.yml).
 
 More info at [GitHub Actions](./../Development/GitHubActions.md)

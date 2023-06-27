@@ -1,8 +1,0 @@
-specVersion: '2.2'
-type: module
-metadata:
-  name: ui5-cc-excelupload-button
-resources:
-  configuration:
-    paths:
-      /thirdparty/customControl/excelUploadButton/v0_8_0/: ./

@@ -22,13 +22,13 @@ describe("Upload File Object Page", () => {
 		await BaseClass.dummyWait(1000);
 	});
 
-	it("Open ExcelUpload Dialog", async () => {
+	it("Open Spreadsheet Upload Dialog", async () => {
 		const buttonSelector = {
 			selector: {
 				controlType: "sap.m.Button",
 				viewId: "container-todo---detail",
 				properties: {
-					text: "Excel Upload Code"
+					text: "Spreadsheet Upload Code"
 				}
 			}
 		};
@@ -46,30 +46,30 @@ describe("Upload File Object Page", () => {
 		try {
 			await browser.waitUntil(
 				async () => {
-					excelUploadDialog = await browser.asControl(dialogSelector);
-					return excelUploadDialog.isOpen();
+					spreadsheetUploadDialog = await browser.asControl(dialogSelector);
+					return spreadsheetUploadDialog.isOpen();
 				},
 				{
 					timeout: 5000,
-					timeoutMsg: "ExcelUpload Dialog did not appear within 20 seconds"
+					timeoutMsg: "SpreadsheetUpload Dialog did not appear within 20 seconds"
 				}
 			);
 		} catch (error) {}
-		let excelUploadDialog = await browser.asControl(dialogSelector);
-		if (!excelUploadDialog.isOpen()) {
+		let spreadsheetUploadDialog = await browser.asControl(dialogSelector);
+		if (!spreadsheetUploadDialog.isOpen()) {
 			await browser.asControl(buttonSelector).press();
 			await browser.waitUntil(
 				async () => {
-					excelUploadDialog = await browser.asControl(dialogSelector);
-					return excelUploadDialog.isOpen();
+					spreadsheetUploadDialog = await browser.asControl(dialogSelector);
+					return spreadsheetUploadDialog.isOpen();
 				},
 				{
 					timeout: 20000,
-					timeoutMsg: "ExcelUpload Dialog did not appear within 20 seconds"
+					timeoutMsg: "SpreadsheetUpload Dialog did not appear within 20 seconds"
 				}
 			);
 		}
-		expect(excelUploadDialog.isOpen()).toBeTruthy();
+		expect(spreadsheetUploadDialog.isOpen()).toBeTruthy();
 		try {
 			browser.execute(function () {
 				const blockLayerPopup = document.getElementById("sap-ui-blocklayer-popup");

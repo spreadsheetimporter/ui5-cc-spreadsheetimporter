@@ -10,7 +10,7 @@
   ],
   "main": "webapp/index.html",
   "dependencies": {
-    "ui5-cc-excelupload": "./../../../packages/ui5-cc-excelUpload"
+    "ui5-cc-spreadsheetimporter": "./../../../packages/ui5-cc-spreadsheetimporter"
   },
   "devDependencies": {
     "@ui5/cli": "^3.0.0",

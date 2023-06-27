@@ -93,13 +93,13 @@
             "css": []
         },
         "componentUsages": {
-            "excelUpload": {
-                "name": "cc.excelUpload.v0_19_1"
+            "spreadsheetImporter": {
+                "name": "cc.spreadsheetimporter.v0_19_1"
             }
         },
         "resourceRoots": {
-            "cc.excelUpload.v0_19_1": "./thirdparty/customControl/excelUpload/v0_19_1",
-            "cc.excelUploadButton.v0_7_1": "./thirdparty/customControl/excelUploadButton/v0_7_1"
+            "cc.spreadsheetimporter.v0_19_1": "./thirdparty/customControl/spreadsheetImporter/v0_19_1",
+            "cc.spreadsheetimporter.button.v0_7_1": "./thirdparty/customControl/spreadsheetUploadButton/v0_7_1"
         },
         "routing": {
             "routes": [
@@ -143,10 +143,10 @@
                             "content": {
                                 "header": {
                                     "actions": {
-                                        "excelUploadListReport": {
-                                            "id": "excelUploadListReportButton",
-                                            "text": "Excel Upload",
-                                            "press": "ui.v4.ordersv4fe.ext.ListReportExtController.openExcelUploadDialog",
+                                        "spreadsheetUploadListReport": {
+                                            "id": "spreadsheetUploadListReportButton",
+                                            "text": "Spreadsheet Upload",
+                                            "press": "ui.v4.ordersv4fe.ext.ListReportExtController.openSpreadsheetUploadDialog",
                                             "requiresSelection": false
                                         }
                                     }
@@ -166,11 +166,11 @@
                             "content": {
                                 "header": {
                                     "actions": {
-                                        "excelUpload": {
-                                            "id": "excelUploadButton",
-                                            "text": "Excel Upload",
+                                        "spreadsheetImporter": {
+                                            "id": "spreadsheetUploadButton",
+                                            "text": "Spreadsheet Upload",
                                             "enabled": "{ui>/isEditable}",
-                                            "press": "ui.v4.ordersv4fe.ext.ObjectPageExtController.openExcelUploadDialog",
+                                            "press": "ui.v4.ordersv4fe.ext.ObjectPageExtController.openSpreadsheetUploadDialog",
                                             "requiresSelection": false
                                         }
                                     }
@@ -215,10 +215,10 @@
                             "content": {
                                 "header": {
                                     "actions": {
-                                        "excelUploadListReport": {
-                                            "id": "excelUploadListReportButton",
-                                            "text": "Excel Upload",
-                                            "press": "ui.v4.ordersv4fe.ext.ListReportExtController.openExcelUploadDialog",
+                                        "spreadsheetUploadListReport": {
+                                            "id": "spreadsheetUploadListReportButton",
+                                            "text": "Spreadsheet Upload",
+                                            "press": "ui.v4.ordersv4fe.ext.ListReportExtController.openSpreadsheetUploadDialog",
                                             "requiresSelection": false
                                         }
                                     }

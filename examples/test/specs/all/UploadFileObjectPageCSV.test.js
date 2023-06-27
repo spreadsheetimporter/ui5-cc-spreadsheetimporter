@@ -44,9 +44,9 @@ describe("Upload CSV File Object Page", () => {
 		await BaseClass.pressById(FE.objectPageEditButton);
 	});
 
-	it("Open ExcelUpload Dialog", async () => {
-		await BaseClass.pressById(FE.objectPageExceluploadButton);
-		const excelUploadDialog = await browser.asControl({
+	it("Open Spreadsheet Upload Dialog", async () => {
+		await BaseClass.pressById(FE.objectPageSpreadsheetuploadButton);
+		const spreadsheetUploadDialog = await browser.asControl({
 			selector: {
 				controlType: "sap.m.Dialog",
 				properties: {
@@ -55,7 +55,7 @@ describe("Upload CSV File Object Page", () => {
 				searchOpenDialogs: true
 			}
 		});
-		expect(excelUploadDialog.isOpen()).toBeTruthy();
+		expect(spreadsheetUploadDialog.isOpen()).toBeTruthy();
 		try {
 			browser.execute(function () {
 				const blockLayerPopup = document.getElementById("sap-ui-blocklayer-popup");

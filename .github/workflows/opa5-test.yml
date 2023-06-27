@@ -30,7 +30,7 @@ jobs:
       - name: install gnome-keyring
         run: sudo apt install gnome-keyring
 
-      - name: checkout excelUpload Repo
+      - name: checkout Spreadsheet Upload Repo
         uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}
@@ -55,9 +55,9 @@ jobs:
           npm i -g npm@latest
           npm --version
 
-      - name: link excel button
+      - name: link spreadsheet button
         run: |
-          cd packages/ui5-cc-excelUpload-Button && npm link && cd ../..
+          cd packages/ui5-cc-spreadsheetimporter-button && npm link && cd ../..
 
       - name: get port
         run: |

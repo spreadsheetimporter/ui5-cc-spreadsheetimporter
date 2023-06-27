@@ -1,1 +1,1 @@
-# Sample Setup for `ui5-cc-excelupload`
+# Sample Setup for `ui5-cc-spreadsheetimporter`

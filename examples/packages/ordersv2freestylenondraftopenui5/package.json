@@ -10,8 +10,8 @@
   ],
   "main": "webapp/index.html",
   "dependencies": {
-    "ui5-cc-excelupload": "./../../../packages/ui5-cc-excelUpload",
-    "ui5-cc-excelupload-button": "./../../../packages/ui5-cc-excelUpload-Button"
+    "ui5-cc-spreadsheetimporter": "./../../../packages/ui5-cc-spreadsheetimporter",
+    "ui5-cc-spreadsheetimporter-button": "./../../../packages/ui5-cc-spreadsheetimporter-button"
   },
   "devDependencies": {
     "@sap-ux/ui5-middleware-fe-mockserver": "^2.1.101",
@@ -36,7 +36,7 @@
     "dependencies": [
       "@sap/ux-ui5-tooling",
       "@sap-ux/ui5-middleware-fe-mockserver",
-      "ui5-cc-excelupload"
+      "ui5-cc-spreadsheetimporter"
     ]
   },
   "sapuxLayer": "CUSTOMER_BASE"
