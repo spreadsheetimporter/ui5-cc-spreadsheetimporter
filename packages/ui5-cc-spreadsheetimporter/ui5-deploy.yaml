@@ -1,0 +1,26 @@
+specVersion: '2.5'
+metadata:
+  name: cc.spreadsheetimporter.v0_20_0
+type: application
+builder:
+  resources:
+    excludes:
+      - /test/**
+      - /localService/**
+  customTasks:
+    - name: deploy-to-abap
+      afterTask: generateCachebusterInfo
+      configuration:
+        target:
+          url: http://vhcala4hci:50000
+          client: '001'
+        credentials:
+          username: env:USER
+          password: env:PW
+        app:
+          name: Z_XUP_v0_20_0
+          description: ''
+          package: Z_SHEETUPLOAD
+          transport: A4HK900057
+        exclude:
+          - .*\.ts

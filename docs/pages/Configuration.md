@@ -6,18 +6,18 @@ These options are available and explained in detail below:
 | ------ | --- | --- |
 | `context` | Context to access App APIs - **mandatory**  | object |
 | `columns` | Defines which fields should only be taken into account | string[] |
-| `excelFileName` | Defines the file name when a template is downloaded | string |
+| `spreadsheetFileName` | Defines the file name when a template is downloaded | string |
 | `tableId` | ID of table to upload the data to  | string |
 | `odataType` | OData Type of specified table | string |
 | `mandatoryFields`  | The selected fields are checked to see if they are present | string[] |
-| `fieldMatchType` | Defines what type of strategy is executed when matching excel columns | string |
+| `fieldMatchType` | Defines what type of strategy is executed when matching spreadsheet columns | string |
 | `activateDraft` | Determines whether a draft should be activated immediately  | boolean |
 | `batchSize` | Determines bach sizes send to backend server  | integer |
 | `standalone` | Mode if you do not have a table and want to do the processing yourself  | boolean |
 | `strict` | The strict option controls the availability of the `Continue` button in the error dialog.  | boolean |
 | `decimalSeparator` | Determines the decimal separator for numbers as string.  | string |
 | `hidePreview` | Hide the button to preview the uploaded data in the table dialog.  | boolean |
-| `skipMandatoryFieldCheck` | Skip check if fields with `mandatory` are not filled in excel file. | boolean |
+| `skipMandatoryFieldCheck` | Skip check if fields with `mandatory` are not filled in spreadsheet file. | boolean |
 | `showBackendErrorMessages` | Show Backend Error Messages | boolean |
 | `showOptions` | Show Options Menu to change a few of these configurations in runtime. | boolean |
 | `availableOptions` | List of available Options to show to the user. | string[] |
@@ -34,7 +34,7 @@ This option defines which fields should only be taken into account during the up
 columns: ["ID", "Birthday","FirstName","LastName"],
 ````
 
-### `excelFileName`
+### `spreadsheetFileName`
 
 **default:** Template.xlsx  
 This option defines the file name when a template is downloaded.  
@@ -63,7 +63,7 @@ odataType: com.sap.gateway.srvd.zui_mr_create_run.v0001.AbleseauftragType
 
 ### `mandatoryFields`
 
-The selected fields are checked to see if they are present in the Excel file.
+The selected fields are checked to see if they are present in the Spreadsheet file.
 If not defined, they will not be checked.  
 **example:**
 
@@ -108,9 +108,9 @@ Options:
 
 For large files it is necessary to split batch requests and not to send them all at once. This batchSize option enables you to control the number of records processed in each batch request, which can help avoid memory issues and improve performance.
 
-When the number of lines in the Excel file exceeds the specified batchSize, the payload array is divided into equal parts, with each part containing the maximum number of lines specified by the batchSize. The application then processes each part separately, sending batch requests to the backend server.
+When the number of lines in the Spreadsheet file exceeds the specified batchSize, the payload array is divided into equal parts, with each part containing the maximum number of lines specified by the batchSize. The application then processes each part separately, sending batch requests to the backend server.
 
-The default value is 1,000, which means that when the number of lines in the Excel file exceeds 1,000, the payload array will be divided into equal parts, and each part will be sent as a separate batch request.
+The default value is 1,000, which means that when the number of lines in the Spreadsheet file exceeds 1,000, the payload array will be divided into equal parts, and each part will be sent as a separate batch request.
 
 If you set the batchSize to 0, the payload array will not be divided, and the entire array will be sent as a single batch request.
 
@@ -130,16 +130,16 @@ The `payload` will be a array of objects with the keys named like the `columns` 
 
 
 ````javascript
-this.excelUpload.attachUploadButtonPress(function (oEvent) {
+this.spreadsheetUpload.attachUploadButtonPress(function (oEvent) {
         const model = this.getModel("tableData");
         model.setData(oEvent.getParameter("payload"));
 }, this);
 ````
 
-An example of an implementation to display data of an Excelupload in a freestyle app can be found here:
+An example of an implementation to display data of an Spreadsheetupload in a freestyle app can be found here:
 
-[UploadToTable.controller.js](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/examples/packages/ordersv2freestylenondraft/webapp/controller/UploadToTable.controller.js)  
-[UploadToTable.view.xml](https://github.com/marianfoo/ui5-cc-excelUpload/blob/main/examples/packages/ordersv2freestylenondraft/webapp/view/UploadToTable.view.xml)
+[UploadToTable.controller.js](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2freestylenondraft/webapp/controller/UploadToTable.controller.js)  
+[UploadToTable.view.xml](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2freestylenondraft/webapp/view/UploadToTable.view.xml)
 
 ### `strict`
 
@@ -154,7 +154,7 @@ This option defines whether the "Continue" button should be displayed in the err
 **default:** Browser Default
 
 This option defines the decimal separator for numbers as string.  
-This option is only needed if in the Excel File are numbers as strings or when importing a CSV. When the datatype in the Excel File is number, the decimal separator is automatically recognized.
+This option is only needed if in the Spreadsheet File are numbers as strings or when importing a CSV. When the datatype in the Spreadsheet File is number, the decimal separator is automatically recognized.
 
 ### `hidePreview`
 
@@ -214,15 +214,15 @@ If set to true, it will set the log level to `debug` (Log.Level.DEBUG) and activ
 ## Example Code with all options
 
 ```js 
-this.excelUpload = await this.getView().getController().getAppComponent().createComponent({
-    usage: "excelUpload",
+this.spreadsheetUpload = await this.getView().getController().getAppComponent().createComponent({
+    usage: "spreadsheetImporter",
     async: true,
     componentData: {
         context: this,
         tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable",
         columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time", "boolean", "decimal"],
         mandatoryFields: ["product_ID", "quantity"],
-        excelFileName: "Test.xlsx",
+        spreadsheetFileName: "Test.xlsx",
         odataType: "com.sap.gateway.srvd.zui_mr_create_run.v0001.AbleseauftragType",
         fieldMatchType: "label",
         activateDraft: false,

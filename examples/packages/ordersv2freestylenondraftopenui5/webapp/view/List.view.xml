@@ -4,7 +4,7 @@
       <Title id="listPageTitle" text="{listView>/title}" level="H2" />
     </semantic:titleHeading>
     <semantic:addAction>
-      <semantic:AddAction press="openExcelUpload" />
+      <semantic:AddAction press="openSpreadsheetUpload" />
     </semantic:addAction>
     <semantic:content>
       <!-- For client side filtering add this to the items attribute: parameters: {operationMode: 'Client'}}" -->

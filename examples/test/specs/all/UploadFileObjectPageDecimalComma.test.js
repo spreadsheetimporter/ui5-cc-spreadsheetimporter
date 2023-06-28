@@ -44,10 +44,10 @@ describe("Upload File Object Page", () => {
 		await BaseClass.pressById(FE.objectPageEditButton);
 	});
 
-	it("Open ExcelUpload Dialog", async () => {
+	it("Open Spreadsheet Upload Dialog", async () => {
 		await BaseClass.dummyWait(500);
-		await BaseClass.pressById(FE.objectPageExceluploadButton);
-		const excelUploadDialog = await browser.asControl({
+		await BaseClass.pressById(FE.objectPageSpreadsheetuploadButton);
+		const spreadsheetUploadDialog = await browser.asControl({
 			selector: {
 				controlType: "sap.m.Dialog",
 				properties: {
@@ -56,8 +56,8 @@ describe("Upload File Object Page", () => {
 				searchOpenDialogs: true
 			}
 		});
-		expect(excelUploadDialog.isOpen()).toBeTruthy();
-		excelUploadDialog.setDecimalSeparator(",")
+		expect(spreadsheetUploadDialog.isOpen()).toBeTruthy();
+		spreadsheetUploadDialog.setDecimalSeparator(",")
 		try {
 			browser.execute(function () {
 				const blockLayerPopup = document.getElementById("sap-ui-blocklayer-popup");

@@ -12,7 +12,7 @@ sap.ui.require(
 			autoWait: true
 		});
 
-		opaTest("Open Excel Upload Dialog", function (Given, When, Then) {
+		opaTest("Open Spreadsheet Upload Dialog", function (Given, When, Then) {
 			const url = sap.ui.require.toUrl("ui/v4/orders") + "/index.html";
 			Given.iStartMyAppInAFrame(url);
 			When.waitFor({
@@ -26,22 +26,22 @@ sap.ui.require(
 				errorMessage: "Can not select 'sap.m.Button'"
 			});
 			Then.waitFor({
-				id: "ui.v4.ordersv4fe::OrdersList--fe::CustomAction::excelUploadListReport",
+				id: "ui.v4.ordersv4fe::OrdersList--fe::CustomAction::spreadsheetUploadListReport",
 				controlType: "sap.m.Button",
 				visible: true,
 				actions: new Press(),
 				success: function (oControl) {
-					Opa5.assert.ok(true, "Excel Upload Button pressed");
+					Opa5.assert.ok(true, "Spreadsheet Upload Button pressed");
 				},
 				errorMessage: "Can not select 'sap.m.Button'"
 			});
 			Then.waitFor({
-				controlType : "cc.excelUpload.v0_20_0.ExcelDialog",
+				controlType : "cc.spreadsheetimporter.v0_20_0.SpreadsheetDialog",
 				check : function (dialog) {
 					return dialog[0].isOpen()
 				},
 				success: function (dialog) {
-					const util = Opa5.getWindow().cc.excelUpload.v0_20_0.Util;
+					const util = Opa5.getWindow().cc.spreadsheetimporter.v0_20_0.Util;
 					console.log("Util", util);
 					Opa5.getContext().util = util;
 					Opa5.getContext().component = dialog[0].getComponent();
@@ -71,7 +71,7 @@ sap.ui.require(
 
 		function testNormalizeNumberString(Then, decimalSeparator, input, expectedOutput) {
 			Then.waitFor({
-				controlType: "cc.excelUpload.v0_20_0.ExcelDialog",
+				controlType: "cc.spreadsheetimporter.v0_20_0.SpreadsheetDialog",
 				success: function (dialog) {
 					Opa5.getContext().component.setDecimalSeparator(decimalSeparator);
 					// Call 'normalizeNumberString' method and check its output

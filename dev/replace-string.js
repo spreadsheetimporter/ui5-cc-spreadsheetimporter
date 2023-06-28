@@ -6,14 +6,14 @@ const updateVersionDocs = require("./update-version-docs")
 const develop = process.argv.includes("--develop");
 
 // Get the version from the parsed data
-const path = "./packages/ui5-cc-excelUpload/package.json"
+const path = "./packages/ui5-cc-spreadsheetimporter/package.json"
 const version = util.getVersionDots(path)
 const versionShort = util.getVersionDots(path).replaceAll(".", "")
 const versionUnderscore = util.getVersionDots(path).replaceAll(".", "_")
 const versionSlash = util.getVersionSlash(path)
 
 	// Get the version from the parsed data
-	const pathButton = "./packages/ui5-cc-excelUpload-Button/package.json"
+	const pathButton = "./packages/ui5-cc-spreadsheetimporter-button/package.json"
 	const versionButton = util.getVersionDots(pathButton)
 	const versionShortButton = versionButton.replaceAll(".", "")
 	const versionUnderscoreButton = versionButton.replaceAll(".", "_")
@@ -32,7 +32,7 @@ updateVersionDocs.updateVersions(versionUnderscore,versionUnderscoreButton)
 replaceButton(versionUnderscoreButton)
 
 if (!develop) {
-	let ui5Apps = ["ordersv2fe", "ordersv2fenondraft", "ordersv2freestylenondraft", "ordersv2freestylenondraftopenui5", "ordersv4fe", "ordersv4fpm"];
+	let ui5Apps = ["ordersv2fe", "ordersv2fenondraft", "ordersv2freestylenondraft", "ordersv2freestylenondraftopenui5", "ordersv4fe", "ordersv4fpm", "ordersv4fets"];
 	util.replaceVersionInExamples(versionUnderscore, versionUnderscore, ui5Apps,versionButton, versionUnderscoreButton);
 }
 
@@ -40,9 +40,9 @@ function replaceButton(versionUnderscoreButton) {
 
 
 
-	const namespace = `cc.excelUploadButton.${versionUnderscoreButton}.ExcelUpload`
+	const namespace = `cc.spreadsheetimporter.button.${versionUnderscoreButton}.SpreadsheetUpload`
 
-	const filePath = 'packages/ui5-cc-excelUpload-Button/ExcelUpload.js';
+	const filePath = 'packages/ui5-cc-spreadsheetimporter-button/SpreadsheetUpload.js';
 	const searchString = /Button\.extend\((["'])(?:(?!\1|\\.|\n).|\\.)*\1\s*,\s*{/s;
 	const replacementString = `Button.extend("${namespace}", {`;
 
@@ -53,12 +53,12 @@ function replaceButton(versionUnderscoreButton) {
 	fs.writeFileSync(filePath, code, 'utf8');
 
 	// Load the ui5-build.yaml file
-	const pathYaml = './packages/ui5-cc-excelUpload-Button/ui5.yaml'
+	const pathYaml = './packages/ui5-cc-spreadsheetimporter-button/ui5.yaml'
 	const fileContents = fs.readFileSync(pathYaml, 'utf8');
 
 	// Parse the YAML into a JavaScript object
 	const ui5Build = yaml.load(fileContents);
-	const key = "/thirdparty/customControl/excelUploadButton/" + versionUnderscoreButton + "/"
+	const key = "/thirdparty/customControl/spreadsheetImporterButton/" + versionUnderscoreButton + "/"
 	// Replace the values
 	ui5Build.resources.configuration.paths = {
 		[key]: "./"

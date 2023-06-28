@@ -1,8 +1,8 @@
 {
-  "name": "ui5-cc-excelupload-sample",
+  "name": "ui5-cc-spreadsheetimporter-sample",
   "version": "0.0.0",
   "private": true,
-  "description": "Test Setup for module ui5-cc-excelupload",
+  "description": "Test Setup for module ui5-cc-spreadsheetimporter",
   "author": "Marian Zeis",
   "license": "Apache-2.0",
   "repository": {
@@ -22,7 +22,7 @@
     "start:uiv4fpm": "pnpm --filter ordersv4fpm start",
     "watch:server": "pnpm --filter @capire/orders watch",
     "test": "wdio run ./test/wdio-base.conf.js",
-    "test:single": "npm run test -- ordersv2fe  96 --spec OpenExcelDialog",
+    "test:single": "npm run test -- ordersv2fe  96 --spec OpenSpreadsheetUploadDialog",
     "ui5-test-runner" : "ui5-test-runner"
   },
   "devDependencies": {

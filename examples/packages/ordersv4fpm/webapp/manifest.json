@@ -93,13 +93,13 @@
       "css": []
     },
     "componentUsages": {
-      "excelUpload": {
-        "name": "cc.excelUpload.v0_20_0"
+      "spreadsheetImporter": {
+        "name": "cc.spreadsheetimporter.v0_20_0"
       }
     },
     "resourceRoots": {
-      "cc.excelUpload.v0_20_0": "./thirdparty/customControl/excelUpload/v0_20_0",
-      "cc.excelUploadButton.v0_8_0": "./thirdparty/customControl/excelUploadButton/v0_8_0"
+      "cc.spreadsheetimporter.v0_20_0": "./thirdparty/customControl/spreadsheetImporter/v0_20_0",
+      "cc.spreadsheetimporter.button.v0_8_0": "./thirdparty/customControl/spreadsheetImporterButton/v0_8_0"
     },
     "routing": {
       "config": {},

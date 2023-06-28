@@ -10,10 +10,10 @@ The following events can be used as extension points to intervene and manipulate
 When the file is uploaded to the App, the `checkBeforeRead` event is fired.
 
 ### Example
-This sample is from the [sample app](https://github.com/marianfoo/ui5-cc-excelUpload/blob/47d22cdc42aa1cacfd797bdc0e025b830330dc5e/examples/packages/ordersv4fe/webapp/ext/ObjectPageExtController.js#L24-L42). 
+This sample is from the [sample app](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/47d22cdc42aa1cacfd797bdc0e025b830330dc5e/examples/packages/ordersv4fe/webapp/ext/ObjectPageExtController.js#L24-L42). 
 It checks whether the price is over 100. 
 ````javascript
-this.excelUpload.attachCheckBeforeRead(function(oEvent) {
+this.spreadsheetUpload.attachCheckBeforeRead(function(oEvent) {
     // example
     const sheetdata = oEvent.getParameter("sheetdata");
     let errorArray = [];
@@ -36,7 +36,7 @@ this.excelUpload.attachCheckBeforeRead(function(oEvent) {
 }, this)
 ````
 
-You can add errors to the `messages` property of the `ExcelUpload` control. After the event the upload is canceled and the errors are displayed in the error dialog.  
+You can add errors to the `messages` property of the `SpreadsheetUpload` control. After the event the upload is canceled and the errors are displayed in the error dialog.  
 With the method `addArrayToMessages` you can add errors to the `messages` property. It expects an array of objects with the following properties:
 
 - `title` - the title of the error
@@ -51,11 +51,11 @@ The Errors with the same title will be grouped.
 When the `Upload` button is pressed, the `changeBeforeCreate` event is fired.
 
 ### Example
-This sample is from the [sample app](https://github.com/marianfoo/ui5-cc-excelUpload/blob/47d22cdc42aa1cacfd797bdc0e025b830330dc5e/examples/packages/ordersv4fe/webapp/ext/ObjectPageExtController.js#L45-L52).
+This sample is from the [sample app](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/47d22cdc42aa1cacfd797bdc0e025b830330dc5e/examples/packages/ordersv4fe/webapp/ext/ObjectPageExtController.js#L45-L52).
 This is a sample to overwrite the payload.  
 
 ````javascript
-this.excelUpload.attachChangeBeforeCreate(function (oEvent) {
+this.spreadsheetUpload.attachChangeBeforeCreate(function (oEvent) {
     let payload = oEvent.getParameter("payload");
     // round number from 12,56 to 12,6
     if (payload.price) {
@@ -74,7 +74,7 @@ It is possible to prevent the data from being sent to the backend with the metho
 
 
 ````javascript
-this.excelUpload.attachChangeBeforeCreate(function (oEvent) {
+this.spreadsheetUpload.attachChangeBeforeCreate(function (oEvent) {
     // prevent data send to backend
     oEvent.preventDefault();
     // get payload

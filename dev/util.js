@@ -47,15 +47,15 @@ function replaceVersionInExamples(versionSlash, version, ui5Apps, versionButton,
 		const resourceRoots = manifestData["sap.ui5"].resourceRoots;
 		const updatedResourceRoots = {};
 		Object.keys(resourceRoots)
-			.filter(key => !key.startsWith("cc.excelUpload"))
+			.filter(key => !key.startsWith("cc.spreadsheetimporter"))
 			.forEach(key => {
 				updatedResourceRoots[key] = resourceRoots[key];
 			});
-		updatedResourceRoots[`cc.excelUpload.${version}`] = `./thirdparty/customControl/excelUpload/${versionSlash}`;
+		updatedResourceRoots[`cc.spreadsheetimporter.${version}`] = `./thirdparty/customControl/spreadsheetImporter/${versionSlash}`;
 		// add to every app even if it is not used
-		updatedResourceRoots[`cc.excelUploadButton.${versionUnderscoreButton}`] = `./thirdparty/customControl/excelUploadButton/${versionUnderscoreButton}`;
+		updatedResourceRoots[`cc.spreadsheetimporter.button.${versionUnderscoreButton}`] = `./thirdparty/customControl/spreadsheetImporterButton/${versionUnderscoreButton}`;
 		manifestData["sap.ui5"].resourceRoots = updatedResourceRoots
-		manifestData["sap.ui5"]["componentUsages"]["excelUpload"].name = `cc.excelUpload.${version}`;
+		manifestData["sap.ui5"]["componentUsages"]["spreadsheetImporterUpload"].name = `cc.spreadsheetimporter.${version}`;
 		// Stringify manifest data back to string
 		manifestData = JSON.stringify(manifestData, null, 2);
 		// Write back manifest file
@@ -77,8 +77,8 @@ function replaceVersionInXML(rootPath, filePath, versionUnderscoreButton) {
 	const path = rootPath + filePath;
 	let view = fs.readFileSync(path, "utf8");
 	// Use a regular expression to replace the namespace prefix value
-	const regex = /cc\.excelUploadButton\.v\d_\d_\d/g;
-	const updatedString = view.replace(regex, `cc.excelUploadButton.${versionUnderscoreButton}`);
+	const regex = /cc\.spreadsheetimporter.button\.v\d_\d_\d/g;
+	const updatedString = view.replace(regex, `cc.spreadsheetimporter.button.${versionUnderscoreButton}`);
 	fs.writeFileSync(path, updatedString, "utf8");
 
 }
@@ -153,7 +153,7 @@ function getTestappObject(scenario, version) {
 
 function replaceYamlFileBuild(version, versionShort, versionSlash) {
 	// Load the ui5-build.yaml file
-	const fileContents = fs.readFileSync('./packages/ui5-cc-excelUpload/ui5-build.yaml', 'utf8');
+	const fileContents = fs.readFileSync('./packages/ui5-cc-spreadsheetimporter/ui5-build.yaml', 'utf8');
 
 	// Parse the YAML into a JavaScript object
 	const ui5Build = yaml.load(fileContents);
@@ -179,17 +179,17 @@ function replaceYamlFileBuild(version, versionShort, versionSlash) {
 	const updatedYaml = yaml.dump(ui5Build, { lineWidth: -1 });
 
 	// Save the updated ui5-build.yaml file
-	fs.writeFileSync('./packages/ui5-cc-excelUpload/ui5-build.yaml', updatedYaml, 'utf8');
+	fs.writeFileSync('./packages/ui5-cc-spreadsheetimporter/ui5-build.yaml', updatedYaml, 'utf8');
 
 }
 
 function replaceYamlFileComponent(versionSlash) {
 	// Load the ui5-build.yaml file
-	const fileContents = fs.readFileSync('./packages/ui5-cc-excelUpload/ui5.yaml', 'utf8');
+	const fileContents = fs.readFileSync('./packages/ui5-cc-spreadsheetimporter/ui5.yaml', 'utf8');
 
 	// Parse the YAML into a JavaScript object
 	const ui5Build = yaml.load(fileContents);
-	const key = "/thirdparty/customControl/excelUpload/" + versionSlash + "/"
+	const key = "/thirdparty/customControl/spreadsheetImporter/" + versionSlash + "/"
 	// Replace the values
 	ui5Build.resources.configuration.paths = {
 		[key]: "./dist/"
@@ -200,20 +200,20 @@ function replaceYamlFileComponent(versionSlash) {
 	const updatedYaml = yaml.dump(ui5Build);
 
 	// Save the updated ui5-build.yaml file
-	fs.writeFileSync('./packages/ui5-cc-excelUpload/ui5.yaml', updatedYaml, 'utf8');
+	fs.writeFileSync('./packages/ui5-cc-spreadsheetimporter/ui5.yaml', updatedYaml, 'utf8');
 
 }
 
 function replaceYamlFileDeploy(version, versionShort) {
 	// Load the ui5-build.yaml file
-	const fileContents = fs.readFileSync('./packages/ui5-cc-excelUpload/ui5-deploy.yaml', 'utf8');
+	const fileContents = fs.readFileSync('./packages/ui5-cc-spreadsheetimporter/ui5-deploy.yaml', 'utf8');
 
 	// Parse the YAML into a JavaScript object
 	const ui5Build = yaml.load(fileContents);
 
 	// Replace the values
 	// Update the paths
-	ui5Build.metadata.name = `cc.excelUpload.${version}`
+	ui5Build.metadata.name = `cc.spreadsheetimporter.${version}`
 	ui5Build.builder.customTasks.forEach(task => {
 		if (task.name === 'deploy-to-abap') {
 			task.configuration.app.name = `Z_XUP_${versionShort}`
@@ -225,22 +225,22 @@ function replaceYamlFileDeploy(version, versionShort) {
 	const updatedYaml = yaml.dump(ui5Build, { lineWidth: -1 });
 
 	// Save the updated ui5-build.yaml file
-	fs.writeFileSync('./packages/ui5-cc-excelUpload/ui5-deploy.yaml', updatedYaml, 'utf8');
+	fs.writeFileSync('./packages/ui5-cc-spreadsheetimporter/ui5-deploy.yaml', updatedYaml, 'utf8');
 
 }
 
 function replaceVersionManifest(version) {
 	// Read the JSON file
-	const jsonFile = fs.readFileSync('./packages/ui5-cc-excelUpload/src/manifest.json', 'utf8');
+	const jsonFile = fs.readFileSync('./packages/ui5-cc-spreadsheetimporter/src/manifest.json', 'utf8');
 	const jsonData = JSON.parse(jsonFile);
 	// Replace the version
 
-	jsonData['sap.app']['id'] = `cc.excelUpload.${version}`;
-	jsonData['sap.ui5']['componentName'] = `cc.excelUpload.${version}`;
-	jsonData['sap.ui5']['models']['i18n']['settings']['bundleName'] = `cc.excelUpload.${version}.i18n.i18n`;
+	jsonData['sap.app']['id'] = `cc.spreadsheetimporter.${version}`;
+	jsonData['sap.ui5']['componentName'] = `cc.spreadsheetimporter.${version}`;
+	jsonData['sap.ui5']['models']['i18n']['settings']['bundleName'] = `cc.spreadsheetimporter.${version}.i18n.i18n`;
 
 	// Write the updated JSON to file
-	fs.writeFileSync('./packages/ui5-cc-excelUpload/src/manifest.json', JSON.stringify(jsonData, null, 2));
+	fs.writeFileSync('./packages/ui5-cc-spreadsheetimporter/src/manifest.json', JSON.stringify(jsonData, null, 2));
 }
 
 function deleteNodeModules(folderPath) {

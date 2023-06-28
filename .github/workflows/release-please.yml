@@ -38,42 +38,42 @@ jobs:
         if: ${{ steps.release.outputs.releases_created }}
         run: pnpm install  --no-frozen-lockfile
 
-      - name: Build ui5-cc-excelupload
-        run: pnpm --filter ui5-cc-excelupload build
-        if: ${{ steps.release.outputs['packages/ui5-cc-excelUpload--release_created'] }}
+      - name: Build ui5-cc-spreadsheetimporter
+        run: pnpm --filter ui5-cc-spreadsheetimporter build
+        if: ${{ steps.release.outputs['packages/ui5-cc-spreadsheetimporter--release_created'] }}
 
-      - name: Publish ui5-cc-excelupload to NPM
-        if: ${{ steps.release.outputs['packages/ui5-cc-excelUpload--release_created'] }}
+      - name: Publish ui5-cc-spreadsheetimporter to NPM
+        if: ${{ steps.release.outputs['packages/ui5-cc-spreadsheetimporter--release_created'] }}
         run: |
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           echo ":::: Publishing as $(npm whoami)"
-          cd ./packages/ui5-cc-excelUpload/ && npm publish --provenance
+          cd ./packages/ui5-cc-spreadsheetimporter/ && npm publish --provenance
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Build ui5-cc-excelUpload-Button
-        run: echo "Build ui5-cc-excelUpload-Button"
-        if: ${{ steps.release.outputs['packages/ui5-cc-excelUpload-Button--release_created'] }}
+      - name: Build ui5-cc-spreadsheetimporter-button
+        run: echo "Build ui5-cc-spreadsheetimporter-button"
+        if: ${{ steps.release.outputs['packages/ui5-cc-spreadsheetimporter-button--release_created'] }}
 
-      - name: Publish ui5-cc-excelUpload-Button to NPM
-        if: ${{ steps.release.outputs['packages/ui5-cc-excelUpload-Button--release_created'] }}
+      - name: Publish ui5-cc-spreadsheetimporter-button to NPM
+        if: ${{ steps.release.outputs['packages/ui5-cc-spreadsheetimporter-button--release_created'] }}
         run: |
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           echo ":::: Publishing as $(npm whoami)"
-          cd ./packages/ui5-cc-excelUpload-Button/ && npm publish --provenance
+          cd ./packages/ui5-cc-spreadsheetimporter-button/ && npm publish --provenance
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Build ui5-cc-excelUpload-Generator
-        run: echo "Build ui5-cc-excelUpload-Generator"
-        if: ${{ steps.release.outputs['packages/ui5-cc-excelUpload-Generator--release_created'] }}
+      - name: Build ui5-cc-spreadsheetimporter-generator
+        run: echo "Build ui5-cc-spreadsheetimporter-generator"
+        if: ${{ steps.release.outputs['packages/ui5-cc-spreadsheetimporter-generator--release_created'] }}
 
-      - name: Publish ui5-cc-excelUpload-Generator to NPM
-        if: ${{ steps.release.outputs['packages/ui5-cc-excelUpload-Generator--release_created'] }}
+      - name: Publish ui5-cc-spreadsheetimporter-generator to NPM
+        if: ${{ steps.release.outputs['packages/ui5-cc-spreadsheetimporter-generator--release_created'] }}
         run: |
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           echo ":::: Publishing as $(npm whoami)"
-          cd ./packages/ui5-cc-excelUpload-Generator/ && npm publish --provenance
+          cd ./packages/ui5-cc-spreadsheetimporter-generator/ && npm publish --provenance
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 

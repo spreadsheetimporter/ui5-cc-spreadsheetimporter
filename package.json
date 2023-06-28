@@ -1,14 +1,14 @@
 {
-  "name": "ui5-excelupload",
+  "name": "ui5-spreadsheetimporter",
   "version": "0.0.0",
-  "description": "Modules Excel Upload for Fiori Element Apps.",
+  "description": "Modules Spreadsheet Upload for Fiori Element Apps.",
   "main": "Component.js",
   "private": true,
   "author": "Marian Zeis",
-  "homepage": "https://marianfoo.github.io/ui5-cc-excelUpload/",
+  "homepage": "https://spreadsheet-importer.com/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/marianfoo/ui5-cc-excelUpload.git"
+    "url": "https://github.com/marianfoo/ui5-cc-spreadsheetimporter.git"
   },
   "license": "Apache-2.0",
   "scripts": {
@@ -16,10 +16,10 @@
     "start": "npm-run-all build --parallel start:server start:v4fe:108",
     "start:v2fe:108": "pnpm --filter ordersv2fe108 start",
     "start:v4fe:108": "pnpm --filter ordersv4fe108 start",
-    "test:v4fe:108": "pnpm --filter ui5-cc-excelupload-sample test -- -- ordersv4fe 108",
-    "test:opa5:v4fe:108": "pnpm --filter ui5-cc-excelupload-sample ui5-test-runner --url http://localhost:8080/test/integration/opaTests.qunit.html",
-    "test:v2fe:108": "pnpm --filter ui5-cc-excelupload-sample test -- -- ordersv2fe 108",
-    "start:server": "pnpm --filter ui5-cc-excelupload-sample watch:server",
+    "test:v4fe:108": "pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- ordersv4fe 108",
+    "test:opa5:v4fe:108": "pnpm --filter ui5-cc-spreadsheetimporter-sample ui5-test-runner --url http://localhost:8080/test/integration/opaTests.qunit.html",
+    "test:v2fe:108": "pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- ordersv2fe 108",
+    "start:server": "pnpm --filter ui5-cc-spreadsheetimporter-sample watch:server",
     "lint": "eslint .",
     "lint:staged": "lint-staged",
     "lint:commit": "commitlint -e",
@@ -27,7 +27,7 @@
     "prettier:staged": "pretty-quick --staged --verbose",
     "hooks:pre-commit": "npm-run-all --sequential prettier:staged lint:staged",
     "hooks:pre-push": "npm-run-all --sequential lint:commit",
-    "build": "pnpm --filter ui5-cc-excelupload build",
+    "build": "pnpm --filter ui5-cc-spreadsheetimporter build",
     "replaceString": "node ./dev/replace-string.js",
     "build:watch": "node ./dev/chokidar.js",
     "updateChromedriver": "cd examples && pnpm add chromedriver@latest --save-dev -w",

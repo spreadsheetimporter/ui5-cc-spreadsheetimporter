@@ -1,4 +1,4 @@
-import Component, { Component$CheckBeforeReadEventParameters } from "cc/excelUpload/v0_19_1/Component";
+import Component, { Component$CheckBeforeReadEventParameters } from "cc/spreadsheetUpload/v0_19_1/Component";
 import ExtensionAPI from "sap/fe/core/ExtensionAPI";
 import Event from "sap/ui/base/Event";
 /**
@@ -7,31 +7,31 @@ import Event from "sap/ui/base/Event";
  * @param this reference to the 'this' that the event handler is bound to.
  * @param pageContext the context of the page on which the event was fired
  */
-export async function openExcelUploadDialog(this: ExtensionAPI) {
+export async function openSpreadsheetUploadDialog(this: ExtensionAPI) {
 	const view = this.getRouting().getView();
 	const controller = view.getController();
-	let excelUpload = controller.excelUpload as Component;
+	let spreadsheetUpload = controller.spreadsheetUpload as Component;
 	view.setBusyIndicatorDelay(0);
 	view.setBusy(true);
-	if (!controller.excelUpload) {
-		excelUpload = await this.getRouting()
+	if (!controller.spreadsheetUpload) {
+		spreadsheetUpload = await this.getRouting()
 			.getView()
 			.getController()
 			.getAppComponent()
 			.createComponent({
-				usage: "excelUpload",
+				usage: "spreadsheetImporter",
 				async: true,
 				componentData: {
 					context: this,
 					tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable",
 					columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time", "boolean", "decimal"],
 					mandatoryFields: ["product_ID", "quantity"],
-					excelFileName: "Test.xlsx"
+					spreadsheetFileName: "Test.xlsx"
 				}
 			});
-		controller.excelUpload = excelUpload;
+		controller.spreadsheetUpload = spreadsheetUpload;
 		// event to check before uploaded to app
-		excelUpload.attachCheckBeforeRead(function (event: Event<Component$CheckBeforeReadEventParameters>) {
+		spreadsheetUpload.attachCheckBeforeRead(function (event: Event<Component$CheckBeforeReadEventParameters>) {
 			// example
 			const sheetData = event.getParameter("sheetData");
 			let errorArray = [];
@@ -54,7 +54,7 @@ export async function openExcelUploadDialog(this: ExtensionAPI) {
 		}, this);
 
 		// event to change data before send to backend
-		excelUpload.attachChangeBeforeCreate(function (event: Event<Component$ChangeBeforeCreateEventParameters>) {
+		spreadsheetUpload.attachChangeBeforeCreate(function (event: Event<Component$ChangeBeforeCreateEventParameters>) {
 			let payload = event.getParameter("payload");
 			// round number from 12,56 to 12,6
 			if (payload.price) {
@@ -63,6 +63,6 @@ export async function openExcelUploadDialog(this: ExtensionAPI) {
 			event.getSource().setPayload(payload);
 		}, this);
 	}
-	excelUpload.openExcelUploadDialog();
+	spreadsheetUpload.openSpreadsheetUploadDialog();
 	view.setBusy(false);
 }

@@ -1,7 +1,7 @@
-site_name: UI5 Custom Control Excel Upload
-site_url: "https://marianfoo.github.io/ui5-cc-excelUpload/" # required for working 404 page
-repo_name: "marianfoo/ui5-cc-excelUpload"
-repo_url: "https://github.com/marianfoo/ui5-cc-excelUpload"
+site_name: UI5 Custom Control Spreadsheet Upload
+site_url: "https://spreadsheet-importer.com/" # required for working 404 page
+repo_name: "marianfoo/ui5-cc-spreadsheetimporter"
+repo_url: "https://github.com/marianfoo/ui5-cc-spreadsheetimporter"
 edit_uri: tree/main/docs/
 docs_dir: "docs" # default
 site_dir: "site" # default

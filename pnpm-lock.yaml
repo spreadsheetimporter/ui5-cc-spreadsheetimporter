@@ -122,9 +122,9 @@ importers:
 
   examples/packages/ordersv2fe:
     dependencies:
-      ui5-cc-excelupload:
-        specifier: ./../../../packages/ui5-cc-excelUpload
-        version: link:../../../packages/ui5-cc-excelUpload
+      ui5-cc-spreadsheetimporter:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
         specifier: ^2.1.101
@@ -141,66 +141,66 @@ importers:
 
   examples/packages/ordersv2fe71:
     dependencies:
-      ui5-cc-excelupload:
-        specifier: ./../../../packages/ui5-cc-excelUpload
-        version: link:../../../packages/ui5-cc-excelUpload
+      ui5-cc-spreadsheetimporter:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
         specifier: ^2.1.101
-        version: 2.1.105
+        version: 2.1.101
       '@sap/ux-specification':
         specifier: ^1.108.6
-        version: 1.108.6
+        version: 1.108.7
       '@sap/ux-ui5-tooling':
         specifier: ^1.9.7
-        version: 1.10.0
+        version: 1.9.7
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
 
   examples/packages/ordersv2fe84:
     dependencies:
-      ui5-cc-excelupload:
-        specifier: ./../../../packages/ui5-cc-excelUpload
-        version: link:../../../packages/ui5-cc-excelUpload
+      ui5-cc-spreadsheetimporter:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
         specifier: ^2.1.101
-        version: 2.1.105
+        version: 2.1.101
       '@sap/ux-specification':
         specifier: ^1.108.6
-        version: 1.108.6
+        version: 1.108.7
       '@sap/ux-ui5-tooling':
         specifier: ^1.9.7
-        version: 1.10.0
+        version: 1.9.7
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
 
   examples/packages/ordersv2fe96:
     dependencies:
-      ui5-cc-excelupload:
-        specifier: ./../../../packages/ui5-cc-excelUpload
-        version: link:../../../packages/ui5-cc-excelUpload
+      ui5-cc-spreadsheetimporter:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
         specifier: ^2.1.101
-        version: 2.1.105
+        version: 2.1.101
       '@sap/ux-specification':
         specifier: ^1.108.6
-        version: 1.108.6
+        version: 1.108.7
       '@sap/ux-ui5-tooling':
         specifier: ^1.9.7
-        version: 1.10.0
+        version: 1.9.7
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
 
   examples/packages/ordersv2fenondraft:
     dependencies:
-      ui5-cc-excelupload:
-        specifier: ./../../../packages/ui5-cc-excelUpload
-        version: link:../../../packages/ui5-cc-excelUpload
+      ui5-cc-spreadsheetimporter:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
         specifier: ^2.1.101
@@ -217,117 +217,69 @@ importers:
 
   examples/packages/ordersv2fenondraft71:
     dependencies:
-      ui5-cc-excelupload:
-        specifier: ./../../../packages/ui5-cc-excelUpload
-        version: link:../../../packages/ui5-cc-excelUpload
+      ui5-cc-spreadsheetimporter:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
         specifier: ^2.1.101
-        version: 2.1.105
+        version: 2.1.101
       '@sap/ux-specification':
         specifier: ^1.108.6
-        version: 1.108.6
+        version: 1.108.7
       '@sap/ux-ui5-tooling':
         specifier: ^1.9.7
-        version: 1.10.0
+        version: 1.9.7
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
 
   examples/packages/ordersv2fenondraft84:
     dependencies:
-      ui5-cc-excelupload:
-        specifier: ./../../../packages/ui5-cc-excelUpload
-        version: link:../../../packages/ui5-cc-excelUpload
+      ui5-cc-spreadsheetimporter:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
         specifier: ^2.1.101
-        version: 2.1.105
+        version: 2.1.101
       '@sap/ux-specification':
         specifier: ^1.108.6
-        version: 1.108.6
+        version: 1.108.7
       '@sap/ux-ui5-tooling':
         specifier: ^1.9.7
-        version: 1.10.0
+        version: 1.9.7
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
 
   examples/packages/ordersv2fenondraft96:
     dependencies:
-      ui5-cc-excelupload:
-        specifier: ./../../../packages/ui5-cc-excelUpload
-        version: link:../../../packages/ui5-cc-excelUpload
+      ui5-cc-spreadsheetimporter:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
         specifier: ^2.1.101
-        version: 2.1.105
+        version: 2.1.101
       '@sap/ux-specification':
         specifier: ^1.108.6
-        version: 1.108.6
+        version: 1.108.7
       '@sap/ux-ui5-tooling':
         specifier: ^1.9.7
-        version: 1.10.0
-      '@ui5/cli':
-        specifier: 3.1.3
-        version: 3.1.3(bluebird@3.7.2)
-
-  examples/packages/ordersv2freestyle71:
-    dependencies:
-      ui5-cc-excelupload:
-        specifier: link:../../..
-        version: link:../../..
-    devDependencies:
-      '@sap-ux/ui5-middleware-fe-mockserver':
-        specifier: ^2.1.105
-        version: 2.1.105
-      '@sap/ux-ui5-tooling':
-        specifier: ^1.10.0
-        version: 1.10.0
-      '@ui5/cli':
-        specifier: 3.1.3
-        version: 3.1.3(bluebird@3.7.2)
-
-  examples/packages/ordersv2freestyle84:
-    dependencies:
-      ui5-cc-excelupload:
-        specifier: link:../../..
-        version: link:../../..
-    devDependencies:
-      '@sap-ux/ui5-middleware-fe-mockserver':
-        specifier: ^2.1.105
-        version: 2.1.105
-      '@sap/ux-ui5-tooling':
-        specifier: ^1.10.0
-        version: 1.10.0
-      '@ui5/cli':
-        specifier: 3.1.3
-        version: 3.1.3(bluebird@3.7.2)
-
-  examples/packages/ordersv2freestyle96:
-    dependencies:
-      ui5-cc-excelupload:
-        specifier: link:../../..
-        version: link:../../..
-    devDependencies:
-      '@sap-ux/ui5-middleware-fe-mockserver':
-        specifier: ^2.1.105
-        version: 2.1.105
-      '@sap/ux-ui5-tooling':
-        specifier: ^1.10.0
-        version: 1.10.0
+        version: 1.9.7
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
 
   examples/packages/ordersv2freestylenondraft:
     dependencies:
-      ui5-cc-excelupload:
-        specifier: ./../../../packages/ui5-cc-excelUpload
-        version: link:../../../packages/ui5-cc-excelUpload
-      ui5-cc-excelupload-button:
-        specifier: ./../../../packages/ui5-cc-excelUpload-Button
-        version: link:../../../packages/ui5-cc-excelUpload-Button
+      ui5-cc-spreadsheetimporter:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+      ui5-cc-spreadsheetimporter-button:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter-button
+        version: link:../../../packages/ui5-cc-spreadsheetimporter-button
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
         specifier: ^2.1.101
@@ -341,69 +293,69 @@ importers:
 
   examples/packages/ordersv2freestylenondraft71:
     dependencies:
-      ui5-cc-excelupload:
-        specifier: ./../../../packages/ui5-cc-excelUpload
-        version: link:../../../packages/ui5-cc-excelUpload
-      ui5-cc-excelupload-button:
-        specifier: ./../../../packages/ui5-cc-excelUpload-Button
-        version: link:../../../packages/ui5-cc-excelUpload-Button
+      ui5-cc-spreadsheetimporter:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+      ui5-cc-spreadsheetimporter-button:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter-button
+        version: link:../../../packages/ui5-cc-spreadsheetimporter-button
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
         specifier: ^2.1.101
-        version: 2.1.105
+        version: 2.1.101
       '@sap/ux-ui5-tooling':
         specifier: ^1.9.7
-        version: 1.10.0
+        version: 1.9.7
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
 
   examples/packages/ordersv2freestylenondraft84:
     dependencies:
-      ui5-cc-excelupload:
-        specifier: ./../../../packages/ui5-cc-excelUpload
-        version: link:../../../packages/ui5-cc-excelUpload
-      ui5-cc-excelupload-button:
-        specifier: ./../../../packages/ui5-cc-excelUpload-Button
-        version: link:../../../packages/ui5-cc-excelUpload-Button
+      ui5-cc-spreadsheetimporter:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+      ui5-cc-spreadsheetimporter-button:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter-button
+        version: link:../../../packages/ui5-cc-spreadsheetimporter-button
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
         specifier: ^2.1.101
-        version: 2.1.105
+        version: 2.1.101
       '@sap/ux-ui5-tooling':
         specifier: ^1.9.7
-        version: 1.10.0
+        version: 1.9.7
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
 
   examples/packages/ordersv2freestylenondraft96:
     dependencies:
-      ui5-cc-excelupload:
-        specifier: ./../../../packages/ui5-cc-excelUpload
-        version: link:../../../packages/ui5-cc-excelUpload
-      ui5-cc-excelupload-button:
-        specifier: ./../../../packages/ui5-cc-excelUpload-Button
-        version: link:../../../packages/ui5-cc-excelUpload-Button
+      ui5-cc-spreadsheetimporter:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+      ui5-cc-spreadsheetimporter-button:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter-button
+        version: link:../../../packages/ui5-cc-spreadsheetimporter-button
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
         specifier: ^2.1.101
-        version: 2.1.105
+        version: 2.1.101
       '@sap/ux-ui5-tooling':
         specifier: ^1.9.7
-        version: 1.10.0
+        version: 1.9.7
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
 
   examples/packages/ordersv2freestylenondraftopenui5:
     dependencies:
-      ui5-cc-excelupload:
-        specifier: ./../../../packages/ui5-cc-excelUpload
-        version: link:../../../packages/ui5-cc-excelUpload
-      ui5-cc-excelupload-button:
-        specifier: ./../../../packages/ui5-cc-excelUpload-Button
-        version: link:../../../packages/ui5-cc-excelUpload-Button
+      ui5-cc-spreadsheetimporter:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+      ui5-cc-spreadsheetimporter-button:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter-button
+        version: link:../../../packages/ui5-cc-spreadsheetimporter-button
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
         specifier: ^2.1.101
@@ -417,66 +369,66 @@ importers:
 
   examples/packages/ordersv2freestylenondraftopenui571:
     dependencies:
-      ui5-cc-excelupload:
-        specifier: ./../../../packages/ui5-cc-excelUpload
-        version: link:../../../packages/ui5-cc-excelUpload
-      ui5-cc-excelupload-button:
-        specifier: ./../../../packages/ui5-cc-excelUpload-Button
-        version: link:../../../packages/ui5-cc-excelUpload-Button
+      ui5-cc-spreadsheetimporter:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+      ui5-cc-spreadsheetimporter-button:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter-button
+        version: link:../../../packages/ui5-cc-spreadsheetimporter-button
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
         specifier: ^2.1.101
-        version: 2.1.105
+        version: 2.1.101
       '@sap/ux-ui5-tooling':
         specifier: ^1.9.7
-        version: 1.10.0
+        version: 1.9.7
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
 
   examples/packages/ordersv2freestylenondraftopenui584:
     dependencies:
-      ui5-cc-excelupload:
-        specifier: ./../../../packages/ui5-cc-excelUpload
-        version: link:../../../packages/ui5-cc-excelUpload
-      ui5-cc-excelupload-button:
-        specifier: ./../../../packages/ui5-cc-excelUpload-Button
-        version: link:../../../packages/ui5-cc-excelUpload-Button
+      ui5-cc-spreadsheetimporter:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+      ui5-cc-spreadsheetimporter-button:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter-button
+        version: link:../../../packages/ui5-cc-spreadsheetimporter-button
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
         specifier: ^2.1.101
-        version: 2.1.105
+        version: 2.1.101
       '@sap/ux-ui5-tooling':
         specifier: ^1.9.7
-        version: 1.10.0
+        version: 1.9.7
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
 
   examples/packages/ordersv2freestylenondraftopenui596:
     dependencies:
-      ui5-cc-excelupload:
-        specifier: ./../../../packages/ui5-cc-excelUpload
-        version: link:../../../packages/ui5-cc-excelUpload
-      ui5-cc-excelupload-button:
-        specifier: ./../../../packages/ui5-cc-excelUpload-Button
-        version: link:../../../packages/ui5-cc-excelUpload-Button
+      ui5-cc-spreadsheetimporter:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+      ui5-cc-spreadsheetimporter-button:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter-button
+        version: link:../../../packages/ui5-cc-spreadsheetimporter-button
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
         specifier: ^2.1.101
-        version: 2.1.105
+        version: 2.1.101
       '@sap/ux-ui5-tooling':
         specifier: ^1.9.7
-        version: 1.10.0
+        version: 1.9.7
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
 
   examples/packages/ordersv4fe:
     dependencies:
-      ui5-cc-excelupload:
-        specifier: ./../../../packages/ui5-cc-excelUpload
-        version: link:../../../packages/ui5-cc-excelUpload
+      ui5-cc-spreadsheetimporter:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
         specifier: ^2.1.101
@@ -493,66 +445,66 @@ importers:
 
   examples/packages/ordersv4fe71:
     dependencies:
-      ui5-cc-excelupload:
-        specifier: ./../../../packages/ui5-cc-excelUpload
-        version: link:../../../packages/ui5-cc-excelUpload
+      ui5-cc-spreadsheetimporter:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
         specifier: ^2.1.101
-        version: 2.1.105
+        version: 2.1.101
       '@sap/ux-specification':
         specifier: ^1.108.6
-        version: 1.108.6
+        version: 1.108.7
       '@sap/ux-ui5-tooling':
         specifier: ^1.9.7
-        version: 1.10.0
+        version: 1.9.7
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
 
   examples/packages/ordersv4fe84:
     dependencies:
-      ui5-cc-excelupload:
-        specifier: ./../../../packages/ui5-cc-excelUpload
-        version: link:../../../packages/ui5-cc-excelUpload
+      ui5-cc-spreadsheetimporter:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
         specifier: ^2.1.101
-        version: 2.1.105
+        version: 2.1.101
       '@sap/ux-specification':
         specifier: ^1.108.6
-        version: 1.108.6
+        version: 1.108.7
       '@sap/ux-ui5-tooling':
         specifier: ^1.9.7
-        version: 1.10.0
+        version: 1.9.7
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
 
   examples/packages/ordersv4fe96:
     dependencies:
-      ui5-cc-excelupload:
-        specifier: ./../../../packages/ui5-cc-excelUpload
-        version: link:../../../packages/ui5-cc-excelUpload
+      ui5-cc-spreadsheetimporter:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
         specifier: ^2.1.101
-        version: 2.1.105
+        version: 2.1.101
       '@sap/ux-specification':
         specifier: ^1.108.6
-        version: 1.108.6
+        version: 1.108.7
       '@sap/ux-ui5-tooling':
         specifier: ^1.9.7
-        version: 1.10.0
+        version: 1.9.7
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
 
   examples/packages/ordersv4fets:
     dependencies:
-      ui5-cc-excelupload:
-        specifier: ./../../../packages/ui5-cc-excelUpload
-        version: link:../../../packages/ui5-cc-excelUpload
+      ui5-cc-spreadsheetimporter:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
         specifier: '2'
@@ -584,12 +536,12 @@ importers:
 
   examples/packages/ordersv4fpm:
     dependencies:
-      ui5-cc-excelupload:
-        specifier: ./../../../packages/ui5-cc-excelUpload
-        version: link:../../../packages/ui5-cc-excelUpload
-      ui5-cc-excelupload-button:
-        specifier: ./../../../packages/ui5-cc-excelUpload-Button
-        version: link:../../../packages/ui5-cc-excelUpload-Button
+      ui5-cc-spreadsheetimporter:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+      ui5-cc-spreadsheetimporter-button:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter-button
+        version: link:../../../packages/ui5-cc-spreadsheetimporter-button
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
         specifier: ^2.1.101
@@ -609,22 +561,22 @@ importers:
 
   examples/packages/ordersv4fpm96:
     dependencies:
-      ui5-cc-excelupload:
-        specifier: ./../../../packages/ui5-cc-excelUpload
-        version: link:../../../packages/ui5-cc-excelUpload
-      ui5-cc-excelupload-button:
-        specifier: ./../../../packages/ui5-cc-excelUpload-Button
-        version: link:../../../packages/ui5-cc-excelUpload-Button
+      ui5-cc-spreadsheetimporter:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+      ui5-cc-spreadsheetimporter-button:
+        specifier: ./../../../packages/ui5-cc-spreadsheetimporter-button
+        version: link:../../../packages/ui5-cc-spreadsheetimporter-button
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
         specifier: ^2.1.101
-        version: 2.1.105
+        version: 2.1.101
       '@sap/ux-specification':
         specifier: ^1.108.6
-        version: 1.108.6
+        version: 1.108.7
       '@sap/ux-ui5-tooling':
         specifier: ^1.9.7
-        version: 1.10.0
+        version: 1.9.7
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
@@ -641,7 +593,7 @@ importers:
         specifier: ^1.9.21
         version: 1.9.21
 
-  packages/ui5-cc-excelUpload:
+  packages/ui5-cc-spreadsheetimporter:
     dependencies:
       xlsx:
         specifier: https://cdn.sheetjs.com/xlsx-0.19.3/xlsx-0.19.3.tgz
@@ -729,11 +681,11 @@ importers:
         specifier: 0.7.13
         version: 0.7.13
 
-  packages/ui5-cc-excelUpload-Button:
+  packages/ui5-cc-spreadsheetimporter-button:
     dependencies:
-      ui5-cc-excelupload:
-        specifier: 0.19.1
-        version: link:../ui5-cc-excelUpload
+      ui5-cc-spreadsheetimporter:
+        specifier: 0.20.0
+        version: link:../ui5-cc-spreadsheetimporter
     devDependencies:
       eslint:
         specifier: ^8.41.0
@@ -748,7 +700,7 @@ importers:
         specifier: ^9.0.0
         version: 9.0.0(puppeteer@20.7.2)
 
-  packages/ui5-cc-excelUpload-Generator:
+  packages/ui5-cc-spreadsheetimporter-generator:
     dependencies:
       '@sap-ux/axios-extension':
         specifier: 1.2.5
@@ -832,23 +784,11 @@ packages:
       '@jridgewell/trace-mapping': 0.3.18
     dev: true
 
-  /@babel/code-frame@7.21.4:
-    resolution: {integrity: sha512-LYvhNKfwWSPpocw8GI7gpK2nq3HSDuEPC/uSYaALSJu9xjsalaaYFOq0Pwt5KmVqwEbZlDu81aLXwBOmD/Fv9g==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      '@babel/highlight': 7.22.5
-    dev: true
-
   /@babel/code-frame@7.22.5:
     resolution: {integrity: sha512-Xmwn266vad+6DAqEB2A6V/CcZVp62BbwVmcOJc2RPuwih1kw02TjQvWVWlcKGbBPd+8/0V5DEkOcizRGYsspYQ==}
     engines: {node: '>=6.9.0'}
     dependencies:
       '@babel/highlight': 7.22.5
-
-  /@babel/compat-data@7.22.3:
-    resolution: {integrity: sha512-aNtko9OPOwVESUFp3MZfD8Uzxl7JzSeJpd7npIoxCasU37PFbAQRpKglkaKwlHOyeJdrREpo8TW8ldrkYWwvIQ==}
-    engines: {node: '>=6.9.0'}
-    dev: true
 
   /@babel/compat-data@7.22.5:
     resolution: {integrity: sha512-4Jc/YuIaYqKnDDz892kPIledykKg12Aw1PYX5i/TY28anJtacvM1Rrr8wbieB9GfEJwlzqT0hUEao0CxEebiDA==}
@@ -876,16 +816,6 @@ packages:
       semver: 6.3.0
     transitivePeerDependencies:
       - supports-color
-    dev: true
-
-  /@babel/generator@7.22.3:
-    resolution: {integrity: sha512-C17MW4wlk//ES/CJDL51kPNwl+qiBQyN7b9SKyVp11BLGFeSPoVaHrv+MNt8jwQFhQWowW88z1eeBx3pFz9v8A==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      '@babel/types': 7.22.5
-      '@jridgewell/gen-mapping': 0.3.3
-      '@jridgewell/trace-mapping': 0.3.18
-      jsesc: 2.5.2
     dev: true
 
   /@babel/generator@7.22.5:
@@ -1131,14 +1061,6 @@ packages:
       chalk: 2.4.2
       js-tokens: 4.0.0
 
-  /@babel/parser@7.22.4:
-    resolution: {integrity: sha512-VLLsx06XkEYqBtE5YGPwfSGwfrjnyPP5oiGty3S8pQLFDFLaS8VwWSIxkTXpcvr5zeYLE6+MBNl2npl/YnfofA==}
-    engines: {node: '>=6.0.0'}
-    hasBin: true
-    dependencies:
-      '@babel/types': 7.22.5
-    dev: true
-
   /@babel/parser@7.22.5:
     resolution: {integrity: sha512-DFZMC9LJUG9PLOclRC32G63UXwzqS2koQC8dkx+PLdmt1xSePYpbT/NbsrJy8Q/muXz7o/h/d4A7Fuyixm559Q==}
     engines: {node: '>=6.0.0'}
@@ -1282,16 +1204,6 @@ packages:
       '@babel/helper-plugin-utils': 7.22.5
     dev: true
 
-  /@babel/plugin-syntax-jsx@7.21.4(@babel/core@7.22.5):
-    resolution: {integrity: sha512-5hewiLct5OKyh6PLKEYaFclcqtIgCb6bmELouxjF6up5q3Sov7rOayW4RwhbaBL0dit8rA80GNfY+UuDp2mBbQ==}
-    engines: {node: '>=6.9.0'}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-    dependencies:
-      '@babel/core': 7.22.5
-      '@babel/helper-plugin-utils': 7.22.5
-    dev: true
-
   /@babel/plugin-syntax-jsx@7.22.5(@babel/core@7.22.5):
     resolution: {integrity: sha512-gvyP4hZrgrs/wWMaocvxZ44Hw0b3W8Pe+cMxc8V1ULQ07oh8VNbIRaoD1LRZVTvD+0nieDKjfgKg89sD7rrKrg==}
     engines: {node: '>=6.9.0'}
@@ -1368,16 +1280,6 @@ packages:
 
   /@babel/plugin-syntax-top-level-await@7.14.5(@babel/core@7.22.5):
     resolution: {integrity: sha512-hx++upLv5U1rgYfwe1xBQUhRmU41NEvpUvrp8jkrSCdvGSnM5/qdRMtylJ6PG5OFkBaHkbTAKTnd3/YyESRHFw==}
-    engines: {node: '>=6.9.0'}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-    dependencies:
-      '@babel/core': 7.22.5
-      '@babel/helper-plugin-utils': 7.22.5
-    dev: true
-
-  /@babel/plugin-syntax-typescript@7.21.4(@babel/core@7.22.5):
-    resolution: {integrity: sha512-xz0D39NvhQn4t4RNsHmDnnsaQizIlUkdtYvLs8La1BlfjQ6JEwxkJGeqJMW2tAXx+q6H+WFuUTXNdYVpEya0YA==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
@@ -2117,24 +2019,6 @@ packages:
       '@babel/types': 7.22.5
     dev: true
 
-  /@babel/traverse@7.22.4:
-    resolution: {integrity: sha512-Tn1pDsjIcI+JcLKq1AVlZEr4226gpuAQTsLMorsYg9tuS/kG7nuwwJ4AB8jfQuEgb/COBwR/DqJxmoiYFu5/rQ==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      '@babel/code-frame': 7.22.5
-      '@babel/generator': 7.22.5
-      '@babel/helper-environment-visitor': 7.22.5
-      '@babel/helper-function-name': 7.22.5
-      '@babel/helper-hoist-variables': 7.22.5
-      '@babel/helper-split-export-declaration': 7.22.5
-      '@babel/parser': 7.22.5
-      '@babel/types': 7.22.5
-      debug: 4.3.4(supports-color@8.1.1)
-      globals: 11.12.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
   /@babel/traverse@7.22.5:
     resolution: {integrity: sha512-7DuIjPgERaNo6r+PZwItpjCZEa5vyw4eJGufeLxrPdBXBoLcCJCIasvK6pK/9DVNrLZTLFhUGqaC6X/PA007TQ==}
     engines: {node: '>=6.9.0'}
@@ -2151,15 +2035,6 @@ packages:
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
-    dev: true
-
-  /@babel/types@7.22.4:
-    resolution: {integrity: sha512-Tx9x3UBHTTsMSW85WB2kphxYQVvrZ/t1FxD88IpSgIjiUJlCm9z+xWIDwyo1vffTwSqteqyznB8ZE9vYYk16zA==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      '@babel/helper-string-parser': 7.22.5
-      '@babel/helper-validator-identifier': 7.22.5
-      to-fast-properties: 2.0.0
     dev: true
 
   /@babel/types@7.22.5:
@@ -5199,7 +5074,7 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0-0
     dependencies:
-      '@babel/compat-data': 7.22.3
+      '@babel/compat-data': 7.22.5
       '@babel/core': 7.22.5
       '@babel/helper-define-polyfill-provider': 0.4.0(@babel/core@7.22.5)
       semver: 6.3.0
@@ -5232,16 +5107,6 @@ packages:
 
   /babel-plugin-transform-async-to-promises@0.8.18:
     resolution: {integrity: sha512-WpOrF76nUHijnNn10eBGOHZmXQC8JYRME9rOLxStOga7Av2VO53ehVFvVNImMksVtQuL2/7ZNxEgxnx7oo/3Hw==}
-    dev: true
-
-  /babel-plugin-transform-modules-ui5@7.2.0:
-    resolution: {integrity: sha512-yKmuUTTlISkHIKbn3rNx/ReWXkkjuY+kxTCzX6gSEGpUJDTbS12LV00ehsm+cPPKnVXoiJYLMX/A5GGHcD57tg==}
-    engines: {node: '>=6'}
-    dependencies:
-      array-flatten: 3.0.0
-      doctrine: 3.0.0
-      ignore-case: 0.1.0
-      object-assign-defined: 1.0.2
     dev: true
 
   /babel-plugin-transform-modules-ui5@7.2.1:
@@ -5292,7 +5157,7 @@ packages:
   /babel-preset-transform-ui5@7.2.0:
     resolution: {integrity: sha512-6iYLqDJtsutUmf2tQyV7oyodLLBFBR3BN+xCjYBbFLh8hheXwTvkpuGJj2RBq67dzZQrxy5hdJr98dgR76b4zQ==}
     dependencies:
-      babel-plugin-transform-modules-ui5: 7.2.0
+      babel-plugin-transform-modules-ui5: 7.2.1
     dev: true
 
   /babel-preset-transform-ui5@7.2.1:
@@ -9275,7 +9140,7 @@ packages:
     resolution: {integrity: sha512-Kijeg9Dag6CKtIDA7O21zNTACqD5MD/8HfIV8pdD94vFyFuer52SigdC3IQMhab3vACxXMiFk+yMHNdbqtyTGA==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
-      '@babel/code-frame': 7.21.4
+      '@babel/code-frame': 7.22.5
       '@jest/types': 29.5.0
       '@types/stack-utils': 2.0.1
       chalk: 4.1.2
@@ -9420,11 +9285,11 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@babel/core': 7.22.5
-      '@babel/generator': 7.22.3
-      '@babel/plugin-syntax-jsx': 7.21.4(@babel/core@7.22.5)
-      '@babel/plugin-syntax-typescript': 7.21.4(@babel/core@7.22.5)
-      '@babel/traverse': 7.22.4
-      '@babel/types': 7.22.4
+      '@babel/generator': 7.22.5
+      '@babel/plugin-syntax-jsx': 7.22.5(@babel/core@7.22.5)
+      '@babel/plugin-syntax-typescript': 7.22.5(@babel/core@7.22.5)
+      '@babel/traverse': 7.22.5
+      '@babel/types': 7.22.5
       '@jest/expect-utils': 29.5.0
       '@jest/transform': 29.5.0
       '@jest/types': 29.5.0
@@ -9559,7 +9424,7 @@ packages:
     engines: {node: '>=12.0.0'}
     hasBin: true
     dependencies:
-      '@babel/parser': 7.22.4
+      '@babel/parser': 7.22.5
       '@jsdoc/salty': 0.2.5
       '@types/markdown-it': 12.2.3
       bluebird: 3.7.2
