@@ -55,7 +55,7 @@ function replaceVersionInExamples(versionSlash, version, ui5Apps, versionButton,
 		// add to every app even if it is not used
 		updatedResourceRoots[`cc.spreadsheetimporter.button.${versionUnderscoreButton}`] = `./thirdparty/customControl/spreadsheetImporterButton/${versionUnderscoreButton}`;
 		manifestData["sap.ui5"].resourceRoots = updatedResourceRoots
-		manifestData["sap.ui5"]["componentUsages"]["spreadsheetImporterUpload"].name = `cc.spreadsheetimporter.${version}`;
+		manifestData["sap.ui5"]["componentUsages"]["spreadsheetImporter"].name = `cc.spreadsheetimporter.${version}`;
 		// Stringify manifest data back to string
 		manifestData = JSON.stringify(manifestData, null, 2);
 		// Write back manifest file

@@ -7,6 +7,7 @@ dist
 .DS_Store
 archive.zip
 package-lock.json
+packages/ui5-cc-spreadsheetimporter/webapp
 # test apps start
 /examples/packages/ordersv2fe96
 /examples/packages/ordersv2fe84
