@@ -16,9 +16,9 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /home/ui5-cc-spreadsheetimporter/
+            cd /home/ui5-cc-excelUpload/
             git fetch --all
             git pull
             npm run build
-            cd /home/ui5-cc-spreadsheetimporter/examples/packages/ordersv4fe
+            cd /home/ui5-cc-excelUpload/examples/packages/ordersv4fe
             npm run build
