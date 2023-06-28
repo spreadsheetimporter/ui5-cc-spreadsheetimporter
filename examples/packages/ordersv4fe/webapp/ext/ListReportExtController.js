@@ -58,6 +58,15 @@ sap.ui.define([], function () {
 			}
 			this.spreadsheetUpload.openSpreadsheetUploadDialog();
 			this.editFlow.getView().setBusy(false);
+		},
+
+		openLanding: function (oEvent) {
+			window.open("https://spreadsheet-importer.com/", "_blank");
+		},
+		
+		openDocs: function (oEvent) {
+			window.open("https://docs.spreadsheet-importer.com/", "_blank");
 		}
+
 	};
 });

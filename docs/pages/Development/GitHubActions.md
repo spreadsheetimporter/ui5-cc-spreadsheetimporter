@@ -4,7 +4,7 @@ The GitHub Actions `docs` is defined in the [`pushDocs.yml`](https://github.com/
 The content of docs is in the [`docs`](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/tree/main/docs) folder and the config file is [`mkdocs.yml`](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/mkdocs.yml).
 
 In a ubuntu enviroment, the workflow will setup python and install `mkdocs-material` and `mkdocs-minify-plugin`.  
-With `mkdocs gh-deploy --force` the docs site will be pushed to the `gh-docs` branch and then published with GitHub Pages to https://spreadsheet-importer.com/ .
+With `mkdocs gh-deploy --force` the docs site will be pushed to the `gh-docs` branch and then published with GitHub Pages to https://docs.spreadsheet-importer.com/ .
 
 ## wdi5
 

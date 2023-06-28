@@ -9,7 +9,7 @@ It enables the bulk upload of data, independent of the backend, OData version, a
 Rather than submitting the file, the control only submits the extracted data.  
 The control's integration aims for simplicity, requiring minimal to no configuration in the ideal scenario.
 
-Our goal is to support as many Fiori Scenarios and UI5 Versions as possible. You can see the currently [supported versions here](https://spreadsheet-importer.com/pages/SupportVersions/).
+Our goal is to support as many Fiori Scenarios and UI5 Versions as possible. You can see the currently [supported versions here](https://docs.spreadsheet-importer.com/pages/SupportVersions/).
 
 ![Spreadsheet Upload Dialog](/images/SpreadsheetUploadDialog.png "Spreadsheet Upload Dialog")
 
@@ -17,7 +17,7 @@ Our goal is to support as many Fiori Scenarios and UI5 Versions as possible. You
 
 For documentation, please visit:
 
-https://spreadsheet-importer.com/
+https://docs.spreadsheet-importer.com/
 
 ## Live Demo
 
@@ -37,7 +37,7 @@ For urgent assistance or special requirements, please schedule an appointment [h
 
 The development documentation can be found here:
 
-https://spreadsheet-importer.com/pages/Development/GettingStarted/
+https://docs.spreadsheet-importer.com/pages/Development/GettingStarted/
 
 # Changelogs
 

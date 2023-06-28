@@ -6,6 +6,7 @@
 This component provides functionality for the bulk upload of data and the quick creation of records, with support for standard identification. Its use is independent of the backend, OData version, and Fiori scenario. Importing data is achieved by reading Spreadsheet files and utilizing standard digital APIs. The component does not submit the file itself, but instead submits the data extracted from the Spreadsheet files. Its integration is designed to be as simple as possible, ideally requiring no configuration.
 
 [**Get Started**](./pages/GettingStarted.md){: .md-button .md-button--primary .sap-icon-initiative }
+[**Live Demo**](https://livedemo.spreadsheet-importer.com/){: .md-button .md-button--secondary .sap-icon-initiative }
 
 For information about the currently supported OData and UI5 Versions, click [here](./pages/SupportVersions.md).  
 A quick integration tutorial for this component is available on YouTube [here](https://www.youtube.com/watch?v=dODt9ZWmi4A).
