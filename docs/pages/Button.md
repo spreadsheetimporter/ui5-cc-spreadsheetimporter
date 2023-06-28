@@ -41,7 +41,7 @@ npm install ui5-cc-spreadsheetimporter-button
    
 ⚠️ You must always keep your ui5-cc-spreadsheetimporter and button version up to date here when updating the module.  
 Check on npmjs which ui5-cc-spreadsheetimporter version is used by the button version you want to use:   
-https://www.npmjs.com/package/ui5-cc-spreadsheetimporter-button/v/0.4.4?activeTab=code
+https://www.npmjs.com/package/ui5-cc-spreadsheetimporter-button?activeTab=code
 
 ````json
 "resourceRoots": {
