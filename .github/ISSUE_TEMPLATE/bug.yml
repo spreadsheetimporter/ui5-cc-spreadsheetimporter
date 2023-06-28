@@ -56,7 +56,7 @@ body:
     id: logs
     attributes:
       label: Relevant log output
-      description: Please attach the log output described [here](https://spreadsheet-importer.com/pages/Troubleshooting/#activate-debug-mode-and-copy-error-messages)
+      description: Please attach the log output described [here](https://docs.spreadsheet-importer.com/pages/Troubleshooting/#activate-debug-mode-and-copy-error-messages)
       render: shell
     validations:
       required: true
@@ -64,7 +64,7 @@ body:
     id: init
     attributes:
       label: Spreadsheet Component Init
-      description: Please copy here how you initialize the ui5 component including all options like show [here](https://spreadsheet-importer.com/pages/GettingStarted/#extension-in-manifestjson).
+      description: Please copy here how you initialize the ui5 component including all options like show [here](https://docs.spreadsheet-importer.com/pages/GettingStarted/#extension-in-manifestjson).
       render: js
     validations:
       required: true

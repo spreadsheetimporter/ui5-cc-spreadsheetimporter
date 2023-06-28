@@ -2,4 +2,4 @@
 
 ## Documentation
 
-https://spreadsheet-importer.com/pages/Generator/
+https://docs.spreadsheet-importer.com/pages/Generator/

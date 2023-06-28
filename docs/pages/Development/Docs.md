@@ -26,4 +26,4 @@ and then open http://localhost:8000/ui5-cc-spreadsheetimporter/
 ### Prod Build
 
 The Documentation is hosted on GitHub Pages and is rebuild on every push to `main` with the GitHub Action [`pushDocs.yml`](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/.github/workflows/pushDocs.yml) and forced pushed to the `gh-deploy` branch.  
-The current URL is: https://spreadsheet-importer.com/
+The current URL is: https://docs.spreadsheet-importer.com/

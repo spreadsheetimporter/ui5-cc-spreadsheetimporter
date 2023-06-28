@@ -221,9 +221,9 @@ The package was renamed from `ui5-cc-excelupload` to `ui5-cc-spreadsheetimporter
 * add Support for OpenUI5 ([#97](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/97)) ([9f1ed6c](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/9f1ed6c471c9d42e70fa265340df7c2dcaaa1ab3))
   * including [Sample App for OpenUI5](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/tree/main/examples/packages/ordersv2freestylenondraftopenui5) and wdi5 Tests
 * improve checks for all Edm Types ([#105](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/105)) ([dc91ee2](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/dc91ee252e1b9c2d204a1486ff8cf1f13ec3109e))
-  * Documentation for the improved Error Handling can be found [here](https://spreadsheet-importer.com/pages/Checks/)
+  * Documentation for the improved Error Handling can be found [here](https://docs.spreadsheet-importer.com/pages/Checks/)
 * improved checks on the data formats and error handling ([#103](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/103)) ([801cfcb](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/801cfcb9b5ed24807144707d03d1db5b0247178e))
-  * Improvements for custom error handling. Documentation can be found [here](https://spreadsheet-importer.com/pages/Events/#check-data-before-upload-to-app)
+  * Improvements for custom error handling. Documentation can be found [here](https://docs.spreadsheet-importer.com/pages/Events/#check-data-before-upload-to-app)
 * new automatically translated languages added ([#107](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/107)) ([477e899](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/477e899d0dbd91149b2bad608bc12579e5ef6ac4))
   * the english language was automatic translated to following languages: `Chinese`, `French`, `Spanish`, `Italien`, `Hindi`, `Japanese`
 
@@ -308,7 +308,7 @@ The package was renamed from `ui5-cc-excelupload` to `ui5-cc-spreadsheetimporter
 **Breaking Changes**
 
 Changes involving in the manifest and custom code implementation.  
-See [Documenation](https://spreadsheet-importer.com/pages/GettingStarted/#general-setup)
+See [Documenation](https://docs.spreadsheet-importer.com/pages/GettingStarted/#general-setup)
 ### Bug Fixes
 
 * component-preload.js and componentUsages in examples apps ([#40](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/40)) ([33c6e88](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/33c6e880b32b13d36638e6dfaddbf69cd5263701))
@@ -333,7 +333,7 @@ See [Documenation](https://spreadsheet-importer.com/pages/GettingStarted/#genera
 ### Features
 
 Created compatibility and wdi5 tests for List Report and Object Page in Draft Mode for OData V2 (Versions 108,96,84,71) and OData V4 (Versions 108,96,84)  
-More info see [Supported Versions](https://spreadsheet-importer.com/pages/SupportVersions/)
+More info see [Supported Versions](https://docs.spreadsheet-importer.com/pages/SupportVersions/)
 
 * compatibility/wdi5 tests with v2 FE 96/84/71 ([3f010d9](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/3f010d9a1a360702972552b647f8f20368d72640))
 * support for v4 96/84 ([#16](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/16)) ([109813f](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/109813f8e20acc16d351da04c80b0208b90008c7))
@@ -359,7 +359,7 @@ More info see [Supported Versions](https://spreadsheet-importer.com/pages/Suppor
 **Breaking Changes**
 
 Changes involving in the manifest and custom code implementation.  
-See [Documenation](https://spreadsheet-importer.com/pages/GettingStarted/#general-setup)
+See [Documenation](https://docs.spreadsheet-importer.com/pages/GettingStarted/#general-setup)
 
 ### Features
 
