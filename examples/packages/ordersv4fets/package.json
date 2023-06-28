@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "@ui5/cli": "^3.0.0",
-    "@sap/ux-ui5-tooling": "1",
+    "@sap/ux-ui5-tooling": "1.10.1",
     "@sap/ux-specification": "UI5-1.108",
     "@sapui5/ts-types-esm": "~1.108.0",
     "ui5-tooling-transpile": "^0.7.13",
