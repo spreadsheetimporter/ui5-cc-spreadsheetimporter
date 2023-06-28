@@ -72,6 +72,26 @@
   * dependencies
     * ui5-cc-spreadsheetimporter bumped from 0.19.0 to 0.19.1
 
+## [0.9.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-spreadsheetimporter-button-v0.8.0...ui5-cc-spreadsheetimporter-button-v0.9.0) (2023-06-28)
+
+
+### ⚠ BREAKING CHANGES
+
+The package was renamed from `ui5-cc-excelupload-button` to `ui5-cc-spreadsheetimporter-button`!  
+
+* rename to spreadsheet importer (removing word `excel`) ([#282](https://github.com/marianfoo/ui5-cc-excelUpload/issues/282))
+
+### Features
+
+* rename to spreadsheet importer (removing word `excel`) ([#282](https://github.com/marianfoo/ui5-cc-excelUpload/issues/282)) ([e661c3e](https://github.com/marianfoo/ui5-cc-excelUpload/commit/e661c3ea509c6a8cc5631a24587ea7901eb504a3))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * ui5-cc-spreadsheetimporter bumped from 0.20.0 to 0.21.0
+
 ## [0.8.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-button-v0.7.1...ui5-cc-spreadsheetimporter-button-v0.8.0) (2023-06-27)
 
 

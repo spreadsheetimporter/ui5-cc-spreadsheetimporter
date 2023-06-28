@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.21.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-spreadsheetimporter-v0.20.0...ui5-cc-spreadsheetimporter-v0.21.0) (2023-06-28)
+
+
+### ⚠ BREAKING CHANGES
+
+The package was renamed from `ui5-cc-excelupload` to `ui5-cc-spreadsheetimporter`!  
+
+* rename to spreadsheet importer (removing word `excel`) ([#282](https://github.com/marianfoo/ui5-cc-excelUpload/issues/282))
+
+### Features
+
+* rename to spreadsheet importer (removing word `excel`) ([#282](https://github.com/marianfoo/ui5-cc-excelUpload/issues/282)) ([e661c3e](https://github.com/marianfoo/ui5-cc-excelUpload/commit/e661c3ea509c6a8cc5631a24587ea7901eb504a3))
+
 ## [0.20.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.19.1...ui5-cc-spreadsheetimporter-v0.20.0) (2023-06-27)
 
 

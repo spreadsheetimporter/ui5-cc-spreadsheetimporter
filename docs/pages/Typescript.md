@@ -22,11 +22,11 @@ Add the component usage and the resource roots to the manifest.json as described
 ```json
         "componentUsages": {
             "spreadsheetImporter": {
-                "name": "cc.spreadsheetimporter.v0_20_0"
+                "name": "cc.spreadsheetimporter.v0_21_0"
             }
         },
         "resourceRoots": {
-            "cc.spreadsheetimporter.v0_20_0": "./thirdparty/customControl/spreadsheetImporter/v0_20_0"
+            "cc.spreadsheetimporter.v0_21_0": "./thirdparty/customControl/spreadsheetImporter/v0_20_0"
         },
 ```
 ### Custom Action
