@@ -36,41 +36,47 @@ function replaceSomething(copyFrom, copyTo, files, from, to) {
 // replace version in examples folder
 function replaceVersionInExamples(versionSlash, version, ui5Apps, versionButton, versionUnderscoreButton) {
 	let manifests = [];
+	let rootPath = "examples/packages/server/app/ordersv4fe/";
+	replaceVersioninApp(app, version, versionSlash, versionUnderscoreButton, rootPath);
 	ui5Apps.forEach((app) => {
 		let rootPath = "examples/packages/" + app + "/";
-		let path = rootPath + "webapp/manifest.json";
-		// Read the contents of the package.json file
-		let manifest = fs.readFileSync(path, "utf8");
-		// Parse the JSON content
-		let manifestData = JSON.parse(manifest);
-		// Replace with current version
-		const resourceRoots = manifestData["sap.ui5"].resourceRoots;
-		const updatedResourceRoots = {};
-		Object.keys(resourceRoots)
-			.filter(key => !key.startsWith("cc.spreadsheetimporter"))
-			.forEach(key => {
-				updatedResourceRoots[key] = resourceRoots[key];
-			});
-		updatedResourceRoots[`cc.spreadsheetimporter.${version}`] = `./thirdparty/customControl/spreadsheetImporter/${versionSlash}`;
-		// add to every app even if it is not used
-		updatedResourceRoots[`cc.spreadsheetimporter.button.${versionUnderscoreButton}`] = `./thirdparty/customControl/spreadsheetImporterButton/${versionUnderscoreButton}`;
-		manifestData["sap.ui5"].resourceRoots = updatedResourceRoots
-		manifestData["sap.ui5"]["componentUsages"]["spreadsheetImporter"].name = `cc.spreadsheetimporter.${version}`;
-		// Stringify manifest data back to string
-		manifestData = JSON.stringify(manifestData, null, 2);
-		// Write back manifest file
-		fs.writeFileSync(path, manifestData, "utf8");
-		if (app.startsWith("ordersv2freestylenondraft")) {
-			replaceVersionInXML(rootPath,"webapp/view/Detail.view.xml", versionUnderscoreButton);
-			replaceVersionInXML(rootPath,"webapp/view/List.view.xml", versionUnderscoreButton);
-		}
-		if (app === "ordersv2freestylenondraft") {
-			replaceVersionInXML(rootPath,"webapp/view/UploadToTable.view.xml", versionUnderscoreButton);
-		}
-		if (app.startsWith("ordersv4fpm")) {
-			replaceVersionInXML(rootPath,"webapp/ext/main/Main.view.xml", versionUnderscoreButton);
-		}
+		replaceVersioninApp(app, version, versionSlash, versionUnderscoreButton, rootPath);
 	});
+}
+
+function replaceVersioninApp(app, version, versionSlash, versionUnderscoreButton, rootPath) {
+	let path = rootPath + "webapp/manifest.json";
+	// Read the contents of the package.json file
+	let manifest = fs.readFileSync(path, "utf8");
+	// Parse the JSON content
+	let manifestData = JSON.parse(manifest);
+	// Replace with current version
+	const resourceRoots = manifestData["sap.ui5"].resourceRoots;
+	const updatedResourceRoots = {};
+	Object.keys(resourceRoots)
+		.filter(key => !key.startsWith("cc.spreadsheetimporter"))
+		.forEach(key => {
+			updatedResourceRoots[key] = resourceRoots[key];
+		});
+	updatedResourceRoots[`cc.spreadsheetimporter.${version}`] = `./thirdparty/customControl/spreadsheetImporter/${versionSlash}`;
+	// add to every app even if it is not used
+	updatedResourceRoots[`cc.spreadsheetimporter.button.${versionUnderscoreButton}`] = `./thirdparty/customControl/spreadsheetImporterButton/${versionUnderscoreButton}`;
+	manifestData["sap.ui5"].resourceRoots = updatedResourceRoots;
+	manifestData["sap.ui5"]["componentUsages"]["spreadsheetImporter"].name = `cc.spreadsheetimporter.${version}`;
+	// Stringify manifest data back to string
+	manifestData = JSON.stringify(manifestData, null, 2);
+	// Write back manifest file
+	fs.writeFileSync(path, manifestData, "utf8");
+	if (app.startsWith("ordersv2freestylenondraft")) {
+		replaceVersionInXML(rootPath, "webapp/view/Detail.view.xml", versionUnderscoreButton);
+		replaceVersionInXML(rootPath, "webapp/view/List.view.xml", versionUnderscoreButton);
+	}
+	if (app === "ordersv2freestylenondraft") {
+		replaceVersionInXML(rootPath, "webapp/view/UploadToTable.view.xml", versionUnderscoreButton);
+	}
+	if (app.startsWith("ordersv4fpm")) {
+		replaceVersionInXML(rootPath, "webapp/ext/main/Main.view.xml", versionUnderscoreButton);
+	}
 }
 
 function replaceVersionInXML(rootPath, filePath, versionUnderscoreButton) {

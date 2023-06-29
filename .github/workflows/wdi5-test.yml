@@ -96,13 +96,23 @@ jobs:
         run: |
           npm run start:server&
 
+      
       - name: start app ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
+        if: matrix.scenario != 'ordersv4fecds'
         run: |
           pnpm --filter ${{ matrix.scenario }}${{ matrix.ui5version }} start:silent&
 
       # run wdi5 tests
       - name: test wdi5 ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
+        if: matrix.scenario != 'ordersv4fecds'
         run: |
           while ! nc -z localhost 4004; do sleep 0.1; done
           while ! nc -z localhost ${{ env.TESTAPPPORT }}; do sleep 0.1; done
+          pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- --headless ${{ matrix.scenario }} ${{ matrix.ui5version }}
+
+      # special case for ordersv4fecds
+      - name: test wdi5 ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
+        if: matrix.scenario == 'ordersv4fecds'
+        run: |
+          while ! nc -z localhost 4004; do sleep 0.1; done
           pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- --headless ${{ matrix.scenario }} ${{ matrix.ui5version }}

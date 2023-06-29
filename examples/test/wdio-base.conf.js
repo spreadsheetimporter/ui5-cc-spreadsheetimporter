@@ -1,3 +1,4 @@
+const { escape } = require("querystring");
 const util = require("./../../dev/util");
 let scenario = "";
 let version = 0;
@@ -13,12 +14,18 @@ for (let index = 0; index < process.argv.length; index++) {
 const testappObject = util.getTestappObject(scenario, version);
 const specs = testappObject["testMapping"]["specs"];
 const port = testappObject.port;
+let baseUrl;
+if (scenario !== "ordersv4fecds") {
+	baseUrl = `http://localhost:${port}/index.html?sap-language=EN`;
+} else {
+	baseUrl = "http://localhost:4004/ui.v4.ordersv4fe/index.html";
+}
 
 module.exports.config = {
 	wdi5: {
-        logLevel: "error",
-        waitForUI5Timeout: 29000
-    },
+		logLevel: "error",
+		waitForUI5Timeout: 29000
+	},
 	scenario: scenario,
 	specs: specs,
 	exclude: [
@@ -44,7 +51,7 @@ module.exports.config = {
 	],
 	logLevel: "error",
 	bail: 0,
-	baseUrl: `http://localhost:${port}/index.html?sap-language=EN`,
+	baseUrl: baseUrl,
 	waitforTimeout: 20000,
 	connectionRetryTimeout: process.argv.indexOf("--debug") > -1 ? 1200000 : 120000,
 	connectionRetryCount: 3,
