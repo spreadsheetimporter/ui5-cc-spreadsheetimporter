@@ -152,8 +152,8 @@ importers:
         specifier: ^1.108.6
         version: 1.108.7
       '@sap/ux-ui5-tooling':
-        specifier: ^1.9.7
-        version: 1.9.7
+        specifier: 1.10.1
+        version: 1.10.1
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
@@ -171,8 +171,8 @@ importers:
         specifier: ^1.108.6
         version: 1.108.7
       '@sap/ux-ui5-tooling':
-        specifier: ^1.9.7
-        version: 1.9.7
+        specifier: 1.10.1
+        version: 1.10.1
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
@@ -190,8 +190,8 @@ importers:
         specifier: ^1.108.6
         version: 1.108.7
       '@sap/ux-ui5-tooling':
-        specifier: ^1.9.7
-        version: 1.9.7
+        specifier: 1.10.1
+        version: 1.10.1
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
@@ -228,8 +228,8 @@ importers:
         specifier: ^1.108.6
         version: 1.108.7
       '@sap/ux-ui5-tooling':
-        specifier: ^1.9.7
-        version: 1.9.7
+        specifier: 1.10.1
+        version: 1.10.1
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
@@ -247,8 +247,8 @@ importers:
         specifier: ^1.108.6
         version: 1.108.7
       '@sap/ux-ui5-tooling':
-        specifier: ^1.9.7
-        version: 1.9.7
+        specifier: 1.10.1
+        version: 1.10.1
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
@@ -266,8 +266,8 @@ importers:
         specifier: ^1.108.6
         version: 1.108.7
       '@sap/ux-ui5-tooling':
-        specifier: ^1.9.7
-        version: 1.9.7
+        specifier: 1.10.1
+        version: 1.10.1
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
@@ -304,8 +304,8 @@ importers:
         specifier: ^2.1.101
         version: 2.1.101
       '@sap/ux-ui5-tooling':
-        specifier: ^1.9.7
-        version: 1.9.7
+        specifier: 1.10.1
+        version: 1.10.1
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
@@ -323,8 +323,8 @@ importers:
         specifier: ^2.1.101
         version: 2.1.101
       '@sap/ux-ui5-tooling':
-        specifier: ^1.9.7
-        version: 1.9.7
+        specifier: 1.10.1
+        version: 1.10.1
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
@@ -342,8 +342,8 @@ importers:
         specifier: ^2.1.101
         version: 2.1.101
       '@sap/ux-ui5-tooling':
-        specifier: ^1.9.7
-        version: 1.9.7
+        specifier: 1.10.1
+        version: 1.10.1
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
@@ -380,8 +380,8 @@ importers:
         specifier: ^2.1.101
         version: 2.1.101
       '@sap/ux-ui5-tooling':
-        specifier: ^1.9.7
-        version: 1.9.7
+        specifier: 1.10.1
+        version: 1.10.1
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
@@ -399,8 +399,8 @@ importers:
         specifier: ^2.1.101
         version: 2.1.101
       '@sap/ux-ui5-tooling':
-        specifier: ^1.9.7
-        version: 1.9.7
+        specifier: 1.10.1
+        version: 1.10.1
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
@@ -418,8 +418,8 @@ importers:
         specifier: ^2.1.101
         version: 2.1.101
       '@sap/ux-ui5-tooling':
-        specifier: ^1.9.7
-        version: 1.9.7
+        specifier: 1.10.1
+        version: 1.10.1
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
@@ -456,8 +456,8 @@ importers:
         specifier: ^1.108.6
         version: 1.108.7
       '@sap/ux-ui5-tooling':
-        specifier: ^1.9.7
-        version: 1.9.7
+        specifier: 1.10.1
+        version: 1.10.1
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
@@ -475,8 +475,8 @@ importers:
         specifier: ^1.108.6
         version: 1.108.7
       '@sap/ux-ui5-tooling':
-        specifier: ^1.9.7
-        version: 1.9.7
+        specifier: 1.10.1
+        version: 1.10.1
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
@@ -494,8 +494,8 @@ importers:
         specifier: ^1.108.6
         version: 1.108.7
       '@sap/ux-ui5-tooling':
-        specifier: ^1.9.7
-        version: 1.9.7
+        specifier: 1.10.1
+        version: 1.10.1
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
@@ -511,7 +511,7 @@ importers:
         version: 2.1.105
       '@sap/ux-specification':
         specifier: UI5-1.108
-        version: 1.108.7
+        version: 1.108.8
       '@sap/ux-ui5-tooling':
         specifier: 1.10.1
         version: 1.10.1
@@ -575,8 +575,8 @@ importers:
         specifier: ^1.108.6
         version: 1.108.7
       '@sap/ux-ui5-tooling':
-        specifier: ^1.9.7
-        version: 1.9.7
+        specifier: 1.10.1
+        version: 1.10.1
       '@ui5/cli':
         specifier: 3.1.3
         version: 3.1.3(bluebird@3.7.2)
@@ -597,7 +597,7 @@ importers:
         specifier: 0.1.4
         version: 0.1.4(@sap/cds@6.8.2)(bluebird@3.7.2)(express@4.18.2)
 
-  examples/packages/server/app/ordersv4fe:
+  examples/packages/server/app/ordersv4fecds:
     dependencies:
       ui5-cc-spreadsheetimporter:
         specifier: ./../../../../../packages/ui5-cc-spreadsheetimporter
@@ -608,7 +608,7 @@ importers:
         version: 2.1.101
       '@sap/ux-specification':
         specifier: ^1.108.6
-        version: 1.108.7
+        version: 1.108.8
       '@sap/ux-ui5-tooling':
         specifier: 1.10.1
         version: 1.10.1
@@ -3246,6 +3246,19 @@ packages:
       xpath: 0.0.32
     dev: true
 
+  /@sap-ux/fe-fpm-writer@0.22.1:
+    resolution: {integrity: sha512-JQw95P2TXkAnzFyZXGuodiFR1ryWl0jygTYBUh/WebGY1SRAHcoszMMNQXQF9D18aZ2F4NynDoAToFQC/9cHPg==}
+    engines: {node: '>= 14.16.0 < 15.0.0 || >=16.1.0 < 17.0.0 || >=18.0.0 < 19.0.0', pnpm: '>=6.26.1 < 7.0.0 || >=7.1.0'}
+    dependencies:
+      '@xmldom/xmldom': 0.8.6
+      ejs: 3.1.7
+      mem-fs: 2.1.0
+      mem-fs-editor: 9.4.0(mem-fs@2.1.0)
+      semver: 7.3.5
+      xml-formatter: 2.6.1
+      xpath: 0.0.32
+    dev: true
+
   /@sap-ux/fe-mockserver-core@1.1.102:
     resolution: {integrity: sha512-+BVUgpgnFYlext4Z8vKSTuMNdiXVx9m1RWjQSfSJ+3zf8qNykCJxk4fT+/+GUe11u0ir3Cg1NcsHtJV+4TAWMA==}
     dependencies:
@@ -3455,26 +3468,16 @@ packages:
       '@sap-ux/vocabularies-types': 0.7.4
     dev: true
 
-  /@sap/ux-ui5-tooling@1.10.1:
-    resolution: {integrity: sha512-KcS9kz020uXeVo1RNFlIb2J4MPpYEP/VlzJkIta+8gZfsS3qpQf7dTE8sxO4QijEwhmqQd6ueY17oBNMDX6EFg==}
-    hasBin: true
+  /@sap/ux-specification@1.108.8:
+    resolution: {integrity: sha512-vGReMI/x9QaXtDPdzaVd6lgjnvWJ7vNXN7bRZb8PHx6a0llpICD9Gd5fB0dY63zqgUJgVV02eWgY9Rcpp9+khQ==}
+    engines: {node: '>= 14.16.0 < 15.0.0 || >= 16.1.0 < 17.0.0 || >= 18.0.0 < 19.0.0 || >= 20.0.0', yarn: '>=1.22.19 < 2'}
     dependencies:
-      '@ui5/fs': 2.0.6
-      debug: 4.3.4(supports-color@8.1.1)
-      express: 4.17.3
-      livereload: 0.9.1
-      semver: 7.3.5
-      update-notifier-cjs: 5.1.5
-    optionalDependencies:
-      keytar: 7.9.0
-    transitivePeerDependencies:
-      - bufferutil
-      - supports-color
-      - utf-8-validate
+      '@sap-ux/fe-fpm-writer': 0.22.1
+      '@sap-ux/vocabularies-types': 0.7.4
     dev: true
 
-  /@sap/ux-ui5-tooling@1.9.7:
-    resolution: {integrity: sha512-h1JIXWZ73ilLuZswdSO0Auh24dIGg8Mdv7hkOdgNKhS+us3GtFf6ArYCQNFYHR+sDVy1Slg0cOnu4xEdmHoaXg==}
+  /@sap/ux-ui5-tooling@1.10.1:
+    resolution: {integrity: sha512-KcS9kz020uXeVo1RNFlIb2J4MPpYEP/VlzJkIta+8gZfsS3qpQf7dTE8sxO4QijEwhmqQd6ueY17oBNMDX6EFg==}
     hasBin: true
     dependencies:
       '@ui5/fs': 2.0.6

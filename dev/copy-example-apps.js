@@ -81,6 +81,9 @@ function copyApps(versionPathRoot, versionPathNew, version, port, versionName) {
 	if(version.split(".")[1] === "71"){
 		util.searchAndReplace(`${versionPathNew}/webapp/test/flpSandbox.html`,/<!-- only for 1.71 -->/g,`<script src="changes_preview.js"></script>`)
 	}
+	if(versionName.startsWith("ordersv4") && version.split(".")[1] === "84"){
+		util.searchAndReplace(`${versionPathNew}/webapp/ext/ListReportExtController.js`, /this.editFlow.getView\(\)/g, `this._view`);
+	}
 }
 
 // Read the .gitignore file
