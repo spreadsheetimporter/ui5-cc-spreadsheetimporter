@@ -12,14 +12,14 @@ function testAppsAction(action) {
 	let addToGitignore = [];
 	for (let index = 0; index < testAppData.length; index++) {
 		const rootApp = testAppData[index];
-		const rootAppPath = `./examples/packages/${rootApp.rootAppName}`;
+		const rootAppPath = `${rootApp.path}${rootApp.rootAppName}`;
 		const targetVersions = rootApp.copyVersions;
 		replaceInFile(rootAppPath +"/webapp/i18n/i18n.properties",rootApp.appTitel)
 		// change gitignore file before the copy action
 		for (let indey = 0; indey < targetVersions.length; indey++) {
 			const targetVersion = targetVersions[indey];
 			const versionName = rootApp.rootAppName + targetVersion.version.split(".")[1];
-			const versionPath = `./examples/packages/${versionName}`;
+			const versionPath = `${rootApp.path}${versionName}`;
 			addToGitignore.push(versionPath);
 		}
 		updateGitIgnore(action, addToGitignore);
@@ -27,7 +27,7 @@ function testAppsAction(action) {
 		for (let indey = 0; indey < targetVersions.length; indey++) {
 			const targetVersion = targetVersions[indey];
 			const versionName = rootApp.rootAppName + targetVersion.version.split(".")[1];
-			const versionPath = `./examples/packages/${versionName}`;
+			const versionPath = `${rootApp.path}${versionName}`;
 			if (action === "create") {
 				util.deleteFolderRecursive(versionPath);
 				copyApps(rootAppPath, versionPath, targetVersion.version, targetVersion.port, versionName);
