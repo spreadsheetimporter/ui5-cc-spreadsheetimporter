@@ -34,13 +34,14 @@
     "copyTestApps": "node ./dev/copy-example-apps.js create && pnpm i --no-frozen-lockfile --verbose",
     "deleteAllNodeModules": "node dev/util.js deleteNodeModules .",
     "deleteTestApps": "node ./dev/copy-example-apps.js  delete",
-    "deploy": "npm run build && fiori deploy --config ui5-deploy.yaml -y"
+    "deploy": "npm run build && fiori deploy --config ui5-deploy.yaml -y",
+    "runDocs" :"docker run --rm -it -p 8000:8000 -v ${PWD}:/docs squidfunk/mkdocs-material"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.5",
     "@commitlint/config-conventional": "^17.6.5",
     "@prettier/plugin-xml": "^2.2.0",
-    "@sap/ux-ui5-tooling": "1.10.0",
+    "@sap/ux-ui5-tooling": "1.10.1",
     "@sapui5/types": "1.115.0",
     "@types/node": "20.2.5",
     "@typescript-eslint/eslint-plugin": "^5.59.8",

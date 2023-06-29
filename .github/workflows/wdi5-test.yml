@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        scenario: ["ordersv2fe", "ordersv4fe", "ordersv2fenondraft", "ordersv2freestylenondraftopenui5", "ordersv2freestylenondraft", "ordersv4fets"]
+        scenario: ["ordersv2fe", "ordersv4fe", "ordersv2fenondraft", "ordersv2freestylenondraftopenui5", "ordersv2freestylenondraft", "ordersv4fets", "ordersv4fecds"]
         ui5version: [108, 96, 84, 71]
         exclude:
           - scenario: ordersv4fe
@@ -22,6 +22,12 @@ jobs:
           - scenario: ordersv4fets
             ui5version: 84
           - scenario: ordersv4fets
+            ui5version: 96
+          - scenario: ordersv4fecds
+            ui5version: 71
+          - scenario: ordersv4fecds
+            ui5version: 84
+          - scenario: ordersv4fecds
             ui5version: 96
 
     steps:
@@ -91,18 +97,34 @@ jobs:
         run: |
           npm i -g @sap/cds-dk
 
-      # run app
+      # run app      # wait for cap server to install ui5 component, remove when switch to fiori tools
       - name: start cap server
         run: |
           npm run start:server&
 
+      
       - name: start app ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
+        if: matrix.scenario != 'ordersv4fecds'
         run: |
           pnpm --filter ${{ matrix.scenario }}${{ matrix.ui5version }} start:silent&
 
       # run wdi5 tests
       - name: test wdi5 ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
+        if: matrix.scenario != 'ordersv4fecds'
         run: |
           while ! nc -z localhost 4004; do sleep 0.1; done
           while ! nc -z localhost ${{ env.TESTAPPPORT }}; do sleep 0.1; done
+          pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- --headless ${{ matrix.scenario }} ${{ matrix.ui5version }}
+
+      # special case for ordersv4fecds
+      - name: wait for ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
+        if: matrix.scenario == 'ordersv4fecds'
+        run: |
+          while ! nc -z localhost 4004; do sleep 0.1; done
+          while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:4004/ui.v4.ordersv4fe/index.html)" != "200" ]]; do sleep 5; done
+
+      # special case for ordersv4fecds
+      - name: test wdi5 ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
+        if: matrix.scenario == 'ordersv4fecds'
+        run: |
           pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- --headless ${{ matrix.scenario }} ${{ matrix.ui5version }}

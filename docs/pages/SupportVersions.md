@@ -19,9 +19,9 @@ More info at [wdi5 tests](./Development/wdi5.md)
 
 ### CAP V4
 
-| [List Report Draft](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv4fe/webapp/ext/ListReportExtController.js)  | [Object Page Draft](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv4fe/webapp/ext/ObjectPageExtController.js)  |  Freestyle | [Flexible Programming Model](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv4fpm/webapp/ext/main/Main.controller.js) |
-|---|---|---|---|
-| :white_check_mark:   | :white_check_mark: |  |  :white_check_mark:  |
+| [List Report Draft](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv4fe/webapp/ext/ListReportExtController.js)  | [Object Page Draft](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv4fe/webapp/ext/ObjectPageExtController.js)  |  Freestyle | [Flexible Programming Model](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv4fpm/webapp/ext/main/Main.controller.js) | [Typescript](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv4fets/webapp/ext/ListReportExtController.ts) | [CDS Plugin](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/server/app/ordersv4fecds/webapp/ext/ObjectPageExtController.js) |
+|---|---|---|---|---|---|
+| :white_check_mark:   | :white_check_mark: |  |  :white_check_mark:  | |  :white_check_mark:  | |  :white_check_mark:  |
 
 ## wdi5 Tests
 
@@ -39,8 +39,8 @@ More info at [wdi5 tests](./Development/wdi5.md)
 
 ### CAP V4
 
-| UI5 Version  | List Report Draft  | Object Page Draft  |  Freestyle | Flexible Programming Model |
-|---|---|---|---|---|
-| 1.108  |  :white_check_mark:  | :white_check_mark: |  |  |
-| 1.96  | :white_check_mark:  | :white_check_mark:  |   |   |
-|  1.84 |  :white_check_mark: | :white_check_mark:  |   |   |
+| UI5 Version  | List Report Draft  | Object Page Draft  |  Freestyle | Flexible Programming Model | Typescript | CDS Plugin|
+|---|---|---|---|---|---|---|
+| 1.108  |  :white_check_mark:  | :white_check_mark: |  |  |:white_check_mark:  |:white_check_mark:  |
+| 1.96  | :white_check_mark:  | :white_check_mark:  |   |   |   |   |
+|  1.84 |  :white_check_mark: | :white_check_mark:  |   |   |   |   |

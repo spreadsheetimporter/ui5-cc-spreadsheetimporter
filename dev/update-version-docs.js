@@ -4,6 +4,9 @@ const path = require('path');
 function updateVersionInContent(content, spreadsheetUploadVersion, spreadsheetUploadButtonVersion) {
   const spreadsheetImporterRegex = /(cc\.spreadsheetimporter\.|customControl\/spreadsheetimporter\/)v\d+_\d+_\d+/g;
   const spreadsheetImporterButtonRegex = /(cc\.spreadsheetimporter.button\.|customControl\/spreadsheetimporter.button\/)v\d+_\d+_\d+/g;
+  const thirdpartySpreadsheetImporterRegex = /(.\.\/thirdparty\/customControl\/spreadsheetImporter\/)v\d+_\d+_\d+/g;
+  const ccSpreadsheetImporterRegex = /(cc\/spreadsheetimporter\/)v\d+_\d+_\d+/g;
+
 
   content = content.replace(spreadsheetImporterRegex, (match, p1) => {
     return `${p1}${spreadsheetUploadVersion}`;
@@ -11,6 +14,14 @@ function updateVersionInContent(content, spreadsheetUploadVersion, spreadsheetUp
 
   content = content.replace(spreadsheetImporterButtonRegex, (match, p1) => {
     return `${p1}${spreadsheetUploadButtonVersion}`;
+  });
+  
+  content = content.replace(thirdpartySpreadsheetImporterRegex, (match, p1) => {
+    return `${p1}${spreadsheetUploadVersion}`;
+  });
+
+  content = content.replace(ccSpreadsheetImporterRegex, (match, p1) => {
+    return `${p1}${spreadsheetUploadVersion}`;
   });
 
   return content;
@@ -45,7 +56,7 @@ function updateVersionInDir(dirPath, spreadsheetUploadVersion, spreadsheetUpload
       const fullPath = path.join(dirPath, entry.name);
       if (entry.isDirectory()) {
         updateVersionInDir(fullPath, spreadsheetUploadVersion, spreadsheetUploadButtonVersion);
-      } else if (entry.isFile() && (path.extname(fullPath) === '.md') || (path.extname(fullPath) === '.js')) {
+      } else if (entry.isFile() && (path.extname(fullPath) === '.md') || (path.extname(fullPath) === '.js') || (path.extname(fullPath) === '.ts')) {
         updateVersionInFile(fullPath, spreadsheetUploadVersion, spreadsheetUploadButtonVersion);
       }
     });
