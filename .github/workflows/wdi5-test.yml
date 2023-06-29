@@ -97,11 +97,10 @@ jobs:
         run: |
           npm i -g @sap/cds-dk
 
-      # run app
+      # run app      # wait for cap server to install ui5 component, remove when switch to fiori tools
       - name: start cap server
         run: |
           npm run start:server&
-      # wait for cap server to install ui5 component, remove when switch to fiori tools
           sleep 20
 
       
