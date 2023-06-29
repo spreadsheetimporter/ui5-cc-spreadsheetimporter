@@ -23,6 +23,12 @@ jobs:
             ui5version: 84
           - scenario: ordersv4fets
             ui5version: 96
+          - scenario: ordersv4fecds
+            ui5version: 71
+          - scenario: ordersv4fecds
+            ui5version: 84
+          - scenario: ordersv4fecds
+            ui5version: 96
 
     steps:
       - name: update chrome
@@ -95,6 +101,8 @@ jobs:
       - name: start cap server
         run: |
           npm run start:server&
+      # wait for cap server to install ui5 component, remove when switch to fiori tools
+          sleep 20
 
       
       - name: start app ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
