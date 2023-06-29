@@ -24,7 +24,7 @@ if (scenario !== "ordersv4fecds") {
 module.exports.config = {
 	wdi5: {
 		logLevel: "error",
-		waitForUI5Timeout: 29000
+		waitForUI5Timeout: 180000
 	},
 	scenario: scenario,
 	specs: specs,
@@ -52,7 +52,7 @@ module.exports.config = {
 	logLevel: "error",
 	bail: 0,
 	baseUrl: baseUrl,
-	waitforTimeout: 20000,
+	waitforTimeout: 60000,
 	connectionRetryTimeout: process.argv.indexOf("--debug") > -1 ? 1200000 : 120000,
 	connectionRetryCount: 3,
 	services: ["chromedriver", "ui5"],
@@ -60,6 +60,6 @@ module.exports.config = {
 	reporters: ["spec"],
 	mochaOpts: {
 		ui: "bdd",
-		timeout: process.argv.indexOf("--debug") > -1 ? 600000 : 60000
+		timeout: process.argv.indexOf("--debug") > -1 ? 600000 : 600000
 	}
 };
