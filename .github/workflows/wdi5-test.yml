@@ -101,7 +101,7 @@ jobs:
       - name: start cap server
         run: |
           npm run start:server&
-          sleep 60
+          sleep 600
 
       
       - name: start app ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}

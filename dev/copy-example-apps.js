@@ -83,6 +83,7 @@ function copyApps(versionPathRoot, versionPathNew, version, port, versionName) {
 	}
 	if(versionName.startsWith("ordersv4") && version.split(".")[1] === "84"){
 		util.searchAndReplace(`${versionPathNew}/webapp/ext/ListReportExtController.js`, /this.editFlow.getView\(\)/g, `this._view`);
+		util.searchAndReplace(`${versionPathNew}/webapp/ext/ObjectPageExtController.js`, /this.editFlow.getView\(\)/g, `this._view`);
 	}
 }
 
