@@ -121,7 +121,7 @@ jobs:
         if: matrix.scenario == 'ordersv4fecds'
         run: |
           while ! nc -z localhost 4004; do sleep 0.1; done
-          while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:4004/ui.v4.ordersv4fe/index.html)" != "200" ]]; do sleep 5; done
+          while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:4004/ui.v4.ordersv4fecds/index.html)" != "200" ]]; do sleep 5; done
 
       # special case for ordersv4fecds
       - name: test wdi5 ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}

@@ -18,7 +18,7 @@ let baseUrl;
 if (scenario !== "ordersv4fecds") {
 	baseUrl = `http://localhost:${port}/index.html?sap-language=EN`;
 } else {
-	baseUrl = "http://localhost:4004/ui.v4.ordersv4fe/index.html";
+	baseUrl = "http://localhost:4004/ui.v4.ordersv4fecds/index.html";
 }
 
 module.exports.config = {
