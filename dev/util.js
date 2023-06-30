@@ -36,7 +36,7 @@ function replaceSomething(copyFrom, copyTo, files, from, to) {
 // replace version in examples folder
 function replaceVersionInExamples(versionSlash, version, ui5Apps, versionButton, versionUnderscoreButton) {
 	let manifests = [];
-	let rootPath = "examples/packages/server/app/ordersv4fe/";
+	let rootPath = "examples/packages/server/app/ordersv4fecds/";
 	replaceVersioninApp("ordersv4fecds", version, versionSlash, versionUnderscoreButton, rootPath);
 	ui5Apps.forEach((app) => {
 		let rootPath = "examples/packages/" + app + "/";
