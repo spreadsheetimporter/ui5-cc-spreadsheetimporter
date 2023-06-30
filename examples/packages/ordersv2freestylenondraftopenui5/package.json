@@ -14,8 +14,8 @@
     "ui5-cc-spreadsheetimporter-button": "./../../../packages/ui5-cc-spreadsheetimporter-button"
   },
   "devDependencies": {
-    "@sap-ux/ui5-middleware-fe-mockserver": "^2.1.111",
-    "@sap/ux-ui5-tooling": "1.10.0",
+    "@sap-ux/ui5-middleware-fe-mockserver": "^2.1.112",
+    "@sap/ux-ui5-tooling": "1.10.1",
     "@ui5/cli": "3.3.0"
   },
   "scripts": {
