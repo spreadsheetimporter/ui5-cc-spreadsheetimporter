@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/generator-ui5-spreadsheetimporter-v0.3.0...generator-ui5-spreadsheetimporter-v0.4.0) (2023-06-30)
+
+
+### Features
+
+* add button to ListReport ([85c45ef](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/85c45efd9c637a7a93f7d5f33224e5873acf1cde))
+
 ## [0.3.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/generator-ui5-spreadsheetimporter-v0.2.5...generator-ui5-spreadsheetimporter-v0.3.0) (2023-06-28)
 
 
