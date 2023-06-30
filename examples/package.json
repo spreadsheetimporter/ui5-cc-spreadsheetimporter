@@ -23,7 +23,7 @@
     "watch:server": "pnpm --filter @capire/orders watch",
     "test": "wdio run ./test/wdio-base.conf.js",
     "test:single": "npm run test -- ordersv2fe  96 --spec OpenSpreadsheetUploadDialog",
-    "ui5-test-runner" : "ui5-test-runner"
+    "ui5-test-runner": "ui5-test-runner"
   },
   "devDependencies": {
     "@wdio/cli": "v7",
