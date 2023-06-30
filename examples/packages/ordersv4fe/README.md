@@ -12,7 +12,7 @@
 |**Application Title**<br>ordersv4fe|
 |**Namespace**<br>ui.v4|
 |**UI5 Theme**<br>sap_horizon|
-|**UI5 Version**<br>1.108.14|
+|**UI5 Version**<br>1.108.19|
 |**Enable Code Assist Libraries**<br>False|
 |**Enable TypeScript**<br>False|
 |**Add Eslint configuration**<br>False|

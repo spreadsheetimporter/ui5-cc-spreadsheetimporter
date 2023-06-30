@@ -13,15 +13,15 @@
     "ui5-cc-spreadsheetimporter": "./../../../packages/ui5-cc-spreadsheetimporter"
   },
   "devDependencies": {
-    "@ui5/cli": "^3.0.0",
+    "@sap-ux/ui5-middleware-fe-mockserver": "^2.1.112",
+    "@sap/ux-specification": "^1.108.8",
     "@sap/ux-ui5-tooling": "1.10.1",
-    "@sap/ux-specification": "UI5-1.108",
     "@sapui5/ts-types-esm": "~1.108.0",
-    "ui5-tooling-transpile": "^0.7.13",
-    "typescript": "^4.6.3",
-    "@typescript-eslint/eslint-plugin": "^5.17.0",
-    "@typescript-eslint/parser": "^5.17.0",
-    "@sap-ux/ui5-middleware-fe-mockserver": "2"
+    "@typescript-eslint/eslint-plugin": "^5.60.1",
+    "@typescript-eslint/parser": "^5.60.1",
+    "@ui5/cli": "^3.3.0",
+    "typescript": "^5.1.6",
+    "ui5-tooling-transpile": "^0.7.13"
   },
   "scripts": {
     "start": "fiori run -p 8101 --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#uiv4ordersv4fets-tile\"",

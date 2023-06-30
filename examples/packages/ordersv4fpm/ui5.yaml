@@ -6,7 +6,7 @@ metadata:
 type: application
 framework:
   name: SAPUI5
-  version: 1.108.11
+  version: 1.108.19
   libraries:
     - name: sap.ui.core
     - name: sap.m
@@ -18,7 +18,7 @@ server:
   customMiddleware:
     - name: ui5-middleware-simpleproxy
       afterMiddleware: compression
-      mountPath: /orders
+      mountPath: /odata/v4/orders
       configuration:
         baseUri: "http://localhost:4004/orders"
         excludePatterns:

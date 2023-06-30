@@ -16,5 +16,5 @@ server:
             - /test-resources
           url: https://ui5.sap.com
         backend:
-          - path: /orders
+          - path: /odata/v4/Orders
             url: http://localhost:4004
