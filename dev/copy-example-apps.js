@@ -1,6 +1,7 @@
 const util = require("./util");
 const replace = require("replace-in-file");
 const fs = require("fs");
+const yaml = require('js-yaml');
 const action = process.argv[2];
 
 const testAppFile = fs.readFileSync("./dev/testapps.json", "utf8");
@@ -50,6 +51,18 @@ function copyApps(versionPathRoot, versionPathNew, version, port, versionName) {
 	manifestData["sap.ui5"]["dependencies"]["minUI5Version"] = version;
 	manifestData = JSON.stringify(manifestData, null, 2);
 	fs.writeFileSync(path, manifestData, "utf8");
+	// replace ui5 version in yaml
+	// Read YAML file
+    const yamlPath = `${versionPathNew}/ui5.yaml`;
+    const yamlData = fs.readFileSync(yamlPath, 'utf8');
+    let doc = yaml.load(yamlData);
+    // Replace version
+	if(doc.framework && doc.framework.version){
+		doc.framework.version = version;
+		// Write YAML file
+		let yamlStr = yaml.dump(doc);
+		fs.writeFileSync(yamlPath, yamlStr, 'utf8');
+	}
 	// replace port number
 	const pathPackageJson = `${versionPathNew}/package.json`;
 	const packageJson = fs.readFileSync(pathPackageJson, "utf8");
