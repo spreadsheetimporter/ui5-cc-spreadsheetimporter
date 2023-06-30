@@ -1,4 +1,3 @@
-import EventProvider from "sap/ui/base/EventProvider";
 import Event from "sap/ui/base/Event";
 import { PropertyBindingInfo } from "sap/ui/base/ManagedObject";
 import { $UIComponentSettings } from "sap/ui/core/UIComponent";
@@ -619,12 +618,4 @@ declare module "./Component" {
      * Type describing the Component's 'uploadButtonPress' event.
      */
     export type Component$UploadButtonPressEvent = Event<Component$UploadButtonPressEventParameters>;
-}
-// This module enhances sap.ui.base.Event with Generics, which is needed in UI5 type definition versions below 1.115
-declare module "sap/ui/base/Event" {
-    export default interface Event<ParamsType extends Record<string, any> = object> {
-        constructor(id: string, oSource: EventProvider, parameters: ParamsType);
-        getParameters(): ParamsType;
-        getParameter<ParamName extends keyof ParamsType>(name: ParamName): ParamsType[ParamName];
-    }
 }
