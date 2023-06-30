@@ -72,6 +72,12 @@
   * dependencies
     * ui5-cc-spreadsheetimporter bumped from 0.19.0 to 0.19.1
 
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * ui5-cc-spreadsheetimporter bumped from 0.21.0 to 0.21.1
+
 ## [0.9.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-spreadsheetimporter-button-v0.8.0...ui5-cc-spreadsheetimporter-button-v0.9.0) (2023-06-28)
 
 
