@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.21.1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.21.0...ui5-cc-spreadsheetimporter-v0.21.1) (2023-06-30)
+
+
+### Bug Fixes
+
+* change texts when records are uploaded to app ([#293](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/293)) ([13555fd](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/13555fdcb0bdedb95db1ccd7dacb3fe04370f0d0))
+
 ## [0.21.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-spreadsheetimporter-v0.20.0...ui5-cc-spreadsheetimporter-v0.21.0) (2023-06-28)
 
 
