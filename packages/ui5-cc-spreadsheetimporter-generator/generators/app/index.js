@@ -60,6 +60,7 @@ module.exports = class extends Generator {
 			this.options.oneTimeConfig.target = manifestTargets.id;
 			this.options.oneTimeConfig.deploymentType = deploymentQuestion.deploymentType;
 			this.options.oneTimeConfig.namespace = manifesJson["sap.app"].id;
+			this.options.oneTimeConfig.templateType = questionTemplate.templateType
 		});
 	}
 
@@ -74,9 +75,17 @@ module.exports = class extends Generator {
 		const sModuleName = this.options.oneTimeConfig.modulename;
 		const deploymentType = this.options.oneTimeConfig.deploymentType;
 		const namespaceUI5 = this.options.oneTimeConfig.namespace;
+		const templateType = this.options.oneTimeConfig.templateType;
 		const namespaceUI5ObjectPage = `${namespaceUI5}.ext.ObjectPageExtController.openSpreadsheetUploadDialog`;
+		const namespaceUI5ListReport = `${namespaceUI5}.ext.ListPageExtController.openSpreadsheetUploadDialog`;
 
-		this.sourceRoot(path.join(__dirname, "templates"));
+		if (templateType === "sap.fe.templates.ListReport") {
+			this.sourceRoot(path.join(__dirname, "templates/ListReport"));
+		}
+		if (templateType === "sap.fe.templates.ObjectPage") {
+			this.sourceRoot(path.join(__dirname, "templates/ObjectPage"));
+		}
+		
 		glob.sync("**", {
 			cwd: this.sourceRoot(),
 			nodir: true
@@ -87,22 +96,23 @@ module.exports = class extends Generator {
 			this.fs.copyTpl(sOrigin, sTarget, oConfig);
 		});
 
-		await fileaccess.manipulateJSON.call(this, "/webapp/manifest.json", {
-			"sap.ui5": {
-				routing: {
-					targets: {
-						[target]: {
-							options: {
-								settings: {
-									content: {
-										header: {
-											actions: {
-												spreadsheetUpload: {
-													id: "spreadsheetUploadButton",
-													text: buttonText,
-													enabled: "{ui>/isEditable}",
-													press: namespaceUI5ObjectPage,
-													requiresSelection: false
+		if (templateType === "sap.fe.templates.ListReport") {
+			await fileaccess.manipulateJSON.call(this, "/webapp/manifest.json", {
+				"sap.ui5": {
+					routing: {
+						targets: {
+							[target]: {
+								options: {
+									settings: {
+										content: {
+											header: {
+												actions: {
+													spreadsheetUpload: {
+														id: "spreadsheetUploadButton",
+														text: buttonText,
+														press: namespaceUI5ListReport,
+														requiresSelection: false
+													}
 												}
 											}
 										}
@@ -112,8 +122,37 @@ module.exports = class extends Generator {
 						}
 					}
 				}
-			}
-		});
+			});
+		}
+		if (templateType === "sap.fe.templates.ObjectPage") {
+			await fileaccess.manipulateJSON.call(this, "/webapp/manifest.json", {
+				"sap.ui5": {
+					routing: {
+						targets: {
+							[target]: {
+								options: {
+									settings: {
+										content: {
+											header: {
+												actions: {
+													spreadsheetUpload: {
+														id: "spreadsheetUploadButton",
+														text: buttonText,
+														enabled: "{ui>/isEditable}",
+														press: namespaceUI5ObjectPage,
+														requiresSelection: false
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			});
+		}
 		const npmLatestVersion = await npmLatestVersionPromise;
 		const npmLatestVersionUnderscore = npmLatestVersion.replaceAll(".", "_");
 		const namespace = `cc.spreadsheetimporter.v${npmLatestVersionUnderscore}`;
@@ -144,7 +183,7 @@ module.exports = class extends Generator {
 		await fileaccess.manipulateJSON.call(this, "/webapp/manifest.json", {
 			"sap.ui5": {
 				componentUsages: {
-					spreadsheetImporterUpload: {
+					spreadsheetImporter: {
 						name: namespace
 					}
 				}
@@ -153,10 +192,10 @@ module.exports = class extends Generator {
 	}
 
 	end() {
-		if (this.options.oneTimeConfig.deploymentType === "inAppDeployment") {
-			this.spawnCommandSync("npm", ["install"], {
-				cwd: this.destinationPath()
-			});
-		}
+		// if (this.options.oneTimeConfig.deploymentType === "inAppDeployment") {
+		// 	this.spawnCommandSync("npm", ["install"], {
+		// 		cwd: this.destinationPath()
+		// 	});
+		// }
 	}
 };
