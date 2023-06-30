@@ -6,7 +6,7 @@ metadata:
 type: application
 server:
   customMiddleware:
-    - name: fiori-tools-proxy
+    - name: ui5-proxy-middleware
       afterMiddleware: compression
       configuration:
         ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
