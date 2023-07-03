@@ -33,7 +33,7 @@
     "chromedriver": "latest",
     "npm-run-all": "^4.1.5",
     "wdio-chromedriver-service": "7.3.2",
-    "wdio-ui5-service": "1.5.0",
+    "wdio-ui5-service": "1.5.1",
     "webdriverio": "v7",
     "ui5-test-runner": "3.2.0"
   }

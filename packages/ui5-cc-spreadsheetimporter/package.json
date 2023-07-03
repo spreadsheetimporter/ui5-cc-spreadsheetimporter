@@ -47,7 +47,7 @@
     "deploy": "npm run build && fiori deploy --config ui5-deploy.yaml -y"
   },
   "dependencies": {
-    "xlsx": "https://cdn.sheetjs.com/xlsx-0.19.3/xlsx-0.19.3.tgz"
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.6",
@@ -55,15 +55,15 @@
     "@prettier/plugin-xml": "^2.2.0",
     "@sap/ux-ui5-tooling": "1.10.1",
     "@sapui5/ts-types-esm": "1.115.1",
-    "@types/node": "20.3.2",
-    "@typescript-eslint/eslint-plugin": "^5.60.1",
-    "@typescript-eslint/parser": "^5.60.1",
-    "@ui5/cli": "3.3.0",
+    "@types/node": "20.3.3",
+    "@typescript-eslint/eslint-plugin": "^5.61.0",
+    "@typescript-eslint/parser": "^5.61.0",
+    "@ui5/cli": "3.3.1",
     "@ui5/ts-interface-generator": "0.7.0",
     "babel-preset-transform-ui5": "^7.2.1",
     "bluebird": "3.7.2",
     "chokidar": "^3.5.3",
-    "eslint": "^8.43.0",
+    "eslint": "^8.44.0",
     "husky": "^8.0.3",
     "js-yaml": "4.1.0",
     "lint-staged": "^13.2.3",
@@ -74,8 +74,8 @@
     "replace-in-file": "^7.0.1",
     "shelljs": "^0.8.5",
     "typescript": "5.1.6",
-    "ui5-tooling-modules": "0.9.11",
-    "ui5-tooling-stringreplace": "0.2.0",
-    "ui5-tooling-transpile": "0.7.13"
+    "ui5-tooling-modules": "0.9.12",
+    "ui5-tooling-stringreplace": "0.2.1",
+    "ui5-tooling-transpile": "0.7.17"
   }
 }

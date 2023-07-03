@@ -16,7 +16,7 @@
     "@sap-ux/ui5-middleware-fe-mockserver": "^2.1.112",
     "@sap/ux-specification": "^1.108.8",
     "@sap/ux-ui5-tooling": "1.10.1",
-    "@ui5/cli": "3.3.0"
+    "@ui5/cli": "3.3.1"
   },
   "scripts": {
     "start": "fiori run -p 8080 --open \"index.html?sap-ui-xx-viewCache=false&sap-language=EN\"",
