@@ -78,6 +78,20 @@
   * dependencies
     * ui5-cc-spreadsheetimporter bumped from 0.21.0 to 0.21.1
 
+## [0.9.2](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-button-v0.9.1...ui5-cc-spreadsheetimporter-button-v0.9.2) (2023-07-03)
+
+
+### Bug Fixes
+
+* update `ui5-tooling-transpile` to use types in apps ([#301](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/301)) ([7e0a35c](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/7e0a35c0e6d3f21721105bccb3def0e76aa59f3c))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * ui5-cc-spreadsheetimporter bumped from 0.21.1 to 0.21.2
+
 ## [0.9.0](https://github.com/marianfoo/ui5-cc-excelUpload/compare/ui5-cc-spreadsheetimporter-button-v0.8.0...ui5-cc-spreadsheetimporter-button-v0.9.0) (2023-06-28)
 
 

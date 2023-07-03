@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.21.2](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.21.1...ui5-cc-spreadsheetimporter-v0.21.2) (2023-07-03)
+
+
+### Bug Fixes
+
+* update `ui5-tooling-transpile` to use types in apps ([#301](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/301)) ([7e0a35c](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/7e0a35c0e6d3f21721105bccb3def0e76aa59f3c))
+
 ## [0.21.1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.21.0...ui5-cc-spreadsheetimporter-v0.21.1) (2023-06-30)
 
 
