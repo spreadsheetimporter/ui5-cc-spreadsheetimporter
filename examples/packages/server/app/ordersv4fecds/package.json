@@ -14,11 +14,11 @@
   },
   "devDependencies": {
     "@sap-ux/ui5-middleware-fe-mockserver": "^2.1.112",
+    "@sap-ux/ui5-proxy-middleware": "1.1.31",
     "@sap/ux-specification": "^1.108.8",
     "@sap/ux-ui5-tooling": "1.10.1",
-    "@ui5/cli": "3.3.0",
-    "ui5-middleware-simpleproxy": "0.9.9",
-    "@sap-ux/ui5-proxy-middleware": "1.1.31"
+    "@ui5/cli": "3.3.1",
+    "ui5-middleware-simpleproxy": "0.9.10"
   },
   "scripts": {
     "start": "fiori run -p 8080 --open \"index.html?sap-ui-xx-viewCache=false&sap-language=EN\"",
