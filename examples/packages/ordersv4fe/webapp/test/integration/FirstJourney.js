@@ -36,9 +36,9 @@ sap.ui.require(
 				errorMessage: "Can not select 'sap.m.Button'"
 			});
 			Then.waitFor({
-				controlType : "cc.spreadsheetimporter.v0_21_1.SpreadsheetDialog",
-				check : function (dialog) {
-					return dialog[0].isOpen()
+				controlType: "cc.spreadsheetimporter.v0_21_1.SpreadsheetDialog",
+				check: function (dialog) {
+					return dialog[0].isOpen();
 				},
 				success: function (dialog) {
 					const util = Opa5.getWindow().cc.spreadsheetimporter.v0_21_1.Util;

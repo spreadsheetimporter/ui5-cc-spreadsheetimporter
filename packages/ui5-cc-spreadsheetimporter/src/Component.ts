@@ -26,7 +26,7 @@ export default class Component extends UIComponent {
 			spreadsheetFileName: { type: "string", defaultValue: "Template.xlsx" },
 			context: { type: "object" },
 			// @ts-ignore
-			columns: { type: "string[]" , defaultValue: []},
+			columns: { type: "string[]", defaultValue: [] },
 			tableId: { type: "string" },
 			odataType: { type: "string" },
 			// @ts-ignore
@@ -42,7 +42,7 @@ export default class Component extends UIComponent {
 			showBackendErrorMessages: { type: "boolean", defaultValue: false },
 			showOptions: { type: "boolean", defaultValue: false },
 			// @ts-ignore
-			availableOptions: { type: "string[]", defaultValue: []},
+			availableOptions: { type: "string[]", defaultValue: [] },
 			hideSampleData: { type: "boolean", defaultValue: false },
 			debug: { type: "boolean", defaultValue: false },
 		},
@@ -101,9 +101,9 @@ export default class Component extends UIComponent {
 		this.setDebug(oCompData.debug);
 		this.setAvailableOptions(oCompData.availableOptions);
 		this.setHideSampleData(oCompData.hideSampleData);
-		if(oCompData.availableOptions && oCompData.availableOptions.length > 0){
+		if (oCompData.availableOptions && oCompData.availableOptions.length > 0) {
 			// if availableOptions is set show the Options Menu
-			this.setShowOptions(true)
+			this.setShowOptions(true);
 		}
 
 		// // we could create a device model and use it
@@ -118,19 +118,18 @@ export default class Component extends UIComponent {
 		super.init();
 	}
 
-
 	createContent() {
-		if(this.getDebug() || Log.getLevel() >= Log.Level.DEBUG){
+		if (this.getDebug() || Log.getLevel() >= Log.Level.DEBUG) {
 			Log.setLevel(Log.Level.DEBUG);
 			// @ts-ignore
-			Log.logSupportInfo(true)
-			this.setShowOptions(true)
+			Log.logSupportInfo(true);
+			this.setShowOptions(true);
 		}
 		const componentData = Object.assign({}, this.getComponentData()) as ComponentData;
 		delete componentData.context;
-		Log.debug("Component Data",undefined,"SpreadsheetUpload: Component",() => this.logger.returnObject(componentData))
+		Log.debug("Component Data", undefined, "SpreadsheetUpload: Component", () => this.logger.returnObject(componentData));
 		this.spreadsheetUpload = new SpreadsheetUpload(this, this.getModel("i18n") as ResourceModel);
-		return this.spreadsheetUpload.getSpreadsheetUploadDialog()
+		return this.spreadsheetUpload.getSpreadsheetUploadDialog();
 	}
 
 	//=============================================================================
@@ -146,7 +145,7 @@ export default class Component extends UIComponent {
 	 * @public
 	 */
 	openSpreadsheetUploadDialog() {
-		Log.debug("openSpreadsheetUploadDialog",undefined,"SpreadsheetUpload: Component")
+		Log.debug("openSpreadsheetUploadDialog", undefined, "SpreadsheetUpload: Component");
 		this.spreadsheetUpload.openSpreadsheetUploadDialog();
 	}
 

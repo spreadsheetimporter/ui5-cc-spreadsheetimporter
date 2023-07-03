@@ -8,8 +8,8 @@ import { ArrayData } from "../types";
  */
 export default class SheetHandler extends ManagedObject {
 	constructor() {
-        super();
-    }
+		super();
+	}
 
 	static sheet_to_json(sheet: WorkSheet, opts?: Sheet2JSONOpts): ArrayData {
 		if (sheet == null || sheet["!ref"] == null) return [];
@@ -85,105 +85,130 @@ export default class SheetHandler extends ManagedObject {
 			if (row.isempty === false || (header === 1 ? o.blankrows !== false : !!o.blankrows)) out[outi++] = row.row;
 		}
 		out.length = outi;
-        const renamedOut = this.renameAttributes(out);
+		const renamedOut = this.renameAttributes(out);
 		return renamedOut;
 	}
 
 	static make_json_row(sheet: WorkSheet, r, R, cols, header, hdr, o) {
-        var rr = XLSX.utils.encode_row(R);
-        var defval = o.defval, raw = o.raw || !Object.prototype.hasOwnProperty.call(o, "raw");
-        var isempty = true, dense = (sheet["!data"] != null);
-        var row = (header === 1) ? [] : {};
-        if(header !== 1) {
-            if(Object.defineProperty) try { Object.defineProperty(row, '__rowNum__', {value:R, enumerable:false}); } catch(e) { row.__rowNum__ = R; }
-            else row.__rowNum__ = R;
-        }
-        if(!dense || sheet["!data"][R]) for (var C = r.s.c; C <= r.e.c; ++C) {
-            var val = dense ? (sheet["!data"][R]||[])[C] : sheet[cols[C] + rr];
-            if(val === undefined || val.t === undefined) {
-                if(defval === undefined) continue;
-                if(hdr[C] != null) { row[hdr[C]] = defval; }
-                continue;
-            }
-            var v = val.v;
-            switch(val.t){
-                case 'z': if(v == null) break; continue;
-                case 'e': v = (v == 0 ? null : void 0); break;
-                case 's': case 'd': case 'b': case 'n': break;
-                default: throw new Error('unrecognized type ' + val.t);
-            }
-            if(hdr[C] != null) {
-                if(v == null) {
-                    if(val.t == "e" && v === null) row[hdr[C]] = null;
-                    else if(defval !== undefined) row[hdr[C]] = defval;
-                    else if(raw && v === null) row[hdr[C]] = null;
-                    else continue;
-                } else {
-                    //row[hdr[C]] = raw && (val.t !== "n" || (val.t === "n" && o.rawNumbers !== false)) ? v : XLSX.utils.format_cell(val,v,o);
-                    row[hdr[C]] = val
-                }
-                if(v != null) isempty = false;
-            }
-        }
-        return { row: row, isempty: isempty };
-    }
+		var rr = XLSX.utils.encode_row(R);
+		var defval = o.defval,
+			raw = o.raw || !Object.prototype.hasOwnProperty.call(o, "raw");
+		var isempty = true,
+			dense = sheet["!data"] != null;
+		var row = header === 1 ? [] : {};
+		if (header !== 1) {
+			if (Object.defineProperty)
+				try {
+					Object.defineProperty(row, "__rowNum__", { value: R, enumerable: false });
+				} catch (e) {
+					row.__rowNum__ = R;
+				}
+			else row.__rowNum__ = R;
+		}
+		if (!dense || sheet["!data"][R])
+			for (var C = r.s.c; C <= r.e.c; ++C) {
+				var val = dense ? (sheet["!data"][R] || [])[C] : sheet[cols[C] + rr];
+				if (val === undefined || val.t === undefined) {
+					if (defval === undefined) continue;
+					if (hdr[C] != null) {
+						row[hdr[C]] = defval;
+					}
+					continue;
+				}
+				var v = val.v;
+				switch (val.t) {
+					case "z":
+						if (v == null) break;
+						continue;
+					case "e":
+						v = v == 0 ? null : void 0;
+						break;
+					case "s":
+					case "d":
+					case "b":
+					case "n":
+						break;
+					default:
+						throw new Error("unrecognized type " + val.t);
+				}
+				if (hdr[C] != null) {
+					if (v == null) {
+						if (val.t == "e" && v === null) row[hdr[C]] = null;
+						else if (defval !== undefined) row[hdr[C]] = defval;
+						else if (raw && v === null) row[hdr[C]] = null;
+						else continue;
+					} else {
+						//row[hdr[C]] = raw && (val.t !== "n" || (val.t === "n" && o.rawNumbers !== false)) ? v : XLSX.utils.format_cell(val,v,o);
+						row[hdr[C]] = val;
+					}
+					if (v != null) isempty = false;
+				}
+			}
+		return { row: row, isempty: isempty };
+	}
 
-    static safe_decode_range(range) {
-        var o = {s:{c:0,r:0},e:{c:0,r:0}};
-        var idx = 0, i = 0, cc = 0;
-        var len = range.length;
-        for(idx = 0; i < len; ++i) {
-            if((cc=range.charCodeAt(i)-64) < 1 || cc > 26) break;
-            idx = 26*idx + cc;
-        }
-        o.s.c = --idx;
-    
-        for(idx = 0; i < len; ++i) {
-            if((cc=range.charCodeAt(i)-48) < 0 || cc > 9) break;
-            idx = 10*idx + cc;
-        }
-        o.s.r = --idx;
-    
-        if(i === len || cc != 10) { o.e.c=o.s.c; o.e.r=o.s.r; return o; }
-        ++i;
-    
-        for(idx = 0; i != len; ++i) {
-            if((cc=range.charCodeAt(i)-64) < 1 || cc > 26) break;
-            idx = 26*idx + cc;
-        }
-        o.e.c = --idx;
-    
-        for(idx = 0; i != len; ++i) {
-            if((cc=range.charCodeAt(i)-48) < 0 || cc > 9) break;
-            idx = 10*idx + cc;
-        }
-        o.e.r = --idx;
-        return o;
-    }
+	static safe_decode_range(range) {
+		var o = { s: { c: 0, r: 0 }, e: { c: 0, r: 0 } };
+		var idx = 0,
+			i = 0,
+			cc = 0;
+		var len = range.length;
+		for (idx = 0; i < len; ++i) {
+			if ((cc = range.charCodeAt(i) - 64) < 1 || cc > 26) break;
+			idx = 26 * idx + cc;
+		}
+		o.s.c = --idx;
 
-    static renameAttributes(dataArray) {
-        const renameAttributesInObject = (obj) => {
-          Object.keys(obj).forEach(key => {
-            if (obj[key].hasOwnProperty('v')) {
-              obj[key].rawValue = obj[key].v;
-              delete obj[key].v;
-            }
-            if (obj[key].hasOwnProperty('t')) {
-              obj[key].sheetDataType = obj[key].t;
-              delete obj[key].t;
-            }
-            if (obj[key].hasOwnProperty('z')) {
-              obj[key].format = obj[key].z;
-              delete obj[key].z;
-            }
-            if (obj[key].hasOwnProperty('w')) {
-              obj[key].formattedValue = obj[key].w;
-              delete obj[key].w;
-            }
-          });
-          return obj;
-        };
-      
-        return dataArray.map(renameAttributesInObject);
-      }    
+		for (idx = 0; i < len; ++i) {
+			if ((cc = range.charCodeAt(i) - 48) < 0 || cc > 9) break;
+			idx = 10 * idx + cc;
+		}
+		o.s.r = --idx;
+
+		if (i === len || cc != 10) {
+			o.e.c = o.s.c;
+			o.e.r = o.s.r;
+			return o;
+		}
+		++i;
+
+		for (idx = 0; i != len; ++i) {
+			if ((cc = range.charCodeAt(i) - 64) < 1 || cc > 26) break;
+			idx = 26 * idx + cc;
+		}
+		o.e.c = --idx;
+
+		for (idx = 0; i != len; ++i) {
+			if ((cc = range.charCodeAt(i) - 48) < 0 || cc > 9) break;
+			idx = 10 * idx + cc;
+		}
+		o.e.r = --idx;
+		return o;
+	}
+
+	static renameAttributes(dataArray) {
+		const renameAttributesInObject = (obj) => {
+			Object.keys(obj).forEach((key) => {
+				if (obj[key].hasOwnProperty("v")) {
+					obj[key].rawValue = obj[key].v;
+					delete obj[key].v;
+				}
+				if (obj[key].hasOwnProperty("t")) {
+					obj[key].sheetDataType = obj[key].t;
+					delete obj[key].t;
+				}
+				if (obj[key].hasOwnProperty("z")) {
+					obj[key].format = obj[key].z;
+					delete obj[key].z;
+				}
+				if (obj[key].hasOwnProperty("w")) {
+					obj[key].formattedValue = obj[key].w;
+					delete obj[key].w;
+				}
+			});
+			return obj;
+		};
+
+		return dataArray.map(renameAttributesInObject);
+	}
 }

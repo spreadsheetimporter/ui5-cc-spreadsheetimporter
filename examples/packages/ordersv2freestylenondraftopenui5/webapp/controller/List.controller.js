@@ -83,17 +83,17 @@ sap.ui.define(
 						for (const [index, row] of sheetData.entries()) {
 							//check for invalid price
 							for (const key in row) {
-							if (key.endsWith("[price]") && row[key].rawValue > 100) {
-								const error = {
-									title: "Price too high (max 100)",
-									row: index + 2,
-									group: true,
-									rawValue: row[key].rawValue,
-									ui5type: "Error"
-								};
-								errorArray.push(error);
+								if (key.endsWith("[price]") && row[key].rawValue > 100) {
+									const error = {
+										title: "Price too high (max 100)",
+										row: index + 2,
+										group: true,
+										rawValue: row[key].rawValue,
+										ui5type: "Error"
+									};
+									errorArray.push(error);
+								}
 							}
-						}
 						}
 						oEvent.getSource().addArrayToMessages(errorArray);
 					}, this);
@@ -103,7 +103,7 @@ sap.ui.define(
 						let payload = oEvent.getParameter("payload");
 						// round number from 12,56 to 12,6
 						if (payload.price) {
-							payload.price = Number(payload.price).toFixed(1)
+							payload.price = Number(payload.price).toFixed(1);
 						}
 						oEvent.getSource().setPayload(payload);
 					}, this);

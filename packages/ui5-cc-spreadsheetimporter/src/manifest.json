@@ -26,10 +26,7 @@
       "tablet": true,
       "phone": true
     },
-    "supportedThemes": [
-      "sap_hcb",
-      "sap_belize"
-    ]
+    "supportedThemes": ["sap_hcb", "sap_belize"]
   },
   "sap.ui5": {
     "componentName": "cc.spreadsheetimporter.v0_21_1",
@@ -51,16 +48,7 @@
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
           "bundleName": "cc.spreadsheetimporter.v0_21_1.i18n.i18n",
-          "supportedLocales": [
-            "de",
-            "en",
-            "es",
-            "fr",
-            "hi",
-            "it",
-            "ja",
-            "zh"
-          ],
+          "supportedLocales": ["de", "en", "es", "fr", "hi", "it", "ja", "zh"],
           "fallbackLocale": "en"
         }
       }

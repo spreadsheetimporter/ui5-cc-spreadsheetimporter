@@ -1,11 +1,11 @@
 {
-    "name": "UI5 SpreadsheetUpload Dev Container",
-    "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:18",
-    "customizations": {
-      "vscode": {
-        "extensions": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode", "sapse.sap-ux-fiori-tools-extension-pack"]
-      }
-    },
-    "forwardPorts": [4004],
+  "name": "UI5 SpreadsheetUpload Dev Container",
+  "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:18",
+  "customizations": {
+    "vscode": {
+      "extensions": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode", "sapse.sap-ux-fiori-tools-extension-pack"]
+    }
+  },
+  "forwardPorts": [4004],
   "postCreateCommand": "bash -c \"sudo apt-get update && sudo apt-get install -y wget apt-transport-https gnupg2 && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - && sudo sh -c 'echo \\\"deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main\\\" >> /etc/apt/sources.list.d/google.list' && sudo apt-get update && sudo apt-get install -y google-chrome-stable && sudo apt-get --only-upgrade -y install google-chrome-stable && google-chrome --version && sudo apt install -y gnome-keyring && npm i -g npm@latest && npm --version && npm i -g pnpm@latest && pnpm install --no-frozen-lockfile && npm run copyTestApps && npm run build && npm run updateChromedriver && npm i -g @sap/cds-dk\""
-  }
+}

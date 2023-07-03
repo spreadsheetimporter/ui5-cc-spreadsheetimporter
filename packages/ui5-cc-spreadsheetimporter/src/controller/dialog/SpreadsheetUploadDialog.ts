@@ -276,7 +276,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 				if (fieldMatchType === "labelTypeBrackets") {
 					label = `${value.label}[${key}]`;
 				}
-				
+
 				if (value.type === "Edm.Boolean") {
 					cell = { v: "true", t: "b" };
 					colWidths.push({ wch: colWidthDefault });
@@ -322,10 +322,10 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 					colWidths.push({ wch: colWidthDefault });
 				}
 				worksheet[XLSX.utils.encode_cell({ c: col, r: 0 })] = { v: label, t: "s" };
-				if(!this.component.getHideSampleData()) {
+				if (!this.component.getHideSampleData()) {
 					worksheet[XLSX.utils.encode_cell({ c: col, r: 1 })] = cell;
 				}
-				
+
 				col++;
 			}
 		}

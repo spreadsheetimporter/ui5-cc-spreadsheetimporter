@@ -1,4 +1,4 @@
-specVersion: '2.5'
+specVersion: "2.5"
 metadata:
   name: cc.spreadsheetimporter.v0_21_1
 type: application
@@ -13,13 +13,13 @@ builder:
       configuration:
         target:
           url: http://vhcala4hci:50000
-          client: '001'
+          client: "001"
         credentials:
           username: env:USER
           password: env:PW
         app:
           name: Z_XUP_v0_21_1
-          description: ''
+          description: ""
           package: Z_SHEETUPLOAD
           transport: A4HK900057
         exclude:

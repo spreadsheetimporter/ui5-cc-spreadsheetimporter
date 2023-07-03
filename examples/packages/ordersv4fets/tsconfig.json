@@ -14,14 +14,10 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
-      "ui/v4/ordersv4fets/*": [
-        "webapp/*"
-      ]
+      "ui/v4/ordersv4fets/*": ["webapp/*"]
     },
-    "types": [ "@sapui5/ts-types-esm", "ui5-cc-spreadsheetimporter" ],
+    "types": ["@sapui5/ts-types-esm", "ui5-cc-spreadsheetimporter"],
     "typeRoots": ["./node_modules"]
   },
-  "include": [
-    "webapp/**/*"
-  ]
+  "include": ["webapp/**/*"]
 }

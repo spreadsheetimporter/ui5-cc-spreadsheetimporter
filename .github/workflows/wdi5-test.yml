@@ -80,7 +80,6 @@ jobs:
         run: |
           npm pkg delete scripts.prepare
           pnpm install --no-frozen-lockfile
-        
 
       - name: copy test apps
         run: npm run copyTestApps
@@ -102,7 +101,6 @@ jobs:
         run: |
           npm run start:server&
 
-      
       - name: start app ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
         if: matrix.scenario != 'ordersv4fecds'
         run: |

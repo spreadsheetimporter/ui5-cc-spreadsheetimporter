@@ -60,7 +60,7 @@ module.exports = class extends Generator {
 			this.options.oneTimeConfig.target = manifestTargets.id;
 			this.options.oneTimeConfig.deploymentType = deploymentQuestion.deploymentType;
 			this.options.oneTimeConfig.namespace = manifesJson["sap.app"].id;
-			this.options.oneTimeConfig.templateType = questionTemplate.templateType
+			this.options.oneTimeConfig.templateType = questionTemplate.templateType;
 		});
 	}
 
@@ -85,7 +85,7 @@ module.exports = class extends Generator {
 		if (templateType === "sap.fe.templates.ObjectPage") {
 			this.sourceRoot(path.join(__dirname, "templates/ObjectPage"));
 		}
-		
+
 		glob.sync("**", {
 			cwd: this.sourceRoot(),
 			nodir: true

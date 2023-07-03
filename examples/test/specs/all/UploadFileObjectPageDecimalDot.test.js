@@ -57,7 +57,7 @@ describe("Upload File Object Page", () => {
 			}
 		});
 		expect(spreadsheetUploadDialog.isOpen()).toBeTruthy();
-		spreadsheetUploadDialog.setDecimalSeparator(".")
+		spreadsheetUploadDialog.setDecimalSeparator(".");
 		try {
 			browser.execute(function () {
 				const blockLayerPopup = document.getElementById("sap-ui-blocklayer-popup");

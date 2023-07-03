@@ -19,7 +19,7 @@ import { CustomMessageTypes } from "../enums";
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
-export default class SpreadsheetUpload extends ManagedObject{
+export default class SpreadsheetUpload extends ManagedObject {
 	public oDataEntityType: any;
 	public component: Component;
 	public context: any;
@@ -67,8 +67,10 @@ export default class SpreadsheetUpload extends ManagedObject{
 		this.isOpenUI5 = sap.ui.generic ? true : false;
 		this.odataHandler = this.createODataHandler(this.UI5MinorVersion, this);
 		this.initialSetupPromise = this.initialSetup();
-		
-		Log.debug("constructor",undefined,"SpreadsheetUpload: SpreadsheetUpload",() => this.component.logger.returnObject({ui5version: this.UI5MinorVersion, isODataV4: this.isODataV4, isOpenUI5: this.isOpenUI5}))
+
+		Log.debug("constructor", undefined, "SpreadsheetUpload: SpreadsheetUpload", () =>
+			this.component.logger.returnObject({ ui5version: this.UI5MinorVersion, isODataV4: this.isODataV4, isOpenUI5: this.isOpenUI5 })
+		);
 	}
 
 	/**
@@ -84,9 +86,7 @@ export default class SpreadsheetUpload extends ManagedObject{
 			} catch (error) {
 				this.errorMessage = error;
 				this.errorState = true;
-				Log.error("Error setting 'setContext'", error as Error, "SpreadsheetUpload: SpreadsheetUpload", () =>
-					this.component.logger.returnObject({ error: error })
-				);
+				Log.error("Error setting 'setContext'", error as Error, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ error: error }));
 			}
 		}
 	}
@@ -121,7 +121,7 @@ export default class SpreadsheetUpload extends ManagedObject{
 
 		this.model = this.tableObject.getModel();
 		Log.debug("model", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ model: this.model }));
-		this.odataHandler.createCustomBinding(this.binding)
+		this.odataHandler.createCustomBinding(this.binding);
 		try {
 			// Load the DraftController asynchronously using the loadDraftController function
 			// @ts-ignore
@@ -163,7 +163,6 @@ export default class SpreadsheetUpload extends ManagedObject{
 		}
 	}
 
-
 	_checkIfODataIsV4() {
 		try {
 			// @ts-ignore
@@ -175,11 +174,11 @@ export default class SpreadsheetUpload extends ManagedObject{
 		}
 	}
 
-	_setPayload(payload:any) {
+	_setPayload(payload: any) {
 		this.payloadArray = payload;
 	}
 
-	refreshBinding(context: any, binding:any, id: any) {
+	refreshBinding(context: any, binding: any, id: any) {
 		if (context._controller?.getExtensionAPI()) {
 			// refresh binding in V4 FE context
 			try {
@@ -298,6 +297,4 @@ export default class SpreadsheetUpload extends ManagedObject{
 	public set spreadsheetUploadDialogHandler(value: SpreadsheetUploadDialog) {
 		this._spreadsheetUploadDialogHandler = value;
 	}
-
-	
 }

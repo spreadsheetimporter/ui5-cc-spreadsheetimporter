@@ -26,7 +26,7 @@ class FEV2ND {
 		this.checkFileuploadListreportAttribute = "OrderNo";
 		this.checkFileuploadListreportValue = "4";
 
-		this.overflowButton = "__toolbar2-overflowButton"
+		this.overflowButton = "__toolbar2-overflowButton";
 	}
 	async getFieldValue(fieldName) {
 		const field = await $(
@@ -38,8 +38,8 @@ class FEV2ND {
 
 	async getRoutingHash(tableId, objectAttribute, objectValue, rootPathBool) {
 		const table = await this.BaseClass.getControlById(tableId);
-		const items = await table.exec( () => this.getItems());
-		const rootBinding = await table.exec( () => this.getBindingContext())
+		const items = await table.exec(() => this.getItems());
+		const rootBinding = await table.exec(() => this.getBindingContext());
 		let rootPath = "";
 		if (rootPathBool) {
 			rootPath = await rootBinding.getPath();
@@ -47,7 +47,7 @@ class FEV2ND {
 		for (let index = 0; index < items.length; index++) {
 			const element = items[index];
 			const item = await this.BaseClass.getControlById(element.id);
-			const binding = await item.exec( () => this.getBindingContext())
+			const binding = await item.exec(() => this.getBindingContext());
 			const object = await binding.getObject();
 			if (object[objectAttribute] === objectValue) {
 				const path = binding.sPath;
@@ -74,7 +74,7 @@ class FEV2ND {
 		for (let index = 0; index < items.length; index++) {
 			const element = items[index];
 			const item = await this.BaseClass.getControlById(element.id);
-			const binding = await item.exec( () => this.getBindingContext())
+			const binding = await item.exec(() => this.getBindingContext());
 			const object = await binding.getObject();
 			if (object[objectAttribute] === objectValue) {
 				return object;

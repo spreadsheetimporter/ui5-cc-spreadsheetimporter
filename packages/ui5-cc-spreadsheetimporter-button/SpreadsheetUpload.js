@@ -2,7 +2,7 @@ sap.ui.define(["sap/m/Button"], (Button) => {
 	return Button.extend("cc.spreadsheetimporter.button.v0_9_1.SpreadsheetUpload", {
 		metadata: {
 			properties: {
-				text : { type: "string", defaultValue: "Spreadsheet Upload" },
+				text: { type: "string", defaultValue: "Spreadsheet Upload" },
 				spreadsheetFileName: {
 					type: "string",
 					defaultValue: "Template.xlsx"
@@ -38,7 +38,7 @@ sap.ui.define(["sap/m/Button"], (Button) => {
 				skipMandatoryFieldCheck: { type: "boolean", defaultValue: false },
 				showBackendErrorMessages: { type: "boolean", defaultValue: true },
 				showOptions: { type: "boolean", defaultValue: false },
-				availableOptions: { type: "string[]", defaultValue: []},
+				availableOptions: { type: "string[]", defaultValue: [] },
 				hideSampleData: { type: "boolean", defaultValue: false },
 				debug: { type: "boolean", defaultValue: false }
 			},

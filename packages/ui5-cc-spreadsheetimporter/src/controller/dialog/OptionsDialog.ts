@@ -8,9 +8,9 @@ import SpreadsheetUpload from "../SpreadsheetUpload";
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
-export default class OptionsDialog extends ManagedObject{
-    spreadsheetUploadController: SpreadsheetUpload;
-    optionsDialog: Dialog;
+export default class OptionsDialog extends ManagedObject {
+	spreadsheetUploadController: SpreadsheetUpload;
+	optionsDialog: Dialog;
 	availableOptions = ["strict", "fieldMatchType", "decimalSeperator"];
 
 	constructor(spreadsheetUploadController: any) {
@@ -18,50 +18,51 @@ export default class OptionsDialog extends ManagedObject{
 		this.spreadsheetUploadController = spreadsheetUploadController;
 	}
 
-    async openOptionsDialog() {
+	async openOptionsDialog() {
 		let showOptionsToUser = this.spreadsheetUploadController.component.getAvailableOptions();
-		if(showOptionsToUser.length === 0) {
-			showOptionsToUser = this.availableOptions
+		if (showOptionsToUser.length === 0) {
+			showOptionsToUser = this.availableOptions;
 		}
 		const availableOptionsData = this.availableOptions.reduce((acc, key) => {
 			acc[key] = showOptionsToUser.includes(key);
 			return acc;
-		  }, {} as Record<string, boolean>);
-		this.spreadsheetUploadController.spreadsheetUploadDialogHandler.getDialog().setBusy(true)
+		}, {} as Record<string, boolean>);
+		this.spreadsheetUploadController.spreadsheetUploadDialogHandler.getDialog().setBusy(true);
 		const optionsModel = new JSONModel({
 			strict: this.spreadsheetUploadController.component.getStrict(),
 			fieldMatchType: this.spreadsheetUploadController.component.getFieldMatchType(),
 			decimalSeparator: this.spreadsheetUploadController.component.getDecimalSeparator(),
 		});
-		const showOptionsModel = new JSONModel(availableOptionsData)
-		Log.debug("openOptionsDialog",undefined,"SpreadsheetUpload: Options",() => this.spreadsheetUploadController.component.logger.returnObject({
-			strict: this.spreadsheetUploadController.component.getStrict(),
-			fieldMatchType: this.spreadsheetUploadController.component.getFieldMatchType(),
-			decimalSeparator: this.spreadsheetUploadController.component.getDecimalSeparator()
-		}))
+		const showOptionsModel = new JSONModel(availableOptionsData);
+		Log.debug("openOptionsDialog", undefined, "SpreadsheetUpload: Options", () =>
+			this.spreadsheetUploadController.component.logger.returnObject({
+				strict: this.spreadsheetUploadController.component.getStrict(),
+				fieldMatchType: this.spreadsheetUploadController.component.getFieldMatchType(),
+				decimalSeparator: this.spreadsheetUploadController.component.getDecimalSeparator(),
+			})
+		);
 		if (!this.optionsDialog) {
 			this.optionsDialog = (await Fragment.load({
 				name: "cc.spreadsheetimporter.XXXnamespaceXXX.fragment.OptionsDialog",
 				type: "XML",
 				controller: this,
 			})) as Dialog;
-            this.optionsDialog.setModel(this.spreadsheetUploadController.componentI18n, "i18n");
+			this.optionsDialog.setModel(this.spreadsheetUploadController.componentI18n, "i18n");
 		}
 		this.optionsDialog.setModel(optionsModel, "options");
 		this.optionsDialog.setModel(showOptionsModel, "availableOptions");
 		this.optionsDialog.open();
-		this.spreadsheetUploadController.spreadsheetUploadDialogHandler.getDialog().setBusy(false)
+		this.spreadsheetUploadController.spreadsheetUploadDialogHandler.getDialog().setBusy(false);
 	}
 
+	onSave() {
+		this.spreadsheetUploadController.component.setFieldMatchType((this.optionsDialog.getModel("options") as JSONModel).getProperty("/fieldMatchType"));
+		this.spreadsheetUploadController.component.setStrict((this.optionsDialog.getModel("options") as JSONModel).getProperty("/strict"));
+		this.spreadsheetUploadController.component.setDecimalSeparator((this.optionsDialog.getModel("options") as JSONModel).getProperty("/decimalSeparator"));
+		this.optionsDialog.close();
+	}
 
-    onSave() {
-        this.spreadsheetUploadController.component.setFieldMatchType((this.optionsDialog.getModel("options") as JSONModel).getProperty("/fieldMatchType"));
-        this.spreadsheetUploadController.component.setStrict((this.optionsDialog.getModel("options") as JSONModel).getProperty("/strict"));
-        this.spreadsheetUploadController.component.setDecimalSeparator((this.optionsDialog.getModel("options") as JSONModel).getProperty("/decimalSeparator"));
-        this.optionsDialog.close();
-    }
-
-    onCancel() {
-        this.optionsDialog.close();
-    }
+	onCancel() {
+		this.optionsDialog.close();
+	}
 }

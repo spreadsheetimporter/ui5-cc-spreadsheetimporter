@@ -80,7 +80,7 @@ jobs:
       - name: install @sap/cds-dk
         run: |
           npm i -g @sap/cds-dk
-      
+
       - name: install ui5-test-runner
         run: |
           npm i -g ui5-test-runner
@@ -89,7 +89,7 @@ jobs:
         run: |
           npm pkg delete scripts.prepare
           pnpm install --no-frozen-lockfile
-      
+
       - name: Run Build
         run: npm run build
 
@@ -104,8 +104,8 @@ jobs:
 
       # run opa5 tests
       - name: test opa5 ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
-        id: opa5test  # An ID for the step to refer to its outputs later
-        continue-on-error: true  # The job will not stop if this step fails
+        id: opa5test # An ID for the step to refer to its outputs later
+        continue-on-error: true # The job will not stop if this step fails
         run: |
           while ! nc -z localhost 4004; do sleep 0.1; done
           while ! nc -z localhost ${{ env.TESTAPPPORT }}; do sleep 0.1; done
@@ -116,7 +116,7 @@ jobs:
         with:
           name: ui5testrunner-report-${{ matrix.scenario }}-${{ matrix.ui5version }}
           path: ./report
-      
+
       # Fail the job if the 'test opa5' step failed
       - name: Check test status
         if: steps.opa5test.outcome != 'success'
