@@ -9,14 +9,18 @@ sap.ui.define([], function () {
 			this.editFlow.getView().setBusyIndicatorDelay(0);
 			this.editFlow.getView().setBusy(true);
 			if (!this.spreadsheetUpload) {
-				this.spreadsheetUpload = await this.editFlow.getView().getController().getAppComponent().createComponent({
-					usage: "spreadsheetImporter",
-					async: true,
-					componentData: {
-						context: this,
-						activateDraft: true,
-					}
-				});
+				this.spreadsheetUpload = await this.editFlow
+					.getView()
+					.getController()
+					.getAppComponent()
+					.createComponent({
+						usage: "spreadsheetImporter",
+						async: true,
+						componentData: {
+							context: this,
+							activateDraft: true
+						}
+					});
 
 				// event to check before uploaded to app
 				this.spreadsheetUpload.attachCheckBeforeRead(function (oEvent) {
@@ -51,7 +55,7 @@ sap.ui.define([], function () {
 					let payload = oEvent.getParameter("payload");
 					// round number from 12,56 to 12,6
 					if (payload.price) {
-						payload.price = Number(payload.price.toFixed(1))
+						payload.price = Number(payload.price.toFixed(1));
 					}
 					oEvent.getSource().setPayload(payload);
 				}, this);
@@ -63,10 +67,9 @@ sap.ui.define([], function () {
 		openLanding: function (oEvent) {
 			window.open("https://spreadsheet-importer.com/", "_blank");
 		},
-		
+
 		openDocs: function (oEvent) {
 			window.open("https://docs.spreadsheet-importer.com/", "_blank");
 		}
-
 	};
 });

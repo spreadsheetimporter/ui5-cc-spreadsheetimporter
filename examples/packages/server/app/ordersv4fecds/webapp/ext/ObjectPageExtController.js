@@ -9,17 +9,21 @@ sap.ui.define([], function () {
 			this.editFlow.getView().setBusyIndicatorDelay(0);
 			this.editFlow.getView().setBusy(true);
 			if (!this.spreadsheetUpload) {
-				this.spreadsheetUpload = await this.editFlow.getView().getController().getAppComponent().createComponent({
-					usage: "spreadsheetImporter",
-					async: true,
-					componentData: {
-						context: this,
-						tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable",
-						columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time", "boolean", "decimal"],
-						mandatoryFields: ["product_ID", "quantity"],
-						spreadsheetFileName: "Test.xlsx"
-					}
-				});
+				this.spreadsheetUpload = await this.editFlow
+					.getView()
+					.getController()
+					.getAppComponent()
+					.createComponent({
+						usage: "spreadsheetImporter",
+						async: true,
+						componentData: {
+							context: this,
+							tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable",
+							columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time", "boolean", "decimal"],
+							mandatoryFields: ["product_ID", "quantity"],
+							spreadsheetFileName: "Test.xlsx"
+						}
+					});
 
 				// event to check before uploaded to app
 				this.spreadsheetUpload.attachCheckBeforeRead(function (oEvent) {
@@ -49,7 +53,7 @@ sap.ui.define([], function () {
 					let payload = oEvent.getParameter("payload");
 					// round number from 12,56 to 12,6
 					if (payload.price) {
-						payload.price = Number(payload.price.toFixed(1))
+						payload.price = Number(payload.price.toFixed(1));
 					}
 					oEvent.getSource().setPayload(payload);
 				}, this);
@@ -61,17 +65,21 @@ sap.ui.define([], function () {
 			this.editFlow.getView().setBusyIndicatorDelay(0);
 			this.editFlow.getView().setBusy(true);
 			if (!this.spreadsheetUploadTable) {
-				this.spreadsheetUploadTable = await this.editFlow.getView().getController().getAppComponent().createComponent({
-					usage: "spreadsheetImporter",
-					async: true,
-					componentData: {
-						context: this,
-						columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time", "boolean", "decimal"],
-						mandatoryFields: ["product_ID", "quantity"],
-						spreadsheetFileName: "Test.xlsx",
-						tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable"
-					}
-				});
+				this.spreadsheetUploadTable = await this.editFlow
+					.getView()
+					.getController()
+					.getAppComponent()
+					.createComponent({
+						usage: "spreadsheetImporter",
+						async: true,
+						componentData: {
+							context: this,
+							columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time", "boolean", "decimal"],
+							mandatoryFields: ["product_ID", "quantity"],
+							spreadsheetFileName: "Test.xlsx",
+							tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable"
+						}
+					});
 			}
 			this.spreadsheetUploadTable.openSpreadsheetUploadDialog();
 			this.editFlow.getView().setBusy(false);
@@ -80,14 +88,18 @@ sap.ui.define([], function () {
 			this.editFlow.getView().setBusyIndicatorDelay(0);
 			this.editFlow.getView().setBusy(true);
 			if (!this.spreadsheetUploadTableShipping) {
-				this.spreadsheetUploadTableShipping = await this.editFlow.getView().getController().getAppComponent().createComponent({
-					usage: "spreadsheetImporter",
-					async: true,
-					componentData: {
-						context: this,
-						tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Shipping::LineItem-innerTable"
-					}
-				});
+				this.spreadsheetUploadTableShipping = await this.editFlow
+					.getView()
+					.getController()
+					.getAppComponent()
+					.createComponent({
+						usage: "spreadsheetImporter",
+						async: true,
+						componentData: {
+							context: this,
+							tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Shipping::LineItem-innerTable"
+						}
+					});
 			}
 			this.spreadsheetUploadTableShipping.openSpreadsheetUploadDialog();
 			this.editFlow.getView().setBusy(false);
@@ -96,14 +108,18 @@ sap.ui.define([], function () {
 			this.editFlow.getView().setBusyIndicatorDelay(0);
 			this.editFlow.getView().setBusy(true);
 			if (!this.spreadsheetUploadTableShippingInfo) {
-				this.spreadsheetUploadTableShippingInfo = await this.editFlow.getView().getController().getAppComponent().createComponent({
-					usage: "spreadsheetImporter",
-					async: true,
-					componentData: {
-						context: this,
-						tableId: "ui.v4.ordersv4fe::Orders_ItemsObjectPage--fe::table::Infos::LineItem-innerTable"
-					}
-				});
+				this.spreadsheetUploadTableShippingInfo = await this.editFlow
+					.getView()
+					.getController()
+					.getAppComponent()
+					.createComponent({
+						usage: "spreadsheetImporter",
+						async: true,
+						componentData: {
+							context: this,
+							tableId: "ui.v4.ordersv4fe::Orders_ItemsObjectPage--fe::table::Infos::LineItem-innerTable"
+						}
+					});
 			}
 			this.spreadsheetUploadTableShippingInfo.openSpreadsheetUploadDialog();
 			this.editFlow.getView().setBusy(false);

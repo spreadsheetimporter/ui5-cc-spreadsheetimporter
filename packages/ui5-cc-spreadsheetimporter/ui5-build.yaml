@@ -1,4 +1,4 @@
-specVersion: '2.6'
+specVersion: "2.6"
 type: application
 metadata:
   name: ui5-cc-spreadsheetimporter
@@ -20,9 +20,9 @@ builder:
       afterTask: ui5-tooling-transpile-task
       configuration:
         files:
-          - '**/*.js'
-          - '**/*.xml'
-          - '**/*.ts'
+          - "**/*.js"
+          - "**/*.xml"
+          - "**/*.ts"
         replace:
           - placeholder: XXXnamespaceXXX
             value: v0_21_1

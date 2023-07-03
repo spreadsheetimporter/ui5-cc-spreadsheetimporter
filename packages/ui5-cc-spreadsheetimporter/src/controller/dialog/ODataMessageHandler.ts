@@ -1,13 +1,13 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 import Dialog from "sap/m/Dialog";
-import { Messages} from "../../types";
+import { Messages } from "../../types";
 import SpreadsheetUpload from "../SpreadsheetUpload";
 import Fragment from "sap/ui/core/Fragment";
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
-export default class ODataMessageHandler extends ManagedObject{
+export default class ODataMessageHandler extends ManagedObject {
 	private messages: Messages[] = [];
 	private spreadsheetUploadController: SpreadsheetUpload;
 	private messageDialog: Dialog;
@@ -36,6 +36,6 @@ export default class ODataMessageHandler extends ManagedObject{
 	private onCloseMessageDialog() {
 		this.messageDialog.close();
 		// reset message manager messages
-		sap.ui.getCore().getMessageManager().removeAllMessages()
+		sap.ui.getCore().getMessageManager().removeAllMessages();
 	}
 }

@@ -49,7 +49,7 @@ export default class ODataV2 extends OData {
 			// check if firstResponse and firstResponse.response exist and that statusCode is >= 400
 			if (firstResponse && firstResponse.response && firstResponse.response.statusCode >= 400) {
 				// show messages from the Messages Manager Model
-				if(showBackendErrorMessages){
+				if (showBackendErrorMessages) {
 					this.odataMessageHandler.displayMessages();
 				}
 				return true;
@@ -98,7 +98,7 @@ export default class ODataV2 extends OData {
 						activateActionsPromises.push(activationPromise);
 					}
 				} catch (error) {
-					Log.error("Activate Draft failed",error as Error,"SpreadsheetUpload: OdataV2")
+					Log.error("Activate Draft failed", error as Error, "SpreadsheetUpload: OdataV2");
 				}
 			}
 		}

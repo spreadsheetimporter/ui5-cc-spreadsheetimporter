@@ -17,9 +17,8 @@ export enum AvailableOptions {
 	 * Changing the decimal seperator for number fields
 	 * @public
 	 */
-	DecimalSeperator = "decimalSeperator"
+	DecimalSeperator = "decimalSeperator",
 }
-
 
 export enum FieldMatchType {
 	/**
@@ -32,7 +31,7 @@ export enum FieldMatchType {
 	 * match type with only labels
 	 * @public
 	 */
-	Label = "label"
+	Label = "label",
 }
 
 export const CustomMessageTypes: { [key: string]: CustomMessageType } = {
@@ -59,5 +58,5 @@ export const CustomMessageTypes: { [key: string]: CustomMessageType } = {
 	Formatting: {
 		title: "Formatting",
 		group: true,
-	}
-}
+	},
+};

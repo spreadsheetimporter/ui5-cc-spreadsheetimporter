@@ -1,7 +1,6 @@
 import { MessageType } from "sap/ui/core/library";
 import { AvailableOptions } from "./enums";
 
-
 export interface Tags {
 	name: string;
 	count: number;
@@ -20,8 +19,7 @@ export type Columns = string[];
 export type CustomMessageType = {
 	title: string;
 	group: boolean;
-}
-
+};
 
 export interface Messages {
 	title: string;
@@ -33,13 +31,13 @@ export interface Messages {
 	formattedValue?: string;
 	ui5type: MessageType;
 	description?: string;
-  }
-  
-  export interface GroupedMessage {
+}
+
+export interface GroupedMessage {
 	title: string;
 	description?: string;
 	ui5type: MessageType;
-  }
+}
 
 export type Payload = {
 	[key: string]: any;
@@ -47,17 +45,17 @@ export type Payload = {
 export type PayloadArray = Payload[];
 
 // SheetHandler
-export type SheetDataType = 'b' | 'e' | 'n' | 'd' | 's' | 'z';
+export type SheetDataType = "b" | "e" | "n" | "d" | "s" | "z";
 
 export interface ValueData {
-  rawValue: any;
-  sheetDataType: SheetDataType;
-  format: string;
-  formattedValue: string;
+	rawValue: any;
+	sheetDataType: SheetDataType;
+	format: string;
+	formattedValue: string;
 }
 
 export type ArrayData = {
-  [key: string]: ValueData;
+	[key: string]: ValueData;
 }[];
 
 export type RowData = {
@@ -67,24 +65,23 @@ export type RowData = {
 export type AvailableOptionsType = keyof typeof AvailableOptions;
 
 export interface ComponentData {
-    spreadsheetFileName?: string;
-    context?: object;
-    columns?: string[];
-    tableId?: string;
-    odataType?: string;
-    mandatoryFields?: string[];
-    fieldMatchType?: FieldMatchType;
-    activateDraft?: boolean;
-    batchSize?: number;
-    standalone?: boolean;
-    strict?: boolean;
-    decimalSeparator?: string;
-    hidePreview?: boolean;
-    skipMandatoryFieldCheck?: boolean;
-    showBackendErrorMessages?: boolean;
-    showOptions?: boolean;
-    availableOptions?: AvailableOptionsType[];
-    debug?: boolean;
+	spreadsheetFileName?: string;
+	context?: object;
+	columns?: string[];
+	tableId?: string;
+	odataType?: string;
+	mandatoryFields?: string[];
+	fieldMatchType?: FieldMatchType;
+	activateDraft?: boolean;
+	batchSize?: number;
+	standalone?: boolean;
+	strict?: boolean;
+	decimalSeparator?: string;
+	hidePreview?: boolean;
+	skipMandatoryFieldCheck?: boolean;
+	showBackendErrorMessages?: boolean;
+	showOptions?: boolean;
+	availableOptions?: AvailableOptionsType[];
+	debug?: boolean;
 	hideSampleData?: boolean;
 }
-

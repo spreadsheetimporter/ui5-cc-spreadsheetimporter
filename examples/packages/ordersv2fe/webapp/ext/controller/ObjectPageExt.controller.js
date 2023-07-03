@@ -21,7 +21,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
 							columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time", "boolean", "decimal"],
 							mandatoryFields: ["product_ID", "quantity"],
 							spreadsheetFileName: "Test.xlsx",
-							hidePreview: false,
+							hidePreview: false
 						}
 					});
 
@@ -53,7 +53,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
 					let payload = oEvent.getParameter("payload");
 					// round number from 12,56 to 12,6
 					if (payload.price) {
-						payload.price = Number(payload.price).toFixed(1)
+						payload.price = Number(payload.price).toFixed(1);
 					}
 					oEvent.getSource().setPayload(payload);
 				}, this);
@@ -61,7 +61,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
 			this.spreadsheetUpload.openSpreadsheetUploadDialog();
 			this.getView().setBusy(false);
 		},
-        openSpreadsheetUploadDialogInfo: async function(oEvent) {
+		openSpreadsheetUploadDialogInfo: async function (oEvent) {
 			this.getView().setBusyIndicatorDelay(0);
 			// this.getView().setBusy(true)
 			if (!this.spreadsheetUpload) {
@@ -74,13 +74,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
 						componentData: {
 							context: this,
 							spreadsheetFileName: "Test.xlsx",
-							hidePreview: false,
+							hidePreview: false
 						}
 					});
-
 			}
 			this.spreadsheetUpload.openSpreadsheetUploadDialog();
 			this.getView().setBusy(false);
-        }
-    };
+		}
+	};
 });

@@ -62,8 +62,7 @@ describe("Upload File List Report", () => {
 		const overflowToolbar = await browser.asControl({
 			selector: {
 				controlType: "sap.m.OverflowToolbar",
-				id: new RegExp('^__toolbar.*', 'gm')
-				
+				id: new RegExp("^__toolbar.*", "gm")
 			}
 		});
 		const overflowToolbarId = await overflowToolbar.getId();
@@ -84,7 +83,7 @@ describe("Upload File List Report", () => {
 		const grid = await browser.asControl({
 			forceSelect: true,
 			selector: {
-				id: new RegExp('^(__container|__form0--FC-NoHead--Grid).*', 'gm'),
+				id: new RegExp("^(__container|__form0--FC-NoHead--Grid).*", "gm"),
 				controlType: "sap.ui.layout.Grid"
 			}
 		});

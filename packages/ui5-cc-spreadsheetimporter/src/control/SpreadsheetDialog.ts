@@ -59,12 +59,10 @@ export default class SpreadsheetDialog extends Dialog {
 		this.fireAvailableOptionsChanged({ availableOptions: aAvailableOptions }) as SpreadsheetDialog$AvailableOptionsChangedEventParameters;
 		return this;
 	}
-	
+
 	//static renderer: typeof sap.m.DialogRenderer = sap.m.DialogRenderer;
 
 	//InputRenderer =  // Renderer is sap/ui/core/Renderer !
-
-
 
 	static renderer: typeof SpreadsheetDialogRenderer = SpreadsheetDialogRenderer;
 }

@@ -5,26 +5,25 @@ import MetadataHandler from "./MetadataHandler";
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
 export default class MetadataHandlerV2 extends MetadataHandler {
-
 	constructor(spreadsheetUploadController: any) {
 		super(spreadsheetUploadController);
 	}
 
 	public getLabelList(colums: Columns, odataType: string, oDataEntityType: any): ListObject {
 		let listObject: ListObject = new Map();
-	
+
 		// get the property list of the entity for which we need to download the template
 		const properties: PropertyArray = oDataEntityType.property;
 		const entityTypeLabel: string = oDataEntityType["sap:label"];
 		Log.debug("SpreadsheetUpload: Annotations", undefined, "SpreadsheetUpload: MetadataHandler", () => this.spreadsheetUploadController.component.logger.returnObject(oDataEntityType));
-	
+
 		// check if file name is not set
 		if (!this.spreadsheetUploadController.component.getSpreadsheetFileName() && entityTypeLabel) {
 			this.spreadsheetUploadController.component.setSpreadsheetFileName(`${entityTypeLabel}.xlsx`);
 		} else if (!this.spreadsheetUploadController.component.getSpreadsheetFileName() && !entityTypeLabel) {
 			this.spreadsheetUploadController.component.setSpreadsheetFileName(`Template.xlsx`);
 		}
-	
+
 		if (colums.length > 0) {
 			for (const propertyName of colums) {
 				const property = properties.find((property: any) => property.name === propertyName);
@@ -48,7 +47,7 @@ export default class MetadataHandlerV2 extends MetadataHandler {
 				try {
 					hiddenProperty = property["com.sap.vocabularies.UI.v1.Hidden"].Bool === "true";
 				} catch (error) {
-					Log.debug(`No hidden property on ${property.name}`,undefined,"SpreadsheetUpload: MetadataHandler");
+					Log.debug(`No hidden property on ${property.name}`, undefined, "SpreadsheetUpload: MetadataHandler");
 				}
 				if (!hiddenProperty && !propertyName.startsWith("SAP__")) {
 					let propertyObject: Property = {} as Property;
@@ -59,7 +58,7 @@ export default class MetadataHandlerV2 extends MetadataHandler {
 				}
 			}
 		}
-	
+
 		return listObject;
 	}
 
@@ -71,7 +70,7 @@ export default class MetadataHandlerV2 extends MetadataHandler {
 			const lineItemsAnnotations = oDataEntityType["com.sap.vocabularies.UI.v1.LineItem"];
 			return lineItemsAnnotations.find((dataField: { Value: { Path: any } }) => dataField.Value.Path === propertyName).Label.String;
 		} catch (error) {
-			Log.debug(`SpreadsheetUpload: ${propertyName} not found as a LineItem Label`,undefined,"SpreadsheetUpload: MetadataHandler");
+			Log.debug(`SpreadsheetUpload: ${propertyName} not found as a LineItem Label`, undefined, "SpreadsheetUpload: MetadataHandler");
 		}
 		return propertyName;
 	}
@@ -82,7 +81,7 @@ export default class MetadataHandlerV2 extends MetadataHandler {
 	 **/
 	getKeyList(oDataEntityType: any): string[] {
 		let keys: string[] = [];
-		if(this.spreadsheetUploadController.component.getSkipMandatoryFieldCheck()){
+		if (this.spreadsheetUploadController.component.getSkipMandatoryFieldCheck()) {
 			return keys;
 		}
 
@@ -90,11 +89,11 @@ export default class MetadataHandlerV2 extends MetadataHandler {
 			// if property is mandatory, field should be in spreadsheet file
 			const propertyName = property.name;
 			// skip sap property
-			if(propertyName.startsWith("SAP__") ) {
+			if (propertyName.startsWith("SAP__")) {
 				continue;
 			}
 			if (
-				!this.spreadsheetUploadController.component.getSkipMandatoryFieldCheck() && 
+				!this.spreadsheetUploadController.component.getSkipMandatoryFieldCheck() &&
 				property["com.sap.vocabularies.Common.v1.FieldControl"] &&
 				property["com.sap.vocabularies.Common.v1.FieldControl"]["EnumMember"] &&
 				property["com.sap.vocabularies.Common.v1.FieldControl"]["EnumMember"] === "com.sap.vocabularies.Common.v1.FieldControlType/Mandatory"

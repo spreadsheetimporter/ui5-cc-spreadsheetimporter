@@ -17,8 +17,8 @@ export default class ODataV4 extends OData {
 	private metadataHandler: MetadataHandlerV4;
 
 	constructor(ui5version: number, spreadsheetUploadController: SpreadsheetUpload) {
-		super(ui5version,spreadsheetUploadController);
-		this.updateGroupId = Util.getRandomString(10)
+		super(ui5version, spreadsheetUploadController);
+		this.updateGroupId = Util.getRandomString(10);
 		this.metadataHandler = new MetadataHandlerV4(spreadsheetUploadController);
 	}
 
@@ -46,29 +46,29 @@ export default class ODataV4 extends OData {
 
 	async checkForErrors(model: any, binding: any, showBackendErrorMessages: Boolean): Promise<boolean> {
 		// if the binding has pending changes, a error occured
-		if(this.customBinding.hasPendingChanges()){
+		if (this.customBinding.hasPendingChanges()) {
 			// delete all the created context
-            this.createContexts.forEach(async context => {
-              await context.delete(this.updateGroupId);
-            });
+			this.createContexts.forEach(async (context) => {
+				await context.delete(this.updateGroupId);
+			});
 			// show messages from the Messages Manager Model
-            if(showBackendErrorMessages){
+			if (showBackendErrorMessages) {
 				this.odataMessageHandler.displayMessages();
 			}
 			return true;
-        }
+		}
 		return false;
 	}
 
 	createCustomBinding(binding: any) {
 		let path = binding.getPath();
-		if(binding.getResolvedPath){
+		if (binding.getResolvedPath) {
 			path = binding.getResolvedPath();
 		} else {
 			// workaround for getResolvedPath only available from 1.88
-			path = binding.getModel().resolve(binding.getPath(),binding.getContext())
+			path = binding.getModel().resolve(binding.getPath(), binding.getContext());
 		}
-		this.customBinding = binding.getModel().bindList(path,null,[],[],{$$updateGroupId: this.updateGroupId});
+		this.customBinding = binding.getModel().bindList(path, null, [], [], { $$updateGroupId: this.updateGroupId });
 	}
 
 	async waitForDraft(): Promise<any[]> {
@@ -98,7 +98,7 @@ export default class ODataV4 extends OData {
 				const metaDataObject = metaModel.getObject(tableBindingPath);
 				return metaDataObject["$Type"];
 			} catch (error) {
-				Log.debug("Error while getting OData Type for List Report",error as Error, "SpreadsheetUpload: ODataV4");
+				Log.debug("Error while getting OData Type for List Report", error as Error, "SpreadsheetUpload: ODataV4");
 			}
 			// for object page
 			if (!odataType) {
@@ -109,7 +109,7 @@ export default class ODataV4 extends OData {
 				}
 			}
 			if (!odataType) {
-				Log.error("Error while getting OData Type. Please specify 'odataType' in options",undefined, "SpreadsheetUpload: ODataV4");
+				Log.error("Error while getting OData Type. Please specify 'odataType' in options", undefined, "SpreadsheetUpload: ODataV4");
 			}
 		}
 	}

@@ -25,7 +25,7 @@ export default class Util extends ManagedObject {
 			try {
 				value = Object.entries(row).find(([key]) => key.includes(`[${type}]`))[1] as ValueData;
 			} catch (error) {
-				Log.debug(`Not found ${type}`,undefined,"SpreadsheetUpload: Util");
+				Log.debug(`Not found ${type}`, undefined, "SpreadsheetUpload: Util");
 			}
 		}
 		return value;
@@ -121,35 +121,35 @@ export default class Util extends ManagedObject {
 	}
 
 	static getRandomString(length: number): string {
-		const characters: string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-		let randomString: string = '';
-	  
-		for (let i: number = 0; i < length; i++) {
-		  const randomIndex: number = Math.floor(Math.random() * characters.length);
-		  randomString += characters.charAt(randomIndex);
-		}
-	  
-		return randomString;
-	  }
+		const characters: string = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		let randomString: string = "";
 
-	  static stringify(obj: any): string {
+		for (let i: number = 0; i < length; i++) {
+			const randomIndex: number = Math.floor(Math.random() * characters.length);
+			randomString += characters.charAt(randomIndex);
+		}
+
+		return randomString;
+	}
+
+	static stringify(obj: any): string {
 		const seen = new WeakSet();
 
 		return JSON.stringify(obj, (key, value) => {
 			// Check if value is an object and not null
-			if (typeof value === 'object' && value !== null) {
+			if (typeof value === "object" && value !== null) {
 				// Handle circular references
 				if (seen.has(value)) {
 					return;
 				}
 				seen.add(value);
-				
+
 				// Handle first-level objects
 				const keys = Object.keys(value);
-				if (keys.every(k => typeof value[k] !== 'object' || value[k] === null)) {
+				if (keys.every((k) => typeof value[k] !== "object" || value[k] === null)) {
 					let simpleObject: { [key: string]: any } = {};
 					for (let k in value) {
-						if (typeof value[k] !== 'object' || value[k] === null) {
+						if (typeof value[k] !== "object" || value[k] === null) {
 							simpleObject[k] = value[k];
 						}
 					}
@@ -159,5 +159,4 @@ export default class Util extends ManagedObject {
 			return value;
 		});
 	}
-	
 }

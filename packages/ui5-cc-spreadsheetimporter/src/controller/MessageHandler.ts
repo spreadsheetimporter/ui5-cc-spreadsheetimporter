@@ -12,7 +12,7 @@ import { CustomMessageTypes, FieldMatchType } from "../enums";
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
-export default class MessageHandler extends ManagedObject{
+export default class MessageHandler extends ManagedObject {
 	private messages: Messages[] = [];
 	private spreadsheetUploadController: SpreadsheetUpload;
 	private messageDialog: Dialog;
@@ -28,12 +28,12 @@ export default class MessageHandler extends ManagedObject{
 	}
 
 	addArrayToMessages(messages: Messages[]) {
-		Log.debug("addArrayToMessages",undefined,"SpreadsheetUpload: MessageHandler",() => this.spreadsheetUploadController.component.logger.returnObject(messages))
+		Log.debug("addArrayToMessages", undefined, "SpreadsheetUpload: MessageHandler", () => this.spreadsheetUploadController.component.logger.returnObject(messages));
 		this.messages = this.messages.concat(messages);
 	}
 
 	addMessageToMessages(message: Messages) {
-		Log.debug("addMessageToMessages",undefined,"SpreadsheetUpload: MessageHandler",() => this.spreadsheetUploadController.component.logger.returnObject(message))
+		Log.debug("addMessageToMessages", undefined, "SpreadsheetUpload: MessageHandler", () => this.spreadsheetUploadController.component.logger.returnObject(message));
 		this.messages.push(message);
 	}
 
@@ -57,10 +57,10 @@ export default class MessageHandler extends ManagedObject{
 		for (const mandatoryField of mandatoryFields) {
 			const fieldLabel = typeLabelList.get(mandatoryField)?.label;
 			if (!fieldLabel) {
-				Log.error(`Mandatory Field ${mandatoryField} not found for checking mandatory fields`,undefined,"SpreadsheetUpload: MessageHandler");
+				Log.error(`Mandatory Field ${mandatoryField} not found for checking mandatory fields`, undefined, "SpreadsheetUpload: MessageHandler");
 				continue;
 			}
-	
+
 			for (const [index, row] of data.entries()) {
 				const value = Util.getValueFromRow(row, fieldLabel, mandatoryField, this.spreadsheetUploadController.component.getFieldMatchType() as FieldMatchType);
 				const errorMessage = {
@@ -68,7 +68,7 @@ export default class MessageHandler extends ManagedObject{
 					type: CustomMessageTypes.MandatoryFieldNotFilled,
 					row: index + 2,
 					counter: 1,
-					ui5type: MessageType.Error
+					ui5type: MessageType.Error,
 				} as Messages;
 				// no value found or value is empty, create error message
 				if (!value || value.rawValue === "" || value.rawValue === undefined) {
@@ -77,12 +77,11 @@ export default class MessageHandler extends ManagedObject{
 			}
 		}
 	}
-	
 
 	checkFormat(data: ArrayData) {
 		for (const [index, row] of data.entries()) {
-			Object.values(row).forEach(({sheetDataType, format, rawValue, formattedValue}) => {
-				if (sheetDataType === 'n' && format !== 'General' && rawValue !== Number(formattedValue)) {
+			Object.values(row).forEach(({ sheetDataType, format, rawValue, formattedValue }) => {
+				if (sheetDataType === "n" && format !== "General" && rawValue !== Number(formattedValue)) {
 					const warningMessage = {
 						title: "Format",
 						type: CustomMessageTypes.Formatting,
@@ -90,7 +89,7 @@ export default class MessageHandler extends ManagedObject{
 						counter: 1,
 						ui5type: MessageType.Warning,
 						rawValue: rawValue,
-						formattedValue: formattedValue
+						formattedValue: formattedValue,
 					} as Messages;
 					this.addMessageToMessages(warningMessage);
 				}
@@ -121,7 +120,7 @@ export default class MessageHandler extends ManagedObject{
 					title: this.spreadsheetUploadController.util.geti18nText("columnNotFound", [columnName]),
 					type: CustomMessageTypes.ColumnNotFound,
 					counter: 1,
-					ui5type: MessageType.Error
+					ui5type: MessageType.Error,
 				} as Messages;
 				this.addMessageToMessages(errorMessage);
 			}
@@ -176,7 +175,9 @@ export default class MessageHandler extends ManagedObject{
 		this.messageDialog.setModel(new JSONModel(), "messages");
 		const messagesGrouped = this.groupMessages(this.messages);
 		const sortedMessagesGrouped = this.sortMessagesByTitle(messagesGrouped);
-		Log.debug("sortedMessagesGrouped", undefined, "SpreadsheetUpload: MessageHandler", () => this.spreadsheetUploadController.component.logger.returnObject({ sortedMessagesGrouped: sortedMessagesGrouped }));
+		Log.debug("sortedMessagesGrouped", undefined, "SpreadsheetUpload: MessageHandler", () =>
+			this.spreadsheetUploadController.component.logger.returnObject({ sortedMessagesGrouped: sortedMessagesGrouped })
+		);
 		(this.messageDialog.getModel("messages") as JSONModel).setData(sortedMessagesGrouped);
 		const dialogState = this.getWorstType(sortedMessagesGrouped);
 		const infoModel = new JSONModel({
@@ -187,40 +188,40 @@ export default class MessageHandler extends ManagedObject{
 		this.messageDialog.open();
 	}
 
-	groupMessages(messages: Messages[]): (GroupedMessage)[] {
+	groupMessages(messages: Messages[]): GroupedMessage[] {
 		const counterLargerThanOne = messages.filter((message) => message.counter !== 0);
 		const parsingMessages = counterLargerThanOne.filter((message) => message.type.group === true);
-		
-		const messageGroups = parsingMessages.reduce<{[key: string]: string[]}>((groups, message) => {
-		  let messageText = "";
-		  if (!groups[message.title]) {
-			groups[message.title] = [];
-		  }
-		  if (message.rawValue && message.formattedValue) {
-			messageText = this.spreadsheetUploadController.util.geti18nText("errorInRowWithValueFormatted", [message.row, message.formattedValue, message.rawValue]);
-		  } else if (message.rawValue) {
-			messageText = this.spreadsheetUploadController.util.geti18nText("errorInRowWithValue", [message.row, message.rawValue]);
-		  } else {
-			messageText = this.spreadsheetUploadController.util.geti18nText("errorInRow", [message.row]);
-		  }
-		  groups[message.title].push(messageText);
-		  return groups;
+
+		const messageGroups = parsingMessages.reduce<{ [key: string]: string[] }>((groups, message) => {
+			let messageText = "";
+			if (!groups[message.title]) {
+				groups[message.title] = [];
+			}
+			if (message.rawValue && message.formattedValue) {
+				messageText = this.spreadsheetUploadController.util.geti18nText("errorInRowWithValueFormatted", [message.row, message.formattedValue, message.rawValue]);
+			} else if (message.rawValue) {
+				messageText = this.spreadsheetUploadController.util.geti18nText("errorInRowWithValue", [message.row, message.rawValue]);
+			} else {
+				messageText = this.spreadsheetUploadController.util.geti18nText("errorInRow", [message.row]);
+			}
+			groups[message.title].push(messageText);
+			return groups;
 		}, {});
-	  
+
 		const groupedMessages: GroupedMessage[] = [];
 		for (const title in messageGroups) {
-		  const ui5type = messages.find(message => message.title === title)?.ui5type || "" as MessageType;
-		  groupedMessages.push({
-			title: title,
-			description: messageGroups[title].join("\n"),
-			ui5type: ui5type
-		  });
+			const ui5type = messages.find((message) => message.title === title)?.ui5type || ("" as MessageType);
+			groupedMessages.push({
+				title: title,
+				description: messageGroups[title].join("\n"),
+				ui5type: ui5type,
+			});
 		}
-	  
+
 		const allMessages = groupedMessages.concat(counterLargerThanOne.filter((message) => message.type.group === false));
-	  
+
 		return allMessages;
-	  }
+	}
 
 	private onCloseMessageDialog() {
 		this.messageDialog.close();
@@ -247,7 +248,7 @@ export default class MessageHandler extends ManagedObject{
 
 	private getWorstType(messages: GroupedMessage[]): ValueState {
 		let worstType = MessageType.None;
-	
+
 		// Map MessageType to severity levels
 		const severity = {
 			[MessageType.None]: 0,
@@ -256,18 +257,14 @@ export default class MessageHandler extends ManagedObject{
 			[MessageType.Warning]: 3,
 			[MessageType.Error]: 4,
 		};
-	
+
 		for (const message of messages) {
 			if (severity[message.ui5type] > severity[worstType]) {
 				worstType = message.ui5type;
 			}
 		}
-	
+
 		// Convert MessageType to ValueState
 		return worstType as unknown as ValueState;
 	}
-	
-	
-	
-	
 }

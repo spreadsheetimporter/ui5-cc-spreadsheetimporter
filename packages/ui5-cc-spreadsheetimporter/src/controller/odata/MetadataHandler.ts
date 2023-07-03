@@ -5,7 +5,7 @@ import SpreadsheetUpload from "../SpreadsheetUpload";
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
-export default abstract class MetadataHandler extends ManagedObject{
+export default abstract class MetadataHandler extends ManagedObject {
 	public spreadsheetUploadController: SpreadsheetUpload;
 
 	constructor(spreadsheetUploadController: any) {
@@ -13,6 +13,6 @@ export default abstract class MetadataHandler extends ManagedObject{
 		this.spreadsheetUploadController = spreadsheetUploadController;
 	}
 
-	abstract getLabelList(colums: Columns, odataType: string, oDataEntityType: any): ListObject 
-	abstract getKeyList(oDataEntityType: any): string[]
+	abstract getLabelList(colums: Columns, odataType: string, oDataEntityType: any): ListObject;
+	abstract getKeyList(oDataEntityType: any): string[];
 }
