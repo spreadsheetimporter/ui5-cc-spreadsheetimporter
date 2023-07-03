@@ -1,4 +1,10 @@
-<mvc:View controllerName="ui.v2.ordersv2freestylenondraft.controller.List" xmlns="sap.m" xmlns:semantic="sap.f.semantic" xmlns:mvc="sap.ui.core.mvc" xmlns:spreadsheet="cc.spreadsheetimporter.button.v0_9_1">
+<mvc:View
+  controllerName="ui.v2.ordersv2freestylenondraft.controller.List"
+  xmlns="sap.m"
+  xmlns:semantic="sap.f.semantic"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:spreadsheet="cc.spreadsheetimporter.button.v0_9_2"
+>
   <semantic:SemanticPage id="listPage" preserveHeaderStateOnScroll="true" toggleHeaderOnTitleClick="false">
     <semantic:titleHeading>
       <Title id="listPageTitle" text="{listView>/title}" level="H2" />
@@ -7,7 +13,14 @@
       <semantic:AddAction press="openSpreadsheetUpload" />
     </semantic:addAction>
     <semantic:titleCustomTextActions>
-      <spreadsheet:SpreadsheetUpload id="spreadsheetUploadButton" text="Spreadsheet Upload Button" tableId="container-todo---list--list" changeBeforeCreate="changeBeforeCreate" checkBeforeRead="checkBeforeRead" uploadButtonPress="uploadButtonPress"/>
+      <spreadsheet:SpreadsheetUpload
+        id="spreadsheetUploadButton"
+        text="Spreadsheet Upload Button"
+        tableId="container-todo---list--list"
+        changeBeforeCreate="changeBeforeCreate"
+        checkBeforeRead="checkBeforeRead"
+        uploadButtonPress="uploadButtonPress"
+      />
     </semantic:titleCustomTextActions>
     <semantic:content>
       <!-- For client side filtering add this to the items attribute: parameters: {operationMode: 'Client'}}" -->

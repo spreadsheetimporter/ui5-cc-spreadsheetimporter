@@ -1,4 +1,10 @@
-<mvc:View controllerName="ui.v2.ordersv2freestylenondraftopenui5.controller.Detail" xmlns="sap.m" xmlns:semantic="sap.f.semantic" xmlns:mvc="sap.ui.core.mvc" xmlns:spreadsheet="cc.spreadsheetimporter.button.v0_9_1">
+<mvc:View
+  controllerName="ui.v2.ordersv2freestylenondraftopenui5.controller.Detail"
+  xmlns="sap.m"
+  xmlns:semantic="sap.f.semantic"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:spreadsheet="cc.spreadsheetimporter.button.v0_9_2"
+>
   <semantic:SemanticPage id="detailPage" busy="{detailView>/busy}" busyIndicatorDelay="{detailView>/delay}" showFooter="true">
     <semantic:titleHeading>
       <Title text="{OrderNo}" level="H2" />
@@ -9,7 +15,7 @@
     </semantic:headerContent>
     <semantic:titleCustomTextActions>
       <Button id="test" text="Spreadsheet Upload Code" press="openSpreadsheetUpload" />
-      <spreadsheet:SpreadsheetUpload id="spreadsheetUploadButton" text="Spreadsheet Upload Button" tableId="container-todo---detail--lineItemsList" showBackendErrorMessages="true"/>
+      <spreadsheet:SpreadsheetUpload id="spreadsheetUploadButton" text="Spreadsheet Upload Button" tableId="container-todo---detail--lineItemsList" showBackendErrorMessages="true" />
     </semantic:titleCustomTextActions>
     <semantic:content>
       <Table
