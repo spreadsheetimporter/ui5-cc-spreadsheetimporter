@@ -9,8 +9,8 @@ sap.ui.define([], function () {
 			this.editFlow.getView().setBusyIndicatorDelay(0);
 			this.editFlow.getView().setBusy(true);
 			if (!this.spreadsheetUpload) {
-				this.spreadsheetUpload = await this.editFlow
-					.getView()
+				// prettier-ignore
+				this.spreadsheetUpload = await this.editFlow.getView()
 					.getController()
 					.getAppComponent()
 					.createComponent({
@@ -65,8 +65,8 @@ sap.ui.define([], function () {
 			this.editFlow.getView().setBusyIndicatorDelay(0);
 			this.editFlow.getView().setBusy(true);
 			if (!this.spreadsheetUploadTable) {
-				this.spreadsheetUploadTable = await this.editFlow
-					.getView()
+				// prettier-ignore
+				this.spreadsheetUploadTable = await this.editFlow.getView()
 					.getController()
 					.getAppComponent()
 					.createComponent({
@@ -88,8 +88,8 @@ sap.ui.define([], function () {
 			this.editFlow.getView().setBusyIndicatorDelay(0);
 			this.editFlow.getView().setBusy(true);
 			if (!this.spreadsheetUploadTableShipping) {
-				this.spreadsheetUploadTableShipping = await this.editFlow
-					.getView()
+				// prettier-ignore
+				this.spreadsheetUploadTableShipping = await this.editFlow.getView()
 					.getController()
 					.getAppComponent()
 					.createComponent({
@@ -108,8 +108,8 @@ sap.ui.define([], function () {
 			this.editFlow.getView().setBusyIndicatorDelay(0);
 			this.editFlow.getView().setBusy(true);
 			if (!this.spreadsheetUploadTableShippingInfo) {
-				this.spreadsheetUploadTableShippingInfo = await this.editFlow
-					.getView()
+				// prettier-ignore
+				this.spreadsheetUploadTableShippingInfo = await this.editFlow.getView()
 					.getController()
 					.getAppComponent()
 					.createComponent({

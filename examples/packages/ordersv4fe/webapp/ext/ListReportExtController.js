@@ -9,8 +9,8 @@ sap.ui.define([], function () {
 			this.editFlow.getView().setBusyIndicatorDelay(0);
 			this.editFlow.getView().setBusy(true);
 			if (!this.spreadsheetUpload) {
-				this.spreadsheetUpload = await this.editFlow
-					.getView()
+				// prettier-ignore
+				this.spreadsheetUpload = await this.editFlow.getView()
 					.getController()
 					.getAppComponent()
 					.createComponent({
