@@ -20,13 +20,13 @@ if (scenario !== "ordersv4fecds") {
 } else {
 	baseUrl = "http://localhost:4004/ui.v4.ordersv4fecds/index.html";
 }
+global.scenario = scenario;
 
 module.exports.config = {
 	wdi5: {
 		logLevel: "error",
 		waitForUI5Timeout: 180000
 	},
-	scenario: scenario,
 	specs: specs,
 	exclude: [
 		// 'path/to/excluded/files'
