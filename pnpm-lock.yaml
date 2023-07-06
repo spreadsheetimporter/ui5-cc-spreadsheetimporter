@@ -110,8 +110,8 @@ importers:
         specifier: 8.1.1
         version: 8.1.1(chromedriver@114.0.2)(webdriverio@8.11.2)
       wdio-ui5-service:
-        specifier: 1.5.1
-        version: 1.5.1
+        specifier: 2.0.0-alpha.1
+        version: 2.0.0-alpha.1
       webdriverio:
         specifier: ^8.11.2
         version: 8.11.2(typescript@5.1.6)
@@ -13384,8 +13384,8 @@ packages:
       - supports-color
     dev: true
 
-  /wdio-ui5-service@1.5.1:
-    resolution: { integrity: sha512-Q6aAvpzR0QsKyepJr4X0Q8YEA8j4kbUicGrjgYpEbxIMIVPgTheWNFMIuHTBWjTE4xEQ17GiOknoEFKFhAoMMA== }
+  /wdio-ui5-service@2.0.0-alpha.1:
+    resolution: { integrity: sha512-GrqRY1EanFeqWDkl3gXthbEp178hsc5rCoR9lwR57QY8AlJzOjUDcuwXu140Uo4Le9YBMMxpyum/07U4JABMcQ== }
     engines: { node: ">=16", npm: ">=7" }
     dependencies:
       dotenv: 16.3.1
