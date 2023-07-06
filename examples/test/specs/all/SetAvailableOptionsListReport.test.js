@@ -11,7 +11,7 @@ let scenario = undefined;
 describe("Upload File List Report", () => {
 	before(async () => {
 		BaseClass = new Base();
-		scenario = browser.config.scenario;
+		scenario = global.scenario;
 		if (scenario.startsWith("ordersv2")) {
 			FE = new FEV2();
 		}
