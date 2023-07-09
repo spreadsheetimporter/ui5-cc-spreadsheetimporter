@@ -1,6 +1,5 @@
-import Component, { Component$CheckBeforeReadEventParameters } from "cc/spreadsheetimporter/v0_22_0/Component";
+import Component, { Component$ChangeBeforeCreateEvent, Component$CheckBeforeReadEvent, Component$UploadButtonPressEvent } from "cc/spreadsheetimporter/v0_22_0/Component";
 import ExtensionAPI from "sap/fe/core/ExtensionAPI";
-import Event from "sap/ui/base/Event";
 /**
  * Generated event handler.
  *
@@ -28,7 +27,7 @@ export async function openSpreadsheetUploadDialog(this: ExtensionAPI) {
 			});
 		controller.spreadsheetUpload = spreadsheetUpload;
 		// event to check before uploaded to app
-		spreadsheetUpload.attachCheckBeforeRead(function (event: Event<Component$CheckBeforeReadEventParameters>) {
+		spreadsheetUpload.attachCheckBeforeRead(function (event: Component$CheckBeforeReadEvent) {
 			// example
 			const sheetData = event.getParameter("sheetData");
 			let errorArray = [];
@@ -51,12 +50,13 @@ export async function openSpreadsheetUploadDialog(this: ExtensionAPI) {
 		}, this);
 
 		// event example to prevent uploading data to backend
-		spreadsheetUpload.attachUploadButtonPress(function (event: Event<Component$UploadButtonPressEventParameters>) {
+		spreadsheetUpload.attachUploadButtonPress(function (event: Component$UploadButtonPressEvent) {
 			//event.preventDefault();
+			event.getParameter("");
 		}, this);
 
 		// event to change data before send to backend
-		spreadsheetUpload.attachChangeBeforeCreate(function (event: Event<Component$ChangeBeforeCreateEventParameters>) {
+		spreadsheetUpload.attachChangeBeforeCreate(function (event: Component$ChangeBeforeCreateEvent) {
 			let payload = event.getParameter("payload");
 			// round number from 12,56 to 12,6
 			if (payload.price) {
