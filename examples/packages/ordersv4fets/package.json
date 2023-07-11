@@ -16,12 +16,12 @@
     "@sap-ux/ui5-middleware-fe-mockserver": "^2.1.112",
     "@sap/ux-specification": "^1.108.8",
     "@sap/ux-ui5-tooling": "1.10.1",
-    "@sapui5/ts-types-esm": "~1.108.0",
-    "@typescript-eslint/eslint-plugin": "^5.61.0",
-    "@typescript-eslint/parser": "^5.61.0",
+    "@sapui5/ts-types-esm": "~1.115.1",
+    "@typescript-eslint/eslint-plugin": "6.0.0",
+    "@typescript-eslint/parser": "6.0.0",
     "@ui5/cli": "^3.3.1",
-    "typescript": "^5.1.6",
-    "ui5-tooling-transpile": "^0.7.17"
+    "typescript": "5.1.6",
+    "ui5-tooling-transpile": "^0.7.18"
   },
   "scripts": {
     "start": "fiori run -p 8101 --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#uiv4ordersv4fets-tile\"",
