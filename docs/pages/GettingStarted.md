@@ -143,15 +143,13 @@ The attribute `context` is mandatory and must be set so the component can access
 openSpreadsheetUploadDialog: async function (oEvent) {
     this.getView().setBusyIndicatorDelay(0)
     this.getView().setBusy(true)
-    if (!this.spreadsheetUpload) {
-        this.spreadsheetUpload = await this.getView().getController().getAppComponent().createComponent({
-            usage: "spreadsheetImporter",
-            async: true,
-            componentData: {
-                context: this
-            }
-        });
-    }
+    this.spreadsheetUpload = await this.getView().getController().getAppComponent().createComponent({
+        usage: "spreadsheetImporter",
+        async: true,
+        componentData: {
+            context: this
+        }
+    });
     this.spreadsheetUpload.openSpreadsheetUploadDialog()
     this.getView().setBusy(false)
 }
@@ -205,15 +203,13 @@ This example is from the [sample app](https://github.com/marianfoo/ui5-cc-spread
 openSpreadsheetUploadDialog: async function (oEvent) {
     this.getView().setBusyIndicatorDelay(0)
     this.getView().setBusy(true)
-    if (!this.spreadsheetUpload) {
-        this.spreadsheetUpload = await this.getView().getController().getOwnerComponent().createComponent({
-            usage: "spreadsheetImporter",
-            async: true,
-            componentData: {
-                context: this
-            }
-        });
-    }
+    this.spreadsheetUpload = await this.getView().getController().getOwnerComponent().createComponent({
+        usage: "spreadsheetImporter",
+        async: true,
+        componentData: {
+            context: this
+        }
+    });
     this.spreadsheetUpload.openSpreadsheetUploadDialog()
     this.getView().setBusy(false)
 }
