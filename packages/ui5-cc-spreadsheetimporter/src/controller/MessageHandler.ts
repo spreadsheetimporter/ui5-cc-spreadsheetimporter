@@ -231,7 +231,9 @@ export default class MessageHandler extends ManagedObject {
 
 	private onContinue() {
 		this.messageDialog.close();
-		this.spreadsheetUploadController.spreadsheetUploadDialogHandler.setDataRows(0);
+		const spreadsheetUploadDialog = this.spreadsheetUploadController.getSpreadsheetUploadDialog();
+		const payloadArrayLength = this.spreadsheetUploadController.payloadArray.length;
+		(spreadsheetUploadDialog.getModel("info") as JSONModel).setProperty("/dataRows", payloadArrayLength);
 	}
 
 	private sortMessagesByTitle(messages: GroupedMessage[]) {
