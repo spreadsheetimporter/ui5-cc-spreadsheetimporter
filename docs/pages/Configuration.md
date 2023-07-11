@@ -22,6 +22,7 @@ These options are available and explained in detail below:
 | `showOptions` | Show Options Menu to change a few of these configurations in runtime. | boolean |
 | `availableOptions` | List of available Options to show to the user. | string[] |
 | `hideSampleData` | Leave the template file empty and do not add any sample data | boolean |
+| `sampleData` | Add a array of objects with sample data for the template | object |
 | `debug` | Option to show more console statements and set Log Level to Debug | boolean |
 
 ### `columns`
@@ -202,6 +203,33 @@ This Option defines which option the user can influence.
 **default:** `false`
 
 Leave the template file empty and do not add any sample data.
+
+### `sampleData`
+
+**default:** Using generated sample data
+
+This option defines the sample data that is displayed in the template file.  
+If no sample data is defined, the sample data is generated automatically.  
+Add a object array using the propeerty names as attribute.
+
+**Example:**
+
+```javascript
+sampleData: [
+        {
+            product_ID: "HT-1000",
+            quantity: 1,
+            title: "Notebook Basic 15",
+            price: 956,
+            validFrom: new Date(),
+            timestamp: new Date(),
+            date: new Date(),
+            time: new Date(),
+            boolean: true,
+            decimal: "1.1"
+        }
+    ]
+```
 
 ### `debug`
 
