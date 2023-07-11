@@ -84,4 +84,5 @@ export interface ComponentData {
 	availableOptions?: AvailableOptionsType[];
 	debug?: boolean;
 	hideSampleData?: boolean;
+	sampleData?: object;
 }

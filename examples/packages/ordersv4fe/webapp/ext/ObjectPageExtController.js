@@ -20,7 +20,21 @@ sap.ui.define([], function () {
 							tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable",
 							columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time", "boolean", "decimal"],
 							mandatoryFields: ["product_ID", "quantity"],
-							spreadsheetFileName: "Test.xlsx"
+							spreadsheetFileName: "Test.xlsx",
+							sampleData: [
+								{
+									product_ID: "HT-1000",
+									quantity: 1,
+									title: "Notebook Basic 15",
+									price: 956,
+									validFrom: new Date(),
+									timestamp: new Date(),
+									date: new Date(),
+									time: new Date(),
+									boolean: true,
+									decimal: 1.1
+								}
+							]
 						}
 					});
 

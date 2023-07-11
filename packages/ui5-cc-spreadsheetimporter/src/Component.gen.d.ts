@@ -25,6 +25,7 @@ declare module "./Component" {
 		showOptions?: boolean | PropertyBindingInfo | `{${string}}`;
 		availableOptions?: string[] | PropertyBindingInfo | `{${string}}`;
 		hideSampleData?: boolean | PropertyBindingInfo | `{${string}}`;
+		sampleData?: object | PropertyBindingInfo | `{${string}}`;
 		debug?: boolean | PropertyBindingInfo | `{${string}}`;
 		checkBeforeRead?: (event: Component$CheckBeforeReadEvent) => void;
 		changeBeforeCreate?: (event: Component$ChangeBeforeCreateEvent) => void;
@@ -403,6 +404,25 @@ declare module "./Component" {
 		 * @returns Reference to "this" in order to allow method chaining
 		 */
 		setHideSampleData(hideSampleData: boolean): this;
+
+		// property: sampleData
+
+		/**
+		 * Gets current value of property "sampleData".
+		 *
+		 * @returns Value of property "sampleData"
+		 */
+		getSampleData(): object;
+
+		/**
+		 * Sets a new value for property "sampleData".
+		 *
+		 * When called with a value of "null" or "undefined", the default value of the property will be restored.
+		 *
+		 * @param sampleData New value for property "sampleData"
+		 * @returns Reference to "this" in order to allow method chaining
+		 */
+		setSampleData(sampleData: object): this;
 
 		// property: debug
 

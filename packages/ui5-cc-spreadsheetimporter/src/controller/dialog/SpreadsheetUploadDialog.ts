@@ -258,9 +258,15 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 		let fieldMatchType = this.component.getFieldMatchType();
 		var worksheet = {} as XLSX.WorkSheet;
 		let colWidths: { wch: number }[] = []; // array to store column widths
+		let sampleData = this.component.getSampleData() as any[];
+		// if sampledata is empty add one row of empty data
+		if (!sampleData || sampleData.length === 0) {
+			sampleData = [{}];
+		}
 		const colWidthDefault = 15;
 		const colWidthDate = 20;
 		let col = 0;
+		let rows = 1;
 		if (this.component.getStandalone()) {
 			// loop over this.component.getColumns
 			for (let column of this.component.getColumns()) {
@@ -276,60 +282,83 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 				if (fieldMatchType === "labelTypeBrackets") {
 					label = `${value.label}[${key}]`;
 				}
-
-				if (value.type === "Edm.Boolean") {
-					cell = { v: "true", t: "b" };
-					colWidths.push({ wch: colWidthDefault });
-				} else if (value.type === "Edm.String") {
-					let newStr;
-					if (value.maxLength) {
-						newStr = "test string".substring(0, value.maxLength);
-					} else {
-						newStr = "test string";
-					}
-					cell = { v: newStr, t: "s" };
-					colWidths.push({ wch: colWidthDefault });
-				} else if (value.type === "Edm.DateTimeOffset" || value.type === "Edm.DateTime") {
-					let format;
-					const currentLang = sap.ui.getCore().getConfiguration().getLanguage();
-					if (currentLang.startsWith("en")) {
-						format = "mm/dd/yyyy hh:mm AM/PM";
-					} else {
-						format = "dd.mm.yyyy hh:mm";
-					}
-
-					cell = { v: new Date(), t: "d", z: format };
-					colWidths.push({ wch: colWidthDate }); // set column width to 20 for this column
-				} else if (value.type === "Edm.Date") {
-					cell = { v: new Date(), t: "d" };
-					colWidths.push({ wch: colWidthDefault });
-				} else if (value.type === "Edm.TimeOfDay" || value.type === "Edm.Time") {
-					cell = { v: new Date(), t: "d", z: "hh:mm" };
-					colWidths.push({ wch: colWidthDefault });
-				} else if (
-					value.type === "Edm.UInt8" ||
-					value.type === "Edm.Int16" ||
-					value.type === "Edm.Int32" ||
-					value.type === "Edm.Integer" ||
-					value.type === "Edm.Int64" ||
-					value.type === "Edm.Integer64"
-				) {
-					cell = { v: 85, t: "n" };
-					colWidths.push({ wch: colWidthDefault });
-				} else if (value.type === "Edm.Double" || value.type === "Edm.Decimal") {
-					const decimalSeparator = this.component.getDecimalSeparator();
-					cell = { v: `123${decimalSeparator}4`, t: "n" };
-					colWidths.push({ wch: colWidthDefault });
-				}
 				worksheet[XLSX.utils.encode_cell({ c: col, r: 0 })] = { v: label, t: "s" };
-				if (!this.component.getHideSampleData()) {
-					worksheet[XLSX.utils.encode_cell({ c: col, r: 1 })] = cell;
-				}
 
+				for (const [index, data] of sampleData.entries()) {
+					let sampleDataValue;
+					rows = index + 1;
+					if (data[key]) {
+						sampleDataValue = data[key];
+					}
+					if (value.type === "Edm.Boolean") {
+						cell = {
+							v: sampleDataValue ? sampleDataValue.toString() : "true",
+							t: "b",
+						};
+						colWidths.push({ wch: colWidthDefault });
+					} else if (value.type === "Edm.String") {
+						let newStr;
+						if (value.maxLength) {
+							newStr = sampleDataValue ? sampleDataValue : "test string".substring(0, value.maxLength);
+						} else {
+							newStr = sampleDataValue ? sampleDataValue : "test string";
+						}
+						cell = { v: newStr, t: "s" };
+						colWidths.push({ wch: colWidthDefault });
+					} else if (value.type === "Edm.DateTimeOffset" || value.type === "Edm.DateTime") {
+						let format;
+						const currentLang = sap.ui.getCore().getConfiguration().getLanguage();
+						if (currentLang.startsWith("en")) {
+							format = "mm/dd/yyyy hh:mm AM/PM";
+						} else {
+							format = "dd.mm.yyyy hh:mm";
+						}
+
+						cell = { v: sampleDataValue ? sampleDataValue : new Date(), t: "d", z: format };
+						colWidths.push({ wch: colWidthDate }); // set column width to 20 for this column
+					} else if (value.type === "Edm.Date") {
+						cell = {
+							v: sampleDataValue ? sampleDataValue : new Date(),
+							t: "d",
+						};
+						colWidths.push({ wch: colWidthDefault });
+					} else if (value.type === "Edm.TimeOfDay" || value.type === "Edm.Time") {
+						cell = {
+							v: sampleDataValue ? sampleDataValue : new Date(),
+							t: "d",
+							z: "hh:mm",
+						};
+						colWidths.push({ wch: colWidthDefault });
+					} else if (
+						value.type === "Edm.UInt8" ||
+						value.type === "Edm.Int16" ||
+						value.type === "Edm.Int32" ||
+						value.type === "Edm.Integer" ||
+						value.type === "Edm.Int64" ||
+						value.type === "Edm.Integer64"
+					) {
+						cell = {
+							v: sampleDataValue ? sampleDataValue : 85,
+							t: "n",
+						};
+						colWidths.push({ wch: colWidthDefault });
+					} else if (value.type === "Edm.Double" || value.type === "Edm.Decimal") {
+						const decimalSeparator = this.component.getDecimalSeparator();
+						cell = {
+							v: sampleDataValue ? sampleDataValue : `123${decimalSeparator}4`,
+							t: "n",
+						};
+						colWidths.push({ wch: colWidthDefault });
+					}
+
+					if (!this.component.getHideSampleData()) {
+						worksheet[XLSX.utils.encode_cell({ c: col, r: rows })] = cell;
+					}
+				}
 				col++;
 			}
 		}
-		worksheet["!ref"] = XLSX.utils.encode_range({ s: { c: 0, r: 0 }, e: { c: col, r: 1 } });
+		worksheet["!ref"] = XLSX.utils.encode_range({ s: { c: 0, r: 0 }, e: { c: col, r: sampleData.length } });
 		worksheet["!cols"] = colWidths; // assign the column widths to the worksheet
 
 		// creating the new spreadsheet work book
