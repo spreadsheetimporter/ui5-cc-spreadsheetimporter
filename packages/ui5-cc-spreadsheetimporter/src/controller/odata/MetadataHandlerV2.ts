@@ -63,16 +63,28 @@ export default class MetadataHandlerV2 extends MetadataHandler {
 	}
 
 	private getLabel(oDataEntityType: { [x: string]: any }, properties: any, property: { [x: string]: any }, propertyName: string) {
+		let label = "";
 		if (property["sap:label"]) {
-			return property["sap:label"];
+			label = property["sap:label"];
 		}
 		try {
 			const lineItemsAnnotations = oDataEntityType["com.sap.vocabularies.UI.v1.LineItem"];
-			return lineItemsAnnotations.find((dataField: { Value: { Path: any } }) => dataField.Value.Path === propertyName).Label.String;
+			label = lineItemsAnnotations.find((dataField: { Value: { Path: any } }) => dataField.Value.Path === propertyName).Label.String;
 		} catch (error) {
-			Log.debug(`SpreadsheetUpload: ${propertyName} not found as a LineItem Label`, undefined, "SpreadsheetUpload: MetadataHandler");
+			Log.debug(`SpreadsheetUpload: ${propertyName} not found as a LineItem Label`, undefined, "SpreadsheetUpload: MetadataHandlerV2");
 		}
-		return propertyName;
+		if (label.startsWith("{") && label.endsWith("}")) {
+			try {
+				label = this.parseI18nText(label, this.spreadsheetUploadController.view);
+			} catch (error) {
+				Log.debug(`SpreadsheetUpload: ${label} not found as a Resource Bundle and i18n text`, undefined, "SpreadsheetUpload: MetadataHandlerV2");
+			}
+		}
+
+		if (label === "") {
+			label = propertyName;
+		}
+		return label;
 	}
 
 	/**
