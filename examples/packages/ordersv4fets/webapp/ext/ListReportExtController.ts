@@ -1,4 +1,4 @@
-import Component, { Component$CheckBeforeReadEventParameters } from "cc/spreadsheetimporter/v0_21_2/Component";
+import Component, { Component$CheckBeforeReadEventParameters } from "cc/spreadsheetimporter/v0_22_0/Component";
 import ExtensionAPI from "sap/fe/core/ExtensionAPI";
 import Event from "sap/ui/base/Event";
 /**

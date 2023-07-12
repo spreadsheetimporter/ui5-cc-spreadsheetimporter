@@ -78,6 +78,20 @@
   * dependencies
     * ui5-cc-spreadsheetimporter bumped from 0.21.0 to 0.21.1
 
+## [0.10.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-button-v0.9.2...ui5-cc-spreadsheetimporter-button-v0.10.0) (2023-07-12)
+
+
+### Features
+
+* new option, add your own `sampleData` ([#318](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/318)) ([24cef4f](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/24cef4f95944cbb2347b3474fe20c09f6ff3cee6))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * ui5-cc-spreadsheetimporter bumped from 0.21.2 to 0.22.0
+
 ## [0.9.2](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-button-v0.9.1...ui5-cc-spreadsheetimporter-button-v0.9.2) (2023-07-03)
 
 

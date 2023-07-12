@@ -5,4 +5,4 @@ metadata:
 resources:
   configuration:
     paths:
-      /thirdparty/customControl/spreadsheetImporterButton/v0_9_2/: ./
+      /thirdparty/customControl/spreadsheetImporterButton/v0_10_0/: ./
