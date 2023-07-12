@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.22.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.21.2...ui5-cc-spreadsheetimporter-v0.22.0) (2023-07-12)
+
+
+### Features
+
+* new option, add your own `sampleData` ([#318](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/318)) ([24cef4f](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/24cef4f95944cbb2347b3474fe20c09f6ff3cee6))
+* parse i18n texts from metadata ([#319](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/319)) ([278447d](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/278447d90fa96de7e2d2a8dcce56bb66fbb9d8f7))
+
+
+### Bug Fixes
+
+* continue on error did not work ([#316](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/316)) ([5d1d55c](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/5d1d55c9a59bcd30dbfe0ceeaacf696cac9d802f))
+
 ## [0.21.2](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.21.1...ui5-cc-spreadsheetimporter-v0.21.2) (2023-07-03)
 
 

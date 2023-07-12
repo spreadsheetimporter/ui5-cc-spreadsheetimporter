@@ -22,11 +22,11 @@ Add the component usage and the resource roots to the manifest.json as described
 ```json
         "componentUsages": {
             "spreadsheetImporter": {
-                "name": "cc.spreadsheetimporter.v0_21_2"
+                "name": "cc.spreadsheetimporter.v0_22_0"
             }
         },
         "resourceRoots": {
-            "cc.spreadsheetimporter.v0_21_2": "./thirdparty/customControl/spreadsheetImporter/v0_21_2"
+            "cc.spreadsheetimporter.v0_22_0": "./thirdparty/customControl/spreadsheetImporter/v0_22_0"
         },
 ```
 ### Custom Action
@@ -35,7 +35,7 @@ This is a example how you could create the component and attach a event handler 
 
 
 ```typescript
-import Component, { Component$CheckBeforeReadEventParameters } from "cc/spreadsheetimporter/v0_21_2/Component";
+import Component, { Component$CheckBeforeReadEventParameters } from "cc/spreadsheetimporter/v0_22_0/Component";
 
 export async function openSpreadsheetUploadDialog(this: ExtensionAPI) {
     const view = this.getRouting().getView();
