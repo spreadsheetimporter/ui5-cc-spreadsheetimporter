@@ -25,7 +25,7 @@ export default class SpreadsheetUpload extends ManagedObject {
 	public context: any;
 	private _isODataV4: boolean;
 	private isOpenUI5: boolean;
-	private view: XMLView;
+	private _view: XMLView;
 	private _tableObject: any;
 	private messageHandler: MessageHandler;
 	public util: Util;
@@ -45,6 +45,7 @@ export default class SpreadsheetUpload extends ManagedObject {
 	odataKeyList: string[];
 	optionsHandler: OptionsDialog;
 	private _spreadsheetUploadDialogHandler: SpreadsheetUploadDialog;
+	private _controller: import("sap/ui/core/mvc/Controller").default;
 
 	/**
 	 * Initializes SpreadsheetUpload instance.
@@ -101,6 +102,7 @@ export default class SpreadsheetUpload extends ManagedObject {
 		}
 
 		this.view = this.odataHandler.getView(this.context);
+		this.controller = this.view.getController();
 		Log.debug("View", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ view: this.view }));
 		this.view.addDependent(this.spreadsheetUploadDialogHandler.getDialog());
 		this.tableObject = this.odataHandler.getTableObject(this.component.getTableId(), this.view);
@@ -296,5 +298,11 @@ export default class SpreadsheetUpload extends ManagedObject {
 	}
 	public set spreadsheetUploadDialogHandler(value: SpreadsheetUploadDialog) {
 		this._spreadsheetUploadDialogHandler = value;
+	}
+	public get controller(): import("sap/ui/core/mvc/Controller").default {
+		return this._controller;
+	}
+	public get view(): XMLView {
+		return this._view;
 	}
 }

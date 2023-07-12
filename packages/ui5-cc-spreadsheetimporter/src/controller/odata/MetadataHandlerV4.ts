@@ -77,16 +77,30 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 	}
 
 	private getLabel(annotations: { [x: string]: { [x: string]: any } }, properties: any, propertyName: string, propertyLabel: { [x: string]: any }, odataType: string) {
+		let label = "";
 		if (propertyLabel && propertyLabel["@com.sap.vocabularies.Common.v1.Label"]) {
-			return propertyLabel["@com.sap.vocabularies.Common.v1.Label"];
+			label = propertyLabel["@com.sap.vocabularies.Common.v1.Label"];
 		}
-		try {
-			const lineItemsAnnotations = annotations[odataType]["@com.sap.vocabularies.UI.v1.LineItem"];
-			return lineItemsAnnotations.find((dataField: { Value: { $Path: any } }) => dataField.Value.$Path === propertyName).Label;
-		} catch (error) {
-			Log.debug(`SpreadsheetUpload: ${propertyName} not found as a LineItem Label`, undefined, "SpreadsheetUpload: MetadataHandler");
+		if (label === "") {
+			try {
+				const lineItemsAnnotations = annotations[odataType]["@com.sap.vocabularies.UI.v1.LineItem"];
+				label = lineItemsAnnotations.find((dataField: { Value: { $Path: any } }) => dataField.Value.$Path === propertyName).Label;
+			} catch (error) {
+				Log.debug(`v: ${propertyName} not found as a LineItem Label`, undefined, "SpreadsheetUpload: MetadataHandlerV4");
+			}
 		}
-		return propertyName;
+		if (label.startsWith("{") && label.endsWith("}")) {
+			try {
+				label = this.parseI18nText(label, this.spreadsheetUploadController.view);
+			} catch (error) {
+				Log.debug(`SpreadsheetUpload: ${label} not found as a Resource Bundle and i18n text`, undefined, "SpreadsheetUpload: MetadataHandlerV4");
+			}
+		}
+
+		if (label === "") {
+			label = propertyName;
+		}
+		return label;
 	}
 
 	/**
