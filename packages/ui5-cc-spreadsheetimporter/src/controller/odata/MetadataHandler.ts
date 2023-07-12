@@ -14,7 +14,7 @@ export default abstract class MetadataHandler extends ManagedObject {
 	}
 
 	parseI18nText(i18nMetadataText: string, view: any): string {
-		// check if the string starts and ends with the correct symbols
+		let translatedText = "";
 
 		// remove the symbols from the start and end of the string
 		const trimmedStr = i18nMetadataText.slice(1, -1);
@@ -25,9 +25,12 @@ export default abstract class MetadataHandler extends ManagedObject {
 			const resourceBundleName = splitStr[0];
 			const i18nPropertyName = splitStr[1];
 			const resourceBundle = view.getModel(resourceBundleName).getResourceBundle();
-			return resourceBundle.getText(i18nPropertyName);
+			translatedText = resourceBundle.getText(i18nPropertyName, undefined, true);
+		}
+		if (!translatedText || translatedText === "") {
+			return "";
 		} else {
-			return i18nMetadataText;
+			return translatedText;
 		}
 	}
 
