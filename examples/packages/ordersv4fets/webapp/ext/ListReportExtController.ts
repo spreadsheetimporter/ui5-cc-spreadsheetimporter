@@ -24,6 +24,7 @@ export async function openSpreadsheetUploadDialog(this: ExtensionAPI) {
 	spreadsheetUpload.attachCheckBeforeRead(function (event: Component$CheckBeforeReadEvent) {
 		// example
 		const sheetData = event.getParameter("sheetData") as any;
+		event.getParameters().messages;
 		let errorArray = [];
 		for (const [index, row] of sheetData.entries()) {
 			//check for invalid price

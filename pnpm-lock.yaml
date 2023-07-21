@@ -512,14 +512,14 @@ importers:
         specifier: ^2.1.112
         version: 2.1.112
       "@sap/ux-specification":
-        specifier: ^1.108.8
-        version: 1.108.8
+        specifier: ^1.108.10
+        version: 1.108.10
       "@sap/ux-ui5-tooling":
-        specifier: 1.10.1
-        version: 1.10.1
+        specifier: 1.10.3
+        version: 1.10.3
       "@sapui5/ts-types-esm":
-        specifier: ~1.115.1
-        version: 1.115.1
+        specifier: ~1.116.0
+        version: 1.116.0
       "@typescript-eslint/eslint-plugin":
         specifier: 6.0.0
         version: 6.0.0(@typescript-eslint/parser@6.0.0)(eslint@8.44.0)(typescript@5.1.6)
@@ -527,14 +527,14 @@ importers:
         specifier: 6.0.0
         version: 6.0.0(eslint@8.44.0)(typescript@5.1.6)
       "@ui5/cli":
-        specifier: ^3.3.1
-        version: 3.3.1(bluebird@3.7.2)
+        specifier: ^3.3.3
+        version: 3.3.3(bluebird@3.7.2)
       typescript:
         specifier: 5.1.6
         version: 5.1.6
       ui5-tooling-transpile:
-        specifier: ^0.7.18
-        version: 0.7.18
+        specifier: 0.7.20
+        version: 0.7.20
 
   examples/packages/ordersv4fpm:
     dependencies:
@@ -2647,6 +2647,7 @@ packages:
 
   /@jridgewell/source-map@0.3.4:
     resolution: { integrity: sha512-KE/SxsDqNs3rrWwFHcRh15ZLVFrI0YoZtgAdIyIq9k5hUNmiWRXXThPomIxHuL20sLdgzbDFyvkUMna14bvtrw== }
+    deprecated: the version has a bug with typescript type resolution
     dev: true
 
   /@jridgewell/sourcemap-codec@1.4.14:
@@ -2729,7 +2730,7 @@ packages:
       read-package-json-fast: 2.0.3
       readdir-scoped-modules: 1.1.0
       rimraf: 3.0.2
-      semver: 7.5.3
+      semver: 7.5.4
       ssri: 8.0.1
       treeverse: 1.0.4
       walk-up-path: 1.0.0
@@ -2747,7 +2748,7 @@ packages:
       nopt: 7.2.0
       proc-log: 3.0.0
       read-package-json-fast: 3.0.2
-      semver: 7.5.3
+      semver: 7.5.4
       walk-up-path: 3.0.1
     dev: true
 
@@ -2755,20 +2756,20 @@ packages:
     resolution: { integrity: sha512-8KG5RD0GVP4ydEzRn/I4BNDuxDtqVbOdm8675T49OIG/NGhaK0pjPX7ZcDlvKYbA+ulvVK3ztfcF4uBdOxuJbQ== }
     dependencies:
       "@gar/promisify": 1.1.3
-      semver: 7.5.3
+      semver: 7.5.4
 
   /@npmcli/fs@2.1.2:
     resolution: { integrity: sha512-yOJKRvohFOaLqipNtwYB9WugyZKhC/DZC4VYPmpaCzDBrA8YpK3qHZ8/HGscMnE4GqbkLNuVcCnxkeQEdGt6LQ== }
     engines: { node: ^12.13.0 || ^14.15.0 || >=16.0.0 }
     dependencies:
       "@gar/promisify": 1.1.3
-      semver: 7.5.3
+      semver: 7.5.4
 
   /@npmcli/fs@3.1.0:
     resolution: { integrity: sha512-7kZUAaLscfgbwBQRbvdMYaZOWyMEcPTH/tJjnyAWJ/dvvs9Ef+CERx/qJb9GExJpl1qipaDGn7KqHnFGGixd0w== }
     engines: { node: ^14.17.0 || ^16.13.0 || >=18.0.0 }
     dependencies:
-      semver: 7.5.3
+      semver: 7.5.4
 
   /@npmcli/git@2.1.0(bluebird@3.7.2):
     resolution: { integrity: sha512-/hBFX/QG1b+N7PZBFs0bi+evgRZcK9nWBxQKZkGoXUT5hJSwl5c4d7y8/hm+NQZRPhQ67RzFaj5UM9YeyKoryw== }
@@ -2779,7 +2780,7 @@ packages:
       npm-pick-manifest: 6.1.1
       promise-inflight: 1.0.1(bluebird@3.7.2)
       promise-retry: 2.0.1
-      semver: 7.5.3
+      semver: 7.5.4
       which: 2.0.2
     transitivePeerDependencies:
       - bluebird
@@ -2794,7 +2795,7 @@ packages:
       proc-log: 3.0.0
       promise-inflight: 1.0.1(bluebird@3.7.2)
       promise-retry: 2.0.1
-      semver: 7.5.3
+      semver: 7.5.4
       which: 3.0.1
     transitivePeerDependencies:
       - bluebird
@@ -2841,7 +2842,7 @@ packages:
       cacache: 15.3.0(bluebird@3.7.2)
       json-parse-even-better-errors: 2.3.1
       pacote: 12.0.3(bluebird@3.7.2)
-      semver: 7.5.3
+      semver: 7.5.4
     transitivePeerDependencies:
       - bluebird
       - supports-color
@@ -3248,7 +3249,6 @@ packages:
       semver: 7.5.3
       xml-formatter: 2.6.1
       xpath: 0.0.32
-    dev: false
 
   /@sap-ux/fe-mockserver-core@1.1.109:
     resolution: { integrity: sha512-IzvFG41t7pgM44kzHY7p+F0pHwhQVXRMIno9XM8YE2SFFpgVb1IGkUNad1LlNlG1BsW+NDb1rPN3RMDfwvLz+g== }
@@ -3359,6 +3359,11 @@ packages:
     engines: { node: ">= 14.16.0 < 15.0.0 || >=16.1.0 < 17.0.0 || >=18.0.0 < 19.0.0", pnpm: ">=7.3.0" }
     dev: true
 
+  /@sap-ux/vocabularies-types@0.9.0:
+    resolution: { integrity: sha512-VDbb5ZkSJwf1IgnmFqnkMvH3SdZS83xFDqVdjX2N8BEjKPf/O1tYHxO1RI2dZyaNTe+9PVOy24sv+r4jKxCv9A== }
+    engines: { node: ">= 14.16.0 < 15.0.0 || >=16.1.0 < 17.0.0 || >=18.0.0 < 19.0.0", pnpm: ">=7.3.0" }
+    dev: true
+
   /@sap-ux/vocabularies-types@0.9.1:
     resolution: { integrity: sha512-xvuL+JnqEdtOtIG+Hy7VXSUV6GJX2Rb8ucxhzEIgemZ5Npz6wB2Q2vOF37TtSX+TeMnKoTlAXlP6iV9PzO6Czw== }
     engines: { node: ">= 14.16.0 < 15.0.0 || >=16.1.0 < 17.0.0 || >=18.0.0 < 19.0.0", pnpm: ">=7.3.0" }
@@ -3435,6 +3440,14 @@ packages:
       url: 0.11.0
     dev: false
 
+  /@sap/ux-specification@1.108.10:
+    resolution: { integrity: sha512-NC9metcMkvad1ldXLc6SFbAu6Zb3kjQqIXZA6trRFRQR1pr0Bb5uWtwHW3Vh3hSh0PgpxDh5LtsVMJ4Eqn1wAg== }
+    engines: { node: ">= 14.16.0 < 15.0.0 || >= 16.1.0 < 17.0.0 || >= 18.0.0 < 19.0.0 || >= 20.0.0", yarn: ">=1.22.19 < 2" }
+    dependencies:
+      "@sap-ux/fe-fpm-writer": 0.22.3
+      "@sap-ux/vocabularies-types": 0.9.0
+    dev: true
+
   /@sap/ux-specification@1.108.8:
     resolution: { integrity: sha512-vGReMI/x9QaXtDPdzaVd6lgjnvWJ7vNXN7bRZb8PHx6a0llpICD9Gd5fB0dY63zqgUJgVV02eWgY9Rcpp9+khQ== }
     engines: { node: ">= 14.16.0 < 15.0.0 || >= 16.1.0 < 17.0.0 || >= 18.0.0 < 19.0.0 || >= 20.0.0", yarn: ">=1.22.19 < 2" }
@@ -3461,8 +3474,35 @@ packages:
       - utf-8-validate
     dev: true
 
+  /@sap/ux-ui5-tooling@1.10.3:
+    resolution: { integrity: sha512-i73VtLyzfbvtvf0o4/GxHzxCwXFAbH/ov9oV4cm41dZMVoze9SIdL0AZ1AHmLqonYsKtjQ9SagVT5O8/OM19Iw== }
+    hasBin: true
+    dependencies:
+      "@ui5/fs": 2.0.6
+      debug: 4.3.4(supports-color@8.1.1)
+      express: 4.17.3
+      livereload: 0.9.1
+      semver: 7.5.3
+      update-notifier-cjs: 5.1.5
+    optionalDependencies:
+      keytar: 7.9.0
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
+    dev: true
+
   /@sapui5/ts-types-esm@1.115.1:
     resolution: { integrity: sha512-pcPQxiaVquV+KzFBTmIRGduhD9Y5Fh8ADUixMhhqi4Q/Pqk2tsfkOo+t3wRNT59s2Irtfcl4RkZkK9BLCyZUsw== }
+    dependencies:
+      "@types/jquery": 3.5.13
+      "@types/offscreencanvas": 2019.6.4
+      "@types/qunit": 2.5.4
+      "@types/three": 0.125.3
+    dev: true
+
+  /@sapui5/ts-types-esm@1.116.0:
+    resolution: { integrity: sha512-m8shzUzMYhGpm3MMJfG1QEECXQTIiFhu6WqktG3tRMTk7SinZ3BxIQo1GJuay7yOFvjlDyDEuh1d06wZm8AJxA== }
     dependencies:
       "@types/jquery": 3.5.13
       "@types/offscreencanvas": 2019.6.4
@@ -4076,7 +4116,7 @@ packages:
       debug: 4.3.4(supports-color@8.1.1)
       globby: 11.1.0
       is-glob: 4.0.3
-      semver: 7.5.3
+      semver: 7.5.4
       tsutils: 3.21.0(typescript@5.1.6)
       typescript: 5.1.6
     transitivePeerDependencies:
@@ -4097,7 +4137,7 @@ packages:
       debug: 4.3.4(supports-color@8.1.1)
       globby: 11.1.0
       is-glob: 4.0.3
-      semver: 7.5.3
+      semver: 7.5.4
       ts-api-utils: 1.0.1(typescript@5.1.6)
       typescript: 5.1.6
     transitivePeerDependencies:
@@ -4118,7 +4158,7 @@ packages:
       "@typescript-eslint/typescript-estree": 5.61.0(typescript@5.1.6)
       eslint: 8.44.0
       eslint-scope: 5.1.1
-      semver: 7.5.3
+      semver: 7.5.4
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -4138,7 +4178,7 @@ packages:
       "@typescript-eslint/typescript-estree": 6.0.0(typescript@5.1.6)
       eslint: 8.44.0
       eslint-scope: 5.1.1
-      semver: 7.5.3
+      semver: 7.5.4
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -4176,8 +4216,30 @@ packages:
       less-openui5: 0.11.6
       pretty-data: 0.40.0
       rimraf: 5.0.1
-      semver: 7.5.3
+      semver: 7.5.4
       terser: 5.18.2
+      workerpool: 6.4.0
+      xml2js: 0.6.0
+    dev: true
+
+  /@ui5/builder@3.0.8:
+    resolution: { integrity: sha512-sf5lCnJIhxWE0/PR0wARQvELUFqWKM3eSkA0eN7zD6bJNoHB6vtFpx5ElZCRwNqFfK/YB3w83Eb5HapqfsZD0g== }
+    engines: { node: ^16.18.0 || >=18.12.0, npm: ">= 8" }
+    dependencies:
+      "@jridgewell/sourcemap-codec": 1.4.15
+      "@ui5/fs": 3.0.4
+      "@ui5/logger": 3.0.0
+      cheerio: 1.0.0-rc.12
+      escape-unicode: 0.2.0
+      escope: 4.0.0
+      espree: 9.6.1
+      graceful-fs: 4.2.11
+      jsdoc: 4.0.2
+      less-openui5: 0.11.6
+      pretty-data: 0.40.0
+      rimraf: 5.0.1
+      semver: 7.5.4
+      terser: 5.19.2
       workerpool: 6.4.0
       xml2js: 0.6.0
     dev: true
@@ -4199,6 +4261,30 @@ packages:
       open: 9.1.0
       pretty-hrtime: 1.0.3
       semver: 7.5.3
+      update-notifier: 6.0.2
+      yargs: 17.7.2
+    transitivePeerDependencies:
+      - bluebird
+      - supports-color
+    dev: true
+
+  /@ui5/cli@3.3.3(bluebird@3.7.2):
+    resolution: { integrity: sha512-6JDq7llyeBezIjsHC3Rzm5DKzHPdGB3muk3gyFwFm9dcha+x5TiYOyYvGo3QnUwbgateEcjqNn5xjS+qBPc0Sw== }
+    engines: { node: ^16.18.0 || >=18.12.0, npm: ">= 8" }
+    hasBin: true
+    dependencies:
+      "@ui5/builder": 3.0.8
+      "@ui5/fs": 3.0.4
+      "@ui5/logger": 3.0.0
+      "@ui5/project": 3.4.2(bluebird@3.7.2)
+      "@ui5/server": 3.1.3
+      chalk: 5.3.0
+      data-with-position: 0.5.0
+      import-local: 3.1.0
+      js-yaml: 4.1.0
+      open: 9.1.0
+      pretty-hrtime: 1.0.3
+      semver: 7.5.4
       update-notifier: 6.0.2
       yargs: 17.7.2
     transitivePeerDependencies:
@@ -4282,7 +4368,39 @@ packages:
       read-pkg-up: 9.1.0
       resolve: 1.22.3
       rimraf: 5.0.1
-      semver: 7.5.3
+      semver: 7.5.4
+      xml2js: 0.6.0
+      yesno: 0.4.0
+    transitivePeerDependencies:
+      - bluebird
+      - supports-color
+    dev: true
+
+  /@ui5/project@3.4.2(bluebird@3.7.2):
+    resolution: { integrity: sha512-v8cCl+rxrrJ7AhAMoLgHKBxcK7Lsg3LNocwEkQTMpmwoqYSq0J8Ufj5LN/rwxJAwAsNwRgpMuXbDknS3j374DQ== }
+    engines: { node: ^16.18.0 || >=18.12.0, npm: ">= 8" }
+    dependencies:
+      "@npmcli/config": 6.2.1
+      "@ui5/builder": 3.0.8
+      "@ui5/fs": 3.0.4
+      "@ui5/logger": 3.0.0
+      ajv: 6.12.6
+      ajv-errors: 1.0.1(ajv@6.12.6)
+      chalk: 5.3.0
+      escape-string-regexp: 5.0.0
+      globby: 13.2.2
+      graceful-fs: 4.2.11
+      js-yaml: 4.1.0
+      lockfile: 1.0.4
+      make-fetch-happen: 11.1.1
+      node-stream-zip: 1.15.0
+      pacote: 15.2.0(bluebird@3.7.2)
+      pretty-hrtime: 1.0.3
+      read-pkg: 8.0.0
+      read-pkg-up: 10.0.0
+      resolve: 1.22.3
+      rimraf: 5.0.1
+      semver: 7.5.4
       xml2js: 0.6.0
       yesno: 0.4.0
     transitivePeerDependencies:
@@ -5271,7 +5389,7 @@ packages:
   /builtins@5.0.1:
     resolution: { integrity: sha512-qwVpFEHNfhYJIzNRBvd2C1kyo6jz3ZSMPyyuR47OPdiKWlbYnZNyDWuyR175qDnAJLiCo5fBBqPb3RiXgWlkOQ== }
     dependencies:
-      semver: 7.5.3
+      semver: 7.5.4
 
   /bundle-name@3.0.0:
     resolution: { integrity: sha512-PKA4BeSvBpQKQ8iPOGCSiell+N8P+Tf1DlwqmYhpe2gAhKPHn8EYOxVT+ShuGmhg8lN8XiSlS80yiExKXrURlw== }
@@ -5317,7 +5435,7 @@ packages:
       "@npmcli/move-file": 1.1.2
       chownr: 2.0.0
       fs-minipass: 2.1.0
-      glob: 7.2.0
+      glob: 7.2.3
       infer-owner: 1.0.4
       lru-cache: 6.0.0
       minipass: 3.3.6
@@ -6886,6 +7004,15 @@ packages:
       eslint-visitor-keys: 3.4.1
     dev: true
 
+  /espree@9.6.1:
+    resolution: { integrity: sha512-oruZaFkjorTpF32kDSI5/75ViwGeZginGGy2NoOSg3Q9bnwlnmDm4HLnkl0RE3n+njDXR037aY1+x58Z/zFdwQ== }
+    engines: { node: ^12.22.0 || ^14.17.0 || >=16.0.0 }
+    dependencies:
+      acorn: 8.9.0
+      acorn-jsx: 5.3.2(acorn@8.9.0)
+      eslint-visitor-keys: 3.4.1
+    dev: true
+
   /esprima@4.0.1:
     resolution: { integrity: sha512-eGuFFw7Upda+g4p+QHvnW0RyTX/SVeJBDM/gCtMARO0cLuT2HcEKnTPvhjV6aGeqrCB/sbNop0Kszm0jsaWU4A== }
     engines: { node: ">=4" }
@@ -7655,7 +7782,7 @@ packages:
       fs.realpath: 1.0.0
       inflight: 1.0.6
       inherits: 2.0.4
-      minimatch: 3.0.8
+      minimatch: 3.1.2
       once: 1.4.0
       path-is-absolute: 1.0.1
     dev: true
@@ -7669,6 +7796,7 @@ packages:
       minimatch: 3.1.2
       once: 1.4.0
       path-is-absolute: 1.0.1
+    dev: true
 
   /glob@7.2.3:
     resolution: { integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q== }
@@ -7754,6 +7882,17 @@ packages:
 
   /globby@13.2.1:
     resolution: { integrity: sha512-DPCBxctI7dN4EeIqjW2KGqgdcUMbrhJ9AzON+PlxCtvppWhubTLD4+a0GFxiym14ZvacUydTPjLPc2DlKz7EIg== }
+    engines: { node: ^12.20.0 || ^14.13.1 || >=16.0.0 }
+    dependencies:
+      dir-glob: 3.0.1
+      fast-glob: 3.3.0
+      ignore: 5.2.4
+      merge2: 1.4.1
+      slash: 4.0.0
+    dev: true
+
+  /globby@13.2.2:
+    resolution: { integrity: sha512-Y1zNGV+pzQdh7H39l9zgB4PJqjRNqydvdYCDG4HFXM4XuvSaQQlEc91IU1yALL8gUTDomgBAfz3XJdmUS+oo0w== }
     engines: { node: ^12.20.0 || ^14.13.1 || >=16.0.0 }
     dependencies:
       dir-glob: 3.0.1
@@ -9108,7 +9247,7 @@ packages:
       jest-util: 29.5.0
       natural-compare: 1.4.0
       pretty-format: 29.5.0
-      semver: 7.5.3
+      semver: 7.5.4
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -9859,7 +9998,7 @@ packages:
       binaryextensions: 4.18.0
       commondir: 1.0.1
       deep-extend: 0.6.0
-      ejs: 3.1.7
+      ejs: 3.1.9
       globby: 11.1.0
       isbinaryfile: 4.0.10
       mem-fs: 2.1.0
@@ -10293,7 +10432,7 @@ packages:
     resolution: { integrity: sha512-iwXuFrMAcFVi/ZoZiqq8BzAdsLw9kxDfTC0HMyjXfSL/6CSDAGD5UmR7azrAgWV1zKYq7dUUMj4owusBWKLsiQ== }
     engines: { node: ">=10" }
     dependencies:
-      semver: 7.5.3
+      semver: 7.5.4
     dev: true
     optional: true
 
@@ -10319,13 +10458,13 @@ packages:
     hasBin: true
     dependencies:
       env-paths: 2.2.1
-      glob: 7.2.0
+      glob: 7.2.3
       graceful-fs: 4.2.11
       make-fetch-happen: 9.1.0(bluebird@3.7.2)
       nopt: 5.0.0
       npmlog: 6.0.2
       rimraf: 3.0.2
-      semver: 7.5.3
+      semver: 7.5.4
       tar: 6.1.15
       which: 2.0.2
     transitivePeerDependencies:
@@ -10339,13 +10478,13 @@ packages:
     dependencies:
       env-paths: 2.2.1
       exponential-backoff: 3.1.1
-      glob: 7.2.0
+      glob: 7.2.3
       graceful-fs: 4.2.11
       make-fetch-happen: 11.1.1
       nopt: 6.0.0
       npmlog: 6.0.2
       rimraf: 3.0.2
-      semver: 7.5.3
+      semver: 7.5.4
       tar: 6.1.15
       which: 2.0.2
     transitivePeerDependencies:
@@ -10407,7 +10546,7 @@ packages:
     dependencies:
       hosted-git-info: 4.1.0
       is-core-module: 2.12.1
-      semver: 7.5.3
+      semver: 7.5.4
       validate-npm-package-license: 3.0.4
     dev: true
 
@@ -10417,7 +10556,7 @@ packages:
     dependencies:
       hosted-git-info: 6.1.1
       is-core-module: 2.12.1
-      semver: 7.5.3
+      semver: 7.5.4
       validate-npm-package-license: 3.0.4
 
   /normalize-path@3.0.0:
@@ -10449,13 +10588,13 @@ packages:
     resolution: { integrity: sha512-09OmyDkNLYwqKPOnbI8exiOZU2GVVmQp7tgez2BPi5OZC8M82elDAps7sxC4l//uSUtotWqoEIDwjRvWH4qz8w== }
     engines: { node: ">=10" }
     dependencies:
-      semver: 7.5.3
+      semver: 7.5.4
 
   /npm-install-checks@6.1.1:
     resolution: { integrity: sha512-dH3GmQL4vsPtld59cOn8uY0iOqRmqKvV+DLGwNXV/Q7MDgD2QfOADWd/mFXcIE5LVhYYGjA3baz6W9JneqnuCw== }
     engines: { node: ^14.17.0 || ^16.13.0 || >=18.0.0 }
     dependencies:
-      semver: 7.5.3
+      semver: 7.5.4
 
   /npm-normalize-package-bin@1.0.1:
     resolution: { integrity: sha512-EPfafl6JL5/rU+ot6P3gRSCpPDW5VmIzX959Ob1+ySFUuuYHWHekXpwdUZcKP5C+DS4GEtdJluwBjnsNDl+fSA== }
@@ -10474,7 +10613,7 @@ packages:
     dependencies:
       hosted-git-info: 6.1.1
       proc-log: 3.0.0
-      semver: 7.5.3
+      semver: 7.5.4
       validate-npm-package-name: 5.0.0
 
   /npm-package-arg@8.1.5:
@@ -10482,7 +10621,7 @@ packages:
     engines: { node: ">=10" }
     dependencies:
       hosted-git-info: 4.1.0
-      semver: 7.5.3
+      semver: 7.5.4
       validate-npm-package-name: 3.0.0
 
   /npm-packlist@3.0.0:
@@ -10490,7 +10629,7 @@ packages:
     engines: { node: ">=10" }
     hasBin: true
     dependencies:
-      glob: 7.2.0
+      glob: 7.2.3
       ignore-walk: 4.0.1
       npm-bundled: 1.1.2
       npm-normalize-package-bin: 1.0.1
@@ -10507,7 +10646,7 @@ packages:
       npm-install-checks: 4.0.0
       npm-normalize-package-bin: 1.0.1
       npm-package-arg: 8.1.5
-      semver: 7.5.3
+      semver: 7.5.4
 
   /npm-pick-manifest@8.0.1:
     resolution: { integrity: sha512-mRtvlBjTsJvfCCdmPtiu2bdlx8d/KXtF7yNXNWe7G0Z36qWA9Ny5zXsI2PfBZEv7SXgoxTmNaTzGSbbzDZChoA== }
@@ -10516,7 +10655,7 @@ packages:
       npm-install-checks: 6.1.1
       npm-normalize-package-bin: 3.0.1
       npm-package-arg: 10.1.0
-      semver: 7.5.3
+      semver: 7.5.4
 
   /npm-registry-fetch@12.0.2(bluebird@3.7.2):
     resolution: { integrity: sha512-Df5QT3RaJnXYuOwtXBXS9BWs+tHH2olvkCLh6jcR/b/u3DvPMlp3J0TvvYwplPKxHMOwfg287PYih9QqaVFoKA== }
@@ -10877,7 +11016,7 @@ packages:
       got: 12.6.1
       registry-auth-token: 5.0.2
       registry-url: 6.0.1
-      semver: 7.5.3
+      semver: 7.5.4
     dev: true
 
   /pacote@12.0.3(bluebird@3.7.2):
@@ -11621,6 +11760,15 @@ packages:
       read-pkg: 1.1.0
     dev: true
 
+  /read-pkg-up@10.0.0:
+    resolution: { integrity: sha512-jgmKiS//w2Zs+YbX039CorlkOp8FIVbSAN8r8GJHDsGlmNPXo+VeHkqAwCiQVTTx5/LwLZTcEw59z3DvcLbr0g== }
+    engines: { node: ">=16" }
+    dependencies:
+      find-up: 6.3.0
+      read-pkg: 8.0.0
+      type-fest: 3.12.0
+    dev: true
+
   /read-pkg-up@7.0.1:
     resolution: { integrity: sha512-zK0TB7Xd6JpCLmlLmufqykGE+/TlOePD6qKClNW7hHDKFh/J7/7gCWGR7joEQEW1bKq3a3yUZSObOoWLFQ4ohg== }
     engines: { node: ">=8" }
@@ -12001,7 +12149,7 @@ packages:
     resolution: { integrity: sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA== }
     hasBin: true
     dependencies:
-      glob: 7.2.0
+      glob: 7.2.3
 
   /rimraf@5.0.1:
     resolution: { integrity: sha512-OfFZdwtd3lZ+XZzYP/6gTACubwFcHdLRqS9UX3UwpU2dnGQYkPFISRwvM3w9IiB2w7bW5qGo/uAwE4SmXXSKvg== }
@@ -12119,7 +12267,7 @@ packages:
     resolution: { integrity: sha512-0Ju4+6A8iOnpL/Thra7dZsSlOHYAHIeMxfhWQRI1/VLcT3WDBZKKtQt/QkBOsiIN9ZpuvHE6cGZ0x4glCMmfiA== }
     engines: { node: ">=12" }
     dependencies:
-      semver: 7.5.3
+      semver: 7.5.4
     dev: true
 
   /semver@5.7.1:
@@ -12149,6 +12297,13 @@ packages:
 
   /semver@7.5.3:
     resolution: { integrity: sha512-QBlUtyVk/5EeHbi7X0fw6liDZc7BBmEaSYn01fMU1OUYbf6GPsbTtd8WmnqbI20SeycoHSeiybkE/q1Q+qlThQ== }
+    engines: { node: ">=10" }
+    hasBin: true
+    dependencies:
+      lru-cache: 6.0.0
+
+  /semver@7.5.4:
+    resolution: { integrity: sha512-1bCSESV6Pv+i21Hvpxp3Dx+pSD8lIPt8uVjRrxAUt/nbswYc+tK6Y2btiULjd4+fnq15PX+nqQDC7Oft7WkwcA== }
     engines: { node: ">=10" }
     hasBin: true
     dependencies:
@@ -12864,6 +13019,17 @@ packages:
       source-map-support: 0.5.21
     dev: true
 
+  /terser@5.19.2:
+    resolution: { integrity: sha512-qC5+dmecKJA4cpYxRa5aVkKehYsQKc+AHeKl0Oe62aYjBL8ZA33tTljktDHJSaxxMnbI5ZYw+o/S2DxxLu8OfA== }
+    engines: { node: ">=10" }
+    hasBin: true
+    dependencies:
+      "@jridgewell/source-map": 0.3.4
+      acorn: 8.9.0
+      commander: 2.20.3
+      source-map-support: 0.5.21
+    dev: true
+
   /test-exclude@6.0.0:
     resolution: { integrity: sha512-cAGWPIyOHU6zlmg88jwm7VRyXnMN7iV68OGAbYDk/Mh/xC/pzVPlQtY6ngoIH/5/tciuhGfvESU8GrHrcxD56w== }
     engines: { node: ">=8" }
@@ -13197,8 +13363,8 @@ packages:
       - supports-color
     dev: true
 
-  /ui5-tooling-transpile@0.7.18:
-    resolution: { integrity: sha512-m+SlN52ZN7MtdvylRajaGRmqr/3Uukh30tUfoJvEjHzpUVwEvhKTk/J04IxDlG6/Icvb430awjzqmipBEp3Gdw== }
+  /ui5-tooling-transpile@0.7.20:
+    resolution: { integrity: sha512-SnT71hN4sTcsUR4wUb9AYqkRysPgLY8scx2hKtYH/H0GERhhWFk6rmLRqYKsLniPeShnlnZzc2rP/VQvejk7/Q== }
     dependencies:
       "@babel/core": 7.22.5
       "@babel/preset-env": 7.22.5(@babel/core@7.22.5)
@@ -13354,7 +13520,7 @@ packages:
       pupa: 2.1.1
       registry-auth-token: 5.0.2
       registry-url: 5.1.0
-      semver: 7.5.3
+      semver: 7.5.4
       semver-diff: 3.1.1
       xdg-basedir: 4.0.0
     dev: true
@@ -13374,7 +13540,7 @@ packages:
       is-yarn-global: 0.4.1
       latest-version: 7.0.0
       pupa: 3.1.0
-      semver: 7.5.3
+      semver: 7.5.4
       semver-diff: 4.0.0
       xdg-basedir: 5.1.0
     dev: true
