@@ -12,6 +12,7 @@ nav:
   - Configuration: pages/Configuration.md
   - Events: pages/Events.md
   - Error Handling: pages/Checks.md
+  - Table Chooser: pages/TableChooser.md
   - Typescript: pages/Typescript.md
   - Supported Versions: pages/SupportVersions.md
   - Central Deployment: pages/CentralDeployment.md

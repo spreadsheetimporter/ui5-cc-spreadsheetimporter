@@ -209,6 +209,19 @@
                     }
                   }
                 }
+              },
+              "content": {
+                "header": {
+                  "actions": {
+                    "test": {
+                      "press": "ui.v4.ordersv4fe.ext.ObjectPageExtController.openSpreadsheetUploadDialog",
+                      "visible": true,
+                      "requiresSelection": false,
+                      "enabled": "{ui>/isEditable}",
+                      "text": "Spreadsheet Upload"
+                    }
+                  }
+                }
               }
             }
           }
