@@ -7,7 +7,7 @@ import ExtensionAPI from "sap/fe/core/ExtensionAPI";
  * @param this reference to the 'this' that the event handler is bound to.
  * @param pageContext the context of the page on which the event was fired
  */
-export async function openSpreadsheetUploadDialog(this: ExtensionAPI) {
+export async function openSpreadsheetUploadDialogTable(this: ExtensionAPI) {
 	const view = this.getRouting().getView();
 	const controller = view.getController() as BaseController;
 	view.setBusyIndicatorDelay(0);

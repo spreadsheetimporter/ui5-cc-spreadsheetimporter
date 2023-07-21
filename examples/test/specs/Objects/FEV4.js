@@ -10,11 +10,11 @@ class FEV4 {
 		this.listReportId = this.rootId + "OrdersList--fe::";
 		this.objectPageId = this.rootId + "OrdersObjectPage--fe::";
 		this.listReportGoButton = this.listReportId + "FilterBar::Orders-btnSearch";
-		this.listReportSpreadsheetuploadButton = this.listReportId + "CustomAction::spreadsheetUploadListReport";
+		this.listReportSpreadsheetuploadButton = this.listReportId + "CustomAction::test";
 		this.listReportDynamicPageTitle = this.listReportId + "ListReport-header";
 		this.listReportTable = this.listReportId + "table::Orders::LineItem-innerTable";
 		this.objectPageEditButton = this.objectPageId + "StandardAction::Edit";
-		this.objectPageSpreadsheetuploadButton = this.objectPageId + "CustomAction::spreadsheetImporter";
+		this.objectPageSpreadsheetuploadButton = this.objectPageId + "CustomAction::ObjectPageExtController";
 		this.objectPageSaveButton = this.objectPageId + "FooterBar::StandardAction::Save";
 		this.objectPageOrderItems = this.objectPageId + "table::Items::LineItem-innerTable";
 		this.listReportUploadFilename = "test/testFiles/ListReportOrdersNoErros.xlsx";

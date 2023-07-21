@@ -117,14 +117,17 @@
             "sap.ui.generic.app": {
               "Orders": {
                 "EntitySet": "Orders",
-                "Header": {
-                  "Actions": {
-                    "spreadsheetImporter": {
-                      "id": "spreadsheetUploadButton",
-                      "text": "Spreadsheet Upload",
-                      "applicablePath": "ui>/editable",
-                      "press": "openSpreadsheetUploadDialog",
-                      "requiresSelection": false
+                "Sections": {
+                  "Items::com.sap.vocabularies.UI.v1.LineItem": {
+                    "id": "Items::com.sap.vocabularies.UI.v1.LineItem",
+                    "Actions": {
+                      "spreadsheetImporter": {
+                        "id": "spreadsheetUploadButton",
+                        "text": "Spreadsheet Upload",
+                        "applicablePath": "ui>/editable",
+                        "press": "openSpreadsheetUploadDialog",
+                        "requiresSelection": false
+                      }
                     }
                   }
                 }
@@ -151,17 +154,11 @@
               "Orders": {
                 "EntitySet": "Orders",
                 "Actions": {
-                  "spreadsheetImporter": {
-                    "id": "spreadsheetUploadButton",
+                  "spreadsheetUploadButton": {
+                    "id": "spreadsheetUploadButtonButton",
                     "text": "Spreadsheet Upload",
                     "press": "openSpreadsheetUpload",
-                    "global": true
-                  },
-                  "submit": {
-                    "id": "submitButton",
-                    "text": "submit",
-                    "press": "submit",
-                    "global": true
+                    "requiresSelection": false
                   }
                 }
               }

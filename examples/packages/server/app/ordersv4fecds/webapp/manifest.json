@@ -138,30 +138,6 @@
                   }
                 }
               },
-              "content": {
-                "header": {
-                  "actions": {
-                    "spreadsheetUploadListReport": {
-                      "id": "spreadsheetUploadListReportButton",
-                      "text": "Spreadsheet Upload",
-                      "press": "ui.v4.ordersv4fe.ext.ListReportExtController.openSpreadsheetUploadDialog",
-                      "requiresSelection": false
-                    },
-                    "openDocs": {
-                      "id": "spreadsheetUploadListReportButton",
-                      "text": "Open Documentation",
-                      "press": "ui.v4.ordersv4fe.ext.ListReportExtController.openDocs",
-                      "requiresSelection": false
-                    },
-                    "openLanding": {
-                      "id": "spreadsheetUploadListReportButton",
-                      "text": "More Info about UI5 Spreadsheet Upload",
-                      "press": "ui.v4.ordersv4fe.ext.ListReportExtController.openLanding",
-                      "requiresSelection": false
-                    }
-                  }
-                }
-              },
               "controlConfiguration": {
                 "@com.sap.vocabularies.UI.v1.LineItem": {
                   "actions": {
