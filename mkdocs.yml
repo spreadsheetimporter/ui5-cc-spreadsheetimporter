@@ -24,6 +24,10 @@ nav:
       - OPA5 Tests: pages/Development/opa5.md
       - Docs: pages/Development/Docs.md
       - GitHub Actions: pages/Development/GitHubActions.md
+  - Changelogs:
+      - spreadsheetimporter: pages/CHANGELOGSPREADSHEETIMPORTER.md
+      - spreadsheetimporter Button: pages/CHANGELOGSPREADSHEETIMPORTERBUTTON.md
+      - spreadsheetimporter Generator: pages/CHANGELOGSPREADSHEETIMPORTERGENERATOR.md
   - Troubleshooting: pages/Troubleshooting.md
   - User Documentation: pages/UserDocumentation.md
   - Use Cases: pages/UseCases.md
