@@ -161,23 +161,23 @@
             "settings": {
               "editableHeaderContent": false,
               "entitySet": "Orders",
-              "content": {
-                "header": {
-                  "actions": {
-                    "spreadsheetImporter": {
-                      "id": "spreadsheetUploadButton",
-                      "text": "Spreadsheet Upload",
-                      "enabled": "{ui>/isEditable}",
-                      "press": "ui.v4.ordersv4fe.ext.ObjectPageExtController.openSpreadsheetUploadDialog",
-                      "requiresSelection": false
-                    }
-                  }
-                }
-              },
               "navigation": {
                 "Items": {
                   "detail": {
                     "route": "Orders_ItemsObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "Items/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "actions": {
+                    "ObjectPageExtController": {
+                      "press": "ui.v4.ordersv4fe.ext.ObjectPageExtController.openSpreadsheetUploadDialogTable",
+                      "visible": true,
+                      "requiresSelection": false,
+                      "enabled": "{ui>/isEditable}",
+                      "text": "Spreadsheet Upload"
+                    }
                   }
                 }
               }
@@ -210,10 +210,10 @@
                   }
                 }
               },
-              "content": {
-                "header": {
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
                   "actions": {
-                    "spreadsheetUploadListReport": {
+                    "test": {
                       "id": "spreadsheetUploadListReportButton",
                       "text": "Spreadsheet Upload",
                       "press": "ui.v4.ordersv4fe.ext.ListReportExtController.openSpreadsheetUploadDialog",

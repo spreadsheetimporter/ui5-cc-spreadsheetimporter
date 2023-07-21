@@ -104,11 +104,11 @@ module.exports = class extends Generator {
 							[target]: {
 								options: {
 									settings: {
-										content: {
-											header: {
+										controlConfiguration: {
+											"@com.sap.vocabularies.UI.v1.LineItem": {
 												actions: {
 													spreadsheetUpload: {
-														id: "spreadsheetUploadButton",
+														id: "spreadsheetUploadListReportButton",
 														text: buttonText,
 														press: namespaceUI5ListReport,
 														requiresSelection: false

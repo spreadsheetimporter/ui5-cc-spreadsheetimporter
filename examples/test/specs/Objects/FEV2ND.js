@@ -8,11 +8,11 @@ class FEV2ND {
 		this.listReportId = this.rootId + "ListReport.view.ListReport::OrdersND--";
 		this.objectPageId = this.rootId + "ObjectPage.view.Details::OrdersND--";
 		this.listReportGoButton = this.listReportId + "listReportFilter-btnGo";
-		this.listReportSpreadsheetuploadButton = this.listReportId + "action::spreadsheetUploadButtonListReport";
+		this.listReportSpreadsheetuploadButton = this.listReportId + "spreadsheetUploadButtonListReport";
 		this.listReportDynamicPageTitle = this.listReportId + "template:::ListReportPage:::DynamicPageTitle";
 		this.listReportTable = this.listReportId + "responsiveTable";
 		this.objectPageEditButton = this.objectPageId + "edit";
-		this.objectPageSpreadsheetuploadButton = this.objectPageId + "action::spreadsheetUploadButton";
+		this.objectPageSpreadsheetuploadButton = this.objectPageId + "spreadsheetUploadButton";
 		this.objectPageSaveButton = this.objectPageId + "activate";
 		this.objectPageOrderItems = this.objectPageId + "Items::com.sap.vocabularies.UI.v1.LineItem::responsiveTable";
 		this.listReportUploadFilename = "test/testFiles/ListReportOrdersNoErros.xlsx";

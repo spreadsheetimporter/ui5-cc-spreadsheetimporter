@@ -141,12 +141,6 @@
               "content": {
                 "header": {
                   "actions": {
-                    "spreadsheetUploadListReport": {
-                      "id": "spreadsheetUploadListReportButton",
-                      "text": "Spreadsheet Upload",
-                      "press": "ui.v4.ordersv4fe.ext.ListReportExtController.openSpreadsheetUploadDialog",
-                      "requiresSelection": false
-                    },
                     "openDocs": {
                       "id": "spreadsheetUploadListReportButton",
                       "text": "Open Documentation",
@@ -185,19 +179,6 @@
             "settings": {
               "editableHeaderContent": false,
               "entitySet": "Orders",
-              "content": {
-                "header": {
-                  "actions": {
-                    "spreadsheetImporter": {
-                      "id": "spreadsheetUploadButton",
-                      "text": "Spreadsheet Upload",
-                      "enabled": "{ui>/isEditable}",
-                      "press": "ui.v4.ordersv4fe.ext.ObjectPageExtController.openSpreadsheetUploadDialog",
-                      "requiresSelection": false
-                    }
-                  }
-                }
-              },
               "navigation": {
                 "Items": {
                   "detail": {
