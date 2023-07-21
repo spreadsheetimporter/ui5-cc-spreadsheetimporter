@@ -14,6 +14,7 @@ export default abstract class OData extends ManagedObject {
 	UI5MinorVersion: number;
 	draftController: DraftController;
 	odataMessageHandler: ODataMessageHandler;
+	private _tables: any[] = [];
 
 	constructor(ui5version: number, spreadsheetUploadController: SpreadsheetUpload) {
 		super();
@@ -109,19 +110,26 @@ export default abstract class OData extends ManagedObject {
 	public getTableObject(tableId: string, view: any) {
 		// try get object page table
 		if (!tableId) {
-			let tables = view.findAggregatedObjects(true, function (object: any) {
+			this.tables = view.findAggregatedObjects(true, function (object: any) {
 				return object.isA("sap.m.Table") || object.isA("sap.ui.table.Table");
 			});
-			if (tables.length > 1) {
+			if (this.tables.length > 1) {
 				throw new Error("Found more than one table on Object Page.\n Please specify table in option 'tableId'");
-			} else if (tables.length === 0) {
+			} else if (this.tables.length === 0) {
 				throw new Error("Found more than one table on Object Page.\n Please specify table in option 'tableId'");
 			} else {
-				return tables[0];
+				return this.tables[0];
 			}
 		} else {
 			return view.byId(tableId);
 		}
+	}
+
+	public get tables(): any[] {
+		return this._tables;
+	}
+	public set tables(value: any[]) {
+		this._tables = value;
 	}
 
 	abstract create(model: any, binding: any, payload: any): any;
