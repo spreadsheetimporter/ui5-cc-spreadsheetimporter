@@ -5,7 +5,7 @@ sap.ui.define([], function () {
 		 * Create Dialog to Upload Spreadsheet and open it
 		 * @param {*} oEvent
 		 */
-		openSpreadsheetUploadDialog: async function (oEvent) {
+		openSpreadsheetUploadDialogTable: async function (oEvent) {
 			this.editFlow.getView().setBusyIndicatorDelay(0);
 			this.editFlow.getView().setBusy(true);
 			// prettier-ignore
@@ -72,27 +72,6 @@ sap.ui.define([], function () {
 			}, this);
 
 			this.spreadsheetUpload.openSpreadsheetUploadDialog();
-			this.editFlow.getView().setBusy(false);
-		},
-		openSpreadsheetUploadDialogTable: async function (oEvent) {
-			this.editFlow.getView().setBusyIndicatorDelay(0);
-			this.editFlow.getView().setBusy(true);
-			// prettier-ignore
-			this.spreadsheetUploadTable = await this.editFlow.getView()
-					.getController()
-					.getAppComponent()
-					.createComponent({
-						usage: "spreadsheetImporter",
-						async: true,
-						componentData: {
-							context: this,
-							columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time", "boolean", "decimal"],
-							mandatoryFields: ["product_ID", "quantity"],
-							spreadsheetFileName: "Test.xlsx",
-							tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable"
-						}
-					});
-			this.spreadsheetUploadTable.openSpreadsheetUploadDialog();
 			this.editFlow.getView().setBusy(false);
 		},
 		openSpreadsheetUploadDialogTableShipping: async function (oEvent) {
