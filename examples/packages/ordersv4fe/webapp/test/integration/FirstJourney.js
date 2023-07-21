@@ -26,7 +26,7 @@ sap.ui.require(
 				errorMessage: "Can not select 'sap.m.Button'"
 			});
 			Then.waitFor({
-				id: "ui.v4.ordersv4fe::OrdersList--fe::CustomAction::spreadsheetUploadListReport",
+				id: "ui.v4.ordersv4fe::OrdersList--fe::table::Orders::LineItem::CustomAction::test",
 				controlType: "sap.m.Button",
 				visible: true,
 				actions: new Press(),
