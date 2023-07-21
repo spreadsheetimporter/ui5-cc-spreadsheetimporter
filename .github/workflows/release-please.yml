@@ -101,6 +101,7 @@ jobs:
           gh pr checkout ${{ matrix.pr.number }}
           npm install
           npm run replaceString
+          npm run coypChangelogToDoc
           git add .
           git commit --amend --no-edit
           git push --force

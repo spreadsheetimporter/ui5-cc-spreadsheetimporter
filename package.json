@@ -35,7 +35,8 @@
     "deleteAllNodeModules": "node dev/util.js deleteNodeModules .",
     "deleteTestApps": "node ./dev/copy-example-apps.js  delete",
     "deploy": "npm run build && fiori deploy --config ui5-deploy.yaml -y",
-    "runDocs": "docker run --rm -it -p 8000:8000 -v ${PWD}:/docs squidfunk/mkdocs-material"
+    "runDocs": "docker run --rm -it -p 8000:8000 -v ${PWD}:/docs squidfunk/mkdocs-material",
+    "coypChangelogToDoc": "node ./dev/copy-changelog-to-doc.js"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.6",
