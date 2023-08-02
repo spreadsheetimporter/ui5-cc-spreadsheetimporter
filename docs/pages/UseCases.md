@@ -1,5 +1,22 @@
 # Use Cases
 
+## Mass Creation
+
+It is possible to use the Spreadsheet Component with big data sets and spreadsheet files.  
+As a example we timed the upload of 10.000 rows.
+
+| Scenario | Rows  | Time  |
+|---|---|---|
+| CAP, Object Page, Draft Mode, Remote CAP Server  | 10.090   |  01 Minute 28 seconds |
+| CAP, Object Page, Draft Mode, Local CAP Server  | 10.090   |  17 seconds |
+| CAP, List Report, Draft Mode incl. Draft Activation, Remote CAP Server  | 10.153   | 03 Minutes 49 seconds |
+| CAP, List Report, Draft Mode incl. Draft Activation, Local CAP Server  | 10.153   |  50 seconds |
+
+Obviously the time depends on the network speed and the server performance.  
+Also if you use draft activation, the time will increase, as the draft activation takes some time.  
+The times are measured with the default batch size of 1000 rows. Changing the batch did not improve performance in our tests. Setting the batch size to high or disabling the batch upload can lead to memory issues and server errors.
+
+
 ## Quick Data Entry for Custom Tables with Fiori Elements
 One of the advantages of the UI5 SpreadsheetUpload component is its ability to quickly add data to custom tables in combination with Fiori Elements.  
 

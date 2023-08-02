@@ -7,6 +7,9 @@ import Log from "sap/base/Log";
 import MetadataHandlerV2 from "./MetadataHandlerV2";
 import MetadataHandlerV4 from "./MetadataHandlerV4";
 import TableChooser from "../TableChooser";
+import JSONModel from "sap/ui/model/json/JSONModel";
+import Fragment from "sap/ui/core/Fragment";
+import Dialog from "sap/m/Dialog";
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -16,6 +19,7 @@ export default abstract class OData extends ManagedObject {
 	draftController: DraftController;
 	odataMessageHandler: ODataMessageHandler;
 	private _tables: any[] = [];
+	busyDialog: Dialog;
 
 	constructor(ui5version: number, spreadsheetUploadController: SpreadsheetUpload) {
 		super();
@@ -40,8 +44,13 @@ export default abstract class OData extends ManagedObject {
 			// get binding of table to create rows
 			const model = tableObject.getModel();
 
+			await this.createBusyDialog(spreadsheetUploadController);
+
 			// Slice the array into chunks of 'batchSize' if necessary
 			const slicedPayloadArray = this.processPayloadArray(component.getBatchSize(), payloadArray);
+			(this.busyDialog.getModel("busyModel") as JSONModel).setProperty("/progressText", `0/${payloadArray.length}`);
+			let currentProgressPercent = 0;
+			let currentProgressValue = 0;
 
 			// Loop over the sliced array
 			for (const batch of slicedPayloadArray) {
@@ -66,8 +75,13 @@ export default abstract class OData extends ManagedObject {
 				}
 
 				this.resetContexts();
+				currentProgressPercent = currentProgressPercent + (batch.length / payloadArray.length) * 100;
+				currentProgressValue = currentProgressValue + batch.length;
+				(this.busyDialog.getModel("busyModel") as JSONModel).setProperty("/progressPercent", currentProgressPercent);
+				(this.busyDialog.getModel("busyModel") as JSONModel).setProperty("/progressText", `${currentProgressValue} / ${payloadArray.length}`);
 			}
 			spreadsheetUploadController.refreshBinding(context, binding, tableObject.getId());
+			this.busyDialog.close();
 			fnResolve();
 		} catch (error) {
 			this.resetContexts();
@@ -134,6 +148,23 @@ export default abstract class OData extends ManagedObject {
 		} else {
 			return view.byId(tableId);
 		}
+	}
+
+	private async createBusyDialog(spreadsheetUploadController: SpreadsheetUpload) {
+		const busyModel = new JSONModel({
+			progressPercent: 0,
+			progressText: "0",
+		});
+		if (!this.busyDialog) {
+			this.busyDialog = (await Fragment.load({
+				name: "cc.spreadsheetimporter.XXXnamespaceXXX.fragment.BusyDialogProgress",
+				controller: this,
+			})) as Dialog;
+		}
+		this.busyDialog.setModel(busyModel, "busyModel");
+		this.busyDialog.setModel(spreadsheetUploadController.component.getModel("device"), "device");
+		this.busyDialog.setModel(spreadsheetUploadController.component.getModel("i18n"), "i18n");
+		this.busyDialog.open();
 	}
 
 	public get tables(): any[] {
