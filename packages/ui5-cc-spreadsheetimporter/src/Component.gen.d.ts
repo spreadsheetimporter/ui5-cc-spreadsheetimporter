@@ -26,6 +26,7 @@ declare module "./Component" {
 		availableOptions?: string[] | PropertyBindingInfo | `{${string}}`;
 		hideSampleData?: boolean | PropertyBindingInfo | `{${string}}`;
 		sampleData?: object | PropertyBindingInfo | `{${string}}`;
+		useTableChooser?: boolean | PropertyBindingInfo | `{${string}}`;
 		debug?: boolean | PropertyBindingInfo | `{${string}}`;
 		checkBeforeRead?: (event: Component$CheckBeforeReadEvent) => void;
 		changeBeforeCreate?: (event: Component$ChangeBeforeCreateEvent) => void;
@@ -423,6 +424,27 @@ declare module "./Component" {
 		 * @returns Reference to "this" in order to allow method chaining
 		 */
 		setSampleData(sampleData: object): this;
+
+		// property: useTableChooser
+
+		/**
+		 * Gets current value of property "useTableChooser".
+		 *
+		 * Default value is: false
+		 * @returns Value of property "useTableChooser"
+		 */
+		getUseTableChooser(): boolean;
+
+		/**
+		 * Sets a new value for property "useTableChooser".
+		 *
+		 * When called with a value of "null" or "undefined", the default value of the property will be restored.
+		 *
+		 * Default value is: false
+		 * @param [useTableChooser=false] New value for property "useTableChooser"
+		 * @returns Reference to "this" in order to allow method chaining
+		 */
+		setUseTableChooser(useTableChooser: boolean): this;
 
 		// property: debug
 

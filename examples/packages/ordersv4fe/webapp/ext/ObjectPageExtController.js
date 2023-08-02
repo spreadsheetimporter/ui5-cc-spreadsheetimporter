@@ -1,28 +1,36 @@
-sap.ui.define(["cc/spreadsheetimporter/v0_22_0/TableChooser"], function (TableChooser) {
+sap.ui.define([], function () {
 	"use strict";
 	return {
 		openSpreadsheetUploadDialog: async function (oEvent) {
+			let spreadsheetImporterOptions;
 			this.editFlow.getView().setBusyIndicatorDelay(0);
 			this.editFlow.getView().setBusy(true);
-			const tableChooser = new TableChooser(this.editFlow.getView());
-			// possible to get all tables found
-			const tables = tableChooser.getTables();
-			let chosenTable;
-			try {
-				chosenTable = await tableChooser.chooseTable();
-			} catch (error) {
-				// user canceled or no table found
-				this.editFlow.getView().setBusy(false);
-				return;
-			}
-			let spreadsheetImporterOptions;
-			if (chosenTable.getId() === "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable") {
+			// prettier-ignore
+			this.spreadsheetUpload = await this.editFlow.getView()
+					.getController()
+					.getAppComponent()
+					.createComponent({
+						usage: "spreadsheetImporter",
+						async: true,
+						componentData: {
+							context: this,
+							useTableChooser: true
+						}
+						
+					});
+			// necessary to trigger table chooser and get tableId
+			await this.spreadsheetUpload.triggerInitContext();
+			const chosenTable = this.spreadsheetUpload.getTableId();
+
+			// not necessary, but possible to set options for specific table
+			if (chosenTable === "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable") {
 				spreadsheetImporterOptions = {
 					context: this,
 					tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable",
 					columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time", "boolean", "decimal"],
 					mandatoryFields: ["product_ID", "quantity"],
 					spreadsheetFileName: "Test.xlsx",
+					hidePreview: true,
 					sampleData: [
 						{
 							product_ID: "HT-1000",
@@ -39,26 +47,15 @@ sap.ui.define(["cc/spreadsheetimporter/v0_22_0/TableChooser"], function (TableCh
 					]
 				};
 			}
-			if (chosenTable.getId() === "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Shipping::LineItem-innerTable") {
+			if (chosenTable === "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Shipping::LineItem-innerTable") {
 				spreadsheetImporterOptions = {
 					context: this,
 					tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Shipping::LineItem-innerTable"
 				};
 			}
 
-			// prettier-ignore
-			this.spreadsheetUpload = await this.editFlow.getView()
-					.getController()
-					.getAppComponent()
-					.createComponent({
-						usage: "spreadsheetImporter",
-						async: true,
-						componentData: 
-							spreadsheetImporterOptions
-						
-					});
-
-			this.spreadsheetUpload.openSpreadsheetUploadDialog();
+			// possible to open dialog with options, option not necessary
+			this.spreadsheetUpload.openSpreadsheetUploadDialog(spreadsheetImporterOptions);
 			this.editFlow.getView().setBusy(false);
 		},
 		/**
@@ -137,19 +134,20 @@ sap.ui.define(["cc/spreadsheetimporter/v0_22_0/TableChooser"], function (TableCh
 		openSpreadsheetUploadDialogTableShipping: async function (oEvent) {
 			this.editFlow.getView().setBusyIndicatorDelay(0);
 			this.editFlow.getView().setBusy(true);
+			const options = {
+				context: this,
+				tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Shipping::LineItem-innerTable"
+			};
 			// prettier-ignore
 			this.spreadsheetUploadTableShipping = await this.editFlow.getView()
 					.getController()
 					.getAppComponent()
 					.createComponent({
 						usage: "spreadsheetImporter",
-						async: true,
-						componentData: {
-							context: this,
-							tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Shipping::LineItem-innerTable"
-						}
+						async: true
 					});
-			this.spreadsheetUploadTableShipping.openSpreadsheetUploadDialog();
+			this.spreadsheetUploadTableShipping.setHidePreview(true);
+			this.spreadsheetUploadTableShipping.openSpreadsheetUploadDialog(options);
 			this.editFlow.getView().setBusy(false);
 		},
 		openSpreadsheetUploadDialogTableInfo: async function (oEvent) {

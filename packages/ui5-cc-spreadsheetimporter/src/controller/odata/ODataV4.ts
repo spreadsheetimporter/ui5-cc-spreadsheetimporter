@@ -111,6 +111,8 @@ export default class ODataV4 extends OData {
 			if (!odataType) {
 				Log.error("Error while getting OData Type. Please specify 'odataType' in options", undefined, "SpreadsheetUpload: ODataV4");
 			}
+		} else {
+			return odataType;
 		}
 	}
 

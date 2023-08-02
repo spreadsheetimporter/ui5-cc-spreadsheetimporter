@@ -18,10 +18,18 @@ docker build . -t mkdocs
 ```
 
 To run the container:  
+
 ```sh
 docker run --rm -it -p 8000:8000 -v ${PWD}:/docs squidfunk/mkdocs-material
 ```
-and then open http://localhost:8000/ui5-cc-spreadsheetimporter/
+
+or 
+
+```sh
+pnpm runDocs
+```
+
+and then open http://localhost:8000
 
 ### Prod Build
 

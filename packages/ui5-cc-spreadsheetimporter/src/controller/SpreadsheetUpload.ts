@@ -1,7 +1,7 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 import Component from "../Component";
 import XMLView from "sap/ui/core/mvc/XMLView";
-import { Messages, ListObject } from "../types";
+import { Messages, ListObject, ComponentData } from "../types";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import ResourceBundle from "sap/base/i18n/ResourceBundle";
 import OData from "./odata/OData";
@@ -62,16 +62,11 @@ export default class SpreadsheetUpload extends ManagedObject {
 		this.util = new Util(componentI18n.getResourceBundle() as ResourceBundle);
 		this.messageHandler = new MessageHandler(this);
 		this.spreadsheetUploadDialogHandler = new SpreadsheetUploadDialog(this, component, componentI18n, this.messageHandler);
-		this.isODataV4 = this._checkIfODataIsV4();
 		// check if "sap.ui.generic" is available, if false it is OpenUI5
 		// @ts-ignore
 		this.isOpenUI5 = sap.ui.generic ? true : false;
-		this.odataHandler = this.createODataHandler(this.UI5MinorVersion, this);
-		this.initialSetupPromise = this.initialSetup();
 
-		Log.debug("constructor", undefined, "SpreadsheetUpload: SpreadsheetUpload", () =>
-			this.component.logger.returnObject({ ui5version: this.UI5MinorVersion, isODataV4: this.isODataV4, isOpenUI5: this.isOpenUI5 })
-		);
+		Log.debug("constructor", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ ui5version: this.UI5MinorVersion, isOpenUI5: this.isOpenUI5 }));
 	}
 
 	/**
@@ -100,12 +95,13 @@ export default class SpreadsheetUpload extends ManagedObject {
 		if (this.context.base) {
 			this.context = this.context.base;
 		}
-
+		this.isODataV4 = this._checkIfODataIsV4();
+		this.odataHandler = this.createODataHandler(this.UI5MinorVersion, this);
 		this.view = this.odataHandler.getView(this.context);
 		this.controller = this.view.getController();
 		Log.debug("View", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ view: this.view }));
 		this.view.addDependent(this.spreadsheetUploadDialogHandler.getDialog());
-		this.tableObject = this.odataHandler.getTableObject(this.component.getTableId(), this.view);
+		this.tableObject = await this.odataHandler.getTableObject(this.component.getTableId(), this.view, this);
 		Log.debug("tableObject", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ tableObject: this.tableObject }));
 		this.component.setTableId(this.tableObject.getId());
 		Log.debug("table Id", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ tableID: this.tableObject.getId() }));
@@ -150,18 +146,90 @@ export default class SpreadsheetUpload extends ManagedObject {
 
 	/**
 	 * Opens the Spreadsheet upload dialog.
+	 * @param {object} options - all component options.
 	 */
-	async openSpreadsheetUploadDialog() {
-		await this.initialSetupPromise;
-		if (this.errorState) {
-			await this.initialSetup();
+	async openSpreadsheetUploadDialog(options: ComponentData) {
+		if (options) {
+			// set options to component
+			this.setComponentOptions(options);
+			this.initialSetupPromise = this.initialSetup();
+		} else {
+			this.initialSetupPromise = this.initialSetup();
 		}
+		await this.initialSetupPromise;
 		if (!this.errorState) {
 			((this.spreadsheetUploadDialogHandler.getDialog().getContent()[0] as FlexBox).getItems()[1] as FileUploader).clear();
 			this.spreadsheetUploadDialogHandler.openSpreadsheetUploadDialog();
 		} else {
 			Util.showError(this.errorMessage, "SpreadsheetUpload.ts", "initialSetup");
 			Log.error("Error opening the dialog", undefined, "SpreadsheetUpload: SpreadsheetUpload");
+		}
+	}
+	setComponentOptions(options: ComponentData) {
+		if (options.hasOwnProperty("spreadsheetFileName")) {
+			this.component.setSpreadsheetFileName(options.spreadsheetFileName);
+		}
+		if (options.hasOwnProperty("context")) {
+			this.component.setContext(options.context);
+		}
+		if (options.hasOwnProperty("columns")) {
+			this.component.setColumns(options.columns);
+		}
+		if (options.hasOwnProperty("tableId")) {
+			this.component.setTableId(options.tableId);
+		}
+		if (options.hasOwnProperty("odataType")) {
+			this.component.setOdataType(options.odataType);
+		}
+		if (options.hasOwnProperty("mandatoryFields")) {
+			this.component.setMandatoryFields(options.mandatoryFields);
+		}
+		if (options.hasOwnProperty("fieldMatchType")) {
+			this.component.setFieldMatchType(options.fieldMatchType);
+		}
+		if (options.hasOwnProperty("activateDraft")) {
+			this.component.setActivateDraft(options.activateDraft);
+		}
+		if (options.hasOwnProperty("batchSize")) {
+			this.component.setBatchSize(options.batchSize);
+		}
+		if (options.hasOwnProperty("standalone")) {
+			this.component.setStandalone(options.standalone);
+		}
+		if (options.hasOwnProperty("strict")) {
+			this.component.setStrict(options.strict);
+		}
+		if (options.hasOwnProperty("decimalSeparator")) {
+			this.component.setDecimalSeparator(options.decimalSeparator);
+		}
+		if (options.hasOwnProperty("hidePreview")) {
+			this.component.setHidePreview(options.hidePreview);
+		}
+		if (options.hasOwnProperty("skipMandatoryFieldCheck")) {
+			this.component.setSkipMandatoryFieldCheck(options.skipMandatoryFieldCheck);
+		}
+		if (options.hasOwnProperty("showBackendErrorMessages")) {
+			this.component.setShowBackendErrorMessages(options.showBackendErrorMessages);
+		}
+		if (options.hasOwnProperty("showOptions")) {
+			this.component.setShowOptions(options.showOptions);
+		}
+		if (options.hasOwnProperty("debug")) {
+			this.component.setDebug(options.debug);
+		}
+		if (options.hasOwnProperty("availableOptions")) {
+			this.component.setAvailableOptions(options.availableOptions);
+		}
+		if (options.hasOwnProperty("sampleData")) {
+			this.component.setSampleData(options.sampleData);
+		}
+		if (options.hasOwnProperty("hideSampleData")) {
+			this.component.setHideSampleData(options.hideSampleData);
+		}
+
+		// Special case for showOptions
+		if (options.availableOptions && options.availableOptions.length > 0) {
+			this.component.setShowOptions(true);
 		}
 	}
 
