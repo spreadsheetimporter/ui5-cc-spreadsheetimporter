@@ -6,7 +6,7 @@ import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import Component from "../../Component";
 import Event from "sap/ui/base/Event";
 import Bar from "sap/m/Bar";
-import FileUploader, { $FileUploaderChangeEventParameters } from "sap/ui/unified/FileUploader";
+import FileUploader, { FileUploader$ChangeEvent } from "sap/ui/unified/FileUploader";
 import MessageToast from "sap/m/MessageToast";
 import Preview from "../Preview";
 import Util from "../Util";
@@ -21,6 +21,7 @@ import Button from "sap/m/Button";
 import { AvailableOptionsType } from "../../types";
 import FlexBox from "sap/m/FlexBox";
 import JSONModel from "sap/ui/model/json/JSONModel";
+import Dialog from "sap/m/Dialog";
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -78,7 +79,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	 * Handles file upload event.
 	 * @param {Event} event - The file upload event
 	 */
-	async onFileUpload(event: Event<$FileUploaderChangeEventParameters>) {
+	async onFileUpload(event: FileUploader$ChangeEvent) {
 		try {
 			this.messageHandler.setMessages([]);
 			const file = event.getParameter("files")[0] as Blob;
