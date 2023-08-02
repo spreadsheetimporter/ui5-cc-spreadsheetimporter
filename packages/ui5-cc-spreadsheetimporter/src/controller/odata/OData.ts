@@ -44,11 +44,11 @@ export default abstract class OData extends ManagedObject {
 			// get binding of table to create rows
 			const model = tableObject.getModel();
 
-			const busyDialog = await this.getBusyDialog(spreadsheetUploadController);
+			await this.createBusyDialog(spreadsheetUploadController);
 
 			// Slice the array into chunks of 'batchSize' if necessary
 			const slicedPayloadArray = this.processPayloadArray(component.getBatchSize(), payloadArray);
-			(busyDialog.getModel("busyModel") as JSONModel).setProperty("/progressText", `0/${payloadArray.length}`);
+			(this.busyDialog.getModel("busyModel") as JSONModel).setProperty("/progressText", `0/${payloadArray.length}`);
 			let currentProgressPercent = 0;
 			let currentProgressValue = 0;
 
@@ -77,11 +77,11 @@ export default abstract class OData extends ManagedObject {
 				this.resetContexts();
 				currentProgressPercent = currentProgressPercent + (batch.length / payloadArray.length) * 100;
 				currentProgressValue = currentProgressValue + batch.length;
-				(busyDialog.getModel("busyModel") as JSONModel).setProperty("/progressPercent", currentProgressPercent);
-				(busyDialog.getModel("busyModel") as JSONModel).setProperty("/progressText", `${currentProgressValue} / ${payloadArray.length}`);
+				(this.busyDialog.getModel("busyModel") as JSONModel).setProperty("/progressPercent", currentProgressPercent);
+				(this.busyDialog.getModel("busyModel") as JSONModel).setProperty("/progressText", `${currentProgressValue} / ${payloadArray.length}`);
 			}
 			spreadsheetUploadController.refreshBinding(context, binding, tableObject.getId());
-			busyDialog.close();
+			this.busyDialog.close();
 			fnResolve();
 		} catch (error) {
 			this.resetContexts();
@@ -150,7 +150,7 @@ export default abstract class OData extends ManagedObject {
 		}
 	}
 
-	private async getBusyDialog(spreadsheetUploadController: SpreadsheetUpload) {
+	private async createBusyDialog(spreadsheetUploadController: SpreadsheetUpload) {
 		const busyModel = new JSONModel({
 			progressPercent: 0,
 			progressText: "0",
@@ -165,7 +165,6 @@ export default abstract class OData extends ManagedObject {
 		this.busyDialog.setModel(spreadsheetUploadController.component.getModel("device"), "device");
 		this.busyDialog.setModel(spreadsheetUploadController.component.getModel("i18n"), "i18n");
 		this.busyDialog.open();
-		return this.busyDialog;
 	}
 
 	public get tables(): any[] {
