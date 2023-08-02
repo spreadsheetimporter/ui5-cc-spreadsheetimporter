@@ -112,6 +112,8 @@ export default class ODataV2 extends OData {
 	getOdataType(binding: any, tableObject: any, odataType: any) {
 		if (!odataType) {
 			return binding._getEntityType().entityType;
+		} else {
+			return odataType;
 		}
 	}
 

@@ -10,7 +10,7 @@ import ResourceBundle from "sap/base/i18n/ResourceBundle";
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
-export default abstract class TableChooser extends ManagedObject {
+export default class TableChooser extends ManagedObject {
 	private _tables: any[] = [];
 	private _i18nModel: ResourceModel;
 

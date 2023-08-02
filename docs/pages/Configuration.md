@@ -1,5 +1,7 @@
 ## Options
 
+How to use them see [Example Code](#example-code)
+
 These options are available and explained in detail below:
 
 | Option | Description | Details |
@@ -23,6 +25,7 @@ These options are available and explained in detail below:
 | `availableOptions` | List of available Options to show to the user. | string[] |
 | `hideSampleData` | Leave the template file empty and do not add any sample data | boolean |
 | `sampleData` | Add a array of objects with sample data for the template | object |
+| `useTableChooser` | Open a table chooser dialog if multiple tables in view | boolean |
 | `debug` | Option to show more console statements and set Log Level to Debug | boolean |
 
 ### `columns`
@@ -96,7 +99,7 @@ This option defines in draft scenarios whether a draft should be activated immed
 The option only defines whether the attempt should be started. If a draft activation is basically not possible, it will not be executed and may lead to errors.  
 This is useful e.g. in a list report. If this option is set to `false`, all uploaded units have to be activated manually.
 
-!!! warning 
+!!! warning
         Draft Activation for OData V2 in **OpenUI5** is not supported.
 
 ### `batchSize`
@@ -115,7 +118,6 @@ The default value is 1,000, which means that when the number of lines in the Spr
 
 If you set the batchSize to 0, the payload array will not be divided, and the entire array will be sent as a single batch request.
 
-
 ### `standalone`
 
 **default:** `false`
@@ -128,7 +130,6 @@ If you want to use the template download function, you have to set the parameter
 The `payload` will be a array of objects with the keys named like the `columns` parameter.
 
 **Example:**
-
 
 ````javascript
 this.spreadsheetUpload.attachUploadButtonPress(function (oEvent) {
@@ -192,6 +193,7 @@ There are also only a few selected configurations available.
 **default:** `[]`
 
 #### Available Options
+
 - `strict`
 - `fieldMatchType`
 - `decimalSeperator`
@@ -231,6 +233,14 @@ sampleData: [
     ]
 ```
 
+### `useTableChooser`
+
+**default:** `false`
+
+This option defines whether the table chooser should be used or not.  
+If set to true and multiple tables in the view, the user can choose the table to upload the data to.  
+It is also possible to set different options for each table (see [TableChooser](TableChooser.md))
+
 ### `debug`
 
 **default:** `false`
@@ -238,10 +248,13 @@ sampleData: [
 This option defines whether the debug mode should be activated or not.  
 If set to true, it will set the log level to `debug` (Log.Level.DEBUG) and activate the options menu with all options available.
 
+## Example Code
 
-## Example Code with all options
+### All options
 
-```js 
+You can assign all the options when creating the component.  
+
+```js
 this.spreadsheetUpload = await this.getView().getController().getAppComponent().createComponent({
     usage: "spreadsheetImporter",
     async: true,
@@ -268,4 +281,47 @@ this.spreadsheetUpload = await this.getView().getController().getAppComponent().
     }
 });
 
+```
+
+### Change options after creating the component
+
+You can also change the options after creating the component or pass them to the `openSpreadsheetUploadDialog` method.
+
+```js
+const options = {
+    context: this,
+    tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Shipping::LineItem-innerTable"
+   }
+this.spreadsheetUploadTableShipping = await this.editFlow.getView()
+    .getController()
+    .getAppComponent()
+    .createComponent({
+    usage: "spreadsheetImporter",
+    async: true
+    });
+this.spreadsheetUploadTableShipping.setBatchSize(500)
+this.spreadsheetUploadTableShipping.openSpreadsheetUploadDialog(options);
+```
+
+You can also just change a subset of the options or overwrite them.
+
+```js
+const options = {
+    tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Shipping::LineItem-innerTable",
+    hidePreview: true,
+    skipMandatoryFieldCheck: true
+   }
+this.spreadsheetUploadTableShipping = await this.editFlow.getView()
+    .getController()
+    .getAppComponent()
+    .createComponent({
+    usage: "spreadsheetImporter",
+    async: true,
+    omponentData: {
+    context: this,
+    hidePreview: false
+}
+    });
+this.spreadsheetUploadTableShipping.setBatchSize(500)
+this.spreadsheetUploadTableShipping.openSpreadsheetUploadDialog(options);
 ```

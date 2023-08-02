@@ -45,6 +45,7 @@ export default class Component extends UIComponent {
 			availableOptions: { type: "string[]", defaultValue: [] },
 			hideSampleData: { type: "boolean", defaultValue: false },
 			sampleData: { type: "object" },
+			useTableChooser: { type: "boolean", defaultValue: false },
 			debug: { type: "boolean", defaultValue: false },
 		},
 		aggregations: {
@@ -83,27 +84,28 @@ export default class Component extends UIComponent {
 		var oModel;
 		const oCompData = this.getComponentData() as ComponentData;
 		this.getContentDensityClass();
-		this.setSpreadsheetFileName(oCompData.spreadsheetFileName);
-		this.setContext(oCompData.context);
-		this.setColumns(oCompData.columns);
-		this.setTableId(oCompData.tableId);
-		this.setOdataType(oCompData.odataType);
-		this.setMandatoryFields(oCompData.mandatoryFields);
-		this.setFieldMatchType(oCompData.fieldMatchType);
-		this.setActivateDraft(oCompData.activateDraft);
-		this.setBatchSize(oCompData.batchSize);
-		this.setStandalone(oCompData.standalone);
-		this.setStrict(oCompData.strict);
-		this.setDecimalSeparator(oCompData.decimalSeparator);
-		this.setHidePreview(oCompData.hidePreview);
-		this.setSkipMandatoryFieldCheck(oCompData.skipMandatoryFieldCheck);
-		this.setShowBackendErrorMessages(oCompData.showBackendErrorMessages);
-		this.setShowOptions(oCompData.showOptions);
-		this.setDebug(oCompData.debug);
-		this.setAvailableOptions(oCompData.availableOptions);
-		this.setSampleData(oCompData.sampleData);
-		this.setHideSampleData(oCompData.hideSampleData);
-		if (oCompData.availableOptions && oCompData.availableOptions.length > 0) {
+		this.setSpreadsheetFileName(oCompData?.spreadsheetFileName);
+		this.setContext(oCompData?.context);
+		this.setColumns(oCompData?.columns);
+		this.setTableId(oCompData?.tableId);
+		this.setOdataType(oCompData?.odataType);
+		this.setMandatoryFields(oCompData?.mandatoryFields);
+		this.setFieldMatchType(oCompData?.fieldMatchType);
+		this.setActivateDraft(oCompData?.activateDraft);
+		this.setBatchSize(oCompData?.batchSize);
+		this.setStandalone(oCompData?.standalone);
+		this.setStrict(oCompData?.strict);
+		this.setDecimalSeparator(oCompData?.decimalSeparator);
+		this.setHidePreview(oCompData?.hidePreview);
+		this.setSkipMandatoryFieldCheck(oCompData?.skipMandatoryFieldCheck);
+		this.setShowBackendErrorMessages(oCompData?.showBackendErrorMessages);
+		this.setShowOptions(oCompData?.showOptions);
+		this.setDebug(oCompData?.debug);
+		this.setAvailableOptions(oCompData?.availableOptions);
+		this.setSampleData(oCompData?.sampleData);
+		this.setUseTableChooser(oCompData?.useTableChooser);
+		this.setHideSampleData(oCompData?.hideSampleData);
+		if (oCompData?.availableOptions && oCompData?.availableOptions.length > 0) {
 			// if availableOptions is set show the Options Menu
 			this.setShowOptions(true);
 		}
@@ -120,7 +122,7 @@ export default class Component extends UIComponent {
 		super.init();
 	}
 
-	createContent() {
+	async createContent() {
 		if (this.getDebug() || Log.getLevel() >= Log.Level.DEBUG) {
 			Log.setLevel(Log.Level.DEBUG);
 			// @ts-ignore
@@ -146,9 +148,13 @@ export default class Component extends UIComponent {
 	 * Opens the dialog for selecting a customer.
 	 * @public
 	 */
-	openSpreadsheetUploadDialog() {
+	openSpreadsheetUploadDialog(options: ComponentData) {
 		Log.debug("openSpreadsheetUploadDialog", undefined, "SpreadsheetUpload: Component");
-		this.spreadsheetUpload.openSpreadsheetUploadDialog();
+		this.spreadsheetUpload.openSpreadsheetUploadDialog(options);
+	}
+
+	async triggerInitContext() {
+		await this.spreadsheetUpload.initialSetup();
 	}
 
 	/**
