@@ -144,7 +144,7 @@ Using `"enabled": "{ui>/isEditable}"` will automatically disable the button if t
 This will set the busy indicator and create the component if it is not already created.  
 Then the Dialog will be opened.  
 The attribute `context` is mandatory and must be set so the component can access the context of the app, including binding paths and the model.  
-You can also pass the options (like `context`) to the method `openSpreadsheetUploadDialog` if you like pass the options on runtime. A use case would be that if you have multiple tables on the object page and you like to open the dialog for a specific table (see [TableChooser](TableChooser.md))
+You can also pass the options (like `context`) to the method `openSpreadsheetUploadDialog` if you like pass the options on runtime. A use case would be that if you have multiple tables on the object page and you like to open the dialog for a specific table (see [TableSelector](TableSelector.md))
 
 ````javascript
 openSpreadsheetUploadDialog: async function (oEvent) {

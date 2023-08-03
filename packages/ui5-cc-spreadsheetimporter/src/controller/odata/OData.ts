@@ -6,7 +6,7 @@ import SpreadsheetUpload from "../SpreadsheetUpload";
 import Log from "sap/base/Log";
 import MetadataHandlerV2 from "./MetadataHandlerV2";
 import MetadataHandlerV4 from "./MetadataHandlerV4";
-import TableChooser from "../TableChooser";
+import TableSelector from "../TableSelector";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Fragment from "sap/ui/core/Fragment";
 import Dialog from "sap/m/Dialog";
@@ -128,18 +128,18 @@ export default abstract class OData extends ManagedObject {
 			this.tables = view.findAggregatedObjects(true, function (object: any) {
 				return object.isA("sap.m.Table") || object.isA("sap.ui.table.Table");
 			});
-			if (this.tables.length > 1 && !spreadsheetUploadController.component.getUseTableChooser()) {
+			if (this.tables.length > 1 && !spreadsheetUploadController.component.getUseTableSelector()) {
 				throw new Error("Found more than one table on Object Page.\n Please specify table in option 'tableId'");
-			} else if (this.tables.length > 1 && spreadsheetUploadController.component.getUseTableChooser()) {
-				const tableChooser = new TableChooser(view);
-				let chosenTable;
+			} else if (this.tables.length > 1 && spreadsheetUploadController.component.getUseTableSelector()) {
+				const tableSelector = new TableSelector(view);
+				let selectedTable;
 				try {
-					chosenTable = await tableChooser.chooseTable();
+					selectedTable = await tableSelector.chooseTable();
 				} catch (error) {
 					// user canceled or no table found
-					throw new Error(spreadsheetUploadController.util.geti18nText("tableChooserDialogCancel"));
+					throw new Error(spreadsheetUploadController.util.geti18nText("tableSelectorDialogCancel"));
 				}
-				return chosenTable;
+				return selectedTable;
 			} else if (this.tables.length === 0) {
 				throw new Error("Found more than one table on Object Page.\n Please specify table in option 'tableId'");
 			} else {

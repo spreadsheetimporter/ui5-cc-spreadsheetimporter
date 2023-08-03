@@ -10,7 +10,7 @@ import ResourceBundle from "sap/base/i18n/ResourceBundle";
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
-export default class TableChooser extends ManagedObject {
+export default class TableSelector extends ManagedObject {
 	private _tables: any[] = [];
 	private _i18nModel: ResourceModel;
 
@@ -48,7 +48,7 @@ export default class TableChooser extends ManagedObject {
 			const i18n = this._i18nModel.getResourceBundle() as ResourceBundle;
 
 			const dialog = new Dialog({
-				title: i18n.getText("tableChooserDialogTitle"),
+				title: i18n.getText("tableSelectorDialogTitle"),
 				type: "Message",
 				content: [select],
 				beginButton: new Button({

@@ -84,6 +84,6 @@ export interface ComponentData {
 	availableOptions?: AvailableOptionsType[];
 	debug?: boolean;
 	hideSampleData?: boolean;
-	useTableChooser?: boolean;
+	useTableSelector?: boolean;
 	sampleData?: object;
 }
