@@ -92,7 +92,7 @@
     },
     "componentUsages": {
       "spreadsheetImporter": {
-        "name": "cc.spreadsheetimporter.v0_22_0"
+        "name": "cc.spreadsheetimporter.v0_23_0"
       }
     },
     "resourceRoots": {
