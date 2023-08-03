@@ -45,7 +45,7 @@ export default class Component extends UIComponent {
 			availableOptions: { type: "string[]", defaultValue: [] },
 			hideSampleData: { type: "boolean", defaultValue: false },
 			sampleData: { type: "object" },
-			useTableChooser: { type: "boolean", defaultValue: false },
+			useTableSelector: { type: "boolean", defaultValue: false },
 			debug: { type: "boolean", defaultValue: false },
 		},
 		aggregations: {
@@ -103,7 +103,7 @@ export default class Component extends UIComponent {
 		this.setDebug(oCompData?.debug);
 		this.setAvailableOptions(oCompData?.availableOptions);
 		this.setSampleData(oCompData?.sampleData);
-		this.setUseTableChooser(oCompData?.useTableChooser);
+		this.setUseTableSelector(oCompData?.useTableSelector);
 		this.setHideSampleData(oCompData?.hideSampleData);
 		if (oCompData?.availableOptions && oCompData?.availableOptions.length > 0) {
 			// if availableOptions is set show the Options Menu
