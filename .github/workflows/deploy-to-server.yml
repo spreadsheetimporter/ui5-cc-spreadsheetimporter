@@ -17,8 +17,10 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /home/ui5-cc-excelUpload/
+            git reset --hard
+            git checkout .
             git fetch --all
-            git pull
+            git reset --hard origin/main
             npm run build
             cd /home/ui5-cc-excelUpload/examples/packages/ordersv4fe
             npm run build
