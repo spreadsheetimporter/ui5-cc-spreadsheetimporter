@@ -45,8 +45,8 @@ https://www.npmjs.com/package/ui5-cc-spreadsheetimporter-button?activeTab=code
 
 ````json
 "resourceRoots": {
-   "cc.spreadsheetimporter.button.v0_10_0": "./thirdparty/customControl/spreadsheetImporterButton/v0_8_0",
-    "cc.spreadsheetimporter.v0_22_0": "./thirdparty/customControl/spreadsheetImporter/v0_22_0"
+   "cc.spreadsheetimporter.button.v0_10_1": "./thirdparty/customControl/spreadsheetImporterButton/v0_8_0",
+    "cc.spreadsheetimporter.v0_23_0": "./thirdparty/customControl/spreadsheetImporter/v0_23_0"
 },
 ````
 
@@ -57,7 +57,7 @@ https://www.npmjs.com/package/ui5-cc-spreadsheetimporter-button?activeTab=code
 ````json
 "componentUsages": {
     "spreadsheetImporter": {
-        "name": "cc.spreadsheetimporter.v0_22_0"
+        "name": "cc.spreadsheetimporter.v0_23_0"
     }
 },
 ````
@@ -69,7 +69,7 @@ https://www.npmjs.com/package/ui5-cc-spreadsheetimporter-button?activeTab=code
    controllerName="sap.ui.demo.walkthrough.controller.HelloPanel"
    xmlns="sap.m"
    xmlns:mvc="sap.ui.core.mvc"
-   xmlns:spreadsheet="cc.spreadsheetimporter.button.v0_10_0">
+   xmlns:spreadsheet="cc.spreadsheetimporter.button.v0_10_1">
 ...
 </mvc:View>
 ````

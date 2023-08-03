@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/generator-ui5-spreadsheetimporter-v0.4.0...generator-ui5-spreadsheetimporter-v0.4.1) (2023-08-03)
+
+
+### Bug Fixes
+
+* remove spreadsheet button from list report template ([#322](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/322)) ([85aa4c1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/85aa4c1b3602825b83c71fd2d1e175bd6f69c9d4))
+
 ## [0.4.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/generator-ui5-spreadsheetimporter-v0.3.0...generator-ui5-spreadsheetimporter-v0.4.0) (2023-06-30)
 
 
