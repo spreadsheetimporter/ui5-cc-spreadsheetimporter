@@ -18,7 +18,7 @@ sap.ui.define([], function () {
 						}
 						
 					});
-			// necessary to trigger table chooser and get tableId
+			// necessary to trigger Table Selector and get tableId
 			await this.spreadsheetUpload.triggerInitContext();
 			const selectedTable = this.spreadsheetUpload.getTableId();
 			if (selectedTable) {

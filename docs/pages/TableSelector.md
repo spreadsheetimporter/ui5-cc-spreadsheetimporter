@@ -1,4 +1,4 @@
-# Table Chooser Implementation Documentation
+# Table Selector Implementation Documentation
 
 The `TableSelector` is designed to help users select a table from a list of available tables in a SAP UI5 application. The tables are aggregated and presented in a dialog, from which a user can select a table.
 
@@ -21,7 +21,7 @@ this.spreadsheetUpload.openSpreadsheetUploadDialog();
 
 ## Custom Options for each Table
 
-If you want to set custom options for each table, you have to trigger the table chooser before opening the dialog to get the table id with `triggerInitContext()`.
+If you want to set custom options for each table, you have to trigger the Table Selector before opening the dialog to get the table id with `triggerInitContext()`.
 
 ```js
 this.spreadsheetUpload = await this.editFlow.getView().getController().getAppComponent().createComponent({
@@ -32,7 +32,7 @@ this.spreadsheetUpload = await this.editFlow.getView().getController().getAppCom
   useTableSelector: true
  }
 });
-// necessary to trigger table chooser and get tableId
+// necessary to trigger Table Selector and get tableId
 await this.spreadsheetUpload.triggerInitContext();
 const selectedTable = this.spreadsheetUpload.getTableId()
 ```
@@ -62,7 +62,7 @@ openSpreadsheetUploadDialog: async function (oEvent) {
 				}
 				
 			});
-	// necessary to trigger table chooser and get tableId
+	// necessary to trigger Table Selector and get tableId
 	await this.spreadsheetUpload.triggerInitContext();
 	const selectedTable = this.spreadsheetUpload.getTableId();
 	if (selectedTable) {

@@ -25,7 +25,7 @@ These options are available and explained in detail below:
 | `availableOptions` | List of available Options to show to the user. | string[] |
 | `hideSampleData` | Leave the template file empty and do not add any sample data | boolean |
 | `sampleData` | Add a array of objects with sample data for the template | object |
-| `useTableSelector` | Open a table chooser dialog if multiple tables in view | boolean |
+| `useTableSelector` | Open a Table Selector dialog if multiple tables in view | boolean |
 | `debug` | Option to show more console statements and set Log Level to Debug | boolean |
 
 ### `columns`
@@ -237,7 +237,7 @@ sampleData: [
 
 **default:** `false`
 
-This option defines whether the table chooser should be used or not.  
+This option defines whether the Table Selector should be used or not.  
 If set to true and multiple tables in the view, the user can choose the table to upload the data to.  
 It is also possible to set different options for each table (see [TableSelector](TableSelector.md))
 
