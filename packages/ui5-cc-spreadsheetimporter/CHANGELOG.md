@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.23.1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.23.0...ui5-cc-spreadsheetimporter-v0.23.1) (2023-08-03)
+
+
+### Bug Fixes
+
+* enable usage of controller extensions ([#330](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/330)) ([f767a5c](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/f767a5c8b1fe2f99f13087c04288364f7db4ade2))
+
 ## [0.23.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.22.0...ui5-cc-spreadsheetimporter-v0.23.0) (2023-08-03)
 
 
