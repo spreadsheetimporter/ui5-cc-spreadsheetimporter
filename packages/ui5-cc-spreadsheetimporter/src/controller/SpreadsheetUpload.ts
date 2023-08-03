@@ -235,9 +235,20 @@ export default class SpreadsheetUpload extends ManagedObject {
 
 	_checkIfODataIsV4() {
 		try {
+			let model;
 			// @ts-ignore
-			if (this.component.getContext().getModel().getODataVersion() === "4.0") {
+			if (this.component.getContext().base) {
+				// @ts-ignore
+				model = this.component.getContext().base.getModel();
+			} else {
+				// @ts-ignore
+				model = this.component.getContext().getModel();
+			}
+
+			if (model.getODataVersion() === "4.0") {
 				return true;
+			} else {
+				return false;
 			}
 		} catch (error) {
 			return false;

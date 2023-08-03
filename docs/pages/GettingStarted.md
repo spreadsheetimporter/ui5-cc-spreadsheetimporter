@@ -94,7 +94,8 @@ The best way is start with the [Guided Development](https://blogs.sap.com/2021/0
 
 ![Guided Development](./../images/guided_development.png){ loading=lazy }
 
-If you have done that, you can continue with the implementation of your Custom Code either with [V2](#custom-code_1) or [V4](#custom-code).
+If you have done that, you can continue with the implementation of your Custom Code either with [V2](#custom-code_1) or [V4](#custom-code).  
+You can also use a controller extension in Fiori Elements. A example can be found with the [Fiori Elements V4 Example App](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/tree/main/examples/packages/ordersv4fe).
 
 ## Starting with Fiori Elements (OData V4)
 
