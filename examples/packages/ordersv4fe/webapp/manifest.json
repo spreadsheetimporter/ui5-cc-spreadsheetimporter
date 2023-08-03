@@ -92,7 +92,7 @@
     },
     "componentUsages": {
       "spreadsheetImporter": {
-        "name": "cc.spreadsheetimporter.v0_23_0"
+        "name": "cc.spreadsheetimporter.v0_22_0"
       }
     },
     "resourceRoots": {
@@ -246,6 +246,20 @@
                     }
                   }
                 }
+              },
+              "content": {
+                "body": {
+                  "sections": {
+                    "myCustomSection": {
+                      "template": "ui.v4.ordersv4fe.custom.fragment.OrderItems",
+                      "title": "Spreadsheet Upload",
+                      "position": {
+                        "placement": "After",
+                        "anchor": "Infos/@com.sap.vocabularies.UI.v1.LineItem"
+                      }
+                    }
+                  }
+                }
               }
             }
           }
@@ -303,7 +317,11 @@
     },
     "extends": {
       "extensions": {
-        "sap.ui.controllerExtensions": {}
+        "sap.ui.controllerExtensions": {
+          "sap.fe.templates.ObjectPage.ObjectPageController#ui.v4.ordersv4fe::Orders_ItemsObjectPage": {
+            "controllerName": "ui.v4.ordersv4fe.ext.controller.OrderItems"
+          }
+        }
       }
     }
   },

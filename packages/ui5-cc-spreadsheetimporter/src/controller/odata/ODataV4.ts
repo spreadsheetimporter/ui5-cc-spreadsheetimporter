@@ -85,7 +85,7 @@ export default class ODataV4 extends OData {
 	}
 
 	getView(context: any) {
-		return context._view || context.oView;
+		return context._view || context.oView || context.getView();
 	}
 
 	getOdataType(binding: any, tableObject: any, odataType: any) {
