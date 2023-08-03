@@ -1,5 +1,5 @@
 sap.ui.define(["sap/m/Button"], (Button) => {
-	return Button.extend("cc.spreadsheetimporter.button.v0_10_0.SpreadsheetUpload", {
+	return Button.extend("cc.spreadsheetimporter.button.v0_10_1.SpreadsheetUpload", {
 		metadata: {
 			properties: {
 				text: { type: "string", defaultValue: "Spreadsheet Upload" },

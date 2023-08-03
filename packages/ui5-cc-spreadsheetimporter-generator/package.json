@@ -1,6 +1,6 @@
 {
   "name": "generator-ui5-spreadsheetimporter",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Generator for a Custom Control Spreadsheet Upload",
   "main": "generators/app/index.js",
   "scripts": {

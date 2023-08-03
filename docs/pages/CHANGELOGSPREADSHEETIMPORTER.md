@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.23.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.22.0...ui5-cc-spreadsheetimporter-v0.23.0) (2023-08-03)
+
+
+### Features
+
+* add progress indicator for large files ([#327](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/327)) ([3bcfc26](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/3bcfc262dfdc75b8364aadbb37cacf84ad589fa8))
+* improve tablechooser ([#326](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/326)) ([268a1a7](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/268a1a7606624c7d5d326a1192c09c4f58b7dc9b))
+* new TableChooser if multiple tables in view ([#325](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/325)) ([bfe5096](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/bfe509691e6859f3aeb67a3c74cbe4ab62bd529f))
+
+
+### Bug Fixes
+
+* rename tableChooser to tableSelector ([#328](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/328)) ([50b21c3](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/50b21c33fa48b44ecaf5b5720ca4775ad8426ba2))
+
 ## [0.22.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.21.2...ui5-cc-spreadsheetimporter-v0.22.0) (2023-07-12)
 
 
