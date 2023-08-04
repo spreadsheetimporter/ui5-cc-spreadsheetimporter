@@ -83,7 +83,7 @@ function replaceVersionInXML(rootPath, filePath, versionUnderscoreButton) {
 	const path = rootPath + filePath;
 	let view = fs.readFileSync(path, "utf8");
 	// Use a regular expression to replace the namespace prefix value
-	const regex = /cc\.spreadsheetimporter.button\.v\d_\d_\d/g;
+	const regex = /cc\.spreadsheetimporter\.button\.v\d+_\d+_\d+/g;
 	const updatedString = view.replace(regex, `cc.spreadsheetimporter.button.${versionUnderscoreButton}`);
 	fs.writeFileSync(path, updatedString, "utf8");
 

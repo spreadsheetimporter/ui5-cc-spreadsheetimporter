@@ -3,7 +3,7 @@
   xmlns="sap.m"
   xmlns:semantic="sap.f.semantic"
   xmlns:mvc="sap.ui.core.mvc"
-  xmlns:spreadsheet="cc.spreadsheetimporter.button.v0_10_1"
+  xmlns:spreadsheet="cc.spreadsheetimporter.button.v0_10_2"
 >
   <semantic:SemanticPage id="detailPage2" busy="{detailView>/busy}" busyIndicatorDelay="{detailView>/delay}" showFooter="true">
     <semantic:titleHeading>
