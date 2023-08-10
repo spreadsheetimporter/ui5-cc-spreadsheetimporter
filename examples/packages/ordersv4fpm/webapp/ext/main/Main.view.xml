@@ -3,7 +3,7 @@
   xmlns:mvc="sap.ui.core.mvc"
   xmlns="sap.m"
   xmlns:macros="sap.fe.macros"
-  xmlns:spreadsheet="cc.spreadsheetimporter.button.v0_10_2"
+  xmlns:spreadsheet="cc.spreadsheetimporter.button.v0_10_3"
   xmlns:html="http://www.w3.org/1999/xhtml"
   controllerName="ui.v4.ordersv4fpm.ext.main.Main"
 >
