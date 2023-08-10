@@ -10,7 +10,7 @@ These options are available and explained in detail below:
 | `columns` | Defines which fields should only be taken into account | string[] |
 | `spreadsheetFileName` | Defines the file name when a template is downloaded | string |
 | `tableId` | ID of table to upload the data to  | string |
-| `odataType` | OData Type of specified table | string |
+| `odataType` | Upload Data to a different Entity Set in the Service | string |
 | `mandatoryFields`  | The selected fields are checked to see if they are present | string[] |
 | `fieldMatchType` | Defines what type of strategy is executed when matching spreadsheet columns | string |
 | `activateDraft` | Determines whether a draft should be activated immediately  | boolean |
@@ -57,12 +57,17 @@ tableId: "ui5.isu.msb.createmeterread::RunObjectPage--fe::table::_Ableseauftrag:
 
 ### `odataType`
 
-This plugin attempts to read the OData type from the table.
-In case of error, the OData Type can be specified.  
+With this option it is possible to upload the data to a different Entity Set in the Service.  
+This is helpful when the service from the table is not the actual service where the data should be uploaded.
+
 **example:**
 
 ````
 odataType: com.sap.gateway.srvd.zui_mr_create_run.v0001.AbleseauftragType
+````
+
+````
+odataType: Orderservice.OrdersND
 ````
 
 ### `mandatoryFields`

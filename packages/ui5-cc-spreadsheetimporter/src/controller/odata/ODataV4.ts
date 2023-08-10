@@ -6,6 +6,12 @@ import ODataListBinding from "sap/ui/model/odata/v4/ODataListBinding";
 import Log from "sap/base/Log";
 import MetadataHandlerV4 from "./MetadataHandlerV4";
 
+type EntityObject = {
+	$kind: string;
+	$Type?: string;
+	$NavigationPropertyBinding?: Record<string, string>;
+};
+
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
@@ -61,14 +67,24 @@ export default class ODataV4 extends OData {
 	}
 
 	createCustomBinding(binding: any) {
-		let path = binding.getPath();
-		if (binding.getResolvedPath) {
-			path = binding.getResolvedPath();
+		if (this.spreadsheetUploadController.component.getOdataType()) {
+			const containerName = this.spreadsheetUploadController.context.getModel().getMetaModel().getData()["$EntityContainer"];
+			const entityContainer = this.spreadsheetUploadController.context.getModel().getMetaModel().getData()[containerName];
+			const typeToSearch = this.spreadsheetUploadController.component.getOdataType();
+			const odataEntityTypeParameterPath = this._findAttributeByType(entityContainer, typeToSearch);
+			this.customBinding = this.spreadsheetUploadController.view
+				.getModel()
+				.bindList("/" + odataEntityTypeParameterPath, null, [], [], { $$updateGroupId: this.updateGroupId }) as ODataListBinding;
 		} else {
-			// workaround for getResolvedPath only available from 1.88
-			path = binding.getModel().resolve(binding.getPath(), binding.getContext());
+			let path = binding.getPath();
+			if (binding.getResolvedPath) {
+				path = binding.getResolvedPath();
+			} else {
+				// workaround for getResolvedPath only available from 1.88
+				path = binding.getModel().resolve(binding.getPath(), binding.getContext());
+			}
+			this.customBinding = binding.getModel().bindList(path, null, [], [], { $$updateGroupId: this.updateGroupId });
 		}
-		this.customBinding = binding.getModel().bindList(path, null, [], [], { $$updateGroupId: this.updateGroupId });
 	}
 
 	async waitForDraft(): Promise<any[]> {
@@ -131,5 +147,17 @@ export default class ODataV4 extends OData {
 
 	getMetadataHandler(): MetadataHandlerV4 {
 		return this.metadataHandler;
+	}
+
+	_findAttributeByType(obj: Record<string, EntityObject>, typeToSearch: string): string | undefined {
+		for (const key in obj) {
+			if (obj.hasOwnProperty(key)) {
+				const entity = obj[key];
+				if (entity.$Type === typeToSearch) {
+					return key;
+				}
+			}
+		}
+		return undefined; // if not found
 	}
 }

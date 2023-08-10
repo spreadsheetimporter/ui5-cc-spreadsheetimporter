@@ -12,6 +12,7 @@ import ODataModel from "sap/ui/model/odata/v2/ODataModel";
 export default class ODataV2 extends OData {
 	public createPromises: Promise<any>[] = [];
 	public createContexts: any[] = [];
+	customBinding: ODataListBinding;
 	submitChangesResponse: any;
 	private metadataHandler: MetadataHandlerV2;
 
@@ -23,7 +24,7 @@ export default class ODataV2 extends OData {
 		const submitChangesPromise = (binding: ODataListBinding, payload: any) => {
 			return new Promise((resolve, reject) => {
 				// @ts-ignore
-				let context = (binding.getModel() as ODataModel).createEntry(binding.sDeepPath, {
+				let context = (this.customBinding.getModel() as ODataModel).createEntry(this.customBinding.sDeepPath, {
 					properties: payload,
 					success: () => {
 						resolve(context);
@@ -34,11 +35,11 @@ export default class ODataV2 extends OData {
 				});
 			});
 		};
-		return submitChangesPromise(binding, payload);
+		return submitChangesPromise(this.customBinding, payload);
 	}
 
 	createAsync(model: any, binding: any, payload: any) {
-		const returnObject = this.create(model, binding, payload);
+		const returnObject = this.create(model, this.customBinding, payload);
 		this.createPromises.push(returnObject);
 	}
 
@@ -58,7 +59,17 @@ export default class ODataV2 extends OData {
 		return false;
 	}
 
-	createCustomBinding(model: any) {}
+	async createCustomBinding(binding: any) {
+		if (this.spreadsheetUploadController.component.getOdataType()) {
+			const metaModel = this.spreadsheetUploadController.view.getModel().getMetaModel();
+			await metaModel.loaded();
+			const oDataEntityType = metaModel.getODataEntityType(this.spreadsheetUploadController.component.getOdataType());
+			const odataEntitySet = metaModel.getODataEntityContainer().entitySet.find((item) => item.entityType === `${oDataEntityType.namespace}.${oDataEntityType.name}`);
+			this.customBinding = new ODataListBinding(this.spreadsheetUploadController.view.getModel() as ODataModel, `/${odataEntitySet.name}`);
+		} else {
+			this.customBinding = binding;
+		}
+	}
 
 	async submitChanges(model: ODataModel) {
 		const submitChangesPromise = (model: ODataModel) => {
