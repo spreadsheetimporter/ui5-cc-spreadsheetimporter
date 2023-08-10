@@ -38,7 +38,7 @@ npm install ui5-cc-spreadsheetimporter
 
 ````json
 "resourceRoots": {
-    "cc.spreadsheetimporter.v0_23_1": "./thirdparty/customControl/spreadsheetImporter/v0_23_1"
+    "cc.spreadsheetimporter.v0_24_0": "./thirdparty/customControl/spreadsheetImporter/v0_24_0"
 },
 ````
 
@@ -60,7 +60,7 @@ npm install ui5-cc-spreadsheetimporter
 ````json
 "componentUsages": {
     "spreadsheetImporter": {
-        "name": "cc.spreadsheetimporter.v0_23_1"
+        "name": "cc.spreadsheetimporter.v0_24_0"
     }
 },
 ````
@@ -76,7 +76,7 @@ npm install ui5-cc-spreadsheetimporter
 ````json
 "componentUsages": {
     "spreadsheetImporter": {
-        "name": "cc.spreadsheetimporter.v0_23_1"
+        "name": "cc.spreadsheetimporter.v0_24_0"
     }
 },
 ````

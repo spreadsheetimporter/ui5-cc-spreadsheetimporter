@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.24.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.23.1...ui5-cc-spreadsheetimporter-v0.24.0) (2023-08-10)
+
+
+### Features
+
+* use odataType to create data for other entity ([#334](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/334)) ([7330ebb](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/7330ebbd6ed89db1bf483f3aea97afe735edf821))
+
 ## [0.23.1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.23.0...ui5-cc-spreadsheetimporter-v0.23.1) (2023-08-03)
 
 
