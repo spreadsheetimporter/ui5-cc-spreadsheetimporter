@@ -255,7 +255,7 @@
                       "title": "Spreadsheet Upload",
                       "position": {
                         "placement": "After",
-                        "anchor": "Infos/@com.sap.vocabularies.UI.v1.LineItem"
+                        "anchor": "OrderItems"
                       }
                     }
                   }
