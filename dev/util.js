@@ -157,36 +157,35 @@ function getTestappObject(scenario, version) {
 	}
 }
 
-function replaceYamlFileBuild(version, versionShort, versionSlash) {
-	// Load the ui5-build.yaml file
-	const fileContents = fs.readFileSync('./packages/ui5-cc-spreadsheetimporter/ui5-build.yaml', 'utf8');
+function replaceYamlFileBuild(version, versionShort, versionSlash, filePath) {
+    // Load the specified yaml file
+    const fileContents = fs.readFileSync(filePath, 'utf8');
 
-	// Parse the YAML into a JavaScript object
-	const ui5Build = yaml.load(fileContents);
+    // Parse the YAML into a JavaScript object
+    const ui5Build = yaml.load(fileContents);
 
-	// Replace the values
-	ui5Build.builder.customTasks.forEach(task => {
-		if (task.name === 'ui5-tooling-stringreplace-task') {
-			task.configuration.replace.forEach(replacement => {
-				if (replacement.placeholder === 'XXXnamespaceXXX') {
-					replacement.value = version;
-				}
-				if (replacement.placeholder === 'XXXnamespaceShortXXX') {
-					replacement.value = versionShort;
-				}
-				if (replacement.placeholder === 'XXXnamespaceSlashXXX') {
-					replacement.value = versionSlash;
-				}
-			});
-		}
-	});
+    // Replace the values
+    ui5Build.builder.customTasks.forEach(task => {
+        if (task.name === 'ui5-tooling-stringreplace-task') {
+            task.configuration.replace.forEach(replacement => {
+                if (replacement.placeholder === 'XXXnamespaceXXX') {
+                    replacement.value = version;
+                }
+                if (replacement.placeholder === 'XXXnamespaceShortXXX') {
+                    replacement.value = versionShort;
+                }
+                if (replacement.placeholder === 'XXXnamespaceSlashXXX') {
+                    replacement.value = versionSlash;
+                }
+            });
+        }
+    });
 
-	// Serialize the modified object back to YAML
-	const updatedYaml = yaml.dump(ui5Build, { lineWidth: -1 });
+    // Serialize the modified object back to YAML
+    const updatedYaml = yaml.dump(ui5Build, { lineWidth: -1 });
 
-	// Save the updated ui5-build.yaml file
-	fs.writeFileSync('./packages/ui5-cc-spreadsheetimporter/ui5-build.yaml', updatedYaml, 'utf8');
-
+    // Save the updated file
+    fs.writeFileSync(filePath, updatedYaml, 'utf8');
 }
 
 function replaceYamlFileComponent(versionSlash) {
