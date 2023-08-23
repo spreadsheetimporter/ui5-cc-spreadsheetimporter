@@ -20,7 +20,8 @@ const versionSlash = util.getVersionSlash(path)
 	const versionSlashButton = util.getVersionSlash(pathButton)
 
 // replace strings in publish folder
-util.replaceYamlFileBuild(versionUnderscore, versionShort, versionUnderscore)
+util.replaceYamlFileBuild(versionUnderscore, versionShort, versionUnderscore,'./packages/ui5-cc-spreadsheetimporter/ui5-build.yaml')
+util.replaceYamlFileBuild(versionUnderscore, versionShort, versionUnderscore,'./packages/ui5-cc-spreadsheetimporter/ui5-build-dev.yaml')
 // create ui5.yaml with current version
 util.replaceYamlFileComponent(versionUnderscore)
 util.replaceYamlFileDeploy(versionUnderscore, versionUnderscore)

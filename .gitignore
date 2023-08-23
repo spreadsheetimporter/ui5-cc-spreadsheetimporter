@@ -8,6 +8,7 @@ dist
 archive.zip
 package-lock.json
 packages/ui5-cc-spreadsheetimporter/webapp
+dev/thirdparty
 # test apps start
 /examples/packages/ordersv2fe96
 /examples/packages/ordersv2fe84

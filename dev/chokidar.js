@@ -3,11 +3,11 @@ const chokidar = require("chokidar");
 var shell = require("shelljs");
 var execAsync = require("./execAsync")
 let timeoutId;
-execAsync("npx @ui5/ts-interface-generator --watch")
+// execAsync("npx @ui5/ts-interface-generator --watch")
 shell.exec(
-	"pnpm --filter ui5-cc-spreadsheetimporter build:dev "
+	"pnpm --filter ui5-cc-spreadsheetimporter build:dev:tooling"
 );
-// One-liner for current directory
+
 chokidar
 	.watch("./packages/ui5-cc-spreadsheetimporter/src/", {
 		awaitWriteFinish: {
@@ -20,6 +20,12 @@ chokidar
 	.on("change", (event, path) => {
 		clearTimeout(timeoutId)
 		timeoutId = setTimeout(() => {
+			// Remove everything in the dist directory except the thirdparty folder
+			shell.ls('packages/ui5-cc-spreadsheetimporter/dist').forEach(function (file) {
+				if (file !== 'thirdparty') {
+					shell.rm('-r', 'packages/ui5-cc-spreadsheetimporter/dist/' + file);
+				}
+			});
 			shell.exec(
 				"pnpm --filter ui5-cc-spreadsheetimporter build:dev "
 			);
