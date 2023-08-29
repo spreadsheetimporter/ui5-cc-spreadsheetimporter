@@ -148,7 +148,7 @@ export default class Component extends UIComponent {
 	 * Opens the dialog for selecting a customer.
 	 * @public
 	 */
-	openSpreadsheetUploadDialog(options: ComponentData) {
+	openSpreadsheetUploadDialog(options?: ComponentData) {
 		Log.debug("openSpreadsheetUploadDialog", undefined, "SpreadsheetUpload: Component");
 		this.spreadsheetUpload.openSpreadsheetUploadDialog(options);
 	}
