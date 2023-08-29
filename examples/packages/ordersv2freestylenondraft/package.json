@@ -14,9 +14,9 @@
     "ui5-cc-spreadsheetimporter-button": "./../../../packages/ui5-cc-spreadsheetimporter-button"
   },
   "devDependencies": {
-    "@sap-ux/ui5-middleware-fe-mockserver": "^2.1.112",
-    "@sap/ux-ui5-tooling": "1.10.1",
-    "@ui5/cli": "3.3.1"
+    "@sap-ux/ui5-middleware-fe-mockserver": "^2.1.117",
+    "@sap/ux-ui5-tooling": "1.10.5",
+    "@ui5/cli": "3.5.0"
   },
   "scripts": {
     "start": "fiori run -p 8082 --open index.html?sap-ui-xx-viewCache=false",
