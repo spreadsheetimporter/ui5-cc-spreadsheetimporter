@@ -52,6 +52,7 @@ export interface ValueData {
 	sheetDataType: SheetDataType;
 	format: string;
 	formattedValue: string;
+	sheetName: string;
 }
 
 export type ArrayData = {
