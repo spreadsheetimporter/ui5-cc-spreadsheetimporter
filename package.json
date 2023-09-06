@@ -64,6 +64,10 @@
     "typescript": "5.2.2"
   },
   "lint-staged": {
-    "*.{js,ts,json,xml}": "prettier --write"
+    "**/*.js": [
+      "eslint",
+      "prettier --write"
+    ],
+    "**/*.{ts,json,xml}": "prettier --write"
   }
 }

@@ -66,6 +66,7 @@ export default abstract class OData extends ManagedObject {
 				await this.submitChanges(model);
 				let errorsFound = await this.checkForErrors(model, binding, component.getShowBackendErrorMessages());
 				if (errorsFound) {
+					this.busyDialog.close();
 					break;
 				} else {
 					await this.waitForCreation();
@@ -86,6 +87,7 @@ export default abstract class OData extends ManagedObject {
 			this.busyDialog.close();
 			fnResolve();
 		} catch (error) {
+			this.busyDialog.close();
 			this.resetContexts();
 			Log.error("Error while calling the odata service", error as Error, "SpreadsheetUpload: callOdata");
 			fnReject(error);
