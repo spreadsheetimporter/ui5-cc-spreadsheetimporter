@@ -3,6 +3,7 @@ const objectAssignDeep = require("object-assign-deep"),
 	fs = require("fs");
 
 exports.getJSON = function (filePath) {
+	// eslint-disable-next-line no-useless-catch
 	try {
 		const fullFilePath = process.cwd() + filePath;
 		try {

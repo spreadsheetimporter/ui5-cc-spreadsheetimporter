@@ -16,3 +16,5 @@ node_modules
 /**/*.png
 /**/*.md
 
+packages/ui5-cc-spreadsheetimporter/src/Component.gen.d.ts
+
