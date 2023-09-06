@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.25.2](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.25.1...ui5-cc-spreadsheetimporter-v0.25.2) (2023-09-06)
+
+
+### Bug Fixes
+
+* readAllSheets Parameter fixed ([#354](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/354)) ([88475fb](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/88475fb46df2b1a41de86ba16d82c2e257b0951c))
+
 ## [0.25.1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.25.0...ui5-cc-spreadsheetimporter-v0.25.1) (2023-09-06)
 
 
