@@ -71,6 +71,8 @@ export default class Component extends UIComponent {
 				allowPreventDefault: true,
 				parameters: {
 					payload: { type: "object" },
+					rawData: { type: "object" },
+					parsedData: { type: "object" },
 				},
 			},
 		},

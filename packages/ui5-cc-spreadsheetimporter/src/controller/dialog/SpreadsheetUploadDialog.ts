@@ -21,7 +21,13 @@ import Button from "sap/m/Button";
 import { AvailableOptionsType } from "../../types";
 import FlexBox from "sap/m/FlexBox";
 import JSONModel from "sap/ui/model/json/JSONModel";
-import Dialog from "sap/m/Dialog";
+
+type InputType = {
+    [key: string]: {
+        rawValue: any;
+        [additionalKeys: string]: any;
+    }
+};
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -146,7 +152,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	 * @param {*} event
 	 */
 	async onUploadSet(event: Event) {
-		const isDefaultNotPrevented = this.component.fireUploadButtonPress({ payload: this.spreadsheetUploadController.payloadArray });
+		const isDefaultNotPrevented = this.component.fireUploadButtonPress({ payload: this.spreadsheetUploadController.payloadArray, rawData: this._extractRawValues(this.spreadsheetUploadController.payloadArray), parsedData: this._extractParsedValues(this.spreadsheetUploadController.payloadArray) });
 		if (!isDefaultNotPrevented || this.component.getStandalone()) {
 			this.onCloseDialog();
 			return;
@@ -414,5 +420,33 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 		}
 
 		return out;
+	}
+
+	_extractRawValues(data: InputType[]): any[] {
+		return data.map(item => {
+			const newObj: { [key: string]: any } = {};
+	
+			for (const key in item) {
+				if (item[key].hasOwnProperty('rawValue')) {
+					newObj[key] = item[key].rawValue;
+				}
+			}
+	
+			return newObj;
+		});
+	}
+
+	_extractParsedValues(data: InputType[]): any[] {
+		return data.map(item => {
+			const newObj: { [key: string]: any } = {};
+	
+			for (const key in item) {
+				if (item[key].hasOwnProperty('formattedValue')) {
+					newObj[key] = item[key].formattedValue;
+				}
+			}
+	
+			return newObj;
+		});
 	}
 }
