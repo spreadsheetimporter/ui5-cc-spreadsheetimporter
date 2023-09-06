@@ -184,7 +184,7 @@ export default class Parser extends ManagedObject {
 			counter: 1,
 			rawValue: rawValue,
 			formattedValue: formattedValue,
-			ui5type: MessageType.Error,
+			ui5type: MessageType.Error
 		});
 	}
 }

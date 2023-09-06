@@ -65,10 +65,7 @@ describe("open-ux-tools", function () {
 		before(async () => {
 			nock.disableNetConnect();
 
-			nock(host)
-				.get(`${service}/$metadata`)
-				.replyWithFile(200, path.join(__dirname, "mock/metadata.xml"))
-				.persist(true);
+			nock(host).get(`${service}/$metadata`).replyWithFile(200, path.join(__dirname, "mock/metadata.xml")).persist(true);
 
 			context = await generate({
 				projectname: "fpmTravelApp",
@@ -86,11 +83,7 @@ describe("open-ux-tools", function () {
 		});
 
 		it("custom page and local annotation file is generated", () => {
-			assert.file([
-				"uimodule/webapp/ext/main/Main.view.xml",
-				"uimodule/webapp/ext/main/Main.controller.ts",
-				"uimodule/webapp/annotations/annotation.xml"
-			]);
+			assert.file(["uimodule/webapp/ext/main/Main.view.xml", "uimodule/webapp/ext/main/Main.controller.ts", "uimodule/webapp/annotations/annotation.xml"]);
 		});
 
 		it("check that fe components are used", () => {

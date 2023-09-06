@@ -28,11 +28,7 @@ function newViewControllerPairTest() {
 		});
 
 		it("should create a propert view", function () {
-			return assert.fileContent(
-				"webapp/view/NewView.view.xml",
-				'id="NewView"',
-				"sap.ui.demo.todo.controller.NewView"
-			);
+			return assert.fileContent("webapp/view/NewView.view.xml", 'id="NewView"', "sap.ui.demo.todo.controller.NewView");
 		});
 	});
 }

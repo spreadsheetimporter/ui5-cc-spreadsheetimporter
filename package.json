@@ -23,7 +23,7 @@
     "lint": "eslint .",
     "lint:staged": "lint-staged",
     "lint:commit": "commitlint -e",
-    "prettier": "prettier --write .",
+    "prettier": "prettier --config .prettierrc.json --write '**/*.{js,ts,json,xml}'",
     "prettier:staged": "lint-staged",
     "hooks:pre-commit": "npm-run-all --sequential prettier:staged lint:staged",
     "hooks:pre-push": "npm-run-all --sequential lint:commit",
@@ -39,6 +39,8 @@
     "coypChangelogToDoc": "node ./dev/copy-changelog-to-doc.js"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "7.22.15",
+    "@babel/preset-env": "^7.22.15",
     "@commitlint/cli": "^17.7.1",
     "@commitlint/config-conventional": "^17.7.0",
     "@prettier/plugin-xml": "^3.2.0",
@@ -65,9 +67,9 @@
   },
   "lint-staged": {
     "**/*.js": [
-      "eslint",
-      "prettier --write"
+      "eslint .",
+      "prettier --write --config .prettierrc.json"
     ],
-    "**/*.{ts,json,xml}": "prettier --write"
+    "**/*.{ts,json,xml}": "prettier --write --config .prettierrc.json"
   }
 }

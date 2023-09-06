@@ -17,7 +17,7 @@ export enum AvailableOptions {
 	 * Changing the decimal seperator for number fields
 	 * @public
 	 */
-	DecimalSeperator = "decimalSeperator",
+	DecimalSeperator = "decimalSeperator"
 }
 
 export enum FieldMatchType {
@@ -31,32 +31,32 @@ export enum FieldMatchType {
 	 * match type with only labels
 	 * @public
 	 */
-	Label = "label",
+	Label = "label"
 }
 
 export const CustomMessageTypes: { [key: string]: CustomMessageType } = {
 	MandatoryFieldNotFilled: {
 		title: "MandatoryFieldNotFilled",
-		group: true,
+		group: true
 	},
 	ColumnNotFound: {
 		title: "ColumnNotFound",
-		group: false,
+		group: false
 	},
 	ParsingError: {
 		title: "ParsingError",
-		group: true,
+		group: true
 	},
 	CustomErrorGroup: {
 		title: "CustomErrorGroup",
-		group: true,
+		group: true
 	},
 	CustomError: {
 		title: "CustomError",
-		group: false,
+		group: false
 	},
 	Formatting: {
 		title: "Formatting",
-		group: true,
-	},
+		group: true
+	}
 };

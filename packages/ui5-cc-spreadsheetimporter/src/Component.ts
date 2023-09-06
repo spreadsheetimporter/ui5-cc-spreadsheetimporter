@@ -47,36 +47,36 @@ export default class Component extends UIComponent {
 			sampleData: { type: "object" },
 			useTableSelector: { type: "boolean", defaultValue: false },
 			readAllSheets: { type: "boolean", defaultValue: false },
-			debug: { type: "boolean", defaultValue: false },
+			debug: { type: "boolean", defaultValue: false }
 		},
 		aggregations: {
 			rootControl: {
 				type: "sap.ui.core.Control",
 				multiple: false,
-				visibility: "hidden",
-			},
+				visibility: "hidden"
+			}
 		},
 		events: {
 			checkBeforeRead: {
 				parameters: {
 					sheetData: { type: "object" },
-					messages: { type: "object" },
-				},
+					messages: { type: "object" }
+				}
 			},
 			changeBeforeCreate: {
 				parameters: {
-					payload: { type: "object" },
-				},
+					payload: { type: "object" }
+				}
 			},
 			uploadButtonPress: {
 				allowPreventDefault: true,
 				parameters: {
 					payload: { type: "object" },
 					rawData: { type: "object" },
-					parsedData: { type: "object" },
-				},
-			},
-		},
+					parsedData: { type: "object" }
+				}
+			}
+		}
 	};
 
 	//=============================================================================

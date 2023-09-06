@@ -39,11 +39,7 @@ module.exports = class extends Generator {
 				choices: entitySets
 			}
 		]);
-		const manifestTargets = util.findEntitySetValue(
-			manifesJson,
-			questionEntitySet.entitySet,
-			questionTemplate.templateType
-		);
+		const manifestTargets = util.findEntitySetValue(manifesJson, questionEntitySet.entitySet, questionTemplate.templateType);
 
 		var aPrompt = [
 			{
