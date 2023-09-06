@@ -73,7 +73,7 @@ sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel", "../model/form
 
 			this.spreadsheetUpload.attachUploadButtonPress(function (oEvent) {
 				const model = this.getModel("tableData");
-				model.setData(oEvent.getParameter("payload"));
+				model.setData(oEvent.getParameter("rawData"));
 				oEvent.preventDefault();
 			}, this);
 
@@ -113,7 +113,7 @@ sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel", "../model/form
 
 		uploadButtonPress(oEvent) {
 			const model = this.getModel("tableData");
-			model.setData(oEvent.getParameter("payload"));
+			model.setData(oEvent.getParameter("rawData"));
 		}
 	});
 });

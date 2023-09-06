@@ -58,7 +58,9 @@ sap.ui.define(["sap/m/Button"], (Button) => {
 				uploadButtonPress: {
 					allowPreventDefault: true,
 					parameters: {
-						payload: { type: "object" }
+						payload: { type: "object" },
+						rawData: { type: "object" },
+						parsedData: { type: "object" }
 					}
 				}
 			}
@@ -132,7 +134,9 @@ sap.ui.define(["sap/m/Button"], (Button) => {
 				this.fireChangeBeforeCreate({ payload: oEvent.getParameter("payload") })
 			}, oControl)
 			oControl.spreadsheetUpload.attachUploadButtonPress(function (oEvent) {
-				const isDefaultNotPrevented = this.fireUploadButtonPress({ payload: oEvent.getParameter("payload") })
+				const rawData = this._extractRawValues(oEvent.getParameter("payload"))
+				const parsedData = this._extractParsedValues(oEvent.getParameter("payload"))
+				const isDefaultNotPrevented = this.fireUploadButtonPress({ payload: oEvent.getParameter("payload"), rawData: rawData, parsedData: parsedData })
 				if (!isDefaultNotPrevented) {
 					oEvent.preventDefault()
 				}
@@ -161,6 +165,32 @@ sap.ui.define(["sap/m/Button"], (Button) => {
 			} else {
 				return null
 			}
+		},
+		_extractRawValues(data) {
+			return data.map(item => {
+				const newObj = {};
+		
+				for (const key in item) {
+					if (item[key].hasOwnProperty('rawValue')) {
+						newObj[key] = item[key].rawValue;
+					}
+				}
+		
+				return newObj;
+			});
+		},
+		_extractParsedValues(data) {
+			return data.map(item => {
+				const newObj = {};
+		
+				for (const key in item) {
+					if (item[key].hasOwnProperty('formattedValue')) {
+						newObj[key] = item[key].formattedValue;
+					}
+				}
+		
+				return newObj;
+			});
 		}
 	})
 })
