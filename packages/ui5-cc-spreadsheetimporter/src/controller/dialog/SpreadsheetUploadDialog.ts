@@ -95,23 +95,19 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 			let spreadsheetSheetsData = SheetHandler.sheet_to_json(workbook.Sheets[sheetName]);
 			let columnNames = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })[0] as string[];
 
-			if (workbook.SheetNames.length > 1) {
-				spreadsheetSheetsData = [];
-				columnNames = [];
-				for (const sheetName of workbook.SheetNames) {
-					let currSheetData = SheetHandler.sheet_to_json(workbook.Sheets[sheetName]);
-
-					for (const dataVal of currSheetData) {
-						Object.keys(dataVal).forEach(key => {
-							dataVal[key].sheetName = sheetName;
-						})
-					}
-					
-					spreadsheetSheetsData = spreadsheetSheetsData.concat(currSheetData);
-					columnNames = columnNames.concat(XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })[0] as string[]);
+			spreadsheetSheetsData = [];
+			columnNames = [];
+			for (const sheetName of workbook.SheetNames) {
+				let currSheetData = SheetHandler.sheet_to_json(workbook.Sheets[sheetName]);
+				for (const dataVal of currSheetData) {
+					Object.keys(dataVal).forEach((key) => {
+						dataVal[key].sheetName = sheetName;
+					});
 				}
-			}
 
+				spreadsheetSheetsData = spreadsheetSheetsData.concat(currSheetData);
+				columnNames = columnNames.concat(XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })[0] as string[]);
+			}
 
 			Log.debug("columnNames of uploaded spreadsheet file", undefined, "SpreadsheetUpload: onFileUpload", () => this.component.logger.returnObject({ columnNames: columnNames }));
 
@@ -133,7 +129,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 					columnNames,
 					this.spreadsheetUploadController.odataKeyList,
 					this.component.getMandatoryFields(),
-					this.spreadsheetUploadController.typeLabelList
+					this.spreadsheetUploadController.typeLabelList,
 				);
 				this.messageHandler.checkColumnNames(columnNames, this.component.getFieldMatchType(), this.spreadsheetUploadController.typeLabelList);
 			}
@@ -147,7 +143,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 					this.component,
 					this.messageHandler,
 					this.util,
-					this.spreadsheetUploadController.isODataV4
+					this.spreadsheetUploadController.isODataV4,
 				);
 			} else {
 				this.spreadsheetUploadController.payloadArray = this.spreadsheetUploadController.payload;
