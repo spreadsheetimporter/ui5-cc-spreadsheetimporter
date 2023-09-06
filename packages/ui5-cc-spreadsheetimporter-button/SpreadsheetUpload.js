@@ -40,6 +40,8 @@ sap.ui.define(["sap/m/Button"], (Button) => {
 				showOptions: { type: "boolean", defaultValue: false },
 				availableOptions: { type: "string[]", defaultValue: [] },
 				hideSampleData: { type: "boolean", defaultValue: false },
+				useTableSelector: { type: "boolean", defaultValue: false },
+				readAllSheets: { type: "boolean", defaultValue: false },
 				debug: { type: "boolean", defaultValue: false },
 				sampleData: { type: "object" }
 			},
@@ -96,7 +98,9 @@ sap.ui.define(["sap/m/Button"], (Button) => {
 						debug: oControl.getDebug(),
 						availableOptions: oControl.getAvailableOptions(),
 						hideSampleData: oControl.getHideSampleData(),
-						sampleData: oControl.getSampleData()
+						sampleData: oControl.getSampleData(),
+						useTableSelector: oControl.getUseTableSelector(),
+						readAllSheets: oControl.getReadAllSheets()
 					}
 				})
 			} else {
@@ -123,7 +127,9 @@ sap.ui.define(["sap/m/Button"], (Button) => {
 						debug: oControl.getDebug(),
 						availableOptions: oControl.getAvailableOptions(),
 						hideSampleData: oControl.getHideSampleData(),
-						sampleData: oControl.getSampleData()
+						sampleData: oControl.getSampleData(),
+						useTableSelector: oControl.getUseTableSelector(),
+						readAllSheets: oControl.getReadAllSheets()
 					}
 				})
 			}

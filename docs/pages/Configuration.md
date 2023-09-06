@@ -16,6 +16,7 @@ These options are available and explained in detail below:
 | `activateDraft` | Determines whether a draft should be activated immediately  | boolean |
 | `batchSize` | Determines bach sizes send to backend server  | integer |
 | `standalone` | Mode if you do not have a table and want to do the processing yourself  | boolean |
+| `readAllSheets` | In Standalone Mode you can get access to all sheets in the spreadsheet file  | boolean |
 | `strict` | The strict option controls the availability of the `Continue` button in the error dialog.  | boolean |
 | `decimalSeparator` | Determines the decimal separator for numbers as string.  | string |
 | `hidePreview` | Hide the button to preview the uploaded data in the table dialog.  | boolean |
@@ -147,6 +148,66 @@ An example of an implementation to display data of an Spreadsheetupload in a fre
 
 [UploadToTable.controller.js](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2freestylenondraft/webapp/controller/UploadToTable.controller.js)  
 [UploadToTable.view.xml](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2freestylenondraft/webapp/view/UploadToTable.view.xml)
+
+### `readAllSheets`
+
+**default:** `false`
+
+This option defines whether all sheets in the Spreadsheet file should be read or not.  
+If this option is set to `true`, the `payload` returns a additional parameter with the sheet name.
+
+You can access all the sheet names in the `uploadButtonPress` event.
+
+```javascript
+this.spreadsheetUpload.attachUploadButtonPress(function (oEvent) {
+    const model = this.getModel("tableData");
+    model.setData(oEvent.getParameter("payload")); // <-- example payload
+    oEvent.preventDefault();
+   }, this);
+```
+
+**Example Payload:**
+
+```json
+[
+    {
+        "product_ID": {
+            "rawValue": 253,
+            "sheetDataType": "n",
+            "format": "General",
+            "formattedValue": "253",
+            "sheetName": "Table1"
+        },
+        "username": {
+            "r": "<t>testUser</t>",
+            "h": "testUser",
+            "rawValue": "testUser",
+            "sheetDataType": "s",
+            "format": "General",
+            "formattedValue": "testUser",
+            "sheetName": "Table1"
+        }
+    },
+    {
+        "product_ID": {
+            "rawValue": 253,
+            "sheetDataType": "n",
+            "format": "General",
+            "formattedValue": "253",
+            "sheetName": "Table2"
+        },
+        "username": {
+            "r": "<t>testUser</t>",
+            "h": "testUser",
+            "rawValue": "testUser",
+            "sheetDataType": "s",
+            "format": "General",
+            "formattedValue": "testUser",
+            "sheetName": "Table2"
+        }
+    }
+]
+```
 
 ### `strict`
 

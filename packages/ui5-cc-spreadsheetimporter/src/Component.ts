@@ -46,6 +46,7 @@ export default class Component extends UIComponent {
 			hideSampleData: { type: "boolean", defaultValue: false },
 			sampleData: { type: "object" },
 			useTableSelector: { type: "boolean", defaultValue: false },
+			readAllSheets: { type: "boolean", defaultValue: false },
 			debug: { type: "boolean", defaultValue: false },
 		},
 		aggregations: {
