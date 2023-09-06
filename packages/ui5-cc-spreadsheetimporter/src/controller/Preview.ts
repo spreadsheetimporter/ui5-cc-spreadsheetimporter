@@ -32,12 +32,12 @@ export default class Preview extends ManagedObject {
 					text: "Close",
 					press: () => {
 						this.dialog.close();
-					},
-				}),
+					}
+				})
 			],
 			afterClose: () => {
 				this.dialog.destroy();
-			},
+			}
 		});
 
 		this.dialog.open();
@@ -53,7 +53,7 @@ export default class Preview extends ManagedObject {
 
 			aColumns.forEach((column) => {
 				const oColumn = new Column({
-					header: new Text({ text: column }),
+					header: new Text({ text: column })
 				});
 
 				table.addColumn(oColumn);

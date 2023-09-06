@@ -23,29 +23,32 @@ export default class OptionsDialog extends ManagedObject {
 		if (showOptionsToUser.length === 0) {
 			showOptionsToUser = this.availableOptions;
 		}
-		const availableOptionsData = this.availableOptions.reduce((acc, key) => {
-			acc[key] = showOptionsToUser.includes(key);
-			return acc;
-		}, {} as Record<string, boolean>);
+		const availableOptionsData = this.availableOptions.reduce(
+			(acc, key) => {
+				acc[key] = showOptionsToUser.includes(key);
+				return acc;
+			},
+			{} as Record<string, boolean>
+		);
 		this.spreadsheetUploadController.spreadsheetUploadDialogHandler.getDialog().setBusy(true);
 		const optionsModel = new JSONModel({
 			strict: this.spreadsheetUploadController.component.getStrict(),
 			fieldMatchType: this.spreadsheetUploadController.component.getFieldMatchType(),
-			decimalSeparator: this.spreadsheetUploadController.component.getDecimalSeparator(),
+			decimalSeparator: this.spreadsheetUploadController.component.getDecimalSeparator()
 		});
 		const showOptionsModel = new JSONModel(availableOptionsData);
 		Log.debug("openOptionsDialog", undefined, "SpreadsheetUpload: Options", () =>
 			this.spreadsheetUploadController.component.logger.returnObject({
 				strict: this.spreadsheetUploadController.component.getStrict(),
 				fieldMatchType: this.spreadsheetUploadController.component.getFieldMatchType(),
-				decimalSeparator: this.spreadsheetUploadController.component.getDecimalSeparator(),
+				decimalSeparator: this.spreadsheetUploadController.component.getDecimalSeparator()
 			})
 		);
 		if (!this.optionsDialog) {
 			this.optionsDialog = (await Fragment.load({
 				name: "cc.spreadsheetimporter.XXXnamespaceXXX.fragment.OptionsDialog",
 				type: "XML",
-				controller: this,
+				controller: this
 			})) as Dialog;
 			this.optionsDialog.setModel(this.spreadsheetUploadController.componentI18n, "i18n");
 		}

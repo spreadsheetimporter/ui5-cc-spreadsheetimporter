@@ -23,10 +23,10 @@ import FlexBox from "sap/m/FlexBox";
 import JSONModel from "sap/ui/model/json/JSONModel";
 
 type InputType = {
-    [key: string]: {
-        rawValue: any;
-        [additionalKeys: string]: any;
-    }
+	[key: string]: {
+		rawValue: any;
+		[additionalKeys: string]: any;
+	};
 };
 
 /**
@@ -60,12 +60,12 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 				dataRows: 0,
 				strict: this.component.getStrict(),
 				hidePreview: this.component.getHidePreview(),
-				showOptions: this.component.getShowOptions(),
+				showOptions: this.component.getShowOptions()
 			});
 			this.spreadsheetUploadDialog = (await Fragment.load({
 				name: "cc.spreadsheetimporter.XXXnamespaceXXX.fragment.SpreadsheetUpload",
 				type: "XML",
-				controller: this,
+				controller: this
 			})) as SpreadsheetDialog;
 			this.spreadsheetUploadDialog.setComponent(this.component);
 			this.spreadsheetUploadDialog.setBusyIndicatorDelay(0);
@@ -92,14 +92,14 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 
 			const workbook = (await this._readWorkbook(file)) as XLSX.WorkBook;
 			const sheetName = workbook.SheetNames[0];
-			let spreadsheetSheetsData:ArrayData = [];
+			let spreadsheetSheetsData: ArrayData = [];
 			let columnNames = [] as string[];
 			if (!this.component.getStandalone()) {
-				 spreadsheetSheetsData = SheetHandler.sheet_to_json(workbook.Sheets[sheetName]);
-				 columnNames = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })[0] as string[];
+				spreadsheetSheetsData = SheetHandler.sheet_to_json(workbook.Sheets[sheetName]);
+				columnNames = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })[0] as string[];
 			}
 			// in standalone mode, we can read all the sheets and save the sheet name in the payload
-			if (this.component.getStandalone() && this.component.getReadAllSheets()) {	
+			if (this.component.getStandalone() && this.component.getReadAllSheets()) {
 				// Loop over the sheet names in the workbook
 				for (const sheetName of Object.keys(workbook.Sheets)) {
 					let currSheetData = SheetHandler.sheet_to_json(workbook.Sheets[sheetName]);
@@ -135,7 +135,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 					columnNames,
 					this.spreadsheetUploadController.odataKeyList,
 					this.component.getMandatoryFields(),
-					this.spreadsheetUploadController.typeLabelList,
+					this.spreadsheetUploadController.typeLabelList
 				);
 				this.messageHandler.checkColumnNames(columnNames, this.component.getFieldMatchType(), this.spreadsheetUploadController.typeLabelList);
 			}
@@ -149,7 +149,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 					this.component,
 					this.messageHandler,
 					this.util,
-					this.spreadsheetUploadController.isODataV4,
+					this.spreadsheetUploadController.isODataV4
 				);
 			} else {
 				this.spreadsheetUploadController.payloadArray = this.spreadsheetUploadController.payload;
@@ -172,7 +172,11 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	 * @param {*} event
 	 */
 	async onUploadSet(event: Event) {
-		const isDefaultNotPrevented = this.component.fireUploadButtonPress({ payload: this.spreadsheetUploadController.payloadArray, rawData: this._extractRawValues(this.spreadsheetUploadController.payloadArray), parsedData: this._extractParsedValues(this.spreadsheetUploadController.payloadArray) });
+		const isDefaultNotPrevented = this.component.fireUploadButtonPress({
+			payload: this.spreadsheetUploadController.payloadArray,
+			rawData: this._extractRawValues(this.spreadsheetUploadController.payloadArray),
+			parsedData: this._extractParsedValues(this.spreadsheetUploadController.payloadArray)
+		});
 		if (!isDefaultNotPrevented || this.component.getStandalone()) {
 			this.onCloseDialog();
 			return;
@@ -201,13 +205,13 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 		var mParameters = {
 			busy: {
 				set: true,
-				check: false,
+				check: false
 			},
 			dataloss: {
 				popup: false,
-				navigation: false,
+				navigation: false
 			},
-			sActionLabel: this.util.geti18nText("uploadingFile"),
+			sActionLabel: this.util.geti18nText("uploadingFile")
 		};
 		// calling the oData service using extension api
 		if (this.spreadsheetUploadController.isODataV4) {
@@ -320,7 +324,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 					if (value.type === "Edm.Boolean") {
 						cell = {
 							v: sampleDataValue ? sampleDataValue.toString() : "true",
-							t: "b",
+							t: "b"
 						};
 						colWidths.push({ wch: colWidthDefault });
 					} else if (value.type === "Edm.String") {
@@ -346,14 +350,14 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 					} else if (value.type === "Edm.Date") {
 						cell = {
 							v: sampleDataValue ? sampleDataValue : new Date(),
-							t: "d",
+							t: "d"
 						};
 						colWidths.push({ wch: colWidthDefault });
 					} else if (value.type === "Edm.TimeOfDay" || value.type === "Edm.Time") {
 						cell = {
 							v: sampleDataValue ? sampleDataValue : new Date(),
 							t: "d",
-							z: "hh:mm",
+							z: "hh:mm"
 						};
 						colWidths.push({ wch: colWidthDefault });
 					} else if (
@@ -366,14 +370,14 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 					) {
 						cell = {
 							v: sampleDataValue ? sampleDataValue : 85,
-							t: "n",
+							t: "n"
 						};
 						colWidths.push({ wch: colWidthDefault });
 					} else if (value.type === "Edm.Double" || value.type === "Edm.Decimal") {
 						const decimalSeparator = this.component.getDecimalSeparator();
 						cell = {
 							v: sampleDataValue ? sampleDataValue : `123${decimalSeparator}4`,
-							t: "n",
+							t: "n"
 						};
 						colWidths.push({ wch: colWidthDefault });
 					}
@@ -443,29 +447,29 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	}
 
 	_extractRawValues(data: InputType[]): any[] {
-		return data.map(item => {
+		return data.map((item) => {
 			const newObj: { [key: string]: any } = {};
-	
+
 			for (const key in item) {
-				if (item[key].hasOwnProperty('rawValue')) {
+				if (item[key].hasOwnProperty("rawValue")) {
 					newObj[key] = item[key].rawValue;
 				}
 			}
-	
+
 			return newObj;
 		});
 	}
 
 	_extractParsedValues(data: InputType[]): any[] {
-		return data.map(item => {
+		return data.map((item) => {
 			const newObj: { [key: string]: any } = {};
-	
+
 			for (const key in item) {
-				if (item[key].hasOwnProperty('formattedValue')) {
+				if (item[key].hasOwnProperty("formattedValue")) {
 					newObj[key] = item[key].formattedValue;
 				}
 			}
-	
+
 			return newObj;
 		});
 	}

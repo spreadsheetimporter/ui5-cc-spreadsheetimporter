@@ -1,12 +1,12 @@
 // removes duplicates from an array
 exports.removeDuplicates = function (aArray) {
-	let sourceSet = new Set(aArray);
-	let reducedSet = sourceSet.values();
+	const sourceSet = new Set(aArray);
+	const reducedSet = sourceSet.values();
 	return Array.from(reducedSet);
 };
 
 exports.transformToPathWithLeadingSlash = function (sFilePath) {
 	const regexCUT = /^[\.]?\/?([^.]+[\.]?[^.]+|)\/?$/;
-	let result = sFilePath.replace(regexCUT, "/$1") || "./";
+	const result = sFilePath.replace(regexCUT, "/$1") || "./";
 	return result;
 };

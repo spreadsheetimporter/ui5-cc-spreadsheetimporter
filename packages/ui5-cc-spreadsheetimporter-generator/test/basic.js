@@ -14,45 +14,23 @@ function createTest(oPrompt) {
 		});
 
 		it("should create the necessary ui5 files", function () {
-			return assert.file([
-				"uimodule/ui5.yaml",
-				`uimodule/webapp/view/MainView.view.${oPrompt.viewtype.toLowerCase()}`,
-				"uimodule/webapp/index.html",
-				"uimodule/webapp/manifest.json"
-			]);
+			return assert.file(["uimodule/ui5.yaml", `uimodule/webapp/view/MainView.view.${oPrompt.viewtype.toLowerCase()}`, "uimodule/webapp/index.html", "uimodule/webapp/manifest.json"]);
 		});
 
 		// regular easy-ui5 is used for scaffolding
 		if (oPrompt.viewtype !== "XML") {
 			it("should reference the base controller", function () {
-				return assert.fileContent(
-					"uimodule/webapp/controller/MainView.controller.js",
-					"controller/BaseController"
-				);
+				return assert.fileContent("uimodule/webapp/controller/MainView.controller.js", "controller/BaseController");
 			});
 		}
 
-		if (
-			!!oPrompt.platform &&
-			oPrompt.platform !== "Static webserver" &&
-			oPrompt.platform !== "SAP NetWeaver" &&
-			oPrompt.platform !== "Application Router @ SAP HANA XS Advanced"
-		) {
+		if (!!oPrompt.platform && oPrompt.platform !== "Static webserver" && oPrompt.platform !== "SAP NetWeaver" && oPrompt.platform !== "Application Router @ SAP HANA XS Advanced") {
 			it("ui5.yaml middleware should point to the right xs-app.json file", function () {
-				return assert.fileContent(
-					"uimodule/ui5.yaml",
-					oPrompt.platform === "Application Router @ Cloud Foundry"
-						? "xsappJson: ../approuter/xs-app.json"
-						: "xsappJson: webapp/xs-app.json"
-				);
+				return assert.fileContent("uimodule/ui5.yaml", oPrompt.platform === "Application Router @ Cloud Foundry" ? "xsappJson: ../approuter/xs-app.json" : "xsappJson: webapp/xs-app.json");
 			});
 		}
 
-		if (
-			!!oPrompt.platform &&
-			oPrompt.platform === "SAP HTML5 Application Repository service for SAP BTP" &&
-			oPrompt.platform === "SAP Launchpad service"
-		) {
+		if (!!oPrompt.platform && oPrompt.platform === "SAP HTML5 Application Repository service for SAP BTP" && oPrompt.platform === "SAP Launchpad service") {
 			it("ui5.yaml should leverage the ui5 zipper task", function () {
 				return assert.fileContent("uimodule/ui5.yaml", "name: ui5-task-zipper");
 			});

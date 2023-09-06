@@ -23,20 +23,20 @@ export default class SpreadsheetDialog extends Dialog {
 		properties: {
 			decimalSeparator: { type: "string" },
 			availableOptions: { type: "string[]" },
-			component: { type: "object" },
+			component: { type: "object" }
 		},
 		events: {
 			decimalSeparatorChanged: {
 				parameters: {
-					decimalSeparator: { type: "string" },
-				},
+					decimalSeparator: { type: "string" }
+				}
 			},
 			availableOptionsChanged: {
 				parameters: {
-					availableOptions: { type: "string[]" },
-				},
-			},
-		},
+					availableOptions: { type: "string[]" }
+				}
+			}
+		}
 	};
 
 	public setDecimalSeparator(sDecimalSeparator: string) {

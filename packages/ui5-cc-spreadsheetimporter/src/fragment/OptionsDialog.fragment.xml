@@ -1,29 +1,23 @@
-<core:FragmentDefinition xmlns="sap.m"
-  xmlns:core="sap.ui.core"
-  xmlns:upload="sap.ui.unified"
-  xmlns:f="sap.ui.layout.form">
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:upload="sap.ui.unified" xmlns:f="sap.ui.layout.form">
   <Dialog contentWidth="{= ${device>/system/phone} ? '100%' : '40vw' }" contentHeight="auto" verticalScrolling="false">
-    <customHeader >
+    <customHeader>
       <OverflowToolbar>
         <Title text="{i18n>optionsDialogTitle}" />
-        <ToolbarSpacer/>
+        <ToolbarSpacer />
       </OverflowToolbar>
     </customHeader>
     <content>
         <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" class="centered">
             <f:content>
               <Label text="{i18n>optionsDialogStrict}" visible="{= ${availableOptions>/strict}}" />
-              <CheckBox
-                selected="{options>/strict}" visible="{= ${availableOptions>/strict}}" />
-              <Label text="{i18n>optionsDialogFieldMatchType}" visible="{= ${availableOptions>/fieldMatchType}}"/>
-              <Select
-                selectedKey="{options>/fieldMatchType}" visible="{= ${availableOptions>/fieldMatchType}}">
+              <CheckBox selected="{options>/strict}" visible="{= ${availableOptions>/strict}}" />
+              <Label text="{i18n>optionsDialogFieldMatchType}" visible="{= ${availableOptions>/fieldMatchType}}" />
+              <Select selectedKey="{options>/fieldMatchType}" visible="{= ${availableOptions>/fieldMatchType}}">
                 <core:Item key="labelTypeBrackets" text="{i18n>optionsDialogLabelTypeBrackets}" />
                 <core:Item key="label" text="{i18n>optionsDialogLabel}" />
               </Select>
-              <Label text="{i18n>optionsDialogDecimalSeperator}" visible="{= ${availableOptions>/decimalSeperator}}"/>
-              <Select
-                selectedKey="{options>/decimalSeparator}" visible="{= ${availableOptions>/decimalSeperator}}">
+              <Label text="{i18n>optionsDialogDecimalSeperator}" visible="{= ${availableOptions>/decimalSeperator}}" />
+              <Select selectedKey="{options>/decimalSeparator}" visible="{= ${availableOptions>/decimalSeperator}}">
                 <core:Item key="" text="{i18n>optionsDialogBrowserDefault}" />
                 <core:Item key="," text="{i18n>optionsDialogComma} `,`" />
                 <core:Item key="." text="{i18n>optionsDialogDot} `.`" />
