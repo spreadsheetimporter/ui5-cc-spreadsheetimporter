@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.25.1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.25.0...ui5-cc-spreadsheetimporter-v0.25.1) (2023-09-06)
+
+
+### Bug Fixes
+
+* close busy dialog on backend error ([#348](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/348)) ([e1cc5e6](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/e1cc5e649c92d64cb4c10640a50426ca7cc12816))
+
 ## [0.25.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.24.0...ui5-cc-spreadsheetimporter-v0.25.0) (2023-09-06)
 
 
