@@ -34,7 +34,8 @@ sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel", "../model/form
 				async: true,
 				componentData: {
 					columns: ["product_ID", "username"],
-					standalone: true
+					standalone: true,
+					readAllSheets: true
 				}
 			});
 

@@ -97,6 +97,7 @@ export default class Component extends UIComponent {
 		this.setActivateDraft(oCompData?.activateDraft);
 		this.setBatchSize(oCompData?.batchSize);
 		this.setStandalone(oCompData?.standalone);
+		this.setReadAllSheets(oCompData?.readAllSheets);
 		this.setStrict(oCompData?.strict);
 		this.setDecimalSeparator(oCompData?.decimalSeparator);
 		this.setHidePreview(oCompData?.hidePreview);

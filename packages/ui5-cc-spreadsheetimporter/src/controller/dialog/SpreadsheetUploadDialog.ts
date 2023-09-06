@@ -89,21 +89,18 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 		try {
 			this.messageHandler.setMessages([]);
 			const file = event.getParameter("files")[0] as Blob;
-
 			const workbook = (await this._readWorkbook(file)) as XLSX.WorkBook;
-			const sheetName = workbook.SheetNames[0];
+
+			const isStandalone = this.component.getStandalone();
+			const readAllSheets = this.component.getReadAllSheets();
+
 			let spreadsheetSheetsData: ArrayData = [];
-			let columnNames = [] as string[];
-			if (!this.component.getStandalone()) {
-				spreadsheetSheetsData = SheetHandler.sheet_to_json(workbook.Sheets[sheetName]);
-				columnNames = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })[0] as string[];
-			}
-			// in standalone mode, we can read all the sheets and save the sheet name in the payload
-			if (this.component.getStandalone() && this.component.getReadAllSheets()) {
+			let columnNames: string[] = [];
+
+			if (isStandalone && readAllSheets) {
 				// Loop over the sheet names in the workbook
 				for (const sheetName of Object.keys(workbook.Sheets)) {
 					let currSheetData = SheetHandler.sheet_to_json(workbook.Sheets[sheetName]);
-
 					for (const dataVal of currSheetData) {
 						Object.keys(dataVal).forEach((key) => {
 							dataVal[key].sheetName = sheetName;
@@ -113,9 +110,11 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 					spreadsheetSheetsData = spreadsheetSheetsData.concat(currSheetData);
 					columnNames = columnNames.concat(XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })[0] as string[]);
 				}
+			} else {
+				const sheetName = workbook.SheetNames[0];
+				spreadsheetSheetsData = SheetHandler.sheet_to_json(workbook.Sheets[sheetName]);
+				columnNames = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })[0] as string[];
 			}
-
-			Log.debug("columnNames of uploaded spreadsheet file", undefined, "SpreadsheetUpload: onFileUpload", () => this.component.logger.returnObject({ columnNames: columnNames }));
 
 			if (!spreadsheetSheetsData || spreadsheetSheetsData.length === 0) {
 				throw new Error(this.util.geti18nText("emptySheet"));
@@ -128,7 +127,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 				}
 			}
 
-			if (!this.component.getStandalone()) {
+			if (!isStandalone) {
 				this.messageHandler.checkFormat(spreadsheetSheetsData);
 				this.messageHandler.checkMandatoryColumns(
 					spreadsheetSheetsData,
@@ -141,19 +140,17 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 			}
 			this.spreadsheetUploadController.payload = spreadsheetSheetsData;
 			this.component.fireCheckBeforeRead({ sheetData: spreadsheetSheetsData });
-			if (!this.component.getStandalone()) {
-				this.spreadsheetUploadController.payloadArray = [];
-				this.spreadsheetUploadController.payloadArray = Parser.parseSpreadsheetData(
-					this.spreadsheetUploadController.payload,
-					this.spreadsheetUploadController.typeLabelList,
-					this.component,
-					this.messageHandler,
-					this.util,
-					this.spreadsheetUploadController.isODataV4
-				);
-			} else {
-				this.spreadsheetUploadController.payloadArray = this.spreadsheetUploadController.payload;
-			}
+
+			this.spreadsheetUploadController.payloadArray = isStandalone
+				? this.spreadsheetUploadController.payload
+				: Parser.parseSpreadsheetData(
+						this.spreadsheetUploadController.payload,
+						this.spreadsheetUploadController.typeLabelList,
+						this.component,
+						this.messageHandler,
+						this.util,
+						this.spreadsheetUploadController.isODataV4
+				  );
 
 			if (this.messageHandler.areMessagesPresent()) {
 				// show error dialog
