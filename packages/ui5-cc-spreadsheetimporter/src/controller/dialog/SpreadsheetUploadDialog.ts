@@ -18,7 +18,7 @@ import Log from "sap/base/Log";
 import SheetHandler from "../SheetHandler";
 import Parser from "../Parser";
 import Button from "sap/m/Button";
-import { AvailableOptionsType } from "../../types";
+import { ArrayData, AvailableOptionsType } from "../../types";
 import FlexBox from "sap/m/FlexBox";
 import JSONModel from "sap/ui/model/json/JSONModel";
 
@@ -92,21 +92,27 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 
 			const workbook = (await this._readWorkbook(file)) as XLSX.WorkBook;
 			const sheetName = workbook.SheetNames[0];
-			let spreadsheetSheetsData = SheetHandler.sheet_to_json(workbook.Sheets[sheetName]);
-			let columnNames = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })[0] as string[];
+			let spreadsheetSheetsData:ArrayData = [];
+			let columnNames = [] as string[];
+			if (!this.component.getStandalone()) {
+				 spreadsheetSheetsData = SheetHandler.sheet_to_json(workbook.Sheets[sheetName]);
+				 columnNames = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })[0] as string[];
+			}
+			// in standalone mode, we can read all the sheets and save the sheet name in the payload
+			if (this.component.getStandalone() && this.component.getReadAllSheets()) {	
+				// Loop over the sheet names in the workbook
+				for (const sheetName of Object.keys(workbook.Sheets)) {
+					let currSheetData = SheetHandler.sheet_to_json(workbook.Sheets[sheetName]);
 
-			spreadsheetSheetsData = [];
-			columnNames = [];
-			for (const sheetName of workbook.SheetNames) {
-				let currSheetData = SheetHandler.sheet_to_json(workbook.Sheets[sheetName]);
-				for (const dataVal of currSheetData) {
-					Object.keys(dataVal).forEach((key) => {
-						dataVal[key].sheetName = sheetName;
-					});
+					for (const dataVal of currSheetData) {
+						Object.keys(dataVal).forEach((key) => {
+							dataVal[key].sheetName = sheetName;
+						});
+					}
+
+					spreadsheetSheetsData = spreadsheetSheetsData.concat(currSheetData);
+					columnNames = columnNames.concat(XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })[0] as string[]);
 				}
-
-				spreadsheetSheetsData = spreadsheetSheetsData.concat(currSheetData);
-				columnNames = columnNames.concat(XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })[0] as string[]);
 			}
 
 			Log.debug("columnNames of uploaded spreadsheet file", undefined, "SpreadsheetUpload: onFileUpload", () => this.component.logger.returnObject({ columnNames: columnNames }));
