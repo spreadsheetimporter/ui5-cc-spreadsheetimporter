@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.25.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.24.0...ui5-cc-spreadsheetimporter-v0.25.0) (2023-09-06)
+
+
+### Features
+
+* add sheet name to payload  ([#346](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/346)) ([4af5b47](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/4af5b47b9f860790a53dbc2b8319fb1f77ed2cbc))
+
+
+### Bug Fixes
+
+* add missing event parameter for uploadButtonPress event ([#344](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/344)) ([93b7613](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/93b7613084b86cfcf8768d036ab359be500baf95))
+* make parameter optional ([#341](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/341)) ([d52486d](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/d52486d2053f4e529a0d297b73eb03be589bb1d5))
+
 ## [0.24.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.23.1...ui5-cc-spreadsheetimporter-v0.24.0) (2023-08-10)
 
 

@@ -96,6 +96,25 @@
   * dependencies
     * ui5-cc-spreadsheetimporter bumped from 0.23.1 to 0.24.0
 
+## [0.11.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-button-v0.10.3...ui5-cc-spreadsheetimporter-button-v0.11.0) (2023-09-06)
+
+
+### Features
+
+* add sheet name to payload  ([#346](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/346)) ([4af5b47](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/4af5b47b9f860790a53dbc2b8319fb1f77ed2cbc))
+
+
+### Bug Fixes
+
+* add missing event parameter for uploadButtonPress event ([#344](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/344)) ([93b7613](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/93b7613084b86cfcf8768d036ab359be500baf95))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * ui5-cc-spreadsheetimporter bumped from 0.24.0 to 0.25.0
+
 ## [0.10.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-button-v0.9.2...ui5-cc-spreadsheetimporter-button-v0.10.0) (2023-07-12)
 
 
