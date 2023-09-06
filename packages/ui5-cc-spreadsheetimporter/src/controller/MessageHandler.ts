@@ -68,7 +68,7 @@ export default class MessageHandler extends ManagedObject {
 					type: CustomMessageTypes.MandatoryFieldNotFilled,
 					row: index + 2,
 					counter: 1,
-					ui5type: MessageType.Error,
+					ui5type: MessageType.Error
 				} as Messages;
 				// no value found or value is empty, create error message
 				if (!value || value.rawValue === "" || value.rawValue === undefined) {
@@ -89,7 +89,7 @@ export default class MessageHandler extends ManagedObject {
 						counter: 1,
 						ui5type: MessageType.Warning,
 						rawValue: rawValue,
-						formattedValue: formattedValue,
+						formattedValue: formattedValue
 					} as Messages;
 					this.addMessageToMessages(warningMessage);
 				}
@@ -120,7 +120,7 @@ export default class MessageHandler extends ManagedObject {
 					title: this.spreadsheetUploadController.util.geti18nText("columnNotFound", [columnName]),
 					type: CustomMessageTypes.ColumnNotFound,
 					counter: 1,
-					ui5type: MessageType.Error,
+					ui5type: MessageType.Error
 				} as Messages;
 				this.addMessageToMessages(errorMessage);
 			}
@@ -145,7 +145,7 @@ export default class MessageHandler extends ManagedObject {
 					title: this.spreadsheetUploadController.util.geti18nText("keyColumnNotFound", [columnNameLabel]),
 					type: CustomMessageTypes.ColumnNotFound,
 					counter: 1,
-					ui5type: MessageType.Error,
+					ui5type: MessageType.Error
 				};
 				this.addMessageToMessages(errorMessage);
 			}
@@ -168,7 +168,7 @@ export default class MessageHandler extends ManagedObject {
 			this.messageDialog = (await Fragment.load({
 				name: "cc.spreadsheetimporter.XXXnamespaceXXX.fragment.MessagesDialog",
 				type: "XML",
-				controller: this,
+				controller: this
 			})) as Dialog;
 		}
 		this.messageDialog.setModel(this.spreadsheetUploadController.componentI18n, "i18n");
@@ -182,7 +182,7 @@ export default class MessageHandler extends ManagedObject {
 		const dialogState = this.getWorstType(sortedMessagesGrouped);
 		const infoModel = new JSONModel({
 			strict: this.spreadsheetUploadController.component.getStrict(),
-			dialogState: dialogState,
+			dialogState: dialogState
 		});
 		this.messageDialog.setModel(infoModel, "info");
 		this.messageDialog.open();
@@ -214,7 +214,7 @@ export default class MessageHandler extends ManagedObject {
 			groupedMessages.push({
 				title: title,
 				description: messageGroups[title].join("\n"),
-				ui5type: ui5type,
+				ui5type: ui5type
 			});
 		}
 
@@ -257,7 +257,7 @@ export default class MessageHandler extends ManagedObject {
 			[MessageType.Information]: 1,
 			[MessageType.Success]: 2,
 			[MessageType.Warning]: 3,
-			[MessageType.Error]: 4,
+			[MessageType.Error]: 4
 		};
 
 		for (const message of messages) {

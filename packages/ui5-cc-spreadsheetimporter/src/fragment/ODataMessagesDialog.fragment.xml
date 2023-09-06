@@ -2,11 +2,7 @@
   <Dialog title="{i18n>messageDialogTitle}" resizable="true" state="{info>/dialogState}" verticalScrolling="false" contentHeight="50%" contentWidth="50%">
     <content>
       <MessageView items="{message>/}">
-        <MessageItem
-            type="{message>type}"
-            title="{message>message}"
-            subtitle="{message>additionalText}"
-            description="{message>description}"/>
+        <MessageItem type="{message>type}" title="{message>message}" subtitle="{message>additionalText}" description="{message>description}" />
       </MessageView>
     </content>
     <buttons>

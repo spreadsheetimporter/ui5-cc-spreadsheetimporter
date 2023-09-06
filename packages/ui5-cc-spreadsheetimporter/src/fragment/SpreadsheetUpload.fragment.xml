@@ -1,37 +1,42 @@
-<core:FragmentDefinition xmlns="sap.m"
-  xmlns:core="sap.ui.core"
-  xmlns:upload="sap.ui.unified"
-  xmlns:spreadsheetdialog="cc.spreadsheetimporter.XXXnamespaceXXX.control">
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:upload="sap.ui.unified" xmlns:spreadsheetdialog="cc.spreadsheetimporter.XXXnamespaceXXX.control">
   <spreadsheetdialog:SpreadsheetDialog contentWidth="{= ${device>/system/phone} ? '100%' : '40vw' }" contentHeight="150px" verticalScrolling="false">
-    <spreadsheetdialog:customHeader >
+    <spreadsheetdialog:customHeader>
       <OverflowToolbar>
         <Title text="{i18n>spreadsheetupload}" />
-        <ToolbarSpacer/>
-        <Button press="showPreview" text="{i18n>showPreview}" icon="sap-icon://display" visible="{= !${info>/hidePreview}}"/>
+        <ToolbarSpacer />
+        <Button press="showPreview" text="{i18n>showPreview}" icon="sap-icon://display" visible="{= !${info>/hidePreview}}" />
         <Button press="onTempDownload" text="{i18n>downloadTemplate}" icon="sap-icon://download-from-cloud" />
         <Button press="onOpenOptionsDialog" text="{i18n>showOptionMenu}" visible="{= ${info>/showOptions}}">
           <layoutData>
-            <OverflowToolbarLayoutData priority="AlwaysOverflow"/>
+            <OverflowToolbarLayoutData priority="AlwaysOverflow" />
           </layoutData>
         </Button>
       </OverflowToolbar>
     </spreadsheetdialog:customHeader>
     <spreadsheetdialog:content>
       <FlexBox direction="Column" height="100%" width="80%" alignItems="Stretch" justifyContent="Center" fitContainer="true" class="centered">
-        <MessageStrip xmlns:core="sap.ui.core" core:require="{ formatMessage: 'sap/base/strings/formatMessage' }" visible="{= ${info>/dataRows} > 0}" text="{
+        <MessageStrip
+          xmlns:core="sap.ui.core"
+          core:require="{ formatMessage: 'sap/base/strings/formatMessage' }"
+          visible="{= ${info>/dataRows} > 0}"
+          text="{
         parts: [
           'i18n>dataRows',
           'info>/dataRows'
         ],
         formatter: 'formatMessage'
-      }" type="Success" enableFormattedText="true" showIcon="true">
+      }"
+          type="Success"
+          enableFormattedText="true"
+          showIcon="true"
+        >
           <layoutData>
             <FlexItemData growFactor="1" styleClass="centeredFlex" />
           </layoutData>
         </MessageStrip>
         <upload:FileUploader placeholder="{i18n>spreadsheetuploadPlaceholder}" fileType="xlsx,xls,csv" change="onFileUpload" sameFilenameAllowed="true" width="100%">
           <upload:layoutData>
-            <FlexItemData growFactor="5" styleClass="centeredFlex"/>
+            <FlexItemData growFactor="5" styleClass="centeredFlex" />
           </upload:layoutData>
         </upload:FileUploader>
       </FlexBox>

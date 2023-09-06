@@ -18,7 +18,7 @@ export default class TableSelector extends ManagedObject {
 		super();
 		this._tables = this._getTableObject(view);
 		this._i18nModel = new ResourceModel({
-			bundleName: "cc.spreadsheetimporter.XXXnamespaceXXX.i18n.i18n",
+			bundleName: "cc.spreadsheetimporter.XXXnamespaceXXX.i18n.i18n"
 		});
 	}
 
@@ -40,7 +40,7 @@ export default class TableSelector extends ManagedObject {
 				select.addItem(
 					new Item({
 						key: table.getId(),
-						text: table.getBinding("items").getPath(),
+						text: table.getBinding("items").getPath()
 					})
 				);
 			});
@@ -58,7 +58,7 @@ export default class TableSelector extends ManagedObject {
 						const selectedTable = this._tables.find((table) => table.getId() === selectedKey);
 						resolve(selectedTable);
 						dialog.close();
-					},
+					}
 				}),
 				afterClose: () => dialog.destroy(),
 				endButton: new Button({
@@ -66,8 +66,8 @@ export default class TableSelector extends ManagedObject {
 					press: () => {
 						reject(new Error(i18n.getText("close")));
 						dialog.close();
-					},
-				}),
+					}
+				})
 			}) as Dialog;
 
 			dialog.open();

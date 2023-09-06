@@ -32,7 +32,7 @@ export default class ODataV4 extends OData {
 		const context = this.customBinding.create(payload, true);
 		return {
 			context: context,
-			promise: context.created(),
+			promise: context.created()
 		};
 	}
 

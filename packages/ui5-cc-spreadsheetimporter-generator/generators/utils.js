@@ -46,11 +46,7 @@ function getUniqueEntitySetValues(json, template) {
 	const targets = json["sap.ui5"]["routing"]["targets"];
 	for (const target in targets) {
 		if (targets[target].name === template) {
-			if (
-				targets[target].hasOwnProperty("options") &&
-				targets[target].options.hasOwnProperty("settings") &&
-				targets[target].options.settings.hasOwnProperty("entitySet")
-			) {
+			if (targets[target].hasOwnProperty("options") && targets[target].options.hasOwnProperty("settings") && targets[target].options.settings.hasOwnProperty("entitySet")) {
 				entities.push(targets[target].options.settings.entitySet);
 			}
 		}

@@ -6,7 +6,12 @@
       </MessageView>
     </content>
     <buttons>
-      <Button press=".onContinue" type="Emphasized" text="{= ${info>/dialogState} === 'Error' ? ${i18n>messageDialogButtonContinueAnyway} : ${i18n>messageDialogButtonContinue} }" visible="{= !${info>/strict}}" />
+      <Button
+        press=".onContinue"
+        type="Emphasized"
+        text="{= ${info>/dialogState} === 'Error' ? ${i18n>messageDialogButtonContinueAnyway} : ${i18n>messageDialogButtonContinue} }"
+        visible="{= !${info>/strict}}"
+      />
       <Button press=".onCloseMessageDialog" text="{i18n>messageDialogButtonClose}" />
     </buttons>
   </Dialog>

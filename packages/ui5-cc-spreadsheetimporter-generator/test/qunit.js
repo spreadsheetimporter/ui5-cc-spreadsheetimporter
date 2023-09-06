@@ -14,7 +14,7 @@ async function runGenerator(sGenerator, oPrompt) {
 }
 
 describe("generator:qunit", function () {
-	let path = require("path");
+	const path = require("path");
 
 	it("Should create basic setup", async function () {
 		await runGenerator("qunit", {

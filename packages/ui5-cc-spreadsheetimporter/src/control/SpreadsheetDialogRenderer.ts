@@ -9,5 +9,5 @@ export default {
 	render: function (rm: RenderManager, control: SpreadsheetDialog) {
 		// @ts-ignore
 		sap.m.DialogRenderer.render.apply(this, arguments);
-	},
+	}
 };

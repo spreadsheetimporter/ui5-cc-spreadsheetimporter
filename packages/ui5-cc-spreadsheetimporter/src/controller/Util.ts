@@ -73,7 +73,7 @@ export default class Util extends ManagedObject {
 		MessageBox.error(errorMessage, {
 			details: detailsContent,
 			initialFocus: MessageBox.Action.CLOSE,
-			actions: [MessageBox.Action.OK],
+			actions: [MessageBox.Action.OK]
 		});
 	}
 
@@ -81,7 +81,7 @@ export default class Util extends ManagedObject {
 		Log.error(errorMessage, `${className}.${methodName}`);
 		MessageBox.error(errorMessage, {
 			initialFocus: MessageBox.Action.CLOSE,
-			actions: [MessageBox.Action.CANCEL],
+			actions: [MessageBox.Action.CANCEL]
 		});
 	}
 

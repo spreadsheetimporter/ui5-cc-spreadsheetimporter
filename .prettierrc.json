@@ -4,15 +4,15 @@
   "endOfLine": "lf",
   "tabWidth": 4,
   "useTabs": true,
+  "trailingComma": "none",
   "overrides": [
     {
       "files": ["*.yaml", "*.yml", "*.md", "*.json", "*.xml", "*.properties"],
       "options": {
         "useTabs": false,
-        "tabWidth": 2,
-        "keySeparator": "=",
-        "xmlWhitespaceSensitivity": "ignore"
+        "tabWidth": 2
       }
     }
-  ]
+  ],
+  "plugins": ["@prettier/plugin-xml"]
 }
