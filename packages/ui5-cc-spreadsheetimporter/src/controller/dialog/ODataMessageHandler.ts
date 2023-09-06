@@ -25,7 +25,7 @@ export default class ODataMessageHandler extends ManagedObject {
 			this.messageDialog = (await Fragment.load({
 				name: "cc.spreadsheetimporter.XXXnamespaceXXX.fragment.ODataMessagesDialog",
 				type: "XML",
-				controller: this,
+				controller: this
 			})) as Dialog;
 		}
 		this.messageDialog.setModel(this.spreadsheetUploadController.componentI18n, "i18n");

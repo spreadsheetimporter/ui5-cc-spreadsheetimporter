@@ -28,10 +28,7 @@ exports.writeJSON = async function (filePath, override) {
 			oldContent = this.fs.readJSON(fullFilePath);
 		}
 
-		const newContent =
-			typeof override === "function"
-				? override(oldContent)
-				: objectAssignDeep.withOptions(oldContent, [override], { arrayBehaviour: "merge" });
+		const newContent = typeof override === "function" ? override(oldContent) : objectAssignDeep.withOptions(oldContent, [override], { arrayBehaviour: "merge" });
 
 		this.fs.writeFile(fullFilePath, JSON.stringify(newContent, null, 2));
 		if (!this.options.isSubgeneratorCall && this.config.get("setupCompleted")) {
@@ -52,10 +49,7 @@ exports.writeYAML = async function (filePath, override) {
 			oldContent = yaml.parse(this.fs.read(fullFilePath));
 		}
 
-		const newContent =
-			typeof override === "function"
-				? override(oldContent)
-				: objectAssignDeep.withOptions(oldContent, [override], { arrayBehaviour: "merge" });
+		const newContent = typeof override === "function" ? override(oldContent) : objectAssignDeep.withOptions(oldContent, [override], { arrayBehaviour: "merge" });
 
 		this.fs.write(fullFilePath, yaml.stringify(newContent, null, 2));
 
@@ -74,10 +68,7 @@ exports.manipulateJSON = async function (filePath, override) {
 		const fullFilePath = process.cwd() + filePath;
 		const oldContent = this.fs.readJSON(fullFilePath);
 
-		const newContent =
-			typeof override === "function"
-				? override(oldContent)
-				: objectAssignDeep.withOptions(oldContent, [override], { arrayBehaviour: "merge" });
+		const newContent = typeof override === "function" ? override(oldContent) : objectAssignDeep.withOptions(oldContent, [override], { arrayBehaviour: "merge" });
 
 		this.fs.writeJSON(fullFilePath, newContent);
 		if (!this.options.isSubgeneratorCall && this.config.get("setupCompleted")) {
@@ -95,10 +86,7 @@ exports.manipulateYAML = async function (filePath, override) {
 		const fullFilePath = process.cwd() + filePath;
 		const oldContent = yaml.parse(this.fs.read(fullFilePath));
 
-		const newContent =
-			typeof override === "function"
-				? override(oldContent)
-				: objectAssignDeep.withOptions(oldContent, [override], { arrayBehaviour: "merge" });
+		const newContent = typeof override === "function" ? override(oldContent) : objectAssignDeep.withOptions(oldContent, [override], { arrayBehaviour: "merge" });
 
 		this.fs.write(fullFilePath, yaml.stringify(newContent, null, 2));
 

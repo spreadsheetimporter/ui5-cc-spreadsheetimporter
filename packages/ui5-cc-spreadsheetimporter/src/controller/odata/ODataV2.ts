@@ -31,7 +31,7 @@ export default class ODataV2 extends OData {
 					},
 					error: (error: Error) => {
 						reject(error);
-					},
+					}
 				});
 			});
 		};
@@ -80,7 +80,7 @@ export default class ODataV2 extends OData {
 					},
 					error: (error: Error) => {
 						reject(error);
-					},
+					}
 				});
 			});
 		};

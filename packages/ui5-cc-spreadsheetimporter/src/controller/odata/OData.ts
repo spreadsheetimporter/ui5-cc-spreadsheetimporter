@@ -157,12 +157,12 @@ export default abstract class OData extends ManagedObject {
 	private async createBusyDialog(spreadsheetUploadController: SpreadsheetUpload) {
 		const busyModel = new JSONModel({
 			progressPercent: 0,
-			progressText: "0",
+			progressText: "0"
 		});
 		if (!this.busyDialog) {
 			this.busyDialog = (await Fragment.load({
 				name: "cc.spreadsheetimporter.XXXnamespaceXXX.fragment.BusyDialogProgress",
-				controller: this,
+				controller: this
 			})) as Dialog;
 		}
 		this.busyDialog.setModel(busyModel, "busyModel");

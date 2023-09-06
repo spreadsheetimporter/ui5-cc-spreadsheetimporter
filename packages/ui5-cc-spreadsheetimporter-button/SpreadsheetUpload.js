@@ -69,12 +69,12 @@ sap.ui.define(["sap/m/Button"], (Button) => {
 			}
 		},
 		init() {
-			console.debug(`[${this.getMetadata().getName()}] > init`)
-			this.attachPress(this.press)
+			console.debug(`[${this.getMetadata().getName()}] > init`);
+			this.attachPress(this.press);
 		},
 		renderer: async function (oRm, oControl) {
-			sap.m.ButtonRenderer.render(oRm, oControl)
-			const view = oControl._getViewControllerOfControl(oControl)
+			sap.m.ButtonRenderer.render(oRm, oControl);
+			const view = oControl._getViewControllerOfControl(oControl);
 			if (view.getAppComponent) {
 				oControl.spreadsheetUpload = await view.getAppComponent().createComponent({
 					usage: "spreadsheetImporter",
@@ -103,7 +103,7 @@ sap.ui.define(["sap/m/Button"], (Button) => {
 						useTableSelector: oControl.getUseTableSelector(),
 						readAllSheets: oControl.getReadAllSheets()
 					}
-				})
+				});
 			} else {
 				oControl.spreadsheetUpload = await view.getOwnerComponent().createComponent({
 					usage: "spreadsheetImporter",
@@ -132,76 +132,76 @@ sap.ui.define(["sap/m/Button"], (Button) => {
 						useTableSelector: oControl.getUseTableSelector(),
 						readAllSheets: oControl.getReadAllSheets()
 					}
-				})
+				});
 			}
 			oControl.spreadsheetUpload.attachCheckBeforeRead(function (oEvent) {
-				this.fireCheckBeforeRead({ sheetData: oEvent.getParameter("sheetData") })
-			}, oControl)
+				this.fireCheckBeforeRead({ sheetData: oEvent.getParameter("sheetData") });
+			}, oControl);
 			oControl.spreadsheetUpload.attachChangeBeforeCreate(function (oEvent) {
-				this.fireChangeBeforeCreate({ payload: oEvent.getParameter("payload") })
-			}, oControl)
+				this.fireChangeBeforeCreate({ payload: oEvent.getParameter("payload") });
+			}, oControl);
 			oControl.spreadsheetUpload.attachUploadButtonPress(function (oEvent) {
-				const rawData = this._extractRawValues(oEvent.getParameter("payload"))
-				const parsedData = this._extractParsedValues(oEvent.getParameter("payload"))
+				const rawData = this._extractRawValues(oEvent.getParameter("payload"));
+				const parsedData = this._extractParsedValues(oEvent.getParameter("payload"));
 				const isDefaultNotPrevented = this.fireUploadButtonPress({
 					payload: oEvent.getParameter("payload"),
 					rawData: rawData,
 					parsedData: parsedData
-				})
+				});
 				if (!isDefaultNotPrevented) {
-					oEvent.preventDefault()
+					oEvent.preventDefault();
 				}
-			}, oControl)
+			}, oControl);
 		},
 		press: function (event) {
-			this.spreadsheetUpload.openSpreadsheetUploadDialog()
+			this.spreadsheetUpload.openSpreadsheetUploadDialog();
 		},
 
 		addArrayToMessages: function (errorArray) {
-			this.spreadsheetUpload.addArrayToMessages(errorArray)
+			this.spreadsheetUpload.addArrayToMessages(errorArray);
 		},
 		setPayload: function (payload) {
-			this.spreadsheetUpload.setPayload(payload)
+			this.spreadsheetUpload.setPayload(payload);
 		},
 		_getViewControllerOfControl(oControl) {
-			var oView = null
+			var oView = null;
 			while (oControl && !(oControl instanceof sap.ui.core.mvc.View)) {
-				oControl = oControl.getParent()
+				oControl = oControl.getParent();
 			}
 
 			if (oControl) {
-				oView = oControl
-				var oController = oView.getController()
-				return oController
+				oView = oControl;
+				var oController = oView.getController();
+				return oController;
 			} else {
-				return null
+				return null;
 			}
 		},
 		_extractRawValues(data) {
 			return data.map((item) => {
-				const newObj = {}
+				const newObj = {};
 
 				for (const key in item) {
 					if (item[key].hasOwnProperty("rawValue")) {
-						newObj[key] = item[key].rawValue
+						newObj[key] = item[key].rawValue;
 					}
 				}
 
-				return newObj
-			})
+				return newObj;
+			});
 		},
 		_extractParsedValues(data) {
 			return data.map((item) => {
-				const newObj = {}
+				const newObj = {};
 
 				for (const key in item) {
 					if (item[key].hasOwnProperty("formattedValue")) {
-						newObj[key] = item[key].formattedValue
+						newObj[key] = item[key].formattedValue;
 					}
 				}
 
-				return newObj
-			})
+				return newObj;
+			});
 		}
-	})
-})
+	});
+});
