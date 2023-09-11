@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.25.3](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.25.2...ui5-cc-spreadsheetimporter-v0.25.3) (2023-09-11)
+
+
+### Bug Fixes
+
+* check for odata type config parameter ([#361](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/361)) ([86706cc](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/86706cc56395b3ef74ecd0b90021162144a000e5))
+* use label in preview table ([#359](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/359)) ([9a02b30](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/9a02b301ada2e60272e6363ad71c2eabd0e024b1))
+
 ## [0.25.2](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.25.1...ui5-cc-spreadsheetimporter-v0.25.2) (2023-09-06)
 
 

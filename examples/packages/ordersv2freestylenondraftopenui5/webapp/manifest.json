@@ -76,12 +76,12 @@
     },
     "componentUsages": {
       "spreadsheetImporter": {
-        "name": "cc.spreadsheetimporter.v0_25_2"
+        "name": "cc.spreadsheetimporter.v0_25_3"
       }
     },
     "resourceRoots": {
-      "cc.spreadsheetimporter.v0_25_2": "./thirdparty/customControl/spreadsheetImporter/v0_25_2",
-      "cc.spreadsheetimporter.button.v0_11_2": "./thirdparty/customControl/spreadsheetImporterButton/v0_11_2"
+      "cc.spreadsheetimporter.v0_25_3": "./thirdparty/customControl/spreadsheetImporter/v0_25_3",
+      "cc.spreadsheetimporter.button.v0_11_3": "./thirdparty/customControl/spreadsheetImporterButton/v0_11_3"
     },
     "routing": {
       "config": {

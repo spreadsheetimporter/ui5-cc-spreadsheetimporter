@@ -3,7 +3,7 @@
   xmlns="sap.m"
   xmlns:semantic="sap.f.semantic"
   xmlns:mvc="sap.ui.core.mvc"
-  xmlns:spreadsheet="cc.spreadsheetimporter.button.v0_11_2"
+  xmlns:spreadsheet="cc.spreadsheetimporter.button.v0_11_3"
 >
   <semantic:SemanticPage id="listPage" preserveHeaderStateOnScroll="true" toggleHeaderOnTitleClick="false">
     <semantic:titleHeading>
