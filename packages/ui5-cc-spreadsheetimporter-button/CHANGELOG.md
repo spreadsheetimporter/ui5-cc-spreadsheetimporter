@@ -102,6 +102,12 @@
   * dependencies
     * ui5-cc-spreadsheetimporter bumped from 0.25.1 to 0.25.2
 
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * ui5-cc-spreadsheetimporter bumped from 0.25.2 to 0.25.3
+
 ## [0.11.1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-button-v0.11.0...ui5-cc-spreadsheetimporter-button-v0.11.1) (2023-09-06)
 
 
