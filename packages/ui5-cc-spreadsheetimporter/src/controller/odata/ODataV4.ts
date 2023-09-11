@@ -128,6 +128,17 @@ export default class ODataV4 extends OData {
 				Log.error("Error while getting OData Type. Please specify 'odataType' in options", undefined, "SpreadsheetUpload: ODataV4");
 			}
 		} else {
+			const containerName = this.spreadsheetUploadController.context.getModel().getMetaModel().getData()["$EntityContainer"];
+			const entityContainer = this.spreadsheetUploadController.context.getModel().getMetaModel().getData()[containerName];
+			const odataEntityType = this._findAttributeByType(entityContainer, odataType);
+			if (!odataEntityType) {
+				// filter out $kind
+				const availableEntities = Object.keys(entityContainer)
+					.filter((entity) => entity !== "$kind")
+					.join();
+				Log.error(`Error while getting specified OData Type. ${availableEntities}`, undefined, "SpreadsheetUpload: ODataV4");
+				throw new Error(`Error while getting specified OData Type. Available Entities: ${availableEntities}`);
+			}
 			return odataType;
 		}
 	}

@@ -5,6 +5,7 @@ import OData from "./OData";
 import MetadataHandlerV2 from "./MetadataHandlerV2";
 import ODataListBinding from "sap/ui/model/odata/v2/ODataListBinding";
 import ODataModel from "sap/ui/model/odata/v2/ODataModel";
+import ODataMetaModel from "sap/ui/model/odata/ODataMetaModel";
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -120,10 +121,22 @@ export default class ODataV2 extends OData {
 		return context.getView();
 	}
 
-	getOdataType(binding: any, tableObject: any, odataType: any) {
+	async getOdataType(binding: any, tableObject: any, odataType: any) {
 		if (!odataType) {
 			return binding._getEntityType().entityType;
 		} else {
+			const metaModel = this.spreadsheetUploadController.view.getModel().getMetaModel() as ODataMetaModel;
+			await metaModel.loaded();
+			const oDataEntityType = metaModel.getODataEntityType(odataType);
+			if (!oDataEntityType) {
+				// filter out $kind
+				const availableEntities = metaModel
+					.getODataEntityContainer()
+					.entitySet.map((item) => item.name)
+					.join();
+				Log.error(`Error while getting specified OData Type. ${availableEntities}`, undefined, "SpreadsheetUpload: ODataV4");
+				throw new Error(`Error while getting specified OData Type. Available Entities: ${availableEntities}`);
+			}
 			return odataType;
 		}
 	}

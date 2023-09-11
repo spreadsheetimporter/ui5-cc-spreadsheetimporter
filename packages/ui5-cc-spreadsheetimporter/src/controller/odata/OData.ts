@@ -188,7 +188,7 @@ export default abstract class OData extends ManagedObject {
 	abstract getMetadataHandler(): MetadataHandlerV2 | MetadataHandlerV4;
 	abstract getLabelList(columns: Columns, odataType: string, tableObject: any): Promise<ListObject>;
 	abstract getKeyList(odataType: string, tableObject: any): Promise<string[]>;
-	abstract getOdataType(binding: any, tableObject: any, odataType: any): string;
+	abstract getOdataType(binding: any, tableObject: any, odataType: any): Promise<string>;
 	abstract checkForErrors(model: any, binding: any, showBackendErrorMessages: Boolean): Promise<boolean>;
 	abstract createCustomBinding(binding: any): any;
 }
