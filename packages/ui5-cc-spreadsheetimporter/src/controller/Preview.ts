@@ -7,6 +7,7 @@ import Table from "sap/m/Table";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Text from "sap/m/Text";
 import Util from "./Util";
+import { ListObject } from "../types";
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -19,8 +20,8 @@ export default class Preview extends ManagedObject {
 		this.util = util;
 	}
 
-	showPreview(payload: any) {
-		const table = this.createDynamicTable(payload);
+	showPreview(payload: any, typeLabelList: ListObject) {
+		const table = this.createDynamicTable(payload, typeLabelList);
 		if (typeof table === "undefined") {
 			return;
 		}
@@ -43,7 +44,7 @@ export default class Preview extends ManagedObject {
 		this.dialog.open();
 	}
 
-	createDynamicTable(data: any[]) {
+	createDynamicTable(data: any[], typeLabelList: ListObject) {
 		const table = new Table();
 
 		// Create table columns and cells based on the first object's keys
@@ -52,8 +53,10 @@ export default class Preview extends ManagedObject {
 			const aColumns = Object.keys(firstObject);
 
 			aColumns.forEach((column) => {
+				const type = typeLabelList.get(column);
+				const label = type && type.label ? type.label : column;
 				const oColumn = new Column({
-					header: new Text({ text: column })
+					header: new Text({ text: label })
 				});
 
 				table.addColumn(oColumn);
