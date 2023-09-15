@@ -159,4 +159,8 @@ export default class Util extends ManagedObject {
 			return value;
 		});
 	}
+
+	static extractObjects(objects: any[]): Record<string, any>[] {
+		return objects.map((obj) => obj.getObject());
+	}
 }

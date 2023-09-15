@@ -89,3 +89,5 @@ export interface ComponentData {
 	useTableSelector?: boolean;
 	sampleData?: object;
 }
+
+// Pro Types
