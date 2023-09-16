@@ -14,11 +14,11 @@
     "ui5-cc-spreadsheetimporter-button": "./../../../packages/ui5-cc-spreadsheetimporter-button"
   },
   "devDependencies": {
-    "@sap-ux/ui5-middleware-fe-mockserver": "^2.1.117",
-    "@sap/ux-specification": "^1.108.12",
-    "@sap/ux-ui5-tooling": "1.10.5",
-    "@ui5/cli": "3.5.0",
-    "ui5-middleware-simpleproxy": "3.0.0"
+    "@sap-ux/ui5-middleware-fe-mockserver": "^2.1.122",
+    "@sap/ux-specification": "^1.108.14",
+    "@sap/ux-ui5-tooling": "1.11.0",
+    "@ui5/cli": "3.6.0",
+    "ui5-middleware-simpleproxy": "3.2.0"
   },
   "scripts": {
     "start": "fiori run -p 8084 --open \"index.html?sap-ui-xx-viewCache=false&sap-language=EN\"",
