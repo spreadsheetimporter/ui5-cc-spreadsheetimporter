@@ -110,7 +110,7 @@ export default class SpreadsheetUpload extends ManagedObject {
 		if (!this.binding) {
 			throw new Error(this.util.geti18nText("bindingError"));
 		}
-		this._odataType = this.odataHandler.getOdataType(this.binding, this.tableObject, this.component.getOdataType());
+		this._odataType = await this.odataHandler.getOdataType(this.binding, this.tableObject, this.component.getOdataType());
 		Log.debug("odataType", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ odataType: this._odataType }));
 		this.odataKeyList = await this.odataHandler.getKeyList(this._odataType, this.tableObject);
 		Log.debug("odataKeyList", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ odataKeyList: this.odataKeyList }));
