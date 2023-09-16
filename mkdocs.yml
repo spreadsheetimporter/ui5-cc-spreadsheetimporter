@@ -19,6 +19,9 @@ nav:
   - yo Generator: pages/Generator.md
   - Button Control: pages/Button.md
   # - UI5 CLI: pages/CLI.md
+  - Pro:
+      - Getting Started: pages/Pro/install.md
+      - Spreadsheet Download: pages/Pro/spreadsheetdownload.md
   - Development:
       - Getting Started: pages/Development/GettingStarted.md
       - wdi5 Tests: pages/Development/wdi5.md

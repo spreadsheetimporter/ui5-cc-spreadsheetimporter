@@ -41,7 +41,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	componentI18n: ResourceModel;
 	optionsHandler: OptionsDialog;
 	messageHandler: MessageHandler;
-	infoModel: JSONModel;
+	spreadsheetOptionsModel: JSONModel;
 
 	constructor(spreadsheetUploadController: SpreadsheetUpload, component: Component, componentI18n: ResourceModel, messageHandler: MessageHandler) {
 		super();
@@ -56,7 +56,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 
 	async createSpreadsheetUploadDialog() {
 		if (!this.spreadsheetUploadDialog) {
-			this.infoModel = new JSONModel({
+			this.spreadsheetOptionsModel = new JSONModel({
 				dataRows: 0,
 				strict: this.component.getStrict(),
 				hidePreview: this.component.getHidePreview(),
@@ -70,7 +70,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 			this.spreadsheetUploadDialog.setComponent(this.component);
 			this.spreadsheetUploadDialog.setBusyIndicatorDelay(0);
 			this.spreadsheetUploadDialog.setModel(this.componentI18n, "i18n");
-			this.spreadsheetUploadDialog.setModel(this.infoModel, "info");
+			this.spreadsheetUploadDialog.setModel(this.spreadsheetOptionsModel, "info");
 			this.spreadsheetUploadDialog.setModel(this.component.getModel("device"), "device");
 			this.spreadsheetUploadDialog.attachDecimalSeparatorChanged(this.onDecimalSeparatorChanged.bind(this));
 			this.spreadsheetUploadDialog.attachAvailableOptionsChanged(this.onAvailableOptionsChanged.bind(this));
@@ -255,10 +255,10 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 		const availableOptions = event.getParameter("availableOptions") as AvailableOptionsType[];
 		if (availableOptions.length > 0) {
 			this.component.setShowOptions(true);
-			this.infoModel.setProperty("/showOptions", true);
+			this.spreadsheetOptionsModel.setProperty("/showOptions", true);
 		} else {
 			this.component.setShowOptions(false);
-			this.infoModel.setProperty("/showOptions", true);
+			this.spreadsheetOptionsModel.setProperty("/showOptions", true);
 		}
 		this.component.setAvailableOptions(availableOptions);
 	}
@@ -278,7 +278,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	}
 
 	async showPreview() {
-		this.previewHandler.showPreview(this.spreadsheetUploadController.getPayloadArray(), this.spreadsheetUploadController.typeLabelList);
+		this.previewHandler.showPreview(this.spreadsheetUploadController.getPayloadArray());
 	}
 
 	onTempDownload() {

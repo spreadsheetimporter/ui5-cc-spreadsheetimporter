@@ -48,6 +48,7 @@ export default class Component extends UIComponent {
 			useTableSelector: { type: "boolean", defaultValue: false },
 			readAllSheets: { type: "boolean", defaultValue: false },
 			debug: { type: "boolean", defaultValue: false }
+			//Pro Configurations
 		},
 		aggregations: {
 			rootControl: {
@@ -113,6 +114,10 @@ export default class Component extends UIComponent {
 			// if availableOptions is set show the Options Menu
 			this.setShowOptions(true);
 		}
+
+		// Pro Configurations - Start
+
+		// Pro Configurations - End
 
 		// // we could create a device model and use it
 		oModel = new JSONModel(Device);

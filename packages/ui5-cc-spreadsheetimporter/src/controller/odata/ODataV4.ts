@@ -20,7 +20,7 @@ export default class ODataV4 extends OData {
 	public createContexts: any[] = [];
 	customBinding: ODataListBinding;
 	updateGroupId: string;
-	private metadataHandler: MetadataHandlerV4;
+	public metadataHandler: MetadataHandlerV4;
 
 	constructor(ui5version: number, spreadsheetUploadController: SpreadsheetUpload) {
 		super(ui5version, spreadsheetUploadController);

@@ -76,7 +76,7 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 		return listObject;
 	}
 
-	private getLabel(annotations: { [x: string]: { [x: string]: any } }, properties: any, propertyName: string, propertyLabel: { [x: string]: any }, odataType: string) {
+	public getLabel(annotations: { [x: string]: { [x: string]: any } }, properties: any, propertyName: string, propertyLabel: { [x: string]: any }, odataType: string) {
 		let label = "";
 		if (propertyLabel && propertyLabel["@com.sap.vocabularies.Common.v1.Label"]) {
 			label = propertyLabel["@com.sap.vocabularies.Common.v1.Label"];
