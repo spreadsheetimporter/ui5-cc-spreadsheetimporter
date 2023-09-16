@@ -24,12 +24,12 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "ui5-cc-spreadsheetimporter": "0.25.3"
+    "ui5-cc-spreadsheetimporter": "workspace:*"
   },
   "devDependencies": {
-    "eslint": "^8.48.0",
-    "eslint-plugin-jest": "^27.2.3",
-    "jest": "^29.6.4",
+    "eslint": "^8.49.0",
+    "eslint-plugin-jest": "^27.4.0",
+    "jest": "^29.7.0",
     "jest-puppeteer": "^9.0.0"
   }
 }

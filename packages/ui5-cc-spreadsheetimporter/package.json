@@ -53,18 +53,18 @@
   "devDependencies": {
     "@commitlint/cli": "^17.7.1",
     "@commitlint/config-conventional": "^17.7.0",
-    "@prettier/plugin-xml": "^3.2.0",
-    "@sap/ux-ui5-tooling": "1.10.5",
-    "@sapui5/ts-types-esm": "1.117.1",
-    "@types/node": "20.5.7",
-    "@typescript-eslint/eslint-plugin": "^6.5.0",
-    "@typescript-eslint/parser": "^6.5.0",
-    "@ui5/cli": "3.5.0",
+    "@prettier/plugin-xml": "^3.2.1",
+    "@sap/ux-ui5-tooling": "1.11.0",
+    "@sapui5/ts-types-esm": "1.118.0",
+    "@types/node": "20.6.2",
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0",
+    "@ui5/cli": "3.6.0",
     "@ui5/ts-interface-generator": "0.8.1",
     "babel-preset-transform-ui5": "^7.2.5",
     "bluebird": "3.7.2",
     "chokidar": "^3.5.3",
-    "eslint": "^8.48.0",
+    "eslint": "^8.49.0",
     "husky": "^8.0.3",
     "js-yaml": "4.1.0",
     "lint-staged": "^14.0.1",
@@ -75,8 +75,8 @@
     "replace-in-file": "^7.0.1",
     "shelljs": "^0.8.5",
     "typescript": "5.2.2",
-    "ui5-tooling-modules": "3.0.5",
-    "ui5-tooling-stringreplace": "3.0.0",
-    "ui5-tooling-transpile": "3.2.0"
+    "ui5-tooling-modules": "3.0.7",
+    "ui5-tooling-stringreplace": "3.0.1",
+    "ui5-tooling-transpile": "3.2.3"
   }
 }
