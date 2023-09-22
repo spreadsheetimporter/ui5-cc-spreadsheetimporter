@@ -30,7 +30,7 @@ server:
       configuration:
         ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
         backend:
-          - path: /v2/odata/v4/Orders
+          - path: /odata/v2/orders/Orders
             url: http://localhost:4004
     - name: sap-fe-mockserver
       beforeMiddleware: csp
