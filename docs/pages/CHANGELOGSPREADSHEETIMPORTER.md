@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.25.4](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.25.3...ui5-cc-spreadsheetimporter-v0.25.4) (2023-09-28)
+
+
+### Bug Fixes
+
+* template generation in standalone mode ([#368](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/368)) ([c0af0d9](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/c0af0d9a40f4abd25319be0a2ae86be5993dce32))
+
 ## [0.25.3](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.25.2...ui5-cc-spreadsheetimporter-v0.25.3) (2023-09-11)
 
 

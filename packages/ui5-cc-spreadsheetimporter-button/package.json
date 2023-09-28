@@ -1,6 +1,6 @@
 {
   "name": "ui5-cc-spreadsheetimporter-button",
-  "version": "0.11.3",
+  "version": "0.11.4",
   "description": "A UI5 Button to integrate a Spreadsheet Upload for Fiori Element Apps.",
   "main": "SpreadsheetUpload.js",
   "scripts": {
