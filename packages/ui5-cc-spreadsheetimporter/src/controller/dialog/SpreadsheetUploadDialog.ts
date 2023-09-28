@@ -298,7 +298,8 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 		if (this.component.getStandalone()) {
 			// loop over this.component.getColumns
 			for (let column of this.component.getColumns()) {
-				worksheet[XLSX.utils.encode_cell({ c: 0, r: 0 })] = { v: column, t: "s" };
+				worksheet[XLSX.utils.encode_cell({ c: col, r: 0 })] = { v: column, t: "s" };
+				col++;
 			}
 		} else {
 			for (let [key, value] of this.spreadsheetUploadController.typeLabelList.entries()) {
