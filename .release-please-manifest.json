@@ -1,5 +1,5 @@
 {
-  "packages/ui5-cc-spreadsheetimporter": "0.25.3",
-  "packages/ui5-cc-spreadsheetimporter-button": "0.11.3",
+  "packages/ui5-cc-spreadsheetimporter": "0.25.4",
+  "packages/ui5-cc-spreadsheetimporter-button": "0.11.4",
   "packages/ui5-cc-spreadsheetimporter-generator": "0.4.1"
 }
