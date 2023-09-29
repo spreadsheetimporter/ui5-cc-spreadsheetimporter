@@ -59,6 +59,9 @@
         "sap.ui.core": {},
         "sap.ushell": {},
         "sap.fe.templates": {}
+      },
+      "components": {
+        "cc.spreadsheetimporter.v0_25_4": {}
       }
     },
     "contentDensities": {

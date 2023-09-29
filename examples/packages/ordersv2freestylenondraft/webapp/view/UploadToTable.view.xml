@@ -1,10 +1,4 @@
-<mvc:View
-  controllerName="ui.v2.ordersv2freestylenondraft.controller.UploadToTable"
-  xmlns="sap.m"
-  xmlns:semantic="sap.f.semantic"
-  xmlns:mvc="sap.ui.core.mvc"
-  xmlns:spreadsheet="cc.spreadsheetimporter.button.v0_11_4"
->
+<mvc:View controllerName="ui.v2.ordersv2freestylenondraft.controller.UploadToTable" xmlns="sap.m" xmlns:semantic="sap.f.semantic" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core">
   <semantic:SemanticPage id="detailPage2" busy="{detailView>/busy}" busyIndicatorDelay="{detailView>/delay}" showFooter="true">
     <semantic:titleHeading>
       <Title text="{OrderNo}" level="H2" />
@@ -15,17 +9,17 @@
     </semantic:headerContent>
     <semantic:titleCustomTextActions>
       <Button text="Spreadsheet Upload Code" press="openSpreadsheetUpload" />
-      <spreadsheet:SpreadsheetUpload
-        id="spreadsheetUploadButton"
-        standalone="true"
-        text="Spreadsheet Upload Button"
-        columns="product_ID,username"
-        changeBeforeCreate="changeBeforeCreate"
-        checkBeforeRead="checkBeforeRead"
-        uploadButtonPress="uploadButtonPress"
-      />
     </semantic:titleCustomTextActions>
     <semantic:content>
+      <VBox>
+        <core:ComponentContainer
+          id="test"
+          width="100%"
+          usage="spreadsheetImporter"
+          propagateModel="true"
+          async="true"
+          settings="{standalone:true,columns: ['product_ID', 'username'],componentContainerData:{uploadButtonPress:'uploadButtonPress',buttonText:'Excel Upload'}}"
+        />
       <Table id="lineItemsList2" items="{tableData>/}" width="auto" noDataText="{i18n>detailLineItemTableNoDataText}" busyIndicatorDelay="{detailView>/lineItemTableDelay}">
         <headerToolbar>
           <Toolbar>
@@ -49,6 +43,7 @@
           </ColumnListItem>
         </items>
       </Table>
+      </VBox>
     </semantic:content>
     <!--Semantic ShareMenu Buttons-->
     <semantic:sendEmailAction>
