@@ -61,7 +61,7 @@
         "sap.fe.templates": {}
       },
       "components": {
-        "cc.spreadsheetimporter.v0_25_4": {}
+        "cc.spreadsheetimporter.v0_26_0": {}
       }
     },
     "contentDensities": {

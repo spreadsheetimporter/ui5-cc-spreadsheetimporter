@@ -62,6 +62,11 @@ function replaceVersioninApp(app, version, versionSlash, rootPath) {
 	// add to every app even if it is not used
 	manifestData["sap.ui5"].resourceRoots = updatedResourceRoots;
 	manifestData["sap.ui5"]["componentUsages"]["spreadsheetImporter"].name = `cc.spreadsheetimporter.${version}`;
+	if(manifestData["sap.ui5"]["dependencies"]["components"]){
+		manifestData["sap.ui5"]["dependencies"]["components"] = {};
+		manifestData["sap.ui5"]["dependencies"]["components"][`cc.spreadsheetimporter.${version}`] = {};
+	}
+	
 	// Stringify manifest data back to string
 	manifestData = JSON.stringify(manifestData, null, 2);
 	// Write back manifest file
