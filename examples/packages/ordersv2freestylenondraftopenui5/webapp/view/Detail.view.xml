@@ -13,12 +13,12 @@
     <semantic:content>
       <VBox>
         <core:ComponentContainer
-          id="test"
+          id="componentContainer"
           width="100%"
           usage="spreadsheetImporter"
           propagateModel="true"
           async="true"
-          settings="{tableId:'container-todo---detail--lineItemsList'showBackendErrorMessages:'true',,componentContainerData:{uploadButtonPress:'uploadButtonPress',buttonText:'Excel Upload'}}"
+          settings="{tableId:'container-todo---detail--lineItemsList',showBackendErrorMessages:true,componentContainerData:{uploadButtonPress:'uploadButtonPress',buttonText:'Excel Upload'}}"
         />
       <Table
           id="lineItemsList"

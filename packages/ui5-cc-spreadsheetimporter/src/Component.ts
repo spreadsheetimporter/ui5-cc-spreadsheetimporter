@@ -94,7 +94,8 @@ export default class Component extends UIComponent {
 	public async init(): Promise<void> {
 		var oModel;
 		const componentData = this.getComponentData() as ComponentData;
-		const oCompData = Object.keys(componentData).length === 0 ? (this.settingsFromContainer as ComponentData) : componentData;
+		const oCompData =
+			componentData != null ? (Object.keys(componentData).length === 0 ? (this.settingsFromContainer as ComponentData) : componentData) : (this.settingsFromContainer as ComponentData);
 		this.getContentDensityClass();
 		this.setSpreadsheetFileName(oCompData?.spreadsheetFileName);
 		this.setContext(oCompData?.context);
