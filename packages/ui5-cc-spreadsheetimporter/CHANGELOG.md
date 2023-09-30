@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.26.0...ui5-cc-spreadsheetimporter-v0.26.1) (2023-09-30)
+
+
+### Bug Fixes
+
+* event attachment of componentContainer ([#372](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/372)) ([5f71366](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/5f71366838a13638291fa83dcee934dce92bc519))
+
 ## [0.26.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.25.4...ui5-cc-spreadsheetimporter-v0.26.0) (2023-09-30)
 
 
