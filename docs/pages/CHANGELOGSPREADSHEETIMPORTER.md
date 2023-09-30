@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.26.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.25.4...ui5-cc-spreadsheetimporter-v0.26.0) (2023-09-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* usage of UIComponent to return button ([#370](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/370))
+
+### Features
+
+* usage of UIComponent to return button ([#370](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/370)) ([6ef0f46](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/6ef0f46493f82697e9d5d56fa4d684070a7e865e))
+
 ## [0.25.4](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.25.3...ui5-cc-spreadsheetimporter-v0.25.4) (2023-09-28)
 
 
