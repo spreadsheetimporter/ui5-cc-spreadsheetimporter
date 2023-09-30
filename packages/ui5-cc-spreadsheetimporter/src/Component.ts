@@ -6,6 +6,9 @@ import { ComponentData, Messages } from "./types";
 import Log from "sap/base/Log";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import Logger from "./controller/Logger";
+import ComponentContainer from "sap/ui/core/ComponentContainer";
+import Button from "sap/m/Button";
+import Controller from "sap/ui/core/mvc/Controller";
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
@@ -13,14 +16,17 @@ export default class Component extends UIComponent {
 	spreadsheetUpload: SpreadsheetUpload;
 	private _sContentDensityClass: any;
 	public logger: Logger;
+	oContainer: ComponentContainer;
+	settingsFromContainer: $ComponentSettings;
 	constructor(idOrSettings?: string | $ComponentSettings);
 	constructor(id?: string, settings?: $ComponentSettings);
 	constructor(id?: string, settings?: $ComponentSettings) {
+		this.settingsFromContainer = id;
 		super(id, settings);
 	}
 
 	public static metadata = {
-		interfaces: ["sap.ui.core.IAsyncContentCreation"],
+		// interfaces: ["sap.ui.core.IAsyncContentCreation"],
 		manifest: "json",
 		properties: {
 			spreadsheetFileName: { type: "string", defaultValue: "Template.xlsx" },
@@ -47,7 +53,8 @@ export default class Component extends UIComponent {
 			sampleData: { type: "object" },
 			useTableSelector: { type: "boolean", defaultValue: false },
 			readAllSheets: { type: "boolean", defaultValue: false },
-			debug: { type: "boolean", defaultValue: false }
+			debug: { type: "boolean", defaultValue: false },
+			componentContainerData: { type: "object" }
 			//Pro Configurations
 		},
 		aggregations: {
@@ -86,7 +93,9 @@ export default class Component extends UIComponent {
 
 	public async init(): Promise<void> {
 		var oModel;
-		const oCompData = this.getComponentData() as ComponentData;
+		const componentData = this.getComponentData() as ComponentData;
+		const oCompData =
+			componentData != null ? (Object.keys(componentData).length === 0 ? (this.settingsFromContainer as ComponentData) : componentData) : (this.settingsFromContainer as ComponentData);
 		this.getContentDensityClass();
 		this.setSpreadsheetFileName(oCompData?.spreadsheetFileName);
 		this.setContext(oCompData?.context);
@@ -110,6 +119,7 @@ export default class Component extends UIComponent {
 		this.setSampleData(oCompData?.sampleData);
 		this.setUseTableSelector(oCompData?.useTableSelector);
 		this.setHideSampleData(oCompData?.hideSampleData);
+		this.setComponentContainerData(oCompData?.componentContainerData);
 		if (oCompData?.availableOptions && oCompData?.availableOptions.length > 0) {
 			// if availableOptions is set show the Options Menu
 			this.setShowOptions(true);
@@ -131,10 +141,10 @@ export default class Component extends UIComponent {
 		super.init();
 	}
 
-	async createContent() {
+	createContent() {
 		if (this.getDebug() || Log.getLevel() >= Log.Level.DEBUG) {
 			Log.setLevel(Log.Level.DEBUG);
-			// @ts-ignore
+
 			Log.logSupportInfo(true);
 			this.setShowOptions(true);
 		}
@@ -142,7 +152,9 @@ export default class Component extends UIComponent {
 		delete componentData.context;
 		Log.debug("Component Data", undefined, "SpreadsheetUpload: Component", () => this.logger.returnObject(componentData));
 		this.spreadsheetUpload = new SpreadsheetUpload(this, this.getModel("i18n") as ResourceModel);
-		return this.spreadsheetUpload.getSpreadsheetUploadDialog();
+		const componentContainerData = this.getComponentContainerData?.() || {};
+		const buttonText = componentContainerData.buttonText ?? "Excel Import";
+		return new Button({ text: buttonText, press: () => this.openSpreadsheetUploadDialog() });
 	}
 
 	//=============================================================================
@@ -158,8 +170,40 @@ export default class Component extends UIComponent {
 	 * @public
 	 */
 	openSpreadsheetUploadDialog(options?: ComponentData) {
+		if (!this.getContext()) {
+			// if loaded via ComponentContainer, context is not set
+			const context = this._getViewControllerOfControl(this.oContainer);
+			this.setContext(context);
+			// attach event from ComponentContainer
+			this._attachEvents(context);
+		}
 		Log.debug("openSpreadsheetUploadDialog", undefined, "SpreadsheetUpload: Component");
 		this.spreadsheetUpload.openSpreadsheetUploadDialog(options);
+	}
+
+	/**
+	 * Attaches events to the component container based on the provided options.
+	 * @param context - The controller context to attach the events to.
+	 * @returns void
+	 */
+	private _attachEvents(context: Controller) {
+		const componentContainerOptions = this.getComponentContainerData();
+		const eventMethodMap = {
+			uploadButtonPress: this.attachUploadButtonPress,
+			changeBeforeCreate: this.attachChangeBeforeCreate,
+			checkBeforeRead: this.attachCheckBeforeRead
+		};
+
+		for (const [eventName, attachMethod] of Object.entries(eventMethodMap)) {
+			const methodName = componentContainerOptions[eventName];
+			if (methodName && typeof context[methodName] === "function") {
+				try {
+					attachMethod.call(this, context[methodName]);
+				} catch (error) {
+					Log.error(`Error while attaching event ${eventName}`, error, "SpreadsheetUpload: Component");
+				}
+			}
+		}
 	}
 
 	async triggerInitContext() {
@@ -224,5 +268,20 @@ export default class Component extends UIComponent {
 			}
 		}
 		return this._sContentDensityClass;
+	}
+
+	_getViewControllerOfControl(control: any) {
+		var oView = null;
+		while (control && !(control instanceof sap.ui.core.mvc.View)) {
+			control = control.getParent();
+		}
+
+		if (control) {
+			oView = control;
+			var oController = oView.getController();
+			return oController;
+		} else {
+			return null;
+		}
 	}
 }

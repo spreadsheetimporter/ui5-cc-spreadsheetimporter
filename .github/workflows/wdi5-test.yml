@@ -68,10 +68,6 @@ jobs:
           npm i -g npm@latest
           npm --version
 
-      - name: link spreadsheet button
-        run: |
-          cd packages/ui5-cc-spreadsheetimporter-button && npm link && cd ../..
-
       - name: get port
         run: |
           TESTAPPPORT=$(node ./dev/get-port.js ${{ matrix.scenario }} ${{ matrix.ui5version }})

@@ -27,6 +27,7 @@ These options are available and explained in detail below:
 | `hideSampleData` | Leave the template file empty and do not add any sample data | boolean |
 | `sampleData` | Add a array of objects with sample data for the template | object |
 | `useTableSelector` | Open a Table Selector dialog if multiple tables in view | boolean |
+| `componentContainerData` | Open a Table Selector dialog if multiple tables in view | boolean |
 | `debug` | Option to show more console statements and set Log Level to Debug | boolean |
 
 ### `columns`
@@ -306,6 +307,40 @@ sampleData: [
 This option defines whether the Table Selector should be used or not.  
 If set to true and multiple tables in the view, the user can choose the table to upload the data to.  
 It is also possible to set different options for each table (see [TableSelector](TableSelector.md))
+
+### `componentContainerData`
+
+The ComponentContainer is a special control that can be used to embed the spreadsheet importer in a view without the need to instantiate it in the controller.  
+These are special options that can be used in the ComponentContainer.
+
+#### Configuration
+
+For the event, the method from your view controller is attached to the event.
+
+| Option | Description | Details |
+| ------ | --- | --- |
+| `buttonText` | Text to be displayed in the button | string |
+| `uploadButtonPress` | Event after the upload button is pressed | string |
+| `changeBeforeCreate` | Event before data send to the backend | string |
+| `checkBeforeRead` | Event before data is uploaded to the app | string |
+
+#### Example
+
+The method name in my controller belongs to the view and is called `uploadButtonPress`.
+
+````xml
+<core:ComponentContainer width="100%" 
+usage="spreadsheetImporter" propagateModel="true" async="true" 
+settings="{
+  standalone:true,
+  columns: ['product_ID', 'username'],
+  componentContainerData:{
+    uploadButtonPress:'uploadButtonPress',
+    buttonText:'Excel Upload'
+    }
+  }" />
+````
+
 
 ### `debug`
 

@@ -1,10 +1,4 @@
-<mvc:View
-  controllerName="ui.v2.ordersv2freestylenondraft.controller.List"
-  xmlns="sap.m"
-  xmlns:semantic="sap.f.semantic"
-  xmlns:mvc="sap.ui.core.mvc"
-  xmlns:spreadsheet="cc.spreadsheetimporter.button.v0_11_4"
->
+<mvc:View controllerName="ui.v2.ordersv2freestylenondraft.controller.List" xmlns="sap.m" xmlns:semantic="sap.f.semantic" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core">
   <semantic:SemanticPage id="listPage" preserveHeaderStateOnScroll="true" toggleHeaderOnTitleClick="false">
     <semantic:titleHeading>
       <Title id="listPageTitle" text="{listView>/title}" level="H2" />
@@ -12,23 +6,21 @@
     <semantic:addAction>
       <semantic:AddAction press="openSpreadsheetUpload" />
     </semantic:addAction>
-    <semantic:titleCustomTextActions>
-      <spreadsheet:SpreadsheetUpload
-        id="spreadsheetUploadButton"
-        text="Spreadsheet Upload Button"
-        tableId="container-todo---list--list"
-        changeBeforeCreate="changeBeforeCreate"
-        checkBeforeRead="checkBeforeRead"
-        uploadButtonPress="uploadButtonPress"
-      />
-    </semantic:titleCustomTextActions>
     <semantic:content>
-      <!-- For client side filtering add this to the items attribute: parameters: {operationMode: 'Client'}}" -->
-      <List
-        id="list"
-        width="auto"
-        class="sapFDynamicPageAlignContent"
-        items="{
+      <VBox>
+        <core:ComponentContainer
+          id="test"
+          width="100%"
+          usage="spreadsheetImporter"
+          propagateModel="true"
+          async="true"
+          settings="{tableId:'container-todo---list--list',componentContainerData:{uploadButtonPress:'uploadButtonPress',buttonText:'Excel Upload'}}"
+        />
+        <List
+          id="list"
+          width="auto"
+          class="sapFDynamicPageAlignContent"
+          items="{
                     path: '/OrdersND',
                     sorter: {
                         path: 'OrderNo',
@@ -36,29 +28,30 @@
                     },
                     groupHeaderFactory: '.createGroupHeader'
                 }"
-        busyIndicatorDelay="{listView>/delay}"
-        noDataText="{listView>/noDataText}"
-        mode="{= ${device>/system/phone} ? 'None' : 'SingleSelectMaster'}"
-        growing="true"
-        growingScrollToLoad="true"
-        updateFinished=".onUpdateFinished"
-        selectionChange=".onSelectionChange"
-      >
-        <headerToolbar>
-          <OverflowToolbar>
-            <SearchField id="searchField" showRefreshButton="true" tooltip="{i18n>listSearchTooltip}" search=".onSearch" width="auto">
-              <layoutData>
-                <OverflowToolbarLayoutData minWidth="150px" maxWidth="240px" shrinkable="true" priority="NeverOverflow" />
-              </layoutData>
-            </SearchField>
-            <ToolbarSpacer />
-            <Button id="sortButton" press=".onOpenViewSettings" icon="sap-icon://sort" type="Transparent" />
-          </OverflowToolbar>
-        </headerToolbar>
-        <items>
-          <ObjectListItem type="Navigation" press=".onSelectionChange" title="{OrderNo}" />
-        </items>
-      </List>
+          busyIndicatorDelay="{listView>/delay}"
+          noDataText="{listView>/noDataText}"
+          mode="{= ${device>/system/phone} ? 'None' : 'SingleSelectMaster'}"
+          growing="true"
+          growingScrollToLoad="true"
+          updateFinished=".onUpdateFinished"
+          selectionChange=".onSelectionChange"
+        >
+          <headerToolbar>
+            <OverflowToolbar>
+              <SearchField id="searchField" showRefreshButton="true" tooltip="{i18n>listSearchTooltip}" search=".onSearch" width="auto">
+                <layoutData>
+                  <OverflowToolbarLayoutData minWidth="150px" maxWidth="240px" shrinkable="true" priority="NeverOverflow" />
+                </layoutData>
+              </SearchField>
+              <ToolbarSpacer />
+              <Button id="sortButton" press=".onOpenViewSettings" icon="sap-icon://sort" type="Transparent" />
+            </OverflowToolbar>
+          </headerToolbar>
+          <items>
+            <ObjectListItem type="Navigation" press=".onSelectionChange" title="{OrderNo}" />
+          </items>
+        </List>
+      </VBox>
     </semantic:content>
   </semantic:SemanticPage>
 </mvc:View>

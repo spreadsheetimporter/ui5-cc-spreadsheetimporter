@@ -21,13 +21,13 @@ chokidar
 		clearTimeout(timeoutId)
 		timeoutId = setTimeout(() => {
 			// Remove everything in the dist directory except the thirdparty folder
-			shell.ls('packages/ui5-cc-spreadsheetimporter/dist').forEach(function (file) {
-				if (file !== 'thirdparty') {
-					shell.rm('-r', 'packages/ui5-cc-spreadsheetimporter/dist/' + file);
-				}
-			});
+			// shell.ls('packages/ui5-cc-spreadsheetimporter/dist').forEach(function (file) {
+			// 	if (file !== 'thirdparty') {
+			// 		shell.rm('-r', 'packages/ui5-cc-spreadsheetimporter/dist/' + file);
+			// 	}
+			// });
 			shell.exec(
-				"pnpm --filter ui5-cc-spreadsheetimporter build:dev "
+				"pnpm --filter ui5-cc-spreadsheetimporter build:dev:tooling "
 			);
 		}, 100);
 

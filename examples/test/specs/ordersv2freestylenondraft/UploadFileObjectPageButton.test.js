@@ -24,15 +24,19 @@ describe("Upload File Object Page", () => {
 
 	it("Open Spreadsheet Upload Dialog", async () => {
 		const buttonSelector = {
+			forceSelect: true,
 			selector: {
-				controlType: "sap.m.Button",
-				viewId: "container-todo---detail",
-				properties: {
-					text: "Spreadsheet Upload Button"
-				}
+				id: "__button2"
+			}
+		};
+		const buttonSelector2 = {
+			forceSelect: true,
+			selector: {
+				id: "__button0"
 			}
 		};
 		const dialogSelector = {
+			forceSelect: true,
 			selector: {
 				controlType: "sap.m.Dialog",
 				properties: {
@@ -42,6 +46,7 @@ describe("Upload File Object Page", () => {
 			}
 		};
 		await browser.asControl(buttonSelector).press();
+		await browser.asControl(buttonSelector2).press();
 		await BaseClass.dummyWait(1000);
 		try {
 			await browser.waitUntil(

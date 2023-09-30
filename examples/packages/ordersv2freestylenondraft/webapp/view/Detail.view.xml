@@ -1,10 +1,4 @@
-<mvc:View
-  controllerName="ui.v2.ordersv2freestylenondraft.controller.Detail"
-  xmlns="sap.m"
-  xmlns:semantic="sap.f.semantic"
-  xmlns:mvc="sap.ui.core.mvc"
-  xmlns:spreadsheet="cc.spreadsheetimporter.button.v0_11_4"
->
+<mvc:View controllerName="ui.v2.ordersv2freestylenondraft.controller.Detail" xmlns="sap.m" xmlns:semantic="sap.f.semantic" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core">
   <semantic:SemanticPage id="detailPage" busy="{detailView>/busy}" busyIndicatorDelay="{detailView>/delay}" showFooter="true">
     <semantic:titleHeading>
       <Title text="{OrderNo}" level="H2" />
@@ -15,25 +9,25 @@
     </semantic:headerContent>
     <semantic:titleCustomTextActions>
       <Button text="Spreadsheet Upload Code" press="openSpreadsheetUpload" />
-      <spreadsheet:SpreadsheetUpload
-        id="spreadsheetUploadButton"
-        text="Spreadsheet Upload Button"
-        tableId="container-todo---detail--lineItemsList"
-        changeBeforeCreate="changeBeforeCreate"
-        checkBeforeRead="checkBeforeRead"
-        uploadButtonPress="uploadButtonPress"
-        showBackendErrorMessages="true"
-      />
     </semantic:titleCustomTextActions>
     <semantic:content>
+      <VBox>
+        <core:ComponentContainer
+          id="test"
+          width="100%"
+          usage="spreadsheetImporter"
+          propagateModel="true"
+          async="true"
+          settings="{componentContainerData:{uploadButtonPress:'uploadButtonPress',buttonText:'Excel Upload'}}"
+        />
       <Table
-        id="lineItemsList"
-        width="auto"
-        items="{Items}"
-        updateFinished=".onListUpdateFinished"
-        noDataText="{i18n>detailLineItemTableNoDataText}"
-        busyIndicatorDelay="{detailView>/lineItemTableDelay}"
-      >
+          id="lineItemsList"
+          width="auto"
+          items="{Items}"
+          updateFinished=".onListUpdateFinished"
+          noDataText="{i18n>detailLineItemTableNoDataText}"
+          busyIndicatorDelay="{detailView>/lineItemTableDelay}"
+        >
         <headerToolbar>
           <Toolbar>
             <Title id="lineItemsTitle" text="{detailView>/lineItemListTitle}" titleStyle="H3" level="H3" />
@@ -56,6 +50,7 @@
           </ColumnListItem>
         </items>
       </Table>
+      </VBox>
     </semantic:content>
     <!--Semantic ShareMenu Buttons-->
     <semantic:sendEmailAction>

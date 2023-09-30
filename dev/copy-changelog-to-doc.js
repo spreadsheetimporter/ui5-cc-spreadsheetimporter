@@ -7,10 +7,6 @@ const filesToCopy = [
     dest: 'docs/pages/CHANGELOGSPREADSHEETIMPORTER.md'
   },
   {
-    src: 'packages/ui5-cc-spreadsheetimporter-button/CHANGELOG.md',
-    dest: 'docs/pages/CHANGELOGSPREADSHEETIMPORTERBUTTON.md'
-  },
-  {
     src: 'packages/ui5-cc-spreadsheetimporter-generator/CHANGELOG.md',
     dest: 'docs/pages/CHANGELOGSPREADSHEETIMPORTERGENERATOR.md'
   },

@@ -34,17 +34,17 @@ function replaceSomething(copyFrom, copyTo, files, from, to) {
 }
 
 // replace version in examples folder
-function replaceVersionInExamples(versionSlash, version, ui5Apps, versionButton, versionUnderscoreButton) {
+function replaceVersionInExamples(versionSlash, version, ui5Apps) {
 	let manifests = [];
 	let rootPath = "examples/packages/server/app/ordersv4fecds/";
-	replaceVersioninApp("ordersv4fecds", version, versionSlash, versionUnderscoreButton, rootPath);
+	replaceVersioninApp("ordersv4fecds", version, versionSlash, rootPath);
 	ui5Apps.forEach((app) => {
 		let rootPath = "examples/packages/" + app + "/";
-		replaceVersioninApp(app, version, versionSlash, versionUnderscoreButton, rootPath);
+		replaceVersioninApp(app, version, versionSlash, rootPath);
 	});
 }
 
-function replaceVersioninApp(app, version, versionSlash, versionUnderscoreButton, rootPath) {
+function replaceVersioninApp(app, version, versionSlash, rootPath) {
 	let path = rootPath + "webapp/manifest.json";
 	// Read the contents of the package.json file
 	let manifest = fs.readFileSync(path, "utf8");
@@ -60,33 +60,12 @@ function replaceVersioninApp(app, version, versionSlash, versionUnderscoreButton
 		});
 	updatedResourceRoots[`cc.spreadsheetimporter.${version}`] = `./thirdparty/customControl/spreadsheetImporter/${versionSlash}`;
 	// add to every app even if it is not used
-	updatedResourceRoots[`cc.spreadsheetimporter.button.${versionUnderscoreButton}`] = `./thirdparty/customControl/spreadsheetImporterButton/${versionUnderscoreButton}`;
 	manifestData["sap.ui5"].resourceRoots = updatedResourceRoots;
 	manifestData["sap.ui5"]["componentUsages"]["spreadsheetImporter"].name = `cc.spreadsheetimporter.${version}`;
 	// Stringify manifest data back to string
 	manifestData = JSON.stringify(manifestData, null, 2);
 	// Write back manifest file
 	fs.writeFileSync(path, manifestData, "utf8");
-	if (app.startsWith("ordersv2freestylenondraft")) {
-		replaceVersionInXML(rootPath, "webapp/view/Detail.view.xml", versionUnderscoreButton);
-		replaceVersionInXML(rootPath, "webapp/view/List.view.xml", versionUnderscoreButton);
-	}
-	if (app === "ordersv2freestylenondraft") {
-		replaceVersionInXML(rootPath, "webapp/view/UploadToTable.view.xml", versionUnderscoreButton);
-	}
-	if (app.startsWith("ordersv4fpm")) {
-		replaceVersionInXML(rootPath, "webapp/ext/main/Main.view.xml", versionUnderscoreButton);
-	}
-}
-
-function replaceVersionInXML(rootPath, filePath, versionUnderscoreButton) {
-	const path = rootPath + filePath;
-	let view = fs.readFileSync(path, "utf8");
-	// Use a regular expression to replace the namespace prefix value
-	const regex = /cc\.spreadsheetimporter\.button\.v\d+_\d+_\d+/g;
-	const updatedString = view.replace(regex, `cc.spreadsheetimporter.button.${versionUnderscoreButton}`);
-	fs.writeFileSync(path, updatedString, "utf8");
-
 }
 
 function deleteFolderRecursive(path) {
