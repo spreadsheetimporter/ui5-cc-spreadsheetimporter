@@ -20,29 +20,30 @@
           async="true"
           settings="{standalone:true,columns: ['product_ID', 'username'],componentContainerData:{uploadButtonPress:'uploadButtonPress',buttonText:'Excel Upload'}}"
         />
-      <Table id="lineItemsList2" items="{tableData>/}" width="auto" noDataText="{i18n>detailLineItemTableNoDataText}" busyIndicatorDelay="{detailView>/lineItemTableDelay}">
-        <headerToolbar>
-          <Toolbar>
-            <Title id="lineItemsTitle" text="{detailView>/lineItemListTitle}" titleStyle="H3" level="H3" />
-          </Toolbar>
-        </headerToolbar>
-        <columns>
-          <Column>
-            <Text text="username" />
-          </Column>
-          <Column>
-            <Text text="product_ID" />
-          </Column>
-        </columns>
-        <items>
-          <ColumnListItem>
-            <cells>
-              <ObjectIdentifier title="{tableData>username}" text="{tableData>username}" />
-              <Text text="{tableData>product_ID}" />
-            </cells>
-          </ColumnListItem>
-        </items>
-      </Table>
+
+        <Table id="lineItemsList2" items="{tableData>/}" width="auto" noDataText="{i18n>detailLineItemTableNoDataText}" busyIndicatorDelay="{detailView>/lineItemTableDelay}">
+          <headerToolbar>
+            <Toolbar>
+              <Title id="lineItemsTitle" text="{detailView>/lineItemListTitle}" titleStyle="H3" level="H3" />
+            </Toolbar>
+          </headerToolbar>
+          <columns>
+            <Column>
+              <Text text="username" />
+            </Column>
+            <Column>
+              <Text text="product_ID" />
+            </Column>
+          </columns>
+          <items>
+            <ColumnListItem>
+              <cells>
+                <ObjectIdentifier title="{tableData>username}" text="{tableData>username}" />
+                <Text text="{tableData>product_ID}" />
+              </cells>
+            </ColumnListItem>
+          </items>
+        </Table>
       </VBox>
     </semantic:content>
     <!--Semantic ShareMenu Buttons-->

@@ -1,4 +1,117 @@
-## Source
+
+!!! warning
+        The seperate button control was deprecated and integrated in the `ui5-spreadsheet-importer` component from version `0.26.0`.
+
+
+## Button in Component
+
+The usage of the [UIComponent](https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.core.UIComponent) enables the possibility to return a button with the usage of a [ComponentContainer](https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.core.ComponentContainer).  
+This has the big advantage that no separate dependency has to be installed and a button for spreadsheet upload can be integrated very easily.
+
+### Getting started
+
+1\. Install from npm
+
+```sh
+npm install ui5-cc-spreadsheetimporter-button
+```
+
+2\.  Add to your `package.json`:  
+:information_source: This step is not necessary from UI5 Tooling V3
+
+````json
+"ui5": {
+  "dependencies": [
+    //...
+    "ui5-cc-spreadsheetimporter-button"
+    //...
+  ]
+}
+````
+
+3\. Add `resourceRoots` to you `manifest.json` under `sap.ui5`
+   
+⚠️ You must always keep your ui5-cc-spreadsheetimporter and button version up to date here when updating the module.
+
+````json
+"resourceRoots": {
+    "cc.spreadsheetimporter.v0_25_4": "./thirdparty/customControl/spreadsheetImporter/v0_25_4"
+},
+````
+
+4\. Add `components` to you `manifest.json` under `sap.ui5.dependencies`
+   
+⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module.
+
+````json
+"dependencies": {
+  "minUI5Version": "1.108.19",
+  "libs": {
+    "sap.m": {},
+    "sap.ui.core": {},
+    "sap.f": {},
+    "sap.ui.table": {}
+  },
+  "components": {
+    "cc.spreadsheetimporter.v0_25_4": {}
+  }
+},
+````
+
+5\. Add `componentUsages` to you `manifest.json` under `sap.ui5`
+   
+⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module.
+
+````json
+"componentUsages": {
+    "spreadsheetImporter": {
+        "name": "cc.spreadsheetimporter.v0_25_4"
+    }
+},
+````
+
+5\. Add the namespace `core` to your XML View
+
+````xml
+<mvc:View controllerName="ui.v2.ordersv2freestylenondraft.controller.UploadToTable"
+  xmlns="sap.m"
+  xmlns:semantic="sap.f.semantic"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core">
+...
+</mvc:View>
+````
+
+6\. Add the `core:ComponentContainer` control to your view.
+
+````xml
+<core:ComponentContainer width="100%" 
+usage="spreadsheetImporter" propagateModel="true" 
+async="true"/>
+````
+
+### Define Configuration Options
+
+You can set configuration options for the spreadsheet importer in the `settings` property of the `core:ComponentContainer` control.  
+For special configuration options for the ComponantContainer see [Configuration](Configuration.md#componentcontainerdata).
+
+````xml
+<core:ComponentContainer width="100%" 
+usage="spreadsheetImporter" propagateModel="true" async="true" 
+settings="{
+  standalone:true,
+  columns: ['product_ID', 'username'],
+  componentContainerData:{
+    uploadButtonPress:'uploadButtonPress',
+    buttonText:'Excel Upload'
+    }
+  }" />
+````
+
+## Deprecated Button Control
+
+!!! warning
+        This information is only relevant if you use the seperate button control version `0.11.4` and the spreadsheet importer component `0.25.4`.
 
 ### GitHub Repository Package
 https://github.com/marianfoo/ui5-cc-spreadsheetimporter/tree/main/packages/ui5-cc-spreadsheetimporter-button
