@@ -68,10 +68,3 @@ See below the configurations for this version:
       "cc.spreadsheetimporter.v0_25_4": "./thirdparty/customControl/spreadsheetImporter/v0_25_4"
     },
 ```
-
-### Button
-
-In the button, the button and the component must also be defined in the resource roots for in-app deployment.  
-In the package.json on npmjs.com you can check which version matches the button version.  
-For example you can look it up here for version 0.4.2:  
-<https://www.npmjs.com/package/ui5-cc-spreadsheetimporter-button?activeTab=code>

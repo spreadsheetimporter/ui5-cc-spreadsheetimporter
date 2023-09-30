@@ -63,11 +63,11 @@ function updateVersionInDir(dirPath, spreadsheetUploadVersion, spreadsheetUpload
   });
 }
 
-function updateVersions(spreadsheetUploadVersion, spreadsheetUploadButtonVersion) {
+function updateVersions(spreadsheetUploadVersion) {
   const docsPath = './docs';
   const examplesPath = './examples';
-  updateVersionInDir(docsPath, spreadsheetUploadVersion, spreadsheetUploadButtonVersion);
-  updateVersionInDir(examplesPath, spreadsheetUploadVersion, spreadsheetUploadButtonVersion);
+  updateVersionInDir(docsPath, spreadsheetUploadVersion);
+  updateVersionInDir(examplesPath, spreadsheetUploadVersion);
 }
 
 

@@ -6,9 +6,6 @@
     "packages/ui5-cc-spreadsheetimporter": {
       "package-name": "ui5-cc-spreadsheetimporter"
     },
-    "packages/ui5-cc-spreadsheetimporter-button": {
-      "package-name": "ui5-cc-spreadsheetimporter-button"
-    },
     "packages/ui5-cc-spreadsheetimporter-generator": {
       "package-name": "generator-ui5-spreadsheetimporter"
     }
