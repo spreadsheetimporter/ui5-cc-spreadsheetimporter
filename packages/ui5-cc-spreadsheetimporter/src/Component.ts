@@ -196,12 +196,16 @@ export default class Component extends UIComponent {
 
 		for (const [eventName, attachMethod] of Object.entries(eventMethodMap)) {
 			const methodName = componentContainerOptions[eventName];
+			console.log(`eventName: ${eventName}, methodName: ${methodName}`);
 			if (methodName && typeof context[methodName] === "function") {
 				try {
-					attachMethod.call(this, context[methodName]);
+					console.log(`Attaching ${methodName} to ${eventName}`);
+					attachMethod.call(this, context[methodName].bind(context), context);
 				} catch (error) {
 					Log.error(`Error while attaching event ${eventName}`, error, "SpreadsheetUpload: Component");
 				}
+			} else {
+				console.log(`Method ${methodName} not found on context or is not a function`);
 			}
 		}
 	}
