@@ -108,6 +108,18 @@ settings="{
   }" />
 ````
 
+### Example App
+
+#### Freestyle OData V2
+
+XML View: [Detail.view.xml](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2freestylenondraft/webapp/view/Detail.view.xml)  
+Controller: [Detail.controller.js](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2freestylenondraft/webapp/controller/Detail.controller.js)
+
+#### Freestyle OData V2 Standalone
+
+XML View: [UploadToTable.view.xml](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2freestylenondraft/webapp/view/UploadToTable.view.xml)  
+Controller: [UploadToTable.controller.js](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2freestylenondraft/webapp/controller/UploadToTable.controller.js)
+
 ## Deprecated Button Control
 
 !!! warning
