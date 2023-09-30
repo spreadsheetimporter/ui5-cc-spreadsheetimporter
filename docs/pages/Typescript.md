@@ -22,11 +22,11 @@ Add the component usage and the resource roots to the manifest.json as described
 ```json
         "componentUsages": {
             "spreadsheetImporter": {
-                "name": "cc.spreadsheetimporter.v0_25_4"
+                "name": "cc.spreadsheetimporter.v0_26_0"
             }
         },
         "resourceRoots": {
-            "cc.spreadsheetimporter.v0_25_4": "./thirdparty/customControl/spreadsheetImporter/v0_25_4"
+            "cc.spreadsheetimporter.v0_26_0": "./thirdparty/customControl/spreadsheetImporter/v0_26_0"
         },
 ```
 ### Custom Action
@@ -35,7 +35,7 @@ This is a example how you could create the component and attach a event handler 
 
 
 ```typescript
-import Component, { Component$ChangeBeforeCreateEvent, Component$CheckBeforeReadEvent, Component$UploadButtonPressEvent } from "cc/spreadsheetimporter/v0_25_4/Component";
+import Component, { Component$ChangeBeforeCreateEvent, Component$CheckBeforeReadEvent, Component$UploadButtonPressEvent } from "cc/spreadsheetimporter/v0_26_0/Component";
 import BaseController from "sap/fe/core/BaseController";
 import ExtensionAPI from "sap/fe/core/ExtensionAPI";
 
