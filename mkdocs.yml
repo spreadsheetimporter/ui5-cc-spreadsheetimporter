@@ -52,6 +52,7 @@ nav:
 
 theme:
   name: "material"
+  custom_dir: docs/overrides
   palette:
     primary: "blue"
     accent: "blue"
@@ -62,8 +63,11 @@ theme:
     - navigation.expand
     - content.code.copy
 
-# extra_css:
-#   - 'stylesheets/extra.css'
+extra:
+  analytics:
+    provider: custom
+    property: foobar 
+
 
 plugins:
   - search
