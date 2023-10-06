@@ -6,6 +6,7 @@
       </MessageView>
     </content>
     <buttons>
+      <Button text="{i18n>downloadButton}" press="onDownloadErrors" />
       <Button
         press=".onContinue"
         type="Emphasized"
