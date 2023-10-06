@@ -33,7 +33,7 @@ export default class Parser extends ManagedObject {
 						if (value.sheetDataType !== "d") {
 							const parsedDate = new Date(rawValue);
 							if (isNaN(parsedDate.getTime())) {
-								this.addMessageToMessages("valueNotADate", util, messageHandler, index, [metadataColumn.label], rawValue);
+								this.addMessageToMessages("invalidDate", util, messageHandler, index, [metadataColumn.label], rawValue);
 								continue;
 							}
 							date = parsedDate;
@@ -50,7 +50,7 @@ export default class Parser extends ManagedObject {
 						if (value.sheetDataType !== "d") {
 							const parsedDate = new Date(rawValue);
 							if (isNaN(parsedDate.getTime())) {
-								this.addMessageToMessages("valueNotADate", util, messageHandler, index, [metadataColumn.label], rawValue);
+								this.addMessageToMessages("invalidDate", util, messageHandler, index, [metadataColumn.label], rawValue);
 								continue;
 							}
 							date = parsedDate;
@@ -66,7 +66,7 @@ export default class Parser extends ManagedObject {
 						if (value.sheetDataType !== "d") {
 							const parsedDate = new Date(rawValue);
 							if (isNaN(parsedDate.getTime())) {
-								this.addMessageToMessages("valueNotADate", util, messageHandler, index, [metadataColumn.label], rawValue);
+								this.addMessageToMessages("invalidDate", util, messageHandler, index, [metadataColumn.label], rawValue);
 								continue;
 							}
 							date = parsedDate;
