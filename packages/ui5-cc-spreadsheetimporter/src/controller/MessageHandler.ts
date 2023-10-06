@@ -8,6 +8,7 @@ import JSONModel from "sap/ui/model/json/JSONModel";
 import { MessageType, ValueState } from "sap/ui/core/library";
 import Log from "sap/base/Log";
 import { CustomMessageTypes, FieldMatchType } from "../enums";
+import * as XLSX from "xlsx";
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -234,6 +235,35 @@ export default class MessageHandler extends ManagedObject {
 		const spreadsheetUploadDialog = this.spreadsheetUploadController.getSpreadsheetUploadDialog();
 		const payloadArrayLength = this.spreadsheetUploadController.payloadArray.length;
 		(spreadsheetUploadDialog.getModel("info") as JSONModel).setProperty("/dataRows", payloadArrayLength);
+	}
+
+	onDownloadErrors() {
+		const messages = (this.messageDialog.getModel("messages") as JSONModel).getData();
+		// Flatten the data
+		const flattenedData: any[] = [];
+
+		messages.forEach((item) => {
+			const descriptions = item.description ? item.description.split("\n") : [];
+			if (descriptions.length > 1) {
+				descriptions.forEach((desc) => {
+					const rowMatch = desc.match(/row (\d+)/i);
+					const rowNumber = rowMatch ? parseInt(rowMatch[1], 10) : null;
+					flattenedData.push({
+						...item,
+						description: desc,
+						rowNumber: rowNumber
+					});
+				});
+			} else {
+				flattenedData.push(item);
+			}
+		});
+		// Convert the data to a worksheet
+		const ws = XLSX.utils.json_to_sheet(flattenedData);
+		// Convert the worksheet to a workbook
+		const wb = XLSX.utils.book_new();
+		XLSX.utils.book_append_sheet(wb, ws, "Errors");
+		XLSX.writeFile(wb, "Errors.xlsx");
 	}
 
 	private sortMessagesByTitle(messages: GroupedMessage[]) {
