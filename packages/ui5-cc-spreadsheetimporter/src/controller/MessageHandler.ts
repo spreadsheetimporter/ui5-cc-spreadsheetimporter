@@ -238,32 +238,51 @@ export default class MessageHandler extends ManagedObject {
 	}
 
 	onDownloadErrors() {
-		const messages = (this.messageDialog.getModel("messages") as JSONModel).getData();
-		// Flatten the data
+		const messages = (this.messageDialog.getModel("messages") as JSONModel).getData() as Messages[];
+
+		// Define a mapping of original attribute names to custom headers
+		const headerMapping = {
+			title: this.spreadsheetUploadController.util.geti18nText("messageTitle"),
+			description: this.spreadsheetUploadController.util.geti18nText("messageDescription"),
+			ui5type: this.spreadsheetUploadController.util.geti18nText("messageType"),
+			rowNumber: this.spreadsheetUploadController.util.geti18nText("messageRow")
+		};
+		const colWidth = [{ wch: 60 }, { wch: 40 }, { wch: 15 }, { wch: 20 }] as XLSX.ColInfo[];
+
 		const flattenedData: any[] = [];
 
 		messages.forEach((item) => {
-			const descriptions = item.description ? item.description.split("\n") : [];
-			if (descriptions.length > 1) {
-				descriptions.forEach((desc) => {
-					const rowMatch = desc.match(/row (\d+)/i);
-					const rowNumber = rowMatch ? parseInt(rowMatch[1], 10) : null;
-					flattenedData.push({
-						...item,
-						description: desc,
-						rowNumber: rowNumber
-					});
-				});
-			} else {
-				flattenedData.push(item);
-			}
+			// Split the description by line breaks or use the original description
+			const descriptions = item.description ? item.description.split("\n") : [item.description || ""];
+
+			descriptions.forEach((desc) => {
+				// Extract row number from the description
+				const rowMatch = desc.match(/row (\d+)/i);
+				const rowNumber = rowMatch ? parseInt(rowMatch[1], 10) : null;
+
+				// Create a new object based on headerMapping
+				const transformedItem: any = {};
+				for (const key in headerMapping) {
+					if (key === "description") {
+						transformedItem[headerMapping[key]] = desc;
+					} else if (key === "rowNumber") {
+						transformedItem[headerMapping[key]] = rowNumber;
+					} else if (item.hasOwnProperty(key)) {
+						transformedItem[headerMapping[key]] = item[key];
+					}
+				}
+				flattenedData.push(transformedItem);
+			});
 		});
-		// Convert the data to a worksheet
-		const ws = XLSX.utils.json_to_sheet(flattenedData);
-		// Convert the worksheet to a workbook
-		const wb = XLSX.utils.book_new();
-		XLSX.utils.book_append_sheet(wb, ws, "Errors");
-		XLSX.writeFile(wb, "Errors.xlsx");
+
+		// Convert the flattened data to a worksheet
+		const worksheet = XLSX.utils.json_to_sheet(flattenedData);
+		worksheet["!cols"] = colWidth;
+
+		// Convert the worksheet to a workbook and download it
+		const workbook = XLSX.utils.book_new();
+		XLSX.utils.book_append_sheet(workbook, worksheet, this.spreadsheetUploadController.util.geti18nText("sheetName"));
+		XLSX.writeFile(workbook, this.spreadsheetUploadController.util.geti18nText("spreadsheetFilenameName") + ".xlsx");
 	}
 
 	private sortMessagesByTitle(messages: GroupedMessage[]) {
