@@ -53,6 +53,7 @@ export default class Component extends UIComponent {
 			sampleData: { type: "object" },
 			useTableSelector: { type: "boolean", defaultValue: false },
 			readAllSheets: { type: "boolean", defaultValue: false },
+			readSheet: { type: "any", defaultValue: 0 },
 			debug: { type: "boolean", defaultValue: false },
 			componentContainerData: { type: "object" }
 			//Pro Configurations
@@ -108,6 +109,7 @@ export default class Component extends UIComponent {
 		this.setBatchSize(oCompData?.batchSize);
 		this.setStandalone(oCompData?.standalone);
 		this.setReadAllSheets(oCompData?.readAllSheets);
+		this.setReadSheet(oCompData?.readSheet);
 		this.setStrict(oCompData?.strict);
 		this.setDecimalSeparator(oCompData?.decimalSeparator);
 		this.setHidePreview(oCompData?.hidePreview);

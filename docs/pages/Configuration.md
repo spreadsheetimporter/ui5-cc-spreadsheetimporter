@@ -17,6 +17,7 @@ These options are available and explained in detail below:
 | `batchSize` | Determines bach sizes send to backend server  | integer |
 | `standalone` | Mode if you do not have a table and want to do the processing yourself  | boolean |
 | `readAllSheets` | In Standalone Mode you can get access to all sheets in the spreadsheet file  | boolean |
+| `readSheet` | Option to read a specific sheet or show a sheet selector | number or string |
 | `strict` | The strict option controls the availability of the `Continue` button in the error dialog.  | boolean |
 | `decimalSeparator` | Determines the decimal separator for numbers as string.  | string |
 | `hidePreview` | Hide the button to preview the uploaded data in the table dialog.  | boolean |
@@ -209,6 +210,22 @@ this.spreadsheetUpload.attachUploadButtonPress(function (oEvent) {
     }
 ]
 ```
+
+### `readSheet`
+
+**default:** `0`
+
+By default the first spreadsheet is read.  
+With this option you can specify which spreadsheet should be read with a number (0 based) or a name.  
+If the name or number is not found, the first spreadsheet is read.  
+Or you can set the option to `XXSelectorXX` to show a selector dialog to choose a sheet.  
+If the option `readAllSheets` is set to `true`, this option is ignored.  
+
+- `0` : First Sheet
+- `1` : Second Sheet
+- `Order` : Sheet with the name `Order`
+- `Items` : Sheet with the name `Items`
+- `XXSelectorXX` : Selector Dialog to choose a sheet
 
 ### `strict`
 

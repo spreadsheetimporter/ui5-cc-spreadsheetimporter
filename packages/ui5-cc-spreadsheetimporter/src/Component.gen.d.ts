@@ -29,6 +29,7 @@ declare module "./Component" {
         sampleData?: object | PropertyBindingInfo | `{${string}}`;
         useTableSelector?: boolean | PropertyBindingInfo | `{${string}}`;
         readAllSheets?: boolean | PropertyBindingInfo | `{${string}}`;
+        readSheet?: any | PropertyBindingInfo | `{${string}}`;
         debug?: boolean | PropertyBindingInfo | `{${string}}`;
         componentContainerData?: object | PropertyBindingInfo | `{${string}}`;
         checkBeforeRead?: (event: Component$CheckBeforeReadEvent) => void;
@@ -470,6 +471,27 @@ declare module "./Component" {
          * @returns Reference to "this" in order to allow method chaining
          */
         setReadAllSheets(readAllSheets: boolean): this;
+
+        // property: readSheet
+
+        /**
+         * Gets current value of property "readSheet".
+         *
+         * Default value is: 0
+         * @returns Value of property "readSheet"
+         */
+        getReadSheet(): any;
+
+        /**
+         * Sets a new value for property "readSheet".
+         *
+         * When called with a value of "null" or "undefined", the default value of the property will be restored.
+         *
+         * Default value is: 0
+         * @param [readSheet=0] New value for property "readSheet"
+         * @returns Reference to "this" in order to allow method chaining
+         */
+        setReadSheet(readSheet: any): this;
 
         // property: debug
 
