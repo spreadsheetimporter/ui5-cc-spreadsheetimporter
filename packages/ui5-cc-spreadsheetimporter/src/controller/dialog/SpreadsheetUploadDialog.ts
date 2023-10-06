@@ -21,6 +21,9 @@ import Button from "sap/m/Button";
 import { ArrayData, AvailableOptionsType } from "../../types";
 import FlexBox from "sap/m/FlexBox";
 import JSONModel from "sap/ui/model/json/JSONModel";
+import Dialog from "sap/m/Dialog";
+import Select from "sap/m/Select";
+import Item from "sap/ui/core/Item";
 
 type InputType = {
 	[key: string]: {
@@ -111,7 +114,14 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 					columnNames = columnNames.concat(XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })[0] as string[]);
 				}
 			} else {
-				const sheetName = workbook.SheetNames[0];
+				const sheetOption = this.spreadsheetUploadController.component.getReadSheet();
+				let sheetName: string;
+				try {
+					sheetName = await this._getSheetName(workbook, sheetOption);
+				} catch (error) {
+					this.resetContent();
+					return;
+				}
 				spreadsheetSheetsData = SheetHandler.sheet_to_json(workbook.Sheets[sheetName]);
 				columnNames = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })[0] as string[];
 			}
@@ -469,6 +479,80 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 			}
 
 			return newObj;
+		});
+	}
+
+	async _getSheetName(workbook: XLSX.WorkBook, sheetOption: string): Promise<string> {
+		let sheetName: string;
+		// Check if sheetOption is a number
+		if (typeof sheetOption === "number") {
+			if (sheetOption >= 0 && sheetOption < workbook.SheetNames.length) {
+				sheetName = workbook.SheetNames[sheetOption];
+			} else {
+				Log.error("Invalid sheet index, defaulting to first Sheet", "SpreadsheetUpload: _getSheetName");
+				sheetName = workbook.SheetNames[0];
+			}
+		}
+		// Check if sheetOption is "XXSelectorXX"
+		else if (sheetOption === "XXSelectorXX") {
+			if (workbook.SheetNames.length === 1) {
+				sheetName = workbook.SheetNames[0];
+				Log.debug("Only one sheet in workbook, defaulting to first Sheet", "SpreadsheetUpload: _getSheetName");
+			} else {
+				// Display a selector dialog and get the selected sheet name
+				sheetName = await this._displaySheetSelectorDialog(workbook.SheetNames);
+			}
+		}
+		// Check if sheetOption is a string and exists in workbook.SheetNames
+		else if (workbook.SheetNames.includes(sheetOption)) {
+			sheetName = sheetOption;
+		} else {
+			Log.error("Invalid sheet name, defaulting to first Sheet", "SpreadsheetUpload: _getSheetName");
+			sheetName = workbook.SheetNames[0];
+		}
+		return sheetName;
+	}
+
+	_displaySheetSelectorDialog(sheetNames: string[]): Promise<string> {
+		// Display a selector dialog and get the selected sheet name
+		// Assuming you have a function called displaySelectorDialog that returns the selected sheet name
+		return new Promise((resolve, reject) => {
+			const select = new Select();
+
+			sheetNames.forEach((sheetName) => {
+				select.addItem(
+					new Item({
+						key: sheetName,
+						text: sheetName
+					})
+				);
+			});
+
+			const i18n = this.componentI18n.getResourceBundle() as ResourceBundle;
+
+			const dialog = new Dialog({
+				title: i18n.getText("sheetSelectorDialogTitle"),
+				type: "Message",
+				content: [select],
+				beginButton: new Button({
+					text: i18n.getText("ok"),
+					press: () => {
+						const selectedKey = select.getSelectedKey();
+						resolve(selectedKey);
+						dialog.close();
+					}
+				}),
+				afterClose: () => dialog.destroy(),
+				endButton: new Button({
+					text: i18n.getText("close"),
+					press: () => {
+						reject(new Error(i18n.getText("close")));
+						dialog.close();
+					}
+				})
+			}) as Dialog;
+
+			dialog.open();
 		});
 	}
 }

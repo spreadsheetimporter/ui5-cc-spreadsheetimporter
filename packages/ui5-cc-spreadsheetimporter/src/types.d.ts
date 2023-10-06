@@ -77,6 +77,7 @@ export interface ComponentData {
 	batchSize?: number;
 	standalone?: boolean;
 	readAllSheets?: boolean;
+	readSheet: number | string;
 	strict?: boolean;
 	decimalSeparator?: string;
 	hidePreview?: boolean;
