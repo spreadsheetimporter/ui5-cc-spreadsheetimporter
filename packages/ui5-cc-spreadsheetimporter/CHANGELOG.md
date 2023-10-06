@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.27.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.26.1...ui5-cc-spreadsheetimporter-v0.27.0) (2023-10-06)
+
+
+### Features
+
+* add sheet selector if multiple sheets in file ([#376](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/376)) ([94de1b4](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/94de1b4564084931251a64c1c2e30c00c6241511))
+* error report can be downloaded as spreadsheet file ([#378](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/378)) ([7fc727e](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/7fc727e1184efc6c8e497b5d5af0f1f19af08a22))
+
+
+### Bug Fixes
+
+* i18n date parser attribute ([#380](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/380)) ([b0e8279](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/b0e82791347322c7e1c23f1527489c303602348d))
+
 ## [0.26.1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.26.0...ui5-cc-spreadsheetimporter-v0.26.1) (2023-09-30)
 
 

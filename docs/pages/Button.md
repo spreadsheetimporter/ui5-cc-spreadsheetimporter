@@ -35,7 +35,7 @@ npm install ui5-cc-spreadsheetimporter-button
 
 ````json
 "resourceRoots": {
-    "cc.spreadsheetimporter.v0_26_1": "./thirdparty/customControl/spreadsheetImporter/v0_26_1"
+    "cc.spreadsheetimporter.v0_27_0": "./thirdparty/customControl/spreadsheetImporter/v0_27_0"
 },
 ````
 
@@ -53,7 +53,7 @@ npm install ui5-cc-spreadsheetimporter-button
     "sap.ui.table": {}
   },
   "components": {
-    "cc.spreadsheetimporter.v0_26_1": {}
+    "cc.spreadsheetimporter.v0_27_0": {}
   }
 },
 ````
@@ -65,7 +65,7 @@ npm install ui5-cc-spreadsheetimporter-button
 ````json
 "componentUsages": {
     "spreadsheetImporter": {
-        "name": "cc.spreadsheetimporter.v0_26_1"
+        "name": "cc.spreadsheetimporter.v0_27_0"
     }
 },
 ````
@@ -171,7 +171,7 @@ https://www.npmjs.com/package/ui5-cc-spreadsheetimporter-button?activeTab=code
 ````json
 "resourceRoots": {
    "cc.spreadsheetimporter.button.undefined": "./thirdparty/customControl/spreadsheetImporterButton/v0_8_0",
-    "cc.spreadsheetimporter.v0_26_1": "./thirdparty/customControl/spreadsheetImporter/v0_26_1"
+    "cc.spreadsheetimporter.v0_27_0": "./thirdparty/customControl/spreadsheetImporter/v0_27_0"
 },
 ````
 
@@ -182,7 +182,7 @@ https://www.npmjs.com/package/ui5-cc-spreadsheetimporter-button?activeTab=code
 ````json
 "componentUsages": {
     "spreadsheetImporter": {
-        "name": "cc.spreadsheetimporter.v0_26_1"
+        "name": "cc.spreadsheetimporter.v0_27_0"
     }
 },
 ````
