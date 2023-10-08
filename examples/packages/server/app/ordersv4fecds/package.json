@@ -9,9 +9,6 @@
     "sapui5"
   ],
   "main": "webapp/index.html",
-  "dependencies": {
-    "ui5-cc-spreadsheetimporter": "./../../../../../packages/ui5-cc-spreadsheetimporter"
-  },
   "devDependencies": {
     "@sap-ux/ui5-middleware-fe-mockserver": "^2.1.122",
     "@sap-ux/ui5-proxy-middleware": "1.2.3",

@@ -18,6 +18,12 @@ server:
         backend:
           - path: /odata/v4/Orders
             url: http://localhost:4004
+    - name: ui5-middleware-ui5
+      afterMiddleware: compression
+      # configuration:
+      #   modules:
+      #     ui5-cc-spreadsheetimporter:
+      #       configFile: "ui5-server.yaml"
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:

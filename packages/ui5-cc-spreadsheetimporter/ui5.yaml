@@ -1,8 +1,45 @@
-specVersion: '2.6'
-type: module
+specVersion: "3.0"
 metadata:
   name: ui5-cc-spreadsheetimporter
+type: application
 resources:
   configuration:
     paths:
-      /thirdparty/customControl/spreadsheetImporter/v0_27_0/: ./dist/
+      webapp: src
+framework:
+  name: OpenUI5
+  version: "1.118.0"
+  libraries:
+    - name: sap.m
+    - name: sap.ui.core
+    - name: themelib_sap_horizon
+server:
+  customMiddleware:
+    - name: ui5-tooling-transpile-middleware
+      afterMiddleware: compression
+      configuration:
+        filePattern: .+(ts|tsx)
+        transpileTypeScript: true 
+        transpileAsync: false
+        generateDts: true
+        removeConsoleStatements: false
+    - name: ui5-tooling-stringreplace-middleware
+      afterMiddleware: ui5-tooling-transpile-middleware
+      configuration:
+        files:
+          - '**/*.js'
+          - '**/*.xml'
+          - '**/*.ts'
+        replace:
+          - placeholder: XXXnamespaceXXX
+            value: v0_27_0
+          - placeholder: XXXnamespaceShortXXX
+            value: v0270
+          - placeholder: XXXnamespaceSlashXXX
+            value: v0_27_0
+    - name: ui5-tooling-modules-middleware
+      afterMiddleware: ui5-tooling-stringreplace-middleware
+      configuration:
+        debug: "verbose"
+        addToNamespace: true
+        prependPathMappings: true
