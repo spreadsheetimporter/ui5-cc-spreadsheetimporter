@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.27.1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.27.0...ui5-cc-spreadsheetimporter-v0.27.1) (2023-10-10)
+
+
+### Bug Fixes
+
+* preview ([#382](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/382)) ([8eb8b28](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/8eb8b28c9da5a02d6a241a36c7943276e110a251))
+
 ## [0.27.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.26.1...ui5-cc-spreadsheetimporter-v0.27.0) (2023-10-06)
 
 
