@@ -288,7 +288,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	}
 
 	async showPreview() {
-		this.previewHandler.showPreview(this.spreadsheetUploadController.getPayloadArray());
+		this.previewHandler.showPreview(this.spreadsheetUploadController.getPayloadArray(), this.spreadsheetUploadController.typeLabelList);
 	}
 
 	onTempDownload() {
