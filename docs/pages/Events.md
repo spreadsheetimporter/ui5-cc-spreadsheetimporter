@@ -4,6 +4,7 @@ The following events can be used as extension points to intervene and manipulate
 | ------ | --- |
 | `checkBeforeRead` | Check data before data is uploaded to the UI5  |
 | `changeBeforeCreate` | Change data before it is sent to the backend |
+| `requestCompleted` | Event when the request is completed |
 | `uploadButtonPress` | Fired when the `Upload` button is pressed, possible to prevent data send to backend |
 
 ## Check data before upload to app
@@ -64,6 +65,24 @@ this.spreadsheetUpload.attachChangeBeforeCreate(function (oEvent) {
     oEvent.getSource().setPayload(payload);
 }, this);
 ````
+
+## Event when the request is completed
+
+When the request is completed, the `requestCompleted` event is fired.  
+With the parameter `success` you can check if the request was successful.
+
+### Example
+
+```js
+this.spreadsheetUpload.attachRequestCompleted(function (oEvent) {
+    const success = oEvent.getParameter("success");
+    if (success) {
+        console.log("Request Completed");
+    } else {
+        console.log("Request Failed");
+    }
+}, this);
+```
 
 ## Event when the upload button is pressed
 When the `Upload` button is pressed, the `uploadButtonPress` event is fired. The event is fired before the `changeBeforeCreate` event.  

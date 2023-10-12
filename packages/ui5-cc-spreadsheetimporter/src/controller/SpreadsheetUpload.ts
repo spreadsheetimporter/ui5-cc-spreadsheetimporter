@@ -43,6 +43,7 @@ export default class SpreadsheetUpload extends ManagedObject {
 	public errorMessage: any;
 	private initialSetupPromise: Promise<void>;
 	public messageArray: Messages[];
+	public errorsFound: boolean;
 	odataKeyList: string[];
 	optionsHandler: OptionsDialog;
 	private _spreadsheetUploadDialogHandler: SpreadsheetUploadDialog;

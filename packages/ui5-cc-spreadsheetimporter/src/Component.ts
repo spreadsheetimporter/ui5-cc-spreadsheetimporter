@@ -77,6 +77,11 @@ export default class Component extends UIComponent {
 					payload: { type: "object" }
 				}
 			},
+			requestCompleted: {
+				parameters: {
+					success: { type: "boolean" }
+				}
+			},
 			uploadButtonPress: {
 				allowPreventDefault: true,
 				parameters: {

@@ -2,15 +2,25 @@
 
 There are two ways to use the Spreadsheet Upload Control.
 Since a Reuse Component (library) is basically utilised, this results in two deployment strategies that can be used.  
+
 ### Decentralized deployment
+
 The library is attached directly to each app and deployed with it.  
+
+!!! note
+    It is possible when you deploy the app you get the error:   
+    `SAPUI5 library/component cc.spreadsheetimporter.v0_27_1 used in application Z_********* not exists`  
+    Even though the fiori tools say the app is not deployed, it is deployed.
+
 ### Central deployment
+
 The Spreadsheet upload is stored directly as a library centrally, e.g. in the on-premise ABAP system.  
 For more information, please see the Page [Central Deployment](CentralDeployment.md).
 
 ## Setup
 
 Here are the manual steps how to integrate the ui5-cc-spreadsheetimporter component. For a simplified integration, a [yo generator](Generator.md) is also available.
+
 ### Setup Decentralized deployment
 
 1\. Install from npm
@@ -33,7 +43,7 @@ npm install ui5-cc-spreadsheetimporter
 ````
 
 3\. Add `resourceRoots` to you `manifest.json` under `sap.ui5`
-   
+
 ⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module.
 
 ````json
@@ -54,7 +64,7 @@ npm install ui5-cc-spreadsheetimporter
 ````
 
 5\. Add `componentUsages` to you `manifest.json` under `sap.ui5`
-   
+
 ⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module.
 
 ````json
@@ -70,7 +80,7 @@ npm install ui5-cc-spreadsheetimporter
 1\. Execute the deployment with the version you like to use, see here [Central Deployment](CentralDeployment.md).
 
 2\. Add `componentUsages` to you `manifest.json` under `sap.ui5`
-   
+
 ⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module.
 
 ````json
@@ -81,10 +91,7 @@ npm install ui5-cc-spreadsheetimporter
 },
 ````
 
-
-
-
-!!! warning 
+!!! warning
         There are different implementations for Fiori Elements depending on the OData Version
 
 ## Starting with the Fiori Elements Application
@@ -165,10 +172,9 @@ openSpreadsheetUploadDialog: async function (oEvent) {
 
 ### How could this look like
 
-see also this at the live demo https://livedemo.spreadsheet-importer.com/
+see also this at the live demo <https://livedemo.spreadsheet-importer.com/>
 
 ![Object Page with Buttons](./../images/object_page.png){ loading=lazy }
-
 
 ## Starting with Fiori Elements (OData V2)
 
