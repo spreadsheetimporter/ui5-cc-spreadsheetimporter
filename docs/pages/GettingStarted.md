@@ -9,7 +9,7 @@ The library is attached directly to each app and deployed with it.
 
 !!! note
     It is possible when you deploy the app you get the error:   
-    `SAPUI5 library/component cc.spreadsheetimporter.v0_27_1 used in application Z_********* not exists`  
+    `SAPUI5 library/component cc.spreadsheetimporter.v0_28_0 used in application Z_********* not exists`  
     Even though the fiori tools say the app is not deployed, it is deployed.
 
 ### Central deployment
@@ -48,7 +48,7 @@ npm install ui5-cc-spreadsheetimporter
 
 ````json
 "resourceRoots": {
-    "cc.spreadsheetimporter.v0_27_1": "./thirdparty/customControl/spreadsheetImporter/v0_27_1"
+    "cc.spreadsheetimporter.v0_28_0": "./thirdparty/customControl/spreadsheetImporter/v0_28_0"
 },
 ````
 
@@ -70,7 +70,7 @@ npm install ui5-cc-spreadsheetimporter
 ````json
 "componentUsages": {
     "spreadsheetImporter": {
-        "name": "cc.spreadsheetimporter.v0_27_1"
+        "name": "cc.spreadsheetimporter.v0_28_0"
     }
 },
 ````
@@ -86,7 +86,7 @@ npm install ui5-cc-spreadsheetimporter
 ````json
 "componentUsages": {
     "spreadsheetImporter": {
-        "name": "cc.spreadsheetimporter.v0_27_1"
+        "name": "cc.spreadsheetimporter.v0_28_0"
     }
 },
 ````
