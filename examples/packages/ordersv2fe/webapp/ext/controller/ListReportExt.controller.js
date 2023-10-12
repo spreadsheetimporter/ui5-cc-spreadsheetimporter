@@ -51,6 +51,15 @@ sap.ui.define([], function () {
 				oEvent.getSource().setPayload(payload);
 			}, this);
 
+			this.spreadsheetUpload.attachRequestCompleted(function (oEvent) {
+				const success = oEvent.getParameter("success");
+				if (success) {
+					console.log("Request Completed");
+				} else {
+					console.log("Request Failed");
+				}
+			}, this);
+
 			this.spreadsheetUpload.openSpreadsheetUploadDialog();
 			this.getView().setBusy(false);
 		},
