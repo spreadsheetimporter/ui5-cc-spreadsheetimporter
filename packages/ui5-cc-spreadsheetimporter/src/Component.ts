@@ -198,7 +198,8 @@ export default class Component extends UIComponent {
 		const eventMethodMap = {
 			uploadButtonPress: this.attachUploadButtonPress,
 			changeBeforeCreate: this.attachChangeBeforeCreate,
-			checkBeforeRead: this.attachCheckBeforeRead
+			checkBeforeRead: this.attachCheckBeforeRead,
+			requestCompleted: this.attachRequestCompleted,
 		};
 
 		for (const [eventName, attachMethod] of Object.entries(eventMethodMap)) {
