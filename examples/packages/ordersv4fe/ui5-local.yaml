@@ -15,6 +15,8 @@ framework:
     - name: themelib_sap_horizon
 server:
   customMiddleware:
+    - name: ui5-middleware-serveframework
+      afterMiddleware: compression
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:
@@ -26,18 +28,8 @@ server:
       configuration:
         ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
         backend:
-          - path: /ordersv4fe
+          - path: /odata/v4/Orders
             url: http://localhost:4004
-    - name: sap-fe-mockserver
-      beforeMiddleware: csp
-      configuration:
-        mountPath: /
-        services:
-          - urlPath: /ordersv4fe
-            metadataPath: ./webapp/localService/metadata.xml
-            mockdataPath: ./webapp/localService/data
-            generateMockData: true
-        annotations: []
     - name: fiori-tools-preview
       afterMiddleware: fiori-tools-appreload
       configuration:

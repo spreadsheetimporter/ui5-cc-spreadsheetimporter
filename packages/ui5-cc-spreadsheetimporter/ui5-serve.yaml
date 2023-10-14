@@ -41,7 +41,7 @@ server:
         generateDts: true
         removeConsoleStatements: false
     - name: ui5-tooling-modules-middleware
-      afterMiddleware: ui5-tooling-stringreplace-middleware
+      afterMiddleware: ui5-tooling-transpile-middleware
       configuration:
         debug: "verbose"
         addToNamespace: true

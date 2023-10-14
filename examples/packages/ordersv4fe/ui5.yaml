@@ -23,7 +23,13 @@ server:
       # configuration:
       #   modules:
       #     ui5-cc-spreadsheetimporter:
-      #       configFile: "ui5-server.yaml"
+      #       configFile: "ui5-serve.yaml"
+    - name: ui5-tooling-modules-middleware
+      afterMiddleware: compression
+      configuration:
+        debug: "verbose"
+        addToNamespace: true
+        prependPathMappings: true
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:

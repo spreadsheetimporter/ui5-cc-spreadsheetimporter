@@ -96,7 +96,7 @@
       }
     },
     "resourceRoots": {
-      "cc.spreadsheetimporter.v0_27_0": "./resources/ui5-cc-spreadsheetimporter"
+      "cc.spreadsheetimporter.v0_27_0": "./thirdparty/customControl/spreadsheetImporter/v0_27_0"
     },
     "routing": {
       "routes": [
