@@ -424,15 +424,18 @@ importers:
       '@ui5/cli':
         specifier: 3.7.0
         version: 3.7.0(bluebird@3.7.2)
+      ui5-middleware-serveframework:
+        specifier: 3.0.0-alpha.3
+        version: 3.0.0-alpha.3(bluebird@3.7.2)
+      ui5-middleware-simpleproxy:
+        specifier: 3.2.6
+        version: 3.2.6
       ui5-middleware-ui5:
         specifier: 3.0.0-alpha.7
         version: 3.0.0-alpha.7(bluebird@3.7.2)
       ui5-tooling-modules:
         specifier: 3.2.1
         version: 3.2.1
-      ui5-tooling-transpile:
-        specifier: 3.2.7
-        version: 3.2.7(@ui5/ts-interface-generator@0.8.1)
 
   examples/packages/ordersv4fe71:
     dependencies:
@@ -685,8 +688,8 @@ importers:
         specifier: 3.2.1
         version: 3.2.1
       ui5-tooling-stringreplace:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       ui5-tooling-transpile:
         specifier: 3.2.7
         version: 3.2.7(@ui5/ts-interface-generator@0.8.1)
@@ -3598,7 +3601,7 @@ packages:
     resolution: {integrity: sha512-bls3EAsYVnVoPKoqgFC4Rtq7Kzte4MCk8xMA9UEPPVncJFsov9FJWYj0uxqJRwNEi9b4i4zX13FydaDrhadmHg==}
     dependencies:
       '@types/expect': 1.20.4
-      '@types/node': 18.18.5
+      '@types/node': 20.8.6
 
   /@types/which@2.0.2:
     resolution: {integrity: sha512-113D3mDkZDjo+EeUEHCFy0qniNc1ZpecGiAU7WSo7YDoSzolZIQKpYFHrPpjkB2nuyahcKfrmLXeQlh7gqJYdw==}
@@ -7301,7 +7304,7 @@ packages:
       fs.realpath: 1.0.0
       inflight: 1.0.6
       inherits: 2.0.4
-      minimatch: 3.0.8
+      minimatch: 3.1.2
       once: 1.4.0
       path-is-absolute: 1.0.1
     dev: true
@@ -12369,6 +12372,22 @@ packages:
     resolution: {integrity: sha512-8Y75pvTYkLJW2hWQHXxoqRgV7qb9B+9vFEtidML+7koHUFapnVJAZ6cKs+Qjz5Aw3aZWHMC6u0wJE3At+nSGwA==}
     dev: true
 
+  /ui5-middleware-serveframework@3.0.0-alpha.3(bluebird@3.7.2):
+    resolution: {integrity: sha512-R8PEm/P2IG8l0+eZRPY5Cpp56lXCCKbHpVQqNvu2PXXD1km79l9neO+NtQlmtaznDEhDLX9DUsFTSRAsrJ3GRw==}
+    dependencies:
+      '@ui5/project': 3.7.2(bluebird@3.7.2)
+      etag: 1.8.1
+      fresh: 0.5.2
+      https-proxy-agent: 7.0.2
+      js-yaml: 4.1.0
+      node-fetch: 2.7.0
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - bluebird
+      - encoding
+      - supports-color
+    dev: true
+
   /ui5-middleware-simpleproxy@3.2.6:
     resolution: {integrity: sha512-0k1YXa0wovZPJUL7C3+ZyjWPEtOQlaujn0fT4lyowEUquDgwzv8rVbfB79pIuAXt3kuuQpVNpn18fEzguCPwGg==}
     dependencies:
@@ -12432,8 +12451,8 @@ packages:
       rollup-plugin-polyfill-node: 0.12.0(rollup@3.29.4)
     dev: true
 
-  /ui5-tooling-stringreplace@3.1.0:
-    resolution: {integrity: sha512-Jgbjc8yO7U2sXiWAuTNG0/WmPQ0QWr9099alHLSAF7y7rYwaNZXSd0nsyulxCRwkd9USyG0XJS9Qq+ggh44F+g==}
+  /ui5-tooling-stringreplace@3.1.1:
+    resolution: {integrity: sha512-JN5hm37Lpxw8t2TaTiWhMjQmVg/1U7/U7NGSC9fHq6Iqr3+ZLmkMMJjrFsPrLnL4spLg20kkUd4mM7P5lgUzqA==}
     dependencies:
       dotenv: 16.3.1
       lodash.escaperegexp: 4.1.2

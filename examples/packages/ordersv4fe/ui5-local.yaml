@@ -23,15 +23,25 @@ server:
         port: 35729
         path: webapp
         delay: 300
-    - name: fiori-tools-proxy
+    - name: ui5-middleware-ui5
+      afterMiddleware: compression
+      # configuration:
+      #   modules:
+      #     ui5-cc-spreadsheetimporter:
+      #       configFile: "ui5-serve.yaml"
+    - name: ui5-tooling-modules-middleware
       afterMiddleware: compression
       configuration:
-        ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
-        backend:
-          - path: /odata/v4/Orders
-            url: http://localhost:4004
-    - name: fiori-tools-preview
-      afterMiddleware: fiori-tools-appreload
+        debug: "verbose"
+        addToNamespace: true
+        prependPathMappings: true
+    - name: ui5-middleware-simpleproxy
+      afterMiddleware: compression
+      mountPath: /odata/v4/Orders
       configuration:
-        component: ui.v4.ordersv4fe
-        ui5Theme: sap_horizon
+        baseUri: "http://localhost:4004/odata/v4/Orders"
+    # - name: fiori-tools-preview
+    #   afterMiddleware: fiori-tools-appreload
+    #   configuration:
+    #     component: ui.v4.ordersv4fe
+    #     ui5Theme: sap_horizon
