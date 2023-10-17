@@ -85,9 +85,9 @@ jobs:
         run: npm run build
 
       # update chromedriver
-      - name: update chromedriver to latest
-        run: |
-          npm run updateChromedriver
+      # - name: update chromedriver to latest
+      #   run: |
+      #     npm run updateChromedriver
 
       - name: install @sap/cds-dk
         run: |
