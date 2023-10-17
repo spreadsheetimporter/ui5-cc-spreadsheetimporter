@@ -1,12 +1,18 @@
 
 !!! warning
-        The seperate button control was deprecated and integrated in the `ui5-spreadsheet-importer` component from version `0.26.0`.
+      The seperate button control was deprecated and integrated in the `ui5-spreadsheet-importer` component from version `0.26.0`.
 
 
 ## Button in Component
 
 The usage of the [UIComponent](https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.core.UIComponent) enables the possibility to return a button with the usage of a [ComponentContainer](https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.core.ComponentContainer).  
 This has the big advantage that no separate dependency has to be installed and a button for spreadsheet upload can be integrated very easily.
+
+### Requirements
+
+- Node.js Version v16.18.0, v18.12.0 or higher  
+- npm Version v8.0.0 or higher
+- UI5 CLI v3.0.0 or higher
 
 ### Getting started
 
@@ -16,20 +22,7 @@ This has the big advantage that no separate dependency has to be installed and a
 npm install ui5-cc-spreadsheetimporter-button
 ```
 
-2\.  Add to your `package.json`:  
-:information_source: This step is not necessary from UI5 Tooling V3
-
-````json
-"ui5": {
-  "dependencies": [
-    //...
-    "ui5-cc-spreadsheetimporter-button"
-    //...
-  ]
-}
-````
-
-3\. Add `resourceRoots` to you `manifest.json` under `sap.ui5`
+2\. Add `resourceRoots` to you `manifest.json` under `sap.ui5`
    
 ⚠️ You must always keep your ui5-cc-spreadsheetimporter and button version up to date here when updating the module.
 
@@ -39,7 +32,7 @@ npm install ui5-cc-spreadsheetimporter-button
 },
 ````
 
-4\. Add `components` to you `manifest.json` under `sap.ui5.dependencies`
+3\. Add `components` to you `manifest.json` under `sap.ui5.dependencies`
    
 ⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module.
 
@@ -58,7 +51,7 @@ npm install ui5-cc-spreadsheetimporter-button
 },
 ````
 
-5\. Add `componentUsages` to you `manifest.json` under `sap.ui5`
+4\. Add `componentUsages` to you `manifest.json` under `sap.ui5`
    
 ⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module.
 
@@ -123,7 +116,7 @@ Controller: [UploadToTable.controller.js](https://github.com/marianfoo/ui5-cc-sp
 ## Deprecated Button Control
 
 !!! warning
-        This information is only relevant if you use the seperate button control version `0.11.4` and the spreadsheet importer component `0.25.4`.
+      This information is only relevant if you use the seperate button control version `0.11.4` and the spreadsheet importer component `0.25.4`.
 
 ### GitHub Repository Package
 https://github.com/marianfoo/ui5-cc-spreadsheetimporter/tree/main/packages/ui5-cc-spreadsheetimporter-button
@@ -149,20 +142,7 @@ You can use the same [properties](Configuration.md) and [events](Events.md) as i
 npm install ui5-cc-spreadsheetimporter-button
 ```
 
-2\.  Add to your `package.json`:  
-:information_source: This step is not necessary from UI5 Tooling V3
-
-````json
-"ui5": {
-  "dependencies": [
-    //...
-    "ui5-cc-spreadsheetimporter-button"
-    //...
-  ]
-}
-````
-
-3\. Add `resourceRoots` to you `manifest.json` under `sap.ui5`
+2\. Add `resourceRoots` to you `manifest.json` under `sap.ui5`
    
 ⚠️ You must always keep your ui5-cc-spreadsheetimporter and button version up to date here when updating the module.  
 Check on npmjs which ui5-cc-spreadsheetimporter version is used by the button version you want to use:   
@@ -175,7 +155,7 @@ https://www.npmjs.com/package/ui5-cc-spreadsheetimporter-button?activeTab=code
 },
 ````
 
-4\. Add `componentUsages` to you `manifest.json` under `sap.ui5`
+3\. Add `componentUsages` to you `manifest.json` under `sap.ui5`
    
 ⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module.
 
@@ -187,7 +167,7 @@ https://www.npmjs.com/package/ui5-cc-spreadsheetimporter-button?activeTab=code
 },
 ````
 
-5\. Add the namespace to your XML View
+4\. Add the namespace to your XML View
 
 ````xml
 <mvc:View
@@ -199,7 +179,7 @@ https://www.npmjs.com/package/ui5-cc-spreadsheetimporter-button?activeTab=code
 </mvc:View>
 ````
 
-6\. Add the button control to your view and define the table id
+5\. Add the button control to your view and define the table id
 
 ````xml
 <spreadsheet:SpreadsheetUpload id="spreadsheetUploadButton" text="Spreadsheet Upload Button" 

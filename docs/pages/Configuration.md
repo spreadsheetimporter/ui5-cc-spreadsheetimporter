@@ -108,7 +108,7 @@ The option only defines whether the attempt should be started. If a draft activa
 This is useful e.g. in a list report. If this option is set to `false`, all uploaded units have to be activated manually.
 
 !!! warning
-        Draft Activation for OData V2 in **OpenUI5** is not supported.
+    Draft Activation for OData V2 in **OpenUI5** is not supported.
 
 ### `batchSize`
 
