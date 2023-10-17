@@ -92,7 +92,7 @@ npm install ui5-cc-spreadsheetimporter
 ````
 
 !!! warning
-        There are different implementations for Fiori Elements depending on the OData Version
+      There are different implementations for Fiori Elements depending on the OData Version
 
 ## Starting with the Fiori Elements Application
 

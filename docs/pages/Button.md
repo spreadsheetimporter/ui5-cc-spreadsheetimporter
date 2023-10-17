@@ -1,6 +1,6 @@
 
 !!! warning
-        The seperate button control was deprecated and integrated in the `ui5-spreadsheet-importer` component from version `0.26.0`.
+      The seperate button control was deprecated and integrated in the `ui5-spreadsheet-importer` component from version `0.26.0`.
 
 
 ## Button in Component
@@ -123,7 +123,7 @@ Controller: [UploadToTable.controller.js](https://github.com/marianfoo/ui5-cc-sp
 ## Deprecated Button Control
 
 !!! warning
-        This information is only relevant if you use the seperate button control version `0.11.4` and the spreadsheet importer component `0.25.4`.
+      This information is only relevant if you use the seperate button control version `0.11.4` and the spreadsheet importer component `0.25.4`.
 
 ### GitHub Repository Package
 https://github.com/marianfoo/ui5-cc-spreadsheetimporter/tree/main/packages/ui5-cc-spreadsheetimporter-button
