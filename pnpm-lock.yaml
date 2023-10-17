@@ -431,8 +431,8 @@ importers:
         specifier: 3.2.6
         version: 3.2.6
       ui5-middleware-ui5:
-        specifier: 3.0.0-alpha.7
-        version: 3.0.0-alpha.7(bluebird@3.7.2)
+        specifier: 3.0.0-alpha.8
+        version: 3.0.0-alpha.8(bluebird@3.7.2)
       ui5-tooling-modules:
         specifier: 3.2.1
         version: 3.2.1
@@ -12404,8 +12404,8 @@ packages:
       - supports-color
     dev: true
 
-  /ui5-middleware-ui5@3.0.0-alpha.7(bluebird@3.7.2):
-    resolution: {integrity: sha512-eUmeIDRDWqHZ0Mf4BWVNSMCDivnuDmTWqoCb62nVa7RrUrBuQ846y1wKpqBx++WCG4IFeEA5zKQr65WiAWL4MA==}
+  /ui5-middleware-ui5@3.0.0-alpha.8(bluebird@3.7.2):
+    resolution: {integrity: sha512-eqmQ8HHOm0u4IzxT4aUc8NBsZGV/yYGq1nXHYbzQ4RIuW0UMCtdyH7AOoFyDd4+ILqYer6ffJBDJ9dnMX6zXJA==}
     dependencies:
       '@ui5/fs': 3.0.5
       '@ui5/project': 3.7.2(bluebird@3.7.2)

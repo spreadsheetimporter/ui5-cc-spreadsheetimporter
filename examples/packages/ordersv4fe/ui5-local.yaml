@@ -25,10 +25,10 @@ server:
         delay: 300
     - name: ui5-middleware-ui5
       afterMiddleware: compression
-      # configuration:
-      #   modules:
-      #     ui5-cc-spreadsheetimporter:
-      #       configFile: "ui5-serve.yaml"
+      configuration:
+        modules:
+          ui5-cc-spreadsheetimporter:
+            configFile: "ui5-serve.yaml"
     - name: ui5-tooling-modules-middleware
       afterMiddleware: compression
       configuration:

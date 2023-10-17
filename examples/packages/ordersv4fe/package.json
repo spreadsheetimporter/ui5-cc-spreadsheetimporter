@@ -17,7 +17,7 @@
     "@sap/ux-specification": "^1.108.16",
     "@sap/ux-ui5-tooling": "1.11.2",
     "@ui5/cli": "3.7.0",
-    "ui5-middleware-ui5": "3.0.0-alpha.7",
+    "ui5-middleware-ui5": "3.0.0-alpha.8",
     "ui5-tooling-modules": "3.2.1",
     "ui5-middleware-serveframework": "3.0.0-alpha.3",
     "ui5-middleware-simpleproxy": "3.2.6"
