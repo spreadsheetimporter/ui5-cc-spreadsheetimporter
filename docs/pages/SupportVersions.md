@@ -35,7 +35,7 @@ More info at [wdi5 tests](./Development/wdi5.md)
 |  1.71 | :white_check_mark:  |  :white_check_mark: |  :white_check_mark: | :white_check_mark: |  :white_check_mark: | :white_check_mark: |
 
 !!! warning 
-        **OpenUI5**: Draft Activation for V2 in OpenUI5 is not supported.
+     **OpenUI5**: Draft Activation for V2 in OpenUI5 is not supported.
 
 ### CAP V4
 

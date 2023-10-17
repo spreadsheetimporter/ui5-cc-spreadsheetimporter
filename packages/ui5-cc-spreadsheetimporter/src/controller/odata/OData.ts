@@ -40,6 +40,7 @@ export default abstract class OData extends ManagedObject {
 		const payloadArray = spreadsheetUploadController.payloadArray;
 		const binding = spreadsheetUploadController.binding;
 		const context = spreadsheetUploadController.context;
+		spreadsheetUploadController.errorsFound = false;
 
 		// intializing the message manager for displaying the odata response messages
 		try {
@@ -64,16 +65,17 @@ export default abstract class OData extends ManagedObject {
 				}
 				// wait for all drafts to be created
 				await this.submitChanges(model);
-				let errorsFound = await this.checkForErrors(model, binding, component.getShowBackendErrorMessages());
-				if (errorsFound) {
+				let errorsFoundLocal = await this.checkForErrors(model, binding, component.getShowBackendErrorMessages());
+				if (errorsFoundLocal) {
 					this.busyDialog.close();
+					spreadsheetUploadController.errorsFound = true;
 					break;
 				} else {
 					await this.waitForCreation();
 				}
 
 				// check for and activate all drafts and wait for all draft to be created
-				if (component.getActivateDraft() && !errorsFound) {
+				if (component.getActivateDraft() && !errorsFoundLocal) {
 					await this.waitForDraft();
 				}
 

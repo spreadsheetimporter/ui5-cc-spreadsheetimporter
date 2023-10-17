@@ -2,15 +2,31 @@
 
 There are two ways to use the Spreadsheet Upload Control.
 Since a Reuse Component (library) is basically utilised, this results in two deployment strategies that can be used.  
+
 ### Decentralized deployment
+
 The library is attached directly to each app and deployed with it.  
+
+!!! note
+    It is possible when you deploy the app you get the error:   
+    `SAPUI5 library/component cc.spreadsheetimporter.v0_28_0 used in application Z_********* not exists`  
+    Even though the fiori tools say the app is not deployed, it is deployed.
+
 ### Central deployment
+
 The Spreadsheet upload is stored directly as a library centrally, e.g. in the on-premise ABAP system.  
 For more information, please see the Page [Central Deployment](CentralDeployment.md).
 
 ## Setup
 
 Here are the manual steps how to integrate the ui5-cc-spreadsheetimporter component. For a simplified integration, a [yo generator](Generator.md) is also available.
+
+### Requirements
+
+- Node.js Version v16.18.0, v18.12.0 or higher  
+- npm Version v8.0.0 or higher
+- UI5 CLI v3.0.0 or higher
+
 ### Setup Decentralized deployment
 
 1\. Install from npm
@@ -19,31 +35,18 @@ Here are the manual steps how to integrate the ui5-cc-spreadsheetimporter compon
 npm install ui5-cc-spreadsheetimporter
 ```
 
-2\.  Add to your `package.json`:  
-:information_source: This step is not necessary from UI5 Tooling V3
+2\. Add `resourceRoots` to you `manifest.json` under `sap.ui5`
 
-````json
-"ui5": {
-  "dependencies": [
-    //...
-    "ui5-cc-spreadsheetimporter"
-    //...
-  ]
-}
-````
-
-3\. Add `resourceRoots` to you `manifest.json` under `sap.ui5`
-   
-⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module.
+!!! warning ""
+    ⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module.
 
 ````json
 "resourceRoots": {
-    "cc.spreadsheetimporter.v0_27_0": "./thirdparty/customControl/spreadsheetImporter/v0_27_0"
+    "cc.spreadsheetimporter.v0_28_0": "./thirdparty/customControl/spreadsheetImporter/v0_28_0"
 },
 ````
 
-4\. Add `--all` to your build script in the package.json  
-:information_source: This step is not necessary from UI5 Tooling V3
+3\. Add `--all` to your build script in the package.json  
 
 ````json
 "scripts": {
@@ -53,14 +56,15 @@ npm install ui5-cc-spreadsheetimporter
 },
 ````
 
-5\. Add `componentUsages` to you `manifest.json` under `sap.ui5`
-   
-⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module.
+4\. Add `componentUsages` to you `manifest.json` under `sap.ui5`
+
+!!! warning ""
+    ⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module.
 
 ````json
 "componentUsages": {
     "spreadsheetImporter": {
-        "name": "cc.spreadsheetimporter.v0_27_0"
+        "name": "cc.spreadsheetimporter.v0_28_0"
     }
 },
 ````
@@ -70,22 +74,20 @@ npm install ui5-cc-spreadsheetimporter
 1\. Execute the deployment with the version you like to use, see here [Central Deployment](CentralDeployment.md).
 
 2\. Add `componentUsages` to you `manifest.json` under `sap.ui5`
-   
-⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module.
+
+!!! warning ""
+    ⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module.
 
 ````json
 "componentUsages": {
     "spreadsheetImporter": {
-        "name": "cc.spreadsheetimporter.v0_27_0"
+        "name": "cc.spreadsheetimporter.v0_28_0"
     }
 },
 ````
 
-
-
-
-!!! warning 
-        There are different implementations for Fiori Elements depending on the OData Version
+!!! warning ""
+    There are different implementations for Fiori Elements depending on the OData Version
 
 ## Starting with the Fiori Elements Application
 
@@ -165,10 +167,9 @@ openSpreadsheetUploadDialog: async function (oEvent) {
 
 ### How could this look like
 
-see also this at the live demo https://livedemo.spreadsheet-importer.com/
+see also this at the live demo <https://livedemo.spreadsheet-importer.com/>
 
 ![Object Page with Buttons](./../images/object_page.png){ loading=lazy }
-
 
 ## Starting with Fiori Elements (OData V2)
 

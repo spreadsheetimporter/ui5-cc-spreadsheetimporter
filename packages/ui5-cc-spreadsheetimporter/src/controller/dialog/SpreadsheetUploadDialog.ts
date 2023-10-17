@@ -220,9 +220,14 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 			},
 			sActionLabel: this.util.geti18nText("uploadingFile")
 		};
+
 		// calling the oData service using extension api
 		if (this.spreadsheetUploadController.isODataV4) {
-			await this.spreadsheetUploadController.context.editFlow.securedExecution(fnAddMessage, mParameters);
+			try {
+				await this.spreadsheetUploadController.context.editFlow.securedExecution(fnAddMessage, mParameters);
+			} catch (error) {
+				Log.error("Error while calling the odata service", error as Error, "SpreadsheetUpload: onUploadSet");
+			}
 		} else {
 			try {
 				if (this.spreadsheetUploadController.context.extensionAPI) {
@@ -232,12 +237,13 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 				}
 			} catch (error) {
 				Log.error("Error while calling the odata service", error as Error, "SpreadsheetUpload: onUploadSet");
+				this.spreadsheetUploadController.errorsFound = true;
 				this.resetContent();
 			}
 		}
 
 		sourceParent.setBusy(false);
-
+		this.component.fireRequestCompleted({ success: !this.spreadsheetUploadController.errorsFound });
 		this.onCloseDialog();
 	}
 
@@ -288,7 +294,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	}
 
 	async showPreview() {
-		this.previewHandler.showPreview(this.spreadsheetUploadController.getPayloadArray());
+		this.previewHandler.showPreview(this.spreadsheetUploadController.getPayloadArray(), this.spreadsheetUploadController.typeLabelList);
 	}
 
 	onTempDownload() {
