@@ -11,7 +11,7 @@
   "main": "webapp/index.html",
   "devDependencies": {
     "@sap-ux/ui5-middleware-fe-mockserver": "^2.1.123",
-    "@sap-ux/ui5-proxy-middleware": "1.2.4",
+    "@sap-ux/ui5-proxy-middleware": "1.2.5",
     "@sap/ux-specification": "^1.108.16",
     "@sap/ux-ui5-tooling": "1.11.2",
     "@ui5/cli": "3.7.0",

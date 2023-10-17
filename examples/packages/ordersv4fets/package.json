@@ -16,11 +16,13 @@
     "@sap-ux/ui5-middleware-fe-mockserver": "^2.1.123",
     "@sap/ux-specification": "^1.108.16",
     "@sap/ux-ui5-tooling": "1.11.2",
-    "@sapui5/ts-types-esm": "~1.119.0",
-    "@typescript-eslint/eslint-plugin": "6.7.5",
-    "@typescript-eslint/parser": "6.7.5",
+    "@sapui5/ts-types-esm": "~1.119.1",
+    "@typescript-eslint/eslint-plugin": "6.8.0",
+    "@typescript-eslint/parser": "6.8.0",
     "@ui5/cli": "^3.7.0",
     "typescript": "5.2.2",
+    "ui5-middleware-ui5": "3.0.0-alpha.8",
+    "ui5-tooling-modules": "3.2.1",
     "ui5-tooling-transpile": "3.2.7"
   },
   "scripts": {
