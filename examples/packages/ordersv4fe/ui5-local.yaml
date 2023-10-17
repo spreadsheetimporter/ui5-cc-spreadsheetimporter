@@ -15,31 +15,33 @@ framework:
     - name: themelib_sap_horizon
 server:
   customMiddleware:
+    - name: ui5-middleware-serveframework
+      afterMiddleware: compression
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:
         port: 35729
         path: webapp
         delay: 300
-    - name: fiori-tools-proxy
+    - name: ui5-middleware-ui5
       afterMiddleware: compression
       configuration:
-        ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
-        backend:
-          - path: /ordersv4fe
-            url: http://localhost:4004
-    - name: sap-fe-mockserver
-      beforeMiddleware: csp
+        modules:
+          ui5-cc-spreadsheetimporter:
+            configFile: "ui5-serve.yaml"
+    - name: ui5-tooling-modules-middleware
+      afterMiddleware: compression
       configuration:
-        mountPath: /
-        services:
-          - urlPath: /ordersv4fe
-            metadataPath: ./webapp/localService/metadata.xml
-            mockdataPath: ./webapp/localService/data
-            generateMockData: true
-        annotations: []
-    - name: fiori-tools-preview
-      afterMiddleware: fiori-tools-appreload
+        debug: "verbose"
+        addToNamespace: true
+        prependPathMappings: true
+    - name: ui5-middleware-simpleproxy
+      afterMiddleware: compression
+      mountPath: /odata/v4/Orders
       configuration:
-        component: ui.v4.ordersv4fe
-        ui5Theme: sap_horizon
+        baseUri: "http://localhost:4004/odata/v4/Orders"
+    # - name: fiori-tools-preview
+    #   afterMiddleware: fiori-tools-appreload
+    #   configuration:
+    #     component: ui.v4.ordersv4fe
+    #     ui5Theme: sap_horizon

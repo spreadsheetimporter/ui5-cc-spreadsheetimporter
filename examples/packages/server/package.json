@@ -2,11 +2,11 @@
   "name": "@capire/orders",
   "version": "1.0.0",
   "dependencies": {
-    "@sap/cds": "^7.2.0",
-    "@cap-js-community/odata-v2-adapter": "1.11.6"
+    "@cap-js-community/odata-v2-adapter": "1.11.7",
+    "@sap/cds": "^7.3.0"
   },
   "devDependencies": {
-    "cds-plugin-ui5": "0.6.10"
+    "cds-plugin-ui5": "0.7.0"
   },
   "scripts": {
     "watch": "cds watch"

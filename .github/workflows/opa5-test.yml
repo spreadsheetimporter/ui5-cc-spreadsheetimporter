@@ -68,11 +68,6 @@ jobs:
       - name: copy test apps
         run: npm run copyTestApps
 
-      # update chromedriver
-      - name: update chromedriver to latest
-        run: |
-          npm run updateChromedriver
-
       - name: install @sap/cds-dk
         run: |
           npm i -g @sap/cds-dk
