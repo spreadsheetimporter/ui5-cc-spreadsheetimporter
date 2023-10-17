@@ -24,15 +24,14 @@ Following steps are currently executed in a ubuntu enviroment with matrix:
     1. With the port we can check if the app is running
 6. Run `pnpm i`
 7. Build ui5-cc-spreadsheetimporter
-8. Update also Chromedriver to latest version
-9. Start CAP Server (for all scenarios the same)
-10. Start the Scenario App
+8. Start CAP Server (for all scenarios the same)
+9.  Start the Scenario App
     1. For example, the matrix variables in `start:silent&` is used like :  
     
     `pnpm --filter ${{ matrix.scenario }}${{ matrix.ui5version }} start:silent&`  
     that can be:  
     `pnpm --filter ordersv4fe108 start`  
-11. Start wdi5 Tests
+10. Start wdi5 Tests
     
     a. First check if server and app is running
 

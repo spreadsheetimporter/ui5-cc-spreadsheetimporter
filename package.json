@@ -30,7 +30,6 @@
     "build": "pnpm --filter ui5-cc-spreadsheetimporter build",
     "replaceString": "node ./dev/replace-string.js",
     "build:watch": "node ./dev/chokidar.js",
-    "updateChromedriver": "cd examples && pnpm add chromedriver@latest --save-dev -w",
     "copyTestApps": "node ./dev/copy-example-apps.js create && pnpm i --no-frozen-lockfile --verbose",
     "deleteAllNodeModules": "node dev/util.js deleteNodeModules .",
     "deleteTestApps": "node ./dev/copy-example-apps.js  delete",
