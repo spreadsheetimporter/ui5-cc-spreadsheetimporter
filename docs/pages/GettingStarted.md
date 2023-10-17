@@ -21,6 +21,12 @@ For more information, please see the Page [Central Deployment](CentralDeployment
 
 Here are the manual steps how to integrate the ui5-cc-spreadsheetimporter component. For a simplified integration, a [yo generator](Generator.md) is also available.
 
+### Requirements
+
+- Node.js Version v16.18.0, v18.12.0 or higher  
+- npm Version v8.0.0 or higher
+- UI5 CLI v3.0.0 or higher
+
 ### Setup Decentralized deployment
 
 1\. Install from npm
@@ -29,22 +35,10 @@ Here are the manual steps how to integrate the ui5-cc-spreadsheetimporter compon
 npm install ui5-cc-spreadsheetimporter
 ```
 
-2\.  Add to your `package.json`:  
-:information_source: This step is not necessary from UI5 Tooling V3
+2\. Add `resourceRoots` to you `manifest.json` under `sap.ui5`
 
-````json
-"ui5": {
-  "dependencies": [
-    //...
-    "ui5-cc-spreadsheetimporter"
-    //...
-  ]
-}
-````
-
-3\. Add `resourceRoots` to you `manifest.json` under `sap.ui5`
-
-⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module.
+!!! warning ""
+    ⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module.
 
 ````json
 "resourceRoots": {
@@ -52,8 +46,7 @@ npm install ui5-cc-spreadsheetimporter
 },
 ````
 
-4\. Add `--all` to your build script in the package.json  
-:information_source: This step is not necessary from UI5 Tooling V3
+3\. Add `--all` to your build script in the package.json  
 
 ````json
 "scripts": {
@@ -63,9 +56,10 @@ npm install ui5-cc-spreadsheetimporter
 },
 ````
 
-5\. Add `componentUsages` to you `manifest.json` under `sap.ui5`
+4\. Add `componentUsages` to you `manifest.json` under `sap.ui5`
 
-⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module.
+!!! warning ""
+    ⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module.
 
 ````json
 "componentUsages": {
@@ -81,7 +75,8 @@ npm install ui5-cc-spreadsheetimporter
 
 2\. Add `componentUsages` to you `manifest.json` under `sap.ui5`
 
-⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module.
+!!! warning ""
+    ⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module.
 
 ````json
 "componentUsages": {
@@ -91,8 +86,8 @@ npm install ui5-cc-spreadsheetimporter
 },
 ````
 
-!!! warning
-      There are different implementations for Fiori Elements depending on the OData Version
+!!! warning ""
+    There are different implementations for Fiori Elements depending on the OData Version
 
 ## Starting with the Fiori Elements Application
 
