@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.28.1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.28.0...ui5-cc-spreadsheetimporter-v0.28.1) (2023-10-18)
+
+
+### Bug Fixes
+
+* add missing event requestCompleted to eventMethodMap ([#389](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/389)) ([51f5c04](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/51f5c042ce648707ed31a6bd0e4af6e0d4f53cb3))
+* add xlsm add upload type ([#395](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/395)) ([0ce65d1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/0ce65d10de4010d50ce6d4c02be110e9aed8513b))
+
 ## [0.28.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.27.1...ui5-cc-spreadsheetimporter-v0.28.0) (2023-10-12)
 
 
