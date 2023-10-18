@@ -34,7 +34,7 @@
             <FlexItemData growFactor="1" styleClass="centeredFlex" />
           </layoutData>
         </MessageStrip>
-        <upload:FileUploader placeholder="{i18n>spreadsheetuploadPlaceholder}" fileType="xlsx,xls,csv" change="onFileUpload" sameFilenameAllowed="true" width="100%">
+        <upload:FileUploader placeholder="{i18n>spreadsheetuploadPlaceholder}" fileType="xlsx,xls,csv,xlsm" change="onFileUpload" sameFilenameAllowed="true" width="100%">
           <upload:layoutData>
             <FlexItemData growFactor="5" styleClass="centeredFlex" />
           </upload:layoutData>
