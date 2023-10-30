@@ -226,3 +226,67 @@ openSpreadsheetUploadDialog: async function (oEvent) {
     this.getView().setBusy(false)
 }
 ````
+
+## Deployment of your app
+
+For deployment for your app, a few things should be considered:
+
+1\. Add `--all` to your build script in the package.json  
+
+````json
+"scripts": {
+// ...
+"build": "ui5 build --config=ui5.yaml --all --clean-dest --dest dist",
+// ...
+},
+````
+
+2\. File unkown when deploying the app
+
+It is possible that the ABAP system does not know how to handle ts files.  
+If you use the `deploy-to-abap` command, you can add the `exclude` option to your `ui5.yaml` file to exclude the files from the deployment:
+
+```yaml
+  customTasks:
+  - name: deploy-to-abap
+    afterTask: replaceVersion
+    configuration:
+      target:
+        url: https://XYZ.sap-system.corp:44311
+        client: 200
+        auth: basic
+      credentials:
+        username: env:XYZ_USER
+        password: env:XYZ_PASSWORD
+      app:
+        name: /TEST/SAMPLE_APP
+        package: /TEST/UPLOAD
+        transport: XYZQ300582
+      exclude:
+      - .*\.ts
+      - .*\.ts.map
+```
+
+3\. Config if you use `ui5-task-zipper`
+
+If you use the `ui5-task-zipper` task, the `ui5-cc-spreadsheetimporter` should be included in the zip file.
+
+```yaml
+builder:
+    customTasks:
+        - name: ui5-task-zipper
+          afterTask: generateComponentPreload
+          configuration:
+            archiveName: uimodule
+            includeDependencies:
+            - ui5-cc-spreadsheetimporter
+
+```
+
+4\. Error: library/component used in application does not exist
+
+When deploying the app to your ABAP system, you may get the error like this:
+`SAPUI5 library/component cc.spreadsheetimporter.v0_27_1 used in application Z*** does not exist`
+
+The application is deployed, but the Service returns an error.  
+Currently there is no workaround.
