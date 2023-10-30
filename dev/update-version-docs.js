@@ -5,6 +5,7 @@ function updateVersionInContent(content, spreadsheetUploadVersion, spreadsheetUp
   const spreadsheetImporterRegex = /(cc\.spreadsheetimporter\.|customControl\/spreadsheetimporter\/)v\d+_\d+_\d+/g;
   const spreadsheetImporterButtonRegex = /(cc\.spreadsheetimporter.button\.|customControl\/spreadsheetimporter.button\/)v\d+_\d+_\d+/g;
   const thirdpartySpreadsheetImporterRegex = /(.\.\/thirdparty\/customControl\/spreadsheetImporter\/)v\d+_\d+_\d+/g;
+  const mountPathRegex = /(mountPath: \/thirdparty\/customControl\/spreadsheetImporter\/)v\d+_\d+_\d+/;
   const ccSpreadsheetImporterRegex = /(cc\/spreadsheetimporter\/)v\d+_\d+_\d+/g;
 
 
@@ -21,6 +22,10 @@ function updateVersionInContent(content, spreadsheetUploadVersion, spreadsheetUp
   });
 
   content = content.replace(ccSpreadsheetImporterRegex, (match, p1) => {
+    return `${p1}${spreadsheetUploadVersion}`;
+  });
+
+  content = content.replace(mountPathRegex, (match, p1) => {
     return `${p1}${spreadsheetUploadVersion}`;
   });
 
@@ -72,3 +77,4 @@ function updateVersions(spreadsheetUploadVersion) {
 
 
 module.exports.updateVersions = updateVersions;
+module.exports.updateVersionInFile = updateVersionInFile;

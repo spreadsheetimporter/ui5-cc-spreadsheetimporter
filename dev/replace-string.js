@@ -14,8 +14,10 @@ const versionUnderscore = util.getVersionDots(path).replaceAll(".", "_")
 // replace strings in publish folder
 util.replaceYamlFileBuild(versionUnderscore, versionShort, versionUnderscore,'./packages/ui5-cc-spreadsheetimporter/ui5-build.yaml')
 util.replaceYamlFileBuild(versionUnderscore, versionShort, versionUnderscore,'./packages/ui5-cc-spreadsheetimporter/ui5-build-dev.yaml')
+util.replaceYamlFileServe(versionUnderscore, versionShort, versionUnderscore,'./packages/ui5-cc-spreadsheetimporter/ui5-serve.yaml')
+updateVersionDocs.updateVersionInFile('./packages/ui5-cc-spreadsheetimporter/ui5-serve.yaml', versionUnderscore, versionUnderscore)
 // create ui5.yaml with current version
-util.replaceYamlFileComponent(versionUnderscore)
+util.replaceYamlFileComponent(versionUnderscore,'./packages/ui5-cc-spreadsheetimporter/ui5.yaml')
 util.replaceYamlFileDeploy(versionUnderscore, versionUnderscore)
 util.replaceVersionManifest(versionUnderscore)
 
