@@ -28,6 +28,7 @@ These options are available and explained in detail below:
 | `availableOptions` | List of available Options to show to the user. | string[] |
 | `hideSampleData` | Leave the template file empty and do not add any sample data | boolean |
 | `sampleData` | Add a array of objects with sample data for the template | object |
+| `spreadsheetTemplateFile` | Instead of a generated spreadsheet file you can provide your own | object |
 | `useTableSelector` | Open a Table Selector dialog if multiple tables in view | boolean |
 | `componentContainerData` | Open a Table Selector dialog if multiple tables in view | boolean |
 | `debug` | Option to show more console statements and set Log Level to Debug | boolean |
@@ -324,6 +325,61 @@ sampleData: [
             decimal: "1.1"
         }
     ]
+```
+
+### `spreadsheetTemplateFile`
+
+**default:** `""`
+
+**possible values:**
+
+- local file in application
+- URL to file
+- ArrayBuffer
+
+By default the template is generated with all properties or those defined in the [`columns`](#columns) option.  
+If you want to use your own template file, you can use this option to add columns which are not being uploaded to the backend.  
+It is recommended to use the [`skipColumnsCheck`](#skipcolumnscheck) option in this case, otherwise you will get errors.  
+
+For the local file or URL, the filename is used for the download. The config [`spreadsheetFileName`](#spreadsheetfilename) will overwrite this.  
+The config [`spreadsheetFileName`](#spreadsheetfilename) will be used for ArrayBuffer value.
+
+**Example:**
+
+**local file in application**
+
+It will use `sap.ui.require.toUrl` to get the file. So make sure use the correct path including the namespace of your application.  
+Here the namespace is `ui.v4.ordersv4fe` and the file is located in the `webapp/ext` folder.
+
+`spreadsheetTemplateFile: "ui/v4/ordersv4fe/ext/ListReportOrdersTemplate.xlsx"`
+
+**URL to file**
+
+`spreadsheetTemplateFile: "https://example.com/ListReportOrdersTemplate.xlsx"`
+
+**ArrayBuffer**
+
+```javascript
+const path = "https://example.com/ListReportOrdersTemplate.xlsx";
+
+const response = await fetch(sPath);
+if (!response.ok) {
+    throw new Error("Network response was not ok " + response.statusText);
+}
+const arrayBuffer = await response.arrayBuffer();
+
+// prettier-ignore
+this.spreadsheetUpload = await this.editFlow.getView()
+        .getController()
+        .getAppComponent()
+        .createComponent({
+            usage: "spreadsheetImporter",
+            async: true,
+            componentData: {
+                context: this,
+                spreadsheetTemplateFile: arrayBuffer
+            }
+        });
 ```
 
 ### `useTableSelector`
