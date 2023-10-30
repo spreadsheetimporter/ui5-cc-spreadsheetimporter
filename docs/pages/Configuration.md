@@ -22,6 +22,7 @@ These options are available and explained in detail below:
 | `decimalSeparator` | Determines the decimal separator for numbers as string.  | string |
 | `hidePreview` | Hide the button to preview the uploaded data in the table dialog.  | boolean |
 | `skipMandatoryFieldCheck` | Skip check if fields with `mandatory` are not filled in spreadsheet file. | boolean |
+| `skipColumnsCheck` | Skip check for unkown columns which are not in the metadata | boolean |
 | `showBackendErrorMessages` | Show Backend Error Messages | boolean |
 | `showOptions` | Show Options Menu to change a few of these configurations in runtime. | boolean |
 | `availableOptions` | List of available Options to show to the user. | string[] |
@@ -254,6 +255,14 @@ This option defines whether the button to preview the uploaded data in the table
 
 This options defines wether mandatory fields defined in the metadata should be checked or not.  
 Only the option `mandatoryFields` will be checked.
+
+### `skipColumnsCheck`
+
+**default:** `false`
+
+This option determines whether or not the columns in the Spreadsheet File should be verified.  
+For instance, if there is a column named `Test column` in the Spreadsheet File, and this particular column name is absent from the metadata, an error will occur by default.  
+However, if there are columns that are not being uploaded to the backend, you can configure this option to `true` in order to bypass the verification process.
 
 ### `showBackendErrorMessages`
 
