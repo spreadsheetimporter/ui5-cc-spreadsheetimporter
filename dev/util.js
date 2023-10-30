@@ -172,9 +172,40 @@ function replaceYamlFileBuild(version, versionShort, versionSlash, filePath) {
     fs.writeFileSync(filePath, updatedYaml, 'utf8');
 }
 
-function replaceYamlFileComponent(versionSlash) {
+function replaceYamlFileServe(version, versionShort, versionSlash, filePath) {
+    // Load the specified yaml file
+    const fileContents = fs.readFileSync(filePath, 'utf8');
+
+    // Parse the YAML into a JavaScript object
+    const ui5Build = yaml.load(fileContents);
+
+    // Replace the values
+    ui5Build.server.customMiddleware.forEach(task => {
+        if (task.name === 'ui5-tooling-stringreplace-middleware') {
+            task.configuration.replace.forEach(replacement => {
+                if (replacement.placeholder === 'XXXnamespaceXXX') {
+                    replacement.value = version;
+                }
+                if (replacement.placeholder === 'XXXnamespaceShortXXX') {
+                    replacement.value = versionShort;
+                }
+                if (replacement.placeholder === 'XXXnamespaceSlashXXX') {
+                    replacement.value = versionSlash;
+                }
+            });
+        }
+    });
+
+    // Serialize the modified object back to YAML
+    const updatedYaml = yaml.dump(ui5Build, { lineWidth: -1 });
+
+    // Save the updated file
+    fs.writeFileSync(filePath, updatedYaml, 'utf8');
+}
+
+function replaceYamlFileComponent(versionSlash, path) {
 	// Load the ui5-build.yaml file
-	const fileContents = fs.readFileSync('./packages/ui5-cc-spreadsheetimporter/ui5.yaml', 'utf8');
+	const fileContents = fs.readFileSync(path, 'utf8');
 
 	// Parse the YAML into a JavaScript object
 	const ui5Build = yaml.load(fileContents);
@@ -189,7 +220,7 @@ function replaceYamlFileComponent(versionSlash) {
 	const updatedYaml = yaml.dump(ui5Build);
 
 	// Save the updated ui5-build.yaml file
-	fs.writeFileSync('./packages/ui5-cc-spreadsheetimporter/ui5.yaml', updatedYaml, 'utf8');
+	fs.writeFileSync(path, updatedYaml, 'utf8');
 
 }
 
@@ -269,6 +300,7 @@ module.exports.searchAndReplace = searchAndReplace;
 module.exports.getTestappObject = getTestappObject;
 module.exports.replaceYamlFileBuild = replaceYamlFileBuild;
 module.exports.replaceYamlFileDeploy = replaceYamlFileDeploy;
+module.exports.replaceYamlFileServe = replaceYamlFileServe;
 module.exports.replaceYamlFileComponent = replaceYamlFileComponent;
 module.exports.replaceVersionManifest = replaceVersionManifest;
 module.exports.deleteNodeModules = deleteNodeModules;
