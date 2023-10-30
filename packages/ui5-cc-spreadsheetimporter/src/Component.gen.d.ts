@@ -22,6 +22,7 @@ declare module "./Component" {
         decimalSeparator?: string | PropertyBindingInfo;
         hidePreview?: boolean | PropertyBindingInfo | `{${string}}`;
         skipMandatoryFieldCheck?: boolean | PropertyBindingInfo | `{${string}}`;
+        skipColumnsCheck?: boolean | PropertyBindingInfo | `{${string}}`;
         showBackendErrorMessages?: boolean | PropertyBindingInfo | `{${string}}`;
         showOptions?: boolean | PropertyBindingInfo | `{${string}}`;
         availableOptions?: string[] | PropertyBindingInfo | `{${string}}`;
@@ -96,6 +97,10 @@ declare module "./Component" {
         getSkipMandatoryFieldCheck(): boolean;
         setSkipMandatoryFieldCheck(skipMandatoryFieldCheck: boolean): this;
 
+        // property: skipColumnsCheck
+        getSkipColumnsCheck(): boolean;
+        setSkipColumnsCheck(skipColumnsCheck: boolean): this;
+
         // property: showBackendErrorMessages
         getShowBackendErrorMessages(): boolean;
         setShowBackendErrorMessages(showBackendErrorMessages: boolean): this;
@@ -149,53 +154,9 @@ declare module "./Component" {
         fireChangeBeforeCreate(parameters?: Component$ChangeBeforeCreateEventParameters): this;
 
         // event: requestCompleted
-
-        /**
-         * Attaches event handler "fn" to the "requestCompleted" event of this "Component".
-         *
-         * When called, the context of the event handler (its "this") will be bound to "oListener" if specified,
-         * otherwise it will be bound to this "Component" itself.
-         *
-         * @param fn The function to be called when the event occurs
-         * @param listener Context object to call the event handler with. Defaults to this "Component" itself
-         *
-         * @returns Reference to "this" in order to allow method chaining
-         */
         attachRequestCompleted(fn: (event: Component$RequestCompletedEvent) => void, listener?: object): this;
-
-        /**
-         * Attaches event handler "fn" to the "requestCompleted" event of this "Component".
-         *
-         * When called, the context of the event handler (its "this") will be bound to "oListener" if specified,
-         * otherwise it will be bound to this "Component" itself.
-         *
-         * @param data An application-specific payload object that will be passed to the event handler along with the event object when firing the event
-         * @param fn The function to be called when the event occurs
-         * @param listener Context object to call the event handler with. Defaults to this "Component" itself
-         *
-         * @returns Reference to "this" in order to allow method chaining
-         */
         attachRequestCompleted<CustomDataType extends object>(data: CustomDataType, fn: (event: Component$RequestCompletedEvent, data: CustomDataType) => void, listener?: object): this;
-
-        /**
-         * Detaches event handler "fn" from the "requestCompleted" event of this "Component".
-         *
-         * The passed function and listener object must match the ones used for event registration.
-         *
-         * @param fn The function to be called, when the event occurs
-         * @param listener Context object on which the given function had to be called
-         * @returns Reference to "this" in order to allow method chaining
-         */
         detachRequestCompleted(fn: (event: Component$RequestCompletedEvent) => void, listener?: object): this;
-
-        /**
-         * Fires event "requestCompleted" to attached listeners.
-         *
-         * @param parameters Parameters to pass along with the event
-         * @param [mParameters.success]
-         *
-         * @returns Reference to "this" in order to allow method chaining
-         */
         fireRequestCompleted(parameters?: Component$RequestCompletedEventParameters): this;
 
         // event: uploadButtonPress

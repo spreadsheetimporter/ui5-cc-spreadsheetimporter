@@ -45,6 +45,7 @@ export default class Component extends UIComponent {
 			decimalSeparator: { type: "string", defaultValue: "" },
 			hidePreview: { type: "boolean", defaultValue: false },
 			skipMandatoryFieldCheck: { type: "boolean", defaultValue: false },
+			skipColumnsCheck: { type: "boolean", defaultValue: false },
 			showBackendErrorMessages: { type: "boolean", defaultValue: false },
 			showOptions: { type: "boolean", defaultValue: false },
 			// @ts-ignore
@@ -119,6 +120,7 @@ export default class Component extends UIComponent {
 		this.setDecimalSeparator(oCompData?.decimalSeparator);
 		this.setHidePreview(oCompData?.hidePreview);
 		this.setSkipMandatoryFieldCheck(oCompData?.skipMandatoryFieldCheck);
+		this.setSkipColumnsCheck(oCompData?.skipColumnsCheck);
 		this.setShowBackendErrorMessages(oCompData?.showBackendErrorMessages);
 		this.setShowOptions(oCompData?.showOptions);
 		this.setDebug(oCompData?.debug);
@@ -199,7 +201,7 @@ export default class Component extends UIComponent {
 			uploadButtonPress: this.attachUploadButtonPress,
 			changeBeforeCreate: this.attachChangeBeforeCreate,
 			checkBeforeRead: this.attachCheckBeforeRead,
-			requestCompleted: this.attachRequestCompleted,
+			requestCompleted: this.attachRequestCompleted
 		};
 
 		for (const [eventName, attachMethod] of Object.entries(eventMethodMap)) {

@@ -146,7 +146,9 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 					this.component.getMandatoryFields(),
 					this.spreadsheetUploadController.typeLabelList
 				);
-				this.messageHandler.checkColumnNames(columnNames, this.component.getFieldMatchType(), this.spreadsheetUploadController.typeLabelList);
+				if (this.component.getSkipColumnsCheck() === false) {
+					this.messageHandler.checkColumnNames(columnNames, this.component.getFieldMatchType(), this.spreadsheetUploadController.typeLabelList);
+				}
 			}
 			this.spreadsheetUploadController.payload = spreadsheetSheetsData;
 			this.component.fireCheckBeforeRead({ sheetData: spreadsheetSheetsData });

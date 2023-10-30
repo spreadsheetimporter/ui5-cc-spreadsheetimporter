@@ -209,6 +209,9 @@ export default class SpreadsheetUpload extends ManagedObject {
 		if (options.hasOwnProperty("skipMandatoryFieldCheck")) {
 			this.component.setSkipMandatoryFieldCheck(options.skipMandatoryFieldCheck);
 		}
+		if (options.hasOwnProperty("skipColumnsCheck")) {
+			this.component.setSkipColumnsCheck(options.skipColumnsCheck);
+		}
 		if (options.hasOwnProperty("showBackendErrorMessages")) {
 			this.component.setShowBackendErrorMessages(options.showBackendErrorMessages);
 		}
