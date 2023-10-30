@@ -176,6 +176,7 @@ declare module "./Component" {
      */
     export interface Component$CheckBeforeReadEventParameters {
         sheetData?: object;
+        parsedData?: object;
         messages?: object;
     }
 

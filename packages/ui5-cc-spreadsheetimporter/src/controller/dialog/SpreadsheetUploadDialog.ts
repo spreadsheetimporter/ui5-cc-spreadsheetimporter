@@ -151,7 +151,6 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 				}
 			}
 			this.spreadsheetUploadController.payload = spreadsheetSheetsData;
-			this.component.fireCheckBeforeRead({ sheetData: spreadsheetSheetsData });
 
 			this.spreadsheetUploadController.payloadArray = isStandalone
 				? this.spreadsheetUploadController.payload
@@ -163,6 +162,8 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 						this.util,
 						this.spreadsheetUploadController.isODataV4
 				  );
+
+			this.component.fireCheckBeforeRead({ sheetData: spreadsheetSheetsData, parsedData: this.spreadsheetUploadController.payloadArray });
 
 			if (this.messageHandler.areMessagesPresent()) {
 				// show error dialog
