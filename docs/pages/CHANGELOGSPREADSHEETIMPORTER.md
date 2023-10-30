@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.29.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.28.1...ui5-cc-spreadsheetimporter-v0.29.0) (2023-10-30)
+
+
+### Features
+
+* new config to provide own template file ([#406](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/406)) ([591e284](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/591e28421f213ca515a14f405008d50488806037))
+* new config to skip columns check ([#404](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/404)) ([6a14152](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/6a14152df7790830a6a2e3b811d1effa0d87ca93))
+
+
+### Bug Fixes
+
+* add parsedData to CheckBeforeRead event ([#407](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/407)) ([110933a](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/110933a3b910fb4543f40dc2994049709f30776c))
+* hide generateTemplate in standalone ([#409](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/409)) ([b9172db](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/b9172dbbbd2e0c7dbcf15982b0f8a379e8532335))
+
 ## [0.28.1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.28.0...ui5-cc-spreadsheetimporter-v0.28.1) (2023-10-18)
 
 
