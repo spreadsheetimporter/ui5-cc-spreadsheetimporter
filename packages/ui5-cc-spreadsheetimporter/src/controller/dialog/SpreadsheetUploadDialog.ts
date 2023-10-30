@@ -299,123 +299,170 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 		this.previewHandler.showPreview(this.spreadsheetUploadController.getPayloadArray(), this.spreadsheetUploadController.typeLabelList);
 	}
 
-	onTempDownload() {
-		// create spreadsheet column list
-		let fieldMatchType = this.component.getFieldMatchType();
-		var worksheet = {} as XLSX.WorkSheet;
-		let colWidths: { wch: number }[] = []; // array to store column widths
-		let sampleData = this.component.getSampleData() as any[];
-		// if sampledata is empty add one row of empty data
-		if (!sampleData || sampleData.length === 0) {
-			sampleData = [{}];
-		}
-		const colWidthDefault = 15;
-		const colWidthDate = 20;
-		let col = 0;
-		let rows = 1;
-		if (this.component.getStandalone()) {
-			// loop over this.component.getColumns
-			for (let column of this.component.getColumns()) {
-				worksheet[XLSX.utils.encode_cell({ c: col, r: 0 })] = { v: column, t: "s" };
-				col++;
+	async onTempDownload() {
+		// check if custom template is provided, otherwise generate it
+		if (this.component.getSpreadsheetTemplateFile() !== "") {
+			try {
+				const templateFile = this.component.getSpreadsheetTemplateFile();
+				let arrayBuffer;
+				let fileName;
+
+				if (typeof templateFile === "string") {
+					// Check if the string is a HTTP/HTTPS address
+					if (templateFile.startsWith("http://") || templateFile.startsWith("https://")) {
+						const response = await fetch(templateFile);
+						if (!response.ok) {
+							throw new Error("Network response was not ok " + response.statusText);
+						}
+						fileName = templateFile.split("/").pop();
+						arrayBuffer = await response.arrayBuffer();
+					}
+					// Assume the string is a local file path
+					else {
+						const sPath = sap.ui.require.toUrl(templateFile);
+						const response = await fetch(sPath);
+						if (!response.ok) {
+							throw new Error("Network response was not ok " + response.statusText);
+						}
+						fileName = templateFile.split("/").pop();
+						arrayBuffer = await response.arrayBuffer();
+					}
+				} else if (templateFile instanceof ArrayBuffer) {
+					// If the input is already an ArrayBuffer, use it directly
+					arrayBuffer = templateFile;
+				} else {
+					throw new Error("Unsupported type for templateFile");
+				}
+
+				// spreadsheet file name wll overwrite the template file name
+				if (this.component.getSpreadsheetFileName() !== "Template.xlsx" || fileName === undefined) {
+					fileName = this.component.getSpreadsheetFileName();
+				}
+
+				Util.downloadSpreadsheetFile(arrayBuffer, fileName);
+
+				// You can now use arrayBuffer to do whatever you need
+			} catch (error) {
+				console.error("Error loading file", error);
 			}
 		} else {
-			for (let [key, value] of this.spreadsheetUploadController.typeLabelList.entries()) {
-				let cell = { v: "", t: "s" } as XLSX.CellObject;
-				let label = "";
-				if (fieldMatchType === "label") {
-					label = value.label;
-				}
-				if (fieldMatchType === "labelTypeBrackets") {
-					label = `${value.label}[${key}]`;
-				}
-				worksheet[XLSX.utils.encode_cell({ c: col, r: 0 })] = { v: label, t: "s" };
-
-				for (const [index, data] of sampleData.entries()) {
-					let sampleDataValue;
-					rows = index + 1;
-					if (data[key]) {
-						sampleDataValue = data[key];
-					}
-					if (value.type === "Edm.Boolean") {
-						cell = {
-							v: sampleDataValue ? sampleDataValue.toString() : "true",
-							t: "b"
-						};
-						colWidths.push({ wch: colWidthDefault });
-					} else if (value.type === "Edm.String") {
-						let newStr;
-						if (value.maxLength) {
-							newStr = sampleDataValue ? sampleDataValue : "test string".substring(0, value.maxLength);
-						} else {
-							newStr = sampleDataValue ? sampleDataValue : "test string";
-						}
-						cell = { v: newStr, t: "s" };
-						colWidths.push({ wch: colWidthDefault });
-					} else if (value.type === "Edm.DateTimeOffset" || value.type === "Edm.DateTime") {
-						let format;
-						const currentLang = sap.ui.getCore().getConfiguration().getLanguage();
-						if (currentLang.startsWith("en")) {
-							format = "mm/dd/yyyy hh:mm AM/PM";
-						} else {
-							format = "dd.mm.yyyy hh:mm";
-						}
-
-						cell = { v: sampleDataValue ? sampleDataValue : new Date(), t: "d", z: format };
-						colWidths.push({ wch: colWidthDate }); // set column width to 20 for this column
-					} else if (value.type === "Edm.Date") {
-						cell = {
-							v: sampleDataValue ? sampleDataValue : new Date(),
-							t: "d"
-						};
-						colWidths.push({ wch: colWidthDefault });
-					} else if (value.type === "Edm.TimeOfDay" || value.type === "Edm.Time") {
-						cell = {
-							v: sampleDataValue ? sampleDataValue : new Date(),
-							t: "d",
-							z: "hh:mm"
-						};
-						colWidths.push({ wch: colWidthDefault });
-					} else if (
-						value.type === "Edm.UInt8" ||
-						value.type === "Edm.Int16" ||
-						value.type === "Edm.Int32" ||
-						value.type === "Edm.Integer" ||
-						value.type === "Edm.Int64" ||
-						value.type === "Edm.Integer64"
-					) {
-						cell = {
-							v: sampleDataValue ? sampleDataValue : 85,
-							t: "n"
-						};
-						colWidths.push({ wch: colWidthDefault });
-					} else if (value.type === "Edm.Double" || value.type === "Edm.Decimal") {
-						const decimalSeparator = this.component.getDecimalSeparator();
-						cell = {
-							v: sampleDataValue ? sampleDataValue : `123${decimalSeparator}4`,
-							t: "n"
-						};
-						colWidths.push({ wch: colWidthDefault });
-					}
-
-					if (!this.component.getHideSampleData()) {
-						worksheet[XLSX.utils.encode_cell({ c: col, r: rows })] = cell;
-					}
-				}
-				col++;
+			// create spreadsheet column list
+			let fieldMatchType = this.component.getFieldMatchType();
+			var worksheet = {} as XLSX.WorkSheet;
+			let colWidths: { wch: number }[] = []; // array to store column widths
+			let sampleData = this.component.getSampleData() as any[];
+			// if sampledata is empty add one row of empty data
+			if (!sampleData || sampleData.length === 0) {
+				sampleData = [{}];
 			}
+			const colWidthDefault = 15;
+			const colWidthDate = 20;
+			let col = 0;
+			let rows = 1;
+			if (this.component.getStandalone()) {
+				// loop over this.component.getColumns
+				for (let column of this.component.getColumns()) {
+					worksheet[XLSX.utils.encode_cell({ c: col, r: 0 })] = { v: column, t: "s" };
+					col++;
+				}
+			} else {
+				for (let [key, value] of this.spreadsheetUploadController.typeLabelList.entries()) {
+					let cell = { v: "", t: "s" } as XLSX.CellObject;
+					let label = "";
+					if (fieldMatchType === "label") {
+						label = value.label;
+					}
+					if (fieldMatchType === "labelTypeBrackets") {
+						label = `${value.label}[${key}]`;
+					}
+					worksheet[XLSX.utils.encode_cell({ c: col, r: 0 })] = { v: label, t: "s" };
+
+					for (const [index, data] of sampleData.entries()) {
+						let sampleDataValue;
+						rows = index + 1;
+						if (data[key]) {
+							sampleDataValue = data[key];
+						}
+						if (value.type === "Edm.Boolean") {
+							cell = {
+								v: sampleDataValue ? sampleDataValue.toString() : "true",
+								t: "b"
+							};
+							colWidths.push({ wch: colWidthDefault });
+						} else if (value.type === "Edm.String") {
+							let newStr;
+							if (value.maxLength) {
+								newStr = sampleDataValue ? sampleDataValue : "test string".substring(0, value.maxLength);
+							} else {
+								newStr = sampleDataValue ? sampleDataValue : "test string";
+							}
+							cell = { v: newStr, t: "s" };
+							colWidths.push({ wch: colWidthDefault });
+						} else if (value.type === "Edm.DateTimeOffset" || value.type === "Edm.DateTime") {
+							let format;
+							const currentLang = sap.ui.getCore().getConfiguration().getLanguage();
+							if (currentLang.startsWith("en")) {
+								format = "mm/dd/yyyy hh:mm AM/PM";
+							} else {
+								format = "dd.mm.yyyy hh:mm";
+							}
+
+							cell = { v: sampleDataValue ? sampleDataValue : new Date(), t: "d", z: format };
+							colWidths.push({ wch: colWidthDate }); // set column width to 20 for this column
+						} else if (value.type === "Edm.Date") {
+							cell = {
+								v: sampleDataValue ? sampleDataValue : new Date(),
+								t: "d"
+							};
+							colWidths.push({ wch: colWidthDefault });
+						} else if (value.type === "Edm.TimeOfDay" || value.type === "Edm.Time") {
+							cell = {
+								v: sampleDataValue ? sampleDataValue : new Date(),
+								t: "d",
+								z: "hh:mm"
+							};
+							colWidths.push({ wch: colWidthDefault });
+						} else if (
+							value.type === "Edm.UInt8" ||
+							value.type === "Edm.Int16" ||
+							value.type === "Edm.Int32" ||
+							value.type === "Edm.Integer" ||
+							value.type === "Edm.Int64" ||
+							value.type === "Edm.Integer64"
+						) {
+							cell = {
+								v: sampleDataValue ? sampleDataValue : 85,
+								t: "n"
+							};
+							colWidths.push({ wch: colWidthDefault });
+						} else if (value.type === "Edm.Double" || value.type === "Edm.Decimal") {
+							const decimalSeparator = this.component.getDecimalSeparator();
+							cell = {
+								v: sampleDataValue ? sampleDataValue : `123${decimalSeparator}4`,
+								t: "n"
+							};
+							colWidths.push({ wch: colWidthDefault });
+						}
+
+						if (!this.component.getHideSampleData()) {
+							worksheet[XLSX.utils.encode_cell({ c: col, r: rows })] = cell;
+						}
+					}
+					col++;
+				}
+			}
+			worksheet["!ref"] = XLSX.utils.encode_range({ s: { c: 0, r: 0 }, e: { c: col, r: sampleData.length } });
+			worksheet["!cols"] = colWidths; // assign the column widths to the worksheet
+
+			// creating the new spreadsheet work book
+			const wb = XLSX.utils.book_new();
+			// set the file value
+			XLSX.utils.book_append_sheet(wb, worksheet, "Tabelle1");
+			// download the created spreadsheet file
+			XLSX.writeFile(wb, this.component.getSpreadsheetFileName());
+
+			MessageToast.show(this.util.geti18nText("downloadingTemplate"));
 		}
-		worksheet["!ref"] = XLSX.utils.encode_range({ s: { c: 0, r: 0 }, e: { c: col, r: sampleData.length } });
-		worksheet["!cols"] = colWidths; // assign the column widths to the worksheet
-
-		// creating the new spreadsheet work book
-		const wb = XLSX.utils.book_new();
-		// set the file value
-		XLSX.utils.book_append_sheet(wb, worksheet, "Tabelle1");
-		// download the created spreadsheet file
-		XLSX.writeFile(wb, this.component.getSpreadsheetFileName());
-
-		MessageToast.show(this.util.geti18nText("downloadingTemplate"));
 	}
 
 	onOpenOptionsDialog() {

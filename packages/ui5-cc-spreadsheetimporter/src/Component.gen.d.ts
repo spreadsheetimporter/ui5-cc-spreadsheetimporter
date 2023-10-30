@@ -28,6 +28,7 @@ declare module "./Component" {
         availableOptions?: string[] | PropertyBindingInfo | `{${string}}`;
         hideSampleData?: boolean | PropertyBindingInfo | `{${string}}`;
         sampleData?: object | PropertyBindingInfo | `{${string}}`;
+        spreadsheetTemplateFile?: any | PropertyBindingInfo | `{${string}}`;
         useTableSelector?: boolean | PropertyBindingInfo | `{${string}}`;
         readAllSheets?: boolean | PropertyBindingInfo | `{${string}}`;
         readSheet?: any | PropertyBindingInfo | `{${string}}`;
@@ -120,6 +121,10 @@ declare module "./Component" {
         // property: sampleData
         getSampleData(): object;
         setSampleData(sampleData: object): this;
+
+        // property: spreadsheetTemplateFile
+        getSpreadsheetTemplateFile(): any;
+        setSpreadsheetTemplateFile(spreadsheetTemplateFile: any): this;
 
         // property: useTableSelector
         getUseTableSelector(): boolean;

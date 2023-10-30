@@ -52,6 +52,7 @@ export default class Component extends UIComponent {
 			availableOptions: { type: "string[]", defaultValue: [] },
 			hideSampleData: { type: "boolean", defaultValue: false },
 			sampleData: { type: "object" },
+			spreadsheetTemplateFile: { type: "any", defaultValue: "" },
 			useTableSelector: { type: "boolean", defaultValue: false },
 			readAllSheets: { type: "boolean", defaultValue: false },
 			readSheet: { type: "any", defaultValue: 0 },
@@ -126,6 +127,7 @@ export default class Component extends UIComponent {
 		this.setDebug(oCompData?.debug);
 		this.setAvailableOptions(oCompData?.availableOptions);
 		this.setSampleData(oCompData?.sampleData);
+		this.setSpreadsheetTemplateFile(oCompData?.spreadsheetTemplateFile);
 		this.setUseTableSelector(oCompData?.useTableSelector);
 		this.setHideSampleData(oCompData?.hideSampleData);
 		this.setComponentContainerData(oCompData?.componentContainerData);

@@ -227,6 +227,9 @@ export default class SpreadsheetUpload extends ManagedObject {
 		if (options.hasOwnProperty("sampleData")) {
 			this.component.setSampleData(options.sampleData);
 		}
+		if (options.hasOwnProperty("spreadsheetTemplateFile")) {
+			this.component.setSpreadsheetTemplateFile(options.spreadsheetTemplateFile);
+		}
 		if (options.hasOwnProperty("hideSampleData")) {
 			this.component.setHideSampleData(options.hideSampleData);
 		}

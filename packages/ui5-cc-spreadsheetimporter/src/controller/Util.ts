@@ -163,4 +163,18 @@ export default class Util extends ManagedObject {
 	static extractObjects(objects: any[]): Record<string, any>[] {
 		return objects.map((obj) => obj.getObject());
 	}
+
+	static downloadSpreadsheetFile(arrayBuffer: ArrayBuffer, fileName: string): void {
+		const blob: Blob = new Blob([arrayBuffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+		const url: string = URL.createObjectURL(blob);
+
+		const a: HTMLAnchorElement = document.createElement("a");
+		a.href = url;
+		a.download = fileName;
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+
+		URL.revokeObjectURL(url);
+	}
 }
