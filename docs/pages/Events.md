@@ -16,7 +16,7 @@ It checks whether the price is over 100.
 ````javascript
 this.spreadsheetUpload.attachCheckBeforeRead(function(oEvent) {
     // example
-    const sheetdata = oEvent.getParameter("sheetdata");
+    const sheetdata = oEvent.getParameter("sheetData");
     let errorArray = [];
     for (const [index, row] of sheetdata.entries()) {
         //check for invalid price

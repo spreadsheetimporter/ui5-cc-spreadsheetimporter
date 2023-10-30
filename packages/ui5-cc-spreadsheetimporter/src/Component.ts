@@ -71,6 +71,7 @@ export default class Component extends UIComponent {
 			checkBeforeRead: {
 				parameters: {
 					sheetData: { type: "object" },
+					parsedData: { type: "object" },
 					messages: { type: "object" }
 				}
 			},
