@@ -63,7 +63,8 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 				dataRows: 0,
 				strict: this.component.getStrict(),
 				hidePreview: this.component.getHidePreview(),
-				showOptions: this.component.getShowOptions()
+				showOptions: this.component.getShowOptions(),
+				hideGenerateTemplateButton: false
 			});
 			this.spreadsheetUploadDialog = (await Fragment.load({
 				name: "cc.spreadsheetimporter.XXXnamespaceXXX.fragment.SpreadsheetUpload",
@@ -79,8 +80,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 			this.spreadsheetUploadDialog.attachAvailableOptionsChanged(this.onAvailableOptionsChanged.bind(this));
 		}
 		if (this.component.getStandalone() && this.component.getColumns().length === 0) {
-			(this.spreadsheetUploadDialog.getSubHeader() as Bar).setVisible(false);
-			(this.spreadsheetUploadDialog.getSubHeader() as Bar).getContentLeft()[0].setVisible(false);
+			this.spreadsheetOptionsModel.setProperty("/hideGenerateTemplateButton", true);
 		}
 	}
 
