@@ -18,7 +18,7 @@
           usage="spreadsheetImporter"
           propagateModel="true"
           async="true"
-          settings="{componentContainerData:{uploadButtonPress:'uploadButtonPress',buttonText:'Excel Upload'}}"
+          settings="{componentContainerData:{uploadButtonPress:'uploadButtonPress',requestCompleted:'onRequestCompleted',buttonText:'Excel Upload'}}"
         />
       <Table
           id="lineItemsList"

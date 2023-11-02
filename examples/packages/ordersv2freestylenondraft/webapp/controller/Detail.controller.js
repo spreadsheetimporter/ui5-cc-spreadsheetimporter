@@ -230,6 +230,15 @@ sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel", "../model/form
 			//oEvent.preventDefault();
 		},
 
+		onRequestCompleted(oEvent) {
+			const success = oEvent.getParameter("success");
+			if (success) {
+				console.log("Request Completed");
+			} else {
+				console.log("Request Failed");
+			}
+		},
+
 		_onMetadataLoaded: function () {
 			// Store original busy indicator delay for the detail view
 			var iOriginalViewBusyDelay = this.getView().getBusyIndicatorDelay(),

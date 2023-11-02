@@ -19,7 +19,8 @@ sap.ui.define([], function () {
 						componentData: {
 							context: this,
 							activateDraft: true,
-							readSheet: "XXSelectorXX"
+							readSheet: "XXSelectorXX",
+							standalone:true
 						}
 					});
 
