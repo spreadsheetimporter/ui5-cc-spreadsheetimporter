@@ -148,6 +148,31 @@ importers:
         specifier: 3.2.1
         version: 3.2.1
 
+  examples/packages/ordersv2fe108:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.1.123
+        version: 2.1.123
+      '@sap/ux-specification':
+        specifier: ^1.108.16
+        version: 1.108.16
+      '@sap/ux-ui5-tooling':
+        specifier: 1.11.2
+        version: 1.11.2
+      '@ui5/cli':
+        specifier: 3.7.0
+        version: 3.7.0(bluebird@3.7.2)
+      ui5-middleware-ui5:
+        specifier: 3.0.0-alpha.8
+        version: 3.0.0-alpha.8(bluebird@3.7.2)
+      ui5-tooling-modules:
+        specifier: 3.2.1
+        version: 3.2.1
+
   examples/packages/ordersv2fe71:
     dependencies:
       ui5-cc-spreadsheetimporter:
@@ -166,6 +191,12 @@ importers:
       '@ui5/cli':
         specifier: 3.7.0
         version: 3.7.0(bluebird@3.7.2)
+      ui5-middleware-ui5:
+        specifier: 3.0.0-alpha.8
+        version: 3.0.0-alpha.8(bluebird@3.7.2)
+      ui5-tooling-modules:
+        specifier: 3.2.1
+        version: 3.2.1
 
   examples/packages/ordersv2fe84:
     dependencies:
@@ -185,6 +216,12 @@ importers:
       '@ui5/cli':
         specifier: 3.7.0
         version: 3.7.0(bluebird@3.7.2)
+      ui5-middleware-ui5:
+        specifier: 3.0.0-alpha.8
+        version: 3.0.0-alpha.8(bluebird@3.7.2)
+      ui5-tooling-modules:
+        specifier: 3.2.1
+        version: 3.2.1
 
   examples/packages/ordersv2fe96:
     dependencies:
@@ -204,8 +241,39 @@ importers:
       '@ui5/cli':
         specifier: 3.7.0
         version: 3.7.0(bluebird@3.7.2)
+      ui5-middleware-ui5:
+        specifier: 3.0.0-alpha.8
+        version: 3.0.0-alpha.8(bluebird@3.7.2)
+      ui5-tooling-modules:
+        specifier: 3.2.1
+        version: 3.2.1
 
   examples/packages/ordersv2fenondraft:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.1.123
+        version: 2.1.123
+      '@sap/ux-specification':
+        specifier: ^1.108.16
+        version: 1.108.16
+      '@sap/ux-ui5-tooling':
+        specifier: 1.11.2
+        version: 1.11.2
+      '@ui5/cli':
+        specifier: 3.7.0
+        version: 3.7.0(bluebird@3.7.2)
+      ui5-middleware-ui5:
+        specifier: 3.0.0-alpha.8
+        version: 3.0.0-alpha.8(bluebird@3.7.2)
+      ui5-tooling-modules:
+        specifier: 3.2.1
+        version: 3.2.1
+
+  examples/packages/ordersv2fenondraft108:
     dependencies:
       ui5-cc-spreadsheetimporter:
         specifier: link:../../../packages/ui5-cc-spreadsheetimporter
@@ -248,6 +316,12 @@ importers:
       '@ui5/cli':
         specifier: 3.7.0
         version: 3.7.0(bluebird@3.7.2)
+      ui5-middleware-ui5:
+        specifier: 3.0.0-alpha.8
+        version: 3.0.0-alpha.8(bluebird@3.7.2)
+      ui5-tooling-modules:
+        specifier: 3.2.1
+        version: 3.2.1
 
   examples/packages/ordersv2fenondraft84:
     dependencies:
@@ -267,6 +341,12 @@ importers:
       '@ui5/cli':
         specifier: 3.7.0
         version: 3.7.0(bluebird@3.7.2)
+      ui5-middleware-ui5:
+        specifier: 3.0.0-alpha.8
+        version: 3.0.0-alpha.8(bluebird@3.7.2)
+      ui5-tooling-modules:
+        specifier: 3.2.1
+        version: 3.2.1
 
   examples/packages/ordersv2fenondraft96:
     dependencies:
@@ -286,8 +366,36 @@ importers:
       '@ui5/cli':
         specifier: 3.7.0
         version: 3.7.0(bluebird@3.7.2)
+      ui5-middleware-ui5:
+        specifier: 3.0.0-alpha.8
+        version: 3.0.0-alpha.8(bluebird@3.7.2)
+      ui5-tooling-modules:
+        specifier: 3.2.1
+        version: 3.2.1
 
   examples/packages/ordersv2freestylenondraft:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.1.123
+        version: 2.1.123
+      '@sap/ux-ui5-tooling':
+        specifier: 1.11.2
+        version: 1.11.2
+      '@ui5/cli':
+        specifier: 3.7.0
+        version: 3.7.0(bluebird@3.7.2)
+      ui5-middleware-ui5:
+        specifier: 3.0.0-alpha.8
+        version: 3.0.0-alpha.8(bluebird@3.7.2)
+      ui5-tooling-modules:
+        specifier: 3.2.1
+        version: 3.2.1
+
+  examples/packages/ordersv2freestylenondraft108:
     dependencies:
       ui5-cc-spreadsheetimporter:
         specifier: link:../../../packages/ui5-cc-spreadsheetimporter
@@ -324,6 +432,12 @@ importers:
       '@ui5/cli':
         specifier: 3.7.0
         version: 3.7.0(bluebird@3.7.2)
+      ui5-middleware-ui5:
+        specifier: 3.0.0-alpha.8
+        version: 3.0.0-alpha.8(bluebird@3.7.2)
+      ui5-tooling-modules:
+        specifier: 3.2.1
+        version: 3.2.1
 
   examples/packages/ordersv2freestylenondraft84:
     dependencies:
@@ -340,6 +454,12 @@ importers:
       '@ui5/cli':
         specifier: 3.7.0
         version: 3.7.0(bluebird@3.7.2)
+      ui5-middleware-ui5:
+        specifier: 3.0.0-alpha.8
+        version: 3.0.0-alpha.8(bluebird@3.7.2)
+      ui5-tooling-modules:
+        specifier: 3.2.1
+        version: 3.2.1
 
   examples/packages/ordersv2freestylenondraft96:
     dependencies:
@@ -356,6 +476,12 @@ importers:
       '@ui5/cli':
         specifier: 3.7.0
         version: 3.7.0(bluebird@3.7.2)
+      ui5-middleware-ui5:
+        specifier: 3.0.0-alpha.8
+        version: 3.0.0-alpha.8(bluebird@3.7.2)
+      ui5-tooling-modules:
+        specifier: 3.2.1
+        version: 3.2.1
 
   examples/packages/ordersv2freestylenondraftopenui5:
     dependencies:
@@ -394,6 +520,12 @@ importers:
       '@ui5/cli':
         specifier: 3.7.0
         version: 3.7.0(bluebird@3.7.2)
+      ui5-middleware-ui5:
+        specifier: 3.0.0-alpha.8
+        version: 3.0.0-alpha.8(bluebird@3.7.2)
+      ui5-tooling-modules:
+        specifier: 3.2.1
+        version: 3.2.1
 
   examples/packages/ordersv2freestylenondraftopenui584:
     dependencies:
@@ -410,6 +542,12 @@ importers:
       '@ui5/cli':
         specifier: 3.7.0
         version: 3.7.0(bluebird@3.7.2)
+      ui5-middleware-ui5:
+        specifier: 3.0.0-alpha.8
+        version: 3.0.0-alpha.8(bluebird@3.7.2)
+      ui5-tooling-modules:
+        specifier: 3.2.1
+        version: 3.2.1
 
   examples/packages/ordersv2freestylenondraftopenui596:
     dependencies:
@@ -426,8 +564,45 @@ importers:
       '@ui5/cli':
         specifier: 3.7.0
         version: 3.7.0(bluebird@3.7.2)
+      ui5-middleware-ui5:
+        specifier: 3.0.0-alpha.8
+        version: 3.0.0-alpha.8(bluebird@3.7.2)
+      ui5-tooling-modules:
+        specifier: 3.2.1
+        version: 3.2.1
 
   examples/packages/ordersv4fe:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.1.123
+        version: 2.1.123
+      '@sap/ux-specification':
+        specifier: ^1.108.16
+        version: 1.108.16
+      '@sap/ux-ui5-tooling':
+        specifier: 1.11.2
+        version: 1.11.2
+      '@ui5/cli':
+        specifier: 3.7.0
+        version: 3.7.0(bluebird@3.7.2)
+      ui5-middleware-serveframework:
+        specifier: 3.0.0-alpha.3
+        version: 3.0.0-alpha.3(bluebird@3.7.2)
+      ui5-middleware-simpleproxy:
+        specifier: 3.2.6
+        version: 3.2.6
+      ui5-middleware-ui5:
+        specifier: 3.0.0-alpha.8
+        version: 3.0.0-alpha.8(bluebird@3.7.2)
+      ui5-tooling-modules:
+        specifier: 3.2.1
+        version: 3.2.1
+
+  examples/packages/ordersv4fe108:
     dependencies:
       ui5-cc-spreadsheetimporter:
         specifier: link:../../../packages/ui5-cc-spreadsheetimporter
@@ -476,6 +651,18 @@ importers:
       '@ui5/cli':
         specifier: 3.7.0
         version: 3.7.0(bluebird@3.7.2)
+      ui5-middleware-serveframework:
+        specifier: 3.0.0-alpha.3
+        version: 3.0.0-alpha.3(bluebird@3.7.2)
+      ui5-middleware-simpleproxy:
+        specifier: 3.2.6
+        version: 3.2.6
+      ui5-middleware-ui5:
+        specifier: 3.0.0-alpha.8
+        version: 3.0.0-alpha.8(bluebird@3.7.2)
+      ui5-tooling-modules:
+        specifier: 3.2.1
+        version: 3.2.1
 
   examples/packages/ordersv4fe84:
     dependencies:
@@ -495,6 +682,18 @@ importers:
       '@ui5/cli':
         specifier: 3.7.0
         version: 3.7.0(bluebird@3.7.2)
+      ui5-middleware-serveframework:
+        specifier: 3.0.0-alpha.3
+        version: 3.0.0-alpha.3(bluebird@3.7.2)
+      ui5-middleware-simpleproxy:
+        specifier: 3.2.6
+        version: 3.2.6
+      ui5-middleware-ui5:
+        specifier: 3.0.0-alpha.8
+        version: 3.0.0-alpha.8(bluebird@3.7.2)
+      ui5-tooling-modules:
+        specifier: 3.2.1
+        version: 3.2.1
 
   examples/packages/ordersv4fe96:
     dependencies:
@@ -514,6 +713,18 @@ importers:
       '@ui5/cli':
         specifier: 3.7.0
         version: 3.7.0(bluebird@3.7.2)
+      ui5-middleware-serveframework:
+        specifier: 3.0.0-alpha.3
+        version: 3.0.0-alpha.3(bluebird@3.7.2)
+      ui5-middleware-simpleproxy:
+        specifier: 3.2.6
+        version: 3.2.6
+      ui5-middleware-ui5:
+        specifier: 3.0.0-alpha.8
+        version: 3.0.0-alpha.8(bluebird@3.7.2)
+      ui5-tooling-modules:
+        specifier: 3.2.1
+        version: 3.2.1
 
   examples/packages/ordersv4fets:
     dependencies:
@@ -7320,7 +7531,7 @@ packages:
       fs.realpath: 1.0.0
       inflight: 1.0.6
       inherits: 2.0.4
-      minimatch: 3.0.8
+      minimatch: 3.1.2
       once: 1.4.0
       path-is-absolute: 1.0.1
     dev: true
@@ -9531,7 +9742,7 @@ packages:
     engines: {node: '>=10'}
     requiresBuild: true
     dependencies:
-      semver: 7.5.3
+      semver: 7.5.4
     dev: true
     optional: true
 
@@ -12659,7 +12870,7 @@ packages:
       pupa: 2.1.1
       registry-auth-token: 5.0.2
       registry-url: 5.1.0
-      semver: 7.5.3
+      semver: 7.5.4
       semver-diff: 3.1.1
       xdg-basedir: 4.0.0
     dev: true
