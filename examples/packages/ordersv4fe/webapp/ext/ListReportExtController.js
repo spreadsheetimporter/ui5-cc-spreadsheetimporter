@@ -18,9 +18,7 @@ sap.ui.define([], function () {
 						async: true,
 						componentData: {
 							context: this,
-							activateDraft: true,
-							readSheet: "XXSelectorXX",
-							standalone:true
+							activateDraft: true
 						}
 					});
 

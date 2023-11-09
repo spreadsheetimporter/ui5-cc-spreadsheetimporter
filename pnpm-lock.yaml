@@ -505,6 +505,28 @@ importers:
         specifier: 3.2.1
         version: 3.2.1
 
+  examples/packages/ordersv2freestylenondraftopenui5108:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.1.123
+        version: 2.1.123
+      '@sap/ux-ui5-tooling':
+        specifier: 1.11.2
+        version: 1.11.2
+      '@ui5/cli':
+        specifier: 3.7.0
+        version: 3.7.0(bluebird@3.7.2)
+      ui5-middleware-ui5:
+        specifier: 3.0.0-alpha.8
+        version: 3.0.0-alpha.8(bluebird@3.7.2)
+      ui5-tooling-modules:
+        specifier: 3.2.1
+        version: 3.2.1
+
   examples/packages/ordersv2freestylenondraftopenui571:
     dependencies:
       ui5-cc-spreadsheetimporter:
