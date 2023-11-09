@@ -822,27 +822,9 @@ importers:
       cds-plugin-ui5:
         specifier: 0.7.0
         version: 0.7.0(@sap/cds@7.3.0)(bluebird@3.7.2)(express@4.18.2)
-
-  examples/packages/server/app/ordersv4fecds:
-    devDependencies:
-      '@sap-ux/ui5-middleware-fe-mockserver':
-        specifier: ^2.1.123
-        version: 2.1.123
-      '@sap-ux/ui5-proxy-middleware':
-        specifier: 1.2.5
-        version: 1.2.5
-      '@sap/ux-specification':
-        specifier: ^1.108.16
-        version: 1.108.16
-      '@sap/ux-ui5-tooling':
-        specifier: 1.11.2
-        version: 1.11.2
-      '@ui5/cli':
-        specifier: 3.7.0
-        version: 3.7.0(bluebird@3.7.2)
-      ui5-middleware-simpleproxy:
-        specifier: 3.2.6
-        version: 3.2.6
+      ordersv4fe120:
+        specifier: '*'
+        version: link:../ordersv4fe
 
   packages/ui5-cc-spreadsheetimporter:
     dependencies:
@@ -3330,6 +3312,7 @@ packages:
       lodash: 4.17.21
       winston: 3.7.2
       winston-transport: 4.5.0
+    dev: false
 
   /@sap-ux/odata-service-writer@0.14.35:
     resolution: {integrity: sha512-as45fZaFYi4YJwQ8bZ2U9Vkoc4WyFppmhexvV5qIQojjEnRDXLsVP3KRqQri4mDGBvDEWDJ0+FLZ7Uu78N7qEA==}
@@ -3415,29 +3398,13 @@ packages:
       '@sap-ux/yaml': 0.13.9
       lodash: 4.17.21
       semver: 7.5.4
+    dev: false
 
   /@sap-ux/ui5-middleware-fe-mockserver@2.1.123:
     resolution: {integrity: sha512-TF9j3qUthGTLYYO/UGqk3w4aT2wj5L2tL0j9DbjjJnc6YETDZBU4xuwIb9jGVo0u2cvHigvs3V9zFZlKp3Ng1w==}
     dependencies:
       '@sap-ux/fe-mockserver-core': 1.1.119
     transitivePeerDependencies:
-      - supports-color
-    dev: true
-
-  /@sap-ux/ui5-proxy-middleware@1.2.5:
-    resolution: {integrity: sha512-iUHLTqw+QvGwHRzVOFi04kH53AF1nIY8LCH2vvoqrFsNkx5Ia87vAieMRdvE1aV7JOoQthdJXEOb5dlHkmvAVA==}
-    engines: {node: '>= 14.16.0 < 15.0.0 || >=16.1.0 < 17.0.0 || >=18.0.0 < 19.0.0', pnpm: '>=6.26.1 < 7.0.0 || >=7.1.0'}
-    dependencies:
-      '@sap-ux/logger': 0.3.9
-      '@sap-ux/ui5-config': 0.19.5
-      dotenv: 16.3.1
-      http-proxy-middleware: 2.0.6
-      https-proxy-agent: 5.0.1
-      i18next: 20.3.2
-      proxy-from-env: 1.1.0
-    transitivePeerDependencies:
-      - '@types/express'
-      - debug
       - supports-color
     dev: true
 
@@ -3460,6 +3427,7 @@ packages:
     dependencies:
       lodash: 4.17.21
       yaml: 2.2.2
+    dev: false
 
   /@sap/cds-compiler@4.3.0:
     resolution: {integrity: sha512-2eHduMHpc8XqGJW1uJWK+JACbwYaTIXSkbu+uVP1Kxxo0YMABdkAN7b7rGuzwd2qbDy2hMwdrswu14xp3ZMSDw==}
