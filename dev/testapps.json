@@ -312,21 +312,6 @@
     "copyVersions": []
   },
   {
-    "rootAppName": "ordersv4fecds",
-    "id": "ui.v4.ordersv4fe",
-    "port": "4004",
-    "versionMinor": 120,
-    "appTitel": "Orders V4 FE CDS 120",
-    "path": "./examples/packages/server/app/",
-    "testMapping": {
-      "specs": [
-        "../test/specs/all/**.test.js",
-        "../test/specs/v4/**.test.js"
-      ]
-    },
-    "copyVersions": []
-  },
-  {
     "rootAppName": "ordersv4fpm",
     "port": "8084",
     "versionMinor": 120,
