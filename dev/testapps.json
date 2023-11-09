@@ -187,7 +187,7 @@
     },
     "copyVersions": [
       {
-        "version": "1.96.21",
+        "version": "1.108.19",
         "versionMinor": 108,
         "port": "8106",
         "appTitel": "Orders V2 FS ND OP 108",
