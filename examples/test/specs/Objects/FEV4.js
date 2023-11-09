@@ -47,6 +47,7 @@ class FEV4 {
 			// only for version 84
 			valueText = await field.getText();
 		}
+		valueText = valueText.replace(this.unicodeSpaceRegex, " ");
 		return valueText.toString();
 	}
 

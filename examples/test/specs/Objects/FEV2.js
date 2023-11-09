@@ -3,6 +3,8 @@ const FE = require("./FE");
 
 class FEV2 {
 	constructor() {
+		this.unicodeSpaceRegex = /[\u0020\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\u202F]/g;
+
 		this.BaseClass = new Base();
 		this.rootId = "ui.v2.ordersv2fe::sap.suite.ui.generic.template.";
 		this.listReportId = this.rootId + "ListReport.view.ListReport::Orders--";
@@ -31,6 +33,7 @@ class FEV2 {
 	async getFieldValue(fieldName) {
 		const field = await $(`//*[@id="ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::OrderItems--com.sap.vocabularies.UI.v1.Identification::${fieldName}::Field-text"]`);
 		let value = await field.getText();
+		value = value.replace(this.unicodeSpaceRegex, " ");
 		return value;
 	}
 
@@ -99,6 +102,8 @@ class FEV2 {
 		const date = await binding.getValue();
 		let formattedDate = await date.toLocaleString("en-US", options);
 		let valueText = await field.getText();
+		valueText = valueText.replace(this.unicodeSpaceRegex, " ");
+		formattedDate = formattedDate.replace(this.unicodeSpaceRegex, " ");
 		return { valueText: valueText, formattedDate: formattedDate };
 	}
 
