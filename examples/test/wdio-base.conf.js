@@ -14,12 +14,7 @@ for (let index = 0; index < process.argv.length; index++) {
 const testappObject = util.getTestappObject(scenario, version);
 const specs = testappObject["testMapping"]["specs"];
 const port = testappObject.port;
-let baseUrl;
-if (scenario !== "ordersv4fecds") {
-	baseUrl = `http://localhost:${port}/index.html?sap-language=EN`;
-} else {
-	baseUrl = "http://localhost:4004/ui.v4.ordersv4fecds/index.html";
-}
+let baseUrl = `http://localhost:${port}/index.html?sap-language=EN`;
 global.scenario = scenario;
 
 module.exports.config = {
