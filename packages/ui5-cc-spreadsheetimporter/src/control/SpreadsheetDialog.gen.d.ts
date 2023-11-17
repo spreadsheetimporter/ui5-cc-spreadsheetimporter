@@ -3,72 +3,66 @@ import { PropertyBindingInfo } from "sap/ui/base/ManagedObject";
 import { $DialogSettings } from "sap/m/Dialog";
 
 declare module "./SpreadsheetDialog" {
-	/**
-	 * Interface defining the settings object used in constructor calls
-	 */
-	interface $SpreadsheetDialogSettings extends $DialogSettings {
-		decimalSeparator?: string | PropertyBindingInfo;
-		availableOptions?: string[] | PropertyBindingInfo | `{${string}}`;
-		component?: object | PropertyBindingInfo | `{${string}}`;
-		decimalSeparatorChanged?: (event: SpreadsheetDialog$DecimalSeparatorChangedEvent) => void;
-		availableOptionsChanged?: (event: SpreadsheetDialog$AvailableOptionsChangedEvent) => void;
-	}
 
-	export default interface SpreadsheetDialog {
-		// property: decimalSeparator
-		getDecimalSeparator(): string;
-		setDecimalSeparator(decimalSeparator: string): this;
+    /**
+     * Interface defining the settings object used in constructor calls
+     */
+    interface $SpreadsheetDialogSettings extends $DialogSettings {
+        decimalSeparator?: string | PropertyBindingInfo;
+        availableOptions?: string[] | PropertyBindingInfo | `{${string}}`;
+        component?: object | PropertyBindingInfo | `{${string}}`;
+        decimalSeparatorChanged?: (event: SpreadsheetDialog$DecimalSeparatorChangedEvent) => void;
+        availableOptionsChanged?: (event: SpreadsheetDialog$AvailableOptionsChangedEvent) => void;
+    }
 
-		// property: availableOptions
-		getAvailableOptions(): string[];
-		setAvailableOptions(availableOptions: string[]): this;
+    export default interface SpreadsheetDialog {
 
-		// property: component
-		getComponent(): object;
-		setComponent(component: object): this;
+        // property: decimalSeparator
+        getDecimalSeparator(): string;
+        setDecimalSeparator(decimalSeparator: string): this;
 
-		// event: decimalSeparatorChanged
-		attachDecimalSeparatorChanged(fn: (event: SpreadsheetDialog$DecimalSeparatorChangedEvent) => void, listener?: object): this;
-		attachDecimalSeparatorChanged<CustomDataType extends object>(
-			data: CustomDataType,
-			fn: (event: SpreadsheetDialog$DecimalSeparatorChangedEvent, data: CustomDataType) => void,
-			listener?: object
-		): this;
-		detachDecimalSeparatorChanged(fn: (event: SpreadsheetDialog$DecimalSeparatorChangedEvent) => void, listener?: object): this;
-		fireDecimalSeparatorChanged(parameters?: SpreadsheetDialog$DecimalSeparatorChangedEventParameters): this;
+        // property: availableOptions
+        getAvailableOptions(): string[];
+        setAvailableOptions(availableOptions: string[]): this;
 
-		// event: availableOptionsChanged
-		attachAvailableOptionsChanged(fn: (event: SpreadsheetDialog$AvailableOptionsChangedEvent) => void, listener?: object): this;
-		attachAvailableOptionsChanged<CustomDataType extends object>(
-			data: CustomDataType,
-			fn: (event: SpreadsheetDialog$AvailableOptionsChangedEvent, data: CustomDataType) => void,
-			listener?: object
-		): this;
-		detachAvailableOptionsChanged(fn: (event: SpreadsheetDialog$AvailableOptionsChangedEvent) => void, listener?: object): this;
-		fireAvailableOptionsChanged(parameters?: SpreadsheetDialog$AvailableOptionsChangedEventParameters): this;
-	}
+        // property: component
+        getComponent(): object;
+        setComponent(component: object): this;
 
-	/**
-	 * Interface describing the parameters of SpreadsheetDialog's 'decimalSeparatorChanged' event.
-	 */
-	export interface SpreadsheetDialog$DecimalSeparatorChangedEventParameters {
-		decimalSeparator?: string;
-	}
+        // event: decimalSeparatorChanged
+        attachDecimalSeparatorChanged(fn: (event: SpreadsheetDialog$DecimalSeparatorChangedEvent) => void, listener?: object): this;
+        attachDecimalSeparatorChanged<CustomDataType extends object>(data: CustomDataType, fn: (event: SpreadsheetDialog$DecimalSeparatorChangedEvent, data: CustomDataType) => void, listener?: object): this;
+        detachDecimalSeparatorChanged(fn: (event: SpreadsheetDialog$DecimalSeparatorChangedEvent) => void, listener?: object): this;
+        fireDecimalSeparatorChanged(parameters?: SpreadsheetDialog$DecimalSeparatorChangedEventParameters): this;
 
-	/**
-	 * Interface describing the parameters of SpreadsheetDialog's 'availableOptionsChanged' event.
-	 */
-	export interface SpreadsheetDialog$AvailableOptionsChangedEventParameters {
-		availableOptions?: string[];
-	}
+        // event: availableOptionsChanged
+        attachAvailableOptionsChanged(fn: (event: SpreadsheetDialog$AvailableOptionsChangedEvent) => void, listener?: object): this;
+        attachAvailableOptionsChanged<CustomDataType extends object>(data: CustomDataType, fn: (event: SpreadsheetDialog$AvailableOptionsChangedEvent, data: CustomDataType) => void, listener?: object): this;
+        detachAvailableOptionsChanged(fn: (event: SpreadsheetDialog$AvailableOptionsChangedEvent) => void, listener?: object): this;
+        fireAvailableOptionsChanged(parameters?: SpreadsheetDialog$AvailableOptionsChangedEventParameters): this;
+    }
 
-	/**
-	 * Type describing the SpreadsheetDialog's 'decimalSeparatorChanged' event.
-	 */
-	export type SpreadsheetDialog$DecimalSeparatorChangedEvent = Event<SpreadsheetDialog$DecimalSeparatorChangedEventParameters>;
+    /**
+     * Interface describing the parameters of SpreadsheetDialog's 'decimalSeparatorChanged' event.
+     */
+    export interface SpreadsheetDialog$DecimalSeparatorChangedEventParameters {
+        decimalSeparator?: string;
+    }
 
-	/**
-	 * Type describing the SpreadsheetDialog's 'availableOptionsChanged' event.
-	 */
-	export type SpreadsheetDialog$AvailableOptionsChangedEvent = Event<SpreadsheetDialog$AvailableOptionsChangedEventParameters>;
+    /**
+     * Interface describing the parameters of SpreadsheetDialog's 'availableOptionsChanged' event.
+     */
+    export interface SpreadsheetDialog$AvailableOptionsChangedEventParameters {
+        availableOptions?: string[];
+    }
+
+    /**
+     * Type describing the SpreadsheetDialog's 'decimalSeparatorChanged' event.
+     */
+    export type SpreadsheetDialog$DecimalSeparatorChangedEvent = Event<SpreadsheetDialog$DecimalSeparatorChangedEventParameters>;
+
+    /**
+     * Type describing the SpreadsheetDialog's 'availableOptionsChanged' event.
+     */
+    export type SpreadsheetDialog$AvailableOptionsChangedEvent = Event<SpreadsheetDialog$AvailableOptionsChangedEventParameters>;
 }

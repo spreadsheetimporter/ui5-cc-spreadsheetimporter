@@ -10,23 +10,29 @@ package-lock.json
 packages/ui5-cc-spreadsheetimporter/webapp
 dev/thirdparty
 # test apps start
+/examples/packages/ordersv2fe108
 /examples/packages/ordersv2fe96
 /examples/packages/ordersv2fe84
+/examples/packages/ordersv4fe108
 /examples/packages/ordersv4fe96
 /examples/packages/ordersv4fe84
 /examples/packages/ordersv2fe71
+/examples/packages/ordersv2fenondraft108
 /examples/packages/ordersv2fenondraft96
 /examples/packages/ordersv2fenondraft84
 /examples/packages/ordersv2fenondraft71
+/examples/packages/ordersv2freestyle108
 /examples/packages/ordersv2freestyle96
 /examples/packages/ordersv2freestyle84
 /examples/packages/ordersv2freestyle71
 /examples/packages/ordersv2freestylenondraft71
 /examples/packages/ordersv2freestylenondraft84
 /examples/packages/ordersv2freestylenondraft96
+/examples/packages/ordersv2freestylenondraft108
 /examples/packages/ordersv2freestylenondraftopenui571
 /examples/packages/ordersv2freestylenondraftopenui584
 /examples/packages/ordersv2freestylenondraftopenui596
+/examples/packages/ordersv2freestylenondraftopenui5108
 /examples/packages/ordersv4fe71
 /examples/packages/ordersv4fpm96
 # test apps end

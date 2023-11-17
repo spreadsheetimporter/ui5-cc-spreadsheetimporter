@@ -8,7 +8,7 @@ function getPortByAppVersion(rootAppName, versionMinor) {
 	// Iterate through the objects in the JSON data
 	json_data.forEach((obj) => {
 		if (obj.rootAppName === rootAppName) {
-            if(versionMinor === 108){
+            if(versionMinor === 120){
                 port = obj.port;
                 return
             }

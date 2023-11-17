@@ -47,6 +47,7 @@ class FEV4 {
 			// only for version 84
 			valueText = await field.getText();
 		}
+		valueText = valueText.replace(this.unicodeSpaceRegex, " ");
 		return valueText.toString();
 	}
 
@@ -56,7 +57,7 @@ class FEV4 {
 				id: `ui.v4.ordersv4fe::Orders_ItemsObjectPage--fe::FormContainer::Identification::FormElement::DataField::${attribute}::Field`
 			}
 		});
-		const binding = await field.exec(() => this.getBindingContext());
+		const binding = await field.getBindingContext();
 		const object = await binding.getObject();
 		const date = new Date(object[attribute]);
 		let formattedDate = await date.toLocaleString("en-US", options);
