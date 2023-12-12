@@ -15,7 +15,7 @@ To install the `@spreadsheetimporter/ui5-cc-spreadsheetimporter-pro` package dir
 4. Choose **Personal access tokens** from the left sidebar.
 5. Click **Generate new token**.
 6. Provide a descriptive name for the token in the **Note** field.
-7. Under **scopes**, select the `repo` checkbox to allow access to private repositories.
+7. Under **scopes**, select the `repo` and `read:packages` checkbox to allow access to private repositories and packages.
 8. Click **Generate token**.
 9. Copy the generated token. **Note**: This is your only chance to copy the token. If lost, you'll have to create a new one.
 
