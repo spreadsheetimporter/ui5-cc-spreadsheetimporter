@@ -31,13 +31,24 @@ export interface Messages {
 	formattedValue?: string;
 	ui5type: MessageType;
 	description?: string;
+	details?: MessagesDetails[];
+}
+
+export interface MessagesDetails {
+	row?: number;
+	description?: string;
 }
 
 export interface GroupedMessage {
 	title: string;
 	description?: string;
-	ui5type: MessageType;
+	ui5type?: MessageType;
+	details?: MessagesDetails[];
 }
+
+export type TransformedItem = {
+	[key in keyof typeof headerMapping]: string | number;
+};
 
 export type Payload = {
 	[key: string]: any;

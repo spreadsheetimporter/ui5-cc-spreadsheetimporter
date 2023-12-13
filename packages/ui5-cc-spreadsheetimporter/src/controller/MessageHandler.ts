@@ -1,6 +1,6 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 import Dialog from "sap/m/Dialog";
-import { Messages, ListObject, ArrayData, PayloadArray, GroupedMessage } from "../types";
+import { Messages, ListObject, ArrayData, PayloadArray, GroupedMessage, MessagesDetails, TransformedItem } from "../types";
 import SpreadsheetUpload from "./SpreadsheetUpload";
 import Util from "./Util";
 import Fragment from "sap/ui/core/Fragment";
@@ -193,7 +193,7 @@ export default class MessageHandler extends ManagedObject {
 		const counterLargerThanOne = messages.filter((message) => message.counter !== 0);
 		const parsingMessages = counterLargerThanOne.filter((message) => message.type.group === true);
 
-		const messageGroups = parsingMessages.reduce<{ [key: string]: string[] }>((groups, message) => {
+		const messageGroups = parsingMessages.reduce<{ [key: string]: MessagesDetails[] }>((groups, message) => {
 			let messageText = "";
 			if (!groups[message.title]) {
 				groups[message.title] = [];
@@ -205,17 +205,19 @@ export default class MessageHandler extends ManagedObject {
 			} else {
 				messageText = this.spreadsheetUploadController.util.geti18nText("errorInRow", [message.row]);
 			}
-			groups[message.title].push(messageText);
+			groups[message.title].push({ description: messageText, row: message.row });
 			return groups;
 		}, {});
 
 		const groupedMessages: GroupedMessage[] = [];
-		for (const title in messageGroups) {
-			const ui5type = messages.find((message) => message.title === title)?.ui5type || ("" as MessageType);
+		for (const messageKeyTitle in messageGroups) {
+			const messageArray = messageGroups[messageKeyTitle];
+			const ui5type = messages.find((message) => message.title === messageKeyTitle)?.ui5type || ("" as MessageType);
 			groupedMessages.push({
-				title: title,
-				description: messageGroups[title].join("\n"),
-				ui5type: ui5type
+				title: messageKeyTitle,
+				description: messageArray.map((message) => message.description).join("\n"),
+				ui5type: ui5type,
+				details: messageArray
 			});
 		}
 
@@ -252,27 +254,36 @@ export default class MessageHandler extends ManagedObject {
 		const flattenedData: any[] = [];
 
 		messages.forEach((item) => {
-			// Split the description by line breaks or use the original description
-			const descriptions = item.description ? item.description.split("\n") : [item.description || ""];
-
-			descriptions.forEach((desc) => {
-				// Extract row number from the description
-				const rowMatch = desc.match(/row (\d+)/i);
-				const rowNumber = rowMatch ? parseInt(rowMatch[1], 10) : null;
-
-				// Create a new object based on headerMapping
-				const transformedItem: any = {};
+			// if details are present, the messages are grouped
+			if (item.details?.length > 0) {
+				item.details?.forEach((detail) => {
+					// Create a new object based on headerMapping
+					const transformedItem: TransformedItem = {};
+					for (const key in headerMapping) {
+						if (key === "description") {
+							transformedItem[headerMapping[key]] = detail.description;
+						} else if (key === "rowNumber") {
+							transformedItem[headerMapping[key]] = detail.row;
+						} else if (item.hasOwnProperty(key)) {
+							transformedItem[headerMapping[key]] = item[key];
+						}
+					}
+					flattenedData.push(transformedItem);
+				});
+			} else {
+				// no details, just add the message
+				const transformedItem = {};
 				for (const key in headerMapping) {
 					if (key === "description") {
-						transformedItem[headerMapping[key]] = desc;
+						transformedItem[headerMapping[key]] = item.title;
 					} else if (key === "rowNumber") {
-						transformedItem[headerMapping[key]] = rowNumber;
+						transformedItem[headerMapping[key]] = item.row;
 					} else if (item.hasOwnProperty(key)) {
 						transformedItem[headerMapping[key]] = item[key];
 					}
 				}
 				flattenedData.push(transformedItem);
-			});
+			}
 		});
 
 		// Convert the flattened data to a worksheet
