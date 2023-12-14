@@ -23,12 +23,6 @@ jobs:
           #   ui5version: 84
           # - scenario: ordersv4fets
           #   ui5version: 96
-          # - scenario: ordersv4fecds
-          #   ui5version: 71
-          # - scenario: ordersv4fecds
-          #   ui5version: 84
-          # - scenario: ordersv4fecds
-          #   ui5version: 96
 
     steps:
       # - name: update chrome
