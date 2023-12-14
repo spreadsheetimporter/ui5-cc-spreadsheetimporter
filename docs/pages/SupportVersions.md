@@ -1,6 +1,7 @@
 # Supported Versions
 
-The goal is to support as many versions and environments as possible, especially all versions in long-term maintenance. 
+The goal is to test in as many versions and environments as possible, especially all versions in long-term maintenance. 
+Even though the tests are currently only in CAP, every OData Service including the `metadata.xml` is supported. That includes OData Services created with CAP, RAP and SEGW. That means, as long you using UI5 version `1.71`, you can also use this in ECC or S/4HANA.
 
 Here is an overview of the apps that were created and passed the smoke test. 
 

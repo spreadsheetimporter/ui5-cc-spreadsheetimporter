@@ -7,11 +7,6 @@ Since a Reuse Component (library) is basically utilised, this results in two dep
 
 The library is attached directly to each app and deployed with it.  
 
-!!! note
-    It is possible when you deploy the app you get the error:   
-    `SAPUI5 library/component cc.spreadsheetimporter.v0_29_0 used in application Z_********* not exists`  
-    Even though the fiori tools say the app is not deployed, it is deployed.
-
 ### Central deployment
 
 The Spreadsheet upload is stored directly as a library centrally, e.g. in the on-premise ABAP system.  
@@ -68,6 +63,19 @@ npm install ui5-cc-spreadsheetimporter
     }
 },
 ````
+
+5\. **Optional** Avoid error `component does not exist`
+
+If you deploy your app to a SAP System with the Fiori Tools, you can get the error `component does not exist`.  
+Even though a error appears, the app is deployed anyway.
+
+To avoid this error, you can add the following to your `manifest.json` file:
+
+```json
+"sap.app": {
+"embeds": ["thirdparty/customControl/spreadsheetImporter/v0_29_0"]
+}
+```
 
 ### Setup Central deployment
 

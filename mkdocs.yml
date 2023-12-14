@@ -22,6 +22,7 @@ nav:
   - Pro:
       - Getting Started: pages/Pro/install.md
       - Spreadsheet Download: pages/Pro/spreadsheetdownload.md
+      - Deep Create: pages/Pro/deepcreate.md
   - Development:
       - Getting Started: pages/Development/GettingStarted.md
       - wdi5 Tests: pages/Development/wdi5.md
