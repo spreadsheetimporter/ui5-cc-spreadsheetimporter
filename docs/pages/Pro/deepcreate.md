@@ -5,7 +5,6 @@ With this feature you are able to upload a spreadsheet to create with multiple e
 | Option | Description | Details |
 | ------ | --- | --- |
 | `operation` | Choose which method to upload data you want to use | string |
-| `rootEntityType` | The root entity type | object |
 | `flatSheet` | Upload data in one  | object |
 | `columns` | Choose which data is uploaded | object |
 
@@ -17,7 +16,6 @@ componentData: {
     pro: {
         operation: "deepCreate",
         deepCreateConfig:{ 
-            rootEntityType: "OrderService.Orders",
             flatSheet:false,
             columns : {
                 "OrderNo":{
@@ -58,7 +56,16 @@ Currently available options: `create`, `deepCreate`
 
 This option defines which method to upload data you want to use. 
 
-### rootEntityType
+### flatSheet
+
+**default:** `false`
+
+This option defines if you want to upload data in one sheet or multiple sheets.  
+By default every entity is in a separate sheet. If you want to upload data in one sheet, set this option to `true`.
+
+### columns
+
+This option defines which data is uploaded.
 
 
 
