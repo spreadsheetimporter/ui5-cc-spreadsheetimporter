@@ -298,7 +298,8 @@ This Option defines which option the user can influence.
 
 **default:** `false`
 
-Leave the template file empty and do not add any sample data.
+Leave the template file empty and do not add any sample data.  
+This will overwrite the [`sampleData`](#sampledata) option.
 
 ### `sampleData`
 
@@ -306,7 +307,8 @@ Leave the template file empty and do not add any sample data.
 
 This option defines the sample data that is displayed in the template file.  
 If no sample data is defined, the sample data is generated automatically.  
-Add a object array using the propeerty names as attribute.
+Add a object array using the property names as attribute.  
+Only sample data will be visible in the template file, no other generated data.
 
 **Example:**
 
