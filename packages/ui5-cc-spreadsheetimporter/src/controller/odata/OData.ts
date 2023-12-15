@@ -92,6 +92,7 @@ export default abstract class OData extends ManagedObject {
 			this.busyDialog.close();
 			this.resetContexts();
 			Log.error("Error while calling the odata service", error as Error, "SpreadsheetUpload: callOdata");
+			this.checkForODataErrors(component.getShowBackendErrorMessages());
 			fnReject(error);
 		}
 	}
@@ -171,6 +172,23 @@ export default abstract class OData extends ManagedObject {
 		this.busyDialog.setModel(spreadsheetUploadController.component.getModel("device"), "device");
 		this.busyDialog.setModel(spreadsheetUploadController.component.getModel("i18n"), "i18n");
 		this.busyDialog.open();
+	}
+
+	private checkForODataErrors(showBackendErrorMessages: Boolean) {
+		if (showBackendErrorMessages) {
+			// sap.ui.core.Messaging is only available in UI5 version 1.118 and above, prefer this over sap.ui.getCore().getMessageManager()
+			if (sap.ui.core.Messaging) {
+				const messages = sap.ui.core.Messaging.getMessageModel().getData();
+				if (messages.length > 0) {
+					this.odataMessageHandler.displayMessages(messages);
+				}
+			} else {
+				const messages = sap.ui.getCore().getMessageManager().getMessageModel().getData();
+				if (messages.length > 0) {
+					this.odataMessageHandler.displayMessages(messages);
+				}
+			}
+		}
 	}
 
 	public get tables(): any[] {

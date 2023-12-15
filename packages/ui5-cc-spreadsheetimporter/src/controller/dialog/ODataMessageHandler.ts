@@ -3,6 +3,7 @@ import Dialog from "sap/m/Dialog";
 import { Messages } from "../../types";
 import SpreadsheetUpload from "../SpreadsheetUpload";
 import Fragment from "sap/ui/core/Fragment";
+import JSONModel from "sap/ui/model/json/JSONModel";
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -20,7 +21,8 @@ export default class ODataMessageHandler extends ManagedObject {
 	/**
 	 * Display messages.
 	 */
-	async displayMessages() {
+	async displayMessages(messageData: any) {
+		const messageModel = new JSONModel(messageData);
 		if (!this.messageDialog) {
 			this.messageDialog = (await Fragment.load({
 				name: "cc.spreadsheetimporter.XXXnamespaceXXX.fragment.ODataMessagesDialog",
@@ -29,7 +31,8 @@ export default class ODataMessageHandler extends ManagedObject {
 			})) as Dialog;
 		}
 		this.messageDialog.setModel(this.spreadsheetUploadController.componentI18n, "i18n");
-		this.messageDialog.setModel(sap.ui.getCore().getMessageManager().getMessageModel(), "message");
+		this.messageDialog.setModel(messageModel, "message");
+		// this.messageDialog.setModel(Message, "message");
 		this.messageDialog.open();
 	}
 
