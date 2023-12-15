@@ -54,7 +54,7 @@ modules:
     build-result: dist
     builder: custom
     commands:
-    - npm install
+    - pnpm i
     - npm run build:cf
     supported-platforms: []
 resources:
