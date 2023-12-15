@@ -352,8 +352,10 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 			var worksheet = {} as XLSX.WorkSheet;
 			let colWidths: { wch: number }[] = []; // array to store column widths
 			let sampleData = this.component.getSampleData() as any[];
+			let sampleDataDefined = true;
 			// if sampledata is empty add one row of empty data
 			if (!sampleData || sampleData.length === 0) {
+				sampleDataDefined = false;
 				sampleData = [{}];
 			}
 			const colWidthDefault = 15;
@@ -385,8 +387,12 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 							sampleDataValue = data[key];
 						}
 						if (value.type === "Edm.Boolean") {
+							// Set default value for sampleDataValue based on sampleDataDefined flag
+							let defaultValue = sampleDataDefined ? "" : "true";
+							// Assign sampleDataValue only if sampleDataValue is not undefined
+							sampleDataValue = sampleDataValue ? sampleDataValue.toString() : defaultValue;
 							cell = {
-								v: sampleDataValue ? sampleDataValue.toString() : "true",
+								v: sampleDataValue,
 								t: "b"
 							};
 							colWidths.push({ wch: colWidthDefault });
@@ -397,7 +403,11 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 							} else {
 								newStr = sampleDataValue ? sampleDataValue : "test string";
 							}
-							cell = { v: newStr, t: "s" };
+							// Set default value for sampleDataValue based on sampleDataDefined flag
+							let defaultValue = sampleDataDefined ? "" : newStr;
+							// Assign sampleDataValue only if sampleDataValue is not undefined
+							sampleDataValue = sampleDataValue ? sampleDataValue : defaultValue;
+							cell = { v: sampleDataValue, t: "s" };
 							colWidths.push({ wch: colWidthDefault });
 						} else if (value.type === "Edm.DateTimeOffset" || value.type === "Edm.DateTime") {
 							let format;
@@ -408,18 +418,36 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 								format = "dd.mm.yyyy hh:mm";
 							}
 
-							cell = { v: sampleDataValue ? sampleDataValue : new Date(), t: "d", z: format };
+							// Set default value for sampleDataValue based on sampleDataDefined flag
+							let defaultValue = sampleDataDefined ? "" : new Date();
+							// Assign sampleDataValue only if sampleDataValue is not undefined
+							sampleDataValue = sampleDataValue ? sampleDataValue : defaultValue;
+							// if sampleDataValue is empty and cellFormat is "d", Excel Generation fails
+							let cellFormat: XLSX.ExcelDataType = sampleDataValue ? "d" : "s";
+							cell = { v: sampleDataValue, t: cellFormat, z: format };
 							colWidths.push({ wch: colWidthDate }); // set column width to 20 for this column
 						} else if (value.type === "Edm.Date") {
+							// Set default value for sampleDataValue based on sampleDataDefined flag
+							let defaultValue = sampleDataDefined ? "" : new Date();
+							// Assign sampleDataValue only if sampleDataValue is not undefined
+							sampleDataValue = sampleDataValue ? sampleDataValue.toString() : defaultValue;
+							// if sampleDataValue is empty and cellFormat is "d", Excel Generation fails
+							let cellFormat: XLSX.ExcelDataType = sampleDataValue ? "d" : "s";
 							cell = {
-								v: sampleDataValue ? sampleDataValue : new Date(),
-								t: "d"
+								v: sampleDataValue,
+								t: cellFormat
 							};
 							colWidths.push({ wch: colWidthDefault });
 						} else if (value.type === "Edm.TimeOfDay" || value.type === "Edm.Time") {
+							// Set default value for sampleDataValue based on sampleDataDefined flag
+							let defaultValue = sampleDataDefined ? "" : new Date();
+							// Assign sampleDataValue only if sampleDataValue is not undefined
+							sampleDataValue = sampleDataValue ? sampleDataValue : defaultValue;
+							// if sampleDataValue is empty and cellFormat is "d", Excel Generation fails
+							let cellFormat: XLSX.ExcelDataType = sampleDataValue ? "d" : "s";
 							cell = {
-								v: sampleDataValue ? sampleDataValue : new Date(),
-								t: "d",
+								v: sampleDataValue,
+								t: cellFormat,
 								z: "hh:mm"
 							};
 							colWidths.push({ wch: colWidthDefault });
@@ -431,15 +459,23 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 							value.type === "Edm.Int64" ||
 							value.type === "Edm.Integer64"
 						) {
+							// Set default value for sampleDataValue based on sampleDataDefined flag
+							let defaultValue = sampleDataDefined ? "" : 85;
+							// Assign sampleDataValue only if sampleDataValue is not undefined
+							sampleDataValue = sampleDataValue ? sampleDataValue : defaultValue;
 							cell = {
-								v: sampleDataValue ? sampleDataValue : 85,
+								v: sampleDataValue,
 								t: "n"
 							};
 							colWidths.push({ wch: colWidthDefault });
 						} else if (value.type === "Edm.Double" || value.type === "Edm.Decimal") {
 							const decimalSeparator = this.component.getDecimalSeparator();
+							// Set default value for sampleDataValue based on sampleDataDefined flag
+							let defaultValue = sampleDataDefined ? "" : `123${decimalSeparator}4`;
+							// Assign sampleDataValue only if sampleDataValue is not undefined
+							sampleDataValue = sampleDataValue ? sampleDataValue.toString() : defaultValue;
 							cell = {
-								v: sampleDataValue ? sampleDataValue : `123${decimalSeparator}4`,
+								v: sampleDataValue,
 								t: "n"
 							};
 							colWidths.push({ wch: colWidthDefault });
