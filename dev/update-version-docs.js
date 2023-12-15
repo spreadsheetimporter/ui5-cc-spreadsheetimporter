@@ -7,6 +7,9 @@ function updateVersionInContent(content, spreadsheetUploadVersion, spreadsheetUp
   const thirdpartySpreadsheetImporterRegex = /(.\.\/thirdparty\/customControl\/spreadsheetImporter\/)v\d+_\d+_\d+/g;
   const mountPathRegex = /(mountPath: \/thirdparty\/customControl\/spreadsheetImporter\/)v\d+_\d+_\d+/;
   const ccSpreadsheetImporterRegex = /(cc\/spreadsheetimporter\/)v\d+_\d+_\d+/g;
+  const newSpreadsheetImporterRegex = /spreadsheetimporter_v\d+_\d+_\d+/g;
+
+
 
 
   content = content.replace(spreadsheetImporterRegex, (match, p1) => {
@@ -28,6 +31,12 @@ function updateVersionInContent(content, spreadsheetUploadVersion, spreadsheetUp
   content = content.replace(mountPathRegex, (match, p1) => {
     return `${p1}${spreadsheetUploadVersion}`;
   });
+
+  content = content.replace(newSpreadsheetImporterRegex, (match, p1) => {
+    return `spreadsheetimporter_${spreadsheetUploadVersion}`;
+  });
+
+  content = content.replace(newSpreadsheetImporterRegex, `spreadsheetimporter_${spreadsheetUploadVersion}`);
 
   return content;
 }
@@ -58,15 +67,20 @@ function updateVersionInDir(dirPath, spreadsheetUploadVersion, spreadsheetUpload
     }
 
     entries.forEach((entry) => {
+      if (entry.name === 'node_modules') {
+        return; // Skip the node_modules directory
+      }
+
       const fullPath = path.join(dirPath, entry.name);
       if (entry.isDirectory()) {
         updateVersionInDir(fullPath, spreadsheetUploadVersion, spreadsheetUploadButtonVersion);
-      } else if (entry.isFile() && (path.extname(fullPath) === '.md') || (path.extname(fullPath) === '.js') || (path.extname(fullPath) === '.ts')) {
+      } else if (entry.isFile() && ['.md', '.js', '.ts'].includes(path.extname(fullPath))) {
         updateVersionInFile(fullPath, spreadsheetUploadVersion, spreadsheetUploadButtonVersion);
       }
     });
   });
 }
+
 
 function updateVersions(spreadsheetUploadVersion) {
   const docsPath = './docs';
