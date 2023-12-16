@@ -115,7 +115,7 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 
 		var annotations = this.spreadsheetUploadController.context.getModel().getMetaModel().getData()["$Annotations"];
 		const properties = this.spreadsheetUploadController.context.getModel().getMetaModel().getData()[odataType];
-		const messagesPath = annotations[odataType]["@com.sap.vocabularies.Common.v1.Messages"];
+		const messagesPath = annotations[odataType]?.["@com.sap.vocabularies.Common.v1.Messages"] ?? undefined;
 
 		const propertiesFiltered = Object.entries(properties).filter(([propertyName, propertyValue]) => (propertyValue as any)["$kind"] === "Property");
 		for (const [propertyName, propertyValue] of propertiesFiltered) {
