@@ -5,6 +5,8 @@ import MessageBox from "sap/m/MessageBox";
 import { RowData, ValueData } from "../types";
 import Component from "../Component";
 import { FieldMatchType } from "../enums";
+import ObjectPool from "sap/ui/base/ObjectPool";
+import Event from "sap/ui/base/Event";
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
@@ -176,5 +178,40 @@ export default class Util extends ManagedObject {
 		document.body.removeChild(a);
 
 		URL.revokeObjectURL(url);
+	}
+
+	/**
+	 * Asynchronously fires an event with the given name and parameters on the specified component.
+	 * With this method, async methods can be attached and also sync methods
+	 * instead of the standard generated fireEvent methods, we call the methods directly
+	 * using promises to wait for the event handlers to complete
+	 *
+	 * @param eventName - The name of the event to be fired.
+	 * @param eventParameters - The parameters to be passed to the event handlers.
+	 * @param component - The component on which the event is fired.
+	 * @returns A promise that resolves when all event handlers have completed.
+	 */
+	static async fireEventAsync(eventName: String, eventParameters: object, component: Component) {
+		let aEventListeners,
+			oEvent,
+			promises = [];
+
+		const eventPool = new ObjectPool(Event);
+
+		aEventListeners = component.mEventRegistry[eventName];
+
+		if (Array.isArray(aEventListeners)) {
+			// Avoid issues with 'concurrent modification' (e.g. if an event listener unregisters itself).
+			aEventListeners = aEventListeners.slice();
+			oEvent = eventPool.borrowObject(eventName, component, eventParameters); // borrow event lazily
+
+			for (let oInfo of aEventListeners) {
+				// Assuming each handler returns a promise
+				promises.push(oInfo.fFunction.call(null, oEvent));
+			}
+		}
+
+		// Wait for all promises (i.e., async handlers) to resolve
+		return Promise.all(promises);
 	}
 }
