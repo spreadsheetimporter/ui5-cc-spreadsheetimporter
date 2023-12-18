@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.29.1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.29.0...ui5-cc-spreadsheetimporter-v0.29.1) (2023-12-16)
+
+
+### Bug Fixes
+
+* add missing row number in excel log file ([#421](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/421)) ([6b05df3](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/6b05df3a6d16d8b46b2a0fc19441cebc172c9d7a))
+* avoid error when annotation not found ([#430](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/430)) ([a989e5f](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/a989e5f3ee8552e20badf7d0f440cc76f4c90829))
+* better error handling on backend errors ([#426](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/426)) ([7541ab9](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/7541ab98c5f7dbe105a388121a4cf195c2adf285))
+* sampleData only if defined ([#428](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/428)) ([dfdacb1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/dfdacb160f3b26bca0772608ed31bb7d503d1d59))
+* use sample data in standalone mode ([#429](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/429)) ([3b9b165](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/3b9b165e47cd23cfb7cf1a43b3ccfca7c1565fcc))
+
 ## [0.29.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.28.1...ui5-cc-spreadsheetimporter-v0.29.0) (2023-10-30)
 
 
