@@ -188,6 +188,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	 * @param {*} event
 	 */
 	async onUploadSet(event: Event) {
+		const source = event.getSource() as Button;
 		this.getDialog().setBusy(true);
 		let isDefaultNotPrevented;
 		try {
@@ -213,7 +214,6 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 		}
 
 		var that = this;
-		const source = event.getSource() as Button;
 		const sourceParent = source.getParent() as SpreadsheetDialog;
 
 		sourceParent.setBusyIndicatorDelay(0);
