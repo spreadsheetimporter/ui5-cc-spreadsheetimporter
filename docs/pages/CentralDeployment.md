@@ -1,10 +1,17 @@
 # Central Deployment
 
-The basic idea behind the development of the UI5 Spreadsheet upload was that the control always be deployed with each app.  
-But there is also the possibility to deploy the control centrally on the backend.  
-It should be noted that the control is consumed version indipendently. This makes it more independent and a new version can always be deployed.
 
-Currently there is no automatic possibility to do this automatically. Therefore, here are the instructions on how to upload the UI5 Spreadsheet centrally in an ABAP on premise system.
+The foundational concept of the UI5 Spreadsheet upload control's development emphasizes its individual deployment alongside each application. However, an alternative deployment strategy exists, allowing for the control to be centrally hosted on the backend.
+
+Key Points:
+
+- **Version Independence**: The control operates independently of specific versions, enhancing its autonomy and facilitating seamless updates with new versions.
+  - **Centralized Deployment Options**:
+    1. **ABAP On-Premise System**: Instructions for centralized uploading in an ABAP on-premise environment.
+    2. **HTML5 Repository on BTP**: Steps for deploying in an HTML5 repository on SAP Business Technology Platform (BTP).
+
+**Note**: As of the current state, there is no automated process for central deployment. Detailed below are manual instructions for implementing centralized deployment of the UI5 Spreadsheet control.
+
 
 ## Deployment to On-Premise ABAP System
 
@@ -45,7 +52,39 @@ cd packages/ui5-cc-spreadsheetimporter
 npm run deploy
 ```
 
+## Deployment to HTML5 Repository on BTP
+
+1\. Clone Repo
+
+```sh
+git clone https://github.com/marianfoo/ui5-cc-spreadsheetimporter
+```
+
+2\. Install Dependencies
+
+```sh
+pnpm install
+```
+
+3\. **Optional** Change `mta.yaml`
+
+The mta.yaml file is used for deployment to the HTML5 Repository on BTP. If you want to change somee settings, you can do it here.
+
+4\. Build MTA
+
+```sh
+pnpm build:mta
+```
+
+5\. Deploy to Cloud Foundry
+
+```sh
+pnpm deploy:cf
+```
+
 ## Consuming in Fiori App
 
 Perform the same steps as you did in [Getting Started](./../pages/GettingStarted.md).  
 It is not necessary to install the control using npm and the entry `resourceRoots` in the `manifest.json`.
+
+For the consuming app in BTP, i have created a [sample app](https://github.com/marianfoo/spreadsheetimporter-btp-example) with the deployment to the HTML5 Repository on BTP.

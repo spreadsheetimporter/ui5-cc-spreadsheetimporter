@@ -9,7 +9,7 @@ The library is attached directly to each app and deployed with it.
 
 ### Central deployment
 
-The Spreadsheet upload is stored directly as a library centrally, e.g. in the on-premise ABAP system.  
+The Spreadsheet upload is stored directly as a library centrally, e.g. in the on-premise ABAP system or BTP.  
 For more information, please see the Page [Central Deployment](CentralDeployment.md).
 
 ## Setup
