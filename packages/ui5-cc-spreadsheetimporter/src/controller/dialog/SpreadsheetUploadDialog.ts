@@ -163,7 +163,13 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 						this.spreadsheetUploadController.isODataV4
 				  );
 
-			this.component.fireCheckBeforeRead({ sheetData: spreadsheetSheetsData, parsedData: this.spreadsheetUploadController.payloadArray });
+			this.getDialog().setBusy(true);
+			try {
+				await Util.fireEventAsync("checkBeforeRead", { sheetData: spreadsheetSheetsData, parsedData: this.spreadsheetUploadController.payloadArray }, this.component);
+			} catch (error) {
+				Log.error("Error while calling the checkBeforeRead event", error as Error, "SpreadsheetUpload: onFileUpload");
+			}
+			this.getDialog().setBusy(false);
 
 			if (this.messageHandler.areMessagesPresent()) {
 				// show error dialog
@@ -182,11 +188,21 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	 * @param {*} event
 	 */
 	async onUploadSet(event: Event) {
-		const isDefaultNotPrevented = this.component.fireUploadButtonPress({
-			payload: this.spreadsheetUploadController.payloadArray,
-			rawData: this._extractRawValues(this.spreadsheetUploadController.payloadArray),
-			parsedData: this._extractParsedValues(this.spreadsheetUploadController.payloadArray)
-		});
+		const source = event.getSource() as Button;
+		this.getDialog().setBusy(true);
+		let isDefaultNotPrevented;
+		try {
+			isDefaultNotPrevented = await Util.fireEventAsync(
+				"uploadButtonPress",
+				{
+					payload: this.spreadsheetUploadController.payloadArray,
+					rawData: this._extractRawValues(this.spreadsheetUploadController.payloadArray),
+					parsedData: this._extractParsedValues(this.spreadsheetUploadController.payloadArray)
+				},
+				this.component
+			);
+		} catch (error) {}
+		this.getDialog().setBusy(false);
 		if (!isDefaultNotPrevented || this.component.getStandalone()) {
 			this.onCloseDialog();
 			return;
@@ -198,7 +214,6 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 		}
 
 		var that = this;
-		const source = event.getSource() as Button;
 		const sourceParent = source.getParent() as SpreadsheetDialog;
 
 		sourceParent.setBusyIndicatorDelay(0);
@@ -246,7 +261,13 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 		}
 
 		sourceParent.setBusy(false);
-		this.component.fireRequestCompleted({ success: !this.spreadsheetUploadController.errorsFound });
+		this.getDialog().setBusy(true);
+		try {
+			await Util.fireEventAsync("requestCompleted", { success: !this.spreadsheetUploadController.errorsFound }, this.component);
+		} catch (error) {
+			Log.error("Error while calling the requestCompleted event", error as Error, "SpreadsheetUpload: onUploadSet");
+		}
+		this.getDialog().setBusy(false);
 		this.onCloseDialog();
 	}
 

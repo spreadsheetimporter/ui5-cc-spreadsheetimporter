@@ -7,6 +7,8 @@ The following events can be used as extension points to intervene and manipulate
 | `requestCompleted` | Event when the request is completed |
 | `uploadButtonPress` | Fired when the `Upload` button is pressed, possible to prevent data send to backend |
 
+You can attach async functions to the events if you wrap the function in a `Promise` (see [Attach async functions to events](#attach-async-functions-to-events)).
+
 ## Check data before upload to app
 When the file is uploaded to the App, the `checkBeforeRead` event is fired.
 
@@ -98,5 +100,38 @@ this.spreadsheetUpload.attachChangeBeforeCreate(function (oEvent) {
     oEvent.preventDefault();
     // get payload
     const payload = oEvent.getParameter("payload")
+}, this);
+````
+
+## Attach async functions to events
+
+You can attach async functions to the events if you wrap the function in a `Promise`.  
+With this you can send a request to the backend for checks that are not possible in the frontend for example with a fuction import.
+
+
+````javascript
+// init spreadsheet upload
+this.spreadsheetUpload = await this.editFlow.getView()
+        .getController()
+        .getAppComponent()
+        .createComponent({
+            usage: "spreadsheetImporter",
+            async: true,
+            componentData: {
+                context: this,
+                activateDraft: true
+            }
+        });
+
+// event to check before uploaded to app
+this.spreadsheetUpload.attachCheckBeforeRead(async function (oEvent) {
+    return new Promise(async (resolve, reject) => {
+        // example
+        console.log("start async wait");
+        await new Promise((resolve) => setTimeout(resolve, 5000));
+        console.log("end async wait");
+        // dont forget to resolve the promise
+        resolve();
+    });
 }, this);
 ````

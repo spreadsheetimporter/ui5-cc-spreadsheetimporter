@@ -10,6 +10,7 @@ import TableSelector from "../TableSelector";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Fragment from "sap/ui/core/Fragment";
 import Dialog from "sap/m/Dialog";
+import Util from "../Util";
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -60,7 +61,11 @@ export default abstract class OData extends ManagedObject {
 				// loop over data from spreadsheet file
 				for (const payload of batch) {
 					// Extension method to manipulate payload
-					component.fireChangeBeforeCreate({ payload: payload });
+					try {
+						await Util.fireEventAsync("changeBeforeCreate", { payload: payload }, component);
+					} catch (error) {
+						Log.error("Error while calling the changeBeforeCreate event", error as Error, "SpreadsheetUpload: callOdata");
+					}
 					this.createAsync(model, binding, payload);
 				}
 				// wait for all drafts to be created
