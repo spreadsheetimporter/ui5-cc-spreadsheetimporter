@@ -11,5 +11,11 @@
   },
   "scripts": {
     "watch": "cds watch"
+  },
+  "cds": {
+    "fiori": {
+      "lean_draft": true,
+      "bypass_draft": true
+    }
   }
 }

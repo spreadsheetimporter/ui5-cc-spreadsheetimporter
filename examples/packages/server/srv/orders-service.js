@@ -6,12 +6,5 @@ class OrdersService extends cds.ApplicationService {
 
 		return super.init();
 	}
-
-	/** order changed -> broadcast event */
-	orderChanged(product, deltaQuantity) {
-		// Emit events to inform subscribers about changes in orders
-		console.log("> emitting:", "OrderChanged", { product, deltaQuantity });
-		return this.emit("OrderChanged", { product, deltaQuantity });
-	}
 }
 module.exports = OrdersService;

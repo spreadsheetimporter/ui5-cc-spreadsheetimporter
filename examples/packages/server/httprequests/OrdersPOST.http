@@ -1,8 +1,4 @@
 POST http://localhost:4004/odata/v4/orders/Orders HTTP/1.1
-Host: localhost:8080
 Content-Type: application/json
-Accept: application/json
 
-{"OrderNo":"3","buyer":"test@test.de","IsActiveEntity": true,
-"HasActiveEntity": false,
-"HasDraftEntity": false}
+{"OrderNo":"3","buyer":"test@test.de","IsActiveEntity": true}

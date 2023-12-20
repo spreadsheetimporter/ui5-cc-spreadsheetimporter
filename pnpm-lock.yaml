@@ -120,8 +120,8 @@ importers:
   examples/packages/common:
     dependencies:
       '@sap/cds':
-        specifier: ^7.5.1
-        version: 7.5.1(express@4.18.2)
+        specifier: ^7.3.0
+        version: 7.3.0(express@4.18.2)
 
   examples/packages/ordersv2fe:
     dependencies:
@@ -860,12 +860,12 @@ importers:
         specifier: 1.11.12
         version: 1.11.12
       '@sap/cds':
-        specifier: ^7.5.1
-        version: 7.5.1(express@4.18.2)
+        specifier: ^7.3.0
+        version: 7.3.0(express@4.18.2)
     devDependencies:
       cds-plugin-ui5:
-        specifier: 0.7.4
-        version: 0.7.4(@sap/cds@7.5.1)(bluebird@3.7.2)(express@4.18.2)
+        specifier: 0.7.0
+        version: 0.7.0(@sap/cds@7.3.0)(bluebird@3.7.2)(express@4.18.2)
       ordersv4fe120:
         specifier: ^0.0.1
         version: link:../ordersv4fe
@@ -2300,13 +2300,6 @@ packages:
       - supports-color
     dev: false
 
-  /@cap-js/cds-types@0.1.0(@sap/cds@7.5.1):
-    resolution: {integrity: sha512-aGIq8m3Ni2ScQtZWK4Rc/TnBJ4LjN4tdSmUatwUA5PSlCua8prheuDJ/k1xRL1F61Rsw0i6G5mZ2HbF2f2dbpA==}
-    peerDependencies:
-      '@sap/cds': '>=7'
-    dependencies:
-      '@sap/cds': 7.5.1(express@4.18.2)
-
   /@chevrotain/types@9.1.0:
     resolution: {integrity: sha512-3hbCD1CThkv9gnaSIPq0GUXwKni68e0ph6jIHwCvcWiQ4JB2xi8bFxBain0RF04qHUWuDjgnZLj4rLgimuGO+g==}
     dev: true
@@ -3493,13 +3486,13 @@ packages:
     dependencies:
       antlr4: 4.9.3
 
-  /@sap/cds-fiori@1.2.2(@sap/cds@7.5.1)(express@4.18.2):
-    resolution: {integrity: sha512-9bJKiIq8dCmwEcIXES7jiAcmiyJlDjjKdnvceAmqCU5Z925ZaalVIGYdnmmlQyciPUzD/bk3vRxmrPIogP6leA==}
+  /@sap/cds-fiori@1.1.0(@sap/cds@7.3.0)(express@4.18.2):
+    resolution: {integrity: sha512-dj+OMS3bpbYx7pO/SUSbZkt2KIs2RiAnaxhO+RZmL89DR8r67MEft2/vQbg00AGoH0Al/NKK0AFiHHyNL/+CWg==}
     peerDependencies:
       '@sap/cds': '>=7'
       express: '>=4'
     dependencies:
-      '@sap/cds': 7.5.1(express@4.18.2)
+      '@sap/cds': 7.3.0(express@4.18.2)
       express: 4.18.2
 
   /@sap/cds-foss@5.0.0:
@@ -3511,15 +3504,14 @@ packages:
       xmlbuilder: 15.1.1
       yaml: 2.3.4
 
-  /@sap/cds@7.5.1(express@4.18.2):
-    resolution: {integrity: sha512-v+/psJEexLH9MBpnCElZfIR12ysxUrkAqxCSWHWJxw+Vvix30EiNqDU+Ytqi+6UKgUufYq7zQbBHhKrFW2Eu1g==}
+  /@sap/cds@7.3.0(express@4.18.2):
+    resolution: {integrity: sha512-hH7VGTzW5kTd4jjWdCr7WNqCI4O/DxQCpyQGM9zZm1Md6Dt20a2/i9pHGLq5nDXOg/bU1wrFT2+e5XYiVZQOew==}
     engines: {node: '>=16'}
     hasBin: true
     dependencies:
-      '@cap-js/cds-types': 0.1.0(@sap/cds@7.5.1)
-      '@sap/cds-compiler': 4.5.0
-      '@sap/cds-fiori': 1.2.2(@sap/cds@7.5.1)(express@4.18.2)
-      '@sap/cds-foss': 5.0.0
+      '@sap/cds-compiler': 4.3.0
+      '@sap/cds-fiori': 1.1.0(@sap/cds@7.3.0)(express@4.18.2)
+      '@sap/cds-foss': 4.0.2
     transitivePeerDependencies:
       - express
 
@@ -5286,13 +5278,13 @@ packages:
       lodash: 4.17.21
     dev: true
 
-  /cds-plugin-ui5@0.7.4(@sap/cds@7.5.1)(bluebird@3.7.2)(express@4.18.2):
-    resolution: {integrity: sha512-QvTV9/VSXtC791Op+xkKbZ2PH53EsHnkAEcS7NP3mvGuO0TlNxz/qjuSe1heMyJsIZw1QdUErsBxfzwdqwligg==}
+  /cds-plugin-ui5@0.7.0(@sap/cds@7.3.0)(bluebird@3.7.2)(express@4.18.2):
+    resolution: {integrity: sha512-0sL3xVNk7lFCcijDEPDh4BZayg7RZ5duxHxs1S7RY0hSMdTkAorrQKEh6e6daE4GLHD/fEWDk5j5VKWwn0uEHg==}
     peerDependencies:
       '@sap/cds': '>=6.8.2'
       express: '>=4.18.2'
     dependencies:
-      '@sap/cds': 7.5.1(express@4.18.2)
+      '@sap/cds': 7.3.0(express@4.18.2)
       '@ui5/fs': 3.0.5
       '@ui5/project': 3.9.0(bluebird@3.7.2)
       '@ui5/server': 3.1.5
