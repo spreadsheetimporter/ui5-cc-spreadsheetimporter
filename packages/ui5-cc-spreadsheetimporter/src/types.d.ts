@@ -89,6 +89,7 @@ export interface ComponentData {
 	standalone?: boolean;
 	readAllSheets?: boolean;
 	readSheet: number | string;
+	spreadsheetRowPropertyName?: string;
 	strict?: boolean;
 	decimalSeparator?: string;
 	hidePreview?: boolean;

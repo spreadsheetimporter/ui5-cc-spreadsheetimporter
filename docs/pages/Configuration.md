@@ -30,6 +30,7 @@ These options are available and explained in detail below:
 | `sampleData` | Add a array of objects with sample data for the template | object |
 | `spreadsheetTemplateFile` | Instead of a generated spreadsheet file you can provide your own | object |
 | `useTableSelector` | Open a Table Selector dialog if multiple tables in view | boolean |
+| `spreadsheetRowPropertyName` | If you want to sent the spreadsheet row to the backend | string |
 | `componentContainerData` | Open a Table Selector dialog if multiple tables in view | boolean |
 | `debug` | Option to show more console statements and set Log Level to Debug | boolean |
 
@@ -391,6 +392,11 @@ this.spreadsheetUpload = await this.editFlow.getView()
 This option defines whether the Table Selector should be used or not.  
 If set to true and multiple tables in the view, the user can choose the table to upload the data to.  
 It is also possible to set different options for each table (see [TableSelector](TableSelector.md))
+
+### `spreadsheetRowPropertyName`
+
+If you want to sent the spreadsheet row to the backend, you can define a property name here.  
+When the property name is defined, the payload will include the spreadsheet row as a integer with the defined property name.
 
 ### `componentContainerData`
 

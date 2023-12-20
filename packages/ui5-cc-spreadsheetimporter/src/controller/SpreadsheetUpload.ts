@@ -233,6 +233,15 @@ export default class SpreadsheetUpload extends ManagedObject {
 		if (options.hasOwnProperty("hideSampleData")) {
 			this.component.setHideSampleData(options.hideSampleData);
 		}
+		if (options.hasOwnProperty("spreadsheetRowPropertyName")) {
+			this.component.setUseTableSelector(options.useTableSelector);
+		}
+		if (options.hasOwnProperty("readAllSheets")) {
+			this.component.setReadAllSheets(options.readAllSheets);
+		}
+		if (options.hasOwnProperty("readSheet")) {
+			this.component.setReadSheet(options.readSheet);
+		}
 
 		// Special case for showOptions
 		if (options.availableOptions && options.availableOptions.length > 0) {

@@ -15,6 +15,7 @@ entity Orders : cuid, managed {
               on Shipping.order = $self;
   buyer    : User;
   currency : Currency;
+  spreadsheetRow: Integer;
 }
 
 entity OrderItems : cuid {

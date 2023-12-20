@@ -56,6 +56,7 @@ export default class Component extends UIComponent {
 			useTableSelector: { type: "boolean", defaultValue: false },
 			readAllSheets: { type: "boolean", defaultValue: false },
 			readSheet: { type: "any", defaultValue: 0 },
+			spreadsheetRowPropertyName: { type: "string" },
 			debug: { type: "boolean", defaultValue: false },
 			componentContainerData: { type: "object" }
 			//Pro Configurations
@@ -118,6 +119,7 @@ export default class Component extends UIComponent {
 		this.setStandalone(oCompData?.standalone);
 		this.setReadAllSheets(oCompData?.readAllSheets);
 		this.setReadSheet(oCompData?.readSheet);
+		this.setSpreadsheetRowPropertyName(oCompData?.spreadsheetRowPropertyName);
 		this.setStrict(oCompData?.strict);
 		this.setDecimalSeparator(oCompData?.decimalSeparator);
 		this.setHidePreview(oCompData?.hidePreview);

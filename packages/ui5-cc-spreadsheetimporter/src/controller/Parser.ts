@@ -130,7 +130,10 @@ export default class Parser extends ManagedObject {
 					}
 				}
 			}
-
+			if (component.getSpreadsheetRowPropertyName()) {
+				// @ts-ignore
+				payload[component.getSpreadsheetRowPropertyName()] = row["__rowNum__"] + 1;
+			}
 			payloadArray.push(payload);
 		}
 		return payloadArray;
