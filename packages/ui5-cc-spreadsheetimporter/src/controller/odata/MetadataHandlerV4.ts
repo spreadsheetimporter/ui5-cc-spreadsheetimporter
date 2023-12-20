@@ -60,7 +60,7 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 			}
 			for (const [propertyName, propertyValue] of propertiesFiltered) {
 				const propertyLabel = annotations[`${odataType}/${propertyName}`];
-				if (!propertyLabel["@com.sap.vocabularies.UI.v1.Hidden"] && !propertyName.startsWith("SAP__")) {
+				if (propertyLabel && !propertyLabel["@com.sap.vocabularies.UI.v1.Hidden"] && !propertyName.startsWith("SAP__")) {
 					let propertyObject: Property = {} as Property;
 					propertyObject.label = this.getLabel(annotations, properties, propertyName, propertyLabel, odataType);
 					if (!propertyObject.label) {

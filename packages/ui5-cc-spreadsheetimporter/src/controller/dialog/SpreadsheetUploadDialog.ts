@@ -271,10 +271,6 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 		this.onCloseDialog();
 	}
 
-	// onUploadSet(event: Event) {
-	//     this.spreadsheetUploadController.onUploadSet(event);
-	// }
-
 	openSpreadsheetUploadDialog() {
 		this.spreadsheetUploadDialog.open();
 	}

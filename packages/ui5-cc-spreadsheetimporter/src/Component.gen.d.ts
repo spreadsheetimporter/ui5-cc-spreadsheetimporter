@@ -32,6 +32,7 @@ declare module "./Component" {
         useTableSelector?: boolean | PropertyBindingInfo | `{${string}}`;
         readAllSheets?: boolean | PropertyBindingInfo | `{${string}}`;
         readSheet?: any | PropertyBindingInfo | `{${string}}`;
+        spreadsheetRowPropertyName?: string | PropertyBindingInfo;
         debug?: boolean | PropertyBindingInfo | `{${string}}`;
         componentContainerData?: object | PropertyBindingInfo | `{${string}}`;
         checkBeforeRead?: (event: Component$CheckBeforeReadEvent) => void;
@@ -137,6 +138,10 @@ declare module "./Component" {
         // property: readSheet
         getReadSheet(): any;
         setReadSheet(readSheet: any): this;
+
+        // property: spreadsheetRowPropertyName
+        getSpreadsheetRowPropertyName(): string;
+        setSpreadsheetRowPropertyName(spreadsheetRowPropertyName: string): this;
 
         // property: debug
         getDebug(): boolean;
