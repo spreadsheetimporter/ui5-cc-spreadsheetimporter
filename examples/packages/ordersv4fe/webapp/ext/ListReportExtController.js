@@ -18,8 +18,7 @@ sap.ui.define([], function () {
 						async: true,
 						componentData: {
 							context: this,
-							activateDraft: true,
-							spreadsheetRowPropertyName: "spreadsheetRow"
+							activateDraft: true
 						}
 					});
 
