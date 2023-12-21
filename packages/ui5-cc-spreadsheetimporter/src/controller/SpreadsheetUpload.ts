@@ -16,6 +16,7 @@ import OptionsDialog from "./dialog/OptionsDialog";
 import SpreadsheetDialog from "../control/SpreadsheetDialog";
 import SpreadsheetUploadDialog from "./dialog/SpreadsheetUploadDialog";
 import { CustomMessageTypes } from "../enums";
+import VersionInfo from "sap/ui/VersionInfo";
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
@@ -58,7 +59,6 @@ export default class SpreadsheetUpload extends ManagedObject {
 		super();
 		this.errorState = false;
 		// @ts-ignore
-		this.UI5MinorVersion = sap.ui.version.split(".")[1];
 		this.component = component;
 		this.componentI18n = componentI18n;
 		this.util = new Util(componentI18n.getResourceBundle() as ResourceBundle);
@@ -67,8 +67,19 @@ export default class SpreadsheetUpload extends ManagedObject {
 		// check if "sap.ui.generic" is available, if false it is OpenUI5
 		// @ts-ignore
 		this.isOpenUI5 = sap.ui.generic ? true : false;
-
-		Log.debug("constructor", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ ui5version: this.UI5MinorVersion, isOpenUI5: this.isOpenUI5 }));
+		// load version from UI5 2.0
+		VersionInfo.load()
+			.catch(function (err) {
+				Log.error("failed to load global version info", err);
+			})
+			.then(
+				function (versionInfo: any) {
+					const version = versionInfo.version;
+					const text = "UI5 Version Info: " + versionInfo.name + " - " + versionInfo.version;
+					console.log("UI5 Version Info", versionInfo);
+					Log.debug("constructor", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ ui5version: version, isOpenUI5: this.isOpenUI5 }));
+				}.bind(this)
+			);
 	}
 
 	/**

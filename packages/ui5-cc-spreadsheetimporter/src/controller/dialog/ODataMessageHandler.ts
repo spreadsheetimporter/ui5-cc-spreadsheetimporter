@@ -4,6 +4,8 @@ import { Messages } from "../../types";
 import SpreadsheetUpload from "../SpreadsheetUpload";
 import Fragment from "sap/ui/core/Fragment";
 import JSONModel from "sap/ui/model/json/JSONModel";
+import Util from "../Util";
+import Log from "sap/base/Log";
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -36,9 +38,18 @@ export default class ODataMessageHandler extends ManagedObject {
 		this.messageDialog.open();
 	}
 
-	private onCloseMessageDialog() {
+	private async onCloseMessageDialog() {
 		this.messageDialog.close();
 		// reset message manager messages
+		try {
+			// sap.ui.core.Messaging is only available in UI5 version 1.118 and above, prefer this over sap.ui.getCore().getMessageManager()saging = Util.loadUI5RessourceAsync("sap/ui/core/Messaging");
+			const Messaging = await Util.loadUI5RessourceAsync("sap/ui/core/Messaging");
+			Messaging.removeAllMessages();
+			return;
+		} catch (error) {
+			Log.debug("sap/ui/core/Messaging not found", undefined, "SpreadsheetUpload: checkForODataErrors");
+		}
+		// fallback for UI5 versions below 1.118
 		sap.ui.getCore().getMessageManager().removeAllMessages();
 	}
 }

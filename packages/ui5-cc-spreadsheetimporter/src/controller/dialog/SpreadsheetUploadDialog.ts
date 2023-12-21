@@ -441,7 +441,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 							colWidths.push({ wch: colWidthDefault });
 						} else if (value.type === "Edm.DateTimeOffset" || value.type === "Edm.DateTime") {
 							let format;
-							const currentLang = sap.ui.getCore().getConfiguration().getLanguage();
+							const currentLang = await this.getLanguage();
 							if (currentLang.startsWith("en")) {
 								format = "mm/dd/yyyy hh:mm AM/PM";
 							} else {
@@ -676,5 +676,17 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 
 			dialog.open();
 		});
+	}
+
+	private async getLanguage(): Promise<string> {
+		try {
+			// getCore is not available in UI5 version 2.0 and above, prefer this over sap.ui.getCore().getConfiguration().getLanguage()
+			const Localization = await Util.loadUI5RessourceAsync("sap/base/i18n/Localization");
+			return Localization.getLanguage();
+		} catch (error) {
+			Log.debug("sap/base/i18n/Localization not found", undefined, "SpreadsheetUpload: checkForODataErrors");
+		}
+		// fallback for UI5 versions below 2.0
+		return sap.ui.getCore().getConfiguration().getLanguage();
 	}
 }

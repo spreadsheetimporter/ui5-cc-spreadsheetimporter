@@ -97,7 +97,7 @@ export default abstract class OData extends ManagedObject {
 			this.busyDialog.close();
 			this.resetContexts();
 			Log.error("Error while calling the odata service", error as Error, "SpreadsheetUpload: callOdata");
-			this.checkForODataErrors(component.getShowBackendErrorMessages());
+			await this.checkForODataErrors(component.getShowBackendErrorMessages());
 			fnReject(error);
 		}
 	}
@@ -179,19 +179,23 @@ export default abstract class OData extends ManagedObject {
 		this.busyDialog.open();
 	}
 
-	private checkForODataErrors(showBackendErrorMessages: Boolean) {
+	private async checkForODataErrors(showBackendErrorMessages: Boolean) {
 		if (showBackendErrorMessages) {
-			// sap.ui.core.Messaging is only available in UI5 version 1.118 and above, prefer this over sap.ui.getCore().getMessageManager()
-			if (sap.ui.core.Messaging) {
-				const messages = sap.ui.core.Messaging.getMessageModel().getData();
+			try {
+				// sap.ui.core.Messaging is only available in UI5 version 1.118 and above, prefer this over sap.ui.getCore().getMessageManager()saging = Util.loadUI5RessourceAsync("sap/ui/core/Messaging");
+				const Messaging = await Util.loadUI5RessourceAsync("sap/ui/core/Messaging");
+				const messages = Messaging.getMessageModel().getData();
 				if (messages.length > 0) {
 					this.odataMessageHandler.displayMessages(messages);
 				}
-			} else {
-				const messages = sap.ui.getCore().getMessageManager().getMessageModel().getData();
-				if (messages.length > 0) {
-					this.odataMessageHandler.displayMessages(messages);
-				}
+				return;
+			} catch (error) {
+				Log.debug("sap/ui/core/Messaging not found", undefined, "SpreadsheetUpload: checkForODataErrors");
+			}
+			// fallback for UI5 versions below 1.118
+			const messages = sap.ui.getCore().getMessageManager().getMessageModel().getData();
+			if (messages.length > 0) {
+				this.odataMessageHandler.displayMessages(messages);
 			}
 		}
 	}
