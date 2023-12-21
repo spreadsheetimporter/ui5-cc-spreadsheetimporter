@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.30.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.29.1...ui5-cc-spreadsheetimporter-v0.30.0) (2023-12-21)
+
+
+### Features
+
+* enable spreadsheet importer for ui5 v2 ([#440](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/440)) ([763c2c7](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/763c2c7d7ceea391e2f0ff5701ecf22fe3a29893))
+* new config to continue batch processing on errors ([#441](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/441)) ([25dda51](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/25dda51f42a08b611a67e6d0a4aba69b3ba0b212))
+* new config to send the spreadsheet row to the backend ([#439](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/439)) ([44af189](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/44af1890ae7c524ffb4b98962bb0ca670c609c54))
+* use events with async attached function s([#435](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/435)) ([2c95615](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/2c956153fd32946bcb491b721847064898472779))
+
 ## [0.29.1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.29.0...ui5-cc-spreadsheetimporter-v0.29.1) (2023-12-16)
 
 
