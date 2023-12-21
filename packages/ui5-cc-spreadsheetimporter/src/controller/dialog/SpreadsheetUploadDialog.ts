@@ -161,7 +161,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 						this.messageHandler,
 						this.util,
 						this.spreadsheetUploadController.isODataV4
-				  );
+					);
 
 			this.getDialog().setBusy(true);
 			try {
@@ -314,7 +314,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	}
 
 	async showPreview() {
-		this.previewHandler.showPreview(this.spreadsheetUploadController.getPayloadArray(), this.spreadsheetUploadController.typeLabelList);
+		this.previewHandler.showPreview(this.spreadsheetUploadController.getPayloadArray(), this.spreadsheetUploadController.typeLabelList, this.component.getPreviewColumns());
 	}
 
 	async onTempDownload() {

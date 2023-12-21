@@ -21,6 +21,7 @@ declare module "./Component" {
         strict?: boolean | PropertyBindingInfo | `{${string}}`;
         decimalSeparator?: string | PropertyBindingInfo;
         hidePreview?: boolean | PropertyBindingInfo | `{${string}}`;
+        previewColumns?: string[] | PropertyBindingInfo | `{${string}}`;
         skipMandatoryFieldCheck?: boolean | PropertyBindingInfo | `{${string}}`;
         skipColumnsCheck?: boolean | PropertyBindingInfo | `{${string}}`;
         showBackendErrorMessages?: boolean | PropertyBindingInfo | `{${string}}`;
@@ -95,6 +96,10 @@ declare module "./Component" {
         // property: hidePreview
         getHidePreview(): boolean;
         setHidePreview(hidePreview: boolean): this;
+
+        // property: previewColumns
+        getPreviewColumns(): string[];
+        setPreviewColumns(previewColumns: string[]): this;
 
         // property: skipMandatoryFieldCheck
         getSkipMandatoryFieldCheck(): boolean;

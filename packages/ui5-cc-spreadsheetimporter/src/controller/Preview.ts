@@ -20,8 +20,8 @@ export default class Preview extends ManagedObject {
 		this.util = util;
 	}
 
-	showPreview(payload: any, typeLabelList: ListObject) {
-		const table = this.createDynamicTable(payload, typeLabelList);
+	showPreview(payload: any, typeLabelList: ListObject, previewColumns: string[]) {
+		const table = this.createDynamicTable(payload, typeLabelList, previewColumns);
 		if (typeof table === "undefined") {
 			return;
 		}
@@ -44,7 +44,7 @@ export default class Preview extends ManagedObject {
 		this.dialog.open();
 	}
 
-	createDynamicTable(data: any[], typeLabelList: ListObject) {
+	createDynamicTable(data: any[], typeLabelList: ListObject, previewColumns: string[]) {
 		const table = new Table();
 
 		// Create table columns and cells based on the first object's keys
@@ -53,6 +53,10 @@ export default class Preview extends ManagedObject {
 			const aColumns = Object.keys(firstObject);
 
 			aColumns.forEach((column) => {
+				// check if column is in previewColumns
+				if (previewColumns && previewColumns.length > 0 && previewColumns.indexOf(column) === -1) {
+					return;
+				}
 				const type = typeLabelList.get(column);
 				const label = type && type.label ? type.label : column;
 				const oColumn = new Column({
