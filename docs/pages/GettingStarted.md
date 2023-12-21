@@ -37,7 +37,7 @@ npm install ui5-cc-spreadsheetimporter
 
 ````json
 "resourceRoots": {
-    "cc.spreadsheetimporter.v0_29_1": "./thirdparty/customControl/spreadsheetImporter/v0_29_1"
+    "cc.spreadsheetimporter.v0_30_0": "./thirdparty/customControl/spreadsheetImporter/v0_30_0"
 },
 ````
 
@@ -59,7 +59,7 @@ npm install ui5-cc-spreadsheetimporter
 ````json
 "componentUsages": {
     "spreadsheetImporter": {
-        "name": "cc.spreadsheetimporter.v0_29_1"
+        "name": "cc.spreadsheetimporter.v0_30_0"
     }
 },
 ````
@@ -89,7 +89,7 @@ To avoid this error, you can add the following to your `manifest.json` file:
 ````json
 "componentUsages": {
     "spreadsheetImporter": {
-        "name": "cc.spreadsheetimporter.v0_29_1"
+        "name": "cc.spreadsheetimporter.v0_30_0"
     }
 },
 ````
@@ -294,7 +294,7 @@ builder:
 4\. Error: library/component used in application does not exist
 
 When deploying the app to your ABAP system, you may get the error like this:
-`SAPUI5 library/component cc.spreadsheetimporter.v0_29_1 used in application Z*** does not exist`
+`SAPUI5 library/component cc.spreadsheetimporter.v0_30_0 used in application Z*** does not exist`
 
 The application is deployed, but the Service returns an error.  
 Currently there is no workaround.
