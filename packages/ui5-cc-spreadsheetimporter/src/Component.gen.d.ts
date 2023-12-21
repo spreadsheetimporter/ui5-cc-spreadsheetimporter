@@ -33,6 +33,7 @@ declare module "./Component" {
         readAllSheets?: boolean | PropertyBindingInfo | `{${string}}`;
         readSheet?: any | PropertyBindingInfo | `{${string}}`;
         spreadsheetRowPropertyName?: string | PropertyBindingInfo;
+        continueOnError?: boolean | PropertyBindingInfo | `{${string}}`;
         debug?: boolean | PropertyBindingInfo | `{${string}}`;
         componentContainerData?: object | PropertyBindingInfo | `{${string}}`;
         checkBeforeRead?: (event: Component$CheckBeforeReadEvent) => void;
@@ -142,6 +143,10 @@ declare module "./Component" {
         // property: spreadsheetRowPropertyName
         getSpreadsheetRowPropertyName(): string;
         setSpreadsheetRowPropertyName(spreadsheetRowPropertyName: string): this;
+
+        // property: continueOnError
+        getContinueOnError(): boolean;
+        setContinueOnError(continueOnError: boolean): this;
 
         // property: debug
         getDebug(): boolean;

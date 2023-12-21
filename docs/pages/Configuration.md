@@ -32,6 +32,7 @@ These options are available and explained in detail below:
 | `useTableSelector` | Open a Table Selector dialog if multiple tables in view | boolean |
 | `spreadsheetRowPropertyName` | If you want to sent the spreadsheet row to the backend | string |
 | `componentContainerData` | Open a Table Selector dialog if multiple tables in view | boolean |
+| `continueOnError` | If a error occurs in batch processing, continue | boolean |
 | `debug` | Option to show more console statements and set Log Level to Debug | boolean |
 
 ### `columns`
@@ -430,6 +431,15 @@ settings="{
     }
   }" />
 ````
+
+### `continueOnError`
+
+**default:** `false`
+
+This option defines whether the batch processing should continue if a error occurs.  
+If you have for example set `batchSize`to 2 and have 4 rows and a error occurs in the first batch of two rows, the processing will stop. If you set this flag to `true` the processing will continue and the second batch of two rows will be processed.  
+This may lead to errors in the backend, because the first batch of two rows was not processed correctly.  
+Use this option with caution.
 
 
 ### `debug`

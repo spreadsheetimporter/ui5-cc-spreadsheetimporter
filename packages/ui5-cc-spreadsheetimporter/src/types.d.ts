@@ -103,6 +103,7 @@ export interface ComponentData {
 	spreadsheetTemplateFile?: string;
 	useTableSelector?: boolean;
 	sampleData?: object;
+	continueOnError?: boolean;
 }
 
 // Pro Types

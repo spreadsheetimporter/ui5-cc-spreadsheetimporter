@@ -57,36 +57,45 @@ export default abstract class OData extends ManagedObject {
 			// Loop over the sliced array
 			for (const batch of slicedPayloadArray) {
 				// loop over data from spreadsheet file
-				for (const payload of batch) {
-					// Extension method to manipulate payload
-					try {
-						await Util.fireEventAsync("changeBeforeCreate", { payload: payload }, component);
-					} catch (error) {
-						Log.error("Error while calling the changeBeforeCreate event", error as Error, "SpreadsheetUpload: callOdata");
+				try {
+					for (const payload of batch) {
+						// Extension method to manipulate payload
+						try {
+							await Util.fireEventAsync("changeBeforeCreate", { payload: payload }, component);
+						} catch (error) {
+							Log.error("Error while calling the changeBeforeCreate event", error as Error, "SpreadsheetUpload: callOdata");
+						}
+						this.createAsync(model, binding, payload);
 					}
-					this.createAsync(model, binding, payload);
-				}
-				// wait for all drafts to be created
-				await this.submitChanges(model);
-				let errorsFoundLocal = await this.checkForErrors(model, binding, component.getShowBackendErrorMessages());
-				if (errorsFoundLocal) {
-					this.busyDialog.close();
-					spreadsheetUploadController.errorsFound = true;
-					break;
-				} else {
-					await this.waitForCreation();
-				}
+					// wait for all drafts to be created
+					await this.submitChanges(model);
+					let errorsFoundLocal = await this.checkForErrors(model, binding, component.getShowBackendErrorMessages());
+					if (errorsFoundLocal) {
+						this.busyDialog.close();
+						spreadsheetUploadController.errorsFound = true;
+						break;
+					} else {
+						await this.waitForCreation();
+					}
 
-				// check for and activate all drafts and wait for all draft to be created
-				if (component.getActivateDraft() && !errorsFoundLocal) {
-					await this.waitForDraft();
-				}
+					// check for and activate all drafts and wait for all draft to be created
+					if (component.getActivateDraft() && !errorsFoundLocal) {
+						await this.waitForDraft();
+					}
 
-				this.resetContexts();
-				currentProgressPercent = currentProgressPercent + (batch.length / payloadArray.length) * 100;
-				currentProgressValue = currentProgressValue + batch.length;
-				(this.busyDialog.getModel("busyModel") as JSONModel).setProperty("/progressPercent", currentProgressPercent);
-				(this.busyDialog.getModel("busyModel") as JSONModel).setProperty("/progressText", `${currentProgressValue} / ${payloadArray.length}`);
+					this.resetContexts();
+					currentProgressPercent = currentProgressPercent + (batch.length / payloadArray.length) * 100;
+					currentProgressValue = currentProgressValue + batch.length;
+					(this.busyDialog.getModel("busyModel") as JSONModel).setProperty("/progressPercent", currentProgressPercent);
+					(this.busyDialog.getModel("busyModel") as JSONModel).setProperty("/progressText", `${currentProgressValue} / ${payloadArray.length}`);
+				} catch (error) {
+					if (component.getContinueOnError()) {
+						Log.error("Error while calling the odata service", error as Error, "SpreadsheetUpload: callOdata");
+					} else {
+						// throw error to stop processing
+						throw error;
+					}
+				}
 			}
 			spreadsheetUploadController.refreshBinding(context, binding, tableObject.getId());
 			this.busyDialog.close();
