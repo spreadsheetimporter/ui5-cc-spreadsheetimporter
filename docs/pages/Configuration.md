@@ -21,6 +21,7 @@ These options are available and explained in detail below:
 | `strict` | The strict option controls the availability of the `Continue` button in the error dialog.  | boolean |
 | `decimalSeparator` | Determines the decimal separator for numbers as string.  | string |
 | `hidePreview` | Hide the button to preview the uploaded data in the table dialog.  | boolean |
+| `previewColumns` | Define which columns should be shown in the preview dialog | string[] |
 | `skipMandatoryFieldCheck` | Skip check if fields with `mandatory` are not filled in spreadsheet file. | boolean |
 | `skipColumnsCheck` | Skip check for unkown columns which are not in the metadata | boolean |
 | `showBackendErrorMessages` | Show Backend Error Messages | boolean |
@@ -251,6 +252,12 @@ This option is only needed if in the Spreadsheet File are numbers as strings or 
 **default:** `false`
 
 This option defines whether the button to preview the uploaded data in the table dialog should be hidden or not.
+
+### `previewColumns`
+
+**default:** `[]`
+
+This option defines which columns should be shown in the preview dialog. This is a array of strings with the property names.
 
 ### `skipMandatoryFieldCheck`
 

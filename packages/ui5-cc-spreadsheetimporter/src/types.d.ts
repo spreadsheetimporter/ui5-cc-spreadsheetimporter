@@ -93,6 +93,7 @@ export interface ComponentData {
 	strict?: boolean;
 	decimalSeparator?: string;
 	hidePreview?: boolean;
+	previewColumns?: string[];
 	skipMandatoryFieldCheck?: boolean;
 	skipColumnsCheck?: boolean;
 	showBackendErrorMessages?: boolean;

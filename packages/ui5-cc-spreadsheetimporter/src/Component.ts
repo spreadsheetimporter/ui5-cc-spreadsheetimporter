@@ -45,6 +45,8 @@ export default class Component extends UIComponent {
 			strict: { type: "boolean", defaultValue: false },
 			decimalSeparator: { type: "string", defaultValue: "" },
 			hidePreview: { type: "boolean", defaultValue: false },
+			// @ts-ignore
+			previewColumns: { type: "string[]", defaultValue: [] },
 			skipMandatoryFieldCheck: { type: "boolean", defaultValue: false },
 			skipColumnsCheck: { type: "boolean", defaultValue: false },
 			showBackendErrorMessages: { type: "boolean", defaultValue: false },
@@ -125,6 +127,7 @@ export default class Component extends UIComponent {
 		this.setStrict(oCompData?.strict);
 		this.setDecimalSeparator(oCompData?.decimalSeparator);
 		this.setHidePreview(oCompData?.hidePreview);
+		this.setPreviewColumns(oCompData?.previewColumns);
 		this.setSkipMandatoryFieldCheck(oCompData?.skipMandatoryFieldCheck);
 		this.setSkipColumnsCheck(oCompData?.skipColumnsCheck);
 		this.setShowBackendErrorMessages(oCompData?.showBackendErrorMessages);

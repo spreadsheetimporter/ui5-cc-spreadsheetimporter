@@ -216,6 +216,9 @@ export default class SpreadsheetUpload extends ManagedObject {
 		if (options.hasOwnProperty("hidePreview")) {
 			this.component.setHidePreview(options.hidePreview);
 		}
+		if (options.hasOwnProperty("previewColumns")) {
+			this.component.setPreviewColumns(options.previewColumns);
+		}
 		if (options.hasOwnProperty("skipMandatoryFieldCheck")) {
 			this.component.setSkipMandatoryFieldCheck(options.skipMandatoryFieldCheck);
 		}
