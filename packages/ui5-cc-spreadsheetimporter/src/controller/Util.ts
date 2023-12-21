@@ -180,6 +180,20 @@ export default class Util extends ManagedObject {
 		URL.revokeObjectURL(url);
 	}
 
+	static async loadUI5RessourceAsync(libraryName: string): Promise<any> {
+		return new Promise(function (resolve, reject) {
+			sap.ui.require(
+				[libraryName],
+				function (Library: unknown) {
+					resolve(Library);
+				},
+				function (err: any) {
+					reject(err);
+				}
+			);
+		});
+	}
+
 	/**
 	 * Asynchronously fires an event with the given name and parameters on the specified component.
 	 * With this method, async methods can be attached and also sync methods

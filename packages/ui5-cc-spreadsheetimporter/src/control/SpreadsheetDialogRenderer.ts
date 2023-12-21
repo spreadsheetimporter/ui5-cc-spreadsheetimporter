@@ -1,4 +1,5 @@
 import RenderManager from "sap/ui/core/RenderManager";
+import DialogRenderer from "sap/m/DialogRenderer";
 import SpreadsheetDialog from "./SpreadsheetDialog";
 /**
  * @name cc.spreadsheetimporter.XXXnamespaceXXX.SpreadsheetDialog
@@ -8,6 +9,6 @@ export default {
 	//apiVersion: 2,
 	render: function (rm: RenderManager, control: SpreadsheetDialog) {
 		// @ts-ignore
-		sap.m.DialogRenderer.render.apply(this, arguments);
+		DialogRenderer.render.apply(this, arguments);
 	}
 };

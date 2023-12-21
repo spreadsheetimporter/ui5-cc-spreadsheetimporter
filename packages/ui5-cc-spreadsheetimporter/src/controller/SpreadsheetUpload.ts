@@ -16,6 +16,7 @@ import OptionsDialog from "./dialog/OptionsDialog";
 import SpreadsheetDialog from "../control/SpreadsheetDialog";
 import SpreadsheetUploadDialog from "./dialog/SpreadsheetUploadDialog";
 import { CustomMessageTypes } from "../enums";
+import VersionInfo from "sap/ui/VersionInfo";
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
@@ -32,7 +33,6 @@ export default class SpreadsheetUpload extends ManagedObject {
 	private model: any;
 	public typeLabelList: ListObject;
 	public componentI18n: ResourceModel;
-	public UI5MinorVersion: number;
 	private odataHandler: OData;
 	public payload: any;
 	private _odataType: string;
@@ -58,7 +58,6 @@ export default class SpreadsheetUpload extends ManagedObject {
 		super();
 		this.errorState = false;
 		// @ts-ignore
-		this.UI5MinorVersion = sap.ui.version.split(".")[1];
 		this.component = component;
 		this.componentI18n = componentI18n;
 		this.util = new Util(componentI18n.getResourceBundle() as ResourceBundle);
@@ -67,8 +66,19 @@ export default class SpreadsheetUpload extends ManagedObject {
 		// check if "sap.ui.generic" is available, if false it is OpenUI5
 		// @ts-ignore
 		this.isOpenUI5 = sap.ui.generic ? true : false;
-
-		Log.debug("constructor", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ ui5version: this.UI5MinorVersion, isOpenUI5: this.isOpenUI5 }));
+		// load version from UI5 2.0
+		VersionInfo.load()
+			.catch(function (err) {
+				Log.error("failed to load global version info", err);
+			})
+			.then(
+				function (versionInfo: any) {
+					const version = versionInfo.version;
+					const text = "UI5 Version Info: " + versionInfo.name + " - " + versionInfo.version;
+					console.log("UI5 Version Info", versionInfo);
+					Log.debug("constructor", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ ui5version: version, isOpenUI5: this.isOpenUI5 }));
+				}.bind(this)
+			);
 	}
 
 	/**
@@ -98,7 +108,7 @@ export default class SpreadsheetUpload extends ManagedObject {
 			this.context = this.context.base;
 		}
 		this.isODataV4 = this._checkIfODataIsV4();
-		this.odataHandler = this.createODataHandler(this.UI5MinorVersion, this);
+		this.odataHandler = this.createODataHandler(this);
 		this.view = this.odataHandler.getView(this.context);
 		this.controller = this.view.getController();
 		Log.debug("View", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ view: this.view }));
@@ -137,11 +147,11 @@ export default class SpreadsheetUpload extends ManagedObject {
 	 * @param {number} version - UI5 version number.
 	 * @returns {OData} OData handler instance.
 	 */
-	createODataHandler(version: number, spreadsheetUploadController: SpreadsheetUpload): OData {
+	createODataHandler(spreadsheetUploadController: SpreadsheetUpload): OData {
 		if (this.isODataV4) {
-			return new ODataV4(version, spreadsheetUploadController);
+			return new ODataV4(spreadsheetUploadController);
 		} else {
-			return new ODataV2(version, spreadsheetUploadController);
+			return new ODataV2(spreadsheetUploadController);
 		}
 	}
 

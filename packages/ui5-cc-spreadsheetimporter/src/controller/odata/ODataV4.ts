@@ -22,8 +22,8 @@ export default class ODataV4 extends OData {
 	updateGroupId: string;
 	public metadataHandler: MetadataHandlerV4;
 
-	constructor(ui5version: number, spreadsheetUploadController: SpreadsheetUpload) {
-		super(ui5version, spreadsheetUploadController);
+	constructor(spreadsheetUploadController: SpreadsheetUpload) {
+		super(spreadsheetUploadController);
 		this.updateGroupId = Util.getRandomString(10);
 		this.metadataHandler = new MetadataHandlerV4(spreadsheetUploadController);
 	}

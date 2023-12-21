@@ -9,6 +9,7 @@ import Logger from "./controller/Logger";
 import ComponentContainer from "sap/ui/core/ComponentContainer";
 import Button from "sap/m/Button";
 import Controller from "sap/ui/core/mvc/Controller";
+import View from "sap/ui/core/mvc/View";
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
@@ -291,7 +292,7 @@ export default class Component extends UIComponent {
 
 	_getViewControllerOfControl(control: any) {
 		var oView = null;
-		while (control && !(control instanceof sap.ui.core.mvc.View)) {
+		while (control && !(control instanceof View)) {
 			control = control.getParent();
 		}
 
