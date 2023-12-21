@@ -16,16 +16,14 @@ import Util from "../Util";
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
 export default abstract class OData extends ManagedObject {
-	UI5MinorVersion: number;
 	draftController: DraftController;
 	odataMessageHandler: ODataMessageHandler;
 	private _tables: any[] = [];
 	busyDialog: Dialog;
 	spreadsheetUploadController: SpreadsheetUpload;
 
-	constructor(ui5version: number, spreadsheetUploadController: SpreadsheetUpload) {
+	constructor(spreadsheetUploadController: SpreadsheetUpload) {
 		super();
-		this.UI5MinorVersion = ui5version;
 		this.odataMessageHandler = new ODataMessageHandler(spreadsheetUploadController);
 		this.spreadsheetUploadController = spreadsheetUploadController;
 	}

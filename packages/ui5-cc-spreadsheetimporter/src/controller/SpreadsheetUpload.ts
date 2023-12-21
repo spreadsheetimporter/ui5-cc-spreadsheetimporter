@@ -33,7 +33,6 @@ export default class SpreadsheetUpload extends ManagedObject {
 	private model: any;
 	public typeLabelList: ListObject;
 	public componentI18n: ResourceModel;
-	public UI5MinorVersion: number;
 	private odataHandler: OData;
 	public payload: any;
 	private _odataType: string;
@@ -109,7 +108,7 @@ export default class SpreadsheetUpload extends ManagedObject {
 			this.context = this.context.base;
 		}
 		this.isODataV4 = this._checkIfODataIsV4();
-		this.odataHandler = this.createODataHandler(this.UI5MinorVersion, this);
+		this.odataHandler = this.createODataHandler(this);
 		this.view = this.odataHandler.getView(this.context);
 		this.controller = this.view.getController();
 		Log.debug("View", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ view: this.view }));
@@ -148,11 +147,11 @@ export default class SpreadsheetUpload extends ManagedObject {
 	 * @param {number} version - UI5 version number.
 	 * @returns {OData} OData handler instance.
 	 */
-	createODataHandler(version: number, spreadsheetUploadController: SpreadsheetUpload): OData {
+	createODataHandler(spreadsheetUploadController: SpreadsheetUpload): OData {
 		if (this.isODataV4) {
-			return new ODataV4(version, spreadsheetUploadController);
+			return new ODataV4(spreadsheetUploadController);
 		} else {
-			return new ODataV2(version, spreadsheetUploadController);
+			return new ODataV2(spreadsheetUploadController);
 		}
 	}
 

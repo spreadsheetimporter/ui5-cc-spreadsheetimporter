@@ -17,8 +17,8 @@ export default class ODataV2 extends OData {
 	submitChangesResponse: any;
 	private metadataHandler: MetadataHandlerV2;
 
-	constructor(ui5version: number, spreadsheetUploadController: SpreadsheetUpload) {
-		super(ui5version, spreadsheetUploadController);
+	constructor(spreadsheetUploadController: SpreadsheetUpload) {
+		super(spreadsheetUploadController);
 		this.metadataHandler = new MetadataHandlerV2(spreadsheetUploadController);
 	}
 	create(model: any, binding: any, payload: any) {
