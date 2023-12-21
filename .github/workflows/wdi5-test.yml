@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
       matrix:
         scenario: ["ordersv2fe", "ordersv4fe", "ordersv2fenondraft", "ordersv2freestylenondraftopenui5", "ordersv2freestylenondraft"]
-        ui5version: [108, 96, 84, 71] # 120 as soon as wdi5 issue is fixed
+        ui5version: [120, 108, 96, 84, 71] # 120 as soon as wdi5 issue is fixed
         exclude:
           - scenario: ordersv4fe
             ui5version: 71
