@@ -220,6 +220,19 @@
                       "text": "Spreadsheet Upload"
                     }
                   }
+                },
+                "body": {
+                  "sections": {
+                    "customSectionReuse": {
+                      "title": "Spreadsheet Upload",
+                      "embeddedComponent": {
+                        "name": "cc.spreadsheetimporter.v0_30_0",
+                        "settings": {
+                          "tableId": "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable"
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }

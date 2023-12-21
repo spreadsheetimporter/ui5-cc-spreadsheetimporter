@@ -8,6 +8,8 @@
 The usage of the [UIComponent](https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.core.UIComponent) enables the possibility to return a button with the usage of a [ComponentContainer](https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.core.ComponentContainer).  
 This has the big advantage that no separate dependency has to be installed and a button for spreadsheet upload can be integrated very easily.
 
+You can also use the button in **Fiori Elements** applications within a section of a object page (see [Including Reuse Components on an Object Page](#including-reuse-components-on-an-object-page)).
+
 ### Requirements
 
 - Node.js Version v16.18.0, v18.12.0 or higher  
@@ -19,7 +21,7 @@ This has the big advantage that no separate dependency has to be installed and a
 1\. Install from npm
 
 ```sh
-npm install ui5-cc-spreadsheetimporter-button
+npm install ui5-cc-spreadsheetimporter
 ```
 
 2\. Add `resourceRoots` to you `manifest.json` under `sap.ui5`
@@ -113,75 +115,31 @@ Controller: [Detail.controller.js](https://github.com/marianfoo/ui5-cc-spreadshe
 XML View: [UploadToTable.view.xml](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2freestylenondraft/webapp/view/UploadToTable.view.xml)  
 Controller: [UploadToTable.controller.js](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2freestylenondraft/webapp/controller/UploadToTable.controller.js)
 
-## Deprecated Button Control
+## Including Reuse Components on an Object Page
 
-!!! warning
-      This information is only relevant if you use the seperate button control version `0.11.4` and the spreadsheet importer component `0.25.4`.
+You can also use the button in **Fiori Elements** applications within a section of a object page.  
+You can define this in the `manifest.json` under `sap.ui.generic.app` in the `pages` property.
 
-### GitHub Repository Package
-https://github.com/marianfoo/ui5-cc-spreadsheetimporter/tree/main/packages/ui5-cc-spreadsheetimporter-button
+The configuration is documented in the [UI5 documentation](https://sapui5.hana.ondemand.com/sdk/#/topic/d869d7ab3caa48b2a20dc20dfa248380).
 
-### npmjs.com Package
+A sample configuration can be found in the manifest.json of the [OData V4 Fiori Elements app](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv4fe/webapp/manifest.json)
 
-https://www.npmjs.com/package/ui5-cc-spreadsheetimporter-button
-
-## Sample App
-
-There is an example app that uses the button.  
-You can see the implementation in the XML View [here](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/d4f841329cb36d3b35371f0fdc3c06ed78fb2a92/examples/packages/ordersv2freestylenondraft/webapp/view/Detail.view.xml#L12)
-
-## Properties
-
-You can use the same [properties](Configuration.md) and [events](Events.md) as in the Spreadsheet Upload Control
-
-# Getting started
-
-1\. Install from npm
-
-```sh
-npm install ui5-cc-spreadsheetimporter-button
+```json
+"body": {
+  "sections": {
+    "customSectionReuse": {
+      "title": "Spreadsheet Upload",
+      "embeddedComponent": {
+        "name": "cc.spreadsheetimporter.v0_30_0",
+        "settings": {
+          "tableId": "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable"
+        }
+      }
+    }
+  }
+}
 ```
 
-2\. Add `resourceRoots` to you `manifest.json` under `sap.ui5`
-   
-⚠️ You must always keep your ui5-cc-spreadsheetimporter and button version up to date here when updating the module.  
-Check on npmjs which ui5-cc-spreadsheetimporter version is used by the button version you want to use:   
-https://www.npmjs.com/package/ui5-cc-spreadsheetimporter-button?activeTab=code
+### Screenshot
 
-````json
-"resourceRoots": {
-   "cc.spreadsheetimporter.button.undefined": "./thirdparty/customControl/spreadsheetImporterButton/v0_8_0",
-    "cc.spreadsheetimporter.v0_30_0": "./thirdparty/customControl/spreadsheetImporter/v0_30_0"
-},
-````
-
-3\. Add `componentUsages` to you `manifest.json` under `sap.ui5`
-   
-⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module.
-
-````json
-"componentUsages": {
-    "spreadsheetImporter": {
-        "name": "cc.spreadsheetimporter.v0_30_0"
-    }
-},
-````
-
-4\. Add the namespace to your XML View
-
-````xml
-<mvc:View
-   controllerName="sap.ui.demo.walkthrough.controller.HelloPanel"
-   xmlns="sap.m"
-   xmlns:mvc="sap.ui.core.mvc"
-   xmlns:spreadsheet="cc.spreadsheetimporter.button.undefined">
-...
-</mvc:View>
-````
-
-5\. Add the button control to your view and define the table id
-
-````xml
-<spreadsheet:SpreadsheetUpload id="spreadsheetUploadButton" text="Spreadsheet Upload Button" 
-tableId="container-todo---detail--lineItemsList"/>
-````
+![Screenshot](../images/reusecomponentFE.jpg)
