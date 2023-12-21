@@ -57,6 +57,7 @@ export default class Component extends UIComponent {
 			readAllSheets: { type: "boolean", defaultValue: false },
 			readSheet: { type: "any", defaultValue: 0 },
 			spreadsheetRowPropertyName: { type: "string" },
+			continueOnError: { type: "boolean", defaultValue: false },
 			debug: { type: "boolean", defaultValue: false },
 			componentContainerData: { type: "object" }
 			//Pro Configurations
@@ -134,6 +135,7 @@ export default class Component extends UIComponent {
 		this.setUseTableSelector(oCompData?.useTableSelector);
 		this.setHideSampleData(oCompData?.hideSampleData);
 		this.setComponentContainerData(oCompData?.componentContainerData);
+		this.setContinueOnError(oCompData?.continueOnError);
 		if (oCompData?.availableOptions && oCompData?.availableOptions.length > 0) {
 			// if availableOptions is set show the Options Menu
 			this.setShowOptions(true);
