@@ -5,10 +5,12 @@ Even though the tests are currently only in CAP, every OData Service including t
 
 Here is an overview of the apps that were created and passed the smoke test. 
 
-Another overview will be shown to you what apps are already tested automatically with wdi5 and are therefore tested on a constant basis.
+Another overview will be shown to you what apps are already tested automatically with wdi5 and are therefore tested on a constant basis.  
 
 All the example apps are found in the [`examples`](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/tree/main/examples/packages) folder. The test scripts are found in the [`test`](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/tree/main/examples/test) folder.  
 More info at [wdi5 tests](./Development/wdi5.md)
+
+**To summarize: All stable UI5 versions are currently supported (from 1.71). Also, 2.0 is already supported, but is still experimental as version 2.0 may still change.**
 
 ## Apps
 
@@ -30,6 +32,8 @@ More info at [wdi5 tests](./Development/wdi5.md)
 
 | UI5 Version  | List Report Draft  | List Report Non Draft  | Object Page Draft  | Object Page Non Draft  | Freestyle | OpenUI5 Freestyle |
 |---|---|---|---|---|---|---|
+| 2.0  |    |   | |   |   |  |
+| 1.120  | :white_check_mark:   |  :white_check_mark: | :white_check_mark: | :white_check_mark:  | :white_check_mark:  | :white_check_mark: |
 | 1.108  | :white_check_mark:   |  :white_check_mark: | :white_check_mark: | :white_check_mark:  | :white_check_mark:  | :white_check_mark: |
 | 1.96  | :white_check_mark:  |  :white_check_mark: |  :white_check_mark: | :white_check_mark:  |  :white_check_mark: | :white_check_mark: |
 |  1.84 |  :white_check_mark: | :white_check_mark:  |  :white_check_mark: | :white_check_mark:  | :white_check_mark:  | :white_check_mark: |
@@ -42,6 +46,8 @@ More info at [wdi5 tests](./Development/wdi5.md)
 
 | UI5 Version  | List Report Draft  | Object Page Draft  |  Freestyle | Flexible Programming Model | Typescript | CDS Plugin|
 |---|---|---|---|---|---|---|
+| 2.0 |    | |  |  |  |  |
+| 1.120  |  :white_check_mark:  | :white_check_mark: |  |  |:white_check_mark:  |:white_check_mark:  |
 | 1.108  |  :white_check_mark:  | :white_check_mark: |  |  |:white_check_mark:  |:white_check_mark:  |
 | 1.96  | :white_check_mark:  | :white_check_mark:  |   |   |   |   |
 |  1.84 |  :white_check_mark: | :white_check_mark:  |   |   |   |   |
