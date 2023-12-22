@@ -58,5 +58,13 @@ export const CustomMessageTypes: { [key: string]: CustomMessageType } = {
 	Formatting: {
 		title: "Formatting",
 		group: true
+	},
+	DuplicateColumns: {
+		title: "DuplicateColumns",
+		group: false
+	},
+	MaxLengthExceeded: {
+		title: "MaxLengthExceeded",
+		group: true
 	}
 };

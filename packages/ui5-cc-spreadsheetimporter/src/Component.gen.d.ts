@@ -24,6 +24,7 @@ declare module "./Component" {
         previewColumns?: string[] | PropertyBindingInfo | `{${string}}`;
         skipMandatoryFieldCheck?: boolean | PropertyBindingInfo | `{${string}}`;
         skipColumnsCheck?: boolean | PropertyBindingInfo | `{${string}}`;
+        skipMaxLengthCheck?: boolean | PropertyBindingInfo | `{${string}}`;
         showBackendErrorMessages?: boolean | PropertyBindingInfo | `{${string}}`;
         showOptions?: boolean | PropertyBindingInfo | `{${string}}`;
         availableOptions?: string[] | PropertyBindingInfo | `{${string}}`;
@@ -108,6 +109,10 @@ declare module "./Component" {
         // property: skipColumnsCheck
         getSkipColumnsCheck(): boolean;
         setSkipColumnsCheck(skipColumnsCheck: boolean): this;
+
+        // property: skipMaxLengthCheck
+        getSkipMaxLengthCheck(): boolean;
+        setSkipMaxLengthCheck(skipMaxLengthCheck: boolean): this;
 
         // property: showBackendErrorMessages
         getShowBackendErrorMessages(): boolean;

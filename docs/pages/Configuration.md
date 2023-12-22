@@ -274,6 +274,13 @@ This option determines whether or not the columns in the Spreadsheet File should
 For instance, if there is a column named `Test column` in the Spreadsheet File, and this particular column name is absent from the metadata, an error will occur by default.  
 However, if there are columns that are not being uploaded to the backend, you can configure this option to `true` in order to bypass the verification process.
 
+### `skipMaxLengthCheck`
+
+**default:** `false`
+
+This option determines whether or not the max length of the columns in the Spreadsheet File should be verified.  
+If there is a `maxLength` defined in the metadata, the value in the Spreadsheet File will be checked.
+
 ### `showBackendErrorMessages`
 
 **default:** `false`
