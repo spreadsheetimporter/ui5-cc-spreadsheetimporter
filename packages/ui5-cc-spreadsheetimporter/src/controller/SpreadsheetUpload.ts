@@ -75,7 +75,6 @@ export default class SpreadsheetUpload extends ManagedObject {
 				function (versionInfo: any) {
 					const version = versionInfo.version;
 					const text = "UI5 Version Info: " + versionInfo.name + " - " + versionInfo.version;
-					console.log("UI5 Version Info", versionInfo);
 					Log.debug("constructor", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ ui5version: version, isOpenUI5: this.isOpenUI5 }));
 				}.bind(this)
 			);
@@ -224,6 +223,9 @@ export default class SpreadsheetUpload extends ManagedObject {
 		}
 		if (options.hasOwnProperty("skipColumnsCheck")) {
 			this.component.setSkipColumnsCheck(options.skipColumnsCheck);
+		}
+		if (options.hasOwnProperty("skipColumnsCheck")) {
+			this.component.setSkipColumnsCheck(options.useTableSelector);
 		}
 		if (options.hasOwnProperty("showBackendErrorMessages")) {
 			this.component.setShowBackendErrorMessages(options.showBackendErrorMessages);

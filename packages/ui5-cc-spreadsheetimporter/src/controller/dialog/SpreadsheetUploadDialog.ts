@@ -146,7 +146,11 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 					this.component.getMandatoryFields(),
 					this.spreadsheetUploadController.typeLabelList
 				);
-				if (this.component.getSkipColumnsCheck() === false) {
+				this.messageHandler.checkDuplicateColumns(columnNames);
+				if (!this.component.getSkipMaxLengthCheck()) {
+					this.messageHandler.checkMaxLength(spreadsheetSheetsData, this.spreadsheetUploadController.typeLabelList, this.component.getFieldMatchType());
+				}
+				if (!this.component.getSkipColumnsCheck()) {
 					this.messageHandler.checkColumnNames(columnNames, this.component.getFieldMatchType(), this.spreadsheetUploadController.typeLabelList);
 				}
 			}

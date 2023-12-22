@@ -42,6 +42,19 @@ export default class MessageHandler extends ManagedObject {
 		return this.messages;
 	}
 
+	checkDuplicateColumns(columnNames: string[]) {
+		const duplicateColumns = columnNames.filter((columnName, index) => columnNames.indexOf(columnName) !== index);
+		if (duplicateColumns.length > 0) {
+			const errorMessage = {
+				title: this.spreadsheetUploadController.util.geti18nText("duplicateColumns", [duplicateColumns.join(", ")]),
+				type: CustomMessageTypes.DuplicateColumns,
+				ui5type: MessageType.Error,
+				group: false
+			} as Messages;
+			this.addMessageToMessages(errorMessage);
+		}
+	}
+
 	checkMandatoryColumns(data: PayloadArray, columnNames: string[], mandatoryFieldsUser: string[], mandatoryFieldsMetadata: string[], typeLabelList: ListObject) {
 		// concat mandatory fields arrays and remove duplicates
 		const mandatoryFields = [...new Set([...mandatoryFieldsUser, ...mandatoryFieldsMetadata])];
@@ -95,6 +108,32 @@ export default class MessageHandler extends ManagedObject {
 					this.addMessageToMessages(warningMessage);
 				}
 			});
+		}
+	}
+
+	checkMaxLength(data: ArrayData, typeLabelList: ListObject, fieldMatchType: string) {
+		for (const [index, row] of data.entries()) {
+			for (const [key, valueTypeLabelList] of typeLabelList) {
+				if (valueTypeLabelList.maxLength) {
+					const value = Util.getValueFromRow(row, valueTypeLabelList.label, key, this.spreadsheetUploadController.component.getFieldMatchType() as FieldMatchType);
+					// check if value is longer then max length
+					if (value && value.rawValue && value.rawValue.length > valueTypeLabelList.maxLength) {
+						// the length was exceeded by x characters
+						const exceededLength = value.rawValue.length - valueTypeLabelList.maxLength;
+						const errorMessage = {
+							title: this.spreadsheetUploadController.util.geti18nText("maxLengthExceeded", [valueTypeLabelList.maxLength, valueTypeLabelList.label]),
+							type: CustomMessageTypes.MaxLengthExceeded,
+							row: index + 2,
+							counter: 1,
+							ui5type: MessageType.Error,
+							rawValue: value.rawValue,
+							maxLength: valueTypeLabelList.maxLength,
+							excededLength: exceededLength
+						} as Messages;
+						this.addMessageToMessages(errorMessage);
+					}
+				}
+			}
 		}
 	}
 
@@ -165,13 +204,11 @@ export default class MessageHandler extends ManagedObject {
 	 * Display messages.
 	 */
 	async displayMessages() {
-		if (!this.messageDialog) {
-			this.messageDialog = (await Fragment.load({
-				name: "cc.spreadsheetimporter.XXXnamespaceXXX.fragment.MessagesDialog",
-				type: "XML",
-				controller: this
-			})) as Dialog;
-		}
+		this.messageDialog = (await Fragment.load({
+			name: "cc.spreadsheetimporter.XXXnamespaceXXX.fragment.MessagesDialog",
+			type: "XML",
+			controller: this
+		})) as Dialog;
 		this.messageDialog.setModel(this.spreadsheetUploadController.componentI18n, "i18n");
 		this.messageDialog.setModel(new JSONModel(), "messages");
 		const messagesGrouped = this.groupMessages(this.messages);
@@ -198,7 +235,9 @@ export default class MessageHandler extends ManagedObject {
 			if (!groups[message.title]) {
 				groups[message.title] = [];
 			}
-			if (message.rawValue && message.formattedValue) {
+			if (message.maxLength && message.excededLength) {
+				messageText = this.spreadsheetUploadController.util.geti18nText("maxLengthExceededWithLength", [message.maxLength, message.excededLength, message.rawValue]);
+			} else if (message.rawValue && message.formattedValue) {
 				messageText = this.spreadsheetUploadController.util.geti18nText("errorInRowWithValueFormatted", [message.row, message.formattedValue, message.rawValue]);
 			} else if (message.rawValue) {
 				messageText = this.spreadsheetUploadController.util.geti18nText("errorInRowWithValue", [message.row, message.rawValue]);
@@ -228,6 +267,7 @@ export default class MessageHandler extends ManagedObject {
 
 	private onCloseMessageDialog() {
 		this.messageDialog.close();
+		this.messageDialog.destroy();
 		// rest file uploader content
 		this.spreadsheetUploadController.resetContent();
 	}

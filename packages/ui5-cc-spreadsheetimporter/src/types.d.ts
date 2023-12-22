@@ -32,6 +32,8 @@ export interface Messages {
 	ui5type: MessageType;
 	description?: string;
 	details?: MessagesDetails[];
+	maxLength?: number;
+	excededLength?: number;
 }
 
 export interface MessagesDetails {
@@ -96,6 +98,7 @@ export interface ComponentData {
 	previewColumns?: string[];
 	skipMandatoryFieldCheck?: boolean;
 	skipColumnsCheck?: boolean;
+	skipMaxLengthCheck?: boolean;
 	showBackendErrorMessages?: boolean;
 	showOptions?: boolean;
 	availableOptions?: AvailableOptionsType[];

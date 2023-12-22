@@ -10,3 +10,5 @@ The following types of errors are handled by the UI5 Spreadsheet Upload Control:
 - **Data Type Mismatch**: The control checks that the data types in the uploaded file match the expected data types. 
 - **Custom Errors**: The control allows you to add custom errors to the error dialog. You can add errors to the `messages` property of the `SpreadsheetUpload` control. After the event the upload is canceled and the errors are displayed in the Error Dialog (see [Events](./Events.md) for more information).
 - **Backend Errors**: If the backend service returns an error, it is displayed. In case of checks during saving (e.g. RAP or CAP), no error is displayed in the draft scenario in Fiori Element Apps, as Fiori Element catches these errors.
+- **Duplicate Columns**: The control checks that the uploaded file does not contain duplicate columns. If there is a duplicate column, an error message is displayed.
+- **Max Length**: The control checks that the length of the data in the uploaded file does not exceed the maximum length of the corresponding field. If the length exceeds the maximum length, an error message is displayed.
