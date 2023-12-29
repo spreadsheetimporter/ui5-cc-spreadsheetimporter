@@ -87,4 +87,7 @@ pnpm deploy:cf
 Perform the same steps as you did in [Getting Started](./../pages/GettingStarted.md).  
 It is not necessary to install the control using npm and the entry `resourceRoots` in the `manifest.json`.
 
-For the consuming app in BTP, i have created a [sample app](https://github.com/marianfoo/spreadsheetimporter-btp-example) with the deployment to the HTML5 Repository on BTP.
+For the consuming app in BTP, i have created a [sample app](https://github.com/marianfoo/spreadsheetimporter-btp-example) with the deployment to the HTML5 Repository on BTP.  
+
+You can find more information in the blog posts from [Wouter Lemaire](https://people.sap.com/wouter.lemaire):  
+[Connecting UI5 Components in BTP CloudFoundry in the same space](https://blogs.sap.com/2023/11/09/connecting-ui5-components-in-btp-cloudfoundry-in-the-same-space/) and [Connecting UI5 Components in BTP CloudFoundry across spaces](https://blogs.sap.com/2023/11/09/connecting-ui5-components-in-btp-cloudfoundry-across-spaces/)
