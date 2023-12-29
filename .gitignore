@@ -153,3 +153,6 @@ package-lock.json
 .yo-rc.json
 .env
 /test/test-output
+/mta_archives/
+*.mtar
+*.zip

@@ -201,6 +201,37 @@ function replaceYamlFileServe(version, versionShort, versionSlash, filePath) {
     fs.writeFileSync(filePath, updatedYaml, 'utf8');
 }
 
+function replaceYamlFileCF(version, versionShort, versionSlash, filePath) {
+    // Load the specified yaml file
+    const fileContents = fs.readFileSync(filePath, 'utf8');
+
+    // Parse the YAML into a JavaScript object
+    const ui5Build = yaml.load(fileContents);
+
+    // Replace the values
+    ui5Build.builder.customTasks.forEach(task => {
+        if (task.name === 'ui5-tooling-stringreplace-task') {
+            task.configuration.replace.forEach(replacement => {
+                if (replacement.placeholder === 'XXXnamespaceXXX') {
+                    replacement.value = version;
+                }
+                if (replacement.placeholder === 'XXXnamespaceShortXXX') {
+                    replacement.value = versionShort;
+                }
+                if (replacement.placeholder === 'XXXnamespaceSlashXXX') {
+                    replacement.value = versionSlash;
+                }
+            });
+        }
+    });
+
+    // Serialize the modified object back to YAML
+    const updatedYaml = yaml.dump(ui5Build, { lineWidth: -1 });
+
+    // Save the updated file
+    fs.writeFileSync(filePath, updatedYaml, 'utf8');
+}
+
 function replaceYamlFileComponent(versionSlash, path) {
 	// Load the ui5-build.yaml file
 	const fileContents = fs.readFileSync(path, 'utf8');
@@ -254,6 +285,7 @@ function replaceVersionManifest(version) {
 	// Replace the version
 
 	jsonData['sap.app']['id'] = `cc.spreadsheetimporter.${version}`;
+	jsonData['sap.cloud']['service'] = `spreadsheetimporter_${version}`;
 	jsonData['sap.ui5']['componentName'] = `cc.spreadsheetimporter.${version}`;
 	jsonData['sap.ui5']['models']['i18n']['settings']['bundleName'] = `cc.spreadsheetimporter.${version}.i18n.i18n`;
 
@@ -299,6 +331,7 @@ module.exports.getTestappObject = getTestappObject;
 module.exports.replaceYamlFileBuild = replaceYamlFileBuild;
 module.exports.replaceYamlFileDeploy = replaceYamlFileDeploy;
 module.exports.replaceYamlFileServe = replaceYamlFileServe;
+module.exports.replaceYamlFileCF = replaceYamlFileCF;
 module.exports.replaceYamlFileComponent = replaceYamlFileComponent;
 module.exports.replaceVersionManifest = replaceVersionManifest;
 module.exports.deleteNodeModules = deleteNodeModules;
