@@ -1,27 +1,27 @@
 # How it Works
 
-The big advantage of this UI5 component is that it can be used universally with minimal configuration and is independent of the backend implementation.  
-This is achieved by reading the files already in the frontend and using the standard UI5 APIs.
+The major advantage of this UI5 component is its universal usability with minimal configuration, and it is independent of the backend implementation.  
+This is achieved by reading the files that are already present in the frontend and utilizing the standard UI5 APIs.
 
 ## Technical Background
 
-The UI5 SpreadsheetUpload is built on a reuse component, which means that componentUsages must be defined in the manifest and createComponent must be used in the code.  
-This allows for the use of i18n and a component-preload, which improves loading time performance.  
-When the component is deployed centrally on an ABAP server, the setup is straightforward.
+The UI5 SpreadsheetUpload is built on a reuse component, which requires the definition of componentUsages in the manifest and the usage of createComponent in the code.  
+This allows for the use of i18n and a component-preload, which enhances the loading time performance.  
+When the component is centrally deployed on an ABAP server, the setup is straightforward.
 
 ## Integration into UI5
 
-Integrating the component is straightforward as long as the component has access to the context or the view. Without this access, it won't work.  
-When the component is created, it looks for a table in the view to use the binding for the upload. Other necessary details, such as metadata and draft activation actions, are also derived from the table. If no table or more than two tables are found, the table must be defined in the options.
+Integrating the component is straightforward as long as the component has access to the context or the view, as without this access, it won't function.  
+Upon creation of the component, it searches for a table in the view to utilize the binding for the upload. Other necessary details, such as metadata and draft activation actions, are also derived from the table. If no table or more than two tables are found, the table must be defined in the options.
 
-## Creating Template File
+## Creating the Template File
 
-Using the metadata, the component can identify the entity of the binding and create a template file with labels.
+By utilizing the metadata, the component can identify the entity of the binding and generate a template file with labels.
 
-## Extracting the Spreadsheet files
+## Extracting the Spreadsheet Files
 
-To avoid sending the entire Spreadsheet file as binary data to the backend, the component uses the open source library [SheetJS](https://sheetjs.com/) to read data from the file. Spreadsheet formats are converted to OData formats as well. With the raw data in hand, the component can use the ODataListBinding and [`create`](https://ui5.sap.com/#/api/sap.ui.model.odata.v4.ODataListBinding%23methods/create) to send the data to the backend.  
-Since the standard interfaces are used here, the big advantage is also the independence from the backend scenario (e.g. CAP or RAP).  
+To avoid sending the entire Spreadsheet file as binary data to the backend, the component utilizes the open-source library [SheetJS](https://sheetjs.com/) to read data from the file. Additionally, Spreadsheet formats are converted to OData formats. With the raw data at hand, the component can utilize the ODataListBinding and [`create`](https://ui5.sap.com/#/api/sap.ui.model.odata.v4.ODataListBinding%23methods/create) to send the data to the backend.  
+Since the standard interfaces are used, the key advantage is the independence from the backend scenario, such as CAP or RAP.
 
-The data is sent as a batch. To prevent a batch from becoming too large, data is sent in 1,000 batches by default.
+The data is sent as a batch, and to prevent a batch from becoming too large, the data is sent in batches of 1,000 by default.  
 The size of the batches can be adjusted in the options.

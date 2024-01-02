@@ -39,15 +39,18 @@ The development documentation can be found here:
 
 https://docs.spreadsheet-importer.com/pages/Development/GettingStarted/
 
+## Quickstart
+
+1. Clone the repository `git clone https://github.com/marianfoo/ui5-cc-spreadsheetimporter`
+2. Run `pnpm install`
+3. Run server with `pnpm start:server`
+4. Start Demo App for example a Fiori Elements App with OData V4 and UI5 1.120 with `pnpm --filter ordersv4fe120 start`
+
 # Changelogs
 
 ## Changelog `ui5-cc-spreadsheetimporter`
 
 See the [CHANGELOG.md](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/packages/ui5-cc-spreadsheetimporter/CHANGELOG.md)
-
-## Changelog `ui5-cc-spreadsheetimporter-button`
-
-Refer to the [CHANGELOG.md](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/packages/ui5-cc-spreadsheetimporter-button/CHANGELOG.md)
 
 ## Changelog `generator-ui5-spreadsheetimporter`
 

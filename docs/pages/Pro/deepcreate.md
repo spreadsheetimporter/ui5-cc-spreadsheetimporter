@@ -1,12 +1,12 @@
-With this feature you are able to upload a spreadsheet to create with multiple entities and their relations.
+With this feature, you are able to upload a spreadsheet to create multiple entities and their relations.
 
 ## Configuration
 
 | Option | Description | Details |
 | ------ | --- | --- |
-| `operation` | Choose which method to upload data you want to use | string |
-| `flatSheet` | Upload data in one  | object |
-| `columns` | Choose which data is uploaded | object |
+| `operation` | Choose which method to use for uploading data | string |
+| `flatSheet` | Upload data in one sheet or multiple sheets | object |
+| `columns` | Choose which data to upload | object |
 
 ### Sample Usage
 
@@ -54,18 +54,15 @@ componentData: {
 
 Currently available options: `create`, `deepCreate`
 
-This option defines which method to upload data you want to use. 
+This option defines the method to use for uploading data. 
 
 ### flatSheet
 
 **default:** `false`
 
-This option defines if you want to upload data in one sheet or multiple sheets.  
-By default every entity is in a separate sheet. If you want to upload data in one sheet, set this option to `true`.
+This option determines whether you want to upload data in one sheet or multiple sheets.  
+By default, every entity is in a separate sheet. If you want to upload data in one sheet, set this option to `true`.
 
 ### columns
 
-This option defines which data is uploaded.
-
-
-
+This option determines which data to upload.

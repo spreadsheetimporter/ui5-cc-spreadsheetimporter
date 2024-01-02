@@ -1,4 +1,4 @@
-# Installing  npm Package from GitHub
+# Installing npm Package from GitHub
 
 To install the `@spreadsheetimporter/ui5-cc-spreadsheetimporter-pro` package directly from a GitHub repository, you'll need a personal access token from GitHub and configure npm to use it. Below are the steps:
 
@@ -15,7 +15,7 @@ To install the `@spreadsheetimporter/ui5-cc-spreadsheetimporter-pro` package dir
 4. Choose **Personal access tokens** from the left sidebar.
 5. Click **Generate new token**.
 6. Provide a descriptive name for the token in the **Note** field.
-7. Under **scopes**, select the `repo` and `read:packages` checkbox to allow access to private repositories and packages.
+7. Under **scopes**, select the `repo` and `read:packages` checkboxes to allow access to private repositories and packages.
 8. Click **Generate token**.
 9. Copy the generated token. **Note**: This is your only chance to copy the token. If lost, you'll have to create a new one.
 
@@ -30,12 +30,12 @@ You can either set up a project-specific `.npmrc` file or edit the global `~/.np
 1. Go to your project directory.
 2. Create or open the `.npmrc` file.
 
-```plaintext
+```
 @spreadsheetimporter:registry=https://npm.pkg.github.com
 //npm.pkg.github.com/:_authToken=YOUR_PERSONAL_ACCESS_TOKEN
 ```
 
-Replace YOUR_PERSONAL_ACCESS_TOKEN with the token you generated in step 1.
+Replace YOUR_PERSONAL_ACCESS_TOKEN with the token you generated in step 2.
 
 Now you can install the package:  
 
@@ -46,9 +46,9 @@ npm install @spreadsheetimporter/ui5-cc-spreadsheetimporter-pro
 ### For Global Configuration
 
 1. Open the `~/.npmrc` file.
-2. Add the following lines:
+2. Add the following line:
 
-```plaintext
+```
 @spreadsheetimporter:registry=https://npm.pkg.github.com
 ```
 
@@ -65,6 +65,6 @@ npm install @spreadsheetimporter/ui5-cc-spreadsheetimporter-pro
 Now you can start using the package in your project.  
 For more information, please refer to the [Getting Started Page](./../GettingStarted.md).
 
-The documentation for pro features are here:
+The documentation for pro features is here:
 
 - [Spreadsheet Download](./spreadsheetdownload.md)

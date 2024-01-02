@@ -1,16 +1,16 @@
 # Supported Versions
 
-The goal is to test in as many versions and environments as possible, especially all versions in long-term maintenance. 
-Even though the tests are currently only in CAP, every OData Service including the `metadata.xml` is supported. That includes OData Services created with CAP, RAP and SEGW. That means, as long you using UI5 version `1.71`, you can also use this in ECC or S/4HANA.
+The goal is to test as many versions and environments as possible, especially all versions in long-term maintenance. 
+Even though the tests are currently only in CAP, every OData Service, including the `metadata.xml`, is supported. That includes OData Services created with CAP, RAP, and SEGW. That means as long as you are using UI5 version `1.71`, you can also use this in ECC or S/4HANA.
 
-Here is an overview of the apps that were created and passed the smoke test. 
+Here is an overview of the apps that were created and passed the smoke test:
 
-Another overview will be shown to you what apps are already tested automatically with wdi5 and are therefore tested on a constant basis.  
+Another overview will show you which apps are already tested automatically with wdi5 and are therefore tested on a constant basis.
 
-All the example apps are found in the [`examples`](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/tree/main/examples/packages) folder. The test scripts are found in the [`test`](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/tree/main/examples/test) folder.  
+All the example apps can be found in the [`examples`](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/tree/main/examples/packages) folder. The test scripts can be found in the [`test`](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/tree/main/examples/test) folder.  
 More info at [wdi5 tests](./Development/wdi5.md)
 
-**To summarize: All stable UI5 versions are currently supported (from 1.71). Also, 2.0 is already supported, but is still experimental as version 2.0 may still change.**
+**To summarize: All stable UI5 versions are currently supported (from 1.71). Also, 2.0 is already supported but is still experimental, as version 2.0 may still change.**
 
 ## Apps
 
