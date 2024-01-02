@@ -9,8 +9,8 @@ resources:
 builder:
   resources:
     excludes:
-      - "/test/**"
-      - "/localService/**"
+      - /test/**
+      - /localService/**
   customTasks:
     - name: ui5-tooling-transpile-task
       afterTask: replaceVersion
@@ -29,11 +29,11 @@ builder:
           - '**/*.ts'
         replace:
           - placeholder: XXXnamespaceXXX
-            value: v0_29_0
+            value: v0_31_0
           - placeholder: XXXnamespaceShortXXX
-            value: v0290
+            value: v0310
           - placeholder: XXXnamespaceSlashXXX
-            value: v0_29_0
+            value: v0_31_0
     - name: ui5-tooling-modules-task
       afterTask: ui5-tooling-stringreplace-task
       configuration:
@@ -43,4 +43,4 @@ builder:
       configuration:
         archiveName: spreadsheetimporter
         additionalFiles:
-        - xs-app.json
+          - xs-app.json

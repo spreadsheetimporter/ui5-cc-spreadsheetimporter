@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.31.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.30.0...ui5-cc-spreadsheetimporter-v0.31.0) (2024-01-02)
+
+
+### Features
+
+* add config for btp deployment with managed approuter ([#419](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/419)) ([470b68f](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/470b68f5e873673c3711b91bfc87d81143c40222))
+* new checks for maxLength and duplicate columns ([#447](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/447)) ([7d47e28](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/7d47e28d925d103dd894154b862ee6801bd84864))
+* new config to define columns in preview ([#443](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/443)) ([b98db12](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/b98db12526503cd72b405bc00b6ce05b942d647b))
+* new option `createActiveEntity´ to directly create active entities ([#438](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/438)) ([a3449f7](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/a3449f77c84d9581a39a19c24eb6e21aacbb25b7))
+
+
+### Bug Fixes
+
+* check if ComponentContainerData is available ([#445](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/445)) ([c484e42](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/c484e42b292831e5884d499b6b6a89060f919626))
+
 ## [0.30.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.29.1...ui5-cc-spreadsheetimporter-v0.30.0) (2023-12-21)
 
 
