@@ -52,10 +52,6 @@ https://docs.spreadsheet-importer.com/pages/Development/GettingStarted/
 
 See the [CHANGELOG.md](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/packages/ui5-cc-spreadsheetimporter/CHANGELOG.md)
 
-## Changelog `ui5-cc-spreadsheetimporter-button`
-
-Refer to the [CHANGELOG.md](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/packages/ui5-cc-spreadsheetimporter-button/CHANGELOG.md)
-
 ## Changelog `generator-ui5-spreadsheetimporter`
 
 Check the [CHANGELOG.md](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/packages/ui5-cc-spreadsheetimporter-generator/CHANGELOG.md)
