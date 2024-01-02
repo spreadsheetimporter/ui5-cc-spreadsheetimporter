@@ -54,7 +54,7 @@
         "sap.ui.table": {}
       },
       "components": {
-        "cc.spreadsheetimporter.v0_30_0": {}
+        "cc.spreadsheetimporter.v0_31_0": {}
       }
     },
     "contentDensities": {
@@ -79,11 +79,11 @@
     },
     "componentUsages": {
       "spreadsheetImporter": {
-        "name": "cc.spreadsheetimporter.v0_30_0"
+        "name": "cc.spreadsheetimporter.v0_31_0"
       }
     },
     "resourceRoots": {
-      "cc.spreadsheetimporter.v0_30_0": "./thirdparty/customControl/spreadsheetImporter/v0_30_0"
+      "cc.spreadsheetimporter.v0_31_0": "./thirdparty/customControl/spreadsheetImporter/v0_31_0"
     },
     "routing": {
       "config": {
