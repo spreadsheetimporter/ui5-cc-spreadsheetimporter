@@ -260,6 +260,9 @@ export default class SpreadsheetUpload extends ManagedObject {
 		if (options.hasOwnProperty("continueOnError")) {
 			this.component.setContinueOnError(options.continueOnError);
 		}
+		if (options.hasOwnProperty("createActiveEntity")) {
+			this.component.setCreateActiveEntity(options.createActiveEntity);
+		}
 
 		// Special case for showOptions
 		if (options.availableOptions && options.availableOptions.length > 0) {

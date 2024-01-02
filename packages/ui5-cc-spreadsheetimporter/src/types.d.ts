@@ -108,6 +108,7 @@ export interface ComponentData {
 	useTableSelector?: boolean;
 	sampleData?: object;
 	continueOnError?: boolean;
+	createActiveEntity?: boolean;
 }
 
 // Pro Types

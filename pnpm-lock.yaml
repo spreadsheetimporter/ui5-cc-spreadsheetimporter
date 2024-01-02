@@ -3493,8 +3493,8 @@ packages:
     dependencies:
       antlr4: 4.9.3
 
-  /@sap/cds-fiori@1.2.2(@sap/cds@7.5.1)(express@4.18.2):
-    resolution: {integrity: sha512-9bJKiIq8dCmwEcIXES7jiAcmiyJlDjjKdnvceAmqCU5Z925ZaalVIGYdnmmlQyciPUzD/bk3vRxmrPIogP6leA==}
+  /@sap/cds-fiori@1.1.0(@sap/cds@7.5.1)(express@4.18.2):
+    resolution: {integrity: sha512-dj+OMS3bpbYx7pO/SUSbZkt2KIs2RiAnaxhO+RZmL89DR8r67MEft2/vQbg00AGoH0Al/NKK0AFiHHyNL/+CWg==}
     peerDependencies:
       '@sap/cds': '>=7'
       express: '>=4'
@@ -3518,7 +3518,7 @@ packages:
     dependencies:
       '@cap-js/cds-types': 0.1.0(@sap/cds@7.5.1)
       '@sap/cds-compiler': 4.5.0
-      '@sap/cds-fiori': 1.2.2(@sap/cds@7.5.1)(express@4.18.2)
+      '@sap/cds-fiori': 1.1.0(@sap/cds@7.5.1)(express@4.18.2)
       '@sap/cds-foss': 5.0.0
     transitivePeerDependencies:
       - express

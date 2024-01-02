@@ -59,6 +59,10 @@ export default abstract class OData extends ManagedObject {
 				// loop over data from spreadsheet file
 				try {
 					for (const payload of batch) {
+						// skip draft and directly create
+						if (component.getCreateActiveEntity()) {
+							payload.IsActiveEntity = true;
+						}
 						// Extension method to manipulate payload
 						try {
 							await Util.fireEventAsync("changeBeforeCreate", { payload: payload }, component);
@@ -79,7 +83,8 @@ export default abstract class OData extends ManagedObject {
 					}
 
 					// check for and activate all drafts and wait for all draft to be created
-					if (component.getActivateDraft() && !errorsFoundLocal) {
+					// only if createActiveEntity is false and IsActiveEntity is not used in the payload
+					if (!component.getCreateActiveEntity() && component.getActivateDraft() && !errorsFoundLocal) {
 						await this.waitForDraft();
 					}
 

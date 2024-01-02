@@ -1,0 +1,4 @@
+POST http://localhost:4004/odata/v4/orders/Orders HTTP/1.1
+Content-Type: application/json
+
+{"OrderNo":"3","buyer":"test@test.de","IsActiveEntity": true}
