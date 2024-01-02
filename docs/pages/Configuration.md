@@ -14,6 +14,7 @@ These options are available and explained in detail below:
 | `mandatoryFields`  | The selected fields are checked to see if they are present | string[] |
 | `fieldMatchType` | Defines what type of strategy is executed when matching spreadsheet columns | string |
 | `activateDraft` | Determines whether a draft should be activated immediately  | boolean |
+| `createActiveEntity` | Inserts `IsActiveEntity` into the payload | boolean |
 | `batchSize` | Determines bach sizes send to backend server  | integer |
 | `standalone` | Mode if you do not have a table and want to do the processing yourself  | boolean |
 | `readAllSheets` | In Standalone Mode you can get access to all sheets in the spreadsheet file  | boolean |
@@ -110,10 +111,47 @@ With `labelTypeBrackets` the header columns would look like this: `ID[ID], Birth
 
 This option defines in draft scenarios whether a draft should be activated immediately or not.  
 The option only defines whether the attempt should be started. If a draft activation is basically not possible, it will not be executed and may lead to errors.  
-This is useful e.g. in a list report. If this option is set to `false`, all uploaded units have to be activated manually.
+This is useful e.g. in a list report. If this option is set to `false`, all uploaded units have to be activated manually.  
+Will be overwritten by the `createActiveEntity` option.
 
 !!! warning
     Draft Activation for OData V2 in **OpenUI5** is not supported.
+
+
+### `createActiveEntity`
+
+**default:** `false`
+
+This option defines whether the `IsActiveEntity` property should be inserted into the payload sent to the backend.  
+In draft scenarios you can use this option to create a active entity instead of a draft.  
+Check if your backend system supports this.
+
+**ABAP Backend**
+
+No informmation which backend OData implementation is supported, but a test with RAP worked.
+
+**CAP Backend**
+
+The feature to support `IsActiveEntity` was introduced in CAP Version `7.5.0`.  
+https://cap.cloud.sap/docs/releases/changelog/#dec-23-added  
+https://cap.cloud.sap/docs/releases/dec23#sapui5-mass-edit  
+
+Unfortunately, in the first tests, this did not work with the CAP backend.  
+Currently waiting for a fix or more information.  
+
+#### When to use `activateDraft` or `createActiveEntity`
+
+- `activateDraft`: First create a draft and then activate it in two separate requests.
+- `createActiveEntity`: Create a active entity directly.
+
+If you create a draft, the determinations are not triggered in the RAP framework, for example. These are only executed when creating directly.
+So if you now pass "IsActiveEntity", the entity is created directly and therefore the determinations are also executed.
+
+Of course, the creation of the draft entity and the subsequent activation takes longer because this is an additional network request.
+
+Together with the option `continueOnError` it is also possible to create all entities and try to activate the other entities if the draft activation fails.
+This means that at least all drafts are available.
+
 
 ### `batchSize`
 

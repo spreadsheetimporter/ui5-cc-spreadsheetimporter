@@ -36,6 +36,7 @@ declare module "./Component" {
         readSheet?: any | PropertyBindingInfo | `{${string}}`;
         spreadsheetRowPropertyName?: string | PropertyBindingInfo;
         continueOnError?: boolean | PropertyBindingInfo | `{${string}}`;
+        createActiveEntity?: boolean | PropertyBindingInfo | `{${string}}`;
         debug?: boolean | PropertyBindingInfo | `{${string}}`;
         componentContainerData?: object | PropertyBindingInfo | `{${string}}`;
         checkBeforeRead?: (event: Component$CheckBeforeReadEvent) => void;
@@ -157,6 +158,10 @@ declare module "./Component" {
         // property: continueOnError
         getContinueOnError(): boolean;
         setContinueOnError(continueOnError: boolean): this;
+
+        // property: createActiveEntity
+        getCreateActiveEntity(): boolean;
+        setCreateActiveEntity(createActiveEntity: boolean): this;
 
         // property: debug
         getDebug(): boolean;
