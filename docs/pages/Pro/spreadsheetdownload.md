@@ -1,26 +1,26 @@
-This feature downloads the data from the backend and converts it to an Spreadsheet file.  
-It is targeted for the future feature to upload the data to update the data in the backend.  
-The main feature which distinguishes this from the integrated Spreadsheet Download is that it can download data from multiple entities at once.
+This feature downloads data from the backend and converts it to a Spreadsheet file.  
+In the future, the feature will allow users to upload data in order to update the data in the backend.  
+The main difference between this feature and the integrated Spreadsheet Download is that it can download data from multiple entities at once.
 
-So for example if you Orders and OrderItems you can download both entities at once and the data will be structured in the Spreadsheet file in a way that you can easily update the data and upload it again.  
-It is possible to recursively download data from multiple entities indefinitely.
+For example, if you have Orders and OrderItems, you can download both entities at once and the data will be structured in the Spreadsheet file in a way that allows for easy data updates and re-uploading.  
+It is also possible to recursively download data from multiple entities indefinitely.
 
 - Orders
     - OrderItems
         - Info
     - ShippingInfos
 
-So it possible to download all Orders including the OrderItems and the ShippingInfos and the Info of the OrderItems.
+This means that you can download all Orders, including the OrderItems, ShippingInfos, and the Info of the OrderItems.
 
 ## Configuration
 
 | Option | Description | Details |
 | ------ | --- | --- |
-| `addKeysToExport` | Add the hidden keys to the export | object |
-| `filename` | Define the filename for the export XLSX file | object |
-| `deepExport` | Export also the sibling entities | object |
-| `deepLevel` | Export siblings to a specific level | object |
-| `showOptions` | Show options dialog for the user to change configurations | object |
+| `addKeysToExport` | Adds hidden keys to the export | object |
+| `filename` | Defines the filename for the export XLSX file | object |
+| `deepExport` | Also exports sibling entities | object |
+| `deepLevel` | Defines the level of sibling entities to export | object |
+| `showOptions` | Shows options dialog for users to change configurations | object |
 
 ### Sample Usage
 
@@ -45,9 +45,7 @@ componentData: {
 
 **default:** `false`
 
-This option adds the hidden keys to the export.  
-For example if you have GUIDs in your data, those are usually hidden in the UI.  
-For the later feature to update the data from the file it is necessary to have those keys in the file.
+This option adds hidden keys to the export, such as GUIDs that are usually hidden in the UI. These keys are necessary for updating data from the file in the future.
 
 ### filename
 
@@ -59,19 +57,19 @@ This option defines the filename for the export XLSX file.
 
 **default:** `false`
 
-This option defines if the sibling entities should be exported as well.
+This option determines whether sibling entities should be exported as well.
 
 ### deepLevel
 
 **default:** `1`
 
-This option defines how deep the sibling entities should be exported.
+This option defines how deep sibling entities should be exported.
 
 ### showOptions
 
 **default:** `true`
 
-This option defines if the options dialog should be shown to the user.
+This option determines whether the options dialog should be shown to the user.
 
 
 ## API

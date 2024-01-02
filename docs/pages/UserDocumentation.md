@@ -12,7 +12,7 @@ To ensure a smooth process without errors, it is recommended to always download 
 
 ![Download Template](./../images/download_template.png){ loading=lazy }
 
-3\.Fill out the template
+3\. Fill out the template
 
 Now, fill the template with the necessary data and save the file.
 

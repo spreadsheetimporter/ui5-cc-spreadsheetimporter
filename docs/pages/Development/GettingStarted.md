@@ -1,84 +1,75 @@
-# Quick Setup with GitHub Codespaces
+## Quick Setup with GitHub Codespaces
 
-The postCreateCommand will automatically install all dependencies.  
+The `postCreateCommand` will automatically install all dependencies.  
 This will take a few minutes.
 
-[![Open Stable in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=569313224&machine=basicLinux32gb&devcontainer_path=.devcontainer%2Fdevcontainer.json&location=WestEurope) 
+[![Open Stable in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=569313224&machine=basicLinux32gb&devcontainer_path=.devcontainer%2Fdevcontainer.json&location=WestEurope)
 
+## Local Setup
 
-# Local Setup
-## Requirements
+### Requirements
+
 - Node.js Versions 16.18.0, 18.12.0, or later
 
 ### Install required NPM Packages
 
-````sh
+```sh
 # Install pnpm if needed
 npm i -g pnpm
 
 # Install @sap/cds-dk if needed
 npm i -g @sap/cds-dk
-````
+```
 
-## Quick start
+### Quick start
 
 To quickly start the test environment, see here. See detailed information below.
 
-````sh
+```sh
 git clone https://github.com/marianfoo/ui5-cc-spreadsheetimporter
 pnpm i
 # will run `build` and start CAP Server and FE Apps V4 1.108
 npm start
-````
+```
 
-
-## Setup `ui5-cc-spreadsheetimporter`
+### Setup `ui5-cc-spreadsheetimporter`
 
 This is the basic setting-up to continue with the next steps.
 
-````sh
+```sh
 # Clone GitHub Repo
 git clone https://github.com/marianfoo/ui5-cc-spreadsheetimporter
 
 # Install all packages including for test environment
 pnpm i
-
-# Build Control to consume via test environment
-npm run build
-````
+```
 
 ## Start Developing
 
-### Run build watch
-
-To start develop, you first run the watch command, to rebuild everytime you change something in the `src` folder.  
-The command will rebuild with the UI5 Tooling and place the result in the `dist` folder. The test apps will consume the control from there.  
-This will not reload your app automatically, you have to reload the app manually.
-
-````sh
-# Run continuous build to watch for changes in `src` folder
-npm run build:watch
-````
-
 ### Start CAP server
 
-The CAP Server is currently very basic and provide a Order Entity with OrderItems. All the apps will consume from this server.
+The CAP Server is currently very basic and provides an Order Entity with OrderItems. All the apps will consume from this server.
 
-````sh
+```sh
 # Start CAP Server (serves data for all Test Apps)
 npm run start:server
-````
+```
+
+### Build Step
+
+The apps get the Spreadsheet Importer Component with the middleware `ui5-middleware-ui5`. With this, no build step is necessary.  
+To make this work, in the `ui5-cc-spreadsheetimporter` folder, the dist folder should be empty with only the `.gitkeep` file. If a build step was executed and the dist folder is not empty, the app will only load the built version.
 
 ### Start UI5 Apps
 
-Under the folder `./examples/packages` are all the UI5 Apps that are setup for the Consumption of the Custom Control.  
-There are five different apps for differenct scenarios (OData V2 Fiori Elements, V2 Freestyle, V2 FE Non Draft, V4 FE, V4 FPM).  
-There are currently only with version `1.108`. For testing, these apps are copied and tested with other maintenance versions.  
+Under the folder `./examples/packages` are all the UI5 Apps that are set up for the Consumption of the Custom Control.  
+There are five different apps for different scenarios (OData V2 Fiori Elements, V2 Freestyle, V2 FE Non Draft, V4 FE, V4 FPM).  
+There are currently only with version `1.120`. For testing, these apps are copied and tested with other maintenance versions.  
 If you want to test with lower maintenance versions, just run this command:  
 `npm run copyTestApps`  
 This will copy the apps according to this [json file](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/dev/testapps.json).
 
-````sh
+```sh
 # Start Test Apps
 npm run start:v4fe:108
 npm run start:v2fe:108
@@ -87,29 +78,30 @@ npm run start:v2fe:108
 pnpm --filter ordersv2fe108 start
 pnpm --filter ordersv4fe108 start
 
-# Run other apps after coping
+# Run other apps after copying
 pnpm --filter ordersv2fe96 start
 pnpm --filter ordersv2fe84 start
 pnpm --filter ordersv2fe71 start
 pnpm --filter ordersv4fe96 start
 ...
-````
+```
 
 ### Run wdi5 Tests
 
 To run the wdi5 tests, the CAP server and the corresponding app must already be running.  
 You can run the test for the OData V4 UI5 Version 108 with this command:  
-````sh
+
+```sh
 npm run test:v4fe:108  
-````
+```
 
 More Info on the [wdi5 Tests](./wdi5.md) site.
 
 ### Commit Message
 
-To create a automatic changelog, we use the [angular commit message guidelines](https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#commit).
+To create an automatic changelog, we use the [angular commit message guidelines](https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#commit).
 
-The commit starts with the `type` and a optional `scope` like `feat(api)`. Possible types are listed [here](https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#type). Scopes can be freely namend or omitted.
+The commit starts with the `type` and an optional `scope` like `feat(api)`. Possible types are listed [here](https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#type). Scopes can be freely named or omitted.
 
 A few examples:
 

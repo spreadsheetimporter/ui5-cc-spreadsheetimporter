@@ -13,7 +13,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "prepare": "chmod +x ./node_modules/husky/lib/bin.js && node ./.husky/skip.js || husky install",
-    "start": "npm-run-all build --parallel start:server start:v4fe:108",
+    "start": "npm-run-all --parallel start:server start:v4fe:120",
     "start:v2fe:120": "pnpm --filter ordersv2fe120 start",
     "start:v4fe:120": "pnpm --filter ordersv4fe120 start",
     "test:v4fe:120": "pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- ordersv4fe 120",
@@ -64,7 +64,8 @@
     "prettier-plugin-properties": "^0.3.0",
     "replace-in-file": "^7.0.2",
     "shelljs": "^0.8.5",
-    "typescript": "5.3.3"
+    "typescript": "5.3.3",
+    "openai": "4.24.1"
   },
   "lint-staged": {
     "**/*.js": [

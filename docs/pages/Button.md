@@ -6,13 +6,13 @@
 ## Button in Component
 
 The usage of the [UIComponent](https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.core.UIComponent) enables the possibility to return a button with the usage of a [ComponentContainer](https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.core.ComponentContainer).  
-This has the big advantage that no separate dependency has to be installed and a button for spreadsheet upload can be integrated very easily.
+This has the big advantage that no separate dependency has to be installed, and a button for spreadsheet upload can be integrated very easily.
 
-You can also use the button in **Fiori Elements** applications within a section of a object page (see [Including Reuse Components on an Object Page](#including-reuse-components-on-an-object-page)).
+You can also use the button in **Fiori Elements** applications within a section of an object page (see [Including Reuse Components on an Object Page](#including-reuse-components-on-an-object-page)).
 
 ### Requirements
 
-- Node.js Version v16.18.0, v18.12.0 or higher  
+- Node.js Version v16.18.0, v18.12.0, or higher  
 - npm Version v8.0.0 or higher
 - UI5 CLI v3.0.0 or higher
 
@@ -24,21 +24,21 @@ You can also use the button in **Fiori Elements** applications within a section 
 npm install ui5-cc-spreadsheetimporter
 ```
 
-2\. Add `resourceRoots` to you `manifest.json` under `sap.ui5`
+2\. Add `resourceRoots` to your `manifest.json` under `sap.ui5`
    
-⚠️ You must always keep your ui5-cc-spreadsheetimporter and button version up to date here when updating the module.
+⚠️ You must always keep your `ui5-cc-spreadsheetimporter` and button version up to date here when updating the module.
 
-````json
+```json
 "resourceRoots": {
     "cc.spreadsheetimporter.v0_31_0": "./thirdparty/customControl/spreadsheetImporter/v0_31_0"
-},
-````
+}
+```
 
-3\. Add `components` to you `manifest.json` under `sap.ui5.dependencies`
+3\. Add `components` to your `manifest.json` under `sap.ui5.dependencies`
    
-⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module.
+⚠️ You must always keep your `ui5-cc-spreadsheetimporter` version up to date here when updating the module.
 
-````json
+```json
 "dependencies": {
   "minUI5Version": "1.108.19",
   "libs": {
@@ -50,24 +50,24 @@ npm install ui5-cc-spreadsheetimporter
   "components": {
     "cc.spreadsheetimporter.v0_31_0": {}
   }
-},
-````
+}
+```
 
-4\. Add `componentUsages` to you `manifest.json` under `sap.ui5`
+4\. Add `componentUsages` to your `manifest.json` under `sap.ui5`
    
-⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module.
+⚠️ You must always keep your `ui5-cc-spreadsheetimporter` version up to date here when updating the module.
 
-````json
+```json
 "componentUsages": {
     "spreadsheetImporter": {
         "name": "cc.spreadsheetimporter.v0_31_0"
     }
-},
-````
+}
+```
 
 5\. Add the namespace `core` to your XML View
 
-````xml
+```xml
 <mvc:View controllerName="ui.v2.ordersv2freestylenondraft.controller.UploadToTable"
   xmlns="sap.m"
   xmlns:semantic="sap.f.semantic"
@@ -75,22 +75,22 @@ npm install ui5-cc-spreadsheetimporter
   xmlns:core="sap.ui.core">
 ...
 </mvc:View>
-````
+```
 
 6\. Add the `core:ComponentContainer` control to your view.
 
-````xml
+```xml
 <core:ComponentContainer width="100%" 
 usage="spreadsheetImporter" propagateModel="true" 
 async="true"/>
-````
+```
 
 ### Define Configuration Options
 
 You can set configuration options for the spreadsheet importer in the `settings` property of the `core:ComponentContainer` control.  
-For special configuration options for the ComponantContainer see [Configuration](Configuration.md#componentcontainerdata).
+For special configuration options for the `ComponantContainer`, see [Configuration](Configuration.md#componentcontainerdata).
 
-````xml
+```xml
 <core:ComponentContainer width="100%" 
 usage="spreadsheetImporter" propagateModel="true" async="true" 
 settings="{
@@ -101,7 +101,7 @@ settings="{
     buttonText:'Excel Upload'
     }
   }" />
-````
+```
 
 ### Example App
 
@@ -117,7 +117,7 @@ Controller: [UploadToTable.controller.js](https://github.com/marianfoo/ui5-cc-sp
 
 ## Including Reuse Components on an Object Page
 
-You can also use the button in **Fiori Elements** applications within a section of a object page.  
+You can also use the button in **Fiori Elements** applications within a section of an object page.  
 You can define this in the `manifest.json` under `sap.ui.generic.app` in the `pages` property.
 
 The configuration is documented in the [UI5 documentation](https://sapui5.hana.ondemand.com/sdk/#/topic/d869d7ab3caa48b2a20dc20dfa248380).

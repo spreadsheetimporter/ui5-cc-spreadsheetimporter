@@ -1,6 +1,5 @@
 # Central Deployment
 
-
 The foundational concept of the UI5 Spreadsheet upload control's development emphasizes its individual deployment alongside each application. However, an alternative deployment strategy exists, allowing for the control to be centrally hosted on the backend.
 
 Key Points:
@@ -11,7 +10,6 @@ Key Points:
     2. **HTML5 Repository on BTP**: Steps for deploying in an HTML5 repository on SAP Business Technology Platform (BTP).
 
 **Note**: As of the current state, there is no automated process for central deployment. Detailed below are manual instructions for implementing centralized deployment of the UI5 Spreadsheet control.
-
 
 ## Deployment to On-Premise ABAP System
 
@@ -40,7 +38,7 @@ When deploying a new version, it is important to use a different app name. This 
 For this purpose, the variable `XXXnamespaceShortXXX` in the file `ui5-deploy-publish.yaml` must not be changed.  
 If you want to use your own app name, it is important to change the name for newer versions, otherwise other versions will be overwritten.
 
-4\. Set Up Enviroment Variables (Deployment from VS Code)
+4\. Set Up Environment Variables (Deployment from VS Code)
 
 Remove `TEMPLATE` from the `.envTEMPLATE` file and enter your username and password for the ABAP System.  
 If you deploy from BAS, remove the `credentials` section in the yaml file.
@@ -53,7 +51,6 @@ npm run deploy
 ```
 
 ## Deployment to HTML5 Repository on BTP
-
 1\. Clone Repo
 
 ```sh
@@ -68,7 +65,7 @@ pnpm install
 
 3\. **Optional** Change `mta.yaml`
 
-The mta.yaml file is used for deployment to the HTML5 Repository on BTP. If you want to change somee settings, you can do it here.
+The `mta.yaml` file is used for deployment to the HTML5 Repository on BTP. If you want to change some settings, you can do it here.
 
 4\. Build MTA
 
@@ -83,11 +80,10 @@ pnpm deploy:cf
 ```
 
 ## Consuming in Fiori App
-
 Perform the same steps as you did in [Getting Started](./../pages/GettingStarted.md).  
 It is not necessary to install the control using npm and the entry `resourceRoots` in the `manifest.json`.
 
-For the consuming app in BTP, i have created a [sample app](https://github.com/marianfoo/spreadsheetimporter-btp-example) with the deployment to the HTML5 Repository on BTP.  
+For the consuming app in BTP, I have created a [sample app](https://github.com/marianfoo/spreadsheetimporter-btp-example) with the deployment to the HTML5 Repository on BTP.  
 
 You can find more information in the blog posts from [Wouter Lemaire](https://people.sap.com/wouter.lemaire):  
 [Connecting UI5 Components in BTP CloudFoundry in the same space](https://blogs.sap.com/2023/11/09/connecting-ui5-components-in-btp-cloudfoundry-in-the-same-space/) and [Connecting UI5 Components in BTP CloudFoundry across spaces](https://blogs.sap.com/2023/11/09/connecting-ui5-components-in-btp-cloudfoundry-across-spaces/)

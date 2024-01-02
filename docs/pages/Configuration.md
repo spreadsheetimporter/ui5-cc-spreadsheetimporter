@@ -29,12 +29,12 @@ These options are available and explained in detail below:
 | `showOptions` | Show Options Menu to change a few of these configurations in runtime. | boolean |
 | `availableOptions` | List of available Options to show to the user. | string[] |
 | `hideSampleData` | Leave the template file empty and do not add any sample data | boolean |
-| `sampleData` | Add a array of objects with sample data for the template | object |
-| `spreadsheetTemplateFile` | Instead of a generated spreadsheet file you can provide your own | object |
+| `sampleData` | Add an array of objects with sample data for the template | object |
+| `spreadsheetTemplateFile` | Instead of a generated spreadsheet file, you can provide your own | object |
 | `useTableSelector` | Open a Table Selector dialog if multiple tables in view | boolean |
-| `spreadsheetRowPropertyName` | If you want to sent the spreadsheet row to the backend | string |
+| `spreadsheetRowPropertyName` | If you want to send the spreadsheet row to the backend | string |
 | `componentContainerData` | Open a Table Selector dialog if multiple tables in view | boolean |
-| `continueOnError` | If a error occurs in batch processing, continue | boolean |
+| `continueOnError` | If an error occurs in batch processing, continue | boolean |
 | `debug` | Option to show more console statements and set Log Level to Debug | boolean |
 
 ### `columns`
@@ -51,13 +51,13 @@ columns: ["ID", "Birthday","FirstName","LastName"],
 
 **default:** Template.xlsx  
 This option defines the file name when a template is downloaded.  
-If not defined, code checks if Label for OData Type defined.
+If not defined, the code checks if Label for OData Type defined.
 
 ### `tableId`
 
-This plugin checks first whether exactly one table exists in an object page.
+This plugin first checks whether exactly one table exists on an object page.
 If there is no table or more than one table, an error is returned.  
-In case of error, the ID of the table can be specified.  
+In case of an error, the ID of the table can be specified.  
 **example:**  
 
 ````
@@ -66,7 +66,7 @@ tableId: "ui5.isu.msb.createmeterread::RunObjectPage--fe::table::_Ableseauftrag:
 
 ### `odataType`
 
-With this option it is possible to upload the data to a different Entity Set in the Service.  
+With this option, it is possible to upload the data to a different Entity Set in the Service.  
 This is helpful when the service from the table is not the actual service where the data should be uploaded.
 
 **example:**
@@ -100,10 +100,10 @@ Options:
 
 In some cases, the labels of different attributes may be identical to each other.  
 In order to assign the correct labels and types, there is an option to make the type visible in the header.  
-This way a correct assignment can be made.
+This way, a correct assignment can be made.
 
-Default (with `label`) the header columns would look like this: `ID, Birthday, First Name, Last Name`  
-With `labelTypeBrackets` the header columns would look like this: `ID[ID], Birthday[birth_day], First Name[FirstName], Last Name[LastName]`
+Default (with `label`), the header columns would look like this: `ID, Birthday, First Name, Last Name`  
+With `labelTypeBrackets`, the header columns would look like this: `ID[ID], Birthday[birth_day], First Name[FirstName], Last Name[LastName]`
 
 ### `activateDraft`
 
@@ -111,7 +111,7 @@ With `labelTypeBrackets` the header columns would look like this: `ID[ID], Birth
 
 This option defines in draft scenarios whether a draft should be activated immediately or not.  
 The option only defines whether the attempt should be started. If a draft activation is basically not possible, it will not be executed and may lead to errors.  
-This is useful e.g. in a list report. If this option is set to `false`, all uploaded units have to be activated manually.  
+This is useful in a list report. If this option is set to `false`, all uploaded units have to be activated manually.  
 Will be overwritten by the `createActiveEntity` option.
 
 !!! warning
@@ -123,12 +123,12 @@ Will be overwritten by the `createActiveEntity` option.
 **default:** `false`
 
 This option defines whether the `IsActiveEntity` property should be inserted into the payload sent to the backend.  
-In draft scenarios you can use this option to create a active entity instead of a draft.  
+In draft scenarios, you can use this option to create an active entity instead of a draft.  
 Check if your backend system supports this.
 
 **ABAP Backend**
 
-No informmation which backend OData implementation is supported, but a test with RAP worked.
+There is no information about which backend OData implementation is supported, but a test with RAP worked.
 
 **CAP Backend**
 
@@ -142,14 +142,14 @@ Currently waiting for a fix or more information.
 #### When to use `activateDraft` or `createActiveEntity`
 
 - `activateDraft`: First create a draft and then activate it in two separate requests.
-- `createActiveEntity`: Create a active entity directly.
+- `createActiveEntity`: Create an active entity directly.
 
 If you create a draft, the determinations are not triggered in the RAP framework, for example. These are only executed when creating directly.
 So if you now pass "IsActiveEntity", the entity is created directly and therefore the determinations are also executed.
 
-Of course, the creation of the draft entity and the subsequent activation takes longer because this is an additional network request.
+Of course, creating the draft entity and the subsequent activation takes longer because this is an additional network request.
 
-Together with the option `continueOnError` it is also possible to create all entities and try to activate the other entities if the draft activation fails.
+Together with the option `continueOnError`, it is also possible to create all entities and try to activate the other entities if the draft activation fails.
 This means that at least all drafts are available.
 
 
@@ -161,24 +161,24 @@ Options:
 
 - `0` : Payload will not be divided
 
-For large files it is necessary to split batch requests and not to send them all at once. This batchSize option enables you to control the number of records processed in each batch request, which can help avoid memory issues and improve performance.
+For large files, it is necessary to split batch requests and not to send them all at once. This `batchSize` option enables you to control the number of records processed in each batch request, which can help avoid memory issues and improve performance.
 
-When the number of lines in the Spreadsheet file exceeds the specified batchSize, the payload array is divided into equal parts, with each part containing the maximum number of lines specified by the batchSize. The application then processes each part separately, sending batch requests to the backend server.
+When the number of lines in the Spreadsheet file exceeds the specified `batchSize`, the payload array is divided into equal parts, with each part containing the maximum number of lines specified by the `batchSize`. The application then processes each part separately, sending batch requests to the backend server.
 
 The default value is 1,000, which means that when the number of lines in the Spreadsheet file exceeds 1,000, the payload array will be divided into equal parts, and each part will be sent as a separate batch request.
 
-If you set the batchSize to 0, the payload array will not be divided, and the entire array will be sent as a single batch request.
+If you set the `batchSize` to 0, the payload array will not be divided, and the entire array will be sent as a single batch request.
 
 ### `standalone`
 
 **default:** `false`
 
 This option defines whether the plugin should be used in standalone mode or not.  
-If this option is set to `true`, no table is searched and therefore no context is needed.  
-The mandatory parameter `context` and the parameter `tableId` is no longer necessary.
+If this option is set to `true`, no table is searched, and therefore no context is needed.  
+The mandatory parameter `context` and the parameter `tableId` are no longer necessary.
 
 If you want to use the template download function, you have to set the parameter `columns`, otherwise the `Download Template` button will not be displayed.  
-The `payload` will be a array of objects with the keys named like the `columns` parameter.
+The `payload` will be an array of objects with the keys named like the `columns` parameter.
 
 **Example:**
 
@@ -189,7 +189,7 @@ this.spreadsheetUpload.attachUploadButtonPress(function (oEvent) {
 }, this);
 ````
 
-An example of an implementation to display data of an Spreadsheetupload in a freestyle app can be found here:
+An example of an implementation to display data of a Spreadsheetupload in a freestyle app can be found here:
 
 [UploadToTable.controller.js](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2freestylenondraft/webapp/controller/UploadToTable.controller.js)  
 [UploadToTable.view.xml](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2freestylenondraft/webapp/view/UploadToTable.view.xml)
@@ -199,7 +199,7 @@ An example of an implementation to display data of an Spreadsheetupload in a fre
 **default:** `false`
 
 This option defines whether all sheets in the Spreadsheet file should be read or not.  
-If this option is set to `true`, the `payload` returns a additional parameter with the sheet name.
+If this option is set to `true`, the `payload` returns an additional parameter with the sheet name.
 
 You can access all the sheet names in the `uploadButtonPress` event.
 
@@ -258,8 +258,8 @@ this.spreadsheetUpload.attachUploadButtonPress(function (oEvent) {
 
 **default:** `0`
 
-By default the first spreadsheet is read.  
-With this option you can specify which spreadsheet should be read with a number (0 based) or a name.  
+By default, the first spreadsheet is read.  
+With this option, you can specify which spreadsheet should be read with a number (0-based) or a name.  
 If the name or number is not found, the first spreadsheet is read.  
 Or you can set the option to `XXSelectorXX` to show a selector dialog to choose a sheet.  
 If the option `readAllSheets` is set to `true`, this option is ignored.  
@@ -282,8 +282,8 @@ This option defines whether the "Continue" button should be displayed in the err
 
 **default:** Browser Default
 
-This option defines the decimal separator for numbers as string.  
-This option is only needed if in the Spreadsheet File are numbers as strings or when importing a CSV. When the datatype in the Spreadsheet File is number, the decimal separator is automatically recognized.
+This option defines the decimal separator for numbers as a string.  
+This option is only needed if there are numbers as strings in the Spreadsheet File or when importing a CSV. When the datatype in the Spreadsheet File is a number, the decimal separator is automatically recognized.
 
 ### `hidePreview`
 
@@ -295,13 +295,13 @@ This option defines whether the button to preview the uploaded data in the table
 
 **default:** `[]`
 
-This option defines which columns should be shown in the preview dialog. This is a array of strings with the property names.
+This option defines which columns should be shown in the preview dialog. This is an array of strings with the property names.
 
 ### `skipMandatoryFieldCheck`
 
 **default:** `false`
 
-This options defines wether mandatory fields defined in the metadata should be checked or not.  
+This option defines whether the mandatory fields defined in the metadata should be checked or not.  
 Only the option `mandatoryFields` will be checked.
 
 ### `skipColumnsCheck`
@@ -352,7 +352,7 @@ This Option defines which option the user can influence.
 
 **default:** `false`
 
-Leave the template file empty and do not add any sample data.  
+This option defines whether the template file should be empty and not have any sample data.  
 This will overwrite the [`sampleData`](#sampledata) option.
 
 ### `sampleData`
@@ -361,7 +361,7 @@ This will overwrite the [`sampleData`](#sampledata) option.
 
 This option defines the sample data that is displayed in the template file.  
 If no sample data is defined, the sample data is generated automatically.  
-Add a object array using the property names as attribute.  
+Add an object array using the property names as attributes.  
 Only sample data will be visible in the template file, no other generated data.
 
 **Example:**
@@ -389,23 +389,23 @@ sampleData: [
 
 **possible values:**
 
-- local file in application
+- local file in the application
 - URL to file
 - ArrayBuffer
 
-By default the template is generated with all properties or those defined in the [`columns`](#columns) option.  
-If you want to use your own template file, you can use this option to add columns which are not being uploaded to the backend.  
-It is recommended to use the [`skipColumnsCheck`](#skipcolumnscheck) option in this case, otherwise you will get errors.  
+By default, the template is generated with all properties or those defined in the [`columns`](#columns) option.  
+If you want to use your own template file, you can use this option to add columns that are not being uploaded to the backend.  
+It is recommended to use the [`skipColumnsCheck`](#skipcolumnscheck) option in this case; otherwise, you will get errors.  
 
 For the local file or URL, the filename is used for the download. The config [`spreadsheetFileName`](#spreadsheetfilename) will overwrite this.  
 The config [`spreadsheetFileName`](#spreadsheetfilename) will be used for ArrayBuffer value.
 
 **Example:**
 
-**local file in application**
+**local file in the application**
 
-It will use `sap.ui.require.toUrl` to get the file. So make sure use the correct path including the namespace of your application.  
-Here the namespace is `ui.v4.ordersv4fe` and the file is located in the `webapp/ext` folder.
+It will use `sap.ui.require.toUrl` to get the file. So make sure use the correct path, including the namespace of your application.  
+Here the namespace is `ui.v4.ordersv4fe`, and the file is located in the `webapp/ext` folder.
 
 `spreadsheetTemplateFile: "ui/v4/ordersv4fe/ext/ListReportOrdersTemplate.xlsx"`
 
@@ -448,8 +448,8 @@ It is also possible to set different options for each table (see [TableSelector]
 
 ### `spreadsheetRowPropertyName`
 
-If you want to sent the spreadsheet row to the backend, you can define a property name here.  
-When the property name is defined, the payload will include the spreadsheet row as a integer with the defined property name.
+If you want to send the spreadsheet row to the backend, you can define a property name here.  
+When the property name is defined, the payload will include the spreadsheet row as an integer with the defined property name.
 
 ### `componentContainerData`
 
@@ -462,9 +462,9 @@ For the event, the method from your view controller is attached to the event.
 
 | Option | Description | Details |
 | ------ | --- | --- |
-| `buttonText` | Text to be displayed in the button | string |
+| `buttonText` | Text to be displayed on the button | string |
 | `uploadButtonPress` | Event after the upload button is pressed | string |
-| `changeBeforeCreate` | Event before data send to the backend | string |
+| `changeBeforeCreate` | Event before data sent to the backend | string |
 | `checkBeforeRead` | Event before data is uploaded to the app | string |
 
 #### Example
@@ -488,18 +488,17 @@ settings="{
 
 **default:** `false`
 
-This option defines whether the batch processing should continue if a error occurs.  
-If you have for example set `batchSize`to 2 and have 4 rows and a error occurs in the first batch of two rows, the processing will stop. If you set this flag to `true` the processing will continue and the second batch of two rows will be processed.  
-This may lead to errors in the backend, because the first batch of two rows was not processed correctly.  
+This option defines whether the batch processing should continue if an error occurs.  
+If you have, for example, set `batchSize` to 2 and have 4 rows, and an error occurs in the first batch of two rows, the processing will stop. If you set this flag to `true`, the processing will continue, and the second batch of two rows will be processed.  
+This may lead to errors in the backend because the first batch of two rows was not processed correctly.  
 Use this option with caution.
-
 
 ### `debug`
 
 **default:** `false`
 
 This option defines whether the debug mode should be activated or not.  
-If set to true, it will set the log level to `debug` (Log.Level.DEBUG) and activate the options menu with all options available.
+If set to true, it will set the log level to `debug` (Log.Level.DEBUG) and activate the options menu with all available options.
 
 ## Example Code
 
@@ -507,7 +506,7 @@ If set to true, it will set the log level to `debug` (Log.Level.DEBUG) and activ
 
 You can assign all the options when creating the component.  
 
-```js
+```javascript
 this.spreadsheetUpload = await this.getView().getController().getAppComponent().createComponent({
     usage: "spreadsheetImporter",
     async: true,
@@ -540,7 +539,7 @@ this.spreadsheetUpload = await this.getView().getController().getAppComponent().
 
 You can also change the options after creating the component or pass them to the `openSpreadsheetUploadDialog` method.
 
-```js
+```javascript
 const options = {
     context: this,
     tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Shipping::LineItem-innerTable"
@@ -558,7 +557,7 @@ this.spreadsheetUploadTableShipping.openSpreadsheetUploadDialog(options);
 
 You can also just change a subset of the options or overwrite them.
 
-```js
+```javascript
 const options = {
     tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Shipping::LineItem-innerTable",
     hidePreview: true,
@@ -570,7 +569,7 @@ this.spreadsheetUploadTableShipping = await this.editFlow.getView()
     .createComponent({
     usage: "spreadsheetImporter",
     async: true,
-    omponentData: {
+    componentData: {
     context: this,
     hidePreview: false
 }
