@@ -126,7 +126,8 @@ export default class Parser extends ManagedObject {
 							this.addMessageToMessages("errorWhileParsing", util, messageHandler, index, [metadataColumn.label], rawValue);
 						}
 					} else {
-						payload[columnKey] = `${rawValue || ""}`;
+						// assign "" only if rawValue is undefined or null
+						payload[columnKey] = `${rawValue ?? ""}`;
 					}
 				}
 			}
