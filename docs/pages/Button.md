@@ -30,7 +30,7 @@ npm install ui5-cc-spreadsheetimporter
 
 ```json
 "resourceRoots": {
-    "cc.spreadsheetimporter.v0_31_0": "./thirdparty/customControl/spreadsheetImporter/v0_31_0"
+    "cc.spreadsheetimporter.v0_31_1": "./thirdparty/customControl/spreadsheetImporter/v0_31_1"
 }
 ```
 
@@ -48,7 +48,7 @@ npm install ui5-cc-spreadsheetimporter
     "sap.ui.table": {}
   },
   "components": {
-    "cc.spreadsheetimporter.v0_31_0": {}
+    "cc.spreadsheetimporter.v0_31_1": {}
   }
 }
 ```
@@ -60,7 +60,7 @@ npm install ui5-cc-spreadsheetimporter
 ```json
 "componentUsages": {
     "spreadsheetImporter": {
-        "name": "cc.spreadsheetimporter.v0_31_0"
+        "name": "cc.spreadsheetimporter.v0_31_1"
     }
 }
 ```
@@ -130,7 +130,7 @@ A sample configuration can be found in the manifest.json of the [OData V4 Fiori 
     "customSectionReuse": {
       "title": "Spreadsheet Upload",
       "embeddedComponent": {
-        "name": "cc.spreadsheetimporter.v0_31_0",
+        "name": "cc.spreadsheetimporter.v0_31_1",
         "settings": {
           "tableId": "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable"
         }

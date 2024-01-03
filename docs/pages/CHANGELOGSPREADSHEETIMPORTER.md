@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.31.1](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.31.0...ui5-cc-spreadsheetimporter-v0.31.1) (2024-01-03)
+
+
+### Bug Fixes
+
+* string assignment using nullish coalescing operator ([#450](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/450)) ([530fcbd](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/commit/530fcbdf264f9753818131049e129fdc2e5ed832))
+
 ## [0.31.0](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.30.0...ui5-cc-spreadsheetimporter-v0.31.0) (2024-01-02)
 
 
