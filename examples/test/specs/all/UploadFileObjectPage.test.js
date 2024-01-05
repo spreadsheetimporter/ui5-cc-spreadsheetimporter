@@ -1,4 +1,3 @@
-const { it } = require("node:test");
 const FEV2ND = require("../Objects/FEV2ND");
 const Base = require("./../Objects/Base");
 const FEV2 = require("./../Objects/FEV2");
@@ -95,8 +94,6 @@ describe("Upload File Object Page", () => {
 		}
 	});
 
-	// check here if i can execute a get request
-
 	it("get items", async () => {
 		// Replace with your specific API endpoint and necessary parameters
 		const apiEndpoint =
@@ -115,7 +112,7 @@ describe("Upload File Object Page", () => {
 	it("check Field: Quantity", async () => {
 		if (item === undefined) throw new Error("item is undefined");
 		const value = item.quantity;
-		expect(value).toBe("3");
+		expect(value).toBe(3);
 	});
 
 	it("check Field: Product", async () => {
@@ -129,18 +126,18 @@ describe("Upload File Object Page", () => {
 	});
 
 	it("check Field: validFrom", async () => {
-		const returnObject = item.validFrom;
-		expect(returnObject.valueText).toBe("2024-11-25T00:00:00Z");
+		const value = item.validFrom;
+		expect(value).toBe("2024-11-25T00:00:00Z");
 	});
 
 	it("check Field: timestamp", async () => {
-		const returnObject = item.timestamp;
-		expect(returnObject.valueText).toBe("2024-11-24T00:00:00.000Z");
+		const value = item.timestamp;
+		expect(value).toBe("2024-11-24T00:00:00.000Z");
 	});
 
 	it("check Field: date", async () => {
-		const returnObject = item.date;
-		expect(returnObject.valueText).toBe("2024-11-23");
+		const value = item.date;
+		expect(value).toBe("2024-11-23");
 	});
 
 	it("check Field: time", async () => {
