@@ -1,3 +1,4 @@
+const { it } = require("node:test");
 const FEV2ND = require("../Objects/FEV2ND");
 const Base = require("./../Objects/Base");
 const FEV2 = require("./../Objects/FEV2");
@@ -7,6 +8,7 @@ const { optionsLong, optionsShort } = require("./../Objects/types");
 let FE = undefined;
 let BaseClass = undefined;
 let skipSave = false;
+let item = undefined;
 
 describe("Upload File Object Page", () => {
 	before(async () => {
@@ -23,19 +25,9 @@ describe("Upload File Object Page", () => {
 			skipSave = true;
 		}
 	});
-	it("should trigger search on ListReport page", async () => {
-		try {
-			await BaseClass.pressById(FE.listReportGoButton);
-		} catch (error) {
-			await BaseClass.pressById(FE.listReportDynamicPageTitle);
-			await BaseClass.dummyWait(500);
-			await BaseClass.pressById(FE.listReportGoButton);
-		}
-	});
 
 	it("go to object page", async () => {
-		const hash = await FE.getRoutingHash(FE.listReportTable, FE.navToObjectPageAttribute, FE.navToObjectPageValue);
-		await browser.goTo({ sHash: hash });
+		await browser.goTo({ sHash: "#/Orders(ID=64e718c9-ff99-47f1-8ca3-950c850777d4,IsActiveEntity=true)" });
 		// force wait to stabelize tests
 		await BaseClass.dummyWait(1000);
 	});
@@ -103,45 +95,56 @@ describe("Upload File Object Page", () => {
 		}
 	});
 
-	it("go to Sub Detail Page", async () => {
-		const hash = await FE.getRoutingHash(FE.objectPageOrderItems, FE.navToSubObjectPageAttribute, FE.navToSubObjectPageValue, true);
-		await browser.goTo({ sHash: hash });
-		// force wait to stabelize tests
-		await BaseClass.dummyWait(1000);
+	// check here if i can execute a get request
+
+	it("get items", async () => {
+		// Replace with your specific API endpoint and necessary parameters
+		const apiEndpoint =
+			"http://localhost:8080/odata/v4/Orders/Orders(ID=64e718c9-ff99-47f1-8ca3-950c850777d4,IsActiveEntity=true)/Items?$count=true&$select=HasActiveEntity,ID,IsActiveEntity,date,price,product_ID,quantity,time,timestamp,title,validFrom&$skip=0&$top=10";
+		const response = await fetch(apiEndpoint);
+
+		// Parse the response body to JSON
+		const data = await response.json();
+
+		item = data.value.find((item) => item.product_ID === "254");
+
+		// Check if the response status is 200 (OK) or perform other validations as needed
+		expect(response.status).toBe(200);
 	});
 
 	it("check Field: Quantity", async () => {
-		const value = await FE.getFieldValue("quantity");
+		if (item === undefined) throw new Error("item is undefined");
+		const value = item.quantity;
 		expect(value).toBe("3");
 	});
 
 	it("check Field: Product", async () => {
-		const value = await FE.getFieldValue("title");
+		const value = item.title;
 		expect(value).toBe("Product Test 2");
 	});
 
 	it("check Field: UnitPrice", async () => {
-		const value = await FE.getFieldValue("price");
-		expect(value).toBe("13.7");
+		const value = item.price;
+		expect(value).toBe(13.7);
 	});
 
 	it("check Field: validFrom", async () => {
-		const returnObject = await FE.getDateFields("validFrom", optionsLong);
-		expect(returnObject.valueText).toBe(returnObject.formattedDate);
+		const returnObject = item.validFrom;
+		expect(returnObject.valueText).toBe("2024-11-25T00:00:00Z");
 	});
 
 	it("check Field: timestamp", async () => {
-		const returnObject = await FE.getDateFields("timestamp", optionsLong);
-		expect(returnObject.valueText).toBe(returnObject.formattedDate);
+		const returnObject = item.timestamp;
+		expect(returnObject.valueText).toBe("2024-11-24T00:00:00.000Z");
 	});
 
 	it("check Field: date", async () => {
-		const returnObject = await FE.getDateFields("date", optionsShort);
-		expect(returnObject.valueText).toBe(returnObject.formattedDate);
+		const returnObject = item.date;
+		expect(returnObject.valueText).toBe("2024-11-23");
 	});
 
 	it("check Field: time", async () => {
-		const value = await FE.getFieldValue("time");
-		expect(value).toBe("4:00:00 PM");
+		const value = item.time;
+		expect(value).toBe("16:00");
 	});
 });
