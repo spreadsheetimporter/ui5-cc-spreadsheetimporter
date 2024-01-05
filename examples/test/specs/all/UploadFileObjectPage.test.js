@@ -97,14 +97,14 @@ describe("Upload File Object Page", () => {
 	it("get items", async () => {
 		// Replace with your specific API endpoint and necessary parameters
 		const apiEndpoint =
-			"http://localhost:8080/odata/v4/Orders/Orders(ID=64e718c9-ff99-47f1-8ca3-950c850777d4,IsActiveEntity=true)/Items?$count=true&$select=HasActiveEntity,ID,IsActiveEntity,date,price,product_ID,quantity,time,timestamp,title,validFrom&$skip=0&$top=10";
+			"http://localhost:4004/odata/v4/Orders/Orders(ID=64e718c9-ff99-47f1-8ca3-950c850777d4,IsActiveEntity=true)/Items?$count=true&$select=HasActiveEntity,ID,IsActiveEntity,date,price,product_ID,quantity,time,timestamp,title,validFrom&$skip=0&$top=10";
 		try {
 			const response = await fetch(apiEndpoint);
 
 			// Check if the response status is 200 (OK)
 			if (response.ok) {
 				const data = await response.json();
-				const item = data.value.find((item) => item.product_ID === "254");
+				item = data.value.find((item) => item.product_ID === "254");
 
 				// Perform any additional validations or operations with 'item'
 
