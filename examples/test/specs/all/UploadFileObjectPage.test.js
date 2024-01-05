@@ -98,15 +98,28 @@ describe("Upload File Object Page", () => {
 		// Replace with your specific API endpoint and necessary parameters
 		const apiEndpoint =
 			"http://localhost:8080/odata/v4/Orders/Orders(ID=64e718c9-ff99-47f1-8ca3-950c850777d4,IsActiveEntity=true)/Items?$count=true&$select=HasActiveEntity,ID,IsActiveEntity,date,price,product_ID,quantity,time,timestamp,title,validFrom&$skip=0&$top=10";
-		const response = await fetch(apiEndpoint);
+		try {
+			const response = await fetch(apiEndpoint);
 
-		// Parse the response body to JSON
-		const data = await response.json();
+			// Check if the response status is 200 (OK)
+			if (response.ok) {
+				const data = await response.json();
+				const item = data.value.find((item) => item.product_ID === "254");
 
-		item = data.value.find((item) => item.product_ID === "254");
+				// Perform any additional validations or operations with 'item'
 
-		// Check if the response status is 200 (OK) or perform other validations as needed
-		expect(response.status).toBe(200);
+				// Expectation for the test
+				expect(response.status).toBe(200);
+			} else {
+				// Log error details if the response status is not OK
+				console.error("Error fetching data:", response.status, response.statusText);
+				throw new Error(`Fetch failed with status: ${response.status} ${response.statusText}`);
+			}
+		} catch (error) {
+			// Handle any errors that occur during the fetch operation
+			console.error("Error during fetch operation:", error.message);
+			throw error;
+		}
 	});
 
 	it("check Field: Quantity", async () => {
