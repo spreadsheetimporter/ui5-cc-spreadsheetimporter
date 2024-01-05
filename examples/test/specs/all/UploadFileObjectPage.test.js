@@ -7,6 +7,7 @@ const { optionsLong, optionsShort } = require("./../Objects/types");
 let FE = undefined;
 let BaseClass = undefined;
 let skipSave = false;
+let target = undefined;
 let item = undefined;
 
 describe("Upload File Object Page", () => {
@@ -15,18 +16,21 @@ describe("Upload File Object Page", () => {
 		const scenario = global.scenario;
 		if (scenario.startsWith("ordersv2")) {
 			FE = new FEV2();
+			target = "#/Orders(ID=64e718c9-ff99-47f1-8ca3-950c850777d4,IsActiveEntity=true)";
 		}
 		if (scenario.startsWith("ordersv4")) {
 			FE = new FEV4();
+			target = "#/Orders(ID=64e718c9-ff99-47f1-8ca3-950c850777d4,IsActiveEntity=true)";
 		}
 		if (scenario.startsWith("ordersv2fenondraft")) {
 			FE = new FEV2ND();
 			skipSave = true;
+			target = "#/OrdersND(ID=64e718c9-ff99-47f1-8ca3-950c850777d4)";
 		}
 	});
 
 	it("go to object page", async () => {
-		await browser.goTo({ sHash: "#/Orders(ID=64e718c9-ff99-47f1-8ca3-950c850777d4,IsActiveEntity=true)" });
+		await browser.goTo({ sHash: target });
 		// force wait to stabelize tests
 		await BaseClass.dummyWait(1000);
 	});
