@@ -15,7 +15,7 @@ class FEV2ND {
 		this.listReportTable = this.listReportId + "responsiveTable";
 		this.objectPageEditButton = this.objectPageId + "edit";
 		this.objectPageSpreadsheetuploadButton = this.objectPageId + "spreadsheetUploadButton";
-		this.objectPageSaveButton = this.objectPageId + "activate";
+		this.objectPageSaveButton = this.objectPageId + "save";
 		this.objectPageOrderItems = this.objectPageId + "Items::com.sap.vocabularies.UI.v1.LineItem::responsiveTable";
 		this.listReportUploadFilename = "test/testFiles/ListReportOrdersNoErros.xlsx";
 		// nav to sub object page
