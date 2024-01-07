@@ -97,7 +97,7 @@ describe("Upload File Object Page", () => {
 
 	it("get items", async () => {
 		// Replace with your specific API endpoint and necessary parameters
-		const apiEndpoint = `http://localhost:4004/odata/v4/Orders/${this.entitySet}(${this.entityObjectPage})/Items`;
+		const apiEndpoint = `http://localhost:4004/odata/v4/Orders/${FE.entitySet}(${FE.entityObjectPage})/Items`;
 		try {
 			const response = await fetch(apiEndpoint);
 
