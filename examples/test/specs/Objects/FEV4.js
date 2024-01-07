@@ -35,6 +35,12 @@ class FEV4 {
 		this.gridTablePageSpreadsheetuploadButton = this.gridTablePageId + "CustomAction::spreadsheetUploadListReport";
 
 		this.overflowButton = "__toolbar0-overflowButton";
+
+		this.entitySet = "Orders";
+		this.entityObjectPage = "ID=64e718c9-ff99-47f1-8ca3-950c850777d4,IsActiveEntity=true";
+		this.entityObjectPageCSV = "ID=64e718c9-ff99-47f1-8ca3-950c850777d4,IsActiveEntity=true";
+		this.entityObjectPageComma = "ID=64e718c9-ff99-47f1-8ca3-950c850777d6,IsActiveEntity=true";
+		this.entityObjectPageDot = "ID=64e718c9-ff99-47f1-8ca3-950c850777d7,IsActiveEntity=true";
 	}
 	async getFieldValue(fieldName) {
 		const field = await this.BaseClass.getControlById(`ui.v4.ordersv4fe::Orders_ItemsObjectPage--fe::FormContainer::Identification::FormElement::DataField::${fieldName}::Field`);

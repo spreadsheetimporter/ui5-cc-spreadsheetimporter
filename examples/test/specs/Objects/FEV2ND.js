@@ -29,6 +29,11 @@ class FEV2ND {
 		this.checkFileuploadListreportValue = "4";
 
 		this.overflowButton = "__toolbar2-overflowButton";
+		this.entitySet = "OrdersND";
+		this.entityObjectPage = "ID=64e718c9-ff99-47f1-8ca3-950c850777d4";
+		this.entityObjectPageCSV = "ID=64e718c9-ff99-47f1-8ca3-950c850777d4";
+		this.entityObjectPageComma = "ID=64e718c9-ff99-47f1-8ca3-950c850777d6";
+		this.entityObjectPageDot = "ID=64e718c9-ff99-47f1-8ca3-950c850777d7";
 	}
 	async getFieldValue(fieldName) {
 		const field = await $(

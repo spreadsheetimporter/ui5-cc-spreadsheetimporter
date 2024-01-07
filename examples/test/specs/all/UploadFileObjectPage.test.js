@@ -7,7 +7,6 @@ const { optionsLong, optionsShort } = require("./../Objects/types");
 let FE = undefined;
 let BaseClass = undefined;
 let skipSave = false;
-let target = undefined;
 let item = undefined;
 
 describe("Upload File Object Page", () => {
@@ -16,21 +15,19 @@ describe("Upload File Object Page", () => {
 		const scenario = global.scenario;
 		if (scenario.startsWith("ordersv2")) {
 			FE = new FEV2();
-			target = "#/Orders(ID=64e718c9-ff99-47f1-8ca3-950c850777d4,IsActiveEntity=true)";
 		}
 		if (scenario.startsWith("ordersv4")) {
 			FE = new FEV4();
-			target = "#/Orders(ID=64e718c9-ff99-47f1-8ca3-950c850777d4,IsActiveEntity=true)";
 		}
 		if (scenario.startsWith("ordersv2fenondraft")) {
 			FE = new FEV2ND();
 			skipSave = true;
-			target = "#/OrdersND(ID=64e718c9-ff99-47f1-8ca3-950c850777d4)";
 		}
 	});
 
 	it("go to object page", async () => {
-		await browser.goTo({ sHash: target });
+		const hash = `#/${FE.entitySet}(${FE.entityObjectPage})`;
+		await browser.goTo({ sHash: hash });
 		// force wait to stabelize tests
 		await BaseClass.dummyWait(1000);
 	});
@@ -100,8 +97,7 @@ describe("Upload File Object Page", () => {
 
 	it("get items", async () => {
 		// Replace with your specific API endpoint and necessary parameters
-		const apiEndpoint =
-			"http://localhost:4004/odata/v4/Orders/Orders(ID=64e718c9-ff99-47f1-8ca3-950c850777d4,IsActiveEntity=true)/Items?$count=true&$select=HasActiveEntity,ID,IsActiveEntity,date,price,product_ID,quantity,time,timestamp,title,validFrom&$skip=0&$top=10";
+		const apiEndpoint = `http://localhost:4004/odata/v4/Orders/${this.entitySet}(${this.entityObjectPage})/Items`;
 		try {
 			const response = await fetch(apiEndpoint);
 
