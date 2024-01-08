@@ -21,7 +21,7 @@ describe("Upload File Object Page", () => {
 		}
 		if (scenario.startsWith("ordersv2fenondraft")) {
 			FE = new FEV2ND();
-			skipSave = true;
+			skipSave = false;
 		}
 	});
 
