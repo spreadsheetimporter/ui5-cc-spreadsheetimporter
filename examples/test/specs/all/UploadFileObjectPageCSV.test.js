@@ -29,12 +29,12 @@ describe("Upload CSV File Object Page", () => {
 		const hash = `#/${FE.entitySet}(${FE.entityObjectPageCSV})`;
 		await browser.goTo({ sHash: hash });
 		// force wait to stabelize tests
-		await BaseClass.dummyWait(500);
+		await BaseClass.dummyWait(2000);
 	});
 
 	it("go to edit mode", async () => {
 		await BaseClass.pressById(FE.objectPageEditButton);
-		await BaseClass.dummyWait(500);
+		await BaseClass.dummyWait(2000);
 	});
 
 	it("Open Spreadsheet Upload Dialog", async () => {
@@ -77,6 +77,7 @@ describe("Upload CSV File Object Page", () => {
 		const $uploader = await uploader.getWebElement(); // wdi5
 		const $fileInput = await $uploader.$("input[type=file]"); // wdio
 		await $fileInput.setValue(remoteFilePath); // wdio
+		await BaseClass.dummyWait(400);
 		await browser
 			.asControl({
 				selector: {
@@ -90,6 +91,7 @@ describe("Upload CSV File Object Page", () => {
 	});
 
 	it("execute save", async () => {
+		await BaseClass.dummyWait(2000);
 		await BaseClass.pressById(FE.objectPageSaveButton);
 	});
 
