@@ -29,12 +29,14 @@ describe("Upload CSV File Object Page", () => {
 		const hash = `#/${FE.entitySet}(${FE.entityObjectPageCSV})`;
 		await browser.goTo({ sHash: hash });
 		// force wait to stabelize tests
-		await BaseClass.dummyWait(2000);
+		await BaseClass.dummyWait(1000);
 	});
 
 	it("go to edit mode", async () => {
 		await BaseClass.pressById(FE.objectPageEditButton);
-		await BaseClass.dummyWait(2000);
+		const hash = `#/${FE.entitySet}(${FE.entityObjectPageCSV})`;
+		await browser.goTo({ sHash: hash });
+		await BaseClass.dummyWait(1000);
 	});
 
 	it("Open Spreadsheet Upload Dialog", async () => {
