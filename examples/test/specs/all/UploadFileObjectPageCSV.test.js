@@ -26,6 +26,7 @@ describe("Upload CSV File Object Page", () => {
 	});
 
 	it("go to object page", async () => {
+		await BaseClass.dummyWait(2000);
 		const hash = `#/${FE.entitySet}(${FE.entityObjectPageCSV})`;
 		await browser.goTo({ sHash: hash });
 		// force wait to stabelize tests
