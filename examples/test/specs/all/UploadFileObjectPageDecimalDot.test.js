@@ -26,6 +26,7 @@ describe("Upload File Object Page", () => {
 	});
 
 	it("go to object page", async () => {
+		await BaseClass.dummyWait(2000);
 		const hash = `#/${FE.entitySet}(${FE.entityObjectPageDot})`;
 		await browser.goTo({ sHash: hash });
 		// force wait to stabelize tests
@@ -33,6 +34,7 @@ describe("Upload File Object Page", () => {
 	});
 
 	it("go to edit mode", async () => {
+		await BaseClass.dummyWait(2000);
 		await BaseClass.pressById(FE.objectPageEditButton);
 	});
 
