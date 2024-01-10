@@ -61,7 +61,7 @@ describe("Upload CSV File Object Page", () => {
 			}
 		});
 		// if the edit button is still visible refresh the page and try again
-		if (object._domId) {
+		if (object2._domId) {
 			await BaseClass.pressById(FE.objectPageEditButton);
 			await BaseClass.dummyWait(3000);
 		}
