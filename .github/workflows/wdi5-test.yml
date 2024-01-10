@@ -45,22 +45,13 @@ jobs:
       - name: use pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 8.7.0
+          version: 8
 
       - name: use node 18
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: "pnpm"
-
-      # we need this for workspace mgmt
-      - name: check npm version >= 7
-        run: npm --version
-
-      - name: update npm
-        run: |
-          npm i -g npm@latest
-          npm --version
 
       - name: get port
         run: |
@@ -73,10 +64,10 @@ jobs:
           pnpm install --no-frozen-lockfile
 
       - name: copy test apps
-        run: npm run copyTestApps
+        run: pnpm copyTestApps
 
       - name: Run Build
-        run: npm run build
+        run: pnpm build
 
       - name: install @sap/cds-dk
         run: |
@@ -85,7 +76,7 @@ jobs:
       # run app      # wait for cap server to install ui5 component, remove when switch to fiori tools
       - name: start cap server
         run: |
-          npm run start:server&
+          pnpm start:server&
 
       - name: start app ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
         if: matrix.scenario != 'ordersv4fecds'

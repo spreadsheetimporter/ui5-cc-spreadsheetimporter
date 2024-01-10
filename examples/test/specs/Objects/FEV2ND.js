@@ -15,7 +15,7 @@ class FEV2ND {
 		this.listReportTable = this.listReportId + "responsiveTable";
 		this.objectPageEditButton = this.objectPageId + "edit";
 		this.objectPageSpreadsheetuploadButton = this.objectPageId + "spreadsheetUploadButton";
-		this.objectPageSaveButton = this.objectPageId + "activate";
+		this.objectPageSaveButton = this.objectPageId + "save";
 		this.objectPageOrderItems = this.objectPageId + "Items::com.sap.vocabularies.UI.v1.LineItem::responsiveTable";
 		this.listReportUploadFilename = "test/testFiles/ListReportOrdersNoErros.xlsx";
 		// nav to sub object page
@@ -29,6 +29,12 @@ class FEV2ND {
 		this.checkFileuploadListreportValue = "4";
 
 		this.overflowButton = "__toolbar2-overflowButton";
+		this.entitySet = "OrdersND";
+		this.entityObjectPage = "ID=64e718c9-ff99-47f1-8ca3-950c850777d4";
+		this.entityObjectPageTestError = "ID=64e718c9-ff99-47f1-8ca3-950c850777d5";
+		this.entityObjectPageCSV = "ID=64e718c9-ff99-47f1-8ca3-950c850777d8";
+		this.entityObjectPageComma = "ID=64e718c9-ff99-47f1-8ca3-950c850777d6";
+		this.entityObjectPageDot = "ID=64e718c9-ff99-47f1-8ca3-950c850777d7";
 	}
 	async getFieldValue(fieldName) {
 		const field = await $(

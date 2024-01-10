@@ -29,6 +29,13 @@ class FEV2 {
 		this.checkFileuploadListreportValue = "4";
 
 		this.overflowButton = "__toolbar2-overflowButton";
+
+		this.entitySet = "Orders";
+		this.entityObjectPage = "ID=64e718c9-ff99-47f1-8ca3-950c850777d4,IsActiveEntity=true";
+		this.entityObjectPageTestError = "ID=64e718c9-ff99-47f1-8ca3-950c850777d5,IsActiveEntity=true";
+		this.entityObjectPageCSV = "ID=64e718c9-ff99-47f1-8ca3-950c850777d8,IsActiveEntity=true";
+		this.entityObjectPageComma = "ID=64e718c9-ff99-47f1-8ca3-950c850777d6,IsActiveEntity=true";
+		this.entityObjectPageDot = "ID=64e718c9-ff99-47f1-8ca3-950c850777d7,IsActiveEntity=true";
 	}
 	async getFieldValue(fieldName) {
 		const field = await $(`//*[@id="ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::OrderItems--com.sap.vocabularies.UI.v1.Identification::${fieldName}::Field-text"]`);
