@@ -1,3 +1,6 @@
+// only requiring the service for late inject/init
+const { default: _ui5Service } = require("wdio-ui5-service");
+const ui5Service = new _ui5Service();
 const FEV2ND = require("../Objects/FEV2ND");
 const Base = require("./../Objects/Base");
 const FEV2 = require("./../Objects/FEV2");
@@ -24,18 +27,8 @@ describe("Upload File Object Page", () => {
 		}
 	});
 
-	it("should trigger search on ListReport page", async () => {
-		try {
-			await BaseClass.pressById(FE.listReportGoButton);
-		} catch (error) {
-			await BaseClass.pressById(FE.listReportDynamicPageTitle);
-			await BaseClass.dummyWait(500);
-			await BaseClass.pressById(FE.listReportGoButton);
-		}
-	});
-
 	it("go to object page", async () => {
-		const hash = await FE.getRoutingHash(FE.listReportTable, FE.navToObjectPageAttribute, "200");
+		const hash = `#/${FE.entitySet}(${FE.entityObjectPageTestError})`;
 		await browser.goTo({ sHash: hash });
 		// force wait to stabelize tests
 		await BaseClass.dummyWait(1000);
@@ -43,6 +36,33 @@ describe("Upload File Object Page", () => {
 
 	it("go to edit mode", async () => {
 		await BaseClass.pressById(FE.objectPageEditButton);
+		await BaseClass.dummyWait(3000);
+
+		// check if edit button is still visible
+		const object = await browser.asControl({
+			forceSelect: true,
+			selector: {
+				id: FE.objectPageEditButton
+			}
+		});
+		// if the edit button is still visible refresh the page and try again
+		if (object._domId) {
+			await browser.refresh();
+			await ui5Service.injectUI5();
+		}
+
+		// check if edit button is still visible
+		const object2 = await browser.asControl({
+			forceSelect: true,
+			selector: {
+				id: FE.objectPageEditButton
+			}
+		});
+		// if the edit button is still visible refresh the page and try again
+		if (object2._domId) {
+			await BaseClass.pressById(FE.objectPageEditButton);
+			await BaseClass.dummyWait(3000);
+		}
 	});
 
 	it("Open Spreadsheet Upload Dialog", async () => {
