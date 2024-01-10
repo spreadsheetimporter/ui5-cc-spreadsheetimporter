@@ -37,47 +37,34 @@ describe("Upload File Object Page", () => {
 	});
 
 	it("go to edit mode", async () => {
-		it("go to edit mode", async () => {
-			await BaseClass.pressById(FE.objectPageEditButton);
-			await BaseClass.dummyWait(500);
-			await browser.refresh();
-			await ui5Service.injectUI5();
-			await BaseClass.dummyWait(500);
+		await BaseClass.pressById(FE.objectPageEditButton);
+		await BaseClass.dummyWait(3000);
 
-			// check if edit button is still visible
-			const object = await browser.asControl({
-				forceSelect: true,
-				selector: {
-					id: FE.objectPageEditButton
-				}
-			});
-			// if the save button is not visible try to press the edit button again
-			if (!object._domId) {
-				await BaseClass.pressById(FE.objectPageEditButton);
-				await BaseClass.pressById(FE.objectPageEditButton);
-				await BaseClass.dummyWait(500);
-				await browser.refresh();
-				await ui5Service.injectUI5();
-				await BaseClass.dummyWait(500);
-			}
-
-			// check if edit button is still visible
-			const object2 = await browser.asControl({
-				forceSelect: true,
-				selector: {
-					id: FE.objectPageEditButton
-				}
-			});
-			// if the save button is not visible try to press the edit button again
-			if (!object2._domId) {
-				await BaseClass.pressById(FE.objectPageEditButton);
-				await BaseClass.pressById(FE.objectPageEditButton);
-				await BaseClass.dummyWait(500);
-				await browser.refresh();
-				await ui5Service.injectUI5();
-				await BaseClass.dummyWait(500);
+		// check if edit button is still visible
+		const object = await browser.asControl({
+			forceSelect: true,
+			selector: {
+				id: FE.objectPageEditButton
 			}
 		});
+		// if the edit button is still visible refresh the page and try again
+		if (object._domId) {
+			await browser.refresh();
+			await ui5Service.injectUI5();
+		}
+
+		// check if edit button is still visible
+		const object2 = await browser.asControl({
+			forceSelect: true,
+			selector: {
+				id: FE.objectPageEditButton
+			}
+		});
+		// if the edit button is still visible refresh the page and try again
+		if (object._domId) {
+			await BaseClass.pressById(FE.objectPageEditButton);
+			await BaseClass.dummyWait(3000);
+		}
 	});
 
 	it("Open Spreadsheet Upload Dialog", async () => {
