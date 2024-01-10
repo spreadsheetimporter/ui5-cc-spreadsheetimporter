@@ -62,7 +62,7 @@ describe("Upload CSV File Object Page", () => {
 	});
 
 	it("Open Spreadsheet Upload Dialog", async () => {
-		await BaseClass.dummyWait(2000);
+		await BaseClass.dummyWait(1000);
 		await BaseClass.pressById(FE.objectPageSpreadsheetuploadButton);
 		const spreadsheetUploadDialog = await browser.asControl({
 			selector: {
@@ -116,7 +116,7 @@ describe("Upload CSV File Object Page", () => {
 	});
 
 	it("execute save", async () => {
-		await BaseClass.dummyWait(2000);
+		await BaseClass.dummyWait(1000);
 		await BaseClass.pressById(FE.objectPageSaveButton);
 	});
 

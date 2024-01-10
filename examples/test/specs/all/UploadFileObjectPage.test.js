@@ -34,6 +34,30 @@ describe("Upload File Object Page", () => {
 
 	it("go to edit mode", async () => {
 		await BaseClass.pressById(FE.objectPageEditButton);
+		// check if edit mode is active by checking if the save button is visible
+		await BaseClass.dummyWait(1000);
+		const object = await browser.asControl({
+			forceSelect: true,
+			selector: {
+				id: FE.objectPageSaveButton
+			}
+		});
+		// if the save button is not visible try to press the edit button again
+		if (!object._domId) {
+			await BaseClass.pressById(FE.objectPageEditButton);
+		}
+		// check if edit mode is active by checking if the save button is visible
+		await BaseClass.dummyWait(1000);
+		const object2 = await browser.asControl({
+			forceSelect: true,
+			selector: {
+				id: FE.objectPageSaveButton
+			}
+		});
+		// if the save button is not visible try to press the edit button again
+		if (!object2._domId) {
+			await BaseClass.pressById(FE.objectPageEditButton);
+		}
 	});
 
 	it("Open Spreadsheet Upload Dialog", async () => {
