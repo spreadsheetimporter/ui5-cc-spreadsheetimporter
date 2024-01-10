@@ -26,11 +26,11 @@ describe("Upload File Object Page", () => {
 	});
 
 	it("go to object page", async () => {
-		await BaseClass.dummyWait(500);
+		await BaseClass.dummyWait(2000);
 		const hash = `#/${FE.entitySet}(${FE.entityObjectPageComma})`;
 		await browser.goTo({ sHash: hash });
 		// force wait to stabelize tests
-		await BaseClass.dummyWait(500);
+		await BaseClass.dummyWait(2000);
 	});
 
 	it("go to edit mode", async () => {
@@ -38,7 +38,7 @@ describe("Upload File Object Page", () => {
 	});
 
 	it("Open Spreadsheet Upload Dialog", async () => {
-		await BaseClass.dummyWait(500);
+		await BaseClass.dummyWait(2000);
 		await BaseClass.pressById(FE.objectPageSpreadsheetuploadButton);
 		const spreadsheetUploadDialog = await browser.asControl({
 			selector: {
