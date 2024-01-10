@@ -96,9 +96,9 @@ describe("Upload File Object Page", () => {
 	});
 
 	it("execute save", async () => {
-		if (!skipSave) {
-			await BaseClass.pressById(FE.objectPageSaveButton);
-		}
+		await BaseClass.dummyWait(1000);
+		await BaseClass.pressById(FE.objectPageSaveButton);
+		await BaseClass.dummyWait(1000);
 	});
 
 	it("get items", async () => {
