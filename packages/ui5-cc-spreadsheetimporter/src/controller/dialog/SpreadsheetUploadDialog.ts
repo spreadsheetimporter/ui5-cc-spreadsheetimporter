@@ -5,8 +5,6 @@ import SpreadsheetDialog, { SpreadsheetDialog$AvailableOptionsChangedEvent, Spre
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import Component from "../../Component";
 import Event from "sap/ui/base/Event";
-import Bar from "sap/m/Bar";
-import FileUploader, { FileUploader$ChangeEvent } from "sap/ui/unified/FileUploader";
 import MessageToast from "sap/m/MessageToast";
 import Preview from "../Preview";
 import Util from "../Util";
@@ -24,6 +22,7 @@ import JSONModel from "sap/ui/model/json/JSONModel";
 import Dialog from "sap/m/Dialog";
 import Select from "sap/m/Select";
 import Item from "sap/ui/core/Item";
+import UploadSet, { UploadSet$AfterItemAddedEvent, UploadSet$AfterItemRemovedEvent } from "sap/m/upload/UploadSet";
 
 type InputType = {
 	[key: string]: {
@@ -88,10 +87,13 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	 * Handles file upload event.
 	 * @param {Event} event - The file upload event
 	 */
-	async onFileUpload(event: FileUploader$ChangeEvent) {
+	async onFileUpload(event: UploadSet$AfterItemAddedEvent) {
 		try {
 			this.messageHandler.setMessages([]);
-			const file = event.getParameter("files")[0] as Blob;
+			const file = event.getParameter("item").getFileObject();
+			event.getSource().getIncompleteItems()[0].setVisibleEdit(false);
+			event.getSource().getIncompleteItems()[0].setUploadState("Complete");
+
 			const workbook = (await this._readWorkbook(file)) as XLSX.WorkBook;
 
 			const isStandalone = this.component.getStandalone();
@@ -187,6 +189,10 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 		}
 	}
 
+	onFileRemoved(event: UploadSet$AfterItemRemovedEvent) {
+		this.resetContent();
+	}
+
 	/**
 	 * Sending extracted data to backend
 	 * @param {*} event
@@ -221,7 +227,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 		const sourceParent = source.getParent() as SpreadsheetDialog;
 
 		sourceParent.setBusyIndicatorDelay(0);
-		sourceParent.setBusy(true);
+		// sourceParent.setBusy(true);
 		await Util.sleep(50);
 
 		// creating a promise as the extension api accepts odata call in form of promise only
@@ -305,8 +311,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 
 	resetContent() {
 		(this.spreadsheetUploadDialog.getModel("info") as JSONModel).setProperty("/dataRows", 0);
-		var fileUploader = (this.spreadsheetUploadDialog.getContent()[0] as FlexBox).getItems()[1] as FileUploader;
-		fileUploader.setValue();
+		((this.spreadsheetUploadDialog.getContent()[0] as FlexBox).getItems()[1] as UploadSet).removeAllItems();
 	}
 
 	setDataRows(length: number) {

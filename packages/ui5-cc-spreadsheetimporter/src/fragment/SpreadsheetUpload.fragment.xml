@@ -1,5 +1,5 @@
-<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:upload="sap.ui.unified" xmlns:spreadsheetdialog="cc.spreadsheetimporter.XXXnamespaceXXX.control">
-  <spreadsheetdialog:SpreadsheetDialog contentWidth="{= ${device>/system/phone} ? '100%' : '40vw' }" contentHeight="150px" verticalScrolling="false">
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:spreadsheetdialog="cc.spreadsheetimporter.XXXnamespaceXXX.control" xmlns:upload="sap.m.upload">
+  <spreadsheetdialog:SpreadsheetDialog contentWidth="{= ${device>/system/phone} ? '100%' : '40vw' }" contentHeight="350px" verticalScrolling="false">
     <spreadsheetdialog:customHeader>
       <OverflowToolbar>
         <Title text="{i18n>spreadsheetupload}" />
@@ -34,11 +34,20 @@
             <FlexItemData growFactor="1" styleClass="centeredFlex" />
           </layoutData>
         </MessageStrip>
-        <upload:FileUploader placeholder="{i18n>spreadsheetuploadPlaceholder}" fileType="xlsx,xls,csv,xlsm" change="onFileUpload" sameFilenameAllowed="true" width="100%">
-          <upload:layoutData>
-            <FlexItemData growFactor="5" styleClass="centeredFlex" />
-          </upload:layoutData>
-        </upload:FileUploader>
+        <upload:UploadSet
+          id="UploadSet"
+          instantUpload="false"
+          showIcons="true"
+          uploadButtonInvisible="{= ${info>/dataRows} > 0}"
+          terminationEnabled="true"
+          fileType="xlsx,xls,csv,xlsm"
+          mode="None"
+          afterItemAdded="onFileUpload"
+          afterItemRemoved="onFileRemoved"
+          sameFilenameAllowed="true"
+          noDataIllustrationType="NoColumnsSet"
+        >
+		</upload:UploadSet>
       </FlexBox>
     </spreadsheetdialog:content>
     <spreadsheetdialog:buttons>
