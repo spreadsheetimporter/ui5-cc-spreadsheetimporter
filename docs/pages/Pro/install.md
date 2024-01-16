@@ -2,7 +2,7 @@
 
 To install the `@spreadsheetimporter/ui5-cc-spreadsheetimporter-pro` package directly from a GitHub repository, you'll need a personal access token from GitHub and configure npm to use it. Below are the steps:
 
-## 1. Be a member of the GitHub organization [`SpreadsheetImporter`](https://github.com/SpreadsheetImporter)
+## 1. Be a member of the GitHub organization [``](https://github.com/)
 
 1. After purchasing the Spreadsheet Importer package, you'll receive an invitation to join the GitHub organization.
 2. If you did not receive an invitation, please contact us at [marian@marianzeis.de](mailto:marian@marianzeis.de).
