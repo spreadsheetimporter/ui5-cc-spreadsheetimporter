@@ -168,7 +168,7 @@ export default class SpreadsheetUpload extends ManagedObject {
 		}
 		await this.initialSetupPromise;
 		if (!this.errorState) {
-			((this.spreadsheetUploadDialogHandler.getDialog().getContent()[0] as FlexBox).getItems()[1] as FileUploader).clear();
+			// ((this.spreadsheetUploadDialogHandler.getDialog().getContent()[0] as FlexBox).getItems()[1] as FileUploader).clear();
 			this.spreadsheetUploadDialogHandler.openSpreadsheetUploadDialog();
 		} else {
 			Util.showError(this.errorMessage, "SpreadsheetUpload.ts", "initialSetup");
