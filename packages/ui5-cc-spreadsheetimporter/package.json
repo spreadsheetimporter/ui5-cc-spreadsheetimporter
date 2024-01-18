@@ -51,7 +51,7 @@
     "undeploy": "cf undeploy ui5-cc-spreadsheetimporter --delete-services --delete-service-keys"
   },
   "dependencies": {
-    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz"
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.1/xlsx-0.20.1.tgz"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.4.4",
