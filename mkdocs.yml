@@ -55,14 +55,26 @@ theme:
   name: "material"
   custom_dir: docs/overrides
   palette:
-    primary: "blue"
-    accent: "blue"
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default 
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
   # logo: "images/logo.svg"
   # favicon: "images/favicon.png"
   font: false
   features:
     - navigation.expand
     - content.code.copy
+    - palette.switch
 
 extra:
   analytics:
