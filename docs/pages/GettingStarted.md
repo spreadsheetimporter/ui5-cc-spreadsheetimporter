@@ -2,7 +2,8 @@
 
 There are two ways to use the Spreadsheet Upload Control. Since a Reuse Component (library) is essentially utilized, this results in two deployment strategies that can be used.
 
-Depending on the deployment environment (ABAP or BTP), you have to consider a few special cases. This is described in the [Deployment of your app](#deployment-of-your-app) page.
+Depending on the deployment environment (ABAP or BTP), you have to consider a few special cases. This is described in the [Deployment of your app](#deployment-of-your-app) page.  
+A full deployable BTP example can be found in the [sample project](https://github.com/marianfoo/spreadsheetimporter-btp-example).
 
 ### Decentralized deployment
 
