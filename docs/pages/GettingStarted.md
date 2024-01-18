@@ -2,6 +2,8 @@
 
 There are two ways to use the Spreadsheet Upload Control. Since a Reuse Component (library) is essentially utilized, this results in two deployment strategies that can be used.
 
+Depending on the deployment environment (ABAP or BTP), you have to consider a few special cases. This is described in the [Deployment of your app](#deployment-of-your-app) page.
+
 ### Decentralized deployment
 
 The library is attached directly to each app and deployed with it.
@@ -13,6 +15,8 @@ The Spreadsheet upload is stored directly as a library centrally, e.g. in the on
 ## Setup
 
 Here are the manual steps to integrate the ui5-cc-spreadsheetimporter component. For a simplified integration, a [yo generator](Generator.md) is also available.
+
+
 
 ### Requirements
 
@@ -30,7 +34,7 @@ npm install ui5-cc-spreadsheetimporter
 
 2\. Add `resourceRoots` to your `manifest.json` under `sap.ui5`
 !!! warning ""
-    ⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module.
+    ⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module. (Explanation here: [Version Namespace](https://blogs.sap.com/2023/03/12/create-a-ui5-custom-library-with-versioning-using-a-multi-version-namespace/) )
 
 ```json
 "resourceRoots": {
@@ -50,7 +54,7 @@ npm install ui5-cc-spreadsheetimporter
 
 4\. Add `componentUsages` to your `manifest.json` under `sap.ui5`
 !!! warning ""
-    ⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module.
+    ⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module. (Explanation here: [Version Namespace](https://blogs.sap.com/2023/03/12/create-a-ui5-custom-library-with-versioning-using-a-multi-version-namespace/) )
 
 ```json
 "componentUsages": {
@@ -78,7 +82,7 @@ To avoid this error, you can add the following to your `manifest.json` file:
 
 2\. Add `componentUsages` to your `manifest.json` under `sap.ui5`
 !!! warning ""
-    ⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module.
+    ⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module. (Explanation here: [Version Namespace](https://blogs.sap.com/2023/03/12/create-a-ui5-custom-library-with-versioning-using-a-multi-version-namespace/) )
 
 ```json
 "componentUsages": {
@@ -228,19 +232,22 @@ openSpreadsheetUploadDialog: async function (oEvent) {
 
 ## Deployment of your app
 
-When deploying your app, a few things should be considered:
 
-1\. Add `--all` to your build script in the package.json
+### ABAP System Deployment
+
+#### Error: library/component used in application does not exist
+
+When deploying the app to your ABAP system, you may get an error like this: `SAPUI5 library/component cc.spreadsheetimporter.v0_31_1 used in application Z*** does not exist`. The application is deployed, but the service returns an error.
+
+To avoid this error, you can add the following to your `manifest.json` file:
 
 ```json
-"scripts": {
-  ...
-  "build": "ui5 build --config=ui5.yaml --all --clean-dest --dest dist",
-  ...
+"sap.app": {
+  "embeds": ["thirdparty/customControl/spreadsheetImporter/v0_29_0"]
 }
 ```
 
-2\. File unknown when deploying the app
+#### File unknown when deploying the app
 
 It is possible that the ABAP system does not know how to handle ts files. If you use the `deploy-to-abap` command, you can add the `exclude` option to your `ui5.yaml` file to exclude the files from the deployment:
 
@@ -265,7 +272,11 @@ customTasks:
       - .*\.ts.map
 ```
 
-3\. Config if you use `ui5-task-zipper`
+### BTP Environment Deployment
+
+#### Config your `ui5-task-zipper` in your deployment yaml file
+
+A full example can be found in the [sample project](https://github.com/marianfoo/spreadsheetimporter-btp-example/blob/main/app/mitigations/ui5-deploy.yaml).
 
 If you use the `ui5-task-zipper` task, the `ui5-cc-spreadsheetimporter` should be included in the zip file.
 
@@ -278,16 +289,4 @@ builder:
         archiveName: uimodule
         includeDependencies:
         - ui5-cc-spreadsheetimporter
-```
-
-4\. Error: library/component used in application does not exist
-
-When deploying the app to your ABAP system, you may get an error like this: `SAPUI5 library/component cc.spreadsheetimporter.v0_31_1 used in application Z*** does not exist`. The application is deployed, but the service returns an error.
-
-To avoid this error, you can add the following to your `manifest.json` file:
-
-```json
-"sap.app": {
-  "embeds": ["thirdparty/customControl/spreadsheetImporter/v0_29_0"]
-}
 ```
