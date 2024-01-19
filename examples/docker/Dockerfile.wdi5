@@ -2,8 +2,11 @@
 # base image
 FROM node:18-alpine3.19
 
-RUN apk update \
-    && apk upgrade
+# Update and upgrade system packages
+RUN apk update && apk upgrade
+
+# Install Chrome for headless testing
+RUN apk add --no-cache chromium chromium-chromedriver
 
 # set working directory
 WORKDIR /app
@@ -26,6 +29,12 @@ RUN pnpm build
 
 RUN npm i -g @sap/cds
 
+# Set environment variables for headless Chrome
+ENV CHROME_BIN=/usr/bin/chromium-browser
+ENV CHROME_PATH=/usr/lib/chromium/
+
+# execute tests
+
 RUN pnpm start:server&
 
 RUN pnpm --filter ordersv4fe120 start:silent&
@@ -33,3 +42,9 @@ RUN pnpm --filter ordersv4fe120 start:silent&
 CMD node_modules/.bin/wait-on tcp:4004 tcp:8080
 
 RUN  pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- --headless ordersv4fe 120
+
+# pnpm start:server&
+# pnpm --filter ordersv4fe120 start:silent&
+# node_modules/.bin/wait-on tcp:4004 tcp:8080
+# pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- --headless ordersv4fe 120
+
