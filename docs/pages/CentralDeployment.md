@@ -16,7 +16,7 @@ Key Points:
 1\. Clone Repo
 
 ```sh
-git clone https://github.com/marianfoo/ui5-cc-spreadsheetimporter
+git clone https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter
 ```
 
 2\. Install Dependencies
@@ -33,7 +33,7 @@ npm install
 
 3\. Change `ui5-deploy.yaml`
 
-For the deployment, you have to change the default [`ui5-deploy.yaml`](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/packages/ui5-cc-spreadsheetimporter/ui5-deploy.yaml) to your settings.  
+For the deployment, you have to change the default [`ui5-deploy.yaml`](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/packages/ui5-cc-spreadsheetimporter/ui5-deploy.yaml) to your settings.  
 When deploying a new version, it is important to use a different app name. This is always done automatically with a new version.  
 For this purpose, the variable `XXXnamespaceShortXXX` in the file `ui5-deploy-publish.yaml` must not be changed.  
 If you want to use your own app name, it is important to change the name for newer versions, otherwise other versions will be overwritten.
@@ -54,7 +54,7 @@ npm run deploy
 1\. Clone Repo
 
 ```sh
-git clone https://github.com/marianfoo/ui5-cc-spreadsheetimporter
+git clone https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter
 ```
 
 2\. Install Dependencies
@@ -83,7 +83,7 @@ pnpm deploy:cf
 Perform the same steps as you did in [Getting Started](./../pages/GettingStarted.md).  
 It is not necessary to install the control using npm and the entry `resourceRoots` in the `manifest.json`.
 
-For the consuming app in BTP, I have created a [sample app](https://github.com/marianfoo/spreadsheetimporter-btp-example) with the deployment to the HTML5 Repository on BTP.  
+For the consuming app in BTP, I have created a [sample app](https://github.com/spreadsheetimporter/sample-full-btp) with the deployment to the HTML5 Repository on BTP.  
 
 You can find more information in the blog posts from [Wouter Lemaire](https://people.sap.com/wouter.lemaire):  
 [Connecting UI5 Components in BTP CloudFoundry in the same space](https://blogs.sap.com/2023/11/09/connecting-ui5-components-in-btp-cloudfoundry-in-the-same-space/) and [Connecting UI5 Components in BTP CloudFoundry across spaces](https://blogs.sap.com/2023/11/09/connecting-ui5-components-in-btp-cloudfoundry-across-spaces/)

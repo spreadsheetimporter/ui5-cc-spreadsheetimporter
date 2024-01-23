@@ -4,14 +4,14 @@ The overview of which scenarios are covered by wdi5 tests can be found here: [wd
 
 ## Setup
 
-wdi5 is used in the test setup in the [`examples`](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/tree/main/examples) folder in the [`test`](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/tree/main/examples/test) folder.  
+wdi5 is used in the test setup in the [`examples`](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/tree/main/examples) folder in the [`test`](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/tree/main/examples/test) folder.  
 As pnpm is used, with `pnpm i`, all the packages, including `wdio-ui5-service`, are installed.  
 
 ### Configuration
 
 The basic config file is the `wdio-base.conf.js` file.  
 To avoid having to create a separate configuration file for each scenario, logic is integrated into the file so that the appropriate variables are automatically drawn, for example the port or the appropriate spec files.  
-The data for this is stored in the [`testapps.json`](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/dev/testapps.json) file.
+The data for this is stored in the [`testapps.json`](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/dev/testapps.json) file.
 
 ## Run tests
 
@@ -47,6 +47,6 @@ pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- --headless ordersv4fe
 
 ## GitHub Actions
 
-As specified in the [`testapps.json`](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/dev/testapps.json) file, the GitHub Action Workflow will run on every Pull Request push, testing scenarios with all current UI5 Maintenance Versions and is written in [`wdi5-test.yml`](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/.github/workflows/wdi5-test.yml).
+As specified in the [`testapps.json`](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/dev/testapps.json) file, the GitHub Action Workflow will run on every Pull Request push, testing scenarios with all current UI5 Maintenance Versions and is written in [`wdi5-test.yml`](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/.github/workflows/wdi5-test.yml).
 
 More info at [GitHub Actions](./../Development/GitHubActions.md)

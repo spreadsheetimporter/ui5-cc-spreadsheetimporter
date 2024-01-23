@@ -24,6 +24,6 @@ So you can run all the other versions like 96 and 84 with the right port.
 
 ## GitHub Actions
 
-The GitHub Action Workflow will run on every Pull Request push, testing the V4 Versions and is written down in [`opa5-test.yml`](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/.github/workflows/opa5-test.yml).
+The GitHub Action Workflow will run on every Pull Request push, testing the V4 Versions and is written down in [`opa5-test.yml`](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/.github/workflows/opa5-test.yml).
 
 More info at [GitHub Actions](./../Development/GitHubActions.md)

@@ -30,7 +30,7 @@ The demo app uses OData V4 and UI5 version 1.108 with a CAP backend. The data re
 
 For discussions about the suitability of the component for your use case, you can schedule an appointment [here](https://outlook.office365.com/owa/calendar/UI5ExcelUploadComponent@marianzeis.de/bookings/) free of charge.
 
-If you encounter implementation issues or bugs, you can open an issue [here](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/new/choose).  
+If you encounter implementation issues or bugs, you can open an issue [here](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/new/choose).  
 For urgent assistance or special requirements, please schedule an appointment [here](https://outlook.office365.com/owa/calendar/UI5ExcelUploadComponent@marianzeis.de/bookings/) at a fixed rate.
 
 # Development
@@ -41,7 +41,7 @@ https://docs.spreadsheet-importer.com/pages/Development/GettingStarted/
 
 ## Quickstart
 
-1. Clone the repository `git clone https://github.com/marianfoo/ui5-cc-spreadsheetimporter`
+1. Clone the repository `git clone https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter`
 2. Run `pnpm install`
 3. Run server with `pnpm start:server`
 4. Start Demo App for example a Fiori Elements App with OData V4 and UI5 1.120 with `pnpm --filter ordersv4fe120 start`
@@ -50,11 +50,11 @@ https://docs.spreadsheet-importer.com/pages/Development/GettingStarted/
 
 ## Changelog `ui5-cc-spreadsheetimporter`
 
-See the [CHANGELOG.md](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/packages/ui5-cc-spreadsheetimporter/CHANGELOG.md)
+See the [CHANGELOG.md](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/packages/ui5-cc-spreadsheetimporter/CHANGELOG.md)
 
 ## Changelog `generator-ui5-spreadsheetimporter`
 
-Check the [CHANGELOG.md](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/packages/ui5-cc-spreadsheetimporter-generator/CHANGELOG.md)
+Check the [CHANGELOG.md](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/packages/ui5-cc-spreadsheetimporter-generator/CHANGELOG.md)
 
 # Open in GitHub Codespaces
 

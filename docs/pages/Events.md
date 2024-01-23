@@ -15,7 +15,7 @@ When the file is uploaded to the app, the `checkBeforeRead` event is fired.
 
 ### Example
 
-This sample is from the [sample app](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/47d22cdc42aa1cacfd797bdc0e025b830330dc5e/examples/packages/ordersv4fe/webapp/ext/ObjectPageExtController.js#L24-L42). It checks whether the price is over 100.
+This sample is from the [sample app](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/47d22cdc42aa1cacfd797bdc0e025b830330dc5e/examples/packages/ordersv4fe/webapp/ext/ObjectPageExtController.js#L24-L42). It checks whether the price is over 100.
 
 ```javascript
 this.spreadsheetUpload.attachCheckBeforeRead(function(oEvent) {
@@ -57,7 +57,7 @@ When the `Upload` button is pressed, the `changeBeforeCreate` event is fired.
 
 ### Example
 
-This sample is from the [sample app](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/47d22cdc42aa1cacfd797bdc0e025b830330dc5e/examples/packages/ordersv4fe/webapp/ext/ObjectPageExtController.js#L45-L52). It overwrites the payload.
+This sample is from the [sample app](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/47d22cdc42aa1cacfd797bdc0e025b830330dc5e/examples/packages/ordersv4fe/webapp/ext/ObjectPageExtController.js#L45-L52). It overwrites the payload.
 
 ```javascript
 this.spreadsheetUpload.attachChangeBeforeCreate(function (oEvent) {

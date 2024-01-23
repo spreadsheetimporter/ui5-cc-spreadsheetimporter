@@ -1,7 +1,7 @@
 ## Issues
 
 If you encounter any issues that are not covered in this documentation, have suggestions, or ideas for improvements, please create an issue in the GitHub repository:  
-[https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues)
+[https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues)
 
 ## Activate Debug Mode and Copy Error Messages
 

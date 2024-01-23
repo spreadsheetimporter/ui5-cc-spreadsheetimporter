@@ -107,13 +107,13 @@ settings="{
 
 #### Freestyle OData V2
 
-XML View: [Detail.view.xml](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2freestylenondraft/webapp/view/Detail.view.xml)  
-Controller: [Detail.controller.js](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2freestylenondraft/webapp/controller/Detail.controller.js)
+XML View: [Detail.view.xml](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2freestylenondraft/webapp/view/Detail.view.xml)  
+Controller: [Detail.controller.js](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2freestylenondraft/webapp/controller/Detail.controller.js)
 
 #### Freestyle OData V2 Standalone
 
-XML View: [UploadToTable.view.xml](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2freestylenondraft/webapp/view/UploadToTable.view.xml)  
-Controller: [UploadToTable.controller.js](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2freestylenondraft/webapp/controller/UploadToTable.controller.js)
+XML View: [UploadToTable.view.xml](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2freestylenondraft/webapp/view/UploadToTable.view.xml)  
+Controller: [UploadToTable.controller.js](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2freestylenondraft/webapp/controller/UploadToTable.controller.js)
 
 ## Including Reuse Components on an Object Page
 
@@ -122,7 +122,7 @@ You can define this in the `manifest.json` under `sap.ui.generic.app` in the `pa
 
 The configuration is documented in the [UI5 documentation](https://sapui5.hana.ondemand.com/sdk/#/topic/d869d7ab3caa48b2a20dc20dfa248380).
 
-A sample configuration can be found in the manifest.json of the [OData V4 Fiori Elements app](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv4fe/webapp/manifest.json)
+A sample configuration can be found in the manifest.json of the [OData V4 Fiori Elements app](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv4fe/webapp/manifest.json)
 
 ```json
 "body": {
