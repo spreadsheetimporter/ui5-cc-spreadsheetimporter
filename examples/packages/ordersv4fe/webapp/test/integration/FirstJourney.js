@@ -36,12 +36,12 @@ sap.ui.require(
 				errorMessage: "Can not select 'sap.m.Button'"
 			});
 			Then.waitFor({
-				controlType: "cc.spreadsheetimporter.v0_31_1.SpreadsheetDialog",
+				controlType: "cc.spreadsheetimporter.v0_31_2.SpreadsheetDialog",
 				check: function (dialog) {
 					return dialog[0].isOpen();
 				},
 				success: function (dialog) {
-					const util = Opa5.getWindow().cc.spreadsheetimporter.v0_31_1.Util;
+					const util = Opa5.getWindow().cc.spreadsheetimporter.v0_31_2.Util;
 					console.log("Util", util);
 					Opa5.getContext().util = util;
 					Opa5.getContext().component = dialog[0].getComponent();
@@ -71,7 +71,7 @@ sap.ui.require(
 
 		function testNormalizeNumberString(Then, decimalSeparator, input, expectedOutput) {
 			Then.waitFor({
-				controlType: "cc.spreadsheetimporter.v0_31_1.SpreadsheetDialog",
+				controlType: "cc.spreadsheetimporter.v0_31_2.SpreadsheetDialog",
 				success: function (dialog) {
 					Opa5.getContext().component.setDecimalSeparator(decimalSeparator);
 					// Call 'normalizeNumberString' method and check its output
