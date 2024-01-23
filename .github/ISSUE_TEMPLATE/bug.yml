@@ -41,6 +41,13 @@ body:
     validations:
       required: true
   - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: In what Environment is your problem? (VS Code, BAS, FLP On Premise, BTP Workzone, ...)
+    validations:
+      required: true
+  - type: input
     id: spreadsheetuploadversion
     attributes:
       label: UI5 Spreadsheet Component
