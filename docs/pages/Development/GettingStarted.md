@@ -26,7 +26,7 @@ npm i -g @sap/cds-dk
 To quickly start the test environment, see here. See detailed information below.
 
 ```sh
-git clone https://github.com/marianfoo/ui5-cc-spreadsheetimporter
+git clone https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter
 pnpm i
 # will run `build` and start CAP Server and FE Apps V4 1.108
 npm start
@@ -38,7 +38,7 @@ This is the basic setting-up to continue with the next steps.
 
 ```sh
 # Clone GitHub Repo
-git clone https://github.com/marianfoo/ui5-cc-spreadsheetimporter
+git clone https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter
 
 # Install all packages including for test environment
 pnpm i
@@ -67,7 +67,7 @@ There are five different apps for different scenarios (OData V2 Fiori Elements, 
 There are currently only with version `1.120`. For testing, these apps are copied and tested with other maintenance versions.  
 If you want to test with lower maintenance versions, just run this command:  
 `npm run copyTestApps`  
-This will copy the apps according to this [json file](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/dev/testapps.json).
+This will copy the apps according to this [json file](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/dev/testapps.json).
 
 ```sh
 # Start Test Apps

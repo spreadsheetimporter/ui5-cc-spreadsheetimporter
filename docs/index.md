@@ -31,7 +31,7 @@ A quick integration tutorial for this component is available on YouTube [here](h
 
 For discussions about the suitability of the component for your use case, you can schedule an appointment [here](https://outlook.office365.com/owa/calendar/UI5ExcelUploadComponent@marianzeis.de/bookings/) free of charge.
 
-If you encounter implementation issues or bugs, you can open an issue [here](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/issues/new/choose).  
+If you encounter implementation issues or bugs, you can open an issue [here](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/new/choose).  
 For urgent assistance or special requirements, please schedule an appointment [here](https://outlook.office365.com/owa/calendar/UI5ExcelUploadComponent@marianzeis.de/bookings/) at a fixed rate.
 
 ## Live Demo

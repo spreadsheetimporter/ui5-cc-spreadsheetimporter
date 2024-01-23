@@ -3,7 +3,7 @@
 There are two ways to use the Spreadsheet Upload Control. Since a Reuse Component (library) is essentially utilized, this results in two deployment strategies that can be used.
 
 Depending on the deployment environment (ABAP or BTP), you have to consider a few special cases. This is described in the [Deployment of your app](#deployment-of-your-app) page.  
-A full deployable BTP example can be found in the [sample project](https://github.com/marianfoo/spreadsheetimporter-btp-example).
+A full deployable BTP example can be found in the [sample project](https://github.com/spreadsheetimporter/sample-full-btp).
 
 ### Decentralized deployment
 
@@ -102,13 +102,13 @@ To start the Spreadsheet Upload Dialog, you need a Button in your Fiori Elements
 
 ![Guided Development](./../images/guided_development.png){ loading=lazy }
 
-If you have done that, you can continue with the implementation of your Custom Code either with [V2](#custom-code_1) or [V4](#custom-code). You can also use a controller extension in Fiori Elements. An example can be found with the [Fiori Elements V4 Example App](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/tree/main/examples/packages/ordersv4fe).
+If you have done that, you can continue with the implementation of your Custom Code either with [V2](#custom-code_1) or [V4](#custom-code). You can also use a controller extension in Fiori Elements. An example can be found with the [Fiori Elements V4 Example App](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/tree/main/examples/packages/ordersv4fe).
 
 ## Starting with Fiori Elements (OData V4)
 
 ### Extension in manifest.json
 
-As an example, here is how your custom action can look like. This example is from the [sample app](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv4fe/webapp/manifest.json) for the object page and will add the button to the object page's order items table. It is important to always specify the relevant option `tableId` if there are multiple tables on the object page. Using `"enabled": "{ui>/isEditable}"` will automatically disable the button if the object page is not in edit mode.
+As an example, here is how your custom action can look like. This example is from the [sample app](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv4fe/webapp/manifest.json) for the object page and will add the button to the object page's order items table. It is important to always specify the relevant option `tableId` if there are multiple tables on the object page. Using `"enabled": "{ui>/isEditable}"` will automatically disable the button if the object page is not in edit mode.
 
 ```json
 "OrdersObjectPage": {
@@ -177,7 +177,7 @@ See also this at the live demo <https://livedemo.spreadsheet-importer.com/>.
 
 ### Extension in manifest.json
 
-As an example, here is how your custom action can look like. This example is from the [sample app](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2fe/webapp/manifest.json) for the object page.
+As an example, here is how your custom action can look like. This example is from the [sample app](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2fe/webapp/manifest.json) for the object page.
 
 ```json
 "extends": {
@@ -277,7 +277,7 @@ customTasks:
 
 #### Config your `ui5-task-zipper` in your deployment yaml file
 
-A full example can be found in the [sample project](https://github.com/marianfoo/spreadsheetimporter-btp-example/blob/main/app/mitigations/ui5-deploy.yaml).
+A full example can be found in the [sample project](https://github.com/spreadsheetimporter/sample-full-btp/blob/main/app/mitigations/ui5-deploy.yaml).
 
 If you use the `ui5-task-zipper` task, the `ui5-cc-spreadsheetimporter` should be included in the zip file.
 

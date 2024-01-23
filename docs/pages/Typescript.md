@@ -1,6 +1,6 @@
 Since the component is written in TypeScript, we can also provide the generated types. 
 
-The GitHub repository contains a sample TypeScript application created with the Fiori Generator. You can find the example app in the [example folder](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/tree/main/examples/packages/ordersv4fets).
+The GitHub repository contains a sample TypeScript application created with the Fiori Generator. You can find the example app in the [example folder](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/tree/main/examples/packages/ordersv4fets).
 
 ## Setup
 

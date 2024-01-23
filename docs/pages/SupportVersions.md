@@ -7,7 +7,7 @@ Here is an overview of the apps that were created and passed the smoke test:
 
 Another overview will show you which apps are already tested automatically with wdi5 and are therefore tested on a constant basis.
 
-All the example apps can be found in the [`examples`](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/tree/main/examples/packages) folder. The test scripts can be found in the [`test`](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/tree/main/examples/test) folder.  
+All the example apps can be found in the [`examples`](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/tree/main/examples/packages) folder. The test scripts can be found in the [`test`](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/tree/main/examples/test) folder.  
 More info at [wdi5 tests](./Development/wdi5.md)
 
 **To summarize: All stable UI5 versions are currently supported (from 1.71). Also, 2.0 is already supported but is still experimental, as version 2.0 may still change.**
@@ -16,13 +16,13 @@ More info at [wdi5 tests](./Development/wdi5.md)
 
 ### CAP V2
 
-| [List Report Draft](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2fe/webapp/ext/controller/ListReportExt.controller.js)  | [List Report Non Draft](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2fenondraft/webapp/ext/controller/ListReportExt.controller.js)  | [Object Page Draft](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2fe/webapp/ext/controller/ObjectPageExt.controller.js)  | [Object Page Non Draft](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2fenondraft/webapp/ext/controller/ObjectPageExt.controller.js)  | [Freestyle](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2freestylenondraft/webapp/controller/List.controller.js) |
+| [List Report Draft](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2fe/webapp/ext/controller/ListReportExt.controller.js)  | [List Report Non Draft](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2fenondraft/webapp/ext/controller/ListReportExt.controller.js)  | [Object Page Draft](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2fe/webapp/ext/controller/ObjectPageExt.controller.js)  | [Object Page Non Draft](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2fenondraft/webapp/ext/controller/ObjectPageExt.controller.js)  | [Freestyle](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv2freestylenondraft/webapp/controller/List.controller.js) |
 |---|---|---|---|---|
 | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 
 ### CAP V4
 
-| [List Report Draft](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv4fe/webapp/ext/ListReportExtController.js)  | [Object Page Draft](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv4fe/webapp/ext/ObjectPageExtController.js)  |  Freestyle | [Flexible Programming Model](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv4fpm/webapp/ext/main/Main.controller.js) | [Typescript](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv4fets/webapp/ext/ListReportExtController.ts) | [CDS Plugin](https://github.com/marianfoo/ui5-cc-spreadsheetimporter/blob/main/examples/packages/server/app/ordersv4fecds/webapp/ext/ObjectPageExtController.js) |
+| [List Report Draft](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv4fe/webapp/ext/ListReportExtController.js)  | [Object Page Draft](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv4fe/webapp/ext/ObjectPageExtController.js)  |  Freestyle | [Flexible Programming Model](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv4fpm/webapp/ext/main/Main.controller.js) | [Typescript](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv4fets/webapp/ext/ListReportExtController.ts) | [CDS Plugin](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/examples/packages/server/app/ordersv4fecds/webapp/ext/ObjectPageExtController.js) |
 |---|---|---|---|---|---|
 | :white_check_mark:   | :white_check_mark: |  |  :white_check_mark:  | |  :white_check_mark:  | |  :white_check_mark:  |
 
