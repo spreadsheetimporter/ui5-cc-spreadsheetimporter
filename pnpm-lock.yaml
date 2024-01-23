@@ -863,21 +863,21 @@ importers:
         specifier: 1.12.2
         version: 1.12.2
       '@sap/cds':
-        specifier: ^7.5.2
-        version: 7.5.2(express@4.18.2)
+        specifier: ^7.5.3
+        version: 7.5.3(express@4.18.2)
     devDependencies:
       cds-plugin-ui5:
         specifier: 0.7.5
-        version: 0.7.5(@sap/cds@7.5.2)(bluebird@3.7.2)(express@4.18.2)
+        version: 0.7.5(@sap/cds@7.5.3)(bluebird@3.7.2)(express@4.18.2)
       ordersv4fe120:
-        specifier: workspace:^
+        specifier: ^0.0.1
         version: link:../ordersv4fe
 
   packages/ui5-cc-spreadsheetimporter:
     dependencies:
       xlsx:
-        specifier: https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz
-        version: '@cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz'
+        specifier: https://cdn.sheetjs.com/xlsx-0.20.1/xlsx-0.20.1.tgz
+        version: '@cdn.sheetjs.com/xlsx-0.20.1/xlsx-0.20.1.tgz'
     devDependencies:
       '@commitlint/cli':
         specifier: ^18.4.4
@@ -2324,6 +2324,14 @@ packages:
       '@sap/cds': '>=7'
     dependencies:
       '@sap/cds': 7.5.2(express@4.18.2)
+    dev: false
+
+  /@cap-js/cds-types@0.2.0(@sap/cds@7.5.3):
+    resolution: {integrity: sha512-s4iVwAjf+rRIUu6jaEooXFcJv16+sP5CTkreQPxDUyxLWWGlhvEr67TuIH0C6Cnp4PPIsYmBK3AVxSW2mNc2wg==}
+    peerDependencies:
+      '@sap/cds': '>=7'
+    dependencies:
+      '@sap/cds': 7.5.3(express@4.18.2)
 
   /@chevrotain/types@9.1.0:
     resolution: {integrity: sha512-3hbCD1CThkv9gnaSIPq0GUXwKni68e0ph6jIHwCvcWiQ4JB2xi8bFxBain0RF04qHUWuDjgnZLj4rLgimuGO+g==}
@@ -3525,6 +3533,16 @@ packages:
     dependencies:
       '@sap/cds': 7.5.2(express@4.18.2)
       express: 4.18.2
+    dev: false
+
+  /@sap/cds-fiori@1.2.2(@sap/cds@7.5.3)(express@4.18.2):
+    resolution: {integrity: sha512-9bJKiIq8dCmwEcIXES7jiAcmiyJlDjjKdnvceAmqCU5Z925ZaalVIGYdnmmlQyciPUzD/bk3vRxmrPIogP6leA==}
+    peerDependencies:
+      '@sap/cds': '>=7'
+      express: '>=4'
+    dependencies:
+      '@sap/cds': 7.5.3(express@4.18.2)
+      express: 4.18.2
 
   /@sap/cds-foss@5.0.0:
     resolution: {integrity: sha512-x8LtyTd2TbElSb6Jv9ckao5gIeJ+jBngGudo3jKBSWbkD8THnP7uVbwVqmsSlyCU+RGhp0cFyHsmCn9P1PNBvw==}
@@ -3543,6 +3561,19 @@ packages:
       '@cap-js/cds-types': 0.2.0(@sap/cds@7.5.2)
       '@sap/cds-compiler': 4.5.0
       '@sap/cds-fiori': 1.2.2(@sap/cds@7.5.2)(express@4.18.2)
+      '@sap/cds-foss': 5.0.0
+    transitivePeerDependencies:
+      - express
+    dev: false
+
+  /@sap/cds@7.5.3(express@4.18.2):
+    resolution: {integrity: sha512-VZk3wx3O69oS11FNmCbSAdB24WXGPD2KZlHJJtiWb4LQC7OCxwepiUuFLNOYPD+Drs2AwPr/x0i+CqkUvf3hVw==}
+    engines: {node: '>=16'}
+    hasBin: true
+    dependencies:
+      '@cap-js/cds-types': 0.2.0(@sap/cds@7.5.3)
+      '@sap/cds-compiler': 4.5.0
+      '@sap/cds-fiori': 1.2.2(@sap/cds@7.5.3)(express@4.18.2)
       '@sap/cds-foss': 5.0.0
     transitivePeerDependencies:
       - express
@@ -5350,13 +5381,13 @@ packages:
       lodash: 4.17.21
     dev: true
 
-  /cds-plugin-ui5@0.7.5(@sap/cds@7.5.2)(bluebird@3.7.2)(express@4.18.2):
+  /cds-plugin-ui5@0.7.5(@sap/cds@7.5.3)(bluebird@3.7.2)(express@4.18.2):
     resolution: {integrity: sha512-qb5Y2PByRrV9RmYFVjahsWMvQ2JkOoS84T+lpjiTvMaBi0WDJAle5nEOeQT5k9kk+BRKFHwnkrczqoTfN5vTHA==}
     peerDependencies:
       '@sap/cds': '>=6.8.2'
       express: '>=4.18.2'
     dependencies:
-      '@sap/cds': 7.5.2(express@4.18.2)
+      '@sap/cds': 7.5.3(express@4.18.2)
       '@ui5/fs': 3.0.5
       '@ui5/project': 3.9.0(bluebird@3.7.2)
       '@ui5/server': 3.1.5
@@ -13163,10 +13194,10 @@ packages:
       readable-stream: 3.6.2
     dev: true
 
-  '@cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz':
-    resolution: {registry: https://registry.npmjs.org/, tarball: https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz}
+  '@cdn.sheetjs.com/xlsx-0.20.1/xlsx-0.20.1.tgz':
+    resolution: {tarball: https://cdn.sheetjs.com/xlsx-0.20.1/xlsx-0.20.1.tgz}
     name: xlsx
-    version: 0.20.0
+    version: 0.20.1
     engines: {node: '>=0.8'}
     hasBin: true
     dev: false

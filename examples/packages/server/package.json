@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "dependencies": {
     "@cap-js-community/odata-v2-adapter": "1.12.2",
-    "@sap/cds": "^7.5.2"
+    "@sap/cds": "^7.5.3"
   },
   "devDependencies": {
     "cds-plugin-ui5": "0.7.5",
