@@ -2,7 +2,7 @@
 
 The foundational concept of the UI5 Spreadsheet upload control's development emphasizes its individual deployment alongside each application. However, an alternative deployment strategy exists, allowing for the control to be centrally hosted on the backend.
 
-Key Points:
+Key Points:  
 
 - **Version Independence**: The control operates independently of specific versions, enhancing its autonomy and facilitating seamless updates with new versions.
   - **Centralized Deployment Options**:
