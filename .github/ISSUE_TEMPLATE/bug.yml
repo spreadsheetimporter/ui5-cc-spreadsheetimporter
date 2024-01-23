@@ -8,7 +8,9 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this bug report!
+        Thanks for taking the time to fill out this bug report!  
+        Please fill out as much of the template below as you can.  
+        Also check if you followed the [Getting Started Guide](https://docs.spreadsheet-importer.com/pages/GettingStarted/) and the [Troubleshooting Guide](https://docs.spreadsheet-importer.com/pages/Troubleshooting/).
   - type: dropdown
     id: odata
     attributes:
@@ -36,6 +38,13 @@ body:
     attributes:
       label: Scenario
       description: In what Scenario are you using? (Fiori Elements/Freestyle, Object Page/List Report)
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: In what Environment is your problem? (VS Code, BAS, FLP On Premise, BTP Workzone, ...)
     validations:
       required: true
   - type: input
