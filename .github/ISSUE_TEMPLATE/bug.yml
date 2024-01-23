@@ -8,7 +8,9 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this bug report!
+        Thanks for taking the time to fill out this bug report!  
+        Please fill out as much of the template below as you can.  
+        Also check if you followed the [Getting Started Guide](https://docs.spreadsheet-importer.com/pages/GettingStarted/) and the [Troubleshooting Guide](https://docs.spreadsheet-importer.com/pages/Troubleshooting/).
   - type: dropdown
     id: odata
     attributes:
