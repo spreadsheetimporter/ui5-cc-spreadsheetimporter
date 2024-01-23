@@ -128,16 +128,14 @@ Check if your backend system supports this.
 
 **ABAP Backend**
 
-There is no information about which backend OData implementation is supported, but a test with RAP worked.
+There is no information about which backend OData implementation is supported, but a test with RAP on S/4HANA 2021 worked.
 
 **CAP Backend**
 
-The feature to support `IsActiveEntity` was introduced in CAP Version `7.5.0`.  
+The feature to support `IsActiveEntity` was introduced in [`@sap/cds`](https://www.npmjs.com/package/@sap/cds) Version `7.5.3`.  
 https://cap.cloud.sap/docs/releases/changelog/#dec-23-added  
 https://cap.cloud.sap/docs/releases/dec23#sapui5-mass-edit  
 
-Unfortunately, in the first tests, this did not work with the CAP backend.  
-Currently waiting for a fix or more information.  
 
 #### When to use `activateDraft` or `createActiveEntity`
 
