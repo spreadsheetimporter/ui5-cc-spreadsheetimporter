@@ -123,8 +123,8 @@ importers:
   examples/packages/common:
     dependencies:
       '@sap/cds':
-        specifier: ^7.5.2
-        version: 7.5.2(express@4.18.2)
+        specifier: ^7.5.3
+        version: 7.5.3(express@4.18.2)
 
   examples/packages/ordersv2fe:
     dependencies:
@@ -2318,14 +2318,6 @@ packages:
       - supports-color
     dev: false
 
-  /@cap-js/cds-types@0.2.0(@sap/cds@7.5.2):
-    resolution: {integrity: sha512-s4iVwAjf+rRIUu6jaEooXFcJv16+sP5CTkreQPxDUyxLWWGlhvEr67TuIH0C6Cnp4PPIsYmBK3AVxSW2mNc2wg==}
-    peerDependencies:
-      '@sap/cds': '>=7'
-    dependencies:
-      '@sap/cds': 7.5.2(express@4.18.2)
-    dev: false
-
   /@cap-js/cds-types@0.2.0(@sap/cds@7.5.3):
     resolution: {integrity: sha512-s4iVwAjf+rRIUu6jaEooXFcJv16+sP5CTkreQPxDUyxLWWGlhvEr67TuIH0C6Cnp4PPIsYmBK3AVxSW2mNc2wg==}
     peerDependencies:
@@ -3525,16 +3517,6 @@ packages:
     dependencies:
       antlr4: 4.9.3
 
-  /@sap/cds-fiori@1.2.2(@sap/cds@7.5.2)(express@4.18.2):
-    resolution: {integrity: sha512-9bJKiIq8dCmwEcIXES7jiAcmiyJlDjjKdnvceAmqCU5Z925ZaalVIGYdnmmlQyciPUzD/bk3vRxmrPIogP6leA==}
-    peerDependencies:
-      '@sap/cds': '>=7'
-      express: '>=4'
-    dependencies:
-      '@sap/cds': 7.5.2(express@4.18.2)
-      express: 4.18.2
-    dev: false
-
   /@sap/cds-fiori@1.2.2(@sap/cds@7.5.3)(express@4.18.2):
     resolution: {integrity: sha512-9bJKiIq8dCmwEcIXES7jiAcmiyJlDjjKdnvceAmqCU5Z925ZaalVIGYdnmmlQyciPUzD/bk3vRxmrPIogP6leA==}
     peerDependencies:
@@ -3552,19 +3534,6 @@ packages:
       generic-pool: 3.9.0
       xmlbuilder: 15.1.1
       yaml: 2.3.4
-
-  /@sap/cds@7.5.2(express@4.18.2):
-    resolution: {integrity: sha512-6La9jk+z9kNsLo6FNOeKvL+5srx+kSrzkMEgIw3xxWNfIwBiWD2MIYxrN7YohfY95nhpsyHqeXIOEd9YbHa+BQ==}
-    engines: {node: '>=16'}
-    hasBin: true
-    dependencies:
-      '@cap-js/cds-types': 0.2.0(@sap/cds@7.5.2)
-      '@sap/cds-compiler': 4.5.0
-      '@sap/cds-fiori': 1.2.2(@sap/cds@7.5.2)(express@4.18.2)
-      '@sap/cds-foss': 5.0.0
-    transitivePeerDependencies:
-      - express
-    dev: false
 
   /@sap/cds@7.5.3(express@4.18.2):
     resolution: {integrity: sha512-VZk3wx3O69oS11FNmCbSAdB24WXGPD2KZlHJJtiWb4LQC7OCxwepiUuFLNOYPD+Drs2AwPr/x0i+CqkUvf3hVw==}
