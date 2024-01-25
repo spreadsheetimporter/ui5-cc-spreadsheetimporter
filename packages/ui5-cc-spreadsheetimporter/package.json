@@ -78,7 +78,7 @@
     "replace-in-file": "^7.1.0",
     "shelljs": "^0.8.5",
     "typescript": "5.3.3",
-    "ui5-tooling-modules": "3.3.1",
+    "ui5-tooling-modules": "3.3.2",
     "ui5-tooling-stringreplace": "3.1.4",
     "ui5-tooling-transpile": "3.3.3"
   }

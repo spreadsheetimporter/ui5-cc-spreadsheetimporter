@@ -18,7 +18,7 @@
     "@sap/ux-ui5-tooling": "1.12.2",
     "@ui5/cli": "3.9.0",
     "ui5-middleware-ui5": "3.1.0",
-    "ui5-tooling-modules": "3.3.1"
+    "ui5-tooling-modules": "3.3.2"
   },
   "scripts": {
     "start": "fiori run -p 8081 --open \"index.html?sap-ui-xx-viewCache=false&sap-language=EN\"",
