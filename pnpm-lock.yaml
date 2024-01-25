@@ -865,6 +865,16 @@ importers:
       '@sap/cds':
         specifier: ^7.5.3
         version: 7.5.3(express@4.18.2)
+    devDependencies:
+      cds-plugin-ui5:
+        specifier: 0.8.0
+        version: 0.8.0(@sap/cds@7.5.3)(bluebird@3.7.2)(express@4.18.2)
+      ordersv2fe120:
+        specifier: workspace:^
+        version: link:../ordersv2fe
+      ordersv4fe120:
+        specifier: workspace:^
+        version: link:../ordersv4fe
 
   packages/ui5-cc-spreadsheetimporter:
     dependencies:
@@ -2317,7 +2327,6 @@ packages:
       '@sap/cds': '>=7'
     dependencies:
       '@sap/cds': 7.5.3(express@4.18.2)
-    dev: false
 
   /@chevrotain/types@9.1.0:
     resolution: {integrity: sha512-3hbCD1CThkv9gnaSIPq0GUXwKni68e0ph6jIHwCvcWiQ4JB2xi8bFxBain0RF04qHUWuDjgnZLj4rLgimuGO+g==}
@@ -3497,7 +3506,6 @@ packages:
     hasBin: true
     dependencies:
       antlr4: 4.9.3
-    dev: false
 
   /@sap/cds-fiori@1.2.2(@sap/cds@7.5.3)(express@4.18.2):
     resolution: {integrity: sha512-9bJKiIq8dCmwEcIXES7jiAcmiyJlDjjKdnvceAmqCU5Z925ZaalVIGYdnmmlQyciPUzD/bk3vRxmrPIogP6leA==}
@@ -3507,7 +3515,6 @@ packages:
     dependencies:
       '@sap/cds': 7.5.3(express@4.18.2)
       express: 4.18.2
-    dev: false
 
   /@sap/cds-foss@5.0.0:
     resolution: {integrity: sha512-x8LtyTd2TbElSb6Jv9ckao5gIeJ+jBngGudo3jKBSWbkD8THnP7uVbwVqmsSlyCU+RGhp0cFyHsmCn9P1PNBvw==}
@@ -3517,7 +3524,6 @@ packages:
       generic-pool: 3.9.0
       xmlbuilder: 15.1.1
       yaml: 2.3.4
-    dev: false
 
   /@sap/cds@7.5.3(express@4.18.2):
     resolution: {integrity: sha512-VZk3wx3O69oS11FNmCbSAdB24WXGPD2KZlHJJtiWb4LQC7OCxwepiUuFLNOYPD+Drs2AwPr/x0i+CqkUvf3hVw==}
@@ -3530,7 +3536,6 @@ packages:
       '@sap/cds-foss': 5.0.0
     transitivePeerDependencies:
       - express
-    dev: false
 
   /@sap/cf-tools@2.1.1:
     resolution: {integrity: sha512-GM1Os0/zLyJNNSwKawOy1zRC38qMg8K/gUvxThbqDKuwfR5raMZZjlHwuoLgF74MsJJ+kDDk71LWRJn9WWzH4w==}
@@ -4700,7 +4705,6 @@ packages:
   /antlr4@4.9.3:
     resolution: {integrity: sha512-qNy2odgsa0skmNMCuxzXhM4M8J1YDaPv3TI+vCdnOAanu0N982wBrSqziDKRDctEZLZy9VffqIZXc0UGjjSP/g==}
     engines: {node: '>=14'}
-    dev: false
 
   /anymatch@3.1.3:
     resolution: {integrity: sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==}
@@ -5005,7 +5009,6 @@ packages:
 
   /big.js@6.2.1:
     resolution: {integrity: sha512-bCtHMwL9LeDIozFn+oNhhFoq+yQ3BNdnsLSASUxLciOb1vgvpHsIO1dsENiGMgbb4SkP5TrzWzRiLddn8ahVOQ==}
-    dev: false
 
   /bin-links@4.0.3:
     resolution: {integrity: sha512-obsRaULtJurnfox/MDwgq6Yo9kzbv1CPTk/1/s7Z/61Lezc8IKkFCOXNeVLXz0456WRzBQmSsDWlai2tIhBsfA==}
@@ -5344,6 +5347,24 @@ packages:
     engines: {node: '>= 10'}
     dependencies:
       lodash: 4.17.21
+    dev: true
+
+  /cds-plugin-ui5@0.8.0(@sap/cds@7.5.3)(bluebird@3.7.2)(express@4.18.2):
+    resolution: {integrity: sha512-mhZVlxEK2Tw2gj/wvK8fdFkf/iGgAMe7fYA3PBI39bght2MRaztqIUb4bS6LOajLj96YD3jBfbV5l3uBAHrMDA==}
+    peerDependencies:
+      '@sap/cds': '>=6.8.2'
+      express: '>=4.18.2'
+    dependencies:
+      '@sap/cds': 7.5.3(express@4.18.2)
+      '@ui5/fs': 3.0.5
+      '@ui5/project': 3.9.0(bluebird@3.7.2)
+      '@ui5/server': 3.1.5
+      express: 4.18.2
+      js-yaml: 4.1.0
+      node-html-parser: 6.1.12
+    transitivePeerDependencies:
+      - bluebird
+      - supports-color
     dev: true
 
   /chainsaw@0.1.0:
@@ -7316,7 +7337,6 @@ packages:
   /generic-pool@3.9.0:
     resolution: {integrity: sha512-hymDOu5B53XvN4QT9dBmZxPX4CWhBPPLguTZ9MMFeFa/Kg0xWVfylOVNlJji/E7yTZWFd/q9GO5TxDLq156D7g==}
     engines: {node: '>= 4'}
-    dev: false
 
   /gensync@1.0.0-beta.2:
     resolution: {integrity: sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==}
@@ -12916,7 +12936,6 @@ packages:
   /xmlbuilder@15.1.1:
     resolution: {integrity: sha512-yMqGBqtXyeN1e3TGYvgNgDVZ3j84W4cwkOXQswghol6APgZWaff9lnbvN7MHYJOiXsvGPXtjTYJEiC9J2wv9Eg==}
     engines: {node: '>=8.0'}
-    dev: false
 
   /xmlcreate@2.0.4:
     resolution: {integrity: sha512-nquOebG4sngPmGPICTS5EnxqhKbCmz5Ox5hsszI2T6U5qdrJizBc+0ilYSEjTSzU0yZcmvppztXe/5Al5fUwdg==}
