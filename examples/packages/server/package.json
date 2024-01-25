@@ -6,7 +6,8 @@
     "@sap/cds": "^7.5.3"
   },
   "devDependencies": {
-    "cds-plugin-ui5": "0.7.5",
+    "cds-plugin-ui5": "0.8.0",
+    "ordersv2fe120": "0.0.1",
     "ordersv4fe120": "^0.0.1"
   },
   "scripts": {
