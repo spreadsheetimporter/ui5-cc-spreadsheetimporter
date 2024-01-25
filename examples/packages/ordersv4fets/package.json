@@ -14,15 +14,15 @@
   },
   "devDependencies": {
     "@sap-ux/ui5-middleware-fe-mockserver": "^2.2.19",
-    "@sap/ux-specification": "^1.120.1",
-    "@sap/ux-ui5-tooling": "1.12.1",
+    "@sap/ux-specification": "^1.120.2",
+    "@sap/ux-ui5-tooling": "1.12.2",
     "@sapui5/ts-types-esm": "~1.120.4",
-    "@typescript-eslint/eslint-plugin": "6.19.0",
-    "@typescript-eslint/parser": "6.19.0",
+    "@typescript-eslint/eslint-plugin": "6.19.1",
+    "@typescript-eslint/parser": "6.19.1",
     "@ui5/cli": "^3.9.0",
     "typescript": "5.3.3",
-    "ui5-middleware-ui5": "3.0.2",
-    "ui5-tooling-modules": "3.2.7",
+    "ui5-middleware-ui5": "3.1.0",
+    "ui5-tooling-modules": "3.3.1",
     "ui5-tooling-transpile": "3.3.3"
   },
   "scripts": {
