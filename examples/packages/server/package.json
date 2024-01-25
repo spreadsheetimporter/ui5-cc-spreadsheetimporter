@@ -7,8 +7,8 @@
   },
   "devDependencies": {
     "cds-plugin-ui5": "0.8.0",
-    "ordersv4fe120": "workspace:^",
-    "ordersv2fe120": "workspace:^"
+    "ordersv2fe120": "0.0.1",
+    "ordersv4fe120": "^0.0.1"
   },
   "scripts": {
     "watch": "cds watch"
