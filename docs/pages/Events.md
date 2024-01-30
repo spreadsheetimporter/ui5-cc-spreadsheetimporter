@@ -94,7 +94,7 @@ When the `Upload` button is pressed, the `uploadButtonPress` event is fired. The
 ### Example
 
 ```javascript
-this.spreadsheetUpload.attachChangeBeforeCreate(function (oEvent) {
+this.spreadsheetUpload.attachUploadButtonPress(function (oEvent) {
     // Prevent data from being sent to the backend
     oEvent.preventDefault();
     // Get payload

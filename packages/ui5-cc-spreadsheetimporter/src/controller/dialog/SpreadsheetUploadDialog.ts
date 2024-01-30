@@ -194,9 +194,9 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	async onUploadSet(event: Event) {
 		const source = event.getSource() as Button;
 		this.getDialog().setBusy(true);
-		let isDefaultNotPrevented;
+		let isDefaultPrevented;
 		try {
-			isDefaultNotPrevented = await Util.fireEventAsync(
+			isDefaultPrevented = await Util.fireEventAsync(
 				"uploadButtonPress",
 				{
 					payload: this.spreadsheetUploadController.payloadArray,
@@ -207,7 +207,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 			);
 		} catch (error) {}
 		this.getDialog().setBusy(false);
-		if (!isDefaultNotPrevented || this.component.getStandalone()) {
+		if (isDefaultPrevented || this.component.getStandalone()) {
 			this.onCloseDialog();
 			return;
 		}
