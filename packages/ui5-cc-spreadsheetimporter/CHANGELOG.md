@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.31.3](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.31.2...ui5-cc-spreadsheetimporter-v0.31.3) (2024-01-30)
+
+
+### Bug Fixes
+
+* preventDefault on event `uploadButtonPress` ([#476](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/476)) ([4c6033e](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/4c6033efb80a2b747d86e56273919e4b67f38118))
+
 ## [0.31.2](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.31.1...ui5-cc-spreadsheetimporter-v0.31.2) (2024-01-23)
 
 
