@@ -205,7 +205,7 @@ export default class Util extends ManagedObject {
 	 * @param component - The component on which the event is fired.
 	 * @returns A promise that resolves when all event handlers have completed.
 	 */
-	static async fireEventAsync(eventName: String, eventParameters: object, component: Component) {
+	static async fireEventAsync(eventName: String, eventParameters: object, component: Component): Promise<boolean> {
 		let aEventListeners,
 			oEvent,
 			promises = [];
@@ -226,6 +226,8 @@ export default class Util extends ManagedObject {
 		}
 
 		// Wait for all promises (i.e., async handlers) to resolve
-		return Promise.all(promises);
+		await Promise.all(promises);
+
+		return oEvent.bPreventDefault;
 	}
 }
