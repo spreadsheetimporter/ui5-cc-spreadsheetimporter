@@ -17,6 +17,16 @@
     "fiori": {
       "lean_draft": true,
       "bypass_draft": true
+    },
+    "cds-plugin-ui5": {
+      "modules": {
+        "ordersv4fe120": {
+          "configFile": "ui5-dist.yaml"
+        },
+        "ordersv2fe120": {
+          "configFile": "ui5-dist.yaml"
+        }
+      }
     }
   }
 }
