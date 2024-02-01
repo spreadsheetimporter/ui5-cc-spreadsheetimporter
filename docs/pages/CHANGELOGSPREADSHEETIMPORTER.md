@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.31.4](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.31.3...ui5-cc-spreadsheetimporter-v0.31.4) (2024-02-01)
+
+
+### Bug Fixes
+
+* show error in standalone mode after upload button press ([#480](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/480)) ([9348694](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/9348694cad5204cfb31188d0db54c9bb0e4fecef))
+
 ## [0.31.3](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.31.2...ui5-cc-spreadsheetimporter-v0.31.3) (2024-01-30)
 
 
