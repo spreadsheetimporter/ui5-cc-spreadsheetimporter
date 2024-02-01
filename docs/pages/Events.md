@@ -46,6 +46,8 @@ You can add errors to the `messages` property of the `SpreadsheetUpload` control
 - `title` - the title of the error
 - `row` - the row number of the error
 - `group` - set to `true` or `false` to group the errors by title
+- `rawValue` - the raw value of the data from the spreadsheet
+- `ui5type` - the type of the error, can be `Error`, `Warning`, `Success`, `Information` or `None` from the [`MessageType](https://ui5.sap.com/#/api/sap.ui.core.MessageType) enum
 
 Errors with the same title will be grouped.
 
@@ -91,7 +93,7 @@ this.spreadsheetUpload.attachRequestCompleted(function (oEvent) {
 
 When the `Upload` button is pressed, the `uploadButtonPress` event is fired. The event is fired before the `changeBeforeCreate` event. Prevent the data from being sent to the backend by calling the `preventDefault` method of the event.
 
-### Example
+### Example 1
 
 ```javascript
 this.spreadsheetUpload.attachUploadButtonPress(function (oEvent) {
@@ -99,6 +101,32 @@ this.spreadsheetUpload.attachUploadButtonPress(function (oEvent) {
     oEvent.preventDefault();
     // Get payload
     const payload = oEvent.getParameter("payload");
+}, this);
+```
+
+### Example 2
+
+You can also use this event to sent the data to the backend and add possible errors to the component. Use the `addArrayToMessages` method to add errors. It will display the errors in the error dialog after the execution of the event.
+
+```javascript
+this.spreadsheetUpload.attachUploadButtonPress(async function (event) {
+    event.preventDefault();
+    
+    event.getSource().addArrayToMessages([{
+        title: "Error on creating",
+        group: false,
+        ui5type: "Error"
+    }]);
+
+    // simulate async call
+    await new Promise((resolve) => {
+        // Wait for 2 seconds
+        setTimeout(() => {
+            resolve();
+        }, 2000);
+    });
+
+    // Code here will execute after the 2-second wait
 }, this);
 ```
 
