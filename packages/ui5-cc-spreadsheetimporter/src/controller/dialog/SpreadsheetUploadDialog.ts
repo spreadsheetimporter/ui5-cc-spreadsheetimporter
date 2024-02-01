@@ -209,6 +209,9 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 		this.getDialog().setBusy(false);
 		if (isDefaultPrevented || this.component.getStandalone()) {
 			this.onCloseDialog();
+			if (this.messageHandler.areMessagesPresent()) {
+				this.messageHandler.displayMessages();
+			}
 			return;
 		}
 		// checking if spreadsheet file contains data or not
