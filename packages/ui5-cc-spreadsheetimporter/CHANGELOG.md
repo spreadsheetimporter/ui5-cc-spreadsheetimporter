@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.31.5](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.31.4...ui5-cc-spreadsheetimporter-v0.31.5) (2024-02-05)
+
+
+### Bug Fixes
+
+* make sure Edm.Date uses the correct date ([#487](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/487)) ([934fe3b](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/934fe3b7ebce8fd3d4cb44f403421da6850613bd))
+
 ## [0.31.4](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.31.3...ui5-cc-spreadsheetimporter-v0.31.4) (2024-02-01)
 
 
