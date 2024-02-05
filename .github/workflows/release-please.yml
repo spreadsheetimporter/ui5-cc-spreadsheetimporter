@@ -23,16 +23,18 @@ jobs:
         run: |
           echo '${{toJSON(steps.release.outputs)}}'
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
         if: ${{ steps.release.outputs.releases_created }}
 
-      - name: use pnpm
-        uses: pnpm/action-setup@v2
+      - run: corepack enable
+      - name: use node 20
+        uses: actions/setup-node@v4
         with:
-          version: 8.7.0
-        if: ${{ steps.release.outputs.releases_created }}
+          node-version: 20
+          cache: "pnpm"
+        if: ${{ steps.release.outputs.releases_created }}       
 
       - name: Run pnpm install
         if: ${{ steps.release.outputs.releases_created }}
@@ -72,12 +74,12 @@ jobs:
       matrix:
         pr: ${{ fromJSON(needs.release-please.outputs.prs) }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup git user
         run: |
           git config --global user.email "ops+robot@npmjs.com"
           git config --global user.name "npm team"
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: "18"
       - name: Update PR ${{ matrix.pr.number }}

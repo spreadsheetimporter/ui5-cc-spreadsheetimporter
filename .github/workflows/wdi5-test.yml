@@ -38,20 +38,20 @@ jobs:
         run: sudo apt install gnome-keyring
 
       - name: checkout spreadsheetupload Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
 
-      - name: use pnpm
-        uses: pnpm/action-setup@v2
+      - run: corepack enable
+      - name: use node 20
+        uses: actions/setup-node@v4
         with:
-          version: 8
-
-      - name: use node 18
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
+          node-version: 20
           cache: "pnpm"
+
+      # log pnpm version
+      - name: log pnpm version
+        run: pnpm --version
 
       - name: get port
         run: |
