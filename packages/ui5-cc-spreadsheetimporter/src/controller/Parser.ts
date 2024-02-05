@@ -40,7 +40,7 @@ export default class Parser extends ManagedObject {
 						}
 						try {
 							this.checkDate(date, metadataColumn, util, messageHandler, index);
-							const dateString = `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`;
+							const dateString = `${date.getUTCFullYear()}-${("0" + (date.getUTCMonth() + 1)).slice(-2)}-${("0" + date.getUTCDate()).slice(-2)}`;
 							payload[columnKey] = dateString;
 						} catch (error) {
 							this.addMessageToMessages("errorWhileParsing", util, messageHandler, index, [metadataColumn.label], rawValue);
