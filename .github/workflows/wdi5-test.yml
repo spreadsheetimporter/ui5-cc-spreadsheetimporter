@@ -49,6 +49,10 @@ jobs:
           node-version: 20
           cache: "pnpm"
 
+      # log pnpm version
+      - name: log pnpm version
+        run: pnpm --version
+
       - name: get port
         run: |
           TESTAPPPORT=$(node ./dev/get-port.js ${{ matrix.scenario }} ${{ matrix.ui5version }})

@@ -35,25 +35,12 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
-      - name: use pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-
+      - run: corepack enable
       - name: use node 20
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: "pnpm"
-
-      # we need this for workspace mgmt
-      - name: check npm version >= 7
-        run: npm --version
-
-      - name: update npm
-        run: |
-          npm i -g npm@latest
-          npm --version
 
       - name: get port
         run: |
