@@ -46,16 +46,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-
-      - name: use pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-
-      - name: use node 20
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
           cache: "pnpm"
 
       - name: get port
