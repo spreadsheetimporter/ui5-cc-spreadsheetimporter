@@ -9,13 +9,13 @@ export default class MetadataHandlerV2 extends MetadataHandler {
 		super(spreadsheetUploadController);
 	}
 
-	public getLabelList(colums: Columns, odataType: string, oDataEntityType: any): ListObject {
+	public getLabelList(colums: Columns, odataType: string, odataEntityType: any): ListObject {
 		let listObject: ListObject = new Map();
 
 		// get the property list of the entity for which we need to download the template
-		const properties: PropertyArray = oDataEntityType.property;
-		const entityTypeLabel: string = oDataEntityType["sap:label"];
-		Log.debug("SpreadsheetUpload: Annotations", undefined, "SpreadsheetUpload: MetadataHandler", () => this.spreadsheetUploadController.component.logger.returnObject(oDataEntityType));
+		const properties: PropertyArray = odataEntityType.property;
+		const entityTypeLabel: string = odataEntityType["sap:label"];
+		Log.debug("SpreadsheetUpload: Annotations", undefined, "SpreadsheetUpload: MetadataHandler", () => this.spreadsheetUploadController.component.logger.returnObject(odataEntityType));
 
 		// check if file name is not set
 		if (!this.spreadsheetUploadController.component.getSpreadsheetFileName() && entityTypeLabel) {
@@ -29,7 +29,7 @@ export default class MetadataHandlerV2 extends MetadataHandler {
 				const property = properties.find((property: any) => property.name === propertyName);
 				if (property) {
 					let propertyObject: Property = {} as Property;
-					propertyObject.label = this.getLabel(oDataEntityType, properties, property, propertyName);
+					propertyObject.label = this.getLabel(odataEntityType, properties, property, propertyName);
 					if (!propertyObject.label) {
 						propertyObject.label = propertyName;
 					}
@@ -51,7 +51,7 @@ export default class MetadataHandlerV2 extends MetadataHandler {
 				}
 				if (!hiddenProperty && !propertyName.startsWith("SAP__")) {
 					let propertyObject: Property = {} as Property;
-					propertyObject.label = this.getLabel(oDataEntityType, properties, property, propertyName);
+					propertyObject.label = this.getLabel(odataEntityType, properties, property, propertyName);
 					propertyObject.type = property["type"];
 					propertyObject.maxLength = property["maxLength"];
 					listObject.set(propertyName, propertyObject);
@@ -62,13 +62,13 @@ export default class MetadataHandlerV2 extends MetadataHandler {
 		return listObject;
 	}
 
-	private getLabel(oDataEntityType: { [x: string]: any }, properties: any, property: { [x: string]: any }, propertyName: string) {
+	private getLabel(odataEntityType: { [x: string]: any }, properties: any, property: { [x: string]: any }, propertyName: string) {
 		let label = "";
 		if (property["sap:label"]) {
 			label = property["sap:label"];
 		}
 		try {
-			const lineItemsAnnotations = oDataEntityType["com.sap.vocabularies.UI.v1.LineItem"];
+			const lineItemsAnnotations = odataEntityType["com.sap.vocabularies.UI.v1.LineItem"];
 			label = lineItemsAnnotations.find((dataField: { Value: { Path: any } }) => dataField.Value.Path === propertyName).Label.String;
 		} catch (error) {
 			Log.debug(`SpreadsheetUpload: ${propertyName} not found as a LineItem Label`, undefined, "SpreadsheetUpload: MetadataHandlerV2");
@@ -91,13 +91,13 @@ export default class MetadataHandlerV2 extends MetadataHandler {
 	 * Creates a list of properties that are defined mandatory in the OData metadata V2
 	 * @param odataType
 	 **/
-	getKeyList(oDataEntityType: any): string[] {
+	getKeyList(odataEntityType: any): string[] {
 		let keys: string[] = [];
 		if (this.spreadsheetUploadController.component.getSkipMandatoryFieldCheck()) {
 			return keys;
 		}
 
-		for (const property of oDataEntityType.property) {
+		for (const property of odataEntityType.property) {
 			// if property is mandatory, field should be in spreadsheet file
 			const propertyName = property.name;
 			// skip sap property

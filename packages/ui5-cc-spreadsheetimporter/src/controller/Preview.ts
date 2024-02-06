@@ -59,15 +59,15 @@ export default class Preview extends ManagedObject {
 				}
 				const type = typeLabelList.get(column);
 				const label = type && type.label ? type.label : column;
-				const oColumn = new Column({
+				const sapMColumn = new Column({
 					header: new Text({ text: label })
 				});
 
-				table.addColumn(oColumn);
+				table.addColumn(sapMColumn);
 			});
 
 			// Create a template for table rows
-			const oTemplate = new ColumnListItem();
+			const template = new ColumnListItem();
 			aColumns.forEach((column) => {
 				let oCell;
 				if (typeof firstObject[column] === "object" && firstObject[column] instanceof Date) {
@@ -76,14 +76,14 @@ export default class Preview extends ManagedObject {
 				} else {
 					oCell = new Text({ text: "{" + column + "}" });
 				}
-				oTemplate.addCell(oCell);
+				template.addCell(oCell);
 			});
 
 			// Bind the data to the table
-			const oModel = new JSONModel();
-			oModel.setData(data);
-			table.setModel(oModel);
-			table.bindItems({ path: "/", template: oTemplate });
+			const model = new JSONModel();
+			model.setData(data);
+			table.setModel(model);
+			table.bindItems({ path: "/", template: template });
 			return table;
 		} else {
 			// No data

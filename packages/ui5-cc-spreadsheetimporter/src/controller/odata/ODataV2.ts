@@ -64,8 +64,8 @@ export default class ODataV2 extends OData {
 		if (this.spreadsheetUploadController.component.getOdataType()) {
 			const metaModel = this.spreadsheetUploadController.view.getModel().getMetaModel();
 			await metaModel.loaded();
-			const oDataEntityType = metaModel.getODataEntityType(this.spreadsheetUploadController.component.getOdataType());
-			const odataEntitySet = metaModel.getODataEntityContainer().entitySet.find((item) => item.entityType === `${oDataEntityType.namespace}.${oDataEntityType.name}`);
+			const odataEntityType = metaModel.getODataEntityType(this.spreadsheetUploadController.component.getOdataType());
+			const odataEntitySet = metaModel.getODataEntityContainer().entitySet.find((item) => item.entityType === `${odataEntityType.namespace}.${odataEntityType.name}`);
 			this.customBinding = new ODataListBinding(this.spreadsheetUploadController.view.getModel() as ODataModel, `/${odataEntitySet.name}`);
 		} else {
 			this.customBinding = binding;
@@ -127,8 +127,8 @@ export default class ODataV2 extends OData {
 		} else {
 			const metaModel = this.spreadsheetUploadController.view.getModel().getMetaModel() as ODataMetaModel;
 			await metaModel.loaded();
-			const oDataEntityType = metaModel.getODataEntityType(odataType);
-			if (!oDataEntityType) {
+			const odataEntityType = metaModel.getODataEntityType(odataType);
+			if (!odataEntityType) {
 				// filter out $kind
 				const availableEntities = metaModel
 					.getODataEntityContainer()
@@ -144,15 +144,15 @@ export default class ODataV2 extends OData {
 	async getLabelList(columns: Columns, odataType: string, tableObject?: any) {
 		const metaModel = tableObject.getModel().getMetaModel();
 		await metaModel.loaded();
-		const oDataEntityType = metaModel.getODataEntityType(odataType);
-		return this.getMetadataHandler().getLabelList(columns, odataType, oDataEntityType);
+		const odataEntityType = metaModel.getODataEntityType(odataType);
+		return this.getMetadataHandler().getLabelList(columns, odataType, odataEntityType);
 	}
 
 	async getKeyList(odataType: string, tableObject: any) {
 		const metaModel = tableObject.getModel().getMetaModel();
 		await metaModel.loaded();
-		const oDataEntityType = metaModel.getODataEntityType(odataType);
-		return this.getMetadataHandler().getKeyList(oDataEntityType);
+		const odataEntityType = metaModel.getODataEntityType(odataType);
+		return this.getMetadataHandler().getKeyList(odataEntityType);
 	}
 
 	resetContexts() {
