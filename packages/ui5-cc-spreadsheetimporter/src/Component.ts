@@ -17,7 +17,7 @@ export default class Component extends UIComponent {
 	spreadsheetUpload: SpreadsheetUpload;
 	private _sContentDensityClass: any;
 	public logger: Logger;
-	container: ComponentContainer;
+	oContainer: ComponentContainer;
 	settingsFromContainer: $ComponentSettings;
 	constructor(idOrSettings?: string | $ComponentSettings);
 	constructor(id?: string, settings?: $ComponentSettings);
@@ -196,7 +196,7 @@ export default class Component extends UIComponent {
 	openSpreadsheetUploadDialog(options?: ComponentData) {
 		if (!this.getContext()) {
 			// if loaded via ComponentContainer, context is not set
-			const context = this._getViewControllerOfControl(this.container);
+			const context = this._getViewControllerOfControl(this.oContainer);
 			this.setContext(context);
 			// attach event from ComponentContainer
 			this._attachEvents(context);
