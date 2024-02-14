@@ -39,7 +39,7 @@ npm install ui5-cc-spreadsheetimporter
 
 ```json
 "resourceRoots": {
-  "cc.spreadsheetimporter.v0_31_5": "./thirdparty/customControl/spreadsheetImporter/v0_31_5"
+  "cc.spreadsheetimporter.v0_31_6": "./thirdparty/customControl/spreadsheetImporter/v0_31_6"
 }
 ```
 
@@ -60,7 +60,7 @@ npm install ui5-cc-spreadsheetimporter
 ```json
 "componentUsages": {
   "spreadsheetImporter": {
-    "name": "cc.spreadsheetimporter.v0_31_5"
+    "name": "cc.spreadsheetimporter.v0_31_6"
   }
 }
 ```
@@ -73,7 +73,7 @@ To avoid this error, you can add the following to your `manifest.json` file:
 
 ```json
 "sap.app": {
-  "embeds": ["./thirdparty/customControl/spreadsheetImporter/v0_31_5"]
+  "embeds": ["./thirdparty/customControl/spreadsheetImporter/v0_31_6"]
 }
 ```
 
@@ -88,7 +88,7 @@ To avoid this error, you can add the following to your `manifest.json` file:
 ```json
 "componentUsages": {
   "spreadsheetImporter": {
-    "name": "cc.spreadsheetimporter.v0_31_5"
+    "name": "cc.spreadsheetimporter.v0_31_6"
   }
 }
 ```
@@ -238,13 +238,13 @@ openSpreadsheetUploadDialog: async function (oEvent) {
 
 #### Error: library/component used in application does not exist
 
-When deploying the app to your ABAP system, you may get an error like this: `SAPUI5 library/component cc.spreadsheetimporter.v0_31_5 used in application Z*** does not exist`. The application is deployed, but the service returns an error.
+When deploying the app to your ABAP system, you may get an error like this: `SAPUI5 library/component cc.spreadsheetimporter.v0_31_6 used in application Z*** does not exist`. The application is deployed, but the service returns an error.
 
 To avoid this error, you can add the following to your `manifest.json` file:
 
 ```json
 "sap.app": {
-  "embeds": ["./thirdparty/customControl/spreadsheetImporter/v0_31_5"]
+  "embeds": ["./thirdparty/customControl/spreadsheetImporter/v0_31_6"]
 }
 ```
 
