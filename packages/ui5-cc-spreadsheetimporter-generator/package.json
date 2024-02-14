@@ -32,29 +32,29 @@
     "generators"
   ],
   "dependencies": {
-    "@sap-ux/axios-extension": "1.8.1",
-    "@sap-ux/fe-fpm-writer": "0.24.3",
+    "@sap-ux/axios-extension": "1.10.1",
+    "@sap-ux/fe-fpm-writer": "0.24.5",
     "@sap-ux/fiori-freestyle-writer": "0.21.3",
     "@sap-ux/odata-service-writer": "0.16.0",
     "@sap-ux/ui5-application-writer": "0.26.2",
     "@sap-ux/ui5-config": "0.21.0",
-    "axios": "1.6.6",
+    "axios": "1.6.7",
     "chalk": "^5.3.0",
     "directory-tree": "^3.5.1",
     "glob": "^10.3.10",
     "object-assign-deep": "^0.4.0",
     "valid-filename": "^4.0.0",
     "yaml": "^2.3.4",
-    "yeoman-environment": "^4.2.1",
+    "yeoman-environment": "^4.3.0",
     "yeoman-generator": "^7.1.1",
     "yosay": "^3.0.0"
   },
   "devDependencies": {
     "execa": "^8.0.1",
     "mem-fs": "4.0.0",
-    "mocha": "^10.2.0",
-    "nock": "13.5.0",
-    "prettier": "3.2.4",
+    "mocha": "^10.3.0",
+    "nock": "13.5.1",
+    "prettier": "3.2.5",
     "yeoman-assert": "3.1.1",
     "yeoman-test": "8.2.0"
   }

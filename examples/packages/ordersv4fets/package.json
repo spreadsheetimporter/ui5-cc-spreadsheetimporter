@@ -13,16 +13,16 @@
     "ui5-cc-spreadsheetimporter": "link:../../../packages/ui5-cc-spreadsheetimporter"
   },
   "devDependencies": {
-    "@sap-ux/ui5-middleware-fe-mockserver": "^2.2.19",
-    "@sap/ux-specification": "^1.120.2",
-    "@sap/ux-ui5-tooling": "1.12.2",
-    "@sapui5/ts-types-esm": "~1.120.4",
-    "@typescript-eslint/eslint-plugin": "6.19.1",
-    "@typescript-eslint/parser": "6.19.1",
-    "@ui5/cli": "^3.9.0",
+    "@sap-ux/ui5-middleware-fe-mockserver": "^2.2.26",
+    "@sap/ux-specification": "^1.120.3",
+    "@sap/ux-ui5-tooling": "1.12.3",
+    "@sapui5/ts-types-esm": "~1.120.7",
+    "@typescript-eslint/eslint-plugin": "7.0.1",
+    "@typescript-eslint/parser": "7.0.1",
+    "@ui5/cli": "^3.9.1",
     "typescript": "5.3.3",
     "ui5-middleware-ui5": "3.1.0",
-    "ui5-tooling-modules": "3.3.3",
+    "ui5-tooling-modules": "3.3.4",
     "ui5-tooling-transpile": "3.3.3"
   },
   "scripts": {

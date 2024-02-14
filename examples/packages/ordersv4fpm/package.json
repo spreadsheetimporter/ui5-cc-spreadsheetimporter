@@ -13,10 +13,10 @@
     "ui5-cc-spreadsheetimporter": "link:../../../packages/ui5-cc-spreadsheetimporter"
   },
   "devDependencies": {
-    "@sap-ux/ui5-middleware-fe-mockserver": "^2.2.19",
-    "@sap/ux-specification": "^1.120.2",
-    "@sap/ux-ui5-tooling": "1.12.2",
-    "@ui5/cli": "3.9.0",
+    "@sap-ux/ui5-middleware-fe-mockserver": "^2.2.26",
+    "@sap/ux-specification": "^1.120.3",
+    "@sap/ux-ui5-tooling": "1.12.3",
+    "@ui5/cli": "3.9.1",
     "ui5-middleware-simpleproxy": "3.2.12"
   },
   "scripts": {
