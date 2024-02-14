@@ -246,7 +246,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 			sActionLabel: this.util.geti18nText("uploadingFile")
 		};
 
-		// calling the oData service using extension api
+		// calling the OData service using extension api
 		if (this.spreadsheetUploadController.isODataV4) {
 			try {
 				await this.spreadsheetUploadController.context.editFlow.securedExecution(fnAddMessage, mParameters);

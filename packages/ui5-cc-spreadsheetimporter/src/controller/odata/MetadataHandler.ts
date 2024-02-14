@@ -34,6 +34,6 @@ export default abstract class MetadataHandler extends ManagedObject {
 		}
 	}
 
-	abstract getLabelList(colums: Columns, odataType: string, oDataEntityType: any): ListObject;
-	abstract getKeyList(oDataEntityType: any): string[];
+	abstract getLabelList(colums: Columns, odataType: string, odataEntityType: any): ListObject;
+	abstract getKeyList(odataEntityType: any): string[];
 }

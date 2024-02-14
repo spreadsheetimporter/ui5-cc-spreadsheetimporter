@@ -123,11 +123,11 @@ export default abstract class OData extends ManagedObject {
 		}
 	}
 
-	public _getActionName(oContext: any, sOperation: string) {
-		var oModel = oContext.getModel(),
-			oMetaModel = oModel.getMetaModel(),
-			sEntitySetPath = oMetaModel.getMetaPath(oContext.getPath());
-		return oMetaModel.getObject("".concat(sEntitySetPath, "@com.sap.vocabularies.Common.v1.DraftRoot/").concat(sOperation));
+	public _getActionName(context: any, sOperation: string) {
+		var model = context.getModel(),
+			metaModel = model.getMetaModel(),
+			entitySetPath = metaModel.getMetaPath(context.getPath());
+		return metaModel.getObject("".concat(entitySetPath, "@com.sap.vocabularies.Common.v1.DraftRoot/").concat(sOperation));
 	}
 
 	// Slice the array into chunks of 'batchSize' if necessary

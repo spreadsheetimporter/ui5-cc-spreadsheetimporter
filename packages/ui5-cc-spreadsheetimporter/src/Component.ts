@@ -108,43 +108,43 @@ export default class Component extends UIComponent {
 	//=============================================================================
 
 	public async init(): Promise<void> {
-		var oModel;
+		let model;
 		const componentData = this.getComponentData() as ComponentData;
-		const oCompData =
+		const compData =
 			componentData != null ? (Object.keys(componentData).length === 0 ? (this.settingsFromContainer as ComponentData) : componentData) : (this.settingsFromContainer as ComponentData);
 		this.getContentDensityClass();
-		this.setSpreadsheetFileName(oCompData?.spreadsheetFileName);
-		this.setContext(oCompData?.context);
-		this.setColumns(oCompData?.columns);
-		this.setTableId(oCompData?.tableId);
-		this.setOdataType(oCompData?.odataType);
-		this.setMandatoryFields(oCompData?.mandatoryFields);
-		this.setFieldMatchType(oCompData?.fieldMatchType);
-		this.setActivateDraft(oCompData?.activateDraft);
-		this.setBatchSize(oCompData?.batchSize);
-		this.setStandalone(oCompData?.standalone);
-		this.setReadAllSheets(oCompData?.readAllSheets);
-		this.setReadSheet(oCompData?.readSheet);
-		this.setSpreadsheetRowPropertyName(oCompData?.spreadsheetRowPropertyName);
-		this.setStrict(oCompData?.strict);
-		this.setDecimalSeparator(oCompData?.decimalSeparator);
-		this.setHidePreview(oCompData?.hidePreview);
-		this.setPreviewColumns(oCompData?.previewColumns);
-		this.setSkipMandatoryFieldCheck(oCompData?.skipMandatoryFieldCheck);
-		this.setSkipColumnsCheck(oCompData?.skipColumnsCheck);
-		this.setSkipMaxLengthCheck(oCompData?.skipMaxLengthCheck);
-		this.setShowBackendErrorMessages(oCompData?.showBackendErrorMessages);
-		this.setShowOptions(oCompData?.showOptions);
-		this.setDebug(oCompData?.debug);
-		this.setAvailableOptions(oCompData?.availableOptions);
-		this.setSampleData(oCompData?.sampleData);
-		this.setSpreadsheetTemplateFile(oCompData?.spreadsheetTemplateFile);
-		this.setUseTableSelector(oCompData?.useTableSelector);
-		this.setHideSampleData(oCompData?.hideSampleData);
-		this.setComponentContainerData(oCompData?.componentContainerData);
-		this.setContinueOnError(oCompData?.continueOnError);
-		this.setCreateActiveEntity(oCompData?.createActiveEntity);
-		if (oCompData?.availableOptions && oCompData?.availableOptions.length > 0) {
+		this.setSpreadsheetFileName(compData?.spreadsheetFileName);
+		this.setContext(compData?.context);
+		this.setColumns(compData?.columns);
+		this.setTableId(compData?.tableId);
+		this.setOdataType(compData?.odataType);
+		this.setMandatoryFields(compData?.mandatoryFields);
+		this.setFieldMatchType(compData?.fieldMatchType);
+		this.setActivateDraft(compData?.activateDraft);
+		this.setBatchSize(compData?.batchSize);
+		this.setStandalone(compData?.standalone);
+		this.setReadAllSheets(compData?.readAllSheets);
+		this.setReadSheet(compData?.readSheet);
+		this.setSpreadsheetRowPropertyName(compData?.spreadsheetRowPropertyName);
+		this.setStrict(compData?.strict);
+		this.setDecimalSeparator(compData?.decimalSeparator);
+		this.setHidePreview(compData?.hidePreview);
+		this.setPreviewColumns(compData?.previewColumns);
+		this.setSkipMandatoryFieldCheck(compData?.skipMandatoryFieldCheck);
+		this.setSkipColumnsCheck(compData?.skipColumnsCheck);
+		this.setSkipMaxLengthCheck(compData?.skipMaxLengthCheck);
+		this.setShowBackendErrorMessages(compData?.showBackendErrorMessages);
+		this.setShowOptions(compData?.showOptions);
+		this.setDebug(compData?.debug);
+		this.setAvailableOptions(compData?.availableOptions);
+		this.setSampleData(compData?.sampleData);
+		this.setSpreadsheetTemplateFile(compData?.spreadsheetTemplateFile);
+		this.setUseTableSelector(compData?.useTableSelector);
+		this.setHideSampleData(compData?.hideSampleData);
+		this.setComponentContainerData(compData?.componentContainerData);
+		this.setContinueOnError(compData?.continueOnError);
+		this.setCreateActiveEntity(compData?.createActiveEntity);
+		if (compData?.availableOptions && compData?.availableOptions.length > 0) {
 			// if availableOptions is set show the Options Menu
 			this.setShowOptions(true);
 		}
@@ -154,9 +154,9 @@ export default class Component extends UIComponent {
 		// Pro Configurations - End
 
 		// // we could create a device model and use it
-		oModel = new JSONModel(Device);
-		oModel.setDefaultBindingMode("OneWay");
-		this.setModel(oModel, "device");
+		model = new JSONModel(Device);
+		model.setDefaultBindingMode("OneWay");
+		this.setModel(model, "device");
 
 		this.logger = new Logger();
 
@@ -301,15 +301,15 @@ export default class Component extends UIComponent {
 	}
 
 	_getViewControllerOfControl(control: any) {
-		var oView = null;
+		var view = null;
 		while (control && !(control instanceof View)) {
 			control = control.getParent();
 		}
 
 		if (control) {
-			oView = control;
-			var oController = oView.getController();
-			return oController;
+			view = control;
+			var controller = view.getController();
+			return controller;
 		} else {
 			return null;
 		}

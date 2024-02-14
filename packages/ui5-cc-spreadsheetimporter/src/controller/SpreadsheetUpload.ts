@@ -7,11 +7,9 @@ import ResourceBundle from "sap/base/i18n/ResourceBundle";
 import OData from "./odata/OData";
 import ODataV2 from "./odata/ODataV2";
 import ODataV4 from "./odata/ODataV4";
-import FileUploader from "sap/ui/unified/FileUploader";
 import Util from "./Util";
 import MessageHandler from "./MessageHandler";
 import Log from "sap/base/Log";
-import FlexBox from "sap/m/FlexBox";
 import OptionsDialog from "./dialog/OptionsDialog";
 import SpreadsheetDialog from "../control/SpreadsheetDialog";
 import SpreadsheetUploadDialog from "./dialog/SpreadsheetUploadDialog";
@@ -21,7 +19,7 @@ import VersionInfo from "sap/ui/VersionInfo";
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
 export default class SpreadsheetUpload extends ManagedObject {
-	public oDataEntityType: any;
+	public odataEntityType: any;
 	public component: Component;
 	public context: any;
 	private _isODataV4: boolean;
