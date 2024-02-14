@@ -203,7 +203,7 @@ export default class MessageHandler extends ManagedObject {
 	/**
 	 * Display messages.
 	 */
-	async displayMessages() {
+	async displayMessages(strict?: boolean) {
 		this.messageDialog = (await Fragment.load({
 			name: "cc.spreadsheetimporter.XXXnamespaceXXX.fragment.MessagesDialog",
 			type: "XML",
@@ -220,6 +220,7 @@ export default class MessageHandler extends ManagedObject {
 		const dialogState = this.getWorstType(sortedMessagesGrouped);
 		const infoModel = new JSONModel({
 			strict: this.spreadsheetUploadController.component.getStrict(),
+			strictParameter: strict,
 			dialogState: dialogState
 		});
 		this.messageDialog.setModel(infoModel, "info");
