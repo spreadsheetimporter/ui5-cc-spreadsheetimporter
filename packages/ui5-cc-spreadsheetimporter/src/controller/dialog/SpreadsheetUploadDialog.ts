@@ -210,7 +210,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 		if (isDefaultPrevented || this.component.getStandalone()) {
 			this.onCloseDialog();
 			if (this.messageHandler.areMessagesPresent()) {
-				this.messageHandler.displayMessages();
+				this.messageHandler.displayMessages(true);
 			}
 			return;
 		}

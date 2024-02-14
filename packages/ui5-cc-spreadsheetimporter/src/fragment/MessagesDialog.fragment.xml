@@ -11,7 +11,7 @@
         press=".onContinue"
         type="Emphasized"
         text="{= ${info>/dialogState} === 'Error' ? ${i18n>messageDialogButtonContinueAnyway} : ${i18n>messageDialogButtonContinue} }"
-        visible="{= !${info>/strict}}"
+        visible="{= !${info>/strict} &amp;&amp; !${info>/strictParameter}}"
       />
       <Button press=".onCloseMessageDialog" text="{i18n>messageDialogButtonClose}" />
     </buttons>
