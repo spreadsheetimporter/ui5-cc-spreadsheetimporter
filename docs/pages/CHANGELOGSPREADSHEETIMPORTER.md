@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.31.6](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.31.5...ui5-cc-spreadsheetimporter-v0.31.6) (2024-02-14)
+
+
+### Bug Fixes
+
+* turn off `continue anyway` on error dialog after upload button press ([#494](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/494)) ([fb82978](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/fb82978b1dbb4bc9e1d7b660856af4308b93febb))
+
 ## [0.31.5](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.31.4...ui5-cc-spreadsheetimporter-v0.31.5) (2024-02-05)
 
 
