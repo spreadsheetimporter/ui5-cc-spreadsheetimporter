@@ -1,11 +1,10 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 import Fragment from "sap/ui/core/Fragment";
 import SpreadsheetUpload from "../SpreadsheetUpload";
-import SpreadsheetDialog, { SpreadsheetDialog$AvailableOptionsChangedEvent, SpreadsheetDialog$DecimalSeparatorChangedEvent } from "../../control/SpreadsheetDialog";
+import SpreadsheetDialog, { SpreadsheetDialog$AvailableOptionsChangedEvent, SpreadsheetDialog$DecimalSeparatorChangedEvent, SpreadsheetDialog$FileDropEvent } from "../../control/SpreadsheetDialog";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import Component from "../../Component";
 import Event from "sap/ui/base/Event";
-import Bar from "sap/m/Bar";
 import FileUploader, { FileUploader$ChangeEvent } from "sap/ui/unified/FileUploader";
 import MessageToast from "sap/m/MessageToast";
 import Preview from "../Preview";
@@ -64,7 +63,8 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 				strict: this.component.getStrict(),
 				hidePreview: this.component.getHidePreview(),
 				showOptions: this.component.getShowOptions(),
-				hideGenerateTemplateButton: false
+				hideGenerateTemplateButton: false,
+				fileUploadValue: ""
 			});
 			this.spreadsheetUploadDialog = (await Fragment.load({
 				name: "cc.spreadsheetimporter.XXXnamespaceXXX.fragment.SpreadsheetUpload",
@@ -78,10 +78,18 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 			this.spreadsheetUploadDialog.setModel(this.component.getModel("device"), "device");
 			this.spreadsheetUploadDialog.attachDecimalSeparatorChanged(this.onDecimalSeparatorChanged.bind(this));
 			this.spreadsheetUploadDialog.attachAvailableOptionsChanged(this.onAvailableOptionsChanged.bind(this));
+			this.spreadsheetUploadDialog.attachFileDrop(this.onFileDrop.bind(this));
 		}
 		if (this.component.getStandalone() && this.component.getColumns().length === 0) {
 			this.spreadsheetOptionsModel.setProperty("/hideGenerateTemplateButton", true);
 		}
+	}
+
+	onFileDrop(event: SpreadsheetDialog$FileDropEvent) {
+		const files = event.getParameter("files");
+		const file = files[0] as File;
+		(this.spreadsheetUploadDialog.getModel("info") as JSONModel).setProperty("/fileUploadValue", file.name);
+		this.handleFile(file);
 	}
 
 	/**
@@ -89,9 +97,14 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	 * @param {Event} event - The file upload event
 	 */
 	async onFileUpload(event: FileUploader$ChangeEvent) {
+		this.messageHandler.setMessages([]);
+		const file = event.getParameter("files")[0] as Blob;
+		this.handleFile(file);
+	}
+
+	async handleFile(file: Blob) {
 		try {
 			this.messageHandler.setMessages([]);
-			const file = event.getParameter("files")[0] as Blob;
 			const workbook = (await this._readWorkbook(file)) as XLSX.WorkBook;
 
 			const isStandalone = this.component.getStandalone();
