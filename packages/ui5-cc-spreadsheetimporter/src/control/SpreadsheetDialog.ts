@@ -2,6 +2,8 @@ import Dialog from "sap/m/Dialog";
 import type { MetadataOptions } from "sap/ui/core/Element";
 import { AvailableOptions } from "../enums";
 import SpreadsheetDialogRenderer from "./SpreadsheetDialogRenderer";
+import ResourceModel from "sap/ui/model/resource/ResourceModel";
+import ResourceBundle from "sap/base/i18n/ResourceBundle";
 /**
  * Constructor for a new <code>cc.spreadsheetimporter.XXXnamespaceXXX.SpreadsheetDialog</code> control.
  *
@@ -14,12 +16,13 @@ import SpreadsheetDialogRenderer from "./SpreadsheetDialogRenderer";
  */
 export default class SpreadsheetDialog extends Dialog {
 	dropMessageShown: boolean;
+	dragDepth: number;
 	constructor(id?: string | $SpreadsheetDialogSettings);
 	constructor(id?: string, settings?: $SpreadsheetDialogSettings);
 	constructor(id?: string, settings?: $SpreadsheetDialogSettings) {
 		super(id, settings);
-		// Add a flag to track the drop message visibility
 		this.dropMessageShown = false;
+		this.dragDepth = 0;
 	}
 
 	static readonly metadata: MetadataOptions = {
@@ -47,47 +50,41 @@ export default class SpreadsheetDialog extends Dialog {
 		}
 	};
 
-	onAfterRendering(event: Event) {
+	onAfterRendering(event: any) {
 		super.onAfterRendering(event);
 		const domRef = this.getDomRef();
 		domRef.addEventListener("dragover", this.handleDragOver.bind(this), false);
+		domRef.addEventListener("dragenter", this.handleDragEnter.bind(this), false);
 		domRef.addEventListener("dragleave", this.handleDragLeave.bind(this), false);
 		domRef.addEventListener("drop", this.handleFileDrop.bind(this), false);
 	}
 
 	private handleDragOver(event: any) {
-		event.stopPropagation();
 		event.preventDefault();
-		event.dataTransfer.dropEffect = "copy"; // Show as a copy.
+		event.stopPropagation();
+		event.dataTransfer.dropEffect = "copy";
 
 		if (!this.dropMessageShown) {
-			const domRef = this.getDomRef();
-			domRef.classList.add("drag-over");
 			this.showDropMessage(true);
 		}
 	}
 
 	private handleDragLeave(event: any) {
-		if (this.dropMessageShown) {
-			const domRef = this.getDomRef();
-			domRef.classList.remove("drag-over");
+		// Check if the drag is actually leaving the dialog, not just moving between children
+		if (!event.currentTarget.contains(event.relatedTarget)) {
 			this.showDropMessage(false);
 		}
 	}
 
 	private handleFileDrop(event: any) {
-		event.stopPropagation();
 		event.preventDefault();
-
-		if (this.dropMessageShown) {
-			const domRef = this.getDomRef();
-			domRef.classList.remove("drag-over");
-			this.showDropMessage(false);
-		}
-
-		var files = event.dataTransfer.files; // FileList object.
-		// Process the files similar to the FileUploader change event
+		event.stopPropagation();
+		this.showDropMessage(false);
+		const files = event.dataTransfer.files;
+		this.fireFileDrop({ files: files } as SpreadsheetDialog$FileDropEventParameters);
 	}
+
+	private handleDragEnter(event: any) {}
 
 	private showDropMessage(show: boolean) {
 		// Ensure the current state matches the desired visibility
@@ -100,7 +97,7 @@ export default class SpreadsheetDialog extends Dialog {
 			// Create the message element if it doesn't exist
 			dropMessage = document.createElement("div");
 			dropMessage.className = "drop-message";
-			dropMessage.textContent = "Drop files here";
+			dropMessage.textContent = ((this.getModel("i18n") as ResourceModel).getResourceBundle() as ResourceBundle).getText("dropMessage");
 			this.getDomRef().appendChild(dropMessage);
 		}
 
@@ -145,7 +142,8 @@ export default class SpreadsheetDialog extends Dialog {
 		if (dropMessage) {
 			dropMessage.remove();
 		}
-
+		this.dropMessageShown = false; // Reset visibility flag
+		this.dragDepth = 0; // Reset drag depth counter
 		super.exit();
 	}
 
