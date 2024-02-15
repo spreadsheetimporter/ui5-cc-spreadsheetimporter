@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.32.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.31.6...ui5-cc-spreadsheetimporter-v0.32.0) (2024-02-15)
+
+
+### Features
+
+* add drag&drop to dialog to upload files ([#496](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/496)) ([ea55361](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/ea5536197d80499ac523bb18fd929cf89a7c4c9f))
+
 ## [0.31.6](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.31.5...ui5-cc-spreadsheetimporter-v0.31.6) (2024-02-14)
 
 

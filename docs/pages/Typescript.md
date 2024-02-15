@@ -22,11 +22,11 @@ Add the component usage and the resource roots to the manifest.json as described
 ```json
         "componentUsages": {
             "spreadsheetImporter": {
-                "name": "cc.spreadsheetimporter.v0_31_6"
+                "name": "cc.spreadsheetimporter.v0_32_0"
             }
         },
         "resourceRoots": {
-            "cc.spreadsheetimporter.v0_31_6": "./thirdparty/customControl/spreadsheetImporter/v0_31_6"
+            "cc.spreadsheetimporter.v0_32_0": "./thirdparty/customControl/spreadsheetImporter/v0_32_0"
         },
 ```
 
@@ -35,7 +35,7 @@ Add the component usage and the resource roots to the manifest.json as described
 This is an example of how you could create the component and attach an event handler to the `checkBeforeRead` event with the types `Component` and `Component$CheckBeforeReadEventParameters` for the event parameters with an OData V4 Fiori Elements Application and UI5 Version 1.116.
 
 ```typescript
-import Component, { Component$ChangeBeforeCreateEvent, Component$CheckBeforeReadEvent, Component$UploadButtonPressEvent } from "cc/spreadsheetimporter/v0_31_6/Component";
+import Component, { Component$ChangeBeforeCreateEvent, Component$CheckBeforeReadEvent, Component$UploadButtonPressEvent } from "cc/spreadsheetimporter/v0_32_0/Component";
 import BaseController from "sap/fe/core/BaseController";
 import ExtensionAPI from "sap/fe/core/ExtensionAPI";
 
