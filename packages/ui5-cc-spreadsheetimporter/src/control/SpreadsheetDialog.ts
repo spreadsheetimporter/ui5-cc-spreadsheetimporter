@@ -16,13 +16,11 @@ import ResourceBundle from "sap/base/i18n/ResourceBundle";
  */
 export default class SpreadsheetDialog extends Dialog {
 	dropMessageShown: boolean;
-	dragDepth: number;
 	constructor(id?: string | $SpreadsheetDialogSettings);
 	constructor(id?: string, settings?: $SpreadsheetDialogSettings);
 	constructor(id?: string, settings?: $SpreadsheetDialogSettings) {
 		super(id, settings);
 		this.dropMessageShown = false;
-		this.dragDepth = 0;
 	}
 
 	static readonly metadata: MetadataOptions = {
@@ -143,7 +141,6 @@ export default class SpreadsheetDialog extends Dialog {
 			dropMessage.remove();
 		}
 		this.dropMessageShown = false; // Reset visibility flag
-		this.dragDepth = 0; // Reset drag depth counter
 		super.exit();
 	}
 
