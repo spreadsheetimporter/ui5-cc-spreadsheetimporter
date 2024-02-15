@@ -1,4 +1,4 @@
-import Component, { Component$ChangeBeforeCreateEvent, Component$CheckBeforeReadEvent } from "cc/spreadsheetimporter/v0_31_6/Component";
+import Component, { Component$ChangeBeforeCreateEvent, Component$CheckBeforeReadEvent } from "cc/spreadsheetimporter/v0_32_0/Component";
 import BaseController from "sap/fe/core/BaseController";
 import ExtensionAPI from "sap/fe/core/ExtensionAPI";
 /**

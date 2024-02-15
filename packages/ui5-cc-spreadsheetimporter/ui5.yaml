@@ -5,4 +5,4 @@ metadata:
 resources:
   configuration:
     paths:
-      /thirdparty/customControl/spreadsheetImporter/v0_31_6/: ./dist/
+      /thirdparty/customControl/spreadsheetImporter/v0_32_0/: ./dist/
