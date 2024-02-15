@@ -8,3 +8,35 @@
 	justify-content: center;
 	align-items: stretch;
 }
+
+.drag-over {
+    border: 2px dashed #007bff; /* Blue border for example */
+    background-color: rgba(0, 123, 255, 0.1); /* Light blue background */
+}
+
+.drop-message {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #007bff;
+    font-size: 20px;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    pointer-events: none; /* Ensures drag events are not intercepted by the message */
+    z-index: 100; /* Adjust as necessary to ensure visibility */
+}
+
+.drop-message.visible {
+    opacity: 1;
+}
+
+
+
+

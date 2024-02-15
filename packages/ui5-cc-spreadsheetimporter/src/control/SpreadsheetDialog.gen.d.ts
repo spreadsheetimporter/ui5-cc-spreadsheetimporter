@@ -11,6 +11,7 @@ declare module "./SpreadsheetDialog" {
         decimalSeparator?: string | PropertyBindingInfo;
         availableOptions?: string[] | PropertyBindingInfo | `{${string}}`;
         component?: object | PropertyBindingInfo | `{${string}}`;
+        fileDrop?: (event: SpreadsheetDialog$FileDropEvent) => void;
         decimalSeparatorChanged?: (event: SpreadsheetDialog$DecimalSeparatorChangedEvent) => void;
         availableOptionsChanged?: (event: SpreadsheetDialog$AvailableOptionsChangedEvent) => void;
     }
@@ -29,6 +30,12 @@ declare module "./SpreadsheetDialog" {
         getComponent(): object;
         setComponent(component: object): this;
 
+        // event: fileDrop
+        attachFileDrop(fn: (event: SpreadsheetDialog$FileDropEvent) => void, listener?: object): this;
+        attachFileDrop<CustomDataType extends object>(data: CustomDataType, fn: (event: SpreadsheetDialog$FileDropEvent, data: CustomDataType) => void, listener?: object): this;
+        detachFileDrop(fn: (event: SpreadsheetDialog$FileDropEvent) => void, listener?: object): this;
+        fireFileDrop(parameters?: SpreadsheetDialog$FileDropEventParameters): this;
+
         // event: decimalSeparatorChanged
         attachDecimalSeparatorChanged(fn: (event: SpreadsheetDialog$DecimalSeparatorChangedEvent) => void, listener?: object): this;
         attachDecimalSeparatorChanged<CustomDataType extends object>(data: CustomDataType, fn: (event: SpreadsheetDialog$DecimalSeparatorChangedEvent, data: CustomDataType) => void, listener?: object): this;
@@ -40,6 +47,13 @@ declare module "./SpreadsheetDialog" {
         attachAvailableOptionsChanged<CustomDataType extends object>(data: CustomDataType, fn: (event: SpreadsheetDialog$AvailableOptionsChangedEvent, data: CustomDataType) => void, listener?: object): this;
         detachAvailableOptionsChanged(fn: (event: SpreadsheetDialog$AvailableOptionsChangedEvent) => void, listener?: object): this;
         fireAvailableOptionsChanged(parameters?: SpreadsheetDialog$AvailableOptionsChangedEventParameters): this;
+    }
+
+    /**
+     * Interface describing the parameters of SpreadsheetDialog's 'fileDrop' event.
+     */
+    export interface SpreadsheetDialog$FileDropEventParameters {
+        files?: object[];
     }
 
     /**
@@ -55,6 +69,11 @@ declare module "./SpreadsheetDialog" {
     export interface SpreadsheetDialog$AvailableOptionsChangedEventParameters {
         availableOptions?: string[];
     }
+
+    /**
+     * Type describing the SpreadsheetDialog's 'fileDrop' event.
+     */
+    export type SpreadsheetDialog$FileDropEvent = Event<SpreadsheetDialog$FileDropEventParameters>;
 
     /**
      * Type describing the SpreadsheetDialog's 'decimalSeparatorChanged' event.

@@ -5,7 +5,6 @@ import SpreadsheetDialog, { SpreadsheetDialog$AvailableOptionsChangedEvent, Spre
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import Component from "../../Component";
 import Event from "sap/ui/base/Event";
-import Bar from "sap/m/Bar";
 import FileUploader, { FileUploader$ChangeEvent } from "sap/ui/unified/FileUploader";
 import MessageToast from "sap/m/MessageToast";
 import Preview from "../Preview";

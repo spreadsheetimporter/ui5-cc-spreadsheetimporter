@@ -13,10 +13,13 @@ import SpreadsheetDialogRenderer from "./SpreadsheetDialogRenderer";
  * @name cc.spreadsheetimporter.XXXnamespaceXXX.SpreadsheetDialog
  */
 export default class SpreadsheetDialog extends Dialog {
+	dropMessageShown: boolean;
 	constructor(id?: string | $SpreadsheetDialogSettings);
 	constructor(id?: string, settings?: $SpreadsheetDialogSettings);
 	constructor(id?: string, settings?: $SpreadsheetDialogSettings) {
 		super(id, settings);
+		// Add a flag to track the drop message visibility
+		this.dropMessageShown = false;
 	}
 
 	static readonly metadata: MetadataOptions = {
@@ -26,6 +29,11 @@ export default class SpreadsheetDialog extends Dialog {
 			component: { type: "object" }
 		},
 		events: {
+			fileDrop: {
+				parameters: {
+					files: { type: "object[]" }
+				}
+			},
 			decimalSeparatorChanged: {
 				parameters: {
 					decimalSeparator: { type: "string" }
@@ -38,6 +46,69 @@ export default class SpreadsheetDialog extends Dialog {
 			}
 		}
 	};
+
+	onAfterRendering(event: Event) {
+		super.onAfterRendering(event);
+		const domRef = this.getDomRef();
+		domRef.addEventListener("dragover", this.handleDragOver.bind(this), false);
+		domRef.addEventListener("dragleave", this.handleDragLeave.bind(this), false);
+		domRef.addEventListener("drop", this.handleFileDrop.bind(this), false);
+	}
+
+	private handleDragOver(event: any) {
+		event.stopPropagation();
+		event.preventDefault();
+		event.dataTransfer.dropEffect = "copy"; // Show as a copy.
+
+		if (!this.dropMessageShown) {
+			const domRef = this.getDomRef();
+			domRef.classList.add("drag-over");
+			this.showDropMessage(true);
+		}
+	}
+
+	private handleDragLeave(event: any) {
+		if (this.dropMessageShown) {
+			const domRef = this.getDomRef();
+			domRef.classList.remove("drag-over");
+			this.showDropMessage(false);
+		}
+	}
+
+	private handleFileDrop(event: any) {
+		event.stopPropagation();
+		event.preventDefault();
+
+		if (this.dropMessageShown) {
+			const domRef = this.getDomRef();
+			domRef.classList.remove("drag-over");
+			this.showDropMessage(false);
+		}
+
+		var files = event.dataTransfer.files; // FileList object.
+		// Process the files similar to the FileUploader change event
+	}
+
+	private showDropMessage(show: boolean) {
+		// Ensure the current state matches the desired visibility
+		if (this.dropMessageShown === show) {
+			return; // No change is needed if the state is already correct
+		}
+
+		let dropMessage = this.getDomRef().querySelector(".drop-message");
+		if (!dropMessage) {
+			// Create the message element if it doesn't exist
+			dropMessage = document.createElement("div");
+			dropMessage.className = "drop-message";
+			dropMessage.textContent = "Drop files here";
+			this.getDomRef().appendChild(dropMessage);
+		}
+
+		// Toggle visibility class based on the 'show' parameter
+		dropMessage.classList.toggle("visible", show);
+		// Update the flag to reflect the new state
+		this.dropMessageShown = show;
+	}
 
 	public setDecimalSeparator(sDecimalSeparator: string) {
 		if (sDecimalSeparator === "," || sDecimalSeparator === ".") {
@@ -60,9 +131,23 @@ export default class SpreadsheetDialog extends Dialog {
 		return this;
 	}
 
-	//static renderer: typeof sap.m.DialogRenderer = sap.m.DialogRenderer;
+	exit() {
+		// Remove event listeners to clean up
+		const domRef = this.getDomRef();
+		if (domRef) {
+			domRef.removeEventListener("dragover", this.handleDragOver.bind(this), false);
+			domRef.removeEventListener("dragleave", this.handleDragLeave.bind(this), false);
+			domRef.removeEventListener("drop", this.handleFileDrop.bind(this), false);
+		}
 
-	//InputRenderer =  // Renderer is sap/ui/core/Renderer !
+		// Clean up the drop message element if needed
+		let dropMessage = domRef?.querySelector(".drop-message");
+		if (dropMessage) {
+			dropMessage.remove();
+		}
+
+		super.exit();
+	}
 
 	static renderer: typeof SpreadsheetDialogRenderer = SpreadsheetDialogRenderer;
 }
