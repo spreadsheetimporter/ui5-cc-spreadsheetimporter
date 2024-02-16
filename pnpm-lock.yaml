@@ -866,12 +866,12 @@ importers:
         specifier: ^7.6.4
         version: 7.6.4(express@4.18.2)
     devDependencies:
-      '@marianfoo/cds-launchpad-plugin':
-        specifier: 2.2.2
-        version: 2.2.2(@sap/cds-dk@7.5.1)(@sap/cds@7.5.3)(express@4.18.2)
       '@sap/cds-dk':
         specifier: ^7
-        version: 7.5.1(bluebird@3.7.2)
+        version: 7.6.1(bluebird@3.7.2)
+      cds-launchpad-plugin:
+        specifier: 2.1.8
+        version: 2.1.8(@sap/cds-dk@7.6.1)(@sap/cds@7.6.3)(express@4.18.2)
       cds-plugin-ui5:
         specifier: 0.8.1
         version: 0.8.1(@sap/cds@7.6.4)(bluebird@3.7.2)(express@4.18.2)
@@ -2700,19 +2700,6 @@ packages:
     dependencies:
       call-bind: 1.0.7
 
-  /@marianfoo/cds-launchpad-plugin@2.2.2(@sap/cds-dk@7.5.1)(@sap/cds@7.5.3)(express@4.18.2):
-    resolution: {integrity: sha512-93mcCMoJ8jMDV6bvwrT8oUisJMZ67mhgBas513bdRHE6ZPIJMi/vL7Gfs3zUiE/TwmirgeMipuJzHx58t6oSlg==}
-    peerDependencies:
-      '@sap/cds': '>=5'
-      '@sap/cds-dk': '>=4.3'
-      express: '>=4'
-    dependencies:
-      '@sap/cds': 7.5.3(express@4.18.2)
-      '@sap/cds-dk': 7.5.1(bluebird@3.7.2)
-      dot-properties: 1.0.1
-      express: 4.18.2
-    dev: true
-
   /@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1:
     resolution: {integrity: sha512-54/JRvkLIzzDWshCWfuhadfrfZVPiElY8Fcgmg1HroEly/EDSszzhBAsarCux+D/kOslTRquNzuyGSmUSTTHGg==}
     dependencies:
@@ -2810,7 +2797,7 @@ packages:
     requiresBuild: true
     dependencies:
       '@gar/promisify': 1.1.3
-      semver: 7.5.4
+      semver: 7.6.0
     dev: true
     optional: true
 
@@ -3589,8 +3576,8 @@ packages:
     dependencies:
       antlr4: 4.9.3
 
-  /@sap/cds-fiori@1.2.3(@sap/cds@7.6.4)(express@4.18.2):
-    resolution: {integrity: sha512-WOPjcHPgTZZ/QpwtcNu0A/FlgcEchZlX3+dlr6s6gEesfF9mq9mUTZ50DFpnEjPmOpZXN9ymN1TR4qO7H1VhOg==}
+  /@sap/cds-fiori@1.2.2(@sap/cds@7.6.3)(express@4.18.2):
+    resolution: {integrity: sha512-9bJKiIq8dCmwEcIXES7jiAcmiyJlDjjKdnvceAmqCU5Z925ZaalVIGYdnmmlQyciPUzD/bk3vRxmrPIogP6leA==}
     peerDependencies:
       '@sap/cds': '>=7.1'
       express: '>=4'
@@ -3607,8 +3594,8 @@ packages:
       xmlbuilder: 15.1.1
       yaml: 2.3.4
 
-  /@sap/cds@7.6.4(express@4.18.2):
-    resolution: {integrity: sha512-1/mDRIVoNEjX2RXGRiPIkMC2VHlKwXgFkTcYXvFXF871e46nIKlQ7MfA9yfcVE7T2EdA3v3M66ul3sp5JgcflQ==}
+  /@sap/cds@7.6.3(express@4.18.2):
+    resolution: {integrity: sha512-/zZUcqAvuOEy7Uu2hPshI9I3q/SJz/T+pWZGFB/MvjKZqrEUcj3htgd+B4Zn8zy9OsTvPe2wXHLeAxM/ep5pdA==}
     engines: {node: '>=16'}
     hasBin: true
     dependencies:
@@ -3627,8 +3614,8 @@ packages:
       properties-reader: 2.2.0
       url: 0.11.0
 
-  /@sap/ux-specification@1.120.4:
-    resolution: {integrity: sha512-9ikxXg5XC2N8N+qmoSlvMWe7Rd9lBS1Wy32FYBhi+SB1gbXL2sA4kDXgNE9L49sU8btBTP8friRptYJHZ8vnmw==}
+  /@sap/ux-specification@1.120.3:
+    resolution: {integrity: sha512-pI4XdAyTA+JpKChWqWnLJmnywHY0tUkrh3CjNVzVzGj7ek9jB5c9+xu9MbRdX2GC6lX12L+Tl0uNy560tsfnXA==}
     engines: {node: '>= 18.0.0 < 19.0.0 || >= 20.0.0 < 21.0.0 || >= 22.0.0', yarn: '>=1.22.19 < 2'}
     dependencies:
       '@sap-ux/fe-fpm-writer': 0.24.4
@@ -3654,8 +3641,8 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@sapui5/ts-types-esm@1.121.0:
-    resolution: {integrity: sha512-CNGuxGEpWz1/r5+jbBK3Whl41Cd1YqyiDihhhleXxAJAKGjzqryeNSscWaqixrxBEO9H+p8gkSk+QswUR9XBuA==}
+  /@sapui5/ts-types-esm@1.120.7:
+    resolution: {integrity: sha512-UIUjbH/ry30bNALlgjTLELGxtSHb5x+j4kNFkiVnaYPSO1ywsuQ2dtT6yp61zPfmo0uXGuyzTzd5shpsox/zOg==}
     dependencies:
       '@types/jquery': 3.5.13
       '@types/offscreencanvas': 2019.6.4
@@ -5524,8 +5511,8 @@ packages:
       lodash: 4.17.21
     dev: true
 
-  /cds-plugin-ui5@0.8.1(@sap/cds@7.6.4)(bluebird@3.7.2)(express@4.18.2):
-    resolution: {integrity: sha512-9170ly2dkX9WI8LEaIFmIti69lWj/c9zkZX6GqPirIC/u31sPRURtp3P67B3wj5QlKJ1o4BtzCgUUSUvjkQyHg==}
+  /cds-plugin-ui5@0.8.0(@sap/cds@7.6.3)(bluebird@3.7.2)(express@4.18.2):
+    resolution: {integrity: sha512-mhZVlxEK2Tw2gj/wvK8fdFkf/iGgAMe7fYA3PBI39bght2MRaztqIUb4bS6LOajLj96YD3jBfbV5l3uBAHrMDA==}
     peerDependencies:
       '@sap/cds': '>=6.8.2'
       express: '>=4.18.2'
@@ -6589,8 +6576,8 @@ packages:
     resolution: {integrity: sha512-cjIHHKlf2dPINJ5Io3lPocWvWmthXn3ztqyHVzUfufRiCiPECb0oiEqEGbEGaunFZtcMvwgUcxP9CTpLG4KCsA==}
     dev: true
 
-  /dotenv@16.4.5:
-    resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==}
+  /dotenv@16.4.4:
+    resolution: {integrity: sha512-XvPXc8XAQThSjAbY6cQ/9PcBXmFoWuw1sQ3b8HqUCR6ziGXjkTi//kB9SWa2UwqlgdAIuRqAa/9hVljzPehbYg==}
     engines: {node: '>=12'}
     dev: true
 
@@ -9938,7 +9925,7 @@ packages:
       nopt: 5.0.0
       npmlog: 6.0.2
       rimraf: 3.0.2
-      semver: 7.5.4
+      semver: 7.6.0
       tar: 6.2.0
       which: 2.0.2
     transitivePeerDependencies:
@@ -11890,24 +11877,9 @@ packages:
     resolution: {integrity: sha512-94hK0Hh8rPqQl2xXc3HsaBoOXKV20MToPkcXvwbISWLEs+64sBq5kFgn2kJDHb1Pry9yrP0dxrCI9RRci7RXKg==}
     engines: {node: '>= 6.0.0', npm: '>= 3.0.0'}
 
-<<<<<<< HEAD
   /smob@1.4.1:
     resolution: {integrity: sha512-9LK+E7Hv5R9u4g4C3p+jjLstaLe11MDsL21UpYaCNmapvMkYhqCV4A/f/3gyH8QjMyh6l68q9xC85vihY9ahMQ==}
     dev: true
-=======
-  /socks-proxy-agent@6.2.1:
-    resolution: {integrity: sha512-a6KW9G+6B3nWZ1yB8G7pJwL3ggLy1uTzKAgCb7ttblwqdz9fMGJUuTy3uFzEP48FAs9FLILlmzDlE2JJhVQaXQ==}
-    engines: {node: '>= 10'}
-    requiresBuild: true
-    dependencies:
-      agent-base: 6.0.2
-      debug: 4.3.4(supports-color@8.1.1)
-      socks: 2.7.1
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-    optional: true
->>>>>>> a0adc86e (chore: update package)
 
   /socks-proxy-agent@8.0.2:
     resolution: {integrity: sha512-8zuqoLv1aP/66PHF5TqwJ7Czm3Yv32urJQHrVyhD7mmA6d61Zv8cIXQYPTWwmg6qlupnPvs/QKDmfa4P/qct2g==}
@@ -12011,6 +11983,25 @@ packages:
 
   /sprintf-js@1.1.3:
     resolution: {integrity: sha512-Oo+0REFV59/rz3gfJNKQiBlwfHaSESl1pcGyABQsnnIfWOFt6JNj5gCog2U6MLZ//IGYD+nA8nI+mTShREReaA==}
+
+  /sqlite3@5.1.7(bluebird@3.7.2):
+    resolution: {integrity: sha512-GGIyOiFaG+TUra3JIfkI/zGP8yZYLPQ0pl1bH+ODjiX57sPhrLU5sQJn1y9bDKZUFYkX1crlrPfSYt0BKKdkog==}
+    requiresBuild: true
+    peerDependenciesMeta:
+      node-gyp:
+        optional: true
+    dependencies:
+      bindings: 1.5.0
+      node-addon-api: 7.1.0
+      prebuild-install: 7.1.1
+      tar: 6.2.0
+    optionalDependencies:
+      node-gyp: 8.4.1(bluebird@3.7.2)
+    transitivePeerDependencies:
+      - bluebird
+      - supports-color
+    dev: true
+    optional: true
 
   /ssri@10.0.5:
     resolution: {integrity: sha512-bSf16tAFkGeRlUNDjXu8FzaMQt6g2HZJrun7mtMbIPOddxt3GLMSz5VWUWcqTJUPfLEaDIepGxv+bYQW49596A==}
@@ -12660,21 +12651,8 @@ packages:
     resolution: {integrity: sha512-8Y75pvTYkLJW2hWQHXxoqRgV7qb9B+9vFEtidML+7koHUFapnVJAZ6cKs+Qjz5Aw3aZWHMC6u0wJE3At+nSGwA==}
     dev: true
 
-<<<<<<< HEAD
   /ui5-middleware-serveframework@3.0.4(bluebird@3.7.2):
     resolution: {integrity: sha512-fRhP6QA75hg33O8jus+576j4kisUwj4R/rn8b29Zjr6/OkL6iVCZ8C/5kYCBeg7fmPR1lw3EcLhtbPZ4CgtVqQ==}
-=======
-  /uglify-js@3.17.4:
-    resolution: {integrity: sha512-T9q82TJI9e/C1TAxYvfb16xO120tMVFZrGA3f9/P4424DNu6ypK103y0GPFVa17yotwSyZW5iYXgjYHkGrJW/g==}
-    engines: {node: '>=0.8.0'}
-    hasBin: true
-    requiresBuild: true
-    dev: true
-    optional: true
-
-  /ui5-middleware-serveframework@3.0.3(bluebird@3.7.2):
-    resolution: {integrity: sha512-JonG4LHkgFdzNWOYgtt6raQeI2JFsOfG3kKCf5wVbZZX2wUcaZKazsEnhcwD4KHjhQJmfE55/hJAPmkRX/7lGw==}
->>>>>>> a0adc86e (chore: update package)
     dependencies:
       '@ui5/project': 3.9.0(bluebird@3.7.2)
       etag: 1.8.1
