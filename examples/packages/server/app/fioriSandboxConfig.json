@@ -15,13 +15,46 @@
               "tiles": [
                 {
                   "id": "ui.v2.ordersv2fe-intent1",
-                  "properties": { "targetURL": "#ordersv2fe-120", "title": "Orders V2 FE 120", "info": "{{appInfo}}", "subtitle": "{{appSubTitle}}", "icon": "sap-icon://course-book" },
+                  "properties": { "targetURL": "#ordersv2fe-120", "title": "Orders V2 FE 120", "info": "", "subtitle": "", "icon": "sap-icon://course-book" },
                   "tileType": "sap.ushell.ui.tile.StaticTile",
                   "serviceRefreshInterval": 10000
                 },
                 {
                   "id": "ui.v4.ordersv4fe-intent1",
-                  "properties": { "targetURL": "#ordersv4fe-120", "title": "{{appTitle}}", "info": "{{appInfo}}", "subtitle": "{{appSubTitle}}", "icon": "sap-icon://course-book" },
+                  "properties": { "targetURL": "#ordersv4fe-120", "title": "Orders V4 FE 120", "info": "", "subtitle": "", "icon": "sap-icon://course-book" },
+                  "tileType": "sap.ushell.ui.tile.StaticTile",
+                  "serviceRefreshInterval": 10000
+                },
+                {
+                  "id": "chore-intent1",
+                  "properties": { "targetURL": "https://spreadsheet-importer.com/", "title": "Landing Page", "info": "Spreadsheet Importer", "subtitle": "", "icon": "sap-icon://course-book" },
+                  "tileType": "sap.ushell.ui.tile.StaticTile",
+                  "serviceRefreshInterval": 10000
+                }
+              ]
+            },
+            {
+              "id": "Home",
+              "title": "test",
+              "isPreset": true,
+              "isVisible": true,
+              "isGroupLocked": false,
+              "tiles": [
+                {
+                  "id": "ui.v2.ordersv2fe-intent1",
+                  "properties": { "targetURL": "#ordersv2fe-120", "title": "Orders V2 FE 120", "info": "", "subtitle": "", "icon": "sap-icon://course-book" },
+                  "tileType": "sap.ushell.ui.tile.StaticTile",
+                  "serviceRefreshInterval": 10000
+                },
+                {
+                  "id": "ui.v4.ordersv4fe-intent1",
+                  "properties": { "targetURL": "#ordersv4fe-120", "title": "Orders V4 FE 120", "info": "", "subtitle": "", "icon": "sap-icon://course-book" },
+                  "tileType": "sap.ushell.ui.tile.StaticTile",
+                  "serviceRefreshInterval": 10000
+                },
+                {
+                  "id": "chore-intent1",
+                  "properties": { "targetURL": "https://spreadsheet-importer.com/", "title": "Landing Page", "info": "Spreadsheet Importer", "subtitle": "", "icon": "sap-icon://course-book" },
                   "tileType": "sap.ushell.ui.tile.StaticTile",
                   "serviceRefreshInterval": 10000
                 }
@@ -41,8 +74,8 @@
               "semanticObject": "ordersv2fe",
               "action": "120",
               "title": "Orders V2 FE 120",
-              "info": "{{appInfo}}",
-              "subTitle": "{{appSubTitle}}",
+              "info": "",
+              "subTitle": "",
               "icon": "sap-icon://course-book",
               "resolutionResult": { "applicationType": "SAPUI5", "additionalInformation": "SAPUI5.Component=ui.v2.ordersv2fe", "url": "/ui.v2.ordersv2fe" }
             },
@@ -50,9 +83,9 @@
               "signature": { "parameters": {}, "additionalParameters": "allowed" },
               "semanticObject": "ordersv4fe",
               "action": "120",
-              "title": "{{appTitle}}",
-              "info": "{{appInfo}}",
-              "subTitle": "{{appSubTitle}}",
+              "title": "Orders V4 FE 120",
+              "info": "",
+              "subTitle": "",
               "icon": "sap-icon://course-book",
               "resolutionResult": { "applicationType": "SAPUI5", "additionalInformation": "SAPUI5.Component=ui.v4.ordersv4fe", "url": "/ui.v4.ordersv4fe" }
             }

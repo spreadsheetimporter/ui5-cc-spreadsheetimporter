@@ -27,6 +27,12 @@
           "configFile": "ui5-dist.yaml"
         }
       }
+    },
+    "launchpad": {
+      "theme": "sap_horizon",
+      "version": "1.120.6",
+      "basePath": "launchpad.html",
+      "appConfigPath": "app/appconfig.json"
     }
   }
 }

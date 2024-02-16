@@ -42,9 +42,9 @@
           },
           "semanticObject": "ordersv2fe",
           "action": "120",
-          "title": "{{appTitle}}",
-          "info": "{{appInfo}}",
-          "subTitle": "{{appSubTitle}}",
+          "title": "Orders Sample App",
+          "info": "Fiori Elements",
+          "subTitle": "UI5 1.120 / OData V2",
           "icon": "sap-icon://course-book"
         }
       }
