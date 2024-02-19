@@ -867,7 +867,7 @@ importers:
         version: 7.6.4(express@4.18.2)
     devDependencies:
       '@sap/cds-dk':
-        specifier: ^7
+        specifier: ^7.6.1
         version: 7.6.1(bluebird@3.7.2)
       cds-launchpad-plugin:
         specifier: 2.1.8
@@ -3374,7 +3374,6 @@ packages:
       axios: 1.6.1(debug@4.3.4)
     transitivePeerDependencies:
       - debug
-    dev: false
 
   /@sap-ux/control-property-editor@0.4.12:
     resolution: {integrity: sha512-gc7ikFsE+L93RisZc68LCsSwv8zqKphcMgSDCgBxmYTrvmUmh95pfPfTeuCGsd6TGRdbM6fY6n/3NZALu+tJpg==}
@@ -11078,6 +11077,15 @@ packages:
       find-up-simple: 1.0.0
       read-pkg: 9.0.1
       type-fest: 4.10.3
+
+  /read-pkg-up@10.0.0:
+    resolution: {integrity: sha512-jgmKiS//w2Zs+YbX039CorlkOp8FIVbSAN8r8GJHDsGlmNPXo+VeHkqAwCiQVTTx5/LwLZTcEw59z3DvcLbr0g==}
+    engines: {node: '>=16'}
+    dependencies:
+      find-up: 6.3.0
+      read-pkg: 8.1.0
+      type-fest: 3.13.1
+    dev: true
 
   /read-pkg-up@10.0.0:
     resolution: {integrity: sha512-jgmKiS//w2Zs+YbX039CorlkOp8FIVbSAN8r8GJHDsGlmNPXo+VeHkqAwCiQVTTx5/LwLZTcEw59z3DvcLbr0g==}
