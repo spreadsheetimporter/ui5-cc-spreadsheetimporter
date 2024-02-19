@@ -71,6 +71,13 @@ jobs:
       - name: Run Build
         run: npm run build
 
+      - name: Remove cds-plugin-ui5 
+        run: |
+          cd examples/packages/server
+          node -e "const pkg = require('./package.json'); \
+                    delete pkg.cds['cds-plugin-ui5']; \
+                    require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2));"
+
       # run app
       - name: start cap server
         run: |
