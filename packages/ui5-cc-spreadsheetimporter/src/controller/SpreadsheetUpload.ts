@@ -222,6 +222,9 @@ export default class SpreadsheetUpload extends ManagedObject {
 		if (options.hasOwnProperty("skipColumnsCheck")) {
 			this.component.setSkipColumnsCheck(options.skipColumnsCheck);
 		}
+		if (options.hasOwnProperty("logTitle")) {
+			this.component.setLogTitle(options.logTitle);
+		}
 		if (options.hasOwnProperty("skipColumnsCheck")) {
 			this.component.setSkipColumnsCheck(options.useTableSelector);
 		}

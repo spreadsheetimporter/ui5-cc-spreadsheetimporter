@@ -64,7 +64,9 @@ export default class Component extends UIComponent {
 			continueOnError: { type: "boolean", defaultValue: false },
 			createActiveEntity: { type: "boolean", defaultValue: false },
 			debug: { type: "boolean", defaultValue: false },
-			componentContainerData: { type: "object" }
+			componentContainerData: { type: "object" },
+			messageDialogTitle: { type: "string" },
+			oDataMessageDialogTitle: { type: "string" }
 			//Pro Configurations
 		},
 		aggregations: {
@@ -132,6 +134,8 @@ export default class Component extends UIComponent {
 		this.setPreviewColumns(compData?.previewColumns);
 		this.setSkipMandatoryFieldCheck(compData?.skipMandatoryFieldCheck);
 		this.setSkipColumnsCheck(compData?.skipColumnsCheck);
+		this.setMessageDialogTitle(compData?.messageDialogTitle);
+		this.setODataMessageDialogTitle(compData?.oDataMessageDialogTitle);
 		this.setSkipMaxLengthCheck(compData?.skipMaxLengthCheck);
 		this.setShowBackendErrorMessages(compData?.showBackendErrorMessages);
 		this.setShowOptions(compData?.showOptions);

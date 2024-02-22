@@ -109,6 +109,8 @@ export interface ComponentData {
 	sampleData?: object;
 	continueOnError?: boolean;
 	createActiveEntity?: boolean;
+	messageDialogTitle?: string;
+	oDataMessageDialogTitle?: string;
 }
 
 // Pro Types

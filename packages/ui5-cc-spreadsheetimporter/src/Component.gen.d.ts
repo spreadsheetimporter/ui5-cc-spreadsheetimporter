@@ -39,6 +39,8 @@ declare module "./Component" {
         createActiveEntity?: boolean | PropertyBindingInfo | `{${string}}`;
         debug?: boolean | PropertyBindingInfo | `{${string}}`;
         componentContainerData?: object | PropertyBindingInfo | `{${string}}`;
+        messageDialogTitle?: string | PropertyBindingInfo;
+        oDataMessageDialogTitle?: string | PropertyBindingInfo;
         checkBeforeRead?: (event: Component$CheckBeforeReadEvent) => void;
         changeBeforeCreate?: (event: Component$ChangeBeforeCreateEvent) => void;
         requestCompleted?: (event: Component$RequestCompletedEvent) => void;
@@ -170,6 +172,14 @@ declare module "./Component" {
         // property: componentContainerData
         getComponentContainerData(): object;
         setComponentContainerData(componentContainerData: object): this;
+
+        // property: messageDialogTitle
+        getMessageDialogTitle(): string;
+        setMessageDialogTitle(messageDialogTitle: string): this;
+
+        // property: oDataMessageDialogTitle
+        getODataMessageDialogTitle(): string;
+        setODataMessageDialogTitle(oDataMessageDialogTitle: string): this;
 
         // event: checkBeforeRead
         attachCheckBeforeRead(fn: (event: Component$CheckBeforeReadEvent) => void, listener?: object): this;

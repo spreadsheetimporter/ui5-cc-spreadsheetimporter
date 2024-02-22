@@ -18,7 +18,9 @@ sap.ui.define([], function () {
 						async: true,
 						componentData: {
 							context: this,
-							createActiveEntity: true
+							createActiveEntity: true,
+							messageDialogTitle: 'Custom Mesasge Dialog Title', // optional, default 'Error'
+							oDataMessageDialogTitle: 'Custom OData Mesasge Dialog Title', // optional, default 'Error
 						}
 					});
 

@@ -35,7 +35,8 @@ sap.ui.define(["sap/ui/core/mvc/ControllerExtension"], function (ControllerExten
 						async: true,
 						componentData: {
 							context: this,
-							tableId: "ui.v4.ordersv4fe::Orders_ItemsObjectPage--fe::table::Infos::LineItem-innerTable"
+							tableId: "ui.v4.ordersv4fe::Orders_ItemsObjectPage--fe::table::Infos::LineItem-innerTable",
+							logTitle: 'Mainak Testing'
 						}
 					});
 			this.spreadsheetUploadTableShippingInfo.openSpreadsheetUploadDialog();

@@ -35,6 +35,7 @@ export default class ODataMessageHandler extends ManagedObject {
 		this.messageDialog.setModel(this.spreadsheetUploadController.componentI18n, "i18n");
 		this.messageDialog.setModel(messageModel, "message");
 		// this.messageDialog.setModel(Message, "message");
+		this.messageDialog.setTitle(this.spreadsheetUploadController.component.getODataMessageDialogTitle());
 		this.messageDialog.open();
 	}
 

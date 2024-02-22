@@ -224,6 +224,7 @@ export default class MessageHandler extends ManagedObject {
 			dialogState: dialogState
 		});
 		this.messageDialog.setModel(infoModel, "info");
+		this.messageDialog.setTitle(this.spreadsheetUploadController.component.getMessageDialogTitle());
 		this.messageDialog.open();
 	}
 
