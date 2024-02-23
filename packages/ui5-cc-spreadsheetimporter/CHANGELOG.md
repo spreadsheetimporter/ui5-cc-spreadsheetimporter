@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.33.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.32.0...ui5-cc-spreadsheetimporter-v0.33.0) (2024-02-23)
+
+
+### Features
+
+* possibility to overwrite i18n texts ([#501](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/501)) ([4c08ed7](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/4c08ed701d994a1e3c8cea60311375a088c430ee))
+
 ## [0.32.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.31.6...ui5-cc-spreadsheetimporter-v0.32.0) (2024-02-15)
 
 
