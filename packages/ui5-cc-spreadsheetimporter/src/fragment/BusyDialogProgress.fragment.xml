@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:html="http://www.w3.org/1999/xhtml">
-    <Dialog title="{i18n>busyDialogTitle}" contentWidth="{= ${device>/system/phone} ? '100%' : '40vw' }" contentHeight="130px" verticalScrolling="false">
+    <Dialog title="{i18n>spreadsheetimporter.busyDialogTitle}" contentWidth="{= ${device>/system/phone} ? '100%' : '40vw' }" contentHeight="130px" verticalScrolling="false">
         <content>
             <FlexBox direction="Column" height="100%" width="80%" alignItems="Stretch" justifyContent="Center" fitContainer="true" class="centered">
                 <BusyIndicator visible="true">

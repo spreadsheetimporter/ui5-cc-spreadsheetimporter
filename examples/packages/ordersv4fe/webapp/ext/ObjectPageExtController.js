@@ -14,7 +14,8 @@ sap.ui.define([], function () {
 						async: true,
 						componentData: {
 							context: this,
-							useTableSelector: true
+							useTableSelector: true,
+							i18nModel: this.getModel("i18n")
 						}
 						
 					});
@@ -80,6 +81,7 @@ sap.ui.define([], function () {
 							columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time", "boolean", "decimal"],
 							mandatoryFields: ["product_ID", "quantity"],
 							spreadsheetFileName: "Test.xlsx",
+							i18nModel: this.getModel("i18n"),
 							sampleData: [
 								{
 									product_ID: "HT-1000",

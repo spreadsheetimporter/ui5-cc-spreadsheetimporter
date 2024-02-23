@@ -46,7 +46,7 @@ export default class MessageHandler extends ManagedObject {
 		const duplicateColumns = columnNames.filter((columnName, index) => columnNames.indexOf(columnName) !== index);
 		if (duplicateColumns.length > 0) {
 			const errorMessage = {
-				title: this.spreadsheetUploadController.util.geti18nText("duplicateColumns", [duplicateColumns.join(", ")]),
+				title: this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.duplicateColumns", [duplicateColumns.join(", ")]),
 				type: CustomMessageTypes.DuplicateColumns,
 				ui5type: MessageType.Error,
 				group: false
@@ -78,7 +78,7 @@ export default class MessageHandler extends ManagedObject {
 			for (const [index, row] of data.entries()) {
 				const value = Util.getValueFromRow(row, fieldLabel, mandatoryField, this.spreadsheetUploadController.component.getFieldMatchType() as FieldMatchType);
 				const errorMessage = {
-					title: this.spreadsheetUploadController.util.geti18nText("mandatoryFieldNotFilled", [fieldLabel]),
+					title: this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.mandatoryFieldNotFilled", [fieldLabel]),
 					type: CustomMessageTypes.MandatoryFieldNotFilled,
 					row: index + 2,
 					counter: 1,
@@ -121,7 +121,7 @@ export default class MessageHandler extends ManagedObject {
 						// the length was exceeded by x characters
 						const exceededLength = value.rawValue.length - valueTypeLabelList.maxLength;
 						const errorMessage = {
-							title: this.spreadsheetUploadController.util.geti18nText("maxLengthExceeded", [valueTypeLabelList.maxLength, valueTypeLabelList.label]),
+							title: this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.maxLengthExceeded", [valueTypeLabelList.maxLength, valueTypeLabelList.label]),
 							type: CustomMessageTypes.MaxLengthExceeded,
 							row: index + 2,
 							counter: 1,
@@ -157,7 +157,7 @@ export default class MessageHandler extends ManagedObject {
 			}
 			if (!found) {
 				const errorMessage = {
-					title: this.spreadsheetUploadController.util.geti18nText("columnNotFound", [columnName]),
+					title: this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.columnNotFound", [columnName]),
 					type: CustomMessageTypes.ColumnNotFound,
 					counter: 1,
 					ui5type: MessageType.Error
@@ -182,7 +182,7 @@ export default class MessageHandler extends ManagedObject {
 			if (!found) {
 				const columnNameLabel = typeLabelList.get(columnName)?.label ? typeLabelList.get(columnName).label : columnName;
 				const errorMessage: Messages = {
-					title: this.spreadsheetUploadController.util.geti18nText("keyColumnNotFound", [columnNameLabel]),
+					title: this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.keyColumnNotFound", [columnNameLabel]),
 					type: CustomMessageTypes.ColumnNotFound,
 					counter: 1,
 					ui5type: MessageType.Error
@@ -237,13 +237,13 @@ export default class MessageHandler extends ManagedObject {
 				groups[message.title] = [];
 			}
 			if (message.maxLength && message.excededLength) {
-				messageText = this.spreadsheetUploadController.util.geti18nText("maxLengthExceededWithLength", [message.maxLength, message.excededLength, message.rawValue]);
+				messageText = this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.maxLengthExceededWithLength", [message.maxLength, message.excededLength, message.rawValue]);
 			} else if (message.rawValue && message.formattedValue) {
-				messageText = this.spreadsheetUploadController.util.geti18nText("errorInRowWithValueFormatted", [message.row, message.formattedValue, message.rawValue]);
+				messageText = this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.errorInRowWithValueFormatted", [message.row, message.formattedValue, message.rawValue]);
 			} else if (message.rawValue) {
-				messageText = this.spreadsheetUploadController.util.geti18nText("errorInRowWithValue", [message.row, message.rawValue]);
+				messageText = this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.errorInRowWithValue", [message.row, message.rawValue]);
 			} else {
-				messageText = this.spreadsheetUploadController.util.geti18nText("errorInRow", [message.row]);
+				messageText = this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.errorInRow", [message.row]);
 			}
 			groups[message.title].push({ description: messageText, row: message.row });
 			return groups;
@@ -285,10 +285,10 @@ export default class MessageHandler extends ManagedObject {
 
 		// Define a mapping of original attribute names to custom headers
 		const headerMapping = {
-			title: this.spreadsheetUploadController.util.geti18nText("messageTitle"),
-			description: this.spreadsheetUploadController.util.geti18nText("messageDescription"),
-			ui5type: this.spreadsheetUploadController.util.geti18nText("messageType"),
-			rowNumber: this.spreadsheetUploadController.util.geti18nText("messageRow")
+			title: this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.messageTitle"),
+			description: this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.messageDescription"),
+			ui5type: this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.messageType"),
+			rowNumber: this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.messageRow")
 		};
 		const colWidth = [{ wch: 60 }, { wch: 40 }, { wch: 15 }, { wch: 20 }] as XLSX.ColInfo[];
 
@@ -333,8 +333,8 @@ export default class MessageHandler extends ManagedObject {
 
 		// Convert the worksheet to a workbook and download it
 		const workbook = XLSX.utils.book_new();
-		XLSX.utils.book_append_sheet(workbook, worksheet, this.spreadsheetUploadController.util.geti18nText("sheetName"));
-		XLSX.writeFile(workbook, this.spreadsheetUploadController.util.geti18nText("spreadsheetFilenameName") + ".xlsx");
+		XLSX.utils.book_append_sheet(workbook, worksheet, this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.sheetName"));
+		XLSX.writeFile(workbook, this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.spreadsheetFilenameName") + ".xlsx");
 	}
 
 	private sortMessagesByTitle(messages: GroupedMessage[]) {

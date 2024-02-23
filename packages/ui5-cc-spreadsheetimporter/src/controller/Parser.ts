@@ -26,14 +26,14 @@ export default class Parser extends ManagedObject {
 						if (typeof rawValue === "boolean" || rawValue === "true" || rawValue === "false") {
 							payload[columnKey] = Boolean(rawValue);
 						} else {
-							this.addMessageToMessages("valueNotABoolean", util, messageHandler, index, [metadataColumn.label], rawValue);
+							this.addMessageToMessages("spreadsheetimporter.valueNotABoolean", util, messageHandler, index, [metadataColumn.label], rawValue);
 						}
 					} else if (metadataColumn.type === "Edm.Date") {
 						let date = rawValue;
 						if (value.sheetDataType !== "d") {
 							const parsedDate = new Date(rawValue);
 							if (isNaN(parsedDate.getTime())) {
-								this.addMessageToMessages("invalidDate", util, messageHandler, index, [metadataColumn.label], rawValue);
+								this.addMessageToMessages("spreadsheetimporter.invalidDate", util, messageHandler, index, [metadataColumn.label], rawValue);
 								continue;
 							}
 							date = parsedDate;
@@ -43,14 +43,14 @@ export default class Parser extends ManagedObject {
 							const dateString = `${date.getUTCFullYear()}-${("0" + (date.getUTCMonth() + 1)).slice(-2)}-${("0" + date.getUTCDate()).slice(-2)}`;
 							payload[columnKey] = dateString;
 						} catch (error) {
-							this.addMessageToMessages("errorWhileParsing", util, messageHandler, index, [metadataColumn.label], rawValue);
+							this.addMessageToMessages("spreadsheetimporter.errorWhileParsing", util, messageHandler, index, [metadataColumn.label], rawValue);
 						}
 					} else if (metadataColumn.type === "Edm.DateTimeOffset" || metadataColumn.type === "Edm.DateTime") {
 						let date = rawValue;
 						if (value.sheetDataType !== "d") {
 							const parsedDate = new Date(rawValue);
 							if (isNaN(parsedDate.getTime())) {
-								this.addMessageToMessages("invalidDate", util, messageHandler, index, [metadataColumn.label], rawValue);
+								this.addMessageToMessages("spreadsheetimporter.invalidDate", util, messageHandler, index, [metadataColumn.label], rawValue);
 								continue;
 							}
 							date = parsedDate;
@@ -59,14 +59,14 @@ export default class Parser extends ManagedObject {
 							this.checkDate(date, metadataColumn, util, messageHandler, index);
 							payload[columnKey] = date;
 						} catch (error) {
-							this.addMessageToMessages("errorWhileParsing", util, messageHandler, index, [metadataColumn.label], rawValue);
+							this.addMessageToMessages("spreadsheetimporter.errorWhileParsing", util, messageHandler, index, [metadataColumn.label], rawValue);
 						}
 					} else if (metadataColumn.type === "Edm.TimeOfDay" || metadataColumn.type === "Edm.Time") {
 						let date = rawValue;
 						if (value.sheetDataType !== "d") {
 							const parsedDate = new Date(rawValue);
 							if (isNaN(parsedDate.getTime())) {
-								this.addMessageToMessages("invalidDate", util, messageHandler, index, [metadataColumn.label], rawValue);
+								this.addMessageToMessages("spreadsheetimporter.invalidDate", util, messageHandler, index, [metadataColumn.label], rawValue);
 								continue;
 							}
 							date = parsedDate;
@@ -76,7 +76,7 @@ export default class Parser extends ManagedObject {
 							const spreadsheetDate = date.toISOString().substring(11, 16);
 							payload[columnKey] = spreadsheetDate;
 						} catch (error) {
-							this.addMessageToMessages("errorWhileParsing", util, messageHandler, index, [metadataColumn.label], rawValue);
+							this.addMessageToMessages("spreadsheetimporter.errorWhileParsing", util, messageHandler, index, [metadataColumn.label], rawValue);
 						}
 					} else if (
 						metadataColumn.type === "Edm.UInt8" ||
@@ -105,7 +105,7 @@ export default class Parser extends ManagedObject {
 								}
 							}
 						} catch (error) {
-							this.addMessageToMessages("errorWhileParsing", util, messageHandler, index, [metadataColumn.label], rawValue);
+							this.addMessageToMessages("spreadsheetimporter.errorWhileParsing", util, messageHandler, index, [metadataColumn.label], rawValue);
 						}
 					} else if (metadataColumn.type === "Edm.Double" || metadataColumn.type === "Edm.Decimal") {
 						try {
@@ -123,7 +123,7 @@ export default class Parser extends ManagedObject {
 								payload[columnKey] = valueDouble.toString();
 							}
 						} catch (error) {
-							this.addMessageToMessages("errorWhileParsing", util, messageHandler, index, [metadataColumn.label], rawValue);
+							this.addMessageToMessages("spreadsheetimporter.errorWhileParsing", util, messageHandler, index, [metadataColumn.label], rawValue);
 						}
 					} else {
 						// assign "" only if rawValue is undefined or null
@@ -142,7 +142,7 @@ export default class Parser extends ManagedObject {
 
 	static checkDate(value: any, metadataColumn: Property, util: Util, messageHandler: MessageHandler, index: number) {
 		if (isNaN(value.getTime())) {
-			this.addMessageToMessages("invalidDate", util, messageHandler, index, [metadataColumn.label], value.rawValue);
+			this.addMessageToMessages("spreadsheetimporter.invalidDate", util, messageHandler, index, [metadataColumn.label], value.rawValue);
 			return false;
 		}
 		return true;
@@ -157,7 +157,7 @@ export default class Parser extends ManagedObject {
 			// check if value is a number a does contain anything other than numbers and decimal seperator
 			if (/[^0-9.,]/.test(valueDouble) || parseFloat(normalizedString).toString() !== normalizedString) {
 				// Error: Value does contain anything other than numbers and decimal seperator
-				this.addMessageToMessages("parsingErrorNotNumber", util, messageHandler, index, [metadataColumn.label], rawValue);
+				this.addMessageToMessages("spreadsheetimporter.parsingErrorNotNumber", util, messageHandler, index, [metadataColumn.label], rawValue);
 			}
 		}
 		return valueDouble;
@@ -173,7 +173,7 @@ export default class Parser extends ManagedObject {
 				// check if value is a number a does contain anything other than numbers
 				if (/[^0-9]/.test(valueInteger) || parseInt(normalizedString).toString() !== normalizedString.toString()) {
 					// Error: Value does contain anything other than numbers
-					this.addMessageToMessages("parsingErrorNotWholeNumber", util, messageHandler, index, [metadataColumn.label], rawValue);
+					this.addMessageToMessages("spreadsheetimporter.parsingErrorNotWholeNumber", util, messageHandler, index, [metadataColumn.label], rawValue);
 				}
 			}
 		}

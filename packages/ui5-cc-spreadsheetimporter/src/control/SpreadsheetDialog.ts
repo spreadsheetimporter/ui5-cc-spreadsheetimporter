@@ -95,7 +95,7 @@ export default class SpreadsheetDialog extends Dialog {
 			// Create the message element if it doesn't exist
 			dropMessage = document.createElement("div");
 			dropMessage.className = "drop-message";
-			dropMessage.textContent = ((this.getModel("i18n") as ResourceModel).getResourceBundle() as ResourceBundle).getText("dropMessage");
+			dropMessage.textContent = ((this.getModel("i18n") as ResourceModel).getResourceBundle() as ResourceBundle).getText("spreadsheetimporter.dropMessage");
 			this.getDomRef().appendChild(dropMessage);
 		}
 

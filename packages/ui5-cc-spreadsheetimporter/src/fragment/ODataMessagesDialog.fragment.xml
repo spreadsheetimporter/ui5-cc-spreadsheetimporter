@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-  <Dialog title="{i18n>odataMessageDialogTitle}" resizable="true" state="{info>/dialogState}" verticalScrolling="false" contentHeight="50%" contentWidth="50%">
+  <Dialog title="{i18n>spreadsheetimporter.odataMessageDialogTitle}" resizable="true" state="{info>/dialogState}" verticalScrolling="false" contentHeight="50%" contentWidth="50%">
     <content>
       <MessageView items="{message>/}">
         <MessageItem type="{message>type}" title="{message>message}" subtitle="{message>additionalText}" description="{message>description}" />
