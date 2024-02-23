@@ -161,7 +161,7 @@ export default abstract class OData extends ManagedObject {
 					selectedTable = await tableSelector.chooseTable();
 				} catch (error) {
 					// user canceled or no table found
-					throw new Error(spreadsheetUploadController.util.geti18nText("tableSelectorDialogCancel"));
+					throw new Error(spreadsheetUploadController.util.geti18nText("spreadsheetimporter.tableSelectorDialogCancel"));
 				}
 				return selectedTable;
 			} else if (this.tables.length === 0) {

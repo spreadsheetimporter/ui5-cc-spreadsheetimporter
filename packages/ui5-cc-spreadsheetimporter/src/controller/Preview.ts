@@ -26,7 +26,7 @@ export default class Preview extends ManagedObject {
 			return;
 		}
 		this.dialog = new Dialog({
-			title: this.util.geti18nText("previewTableName"),
+			title: this.util.geti18nText("spreadsheetimporter.previewTableName"),
 			content: [table],
 			buttons: [
 				new Button({
@@ -87,7 +87,7 @@ export default class Preview extends ManagedObject {
 			return table;
 		} else {
 			// No data
-			Util.showError(new Error(this.util.geti18nText("noDataPreview")), "Preview.ts", "createDynamicTable");
+			Util.showError(new Error(this.util.geti18nText("spreadsheetimporter.noDataPreview")), "Preview.ts", "createDynamicTable");
 			return undefined;
 		}
 	}

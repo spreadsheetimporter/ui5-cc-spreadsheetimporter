@@ -140,7 +140,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 			}
 
 			if (!spreadsheetSheetsData || spreadsheetSheetsData.length === 0) {
-				throw new Error(this.util.geti18nText("emptySheet"));
+				throw new Error(this.util.geti18nText("spreadsheetimporter.emptySheet"));
 			}
 
 			//remove empty spaces before and after every value
@@ -229,7 +229,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 		}
 		// checking if spreadsheet file contains data or not
 		if (!this.spreadsheetUploadController.payloadArray.length) {
-			MessageToast.show(this.util.geti18nText("selectFileUpload"));
+			MessageToast.show(this.util.geti18nText("spreadsheetimporter.selectFileUpload"));
 			return;
 		}
 
@@ -256,7 +256,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 				popup: false,
 				navigation: false
 			},
-			sActionLabel: this.util.geti18nText("uploadingFile")
+			sActionLabel: this.util.geti18nText("spreadsheetimporter.uploadingFile")
 		};
 
 		// calling the OData service using extension api
@@ -548,7 +548,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 			// download the created spreadsheet file
 			XLSX.writeFile(wb, this.component.getSpreadsheetFileName());
 
-			MessageToast.show(this.util.geti18nText("downloadingTemplate"));
+			MessageToast.show(this.util.geti18nText("spreadsheetimporter.downloadingTemplate"));
 		}
 	}
 
@@ -673,11 +673,11 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 			const i18n = this.componentI18n.getResourceBundle() as ResourceBundle;
 
 			const dialog = new Dialog({
-				title: i18n.getText("sheetSelectorDialogTitle"),
+				title: i18n.getText("spreadsheetimporter.sheetSelectorDialogTitle"),
 				type: "Message",
 				content: [select],
 				beginButton: new Button({
-					text: i18n.getText("ok"),
+					text: i18n.getText("spreadsheetimporter.ok"),
 					press: () => {
 						const selectedKey = select.getSelectedKey();
 						resolve(selectedKey);

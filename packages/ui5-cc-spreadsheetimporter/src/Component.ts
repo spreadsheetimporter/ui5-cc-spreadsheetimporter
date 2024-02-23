@@ -63,6 +63,7 @@ export default class Component extends UIComponent {
 			spreadsheetRowPropertyName: { type: "string" },
 			continueOnError: { type: "boolean", defaultValue: false },
 			createActiveEntity: { type: "boolean", defaultValue: false },
+			i18nModel: { type: "object" },
 			debug: { type: "boolean", defaultValue: false },
 			componentContainerData: { type: "object" }
 			//Pro Configurations
@@ -144,6 +145,7 @@ export default class Component extends UIComponent {
 		this.setComponentContainerData(compData?.componentContainerData);
 		this.setContinueOnError(compData?.continueOnError);
 		this.setCreateActiveEntity(compData?.createActiveEntity);
+		this.setI18nModel(compData?.i18nModel);
 		if (compData?.availableOptions && compData?.availableOptions.length > 0) {
 			// if availableOptions is set show the Options Menu
 			this.setShowOptions(true);

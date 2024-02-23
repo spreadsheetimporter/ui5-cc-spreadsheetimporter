@@ -58,6 +58,16 @@ export default class SpreadsheetUpload extends ManagedObject {
 		// @ts-ignore
 		this.component = component;
 		this.componentI18n = componentI18n;
+		// enhance i18n model with data from the component config, custom i18n model will overwrite the default one but only the texts that are present in the custom i18n model
+		//https://github.com/SAP/openui5/blob/85c3fc7d61b0886a1f53babd02100ef6bb96521b/src/sap.ui.core/src/sap/ui/model/resource/ResourceModel.js#L392-L426
+		if (this.component.getI18nModel()) {
+			try {
+				// @ts-ignore
+				this.componentI18n.enhance((this.component.getI18nModel() as ResourceModel).getResourceBundle());
+			} catch (error) {
+				Log.error("Error enhancing i18n model", error as Error, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ error: error }));
+			}
+		}
 		this.util = new Util(componentI18n.getResourceBundle() as ResourceBundle);
 		this.messageHandler = new MessageHandler(this);
 		this.spreadsheetUploadDialogHandler = new SpreadsheetUploadDialog(this, component, componentI18n, this.messageHandler);
@@ -116,7 +126,7 @@ export default class SpreadsheetUpload extends ManagedObject {
 		Log.debug("table Id", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ tableID: this.tableObject.getId() }));
 		this.binding = this.odataHandler.getBinding(this.tableObject);
 		if (!this.binding) {
-			throw new Error(this.util.geti18nText("bindingError"));
+			throw new Error(this.util.geti18nText("spreadsheetimporter.bindingError"));
 		}
 		this._odataType = await this.odataHandler.getOdataType(this.binding, this.tableObject, this.component.getOdataType());
 		Log.debug("odataType", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ odataType: this._odataType }));
@@ -260,6 +270,12 @@ export default class SpreadsheetUpload extends ManagedObject {
 		}
 		if (options.hasOwnProperty("createActiveEntity")) {
 			this.component.setCreateActiveEntity(options.createActiveEntity);
+		}
+		if (options.hasOwnProperty("componentContainerData")) {
+			this.component.setComponentContainerData(options.componentContainerData);
+		}
+		if (options.hasOwnProperty("i18nModel")) {
+			this.component.setI18nModel(options.i18nModel);
 		}
 
 		// Special case for showOptions

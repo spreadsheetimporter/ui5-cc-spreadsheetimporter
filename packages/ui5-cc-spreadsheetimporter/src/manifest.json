@@ -8,8 +8,8 @@
     "id": "cc.spreadsheetimporter.v0_32_0",
     "type": "component",
     "i18n": "i18n/i18n.properties",
-    "title": "{{compTitle}}",
-    "description": "{{compDescription}}",
+    "title": "{{spreadsheetimporter.compTitle}}",
+    "description": "{{spreadsheetimporter.compDescription}}",
     "resources": "resources.json",
     "applicationVersion": {
       "version": "1.0.0"

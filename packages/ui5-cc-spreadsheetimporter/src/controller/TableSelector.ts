@@ -48,11 +48,11 @@ export default class TableSelector extends ManagedObject {
 			const i18n = this._i18nModel.getResourceBundle() as ResourceBundle;
 
 			const dialog = new Dialog({
-				title: i18n.getText("tableSelectorDialogTitle"),
+				title: i18n.getText("spreadsheetimporter.tableSelectorDialogTitle"),
 				type: "Message",
 				content: [select],
 				beginButton: new Button({
-					text: i18n.getText("ok"),
+					text: i18n.getText("spreadsheetimporter.ok"),
 					press: () => {
 						const selectedKey = select.getSelectedKey();
 						const selectedTable = this._tables.find((table) => table.getId() === selectedKey);
