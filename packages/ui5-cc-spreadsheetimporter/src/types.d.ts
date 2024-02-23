@@ -108,7 +108,9 @@ export interface ComponentData {
 	useTableSelector?: boolean;
 	sampleData?: object;
 	continueOnError?: boolean;
+	componentContainerData?: object;
 	createActiveEntity?: boolean;
+	i18nModel?: object;
 }
 
 // Pro Types
