@@ -34,6 +34,7 @@ These options are available and explained in detail below:
 | `useTableSelector` | Open a Table Selector dialog if multiple tables in view | boolean |
 | `spreadsheetRowPropertyName` | If you want to send the spreadsheet row to the backend | string |
 | `componentContainerData` | Open a Table Selector dialog if multiple tables in view | boolean |
+| `i18nModel` | You can use your own i18n model to overwrite texts | object |
 | `continueOnError` | If an error occurs in batch processing, continue | boolean |
 | `debug` | Option to show more console statements and set Log Level to Debug | boolean |
 
@@ -481,6 +482,31 @@ settings="{
     }
   }" />
 ````
+
+### `i18nModel`
+
+You can use your own i18n model to overwrite texts.  
+
+You can see all the available texts in the [i18n files](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/packages/ui5-cc-spreadsheetimporter/src/i18n/i18n_en.properties).
+
+You don't have to overwrite all texts, only the ones you want to change. If you don't overwrite a text, the default text will be used.
+
+
+**Example:**
+
+```javascript
+this.spreadsheetUpload = await this.editFlow.getView()
+					.getController()
+					.getAppComponent()
+					.createComponent({
+						usage: "spreadsheetImporter",
+						async: true,
+						componentData: {
+							context: this,
+							i18nModel: this.getModel("i18n")
+						}
+					});
+```
 
 ### `continueOnError`
 
