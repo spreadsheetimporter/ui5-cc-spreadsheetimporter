@@ -1,0 +1,20 @@
+name: Feature Suggestion
+description: Suggest a new feature
+title: "[FEAT]: "
+labels: ["enhancement", "external"]
+assignees:
+  - marianfoo
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this feature suggestion.
+        Please make sure you checked the documentation if the features already exists or how your feature suggestion would fit in.
+  - type: textarea
+    id: text
+    attributes:
+      label: Description
+      description: Please describe your feature suggestion and possible use cases
+      render: markdown
+    validations:
+      required: true
