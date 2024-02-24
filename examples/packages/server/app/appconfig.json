@@ -1,0 +1,47 @@
+{
+  "bootstrapPlugins": {},
+  "services": {
+    "LaunchPage": {
+      "adapter": {
+        "config": {
+          "catalogs": [],
+          "groups": [
+            {
+              "id": "Home",
+              "title": "test",
+              "isPreset": true,
+              "isVisible": true,
+              "isGroupLocked": false,
+              "tiles": [
+                {
+                  "id": "chore-intent1",
+                  "properties": { "targetURL": "https://spreadsheet-importer.com/", "title": "Landing Page", "info": "Spreadsheet Importer", "subtitle": "", "icon": "sap-icon://course-book" },
+                  "tileType": "sap.ushell.ui.tile.StaticTile",
+                  "serviceRefreshInterval": 10000
+                },
+                {
+                  "id": "chore-intent2",
+                  "properties": { "targetURL": "https://docs.spreadsheet-importer.com/", "title": "Documentation", "info": "Spreadsheet Importer", "subtitle": "", "icon": "sap-icon://course-book" },
+                  "tileType": "sap.ushell.ui.tile.StaticTile",
+                  "serviceRefreshInterval": 10000
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "NavTargetResolution": {
+      "config": {
+        "enableClientSideTargetResolution": true
+      }
+    },
+    "ClientSideTargetResolution": {
+      "adapter": {
+        "config": {
+          "inbounds": {}
+        }
+      }
+    }
+  }
+}

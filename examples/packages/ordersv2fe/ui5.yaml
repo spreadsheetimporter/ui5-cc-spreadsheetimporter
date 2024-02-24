@@ -33,9 +33,10 @@ server:
     - name: ui5-tooling-modules-middleware
       afterMiddleware: compression
       configuration:
-        debug: "verbose"
-        addToNamespace: true
-        prependPathMappings: true
+        debug: false
+        # only for build
+        # addToNamespace: true
+        # prependPathMappings: true
     - name: fiori-tools-preview
       afterMiddleware: fiori-tools-appreload
       configuration:

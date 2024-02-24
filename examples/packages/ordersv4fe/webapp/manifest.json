@@ -32,6 +32,22 @@
           "localUri": "annotations/annotation.xml"
         }
       }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "intent1": {
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          },
+          "semanticObject": "ordersv4fe",
+          "action": "120",
+          "title": "Orders Sample App",
+          "info": "Fiori Elements",
+          "subTitle": "UI5 1.120 / OData V4",
+          "icon": "sap-icon://course-book"
+        }
+      }
     }
   },
   "sap.ui": {

@@ -6,6 +6,7 @@
     "@sap/cds": "^7.6.4"
   },
   "devDependencies": {
+    "cds-launchpad-plugin": "2.1.8",
     "cds-plugin-ui5": "0.8.1",
     "ordersv2fe120": "workspace:*",
     "ordersv4fe120": "workspace:^"
@@ -17,6 +18,22 @@
     "fiori": {
       "lean_draft": true,
       "bypass_draft": true
+    },
+    "cds-plugin-ui5": {
+      "modules": {
+        "ordersv4fe120": {
+          "configFile": "ui5-dist.yaml"
+        },
+        "ordersv2fe120": {
+          "configFile": "ui5-dist.yaml"
+        }
+      }
+    },
+    "launchpad": {
+      "theme": "sap_horizon",
+      "version": "1.120.6",
+      "basePath": "launchpad.html",
+      "appConfigPath": "app/appconfig.json"
     }
   }
 }
