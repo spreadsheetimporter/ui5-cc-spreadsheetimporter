@@ -108,8 +108,8 @@ importers:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@20.11.20)(typescript@5.3.3)
       ui5-test-runner:
-        specifier: 4.1.0
-        version: 4.1.0
+        specifier: 4.1.1
+        version: 4.1.1
       wdio-chromedriver-service:
         specifier: 8.1.1
         version: 8.1.1(@wdio/types@8.32.2)(webdriverio@8.32.3)
@@ -871,7 +871,7 @@ importers:
         version: 7.6.1(bluebird@3.7.2)
       cds-launchpad-plugin:
         specifier: 2.1.8
-        version: 2.1.8(@sap/cds-dk@7.6.1)(@sap/cds@7.6.3)(express@4.18.2)
+        version: 2.1.8(@sap/cds-dk@7.6.1)(@sap/cds@7.6.4)(express@4.18.2)
       cds-plugin-ui5:
         specifier: 0.8.1
         version: 0.8.1(@sap/cds@7.6.4)(bluebird@3.7.2)(express@4.18.2)
@@ -1058,8 +1058,8 @@ packages:
     resolution: {integrity: sha512-lFMjJTrFL3j7L9yBxwYfCq2k6qqwHyzuUl/XBnif78PWTJYyL/dfowQHWE3sp6U6ZzqWiiIZnpTMO96zhkjwtg==}
     engines: {node: '>=6.0.0'}
     dependencies:
-      '@jridgewell/gen-mapping': 0.3.3
-      '@jridgewell/trace-mapping': 0.3.22
+      '@jridgewell/gen-mapping': 0.3.4
+      '@jridgewell/trace-mapping': 0.3.23
     dev: true
 
   /@babel/code-frame@7.23.5:
@@ -1116,8 +1116,8 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       '@babel/types': 7.23.9
-      '@jridgewell/gen-mapping': 0.3.3
-      '@jridgewell/trace-mapping': 0.3.22
+      '@jridgewell/gen-mapping': 0.3.4
+      '@jridgewell/trace-mapping': 0.3.23
       jsesc: 2.5.2
     dev: true
 
@@ -2633,13 +2633,13 @@ packages:
       chalk: 4.1.2
     dev: true
 
-  /@jridgewell/gen-mapping@0.3.3:
-    resolution: {integrity: sha512-HLhSWOLRi875zjjMG/r+Nv0oCW8umGb0BgEhyX3dDX3egwZtB8PqLnjz3yedt8R5StBrzcg4aBpnh8UA9D1BoQ==}
+  /@jridgewell/gen-mapping@0.3.4:
+    resolution: {integrity: sha512-Oud2QPM5dHviZNn4y/WhhYKSXksv+1xLEIsNrAbGcFzUN3ubqWRFT5gwPchNc5NuzILOU4tPBDTZ4VwhL8Y7cw==}
     engines: {node: '>=6.0.0'}
     dependencies:
       '@jridgewell/set-array': 1.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
-      '@jridgewell/trace-mapping': 0.3.22
+      '@jridgewell/trace-mapping': 0.3.23
     dev: true
 
   /@jridgewell/resolve-uri@3.1.2:
@@ -2655,16 +2655,16 @@ packages:
   /@jridgewell/source-map@0.3.5:
     resolution: {integrity: sha512-UTYAUj/wviwdsMfzoSJspJxbkH5o1snzwX0//0ENX1u/55kkZZkcTZP6u9bwKGkv+dkk9at4m1Cpt0uY80kcpQ==}
     dependencies:
-      '@jridgewell/gen-mapping': 0.3.3
-      '@jridgewell/trace-mapping': 0.3.22
+      '@jridgewell/gen-mapping': 0.3.4
+      '@jridgewell/trace-mapping': 0.3.23
     dev: true
 
   /@jridgewell/sourcemap-codec@1.4.15:
     resolution: {integrity: sha512-eF2rxCRulEKXHTRiDrDy6erMYWqNw4LPdQ8UQA4huuxaQsVeRPFl2oM8oDGxMFhJUWZf9McpLtJasDDZb/Bpeg==}
     dev: true
 
-  /@jridgewell/trace-mapping@0.3.22:
-    resolution: {integrity: sha512-Wf963MzWtA2sjrNt+g18IAln9lKnlRp+K2eH4jjIoF1wYeq3aMREpG09xhlhdzS0EjwU7qmUJYangWa+151vZw==}
+  /@jridgewell/trace-mapping@0.3.23:
+    resolution: {integrity: sha512-9/4foRoUKp8s96tSkh8DlAAc5A0Ty8vLXld+l9gjKKY6ckwI8G15f0hskGmuLZu78ZlGa1vtsfOa+lnB4vG6Jg==}
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
@@ -3374,6 +3374,10 @@ packages:
       axios: 1.6.1(debug@4.3.4)
     transitivePeerDependencies:
       - debug
+<<<<<<< HEAD
+=======
+    dev: false
+>>>>>>> ea4d059a (chore: update deps)
 
   /@sap-ux/control-property-editor@0.4.12:
     resolution: {integrity: sha512-gc7ikFsE+L93RisZc68LCsSwv8zqKphcMgSDCgBxmYTrvmUmh95pfPfTeuCGsd6TGRdbM6fY6n/3NZALu+tJpg==}
@@ -3575,8 +3579,41 @@ packages:
     dependencies:
       antlr4: 4.9.3
 
+<<<<<<< HEAD
   /@sap/cds-fiori@1.2.2(@sap/cds@7.6.3)(express@4.18.2):
     resolution: {integrity: sha512-9bJKiIq8dCmwEcIXES7jiAcmiyJlDjjKdnvceAmqCU5Z925ZaalVIGYdnmmlQyciPUzD/bk3vRxmrPIogP6leA==}
+=======
+  /@sap/cds-dk@7.6.1(bluebird@3.7.2):
+    resolution: {integrity: sha512-6Sovucw58dTZXdVZT/F5njXBEF8v4QnPfKZF84zawUdxm1qAln+y+JRrk+r/sb/BgkH53y6iwd5Dx6jGeHQqyw==}
+    hasBin: true
+    dependencies:
+      '@sap/cds': 7.6.4(express@4.18.2)
+      '@sap/cds-foss': 5.0.0
+      '@sap/cds-mtxs': 1.15.0
+      '@sap/eslint-plugin-cds': 2.6.5(eslint@8.57.0)(express@4.18.2)
+      '@sap/hdi-deploy': 4.9.2
+      axios: 1.6.7
+      eslint: 8.57.0
+      express: 4.18.2
+      livereload-js: 4.0.2
+      mustache: 4.2.0
+      node-watch: 0.7.4
+      pluralize: 8.0.0
+      ws: 8.16.0
+      xml-js: 1.6.11
+    optionalDependencies:
+      sqlite3: 5.1.7(bluebird@3.7.2)
+    transitivePeerDependencies:
+      - bluebird
+      - bufferutil
+      - debug
+      - supports-color
+      - utf-8-validate
+    dev: true
+
+  /@sap/cds-fiori@1.2.3(@sap/cds@7.6.4)(express@4.18.2):
+    resolution: {integrity: sha512-WOPjcHPgTZZ/QpwtcNu0A/FlgcEchZlX3+dlr6s6gEesfF9mq9mUTZ50DFpnEjPmOpZXN9ymN1TR4qO7H1VhOg==}
+>>>>>>> ea4d059a (chore: update deps)
     peerDependencies:
       '@sap/cds': '>=7.1'
       express: '>=4'
@@ -3593,8 +3630,24 @@ packages:
       xmlbuilder: 15.1.1
       yaml: 2.3.4
 
+<<<<<<< HEAD
   /@sap/cds@7.6.3(express@4.18.2):
     resolution: {integrity: sha512-/zZUcqAvuOEy7Uu2hPshI9I3q/SJz/T+pWZGFB/MvjKZqrEUcj3htgd+B4Zn8zy9OsTvPe2wXHLeAxM/ep5pdA==}
+=======
+  /@sap/cds-mtxs@1.15.0:
+    resolution: {integrity: sha512-kZeGdVV0Ornw+FPiXDFeAfOcexDpHG1aCyIr9ojx/0Rde54rPXMhXvEKhbH8yis6OfOumSjuDtTp1UoLSumsGw==}
+    hasBin: true
+    dependencies:
+      '@sap/hdi-deploy': 4.9.2
+      axios: 1.6.7
+    transitivePeerDependencies:
+      - debug
+      - supports-color
+    dev: true
+
+  /@sap/cds@7.6.4(express@4.18.2):
+    resolution: {integrity: sha512-1/mDRIVoNEjX2RXGRiPIkMC2VHlKwXgFkTcYXvFXF871e46nIKlQ7MfA9yfcVE7T2EdA3v3M66ul3sp5JgcflQ==}
+>>>>>>> ea4d059a (chore: update deps)
     engines: {node: '>=16'}
     hasBin: true
     dependencies:
@@ -3613,8 +3666,69 @@ packages:
       properties-reader: 2.2.0
       url: 0.11.0
 
+<<<<<<< HEAD
   /@sap/ux-specification@1.120.3:
     resolution: {integrity: sha512-pI4XdAyTA+JpKChWqWnLJmnywHY0tUkrh3CjNVzVzGj7ek9jB5c9+xu9MbRdX2GC6lX12L+Tl0uNy560tsfnXA==}
+=======
+  /@sap/eslint-plugin-cds@2.6.5(eslint@8.57.0)(express@4.18.2):
+    resolution: {integrity: sha512-Opymu1yYubhkCoE8FoFNECZd5rl5DsPseVXJzOE7zQ04hh5AtyL0sWHtFUoDyvblCmSUTbaKcA8Zj1e1R2Ahqw==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      eslint: '>=7'
+    dependencies:
+      '@sap/cds': 7.6.4(express@4.18.2)
+      eslint: 8.57.0
+      semver: 7.6.0
+    transitivePeerDependencies:
+      - express
+    dev: true
+
+  /@sap/hana-client@2.19.21:
+    resolution: {integrity: sha512-SEqnykEzLaeMTx8VJvgk26H3chSyc/0I9Yf7JfSAfxRSlQZutIV6eAMcIcjI9Mb6A/c6tVw7q9zsG5kdHPL6MQ==}
+    engines: {node: '>=4.0.0'}
+    requiresBuild: true
+    dependencies:
+      debug: 3.1.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /@sap/hdi-deploy@4.9.2:
+    resolution: {integrity: sha512-EP4uvJxTb7/VGa9SKduUZn7M6IIGYrg04Q3CfCEWbbNm2xdmumPLrAxzfW0knyf5lu6430I+/qEZShm2u9Wbkg==}
+    engines: {node: ^12.0.0 || ^14.0.0 || ^16.0.0 || ^18.0.0 || ^20.0.0}
+    dependencies:
+      '@sap/hana-client': 2.19.21
+      '@sap/hdi': 4.5.2(@sap/hana-client@2.19.21)(hdb@0.19.3)
+      '@sap/xsenv': 4.2.0
+      async: 3.2.3
+      dotenv: 10.0.0
+      handlebars: 4.7.7
+      hdb: 0.19.3
+      micromatch: 4.0.4
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /@sap/hdi@4.5.2(@sap/hana-client@2.19.21)(hdb@0.19.3):
+    resolution: {integrity: sha512-SwWZ8oA9NIIif2eg5Cqdn7oLjD2Ue2MBorb/cvGEbbCSEKmo++aXWr7dIXVOCdZ8FN97uabyM/PA6j7wqjXBDw==}
+    engines: {node: '>=12 <=20'}
+    peerDependencies:
+      '@sap/hana-client': ^2 >= 2.5
+      hdb: ^0
+    peerDependenciesMeta:
+      '@sap/hana-client':
+        optional: true
+      hdb:
+        optional: true
+    dependencies:
+      '@sap/hana-client': 2.19.21
+      async: 3.2.3
+      hdb: 0.19.3
+    dev: true
+
+  /@sap/ux-specification@1.120.4:
+    resolution: {integrity: sha512-9ikxXg5XC2N8N+qmoSlvMWe7Rd9lBS1Wy32FYBhi+SB1gbXL2sA4kDXgNE9L49sU8btBTP8friRptYJHZ8vnmw==}
+>>>>>>> ea4d059a (chore: update deps)
     engines: {node: '>= 18.0.0 < 19.0.0 || >= 20.0.0 < 21.0.0 || >= 22.0.0', yarn: '>=1.22.19 < 2'}
     dependencies:
       '@sap-ux/fe-fpm-writer': 0.24.4
@@ -3640,8 +3754,24 @@ packages:
       - utf-8-validate
     dev: true
 
+<<<<<<< HEAD
   /@sapui5/ts-types-esm@1.120.7:
     resolution: {integrity: sha512-UIUjbH/ry30bNALlgjTLELGxtSHb5x+j4kNFkiVnaYPSO1ywsuQ2dtT6yp61zPfmo0uXGuyzTzd5shpsox/zOg==}
+=======
+  /@sap/xsenv@4.2.0:
+    resolution: {integrity: sha512-Hu74ezPEKVgzz1XLi4/Ttlv+n2w9CTuLBlR6Vw4y9FK7btLm1wnCViDPufTG7yxniEADw8EQbqRv+krmcFmGLA==}
+    engines: {node: ^12.0.0 || ^14.0.0 || ^16.0.0 || ^18.0.0 || ^20.0.0}
+    dependencies:
+      debug: 4.3.3
+      node-cache: 5.1.2
+      verror: 1.10.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /@sapui5/ts-types-esm@1.121.0:
+    resolution: {integrity: sha512-CNGuxGEpWz1/r5+jbBK3Whl41Cd1YqyiDihhhleXxAJAKGjzqryeNSscWaqixrxBEO9H+p8gkSk+QswUR9XBuA==}
+>>>>>>> ea4d059a (chore: update deps)
     dependencies:
       '@types/jquery': 3.5.13
       '@types/offscreencanvas': 2019.6.4
@@ -3950,8 +4080,8 @@ packages:
       '@types/node': 20.11.20
     dev: true
 
-  /@types/semver@7.5.7:
-    resolution: {integrity: sha512-/wdoPq1QqkSj9/QOeKkFquEuPzQbHTWAMPH/PaUMB+JuR31lXhlWXRZ52IpfDYVlDOUBvX09uBrPwxGT1hjNBg==}
+  /@types/semver@7.5.8:
+    resolution: {integrity: sha512-I8EUhyrgfLrcTkzV3TSsGyl1tSuPrEDzr0yd5m90UgNxQkyDXULk3b6MlQqTCpZpNtWe1K0hzclnZkTcLBe2UQ==}
     dev: true
 
   /@types/sizzle@2.3.8:
@@ -4124,7 +4254,7 @@ packages:
     dependencies:
       '@eslint-community/eslint-utils': 4.4.0(eslint@8.57.0)
       '@types/json-schema': 7.0.15
-      '@types/semver': 7.5.7
+      '@types/semver': 7.5.8
       '@typescript-eslint/scope-manager': 7.0.2
       '@typescript-eslint/types': 7.0.2
       '@typescript-eslint/typescript-estree': 7.0.2(typescript@5.3.3)
@@ -5510,8 +5640,26 @@ packages:
       lodash: 4.17.21
     dev: true
 
+<<<<<<< HEAD
   /cds-plugin-ui5@0.8.0(@sap/cds@7.6.3)(bluebird@3.7.2)(express@4.18.2):
     resolution: {integrity: sha512-mhZVlxEK2Tw2gj/wvK8fdFkf/iGgAMe7fYA3PBI39bght2MRaztqIUb4bS6LOajLj96YD3jBfbV5l3uBAHrMDA==}
+=======
+  /cds-launchpad-plugin@2.1.8(@sap/cds-dk@7.6.1)(@sap/cds@7.6.4)(express@4.18.2):
+    resolution: {integrity: sha512-BeDaBWvtusWfeHsc93sv/E6kKOXRsandfPvg310durm0uWm3ZAAyyK4YPqNMRexoR33XPQC1aD4hUNFTz+I/Vg==}
+    peerDependencies:
+      '@sap/cds': '>=5'
+      '@sap/cds-dk': '>=4.3'
+      express: '>=4'
+    dependencies:
+      '@sap/cds': 7.6.4(express@4.18.2)
+      '@sap/cds-dk': 7.6.1(bluebird@3.7.2)
+      dot-properties: 1.0.1
+      express: 4.18.2
+    dev: true
+
+  /cds-plugin-ui5@0.8.1(@sap/cds@7.6.4)(bluebird@3.7.2)(express@4.18.2):
+    resolution: {integrity: sha512-9170ly2dkX9WI8LEaIFmIti69lWj/c9zkZX6GqPirIC/u31sPRURtp3P67B3wj5QlKJ1o4BtzCgUUSUvjkQyHg==}
+>>>>>>> ea4d059a (chore: update deps)
     peerDependencies:
       '@sap/cds': '>=6.8.2'
       express: '>=4.18.2'
@@ -6575,8 +6723,18 @@ packages:
     resolution: {integrity: sha512-cjIHHKlf2dPINJ5Io3lPocWvWmthXn3ztqyHVzUfufRiCiPECb0oiEqEGbEGaunFZtcMvwgUcxP9CTpLG4KCsA==}
     dev: true
 
+<<<<<<< HEAD
   /dotenv@16.4.4:
     resolution: {integrity: sha512-XvPXc8XAQThSjAbY6cQ/9PcBXmFoWuw1sQ3b8HqUCR6ziGXjkTi//kB9SWa2UwqlgdAIuRqAa/9hVljzPehbYg==}
+=======
+  /dotenv@10.0.0:
+    resolution: {integrity: sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==}
+    engines: {node: '>=10'}
+    dev: true
+
+  /dotenv@16.4.5:
+    resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==}
+>>>>>>> ea4d059a (chore: update deps)
     engines: {node: '>=12'}
     dev: true
 
@@ -7199,8 +7357,8 @@ packages:
     dependencies:
       strnum: 1.0.5
 
-  /fast-xml-parser@4.3.4:
-    resolution: {integrity: sha512-utnwm92SyozgA3hhH2I8qldf2lBqm6qHOICawRNRFu1qMe3+oqr+GcXjGqTmXTMGE5T4eC03kr/rlh5C1IRdZA==}
+  /fast-xml-parser@4.3.5:
+    resolution: {integrity: sha512-sWvP1Pl8H03B8oFJpFR3HE31HUfwtX7Rlf9BNsvdpujD4n7WMhfmu8h9wOV2u+c1k0ZilTADhPqypzx2J690ZQ==}
     hasBin: true
     dependencies:
       strnum: 1.0.5
@@ -9836,8 +9994,13 @@ packages:
       - supports-color
     dev: true
 
+<<<<<<< HEAD
   /node-abi@3.55.0:
     resolution: {integrity: sha512-uPEjtyh2tFEvWYt4Jw7McOD5FPcHkcxm/tHZc5PWaDB3JYq0rGFUbgaAK+CT5pYpQddBfsZVWI08OwoRfdfbcQ==}
+=======
+  /node-abi@3.56.0:
+    resolution: {integrity: sha512-fZjdhDOeRcaS+rcpve7XuwHBmktS1nS1gzgghwKUQQ8nTy2FdSDr6ZT8k6YhvlJeHmmQMYiT/IH9hfco5zeW2Q==}
+>>>>>>> ea4d059a (chore: update deps)
     engines: {node: '>=10'}
     requiresBuild: true
     dependencies:
@@ -10662,7 +10825,11 @@ packages:
       minimist: 1.2.8
       mkdirp-classic: 0.5.3
       napi-build-utils: 1.0.2
+<<<<<<< HEAD
       node-abi: 3.55.0
+=======
+      node-abi: 3.56.0
+>>>>>>> ea4d059a (chore: update deps)
       pump: 3.0.0
       rc: 1.2.8
       simple-get: 4.0.1
@@ -11077,6 +11244,7 @@ packages:
       find-up-simple: 1.0.0
       read-pkg: 9.0.1
       type-fest: 4.10.3
+<<<<<<< HEAD
 
   /read-pkg-up@10.0.0:
     resolution: {integrity: sha512-jgmKiS//w2Zs+YbX039CorlkOp8FIVbSAN8r8GJHDsGlmNPXo+VeHkqAwCiQVTTx5/LwLZTcEw59z3DvcLbr0g==}
@@ -11086,6 +11254,8 @@ packages:
       read-pkg: 8.1.0
       type-fest: 3.13.1
     dev: true
+=======
+>>>>>>> ea4d059a (chore: update deps)
 
   /read-pkg-up@10.0.0:
     resolution: {integrity: sha512-jgmKiS//w2Zs+YbX039CorlkOp8FIVbSAN8r8GJHDsGlmNPXo+VeHkqAwCiQVTTx5/LwLZTcEw59z3DvcLbr0g==}
@@ -11889,6 +12059,22 @@ packages:
     resolution: {integrity: sha512-9LK+E7Hv5R9u4g4C3p+jjLstaLe11MDsL21UpYaCNmapvMkYhqCV4A/f/3gyH8QjMyh6l68q9xC85vihY9ahMQ==}
     dev: true
 
+<<<<<<< HEAD
+=======
+  /socks-proxy-agent@6.2.1:
+    resolution: {integrity: sha512-a6KW9G+6B3nWZ1yB8G7pJwL3ggLy1uTzKAgCb7ttblwqdz9fMGJUuTy3uFzEP48FAs9FLILlmzDlE2JJhVQaXQ==}
+    engines: {node: '>= 10'}
+    requiresBuild: true
+    dependencies:
+      agent-base: 6.0.2
+      debug: 4.3.4(supports-color@8.1.1)
+      socks: 2.8.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+    optional: true
+
+>>>>>>> ea4d059a (chore: update deps)
   /socks-proxy-agent@8.0.2:
     resolution: {integrity: sha512-8zuqoLv1aP/66PHF5TqwJ7Czm3Yv32urJQHrVyhD7mmA6d61Zv8cIXQYPTWwmg6qlupnPvs/QKDmfa4P/qct2g==}
     engines: {node: '>= 14'}
@@ -12705,8 +12891,8 @@ packages:
       - supports-color
     dev: true
 
-  /ui5-test-runner@4.1.0:
-    resolution: {integrity: sha512-Dbsl11gsU7cIxFk31BpXcNAAWFC1epVLY4TajAMM1XAb4FpF8CUwuDEdXGQR7l/+zGQRDRzkYyjHeUUY8e2S4Q==}
+  /ui5-test-runner@4.1.1:
+    resolution: {integrity: sha512-ux/umWSMWSZ4nHiNDNOdt4u2thown/DHcKZfVgxs05Y9gAWovKtT9grH7JGpw6Hc7qf21YZxc1XgFrNvHI+zOA==}
     engines: {node: '>=18'}
     hasBin: true
     dependencies:
@@ -12733,7 +12919,7 @@ packages:
       chokidar: 3.6.0
       espree: 9.6.1
       estraverse: 5.3.0
-      fast-xml-parser: 4.3.4
+      fast-xml-parser: 4.3.5
       ignore-walk: 6.0.4
       minimatch: 7.4.6
       rollup: 4.12.0
