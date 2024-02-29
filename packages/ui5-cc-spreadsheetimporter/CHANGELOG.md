@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.33.1](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.33.0...ui5-cc-spreadsheetimporter-v0.33.1) (2024-02-29)
+
+
+### Bug Fixes
+
+* parse Edm.Byte and Edm.SByte ([#506](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/506)) ([1b50aef](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/1b50aef494c21a39674ac1cce871b5e3889b9671))
+
 ## [0.33.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.32.0...ui5-cc-spreadsheetimporter-v0.33.0) (2024-02-23)
 
 
