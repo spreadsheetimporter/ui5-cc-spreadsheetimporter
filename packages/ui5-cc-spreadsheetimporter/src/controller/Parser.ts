@@ -84,7 +84,9 @@ export default class Parser extends ManagedObject {
 						metadataColumn.type === "Edm.Int32" ||
 						metadataColumn.type === "Edm.Integer" ||
 						metadataColumn.type === "Edm.Int64" ||
-						metadataColumn.type === "Edm.Integer64"
+						metadataColumn.type === "Edm.Integer64" ||
+						metadataColumn.type === "Edm.Byte" ||
+						metadataColumn.type === "Edm.SByte"
 					) {
 						try {
 							const valueInteger = this.checkInteger(value, metadataColumn, util, messageHandler, index, component);
