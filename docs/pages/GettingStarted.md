@@ -67,13 +67,13 @@ npm install ui5-cc-spreadsheetimporter
 
 5\. **Optional** Avoid error `component does not exist`
 
-If you deploy your app to a SAP System with the Fiori Tools, you may get the error `component does not exist`. Even though an error appears, the app is deployed anyway.
+If you deploy your app to a SAP System (S/4 On-Premise or SAP BTP ABAP environment), you may get the error `component does not exist`.
 
 To avoid this error, you can add the following to your `manifest.json` file:
 
 ```json
 "sap.app": {
-  "embeds": ["./thirdparty/customControl/spreadsheetImporter/v0_33_1"]
+  "embeds": ["thirdparty/customControl/spreadsheetImporter/v0_33_1"]
 }
 ```
 
@@ -244,7 +244,7 @@ To avoid this error, you can add the following to your `manifest.json` file:
 
 ```json
 "sap.app": {
-  "embeds": ["./thirdparty/customControl/spreadsheetImporter/v0_33_1"]
+  "embeds": ["thirdparty/customControl/spreadsheetImporter/v0_33_1"]
 }
 ```
 
