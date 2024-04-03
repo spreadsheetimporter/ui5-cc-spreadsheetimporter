@@ -2,12 +2,12 @@
   "name": "@capire/orders",
   "version": "1.0.0",
   "dependencies": {
-    "@cap-js-community/odata-v2-adapter": "1.12.5",
-    "@sap/cds": "^7.6.4"
+    "@cap-js-community/odata-v2-adapter": "1.12.8",
+    "@sap/cds": "^7.8.0"
   },
   "devDependencies": {
     "cds-launchpad-plugin": "2.1.8",
-    "cds-plugin-ui5": "0.8.1",
+    "cds-plugin-ui5": "0.8.3",
     "ordersv2fe120": "workspace:*",
     "ordersv4fe120": "workspace:^"
   },
@@ -22,10 +22,10 @@
     "cds-plugin-ui5": {
       "modules": {
         "ordersv4fe120": {
-          "configFile": "ui5-dist.yaml"
+          "configFile": "ui5.yaml"
         },
         "ordersv2fe120": {
-          "configFile": "ui5-dist.yaml"
+          "configFile": "ui5.yaml"
         }
       }
     },
