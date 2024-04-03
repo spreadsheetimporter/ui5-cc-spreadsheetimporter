@@ -100,7 +100,7 @@ export default class Parser extends ManagedObject {
 								}
 							} else {
 								// for OData V2
-								if (metadataColumn.type === "Edm.Int16" || metadataColumn.type === "Edm.Int32") {
+								if (metadataColumn.type === "Edm.Int16" || metadataColumn.type === "Edm.Int32" || metadataColumn.type === "Edm.Byte" || metadataColumn.type === "Edm.SByte") {
 									payload[columnKey] = valueInteger;
 								} else {
 									payload[columnKey] = valueInteger.toString();
