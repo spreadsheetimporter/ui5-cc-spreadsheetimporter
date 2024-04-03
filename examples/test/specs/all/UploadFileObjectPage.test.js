@@ -189,12 +189,12 @@ describe("Upload File Object Page", () => {
 	});
 
 	it("check Field: byte", async () => {
-		const value = item.time;
+		const value = item.byte;
 		expect(value).toBe("4");
 	});
 
 	it("check Field: time", async () => {
-		const value = item.time;
+		const value = item.binary;
 		expect(value).toBe("dGhpc2lzYXRlc3Q=");
 	});
 });
