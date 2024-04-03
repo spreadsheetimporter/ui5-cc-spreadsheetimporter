@@ -190,7 +190,7 @@ describe("Upload File Object Page", () => {
 
 	it("check Field: byte", async () => {
 		const value = item.byte;
-		expect(value).toBe("4");
+		expect(value).toBe(4);
 	});
 
 	it("check Field: time", async () => {
