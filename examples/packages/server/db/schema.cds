@@ -8,21 +8,21 @@ using {
 namespace sap.capire.orders;
 
 entity Orders : cuid, managed {
-  OrderNo  : String(22) @title: 'Order Number'; //> readable key
-  Items    : Composition of many OrderItems
-               on Items.order = $self;
-  Shipping : Composition of many ShippingDetails
-              on Shipping.order = $self;
-  buyer    : User;
-  currency : Currency;
-  spreadsheetRow: Integer;
+  OrderNo        : String(22) @title: 'Order Number'; //> readable key
+  Items          : Composition of many OrderItems
+                     on Items.order = $self;
+  Shipping       : Composition of many ShippingDetails
+                     on Shipping.order = $self;
+  buyer          : User;
+  currency       : Currency;
+  spreadsheetRow : Integer;
 }
 
 entity OrderItems : cuid {
   order     : Association to Orders;
   product   : Association to Products;
-  Infos : Composition of many OrderItemsInfo
-               on Infos.orderItem = $self;
+  Infos     : Composition of many OrderItemsInfo
+                on Infos.orderItem = $self;
   quantity  : Integer;
   title     : String; //> intentionally replicated as snapshot from product.title
   price     : Double; //> materialized calculated field
@@ -32,23 +32,26 @@ entity OrderItems : cuid {
   time      : Time;
   boolean   : Boolean;
   decimal   : Decimal(15, 3);
+  byte      : UInt8;
+  binary    : Binary;
+
 }
 
 entity OrderItemsInfo : cuid {
-  orderItem     : Association to OrderItems;
-  comment       : String;
+  orderItem : Association to OrderItems;
+  comment   : String;
 }
 
 entity ShippingDetails : cuid {
-  order         : Association to Orders;
-  address       : String;
-  city          : String;
-  state         : String;
-  postalCode    : String;
-  country       : String;
-  shipmentDate  : DateTime;
-  arrivalDate   : DateTime;
-  shipmentStatus: String;
+  order          : Association to Orders;
+  address        : String;
+  city           : String;
+  state          : String;
+  postalCode     : String;
+  country        : String;
+  shipmentDate   : DateTime;
+  arrivalDate    : DateTime;
+  shipmentStatus : String;
 }
 
 /**
@@ -70,8 +73,8 @@ entity OrdersND : cuid, managed {
 entity OrderItemsND : cuid {
   order     : Association to OrdersND;
   product   : Association to ProductsND;
-  Infos : Composition of many OrderItemsInfoND
-               on Infos.orderItem = $self;
+  Infos     : Composition of many OrderItemsInfoND
+                on Infos.orderItem = $self;
   quantity  : Integer;
   title     : String; //> intentionally replicated as snapshot from product.title
   price     : Double; //> materialized calculated field
@@ -81,11 +84,13 @@ entity OrderItemsND : cuid {
   time      : Time;
   boolean   : Boolean;
   decimal   : Decimal(15, 3);
+  byte      : UInt8;
+  binary    : Binary;
 }
 
 entity OrderItemsInfoND : cuid {
-  orderItem     : Association to OrderItemsND;
-  comment       : String;
+  orderItem : Association to OrderItemsND;
+  comment   : String;
 }
 
 /**

@@ -187,4 +187,14 @@ describe("Upload File Object Page", () => {
 		const value = item.time;
 		expect(value).toBe("16:00");
 	});
+
+	it("check Field: byte", async () => {
+		const value = item.byte;
+		expect(value).toBe(4);
+	});
+
+	it("check Field: time", async () => {
+		const value = item.binary;
+		expect(value).toBe("dGhpc2lzYXRlc3Q=");
+	});
 });

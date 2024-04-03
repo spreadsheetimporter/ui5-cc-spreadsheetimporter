@@ -78,7 +78,7 @@ sap.ui.define([], function () {
 						componentData: {
 							context: this,
 							tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable",
-							columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time", "boolean", "decimal"],
+							columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time", "boolean", "decimal", "byte","binary"],
 							mandatoryFields: ["product_ID", "quantity"],
 							spreadsheetFileName: "Test.xlsx",
 							i18nModel: this.getModel("i18n"),
