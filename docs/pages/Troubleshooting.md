@@ -40,7 +40,7 @@ Alternatively, you can try selecting all the messages and copying them to a text
 If you receive an error similar to the following:
 
 ```
-ui5loader-dbg.js:1042 Uncaught (in promise) ModuleError: failed to load 'cc/spreadsheetimporter/v0_33_1/Component.js' from resources/cc/spreadsheetimporter/v0_33_1/Component.js: script load error
+ui5loader-dbg.js:1042 Uncaught (in promise) ModuleError: failed to load 'cc/spreadsheetimporter/v0_33_2/Component.js' from resources/cc/spreadsheetimporter/v0_33_2/Component.js: script load error
 ```
 
 Since the component is designed to always use a specific version, you must ensure that the correct version is used after an update.  
@@ -61,10 +61,10 @@ See the configurations for this version below:
 ```json
 "componentUsages": {
     "spreadsheetImporter": {
-        "name": "cc.spreadsheetimporter.v0_33_1"
+        "name": "cc.spreadsheetimporter.v0_33_2"
     }
 },
 "resourceRoots": {
-    "cc.spreadsheetimporter.v0_33_1": "./thirdparty/customControl/spreadsheetImporter/v0_33_1"
+    "cc.spreadsheetimporter.v0_33_2": "./thirdparty/customControl/spreadsheetImporter/v0_33_2"
 }
 ```
