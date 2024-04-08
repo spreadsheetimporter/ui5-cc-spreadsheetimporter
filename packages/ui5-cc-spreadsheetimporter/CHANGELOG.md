@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.33.2](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.33.1...ui5-cc-spreadsheetimporter-v0.33.2) (2024-04-08)
+
+
+### Bug Fixes
+
+* special case for Edm.Byte for OData V2 ([#519](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/519)) ([36b5f7c](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/36b5f7c3eb83c8ba02f9bc69405fb68738d49ee8))
+* update SheetJS to 0.20.2 ([#521](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/521)) ([29301d2](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/29301d23a7163d267a84532593646b1b4685b2aa))
+
 ## [0.33.1](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.33.0...ui5-cc-spreadsheetimporter-v0.33.1) (2024-02-29)
 
 
