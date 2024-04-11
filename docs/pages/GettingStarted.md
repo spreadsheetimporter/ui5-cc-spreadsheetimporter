@@ -240,6 +240,12 @@ openSpreadsheetUploadDialog: async function (oEvent) {
 
 When deploying the app to your ABAP system, you may get an error like this: `SAPUI5 library/component cc.spreadsheetimporter.v0_33_2 used in application Z*** does not exist`. The application is deployed, but the service returns an error.
 
+IF you have used a template to create the app, then make sure the build script is using the --all command like below
+
+```
+  "build": "ui5 build --config=ui5.yaml --all --clean-dest --dest dist",
+```
+
 To avoid this error, you can add the following to your `manifest.json` file:
 
 ```json
