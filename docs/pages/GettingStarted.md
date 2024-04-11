@@ -1,13 +1,16 @@
 ## Deployment Strategy
 
-There are two ways to use the Spreadsheet Upload Control. Since a Reuse Component (library) is essentially utilized, this results in two deployment strategies that can be used.
+There are two ways to use the Spreadsheet Upload Control. Since a Reuse Component is essentially utilized, this results in two deployment strategies that can be used.
 
 Depending on the deployment environment (ABAP or BTP), you have to consider a few special cases. This is described in the [Deployment of your app](#deployment-of-your-app) page.  
 A full deployable BTP example can be found in the [sample project](https://github.com/spreadsheetimporter/sample-full-btp).
 
+**Recommended:** Because SAP did not initially consider Decentralized deployment, there may be problems with it (especially in the ABAP stack).
+I therefore recommend centralized deployment on the ABAP stack.
+
 ### Decentralized deployment
 
-The library is attached directly to each app and deployed with it.
+The component is attached directly to each app and deployed with it. There are specific things to note here on the ABAP stack (see [ABAP Component Deployment](#component-deployment)).
 
 ### Central deployment
 
@@ -236,6 +239,44 @@ openSpreadsheetUploadDialog: async function (oEvent) {
 
 ### ABAP System Deployment
 
+#### Component Deployment
+
+The following points are not explicitly relevant for the Spreadsheet Importer, but for the Reuse Component in general (see [UI5 Reuse Components](https://sapui5.hana.ondemand.com/sdk/#/topic/6314fcd2510648fbaad3cee8a421030d.html)).
+
+When you deploy the component to your ABAP system with decentralized deployment, the namespace of the component is registered in the app index. The same happens when you deploy the component centrally.  
+This means after you deploy the component decentrally the first time (or centrally), you can use the component in your app always the centrally way ([Central Deployment](#setup-central-deployment)).
+As the app index is used to find the component, you can only use this approach in the Fiori Launchpad.
+
+That means, you can deploy the component decentrally only once. After that, the namespace of the component is registered in the app index and the namespace can only exist once in the app index.  
+That is the reason why it is recommended to use the central deployment from the start.
+
+#### Using the component outside the app index
+
+If you using the component outside the Fiori Launchpad and can not use the app index or for whatever reason the component is not found even though it is deployed, you can direct the app to the correct path with `url` and `name` in the `createComponent` method:
+  
+```javascript
+openSpreadsheetUploadDialog: async function (oEvent) {
+  this.getView().setBusyIndicatorDelay(0);
+  this.getView().setBusy(true);
+  this.spreadsheetUpload = await this.getView()
+    .getController()
+    .getAppComponent()
+    .createComponent({
+      usage: "spreadsheetImporter",
+      async: true,
+      componentData: {
+        context: this,
+      },
+      url: "/sap/bc/ui5_ui5/sap/Z_XUP_v0_33_2",
+      name: "cc.spreadsheetimporter.v0_33_2"
+    });
+  this.spreadsheetUpload.openSpreadsheetUploadDialog();
+  this.getView().setBusy(false);
+}
+```
+
+This is alternative to using resourceRoots in the manifest.json when you don't have access to the manifest.json (like in adaption projects).
+
 #### Error: library/component used in application does not exist
 
 When deploying the app to your ABAP system, you may get an error like this: `SAPUI5 library/component cc.spreadsheetimporter.v0_33_2 used in application Z*** does not exist`. The application is deployed, but the service returns an error.
@@ -247,6 +288,8 @@ To avoid this error, you can add the following to your `manifest.json` file:
   "embeds": ["thirdparty/customControl/spreadsheetImporter/v0_33_1"]
 }
 ```
+
+After that the component should be found in the app index. This means ressourceRoots is not necessary.
 
 #### File unknown when deploying the app
 
