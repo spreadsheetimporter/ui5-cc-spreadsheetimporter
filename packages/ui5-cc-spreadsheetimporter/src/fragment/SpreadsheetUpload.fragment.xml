@@ -4,13 +4,9 @@
       <OverflowToolbar>
         <Title text="{i18n>spreadsheetimporter.spreadsheetupload}" />
         <ToolbarSpacer />
-        <Button press="showPreview" text="{i18n>spreadsheetimporter.showPreview}" icon="sap-icon://display" visible="{= !${info>/hidePreview}}" />
-        <Button press="onTempDownload" text="{i18n>spreadsheetimporter.downloadTemplate}" icon="sap-icon://download-from-cloud" visible="{= !${info>/hideGenerateTemplateButton}}" />
-        <Button press="onOpenOptionsDialog" text="{i18n>spreadsheetimporter.showOptionMenu}" visible="{= ${info>/showOptions}}">
-          <layoutData>
-            <OverflowToolbarLayoutData priority="AlwaysOverflow" />
-          </layoutData>
-        </Button>
+        <Button press="showPreview" text="{i18n>spreadsheetimporter.showPreview}" visible="{= !${info>/hidePreview}}" enabled="{= ${info>/dataRows} > 0}" />
+        <Button press="onTempDownload" text="{i18n>spreadsheetimporter.downloadTemplate}" visible="{= !${info>/hideGenerateTemplateButton}}" />
+        <Button press="onOpenOptionsDialog" icon="sap-icon://action-settings" visible="{= ${info>/showOptions}}" />
       </OverflowToolbar>
     </spreadsheetdialog:customHeader>
     <spreadsheetdialog:content>
