@@ -21,7 +21,7 @@
         ],
         formatter: 'formatMessage'
       }"
-          type="{= ${info>/dataRows} > 0 ? 'Success' : 'None'}"
+          type="{= ${info>/dataRows} > 0 ? 'Success' : 'Information'}"
           enableFormattedText="true"
           showIcon="true"
         >
