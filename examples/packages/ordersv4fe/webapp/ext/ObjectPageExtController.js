@@ -124,12 +124,12 @@ sap.ui.define([], function () {
 
 			// event to change data before send to backend
 			this.spreadsheetUpload.attachChangeBeforeCreate(function (oEvent) {
-				let payload = oEvent.getParameter("payload");
+				let payload = Object.assign({}, oEvent.getParameter("payload"));
 				// round number from 12,56 to 12,6
 				if (payload.price) {
 					payload.price = Number(payload.price.toFixed(1));
 				}
-				oEvent.getSource().setPayload(payload);
+				return payload;
 			}, this);
 
 			this.spreadsheetUpload.attachRequestCompleted(function (oEvent) {
