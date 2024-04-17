@@ -64,7 +64,7 @@ This sample is from the [sample app](https://github.com/spreadsheetimporter/ui5-
 
 ```javascript
 this.spreadsheetUpload.attachChangeBeforeCreate(function (event) {
-    let payload = Object.assign({}, event.getParameter("payload"));
+    let payload = event.getParameter("payload");
     // round number from 12,56 to 12,6
     if (payload.price) {
         payload.price = Number(payload.price.toFixed(1));
