@@ -243,14 +243,6 @@ export default class Component extends UIComponent {
 	}
 
 	/**
-	 * Set Payload for Event
-	 * @public
-	 */
-	setPayload(payload: any) {
-		this.spreadsheetUpload._setPayload(payload);
-	}
-
-	/**
 	 * add to error array
 	 * @public
 	 */

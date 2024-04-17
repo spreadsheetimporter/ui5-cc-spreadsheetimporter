@@ -1,6 +1,6 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 import DraftController from "sap/ui/generic/app/transaction/DraftController";
-import { Columns, ListObject, Property } from "../../types";
+import { Columns, FireEventReturnType, ListObject, Property } from "../../types";
 import ODataMessageHandler from "../dialog/ODataMessageHandler";
 import SpreadsheetUpload from "../SpreadsheetUpload";
 import Log from "sap/base/Log";
@@ -58,16 +58,20 @@ export default abstract class OData extends ManagedObject {
 			for (const batch of slicedPayloadArray) {
 				// loop over data from spreadsheet file
 				try {
-					for (const payload of batch) {
+					for (let payload of batch) {
+						let fireEventAsyncReturn: FireEventReturnType;
 						// skip draft and directly create
 						if (component.getCreateActiveEntity()) {
 							payload.IsActiveEntity = true;
 						}
 						// Extension method to manipulate payload
 						try {
-							await Util.fireEventAsync("changeBeforeCreate", { payload: payload }, component);
+							fireEventAsyncReturn = await Util.fireEventAsync("changeBeforeCreate", { payload: payload }, component);
 						} catch (error) {
 							Log.error("Error while calling the changeBeforeCreate event", error as Error, "SpreadsheetUpload: callOdata");
+						}
+						if (fireEventAsyncReturn.returnValue) {
+							payload = fireEventAsyncReturn.returnValue;
 						}
 						this.createAsync(model, binding, payload);
 					}
