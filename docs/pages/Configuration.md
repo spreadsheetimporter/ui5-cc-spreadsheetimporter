@@ -182,9 +182,9 @@ The `payload` will be an array of objects with the keys named like the `columns`
 **Example:**
 
 ````javascript
-this.spreadsheetUpload.attachUploadButtonPress(function (oEvent) {
+this.spreadsheetUpload.attachUploadButtonPress(function (event) {
         const model = this.getModel("tableData");
-        model.setData(oEvent.getParameter("payload"));
+        model.setData(event.getParameter("payload"));
 }, this);
 ````
 
@@ -203,10 +203,10 @@ If this option is set to `true`, the `payload` returns an additional parameter w
 You can access all the sheet names in the `uploadButtonPress` event.
 
 ```javascript
-this.spreadsheetUpload.attachUploadButtonPress(function (oEvent) {
+this.spreadsheetUpload.attachUploadButtonPress(function (event) {
     const model = this.getModel("tableData");
-    model.setData(oEvent.getParameter("payload")); // <-- example payload
-    oEvent.preventDefault();
+    model.setData(event.getParameter("payload")); // <-- example payload
+    event.preventDefault();
    }, this);
 ```
 

@@ -149,7 +149,7 @@ As an example, here is how your custom action can look like. This example is fro
 This will set the busy indicator and create the component if it is not already created. Then the Dialog will be opened. The attribute `context` is mandatory and must be set so the component can access the context of the app, including binding paths and the model. You can also pass the options (like `context`) to the method `openSpreadsheetUploadDialog` if you would like to pass the options at runtime. A use case would be if you have multiple tables on the object page and you would like to open the dialog for a specific table (see [TableSelector](TableSelector.md)).
 
 ```javascript
-openSpreadsheetUploadDialog: async function (oEvent) {
+openSpreadsheetUploadDialog: async function (event) {
   this.getView().setBusyIndicatorDelay(0);
   this.getView().setBusy(true);
   this.spreadsheetUpload = await this.getView()
@@ -213,7 +213,7 @@ As an example, here is how your custom action can look like. This example is fro
 ### Custom Code
 
 ```javascript
-openSpreadsheetUploadDialog: async function (oEvent) {
+openSpreadsheetUploadDialog: async function (event) {
   this.getView().setBusyIndicatorDelay(0);
   this.getView().setBusy(true);
   this.spreadsheetUpload = await this.getView()
