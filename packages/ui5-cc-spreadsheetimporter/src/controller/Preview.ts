@@ -30,7 +30,7 @@ export default class Preview extends ManagedObject {
 			content: [table],
 			buttons: [
 				new Button({
-					text: "Close",
+					text: this.util.geti18nText("spreadsheetimporter.messageDialogButtonClose"),
 					press: () => {
 						this.dialog.close();
 					}
