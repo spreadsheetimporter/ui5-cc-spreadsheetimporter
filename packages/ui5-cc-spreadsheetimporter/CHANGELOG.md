@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.33.3](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.33.2...ui5-cc-spreadsheetimporter-v0.33.3) (2024-04-18)
+
+
+### Bug Fixes
+
+* design improvements ([#527](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/527)) ([af21d7b](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/af21d7b4daba8060eb071da62c59dd16310299a7))
+* make sure payload in `changeBeforeCreate` is used ([#528](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/528)) ([89f3292](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/89f329243a438ffc7bd8a7fec7d6183cfbe46b1b))
+* reset context on server error ([#525](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/525)) ([d1dd033](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/d1dd03351787f9bb07f19883f9e92cc93b23dbc3))
+
 ## [0.33.2](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.33.1...ui5-cc-spreadsheetimporter-v0.33.2) (2024-04-08)
 
 
