@@ -66,16 +66,7 @@ describe("Upload File List Report", () => {
 			}
 		});
 		const overflowToolbarId = await overflowToolbar.getId();
-		await BaseClass.pressById(overflowToolbarId + "-overflowButton");
-		const button = await browser.asControl({
-			selector: {
-				controlType: "sap.m.Button",
-				properties: {
-					text: "Show options"
-				}
-			}
-		});
-		await button.press();
+		await BaseClass.pressById("__button5");
 	});
 
 	it("Check only strict available", async () => {
