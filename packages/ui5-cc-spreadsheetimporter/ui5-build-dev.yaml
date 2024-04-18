@@ -25,8 +25,8 @@ builder:
           - '**/*.ts'
         replace:
           - placeholder: XXXnamespaceXXX
-            value: v0_33_2
+            value: v0_33_3
           - placeholder: XXXnamespaceShortXXX
-            value: v0332
+            value: v0333
           - placeholder: XXXnamespaceSlashXXX
-            value: v0_33_2
+            value: v0_33_3
