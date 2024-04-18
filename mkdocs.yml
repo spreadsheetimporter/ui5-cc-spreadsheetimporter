@@ -29,6 +29,7 @@ nav:
       - OPA5 Tests: pages/Development/opa5.md
       - Docs: pages/Development/Docs.md
       - GitHub Actions: pages/Development/GitHubActions.md
+      - Sample Apps: pages/Development/SampleApps.md
   - Changelogs:
       - spreadsheetimporter: pages/CHANGELOGSPREADSHEETIMPORTER.md
       - spreadsheetimporter Button: pages/CHANGELOGSPREADSHEETIMPORTERBUTTON.md
