@@ -19,8 +19,7 @@ sap.ui.define([], function () {
 						componentData: {
 							context: this,
 							createActiveEntity: true,
-							i18nModel: this.getModel("i18n"),
-							showOptions: true,
+							i18nModel: this.getModel("i18n")
 						}
 					});
 
