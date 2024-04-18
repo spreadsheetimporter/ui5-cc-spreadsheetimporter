@@ -113,4 +113,10 @@ export interface ComponentData {
 	i18nModel?: object;
 }
 
+export type FireEventReturnType = {
+	bPreventDefault: boolean;
+	mParameters: object;
+	returnValue: object;
+};
+
 // Pro Types

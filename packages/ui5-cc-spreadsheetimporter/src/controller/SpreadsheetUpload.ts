@@ -306,10 +306,6 @@ export default class SpreadsheetUpload extends ManagedObject {
 		}
 	}
 
-	_setPayload(payload: any) {
-		this.payloadArray = payload;
-	}
-
 	refreshBinding(context: any, binding: any, id: any) {
 		if (context._controller?.getExtensionAPI()) {
 			// refresh binding in V4 FE context

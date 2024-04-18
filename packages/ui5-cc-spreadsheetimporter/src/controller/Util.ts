@@ -2,7 +2,7 @@ import ManagedObject from "sap/ui/base/ManagedObject";
 import Log from "sap/base/Log";
 import ResourceBundle from "sap/base/i18n/ResourceBundle";
 import MessageBox from "sap/m/MessageBox";
-import { RowData, ValueData } from "../types";
+import { FireEventReturnType, RowData, ValueData } from "../types";
 import Component from "../Component";
 import { FieldMatchType } from "../enums";
 import ObjectPool from "sap/ui/base/ObjectPool";
@@ -206,7 +206,7 @@ export default class Util extends ManagedObject {
 	 * @param component - The component on which the event is fired.
 	 * @returns A promise that resolves when all event handlers have completed.
 	 */
-	static async fireEventAsync(eventName: string, eventParameters: object, component: Component): Promise<boolean> {
+	static async fireEventAsync(eventName: string, eventParameters: object, component: Component): Promise<FireEventReturnType> {
 		let aEventListeners,
 			event,
 			promises = [];
@@ -230,6 +230,10 @@ export default class Util extends ManagedObject {
 		// Wait for all promises (i.e., async handlers) to resolve
 		await Promise.all(promises);
 
-		return (event as any).bPreventDefault;
+		return {
+			bPreventDefault: (event as any).bPreventDefault,
+			mParameters: (event as any).mParameters,
+			returnValue: promises[0]
+		};
 	}
 }

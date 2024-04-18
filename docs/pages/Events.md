@@ -18,9 +18,9 @@ When the file is uploaded to the app, the `checkBeforeRead` event is fired.
 This sample is from the [sample app](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/47d22cdc42aa1cacfd797bdc0e025b830330dc5e/examples/packages/ordersv4fe/webapp/ext/ObjectPageExtController.js#L24-L42). It checks whether the price is over 100.
 
 ```javascript
-this.spreadsheetUpload.attachCheckBeforeRead(function(oEvent) {
+this.spreadsheetUpload.attachCheckBeforeRead(function(event) {
     // example
-    const sheetdata = oEvent.getParameter("sheetData");
+    const sheetdata = event.getParameter("sheetData");
     let errorArray = [];
     for (const [index, row] of sheetData.entries()) {
         // Check for invalid price
@@ -37,7 +37,7 @@ this.spreadsheetUpload.attachCheckBeforeRead(function(oEvent) {
             }
         }
     }
-    oEvent.getSource().addArrayToMessages(errorArray);
+    event.getSource().addArrayToMessages(errorArray);
 }, this);
 ```
 
@@ -55,20 +55,21 @@ Errors with the same title will be grouped.
 
 ## Manipulate data before it is sent to the backend
 
-When the `Upload` button is pressed, the `changeBeforeCreate` event is fired.
+When the `Upload` button is pressed, the `changeBeforeCreate` event is fired.  Use this event to manipulate the data before it is sent to the backend. The event expects a payload object to be returned.  
+Make sure only one handler is attached to this event. If multiple handlers are attached, only the first payload will be used.
 
 ### Example
 
 This sample is from the [sample app](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/47d22cdc42aa1cacfd797bdc0e025b830330dc5e/examples/packages/ordersv4fe/webapp/ext/ObjectPageExtController.js#L45-L52). It overwrites the payload.
 
 ```javascript
-this.spreadsheetUpload.attachChangeBeforeCreate(function (oEvent) {
-    let payload = oEvent.getParameter("payload");
-    // Round number from 12.56 to 12.6
+this.spreadsheetUpload.attachChangeBeforeCreate(function (event) {
+    let payload = event.getParameter("payload");
+    // round number from 12,56 to 12,6
     if (payload.price) {
-        payload.price = Number(payload.price).toFixed(1);
+        payload.price = Number(payload.price.toFixed(1));
     }
-    oEvent.getSource().setPayload(payload);
+    return payload;
 }, this);
 ```
 
@@ -79,8 +80,8 @@ When the request is completed, the `requestCompleted` event is fired. Use the `s
 ### Example
 
 ```javascript
-this.spreadsheetUpload.attachRequestCompleted(function (oEvent) {
-    const success = oEvent.getParameter("success");
+this.spreadsheetUpload.attachRequestCompleted(function (event) {
+    const success = event.getParameter("success");
     if (success) {
         console.log("Request Completed");
     } else {
@@ -96,11 +97,11 @@ When the `Upload` button is pressed, the `uploadButtonPress` event is fired. The
 ### Example 1
 
 ```javascript
-this.spreadsheetUpload.attachUploadButtonPress(function (oEvent) {
+this.spreadsheetUpload.attachUploadButtonPress(function (event) {
     // Prevent data from being sent to the backend
-    oEvent.preventDefault();
+    event.preventDefault();
     // Get payload
-    const payload = oEvent.getParameter("payload");
+    const payload = event.getParameter("payload");
 }, this);
 ```
 
@@ -149,7 +150,7 @@ this.spreadsheetUpload = await this.editFlow.getView()
         });
 
 // Event to check before uploading to app
-this.spreadsheetUpload.attachCheckBeforeRead(async function (oEvent) {
+this.spreadsheetUpload.attachCheckBeforeRead(async function (event) {
     return new Promise(async (resolve, reject) => {
         // Example
         console.log("Start async wait");

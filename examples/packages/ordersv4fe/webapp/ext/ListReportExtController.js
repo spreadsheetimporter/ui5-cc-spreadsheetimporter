@@ -58,7 +58,7 @@ sap.ui.define([], function () {
 				if (payload.price) {
 					payload.price = Number(payload.price.toFixed(1));
 				}
-				oEvent.getSource().setPayload(payload);
+				return payload;
 			}, this);
 
 			this.spreadsheetUpload.attachRequestCompleted(function (oEvent) {

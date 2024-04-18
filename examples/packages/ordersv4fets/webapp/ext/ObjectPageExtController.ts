@@ -46,11 +46,12 @@ export async function openSpreadsheetUploadDialogTable(this: ExtensionAPI) {
 	});
 	// event to change data before send to backend
 	spreadsheetUpload.attachChangeBeforeCreate((event) => {
-		const payload = event.getParameter("payload") as any;
-		if (payload && payload.price !== undefined) {
+		let payload = event.getParameter("payload");
+		// round number from 12,56 to 12,6
+		if (payload.price) {
 			payload.price = Number(payload.price.toFixed(1));
-			(event.getSource() as Component).setPayload(payload);
 		}
+		return payload;
 	});
 
 	spreadsheetUpload.openSpreadsheetUploadDialog();

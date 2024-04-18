@@ -43,7 +43,7 @@ The method `getTableId` returns the table id of the selected table. With the id,
 Make sure you check if the user selected a table with `if (selectedTable)`.
 
 ```js
-openSpreadsheetUploadDialog: async function (oEvent) {
+openSpreadsheetUploadDialog: async function (event) {
   let spreadsheetImporterOptions;
   this.editFlow.getView().setBusyIndicatorDelay(0);
   this.editFlow.getView().setBusy(true);

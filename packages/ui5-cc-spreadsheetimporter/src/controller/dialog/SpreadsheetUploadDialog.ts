@@ -17,7 +17,7 @@ import Log from "sap/base/Log";
 import SheetHandler from "../SheetHandler";
 import Parser from "../Parser";
 import Button from "sap/m/Button";
-import { ArrayData, AvailableOptionsType } from "../../types";
+import { ArrayData, AvailableOptionsType, FireEventReturnType } from "../../types";
 import FlexBox from "sap/m/FlexBox";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Dialog from "sap/m/Dialog";
@@ -207,9 +207,10 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	async onUploadSet(event: Event) {
 		const source = event.getSource() as Button;
 		this.getDialog().setBusy(true);
+		let fireEventAsyncReturn: FireEventReturnType;
 		let isDefaultPrevented;
 		try {
-			isDefaultPrevented = await Util.fireEventAsync(
+			fireEventAsyncReturn = await Util.fireEventAsync(
 				"uploadButtonPress",
 				{
 					payload: this.spreadsheetUploadController.payloadArray,
@@ -218,6 +219,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 				},
 				this.component
 			);
+			isDefaultPrevented = fireEventAsyncReturn.bPreventDefault;
 		} catch (error) {}
 		this.getDialog().setBusy(false);
 		if (isDefaultPrevented || this.component.getStandalone()) {
