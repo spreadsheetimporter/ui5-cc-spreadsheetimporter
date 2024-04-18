@@ -55,7 +55,7 @@ export async function openSpreadsheetUploadDialog(this: ExtensionAPI) {
 		let payload = event.getParameter("payload");
 		// round number from 12,56 to 12,6
 		if (payload.price) {
-			payload.price = Number(payload.price.toFixed(1));
+			payload.price = Number(payload.price).toFixed(1);
 		}
 		return payload;
 	}, this);
