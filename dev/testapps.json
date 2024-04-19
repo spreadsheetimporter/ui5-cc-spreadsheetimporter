@@ -13,7 +13,7 @@
     },
     "copyVersions": [
       {
-        "version": "1.108.19",
+        "version": "1.108.30",
         "versionMinor": 108,
         "port": "8090",
         "appTitel": "Orders V2 FE 108",
@@ -24,7 +24,7 @@
         }
       },
       {
-        "version": "1.96.23",
+        "version": "1.96.30",
         "versionMinor": 96,
         "port": "8090",
         "appTitel": "Orders V2 FE 96",
@@ -35,7 +35,7 @@
         }
       },
       {
-        "version": "1.84.35",
+        "version": "1.84.44",
         "versionMinor": 84,
         "port": "8091",
         "appTitel": "Orders V2 FE 84",
@@ -46,7 +46,7 @@
         }
       },
       {
-        "version": "1.71.57",
+        "version": "1.71.67",
         "versionMinor": 71,
         "port": "8092",
         "appTitel": "Orders V2 FE 71",
@@ -71,7 +71,7 @@
     },
     "copyVersions": [
       {
-        "version": "1.108.19",
+        "version": "1.108.30",
         "versionMinor": 108,
         "port": "8093",
         "appTitel": "Orders V2 FE ND 108",
@@ -82,7 +82,7 @@
         }
       },
       {
-        "version": "1.96.23",
+        "version": "1.96.30",
         "versionMinor": 96,
         "port": "8093",
         "appTitel": "Orders V2 FE ND 96",
@@ -93,7 +93,7 @@
         }
       },
       {
-        "version": "1.84.35",
+        "version": "1.84.44",
         "versionMinor": 84,
         "port": "8094",
         "appTitel": "Orders V2 FE ND 84",
@@ -104,7 +104,7 @@
         }
       },
       {
-        "version": "1.71.57",
+        "version": "1.71.67",
         "versionMinor": 71,
         "port": "8095",
         "appTitel": "Orders V2 FE ND 71",
@@ -129,7 +129,7 @@
     },
     "copyVersions": [
       {
-        "version": "1.108.19",
+        "version": "1.108.30",
         "versionMinor": 108,
         "port": "8096",
         "appTitel": "Orders V2 FS ND 108",
@@ -140,7 +140,7 @@
         }
       },
       {
-        "version": "1.96.23",
+        "version": "1.96.30",
         "versionMinor": 96,
         "port": "8096",
         "appTitel": "Orders V2 FS ND 96",
@@ -151,7 +151,7 @@
         }
       },
       {
-        "version": "1.84.35",
+        "version": "1.84.44",
         "versionMinor": 84,
         "port": "8097",
         "appTitel": "Orders V2 FS ND 84",
@@ -162,7 +162,7 @@
         }
       },
       {
-        "version": "1.71.57",
+        "version": "1.71.67",
         "versionMinor": 71,
         "port": "8098",
         "appTitel": "Orders V2 FS ND 71",
@@ -187,7 +187,7 @@
     },
     "copyVersions": [
       {
-        "version": "1.108.19",
+        "version": "1.108.27",
         "versionMinor": 108,
         "port": "8106",
         "appTitel": "Orders V2 FS ND OP 108",
@@ -198,7 +198,7 @@
         }
       },
       {
-        "version": "1.96.21",
+        "version": "1.96.28",
         "versionMinor": 96,
         "port": "8106",
         "appTitel": "Orders V2 FS ND OP 96",
@@ -209,7 +209,7 @@
         }
       },
       {
-        "version": "1.84.35",
+        "version": "1.84.44",
         "versionMinor": 84,
         "port": "8107",
         "appTitel": "Orders V2 FS ND OP 84",
@@ -220,7 +220,7 @@
         }
       },
       {
-        "version": "1.71.57",
+        "version": "1.71.63",
         "versionMinor": 71,
         "port": "8108",
         "appTitel": "Orders V2 FS ND OP 71",
@@ -247,7 +247,7 @@
     },
     "copyVersions": [
       {
-        "version": "1.108.19",
+        "version": "1.108.30",
         "versionMinor": 108,
         "port": "8087",
         "appTitel": "Orders V4 FE 108",
@@ -259,7 +259,7 @@
         }
       },
       {
-        "version": "1.96.23",
+        "version": "1.96.30",
         "versionMinor": 96,
         "port": "8087",
         "appTitel": "Orders V4 FE 96",
@@ -271,7 +271,7 @@
         }
       },
       {
-        "version": "1.84.35",
+        "version": "1.84.44",
         "versionMinor": 84,
         "port": "8088",
         "appTitel": "Orders V4 FE 84",
@@ -283,7 +283,7 @@
         }
       },
       {
-        "version": "1.71.57",
+        "version": "1.71.67",
         "versionMinor": 71,
         "port": "8099",
         "appTitel": "Orders V4 FE 71",
@@ -319,7 +319,7 @@
     "path": "./examples/packages/",
     "copyVersions": [
       {
-        "version": "1.96.23",
+        "version": "1.96.30",
         "port": "8100",
         "appTitel": "Orders V4 FPM 96"
       }

@@ -65,17 +65,26 @@ describe("Upload File List Report", () => {
 				id: new RegExp("^__toolbar.*", "gm")
 			}
 		});
-		const overflowToolbarId = await overflowToolbar.getId();
-		await BaseClass.pressById(overflowToolbarId + "-overflowButton");
-		const button = await browser.asControl({
+		let settingsButton = await browser.asControl({
 			selector: {
 				controlType: "sap.m.Button",
 				properties: {
-					text: "Show options"
-				}
+					icon: "sap-icon://action-settings"
+				},
+				bindingPath: {
+					path: "",
+					propertyPath: "/showOptions",
+					modelName: "info"
+				},
+				searchOpenDialogs: true
 			}
 		});
-		await button.press();
+		if (settingsButton._domId === undefined) {
+			const toolbarContent = await overflowToolbar.getContent();
+			// 4 is the index of the settings button
+			settingsButton = toolbarContent[4];
+		}
+		await settingsButton.press();
 	});
 
 	it("Check only strict available", async () => {

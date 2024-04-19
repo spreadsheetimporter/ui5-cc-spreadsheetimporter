@@ -40,7 +40,7 @@ npm install ui5-cc-spreadsheetimporter
 
 ```json
 "dependencies": {
-  "minUI5Version": "1.108.19",
+  "minUI5Version": "1.108.30",
   "libs": {
     "sap.m": {},
     "sap.ui.core": {},

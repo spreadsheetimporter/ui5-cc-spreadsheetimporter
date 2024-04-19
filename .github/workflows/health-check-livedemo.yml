@@ -5,6 +5,9 @@ on:
   schedule:
     - cron: '0 3,20 * * *'  
 
+permissions:
+    issues: write
+      
 jobs:
   check_website:
     runs-on: ubuntu-latest
@@ -14,7 +17,7 @@ jobs:
       - name: Check Website Status
         id: check_website_status # Added an ID to this step to reference its outputs later
         run: |
-          status_code=$(curl -s -o /dev/null -w "%{http_code}" https://livedemo.spreadsheet-importer.com)
+          status_code=$(curl -s -o /dev/null -w "%{http_code}" https://livedemo.spreadsheet-importer.com/launchpad.html#Shell-home)
           echo "STATUS_CODE=$status_code"
           if [ "$status_code" -ne 200 ]; then
             echo "create_issue=true" >> $GITHUB_ENV
