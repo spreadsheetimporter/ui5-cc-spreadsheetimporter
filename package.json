@@ -69,7 +69,6 @@
   },
   "lint-staged": {
     "**/*.js": [
-      "eslint .",
       "prettier --write --config .prettierrc.json"
     ],
     "**/*.{ts,json,xml}": "prettier --write --config .prettierrc.json"

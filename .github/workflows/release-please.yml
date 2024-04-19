@@ -79,16 +79,20 @@ jobs:
         run: |
           git config --global user.email "ops+robot@npmjs.com"
           git config --global user.name "npm team"
-      - uses: actions/setup-node@v4
+      - run: corepack enable
+      - name: use node 20
+        uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: 20
+          cache: "pnpm"
+
       - name: Update PR ${{ matrix.pr.number }}
         if: ${{ matrix.pr }}
         env:
           GITHUB_TOKEN: ${{ secrets.GH_WORKFLOW_TOKEN }}
         run: |
           gh pr checkout ${{ matrix.pr.number }}
-          npm install
+          pnpm install
           npm run replaceString
           npm run coypChangelogToDoc
           git add .
