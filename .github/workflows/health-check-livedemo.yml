@@ -12,7 +12,7 @@ jobs:
   check_website:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Check Website Status
         id: check_website_status # Added an ID to this step to reference its outputs later
