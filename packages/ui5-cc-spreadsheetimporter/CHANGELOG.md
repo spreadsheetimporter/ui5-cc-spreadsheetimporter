@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.33.4](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.33.3...ui5-cc-spreadsheetimporter-v0.33.4) (2024-04-19)
+
+
+### Bug Fixes
+
+* make `fireEventAsync` more stable ([#534](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/534)) ([1ab4cd2](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/1ab4cd278a810f743ff0024086a6dde6ef04293a))
+
 ## [0.33.3](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.33.2...ui5-cc-spreadsheetimporter-v0.33.3) (2024-04-18)
 
 
