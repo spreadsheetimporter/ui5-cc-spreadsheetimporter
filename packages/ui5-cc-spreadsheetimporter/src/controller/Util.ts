@@ -222,12 +222,8 @@ export default class Util extends ManagedObject {
 			event = eventPool.borrowObject(eventName, component, eventParameters); // borrow event lazily
 
 			for (let oInfo of aEventListeners) {
-				try {
-					// Assuming each handler returns a promise
-					promises.push(oInfo.fFunction.call(null, event));
-				} catch (error) {
-					Log.error("Error in event handler:", error as Error);
-				}
+				// Assuming each handler returns a promise
+				promises.push(oInfo.fFunction.call(null, event));
 			}
 		}
 
@@ -235,8 +231,8 @@ export default class Util extends ManagedObject {
 		await Promise.all(promises);
 
 		return {
-			bPreventDefault: (event as any)?.bPreventDefault,
-			mParameters: (event as any)?.mParameters,
+			bPreventDefault: (event as any).bPreventDefault,
+			mParameters: (event as any).mParameters,
 			returnValue: promises[0]
 		};
 	}
