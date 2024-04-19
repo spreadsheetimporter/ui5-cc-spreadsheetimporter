@@ -65,7 +65,7 @@ describe("Upload File List Report", () => {
 				id: new RegExp("^__toolbar.*", "gm")
 			}
 		});
-		const settingsButton = await browser.asControl({
+		let settingsButton = await browser.asControl({
 			selector: {
 				controlType: "sap.m.Button",
 				properties: {
@@ -79,6 +79,11 @@ describe("Upload File List Report", () => {
 				searchOpenDialogs: true
 			}
 		});
+		if (settingsButton._domId === undefined) {
+			const toolbarContent = await overflowToolbar.getContent();
+			// 4 is the index of the settings button
+			settingsButton = toolbarContent[4];
+		}
 		await settingsButton.press();
 	});
 
