@@ -76,7 +76,7 @@ To avoid this error, you can add the following to your `manifest.json` file:
 
 ```json
 "sap.app": {
-  "embeds": ["thirdparty/customcontrol/spreadsheetimporter/v0_33_1"]
+  "embeds": ["thirdparty/customcontrol/spreadsheetimporter/v0_33_4"]
 }
 ```
 
@@ -285,7 +285,7 @@ To avoid this error, you can add the following to your `manifest.json` file:
 
 ```json
 "sap.app": {
-  "embeds": ["thirdparty/customcontrol/spreadsheetimporter/v0_33_1"]
+  "embeds": ["thirdparty/customcontrol/spreadsheetimporter/v0_33_4"]
 }
 ```
 
