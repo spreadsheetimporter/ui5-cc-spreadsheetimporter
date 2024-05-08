@@ -186,6 +186,6 @@ describe("Upload CSV File Object Page", () => {
 
 	it("check Field: time", async () => {
 		const value = item.time;
-		expect(value).toBe("15:00");
+		expect(value).toBe("15:00:00");
 	});
 });
