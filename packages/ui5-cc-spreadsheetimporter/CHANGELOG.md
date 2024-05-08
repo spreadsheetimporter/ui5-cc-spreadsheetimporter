@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.34.1](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.34.0...ui5-cc-spreadsheetimporter-v0.34.1) (2024-05-08)
+
+
+### Bug Fixes
+
+* add seconds when parsing odata time ([#549](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/549)) ([b5f69bc](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/b5f69bc5e1718e8cc08a22041d3ba08eb11a292a))
+
 ## [0.34.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.33.4...ui5-cc-spreadsheetimporter-v0.34.0) (2024-05-08)
 
 
