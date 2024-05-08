@@ -75,7 +75,7 @@ If you deploy your app to a SAP System (S/4 On-Premise or SAP BTP ABAP environme
 To avoid this error, you can add the following to your `manifest.json` file:
 
 !!! warning ""
-    ⚠️ The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v0_34_0" changed from version 0.40.0 to lowercase. Please make sure to use the correct path.
+    ⚠️ The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v0_34_0" changed from version 0.34.0 to lowercase. Please make sure to use the correct path.
 
 
 ```json
@@ -288,7 +288,7 @@ When deploying the app to your ABAP system, you may get an error like this: `SAP
 To avoid this error, you can add the following to your `manifest.json` file:
 
 !!! warning ""
-    ⚠️ The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v0_34_0" changed from version 0.40.0 to lowercase. Please make sure to use the correct path.
+    ⚠️ The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v0_34_0" changed from version 0.34.0 to lowercase. Please make sure to use the correct path.
 
 
 ```json

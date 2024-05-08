@@ -73,7 +73,7 @@ export default class Parser extends ManagedObject {
 						}
 						try {
 							this.checkDate(date, metadataColumn, util, messageHandler, index);
-							const spreadsheetDate = date.toISOString().substring(11, 16);
+							const spreadsheetDate = date.toISOString().substring(11, 19);
 							payload[columnKey] = spreadsheetDate;
 						} catch (error) {
 							this.addMessageToMessages("spreadsheetimporter.errorWhileParsing", util, messageHandler, index, [metadataColumn.label], rawValue);
