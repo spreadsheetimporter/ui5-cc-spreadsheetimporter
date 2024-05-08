@@ -58,6 +58,10 @@ See the configurations for this version below:
 
 ### manifest.json
 
+!!! warning ""
+    ⚠️ The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v0_33_4" changed from version 0.40.0 to lowercase. Please make sure to use the correct path.
+
+
 ```json
 "componentUsages": {
     "spreadsheetImporter": {

@@ -74,6 +74,10 @@ If you deploy your app to a SAP System (S/4 On-Premise or SAP BTP ABAP environme
 
 To avoid this error, you can add the following to your `manifest.json` file:
 
+!!! warning ""
+    ⚠️ The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v0_33_4" changed from version 0.40.0 to lowercase. Please make sure to use the correct path.
+
+
 ```json
 "sap.app": {
   "embeds": ["thirdparty/customcontrol/spreadsheetimporter/v0_33_4"]
@@ -282,6 +286,10 @@ This is alternative to using resourceRoots in the manifest.json when you don't h
 When deploying the app to your ABAP system, you may get an error like this: `SAPUI5 library/component cc.spreadsheetimporter.v0_33_4 used in application Z*** does not exist`. The application is deployed, but the service returns an error.
 
 To avoid this error, you can add the following to your `manifest.json` file:
+
+!!! warning ""
+    ⚠️ The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v0_33_4" changed from version 0.40.0 to lowercase. Please make sure to use the correct path.
+
 
 ```json
 "sap.app": {

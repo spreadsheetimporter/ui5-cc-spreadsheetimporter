@@ -28,6 +28,10 @@ npm install ui5-cc-spreadsheetimporter
    
 ⚠️ You must always keep your `ui5-cc-spreadsheetimporter` and button version up to date here when updating the module.
 
+!!! warning ""
+    ⚠️ The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v0_33_4" changed from version 0.40.0 to lowercase. Please make sure to use the correct path.
+
+
 ```json
 "resourceRoots": {
     "cc.spreadsheetimporter.v0_33_4": "./thirdparty/customcontrol/spreadsheetimporter/v0_33_4"
