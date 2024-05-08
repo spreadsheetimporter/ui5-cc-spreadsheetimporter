@@ -317,6 +317,15 @@ function deleteNodeModules(folderPath) {
 	}
 }
 
+function replaceMetadataName(versionDash){
+	// replace the metadata in yaml packages/ui5-cc-spreadsheetimporter/ui5.yaml
+	const fileContents = fs.readFileSync('./packages/ui5-cc-spreadsheetimporter/ui5.yaml', 'utf8');
+	const ui5Build = yaml.load(fileContents);
+	ui5Build.metadata.name = `ui5-cc-spreadsheetimporter-${versionDash}`
+	const updatedYaml = yaml.dump(ui5Build, { lineWidth: -1 });
+	fs.writeFileSync('./packages/ui5-cc-spreadsheetimporter/ui5.yaml', updatedYaml, 'utf8');
+}
+
 
 
 module.exports.getPackageJson = getPackageJson;
@@ -335,3 +344,4 @@ module.exports.replaceYamlFileCF = replaceYamlFileCF;
 module.exports.replaceYamlFileComponent = replaceYamlFileComponent;
 module.exports.replaceVersionManifest = replaceVersionManifest;
 module.exports.deleteNodeModules = deleteNodeModules;
+module.exports.replaceMetadataName = replaceMetadataName;

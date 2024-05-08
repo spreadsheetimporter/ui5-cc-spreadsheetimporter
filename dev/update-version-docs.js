@@ -5,7 +5,7 @@ function updateVersionInContent(content, spreadsheetUploadVersion, spreadsheetUp
   const spreadsheetImporterRegex = /(cc\.spreadsheetimporter\.|customControl\/spreadsheetimporter\/)v\d+_\d+_\d+/g;
   const spreadsheetImporterButtonRegex = /(cc\.spreadsheetimporter.button\.|customControl\/spreadsheetimporter.button\/)v\d+_\d+_\d+/g;
   const thirdpartySpreadsheetImporterRegex = /(.\.\/thirdparty\/customControl\/spreadsheetImporter\/)v\d+_\d+_\d+/g;
-  const mountPathRegex = /(mountPath: \/thirdparty\/customControl\/spreadsheetImporter\/)v\d+_\d+_\d+/;
+  const mountPathRegex = /(mountPath: \/thirdparty\/customcontrol\/spreadsheetimporter\/)v\d+_\d+_\d+/;
   const ccSpreadsheetImporterRegex = /(cc\/spreadsheetimporter\/)v\d+_\d+_\d+/g;
   const newSpreadsheetImporterRegex = /spreadsheetimporter_v\d+_\d+_\d+/g;
 
