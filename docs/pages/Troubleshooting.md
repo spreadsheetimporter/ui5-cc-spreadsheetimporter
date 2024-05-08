@@ -65,6 +65,6 @@ See the configurations for this version below:
     }
 },
 "resourceRoots": {
-    "cc.spreadsheetimporter.v0_33_4": "./thirdparty/customControl/spreadsheetImporter/v0_33_4"
+    "cc.spreadsheetimporter.v0_33_4": "./thirdparty/customcontrol/spreadsheetimporter/v0_33_4"
 }
 ```

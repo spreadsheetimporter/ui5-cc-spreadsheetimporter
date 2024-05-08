@@ -42,7 +42,7 @@ npm install ui5-cc-spreadsheetimporter
 
 ```json
 "resourceRoots": {
-  "cc.spreadsheetimporter.v0_33_4": "./thirdparty/customControl/spreadsheetImporter/v0_33_4"
+  "cc.spreadsheetimporter.v0_33_4": "./thirdparty/customcontrol/spreadsheetimporter/v0_33_4"
 }
 ```
 
@@ -76,7 +76,7 @@ To avoid this error, you can add the following to your `manifest.json` file:
 
 ```json
 "sap.app": {
-  "embeds": ["thirdparty/customControl/spreadsheetImporter/v0_33_1"]
+  "embeds": ["thirdparty/customcontrol/spreadsheetimporter/v0_33_1"]
 }
 ```
 
@@ -285,7 +285,7 @@ To avoid this error, you can add the following to your `manifest.json` file:
 
 ```json
 "sap.app": {
-  "embeds": ["thirdparty/customControl/spreadsheetImporter/v0_33_1"]
+  "embeds": ["thirdparty/customcontrol/spreadsheetimporter/v0_33_1"]
 }
 ```
 

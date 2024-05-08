@@ -56,7 +56,7 @@ function replaceVersioninApp(app, version, versionSlash, rootPath) {
 		.forEach(key => {
 			updatedResourceRoots[key] = resourceRoots[key];
 		});
-	updatedResourceRoots[`cc.spreadsheetimporter.${version}`] = `./thirdparty/customControl/spreadsheetImporter/${versionSlash}`;
+	updatedResourceRoots[`cc.spreadsheetimporter.${version}`] = `./thirdparty/customcontrol/spreadsheetimporter/${versionSlash}`;
 	// add to every app even if it is not used
 	manifestData["sap.ui5"].resourceRoots = updatedResourceRoots;
 	manifestData["sap.ui5"]["componentUsages"]["spreadsheetImporter"].name = `cc.spreadsheetimporter.${version}`;
@@ -238,7 +238,7 @@ function replaceYamlFileComponent(versionSlash, path) {
 
 	// Parse the YAML into a JavaScript object
 	const ui5Build = yaml.load(fileContents);
-	const key = "/thirdparty/customControl/spreadsheetImporter/" + versionSlash + "/"
+	const key = "/thirdparty/customcontrol/spreadsheetimporter/" + versionSlash + "/"
 	// Replace the values
 	ui5Build.resources.configuration.paths = {
 		[key]: "./dist/"

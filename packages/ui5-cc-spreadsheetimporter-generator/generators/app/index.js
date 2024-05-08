@@ -171,7 +171,7 @@ module.exports = class extends Generator {
 			await fileaccess.manipulateJSON.call(this, "/webapp/manifest.json", {
 				"sap.ui5": {
 					resourceRoots: {
-						[namespace]: "./thirdparty/customControl/spreadsheetImporter/v" + npmLatestVersionUnderscore
+						[namespace]: "./thirdparty/customcontrol/spreadsheetimporter/v" + npmLatestVersionUnderscore
 					}
 				}
 			});

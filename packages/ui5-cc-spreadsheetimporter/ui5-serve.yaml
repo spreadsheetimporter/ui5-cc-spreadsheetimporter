@@ -8,7 +8,7 @@ resources:
       webapp: src
 customConfiguration:
   ui5-middleware-ui5:
-    mountPath: /thirdparty/customControl/spreadsheetImporter/v0_33_4
+    mountPath: /thirdparty/customcontrol/spreadsheetimporter/v0_33_4
 framework:
   name: OpenUI5
   version: 1.118.0

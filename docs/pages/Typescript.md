@@ -26,7 +26,7 @@ Add the component usage and the resource roots to the manifest.json as described
             }
         },
         "resourceRoots": {
-            "cc.spreadsheetimporter.v0_33_4": "./thirdparty/customControl/spreadsheetImporter/v0_33_4"
+            "cc.spreadsheetimporter.v0_33_4": "./thirdparty/customcontrol/spreadsheetimporter/v0_33_4"
         },
 ```
 
