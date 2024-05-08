@@ -19,6 +19,9 @@ You can consume the types from the `@sapui5/ts-types-esm` and the `ui5-cc-spread
 
 Add the component usage and the resource roots to the manifest.json as described in the [Getting Started](GettingStarted.md) section.
 
+!!! warning ""
+    ⚠️ The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v0_33_4" changed from version 0.40.0 to lowercase. Please make sure to use the correct path.
+
 ```json
         "componentUsages": {
             "spreadsheetImporter": {
@@ -26,7 +29,7 @@ Add the component usage and the resource roots to the manifest.json as described
             }
         },
         "resourceRoots": {
-            "cc.spreadsheetimporter.v0_33_4": "./thirdparty/customControl/spreadsheetImporter/v0_33_4"
+            "cc.spreadsheetimporter.v0_33_4": "./thirdparty/customcontrol/spreadsheetimporter/v0_33_4"
         },
 ```
 

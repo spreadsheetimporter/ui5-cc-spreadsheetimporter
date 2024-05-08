@@ -10,6 +10,7 @@ const path = "./packages/ui5-cc-spreadsheetimporter/package.json"
 const version = util.getVersionDots(path)
 const versionShort = util.getVersionDots(path).replaceAll(".", "")
 const versionUnderscore = util.getVersionDots(path).replaceAll(".", "_")
+const versionDash = util.getVersionDots(path).replaceAll(".", "-")
 
 // replace strings in publish folder
 util.replaceYamlFileBuild(versionUnderscore, versionShort, versionUnderscore,'./packages/ui5-cc-spreadsheetimporter/ui5-build.yaml')
@@ -22,6 +23,7 @@ updateVersionDocs.updateVersionInFile('./packages/ui5-cc-spreadsheetimporter/mta
 util.replaceYamlFileComponent(versionUnderscore,'./packages/ui5-cc-spreadsheetimporter/ui5.yaml')
 util.replaceYamlFileDeploy(versionUnderscore, versionUnderscore)
 util.replaceVersionManifest(versionUnderscore)
+util.replaceMetadataName(versionDash)
 
 // replace in docs
 updateVersionDocs.updateVersions(versionUnderscore)

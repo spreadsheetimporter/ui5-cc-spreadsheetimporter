@@ -4,8 +4,9 @@ const path = require('path');
 function updateVersionInContent(content, spreadsheetUploadVersion, spreadsheetUploadButtonVersion) {
   const spreadsheetImporterRegex = /(cc\.spreadsheetimporter\.|customControl\/spreadsheetimporter\/)v\d+_\d+_\d+/g;
   const spreadsheetImporterButtonRegex = /(cc\.spreadsheetimporter.button\.|customControl\/spreadsheetimporter.button\/)v\d+_\d+_\d+/g;
-  const thirdpartySpreadsheetImporterRegex = /(.\.\/thirdparty\/customControl\/spreadsheetImporter\/)v\d+_\d+_\d+/g;
-  const mountPathRegex = /(mountPath: \/thirdparty\/customControl\/spreadsheetImporter\/)v\d+_\d+_\d+/;
+  // Updated regex to optionally match the leading "./" and ensure case insensitivity
+  const thirdpartySpreadsheetImporterRegex = /(\.?\/?thirdparty\/customcontrol\/spreadsheetimporter\/)v\d+_\d+_\d+/ig;
+  const mountPathRegex = /(mountPath: \/thirdparty\/customcontrol\/spreadsheetimporter\/)v\d+_\d+_\d+/;
   const ccSpreadsheetImporterRegex = /(cc\/spreadsheetimporter\/)v\d+_\d+_\d+/g;
   const newSpreadsheetImporterRegex = /spreadsheetimporter_v\d+_\d+_\d+/g;
 

@@ -56,7 +56,7 @@ function replaceVersioninApp(app, version, versionSlash, rootPath) {
 		.forEach(key => {
 			updatedResourceRoots[key] = resourceRoots[key];
 		});
-	updatedResourceRoots[`cc.spreadsheetimporter.${version}`] = `./thirdparty/customControl/spreadsheetImporter/${versionSlash}`;
+	updatedResourceRoots[`cc.spreadsheetimporter.${version}`] = `./thirdparty/customcontrol/spreadsheetimporter/${versionSlash}`;
 	// add to every app even if it is not used
 	manifestData["sap.ui5"].resourceRoots = updatedResourceRoots;
 	manifestData["sap.ui5"]["componentUsages"]["spreadsheetImporter"].name = `cc.spreadsheetimporter.${version}`;
@@ -238,7 +238,7 @@ function replaceYamlFileComponent(versionSlash, path) {
 
 	// Parse the YAML into a JavaScript object
 	const ui5Build = yaml.load(fileContents);
-	const key = "/thirdparty/customControl/spreadsheetImporter/" + versionSlash + "/"
+	const key = "/thirdparty/customcontrol/spreadsheetimporter/" + versionSlash + "/"
 	// Replace the values
 	ui5Build.resources.configuration.paths = {
 		[key]: "./dist/"
@@ -317,6 +317,15 @@ function deleteNodeModules(folderPath) {
 	}
 }
 
+function replaceMetadataName(versionDash){
+	// replace the metadata in yaml packages/ui5-cc-spreadsheetimporter/ui5.yaml
+	const fileContents = fs.readFileSync('./packages/ui5-cc-spreadsheetimporter/ui5.yaml', 'utf8');
+	const ui5Build = yaml.load(fileContents);
+	ui5Build.metadata.name = `ui5-cc-spreadsheetimporter-${versionDash}`
+	const updatedYaml = yaml.dump(ui5Build, { lineWidth: -1 });
+	fs.writeFileSync('./packages/ui5-cc-spreadsheetimporter/ui5.yaml', updatedYaml, 'utf8');
+}
+
 
 
 module.exports.getPackageJson = getPackageJson;
@@ -335,3 +344,4 @@ module.exports.replaceYamlFileCF = replaceYamlFileCF;
 module.exports.replaceYamlFileComponent = replaceYamlFileComponent;
 module.exports.replaceVersionManifest = replaceVersionManifest;
 module.exports.deleteNodeModules = deleteNodeModules;
+module.exports.replaceMetadataName = replaceMetadataName;

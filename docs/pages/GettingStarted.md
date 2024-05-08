@@ -42,7 +42,7 @@ npm install ui5-cc-spreadsheetimporter
 
 ```json
 "resourceRoots": {
-  "cc.spreadsheetimporter.v0_33_4": "./thirdparty/customControl/spreadsheetImporter/v0_33_4"
+  "cc.spreadsheetimporter.v0_33_4": "./thirdparty/customcontrol/spreadsheetimporter/v0_33_4"
 }
 ```
 
@@ -74,9 +74,13 @@ If you deploy your app to a SAP System (S/4 On-Premise or SAP BTP ABAP environme
 
 To avoid this error, you can add the following to your `manifest.json` file:
 
+!!! warning ""
+    ⚠️ The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v0_33_4" changed from version 0.40.0 to lowercase. Please make sure to use the correct path.
+
+
 ```json
 "sap.app": {
-  "embeds": ["thirdparty/customControl/spreadsheetImporter/v0_33_1"]
+  "embeds": ["thirdparty/customcontrol/spreadsheetimporter/v0_33_4"]
 }
 ```
 
@@ -283,9 +287,13 @@ When deploying the app to your ABAP system, you may get an error like this: `SAP
 
 To avoid this error, you can add the following to your `manifest.json` file:
 
+!!! warning ""
+    ⚠️ The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v0_33_4" changed from version 0.40.0 to lowercase. Please make sure to use the correct path.
+
+
 ```json
 "sap.app": {
-  "embeds": ["thirdparty/customControl/spreadsheetImporter/v0_33_1"]
+  "embeds": ["thirdparty/customcontrol/spreadsheetimporter/v0_33_4"]
 }
 ```
 
