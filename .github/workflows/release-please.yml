@@ -66,6 +66,16 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Update the ABAP Deploy Repository
+        if: ${{ steps.release.outputs['packages/ui5-cc-spreadsheetimporter-generator--release_created'] }}
+        run: |
+          curl \
+          -X POST \
+          -H "Accept: application/vnd.github.v3+json" \
+          -H "Authorization: token ${{ secrets.GH_WORKFLOW_TOKEN }}" \
+          https://api.github.com/repos/spreadsheetimporter/packed-deployment-abap/actions/workflows/updateversions.yml/dispatches \
+          -d '{"ref":"main"}'
+
   update-prs:
     needs: release-please
     if: needs.release-please.outputs.prs
