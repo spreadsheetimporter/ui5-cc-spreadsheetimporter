@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.34.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.33.4...ui5-cc-spreadsheetimporter-v0.34.0) (2024-05-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* enable packaged deployment ([#547](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/547)) ([6d3450b](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/6d3450bc149b12938eaadefeb29771428aa2be18))
+
+because of a bug, it is not possible to do a packaged central deployment of bug in the abap system.  
+The Bug was fixed as described in [#490](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/490), but still relevant in older ABAP Systems.  
+To make things easier and make the packaged central deployment possible at all, it is necessary to add the version to the metadata name and make the resources path lowercase because abap system can´t handle camel case.  
+
+#### New metadata name
+```yml
+ui5-cc-spreadsheetimporter-v0-34-0
+```
+
+#### New lowercase resourceRoots path
+Instead of `thirdparty/customControl/spreadsheetImporter/v0_34_0` it is `thirdparty/customcontrol/spreadsheetimporter/v0_34_0`
+
 ## [0.33.4](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.33.3...ui5-cc-spreadsheetimporter-v0.33.4) (2024-04-19)
 
 
