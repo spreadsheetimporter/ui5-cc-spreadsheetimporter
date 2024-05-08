@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.6.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/generator-ui5-spreadsheetimporter-v0.5.0...generator-ui5-spreadsheetimporter-v0.6.0) (2024-05-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* 
+
+### Features
+
+* enable packaged deployment ([#547](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/547)) ([6d3450b](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/6d3450bc149b12938eaadefeb29771428aa2be18))
+
 ## [0.5.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/generator-ui5-spreadsheetimporter-v0.4.1...generator-ui5-spreadsheetimporter-v0.5.0) (2024-02-23)
 
 
