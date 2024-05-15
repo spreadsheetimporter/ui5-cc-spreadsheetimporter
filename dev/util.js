@@ -326,6 +326,19 @@ function replaceMetadataName(versionDash){
 	fs.writeFileSync('./packages/ui5-cc-spreadsheetimporter/ui5.yaml', updatedYaml, 'utf8');
 }
 
+function updateManifestVersion(version){
+	// remove 'v' from version
+	version = version.replace('v', '');
+	// Read the JSON file
+	const jsonFile = fs.readFileSync('./packages/ui5-cc-spreadsheetimporter/src/manifest.json', 'utf8');
+	const jsonData = JSON.parse(jsonFile);
+	// Replace the version
+	jsonData['sap.app']['applicationVersion']['version'] = version;
+	// Write the updated JSON to file
+	fs.writeFileSync('./packages/ui5-cc-spreadsheetimporter/src/manifest.json', JSON.stringify(jsonData, null, 2));
+
+}
+
 
 
 module.exports.getPackageJson = getPackageJson;
@@ -345,3 +358,4 @@ module.exports.replaceYamlFileComponent = replaceYamlFileComponent;
 module.exports.replaceVersionManifest = replaceVersionManifest;
 module.exports.deleteNodeModules = deleteNodeModules;
 module.exports.replaceMetadataName = replaceMetadataName;
+module.exports.updateManifestVersion = updateManifestVersion;
