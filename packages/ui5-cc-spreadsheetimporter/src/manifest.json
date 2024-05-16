@@ -12,7 +12,7 @@
     "description": "{{spreadsheetimporter.compDescription}}",
     "resources": "resources.json",
     "applicationVersion": {
-      "version": "0.34.1"
+      "version": "1.0.0"
     }
   },
   "sap.ui": {
