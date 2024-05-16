@@ -1,14 +1,19 @@
 ## Deployment Strategy
 
-There are two ways to use the Spreadsheet Upload Control. Since a Reuse Component is essentially utilized, this results in two deployment strategies that can be used.
+In the past, we had recommended two ways to deploy the component.
+It turned out that there are problems with the so-called decentralized or packaged deployment into the ABAP system and BTP.
 
-Depending on the deployment environment (ABAP or BTP), you have to consider a few special cases. This is described in the [Deployment of your app](#deployment-of-your-app) page.  
+Therefore, the **centralized deployment** is clearly recommended and the decentralized should only be used if centralized does not work.
+
+There are a few things to bear in mind for decentralized deployment with ABAP, see [ABAP Component Deployment](#component-deployment).
+
+If you deploy to BTP, special things must be considered, see [BTP Deployment](#btp-deployment).
 A full deployable BTP example can be found in the [sample project](https://github.com/spreadsheetimporter/sample-full-btp).
 
-**Recommended:** Because SAP did not initially consider Decentralized deployment, there may be problems with it (especially in the ABAP stack).
-I therefore recommend centralized deployment on the ABAP stack.
-
 ### Decentralized deployment
+
+!!! warning ""
+    This is not recommended. Please use the [Central Deployment](CentralDeployment.md) instead.
 
 The component is attached directly to each app and deployed with it. There are specific things to note here on the ABAP stack (see [ABAP Component Deployment](#component-deployment)).
 
@@ -90,7 +95,8 @@ To avoid this error, you can add the following to your `manifest.json` file:
 
 2\. Add `componentUsages` to your `manifest.json` under `sap.ui5`
 !!! warning ""
-    ⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module. (Explanation here: [Version Namespace](https://blogs.sap.com/2023/03/12/create-a-ui5-custom-library-with-versioning-using-a-multi-version-namespace/) )
+    ⚠️ You must always keep your ui5-cc-spreadsheetimporter version up to date here when updating the module. (Explanation here: [Version Namespace](https://blogs.sap.com/2023/03/12/create-a-ui5-custom-library-with-versioning-using-a-multi-version-namespace/) )  
+    Make sure the version is available in the system.
 
 ```json
 "componentUsages": {
