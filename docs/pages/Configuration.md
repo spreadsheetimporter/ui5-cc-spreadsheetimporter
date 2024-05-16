@@ -2,41 +2,54 @@
 
 How to use them see [Example Code](#example-code)
 
-These options are available and explained in detail below:
 
-| Option | Description | Details |
-| ------ | --- | --- |
-| `context` | Context to access App APIs - **mandatory**  | object |
-| `columns` | Defines which fields should only be taken into account | string[] |
-| `spreadsheetFileName` | Defines the file name when a template is downloaded | string |
-| `tableId` | ID of table to upload the data to  | string |
-| `odataType` | Upload Data to a different Entity Set in the Service | string |
-| `mandatoryFields`  | The selected fields are checked to see if they are present | string[] |
-| `fieldMatchType` | Defines what type of strategy is executed when matching spreadsheet columns | string |
-| `activateDraft` | Determines whether a draft should be activated immediately  | boolean |
-| `createActiveEntity` | Inserts `IsActiveEntity` into the payload | boolean |
-| `batchSize` | Determines bach sizes send to backend server  | integer |
-| `standalone` | Mode if you do not have a table and want to do the processing yourself  | boolean |
-| `readAllSheets` | In Standalone Mode you can get access to all sheets in the spreadsheet file  | boolean |
-| `readSheet` | Option to read a specific sheet or show a sheet selector | number or string |
-| `strict` | The strict option controls the availability of the `Continue` button in the error dialog.  | boolean |
-| `decimalSeparator` | Determines the decimal separator for numbers as string.  | string |
-| `hidePreview` | Hide the button to preview the uploaded data in the table dialog.  | boolean |
-| `previewColumns` | Define which columns should be shown in the preview dialog | string[] |
-| `skipMandatoryFieldCheck` | Skip check if fields with `mandatory` are not filled in spreadsheet file. | boolean |
-| `skipColumnsCheck` | Skip check for unkown columns which are not in the metadata | boolean |
-| `showBackendErrorMessages` | Show Backend Error Messages | boolean |
-| `showOptions` | Show Options Menu to change a few of these configurations in runtime. | boolean |
-| `availableOptions` | List of available Options to show to the user. | string[] |
-| `hideSampleData` | Leave the template file empty and do not add any sample data | boolean |
-| `sampleData` | Add an array of objects with sample data for the template | object |
-| `spreadsheetTemplateFile` | Instead of a generated spreadsheet file, you can provide your own | object |
-| `useTableSelector` | Open a Table Selector dialog if multiple tables in view | boolean |
-| `spreadsheetRowPropertyName` | If you want to send the spreadsheet row to the backend | string |
-| `componentContainerData` | Open a Table Selector dialog if multiple tables in view | boolean |
-| `i18nModel` | You can use your own i18n model to overwrite texts | object |
-| `continueOnError` | If an error occurs in batch processing, continue | boolean |
-| `debug` | Option to show more console statements and set Log Level to Debug | boolean |
+## Configuration Options
+
+The table below summarizes the options available for the UI5 Spreadsheet Importer Component. Detailed explanations and examples for each option are provided in the linked sections.
+
+### File Handling Options
+| Option                  | Description                                                             | Default        | Details               |
+|-------------------------|-------------------------------------------------------------------------|----------------|-----------------------|
+| [`spreadsheetFileName`](#spreadsheetfilename) | Defines the file name for downloads.                                  | `Template.xlsx`| string                |
+| [`spreadsheetTemplateFile`](#spreadsheettemplatefile) | Use a custom template file instead of a generated one.                | `""`           | object                |
+| [`readAllSheets`](#readallsheets) | Access all sheets in standalone mode.                                    | `false`        | boolean               |
+| [`readSheet`](#readsheet) | Option to read a specific sheet or show a sheet selector.               | `0`            | number or string      |
+
+### UI Customization Options
+| Option                  | Description                                                             | Default        | Details               |
+|-------------------------|-------------------------------------------------------------------------|----------------|-----------------------|
+| [`hidePreview`](#hidepreview) | Hide the button to preview uploaded data in the dialog.                  | `false`        | boolean               |
+| [`previewColumns`](#previewcolumns) | Define which columns to show in the preview dialog.                      | `[]`           | string[]              |
+| [`showBackendErrorMessages`](#showbackenderrormessages) | Show backend error messages directly in the UI.                            | `false`        | boolean               |
+| [`showOptions`](#showoptions) | Show a menu to change configurations at runtime.                          | `false`        | boolean               |
+
+### Data Processing Options
+| Option                  | Description                                                             | Default        | Details               |
+|-------------------------|-------------------------------------------------------------------------|----------------|-----------------------|
+| [`batchSize`](#batchsize) | Controls batch sizes sent to the backend server.                       | `1000`         | integer               |
+| [`strict`](#strict) | Controls availability of the `Continue` button in error dialogs.        | `false`        | boolean               |
+| [`decimalSeparator`](#decimalseparator) | Determines the decimal separator for numbers.                            | Browser default| string                |
+| [`mandatoryFields`](#mandatoryfields) | Fields to check for presence in the spreadsheet.                         | Not defined    | string[]              |
+| [`skipMandatoryFieldCheck`](#skipmandatoryfieldcheck) | Skip the check for mandatory fields.                                    | `false`        | boolean               |
+| [`skipColumnsCheck`](#skipcolumnscheck) | Skip check for unknown columns not in metadata.                           | `false`        | boolean               |
+| [`continueOnError`](#continueonerror) | Continue processing next batches even after errors.                      | `false`        | boolean               |
+
+### Advanced Configuration Options
+| Option                  | Description                                                             | Default        | Details               |
+|-------------------------|-------------------------------------------------------------------------|----------------|-----------------------|
+| [`fieldMatchType`](#fieldmatchtype) | Strategy for matching spreadsheet columns to fields.                   | `label`        | string                |
+| [`activateDraft`](#activatedraft) | Activate a draft immediately if possible.                               | `false`        | boolean               |
+| [`createActiveEntity`](#createactiveentity) | Directly create an active entity in draft scenarios.                    | `false`        | boolean               |
+| [`standalone`](#standalone) | Use the component in standalone mode without a linked table.             | `false`        | boolean               |
+| [`useTableSelector`](#usetableselector) | Choose a table to upload data to if multiple tables are present.         | `false`        | boolean               |
+| [`hideSampleData`](#hidesampledata) | Do not add sample data to the template file.                             | `false`        | boolean               |
+| [`sampleData`](#sampledata) | Add custom sample data to the template file.                             | Generated data | object                |
+| [`debug`](#debug) | Enable debug mode to show more console statements and logs.              | `false`        | boolean               |
+| [`componentContainerData`](#componentcontainerdata) | Special options for using the component in a ComponentContainer.          | Not specified  | boolean               |
+| [`i18nModel`](#i18nmodel) | Use a custom internationalization model to overwrite default texts.      | Not specified  | object                |
+
+This structured layout now includes the default settings, providing complete and immediate visibility into the expected behavior of each option unless otherwise configured.
+
 
 ### `columns`
 
