@@ -1,7 +1,5 @@
 # UI5 custom control `ui5-cc-spreadsheetimporter`
 
-> :warning: **This control is still in beta**: Core functionality is given, but bugs may still occur and APIs may change!
-
 A UI5 Module to integrate a Spreadsheet Upload for Fiori Element Apps.  
 This control simply enables the mass upload of data, independent of the backend, OData version and Fiori scenario.  
 This is made possible by reading the Spreadsheet file and using the standard APIs.  
