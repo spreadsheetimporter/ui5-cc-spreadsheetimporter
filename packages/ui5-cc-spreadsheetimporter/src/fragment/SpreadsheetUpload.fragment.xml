@@ -1,5 +1,9 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:upload="sap.ui.unified" xmlns:spreadsheetdialog="cc.spreadsheetimporter.XXXnamespaceXXX.control">
-  <spreadsheetdialog:SpreadsheetDialog contentWidth="{= ${device>/system/phone} ? '100%' : '40vw' }" contentHeight="110px" verticalScrolling="false">
+  <spreadsheetdialog:SpreadsheetDialog
+    contentWidth="{= ${device>/system/phone} ? '100%' : '40vw' }"
+    contentHeight="{= ${info>/densityClass} === 'sapUiSizeCompact' ? '110px' : '120px'}"
+    verticalScrolling="false"
+  >
     <spreadsheetdialog:customHeader>
       <OverflowToolbar>
         <Title text="{i18n>spreadsheetimporter.spreadsheetupload}" />
