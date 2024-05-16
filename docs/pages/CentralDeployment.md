@@ -85,5 +85,5 @@ It is not necessary to install the control using npm and the entry `resourceRoot
 
 For the consuming app in BTP, I have created a [sample app](https://github.com/spreadsheetimporter/sample-full-btp) with the deployment to the HTML5 Repository on BTP.  
 
-You can find more information in the blog posts from [Wouter Lemaire](https://people.sap.com/wouter.lemaire):  
+You can find more information in the blog posts from [Wouter Lemaire](https://community.sap.com/t5/user/viewprofilepage/user-id/9863):  
 [Connecting UI5 Components in BTP CloudFoundry in the same space](https://blogs.sap.com/2023/11/09/connecting-ui5-components-in-btp-cloudfoundry-in-the-same-space/) and [Connecting UI5 Components in BTP CloudFoundry across spaces](https://blogs.sap.com/2023/11/09/connecting-ui5-components-in-btp-cloudfoundry-across-spaces/)

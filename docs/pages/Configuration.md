@@ -135,7 +135,7 @@ There is no information about which backend OData implementation is supported, b
 
 The feature to support `IsActiveEntity` was introduced in [`@sap/cds`](https://www.npmjs.com/package/@sap/cds) Version `7.5.3`.  
 https://cap.cloud.sap/docs/releases/changelog/#dec-23-added  
-https://cap.cloud.sap/docs/releases/dec23#sapui5-mass-edit  
+https://cap.cloud.sap/docs/releases/archive/2023/dec23#sapui5-mass-edit  
 
 
 #### When to use `activateDraft` or `createActiveEntity`

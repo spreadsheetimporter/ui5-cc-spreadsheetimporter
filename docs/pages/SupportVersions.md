@@ -22,7 +22,7 @@ More info at [wdi5 tests](./Development/wdi5.md)
 
 ### CAP V4
 
-| [List Report Draft](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv4fe/webapp/ext/ListReportExtController.js)  | [Object Page Draft](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv4fe/webapp/ext/ObjectPageExtController.js)  |  Freestyle | [Flexible Programming Model](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv4fpm/webapp/ext/main/Main.controller.js) | [Typescript](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv4fets/webapp/ext/ListReportExtController.ts) | [CDS Plugin](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/examples/packages/server/app/ordersv4fecds/webapp/ext/ObjectPageExtController.js) |
+| [List Report Draft](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv4fe/webapp/ext/ListReportExtController.js)  | [Object Page Draft](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv4fe/webapp/ext/ObjectPageExtController.js)  |  Freestyle | [Flexible Programming Model](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv4fpm/webapp/ext/main/Main.controller.js) | [Typescript](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/examples/packages/ordersv4fets/webapp/ext/ListReportExtController.ts) | CDS Plugin |
 |---|---|---|---|---|---|
 | :white_check_mark:   | :white_check_mark: |  |  :white_check_mark:  | |  :white_check_mark:  | |  :white_check_mark:  |
 
