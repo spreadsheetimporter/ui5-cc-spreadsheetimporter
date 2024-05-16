@@ -1,6 +1,4 @@
 {
-  "bump-minor-pre-major": true,
-  "prerelease": true,
   "plugins": ["node-workspace"],
   "packages": {
     "packages/ui5-cc-spreadsheetimporter": {
