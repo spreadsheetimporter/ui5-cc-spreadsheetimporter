@@ -24,6 +24,7 @@ util.replaceYamlFileComponent(versionUnderscore,'./packages/ui5-cc-spreadsheetim
 util.replaceYamlFileDeploy(versionUnderscore, versionUnderscore)
 util.replaceVersionManifest(versionUnderscore)
 util.replaceMetadataName(versionDash)
+util.updateManifestVersion(version)
 
 // replace in docs
 updateVersionDocs.updateVersions(versionUnderscore)
