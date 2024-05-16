@@ -1,17 +1,22 @@
 # Central Deployment
 
-The foundational concept of the UI5 Spreadsheet upload control's development emphasizes its individual deployment alongside each application. However, an alternative deployment strategy exists, allowing for the control to be centrally hosted on the backend.
-
-Key Points:  
-
-- **Version Independence**: The control operates independently of specific versions, enhancing its autonomy and facilitating seamless updates with new versions.
-  - **Centralized Deployment Options**:
-    1. **ABAP On-Premise System**: Instructions for centralized uploading in an ABAP on-premise environment.
-    2. **HTML5 Repository on BTP**: Steps for deploying in an HTML5 repository on SAP Business Technology Platform (BTP).
-
-**Note**: As of the current state, there is no automated process for central deployment. Detailed below are manual instructions for implementing centralized deployment of the UI5 Spreadsheet control.
+the best way is to deploy the UI5 Spreadsheet Importer centrally on the system. Once deployed, it is much easier for the individual developer to use.
 
 ## Deployment to On-Premise ABAP System
+
+The **best way** is to use a carrier UI5 app.  
+This app contains all required versions of the Spreadsheet Importer component and with just one deployment all versions are available in the system.   
+The components are available in the app index through the deployment.
+
+### UI5 Carrier App
+
+You can find the a sample carrier app [here](https://github.com/spreadsheetimporter/packed-deployment-abap).
+
+Just follow the README.md file in the repository.
+
+After the deployment, you can use the component in your Fiori app.
+
+### Manual deployment
 
 1\. Clone Repo
 
