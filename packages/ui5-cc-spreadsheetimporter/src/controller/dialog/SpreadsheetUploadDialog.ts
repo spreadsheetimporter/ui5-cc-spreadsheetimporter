@@ -64,7 +64,8 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 				hidePreview: this.component.getHidePreview(),
 				showOptions: this.component.getShowOptions(),
 				hideGenerateTemplateButton: false,
-				fileUploadValue: ""
+				fileUploadValue: "",
+				densityClass: this.component._densityClass
 			});
 			this.spreadsheetUploadDialog = (await Fragment.load({
 				name: "cc.spreadsheetimporter.XXXnamespaceXXX.fragment.SpreadsheetUpload",

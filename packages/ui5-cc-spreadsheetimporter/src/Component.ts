@@ -16,6 +16,7 @@ import View from "sap/ui/core/mvc/View";
 export default class Component extends UIComponent {
 	spreadsheetUpload: SpreadsheetUpload;
 	private _sContentDensityClass: any;
+	public _densityClass: string;
 	public logger: Logger;
 	oContainer: ComponentContainer;
 	settingsFromContainer: $ComponentSettings;
@@ -283,6 +284,8 @@ export default class Component extends UIComponent {
 			// check whether FLP has already set the content density class; do nothing in this case
 			if (document.body.classList.contains("sapUiSizeCozy") || document.body.classList.contains("sapUiSizeCompact")) {
 				this._sContentDensityClass = "";
+				// set _densityClass to "sapUiSizeCozy" or "sapUiSizeCompact" depending on the current content density
+				this._densityClass = document.body.classList.contains("sapUiSizeCozy") ? "sapUiSizeCozy" : "sapUiSizeCompact";
 			} else if (!Device.support.touch) {
 				// apply "compact" mode if touch is not supported
 				this._sContentDensityClass = "sapUiSizeCompact";
