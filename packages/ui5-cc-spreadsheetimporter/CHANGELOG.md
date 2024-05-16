@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.35.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.34.1...ui5-cc-spreadsheetimporter-v0.35.0) (2024-05-16)
+
+
+### Features
+
+* new language portuguese by LLM translation ([#553](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/553)) ([76d246c](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/76d246c55cd0e533d35c6972b8c587bf78a056bc))
+
 ## [0.34.1](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.34.0...ui5-cc-spreadsheetimporter-v0.34.1) (2024-05-08)
 
 
