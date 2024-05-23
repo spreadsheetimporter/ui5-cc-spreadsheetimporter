@@ -47,7 +47,7 @@ npm install ui5-cc-spreadsheetimporter
 
 ```json
 "resourceRoots": {
-  "cc.spreadsheetimporter.v0_34_1": "./thirdparty/customcontrol/spreadsheetimporter/v0_34_1"
+  "cc.spreadsheetimporter.v1_0_0": "./thirdparty/customcontrol/spreadsheetimporter/v1_0_0"
 }
 ```
 
@@ -68,7 +68,7 @@ npm install ui5-cc-spreadsheetimporter
 ```json
 "componentUsages": {
   "spreadsheetImporter": {
-    "name": "cc.spreadsheetimporter.v0_34_1"
+    "name": "cc.spreadsheetimporter.v1_0_0"
   }
 }
 ```
@@ -80,12 +80,12 @@ If you deploy your app to a SAP System (S/4 On-Premise or SAP BTP ABAP environme
 To avoid this error, you can add the following to your `manifest.json` file:
 
 !!! warning ""
-    ⚠️ The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v0_34_1" changed from version 0.34.0 to lowercase. Please make sure to use the correct path.
+    ⚠️ The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v1_0_0" changed from version 0.34.0 to lowercase. Please make sure to use the correct path.
 
 
 ```json
 "sap.app": {
-  "embeds": ["thirdparty/customcontrol/spreadsheetimporter/v0_34_1"]
+  "embeds": ["thirdparty/customcontrol/spreadsheetimporter/v1_0_0"]
 }
 ```
 
@@ -101,7 +101,7 @@ To avoid this error, you can add the following to your `manifest.json` file:
 ```json
 "componentUsages": {
   "spreadsheetImporter": {
-    "name": "cc.spreadsheetimporter.v0_34_1"
+    "name": "cc.spreadsheetimporter.v1_0_0"
   }
 }
 ```
@@ -278,7 +278,7 @@ openSpreadsheetUploadDialog: async function (oEvent) {
         context: this,
       },
       url: "/sap/bc/ui5_ui5/sap/Z_XUP_v0_33_2",
-      name: "cc.spreadsheetimporter.v0_34_1"
+      name: "cc.spreadsheetimporter.v1_0_0"
     });
   this.spreadsheetUpload.openSpreadsheetUploadDialog();
   this.getView().setBusy(false);
@@ -289,17 +289,17 @@ This is alternative to using resourceRoots in the manifest.json when you don't h
 
 #### Error: library/component used in application does not exist
 
-When deploying the app to your ABAP system, you may get an error like this: `SAPUI5 library/component cc.spreadsheetimporter.v0_34_1 used in application Z*** does not exist`. The application is deployed, but the service returns an error.
+When deploying the app to your ABAP system, you may get an error like this: `SAPUI5 library/component cc.spreadsheetimporter.v1_0_0 used in application Z*** does not exist`. The application is deployed, but the service returns an error.
 
 To avoid this error, you can add the following to your `manifest.json` file:
 
 !!! warning ""
-    ⚠️ The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v0_34_1" changed from version 0.34.0 to lowercase. Please make sure to use the correct path.
+    ⚠️ The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v1_0_0" changed from version 0.34.0 to lowercase. Please make sure to use the correct path.
 
 
 ```json
 "sap.app": {
-  "embeds": ["thirdparty/customcontrol/spreadsheetimporter/v0_34_1"]
+  "embeds": ["thirdparty/customcontrol/spreadsheetimporter/v1_0_0"]
 }
 ```
 
@@ -336,7 +336,7 @@ After you have deployed the component centrally, you can consume it in your app 
 
 To find out which URL to enter, the App Index can be called up at the following URL:  
 ```
-<SAP SYSTEM URL>/sap/bc/ui2/app_index/ui5_app_info?id=cc.spreadsheetimporter.v0_34_1
+<SAP SYSTEM URL>/sap/bc/ui2/app_index/ui5_app_info?id=cc.spreadsheetimporter.v1_0_0
 ```
 
 Here are the examples for [`fiori-tools-proxy`](https://www.npmjs.com/package/@sap/ux-ui5-tooling#2-proxy) and [`ui5-middleware-simpleproxy`](https://www.npmjs.com/package/ui5-middleware-simpleproxy).
@@ -351,9 +351,9 @@ Here are the examples for [`fiori-tools-proxy`](https://www.npmjs.com/package/@s
       - path: /sap
         url: <Cloud Connector or local URL>
         destination: <System Destination name if in BAS>
-      - path: /resources/cc/spreadsheetimporter/v0_34_1
+      - path: /resources/cc/spreadsheetimporter/v1_0_0
         destination: <System Destination name if in BAS>
-        pathPrefix: /sap/bc/ui5_ui5/sap/<BSP NAME>/thirdparty/customcontrol/spreadsheetimporter/v0_34_1/
+        pathPrefix: /sap/bc/ui5_ui5/sap/<BSP NAME>/thirdparty/customcontrol/spreadsheetimporter/v1_0_0/
         url: <Cloud Connector or local URL>
 ```
 
@@ -362,9 +362,9 @@ Here are the examples for [`fiori-tools-proxy`](https://www.npmjs.com/package/@s
 ```yml
    - name: ui5-middleware-simpleproxy
       afterMiddleware: compression
-      mountPath: /resources/cc/spreadsheetimporter/v0_34_1/
+      mountPath: /resources/cc/spreadsheetimporter/v1_0_0/
       configuration:
-        baseUri: "<SAP SYSTEM URL>/sap/bc/ui5_ui5/sap/<BSP NAME>/thirdparty/customcontrol/spreadsheetimporter/v0_34_1/"
+        baseUri: "<SAP SYSTEM URL>/sap/bc/ui5_ui5/sap/<BSP NAME>/thirdparty/customcontrol/spreadsheetimporter/v1_0_0/"
         username: <SAP USERNAME>
         password: <SAP PASSWORD
         query:
