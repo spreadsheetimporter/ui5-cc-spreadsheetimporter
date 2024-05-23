@@ -330,6 +330,47 @@ customTasks:
       - .*\.ts.map
 ```
 
+#### Consuming the central deployed component from the ABAP system
+
+After you have deployed the component centrally, you can consume it in your app when you develop it in VS Code or BAS.  
+
+To find out which URL to enter, the App Index can be called up at the following URL:  
+```
+<SAP SYSTEM URL>/sap/bc/ui2/app_index/ui5_app_info?id=cc.spreadsheetimporter.v0_34_1
+```
+
+Here are the examples for [`fiori-tools-proxy`](https://www.npmjs.com/package/@sap/ux-ui5-tooling#2-proxy) and [`ui5-middleware-simpleproxy`](https://www.npmjs.com/package/ui5-middleware-simpleproxy).
+
+**`fiori-tools-proxy`**
+
+```yml
+- name: fiori-tools-proxy
+  afterMiddleware: compression
+  configuration:
+    backend:
+      - path: /sap
+        url: <Cloud Connector or local URL>
+        destination: <System Destination name if in BAS>
+      - path: /resources/cc/spreadsheetimporter/v0_34_1
+        destination: <System Destination name if in BAS>
+        pathPrefix: /sap/bc/ui5_ui5/sap/<BSP NAME>/thirdparty/customcontrol/spreadsheetimporter/v0_34_1/
+        url: <Cloud Connector or local URL>
+```
+
+**`ui5-middleware-simpleproxy`**
+
+```yml
+   - name: ui5-middleware-simpleproxy
+      afterMiddleware: compression
+      mountPath: /resources/cc/spreadsheetimporter/v0_34_1/
+      configuration:
+        baseUri: "<SAP SYSTEM URL>/sap/bc/ui5_ui5/sap/<BSP NAME>/thirdparty/customcontrol/spreadsheetimporter/v0_34_1/"
+        username: <SAP USERNAME>
+        password: <SAP PASSWORD
+        query:
+          sap-client: '100'
+```
+
 ### BTP Environment Deployment
 
 #### Config your `ui5-task-zipper` in your deployment yaml file
