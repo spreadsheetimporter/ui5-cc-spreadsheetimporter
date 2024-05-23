@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.0.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.34.1...ui5-cc-spreadsheetimporter-v1.0.0) (2024-05-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* release 1.0.0
+
+### Features
+
+* new language portuguese by LLM translation ([#553](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/553)) ([76d246c](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/76d246c55cd0e533d35c6972b8c587bf78a056bc))
+* release 1.0.0 ([345b82f](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/345b82fff57f736bd037cfb587ae58e835df3b63))
+
+
+### Bug Fixes
+
+* dialog margin in `sapUiSizeCozy` mode ([#562](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/562)) ([4104fb9](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/4104fb9869abc61314e4f930e720a09c387dd0a5))
+
 ## [0.34.1](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.34.0...ui5-cc-spreadsheetimporter-v0.34.1) (2024-05-08)
 
 
