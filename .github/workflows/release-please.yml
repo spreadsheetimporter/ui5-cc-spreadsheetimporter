@@ -67,7 +67,7 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Update the ABAP Deploy Repository
-        if: ${{ steps.release.outputs['packages/ui5-cc-spreadsheetimporter-generator--release_created'] }}
+        if: ${{ steps.release.outputs['packages/ui5-cc-spreadsheetimporter--release_created'] }}
         run: |
           curl \
           -X POST \
