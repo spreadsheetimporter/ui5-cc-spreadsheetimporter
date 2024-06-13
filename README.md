@@ -1,8 +1,6 @@
 # UI5 `ui5-cc-spreadsheetimporter`
 
-This monorepo houses the UI5 Component `ui5-cc-spreadsheetimporter`, the Button `ui5-cc-spreadsheetimporter-button`, and the generator for seamless integration of the component into your app.
-
-> :warning: **Beta Version**: While core functionality is provided, bugs may still occur and APIs may change!
+This monorepo houses the UI5 Component `ui5-cc-spreadsheetimporter` and the generator for seamless integration of the component into your app.
 
 `ui5-cc-spreadsheetimporter` is a UI5 Component designed for the integration of Spreadsheet Upload functionality into Fiori Elements and other UI5 Apps.  
 It enables the bulk upload of data, independent of the backend, OData version, and Fiori scenario, by extracting data from an Spreadsheet file and leveraging standard APIs.  
@@ -24,14 +22,11 @@ https://docs.spreadsheet-importer.com/
 Give this a try directly at:  
 https://livedemo.spreadsheet-importer.com/
 
-The demo app uses OData V4 and UI5 version 1.108 with a CAP backend. The data resets every hour on the hour.
+The demo app uses OData V4 and UI5 version 1.120 with a CAP backend. The data resets every hour on the hour.
 
 # **Support**
 
-For discussions about the suitability of the component for your use case, you can schedule an appointment [here](https://outlook.office365.com/owa/calendar/UI5ExcelUploadComponent@marianzeis.de/bookings/) free of charge.
-
 If you encounter implementation issues or bugs, you can open an issue [here](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/new/choose).  
-For urgent assistance or special requirements, please schedule an appointment [here](https://outlook.office365.com/owa/calendar/UI5ExcelUploadComponent@marianzeis.de/bookings/) at a fixed rate.
 
 # Development
 
