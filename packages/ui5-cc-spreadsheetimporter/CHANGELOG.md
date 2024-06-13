@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.0.0...ui5-cc-spreadsheetimporter-v1.1.0) (2024-06-13)
+
+
+### Features
+
+* new option `excludeColumns` ([#575](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/575)) ([a639b02](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/a639b0250242870cafa3b500dfd11c2c0c32bd37))
+* parse `Edm.Time` when excel data is text ([#573](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/573)) ([cfaeace](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/cfaeace8f53f9ed81cc8f10fc51519ab1e68605e))
+
 ## [1.0.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v0.34.1...ui5-cc-spreadsheetimporter-v1.0.0) (2024-05-23)
 
 
