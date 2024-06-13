@@ -12,7 +12,6 @@
   "engines": {
     "node": ">=16"
   },
-  "packageManager": "pnpm@7.1.7",
   "scripts": {
     "start": "run-p watch:server start:uiv4fe start:uiv2fe start:uiv2freestyle start:uiv2fenondraft start:uiv4fpm",
     "start:uiv4fe": "pnpm --filter ordersv4fe start",
