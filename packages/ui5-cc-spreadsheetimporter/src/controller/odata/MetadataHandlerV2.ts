@@ -9,7 +9,7 @@ export default class MetadataHandlerV2 extends MetadataHandler {
 		super(spreadsheetUploadController);
 	}
 
-	public getLabelList(colums: Columns, odataType: string, odataEntityType: any): ListObject {
+	public getLabelList(columns: Columns, odataType: string, odataEntityType: any, excludeColumns: Columns): ListObject {
 		let listObject: ListObject = new Map();
 
 		// get the property list of the entity for which we need to download the template
@@ -24,8 +24,13 @@ export default class MetadataHandlerV2 extends MetadataHandler {
 			this.spreadsheetUploadController.component.setSpreadsheetFileName(`Template.xlsx`);
 		}
 
-		if (colums.length > 0) {
-			for (const propertyName of colums) {
+		// excludeColumns will remove the columns from the list if columns are present
+		if (columns.length > 0 && excludeColumns.length > 0) {
+			columns = columns.filter((column) => !excludeColumns.includes(column));
+		}
+
+		if (columns.length > 0) {
+			for (const propertyName of columns) {
 				const property = properties.find((property: any) => property.name === propertyName);
 				if (property) {
 					let propertyObject: Property = {} as Property;
@@ -38,6 +43,27 @@ export default class MetadataHandlerV2 extends MetadataHandler {
 					listObject.set(propertyName, propertyObject);
 				} else {
 					Log.warning(`SpreadsheetUpload: Property ${propertyName} not found`);
+				}
+			}
+		} else if (columns.length === 0 && excludeColumns.length > 0) {
+			for (const property of properties) {
+				// if property is in excludeColumns, skip it
+				if (excludeColumns.includes(property.name)) {
+					continue;
+				}
+				let hiddenProperty = false;
+				const propertyName = property.name;
+				try {
+					hiddenProperty = property["com.sap.vocabularies.UI.v1.Hidden"].Bool === "true";
+				} catch (error) {
+					Log.debug(`No hidden property on ${property.name}`, undefined, "SpreadsheetUpload: MetadataHandler");
+				}
+				if (!hiddenProperty && !propertyName.startsWith("SAP__")) {
+					let propertyObject: Property = {} as Property;
+					propertyObject.label = this.getLabel(odataEntityType, properties, property, propertyName);
+					propertyObject.type = property["type"];
+					propertyObject.maxLength = property["maxLength"];
+					listObject.set(propertyName, propertyObject);
 				}
 			}
 		} else {

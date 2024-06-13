@@ -35,6 +35,8 @@ export default class Component extends UIComponent {
 			context: { type: "object" },
 			// @ts-ignore
 			columns: { type: "string[]", defaultValue: [] },
+			// @ts-ignore
+			excludeColumns: { type: "string[]", defaultValue: [] },
 			tableId: { type: "string" },
 			odataType: { type: "string" },
 			// @ts-ignore
@@ -118,6 +120,7 @@ export default class Component extends UIComponent {
 		this.setSpreadsheetFileName(compData?.spreadsheetFileName);
 		this.setContext(compData?.context);
 		this.setColumns(compData?.columns);
+		this.setExcludeColumns(compData?.excludeColumns);
 		this.setTableId(compData?.tableId);
 		this.setOdataType(compData?.odataType);
 		this.setMandatoryFields(compData?.mandatoryFields);

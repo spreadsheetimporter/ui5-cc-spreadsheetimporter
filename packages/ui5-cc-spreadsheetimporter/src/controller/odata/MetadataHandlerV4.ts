@@ -9,7 +9,7 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 		super(spreadsheetUploadController);
 	}
 
-	public getLabelList(colums: Columns, odataType: string): ListObject {
+	public getLabelList(columns: Columns, odataType: string, excludeColumns: Columns): ListObject {
 		let listObject: ListObject = new Map();
 		let entityTypeLabel;
 
@@ -33,8 +33,13 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 			this.spreadsheetUploadController.component.setSpreadsheetFileName(`Template.xlsx`);
 		}
 
-		if (colums.length > 0) {
-			for (const propertyName of colums) {
+		// excludeColumns will remove the columns from the list if columns are present
+		if (columns.length > 0 && excludeColumns.length > 0) {
+			columns = columns.filter((column) => !excludeColumns.includes(column));
+		}
+
+		if (columns.length > 0) {
+			for (const propertyName of columns) {
 				const property = properties[propertyName];
 				if (property) {
 					const propertyLabel = annotations[`${odataType}/${propertyName}`];
@@ -48,6 +53,31 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 					listObject.set(propertyName, propertyObject);
 				} else {
 					Log.warning(`SpreadsheetUpload: Property ${propertyName} not found`, undefined, "SpreadsheetUpload: MetadataHandler");
+				}
+			}
+		} else if (columns.length === 0 && excludeColumns.length > 0) {
+			const propertiesFiltered = [];
+			for (const propertyName in properties) {
+				const propertyValue = properties[propertyName];
+				if (propertyValue["$kind"] === "Property") {
+					propertiesFiltered.push([propertyName, propertyValue]);
+				}
+			}
+			for (const [propertyName, propertyValue] of propertiesFiltered) {
+				// if property is in excludeColumns, skip it
+				if (excludeColumns.includes(propertyName)) {
+					continue;
+				}
+				const propertyLabel = annotations[`${odataType}/${propertyName}`];
+				if (propertyLabel && !propertyLabel["@com.sap.vocabularies.UI.v1.Hidden"] && !propertyName.startsWith("SAP__")) {
+					let propertyObject: Property = {} as Property;
+					propertyObject.label = this.getLabel(annotations, properties, propertyName, propertyLabel, odataType);
+					if (!propertyObject.label) {
+						propertyObject.label = propertyName;
+					}
+					propertyObject.type = propertyValue.$Type;
+					propertyObject.maxLength = propertyValue.$MaxLength;
+					listObject.set(propertyName, propertyObject);
 				}
 			}
 		} else {

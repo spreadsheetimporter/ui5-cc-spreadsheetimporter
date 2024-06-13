@@ -143,8 +143,8 @@ export default class ODataV4 extends OData {
 		}
 	}
 
-	async getLabelList(columns: Columns, odataType: string) {
-		return this.getMetadataHandler().getLabelList(columns, odataType);
+	async getLabelList(columns: Columns, odataType: string, excludeColumns: Columns) {
+		return this.getMetadataHandler().getLabelList(columns, odataType, excludeColumns);
 	}
 
 	async getKeyList(odataType: string, tableObject: any) {

@@ -11,6 +11,7 @@ declare module "./Component" {
         spreadsheetFileName?: string | PropertyBindingInfo;
         context?: object | PropertyBindingInfo | `{${string}}`;
         columns?: string[] | PropertyBindingInfo | `{${string}}`;
+        excludeColumns?: string[] | PropertyBindingInfo | `{${string}}`;
         tableId?: string | PropertyBindingInfo;
         odataType?: string | PropertyBindingInfo;
         mandatoryFields?: string[] | PropertyBindingInfo | `{${string}}`;
@@ -59,6 +60,10 @@ declare module "./Component" {
         // property: columns
         getColumns(): string[];
         setColumns(columns: string[]): this;
+
+        // property: excludeColumns
+        getExcludeColumns(): string[];
+        setExcludeColumns(excludeColumns: string[]): this;
 
         // property: tableId
         getTableId(): string;

@@ -132,7 +132,7 @@ export default class SpreadsheetUpload extends ManagedObject {
 		Log.debug("odataType", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ odataType: this._odataType }));
 		this.odataKeyList = await this.odataHandler.getKeyList(this._odataType, this.tableObject);
 		Log.debug("odataKeyList", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ odataKeyList: this.odataKeyList }));
-		this.typeLabelList = await this.odataHandler.getLabelList(this.component.getColumns(), this._odataType, this.tableObject);
+		this.typeLabelList = await this.odataHandler.getLabelList(this.component.getColumns(), this._odataType, this.component.getExcludeColumns(), this.tableObject);
 		Log.debug("typeLabelList", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ typeLabelList: this.typeLabelList }));
 
 		this.model = this.tableObject.getModel();
@@ -192,6 +192,9 @@ export default class SpreadsheetUpload extends ManagedObject {
 		}
 		if (options.hasOwnProperty("columns")) {
 			this.component.setColumns(options.columns);
+		}
+		if (options.hasOwnProperty("excludeColumns")) {
+			this.component.setExcludeColumns(options.excludeColumns);
 		}
 		if (options.hasOwnProperty("tableId")) {
 			this.component.setTableId(options.tableId);
