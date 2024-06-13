@@ -10,6 +10,8 @@ The table below summarizes the options available for the UI5 Spreadsheet Importe
 ### File Handling Options
 | Option                  | Description                                                             | Default        | Details               |
 |-------------------------|-------------------------------------------------------------------------|----------------|-----------------------|
+| [`columns`](#columns) | Defines columns imported and shown in the template.                                  | `[]`| string[]                |
+| [`excludeColumns`](#excludeColumns) | Defines columns excluding in import and template.                                  | `[]`| string[]                |
 | [`spreadsheetFileName`](#spreadsheetfilename) | Defines the file name for downloads.                                  | `Template.xlsx`| string                |
 | [`spreadsheetTemplateFile`](#spreadsheettemplatefile) | Use a custom template file instead of a generated one.                | `""`           | object                |
 | [`readAllSheets`](#readallsheets) | Access all sheets in standalone mode.                                    | `false`        | boolean               |
@@ -60,6 +62,14 @@ This option defines which fields should only be taken into account during the up
 ````
 columns: ["ID", "Birthday","FirstName","LastName"],
 ````
+
+### `excludeColumns`
+
+**default:** []
+
+You can specify columns to exclude from the import and the template.  
+If you have already defined the [`columns`](#columns) property in your configuration, any columns listed in `excludeColumns` will be omitted from the final display.  
+This allows you to focus on including only the relevant columns, rather than individually removing each unwanted column
 
 ### `spreadsheetFileName`
 

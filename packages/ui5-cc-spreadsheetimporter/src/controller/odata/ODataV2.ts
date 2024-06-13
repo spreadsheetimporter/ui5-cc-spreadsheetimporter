@@ -141,11 +141,11 @@ export default class ODataV2 extends OData {
 		}
 	}
 
-	async getLabelList(columns: Columns, odataType: string, tableObject?: any) {
+	async getLabelList(columns: Columns, odataType: string, excludeColumns: Columns, tableObject?: any) {
 		const metaModel = tableObject.getModel().getMetaModel();
 		await metaModel.loaded();
 		const odataEntityType = metaModel.getODataEntityType(odataType);
-		return this.getMetadataHandler().getLabelList(columns, odataType, odataEntityType);
+		return this.getMetadataHandler().getLabelList(columns, odataType, odataEntityType, excludeColumns);
 	}
 
 	async getKeyList(odataType: string, tableObject: any) {

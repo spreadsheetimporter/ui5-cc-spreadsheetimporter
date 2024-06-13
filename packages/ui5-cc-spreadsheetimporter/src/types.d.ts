@@ -82,6 +82,7 @@ export interface ComponentData {
 	spreadsheetFileName?: string;
 	context?: object;
 	columns?: string[];
+	excludeColumns?: string[];
 	tableId?: string;
 	odataType?: string;
 	mandatoryFields?: string[];
