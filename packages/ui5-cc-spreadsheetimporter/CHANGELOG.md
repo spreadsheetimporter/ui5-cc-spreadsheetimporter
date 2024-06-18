@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.1.0...ui5-cc-spreadsheetimporter-v1.1.1) (2024-06-18)
+
+
+### Bug Fixes
+
+* dialog is blocking navigation in FE scenarios ([#579](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/579)) ([5a0b05d](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/5a0b05d051e083d367833da70e33d19464020b74))
+
 ## [1.1.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.0.0...ui5-cc-spreadsheetimporter-v1.1.0) (2024-06-13)
 
 
