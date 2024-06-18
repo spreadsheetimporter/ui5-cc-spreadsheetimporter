@@ -302,6 +302,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	 * Closes the Spreadsheet upload dialog.
 	 */
 	onCloseDialog() {
+		this.component.fireRequestCompleted();
 		this.resetContent();
 		this.spreadsheetUploadDialog.close();
 	}
