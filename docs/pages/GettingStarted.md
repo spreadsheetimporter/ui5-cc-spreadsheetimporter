@@ -307,7 +307,17 @@ After that the component should be found in the app index. This means ressourceR
 
 #### File unknown when deploying the app
 
-It is possible that the ABAP system does not know how to handle ts files. If you use the `deploy-to-abap` command, you can add the `exclude` option to your `ui5.yaml` file to exclude the files from the deployment:
+It is possible that the ABAP system does not know how to handle ts files.  
+You need to create a new file called `.Ui5RepositoryTextFiles` like described [here](https://ui5.sap.com/#/topic/a883327a82ef4cc792f3c1e7b7a48de8) in the webapp folder of your app.  
+A sample file can be found [here](https://github.com/spreadsheetimporter/packed-deployment-abap/blob/main/webapp/.Ui5RepositoryTextFiles) and can look like this:
+
+```txt
+^.*.ts$
+^.*.ts.map$
+^.*.js.map$
+```
+
+If you use the `deploy-to-abap` command, you can add the `exclude` option to your `ui5.yaml` file to exclude the files from the deployment:
 
 ```yaml
 customTasks:
@@ -328,6 +338,7 @@ customTasks:
       exclude:
       - .*\.ts
       - .*\.ts.map
+      - .*\.js.map
 ```
 
 #### Consuming the central deployed component from the ABAP system
