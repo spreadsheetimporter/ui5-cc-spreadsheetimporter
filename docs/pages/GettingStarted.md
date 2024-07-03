@@ -400,3 +400,30 @@ builder:
         includeDependencies:
         - ui5-cc-spreadsheetimporter
 ```
+
+#### Update `"sap.cloud".service` in Spreadsheet Importer manifest.json
+
+When you are using the decentral deployment and try to deploy, it is possible that the deployment fails with the following error: 
+
+`"Service name 'spreadsheetimporter_v1_1_1' and public setting 'true' in embedded manifest.json have to be equal to service name 'xxxxxxx' and public setting 'true' of root manifest.json"`
+
+You could manually update the `service` name in the `manifest.json` of the Spreadsheet Importer to match the service name in the `manifest.json` of your app.  
+To automate this, you can use the custom task for the UI5 Tooling [`ui5-task-btp-manifest`](https://github.com/spreadsheetimporter/ui5-task-btp-manifest)
+
+##### Install the task
+
+```bash
+npm install --save-dev ui5-task-btp-manifest
+```
+
+##### Add the task to your `ui5.yaml`
+
+```yml
+builder:
+  customTasks:
+    - name: ui5-task-btp-manifest
+      afterTask: replaceVersion
+```
+
+This will update the manifest file of the Spreadsheet Importer with the service name of the app like to this path:
+`dist/thirdparty/customcontrol/spreadsheetimporter/v1_1_1/manifest.json`
