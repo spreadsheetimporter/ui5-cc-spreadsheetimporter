@@ -336,9 +336,10 @@ export default class SpreadsheetUpload extends ManagedObject {
 					refreshFailed = true;
 				}
 			}
-			// try refresh binding either way
+			// try refresh binding when refresh failed
 			if (refreshFailed) {
 				try {
+					// force refresh only available for v2
 					binding.refresh(true);
 				} catch (error) {
 					Log.error("Failed to refresh binding in other contexts: " + error);
