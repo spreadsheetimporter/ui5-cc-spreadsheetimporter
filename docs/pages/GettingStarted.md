@@ -247,7 +247,7 @@ openSpreadsheetUploadDialog: async function (event) {
 ## Deployment of your app
 
 
-### ABAP System Deployment
+### ABAP Stack
 
 #### Component Deployment
 
@@ -341,7 +341,15 @@ customTasks:
       - .*\.js.map
 ```
 
-### BTP Environment Deployment
+### BTP Environment
+
+#### Run with CAP 
+
+If you are using CAP and installing the component as dependency **to your UI5 App**, you have to use [`cds-plugin-ui5`](https://www.npmjs.com/package/cds-plugin-ui5?activeTab=versions), so the UI5 Tooling is loading the installed component.
+
+```sh
+npm install cds-plugin-ui5 --save-dev
+```
 
 #### Config your `ui5-task-zipper` in your deployment yaml file
 
