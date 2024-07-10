@@ -400,3 +400,42 @@ builder:
         includeDependencies:
         - ui5-cc-spreadsheetimporter
 ```
+
+#### Update `"sap.cloud".service` in Spreadsheet Importer manifest.json
+
+When you are using the decentral deployment and try to deploy, it is possible that the deployment fails with the following error:  
+
+`"Service name 'spreadsheetimporter_v1_1_1' and public setting 'true' in embedded manifest.json have to be equal to service name 'xxxxxxx' and public setting 'true' of root manifest.json"`
+
+As of now, according to SAP, this will not be changed.
+
+##### Workaround 1
+
+You can manually update the `service` name in the `manifest.json` of the Spreadsheet Importer to match the service name in the `manifest.json` of your app.  
+
+I tried to automate this and you can use the custom task for the UI5 Tooling [`ui5-task-btp-manifest`](https://github.com/spreadsheetimporter/ui5-task-btp-manifest)
+
+###### Install the task
+
+```bash
+npm install --save-dev ui5-task-btp-manifest
+```
+
+###### Add the task to your `ui5.yaml`
+
+```yml
+builder:
+  customTasks:
+    - name: ui5-task-btp-manifest
+      afterTask: replaceVersion
+```
+
+This will update the manifest file of the Spreadsheet Importer with the service name of the app like to this path:
+`dist/thirdparty/customcontrol/spreadsheetimporter/v1_1_1/manifest.json`
+
+##### Workaround 2
+
+According to the [comment from user TravelTechCode](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/582#issuecomment-2210564980) you can try to deploy the app without the packaged component first:
+
+
+> Though one hack i found is that ,if i deploy my app first without the ui5 spreadsheet component and then add and deploy the ui5 spreadsheet component in the second deployment, then it's not causing any deployment error and can be access in the content explorer too.
