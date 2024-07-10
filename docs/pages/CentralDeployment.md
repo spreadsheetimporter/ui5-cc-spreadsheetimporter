@@ -92,7 +92,7 @@ pnpm build:mta
 pnpm deploy:cf
 ```
 
-## Consuming in Fiori App
+## Consuming in UI5 App
 Perform the same steps as you did in [Getting Started](./../pages/GettingStarted.md).  
 It is not necessary to install the control using npm and the entry `resourceRoots` in the `manifest.json`.
 
@@ -100,3 +100,76 @@ For the consuming app in BTP, I have created a [sample app](https://github.com/s
 
 You can find more information in the blog posts from [Wouter Lemaire](https://community.sap.com/t5/user/viewprofilepage/user-id/9863):  
 [Connecting UI5 Components in BTP CloudFoundry in the same space](https://blogs.sap.com/2023/11/09/connecting-ui5-components-in-btp-cloudfoundry-in-the-same-space/) and [Connecting UI5 Components in BTP CloudFoundry across spaces](https://blogs.sap.com/2023/11/09/connecting-ui5-components-in-btp-cloudfoundry-across-spaces/)
+
+
+## Running the app locally
+
+When the component is deployed centrally, you can run the app locally by installing the component as dev dependency and proxying the requests to the local installed component. You can also consume the central deployed component from the ABAP system.
+
+### Consuming the component as dev dependency locally
+
+You can install the component as dev dependency in your app to simulate the central deployed component either to ABAP Stack or BTP.
+
+1\. Install the component as dev dependency (install the component version that is used in your app)
+
+```sh
+npm install ui5-cc-spreadsheetimporter --save-dev
+```
+
+2\. Install [`ui5-middleware-servestatic`](https://www.npmjs.com/package/ui5-middleware-servestatic)
+
+```sh
+npm install ui5-middleware-servestatic --save-dev
+```
+
+3\. Add the following configuration to the `ui5.yaml` file (adjust the version number)
+
+```yml
+    - name: ui5-middleware-servestatic
+      afterMiddleware: compression
+      mountPath: /resources/cc/spreadsheetimporter/v1_1_1/
+      configuration:
+        rootPath: "node_modules/ui5-cc-spreadsheetimporter/dist"
+```
+
+
+### Consuming the central deployed component from the ABAP system
+
+After you have deployed the component centrally, you can consume it in your app when you develop it in VS Code or BAS.  
+
+To find out which URL to enter, the App Index can be called up at the following URL:  
+```
+<SAP SYSTEM URL>/sap/bc/ui2/app_index/ui5_app_info?id=cc.spreadsheetimporter.v1_1_1
+```
+
+Here are the examples for [`fiori-tools-proxy`](https://www.npmjs.com/package/@sap/ux-ui5-tooling#2-proxy) and [`ui5-middleware-simpleproxy`](https://www.npmjs.com/package/ui5-middleware-simpleproxy).
+
+**`fiori-tools-proxy`**
+
+```yml
+- name: fiori-tools-proxy
+  afterMiddleware: compression
+  configuration:
+    backend:
+      - path: /sap
+        url: <Cloud Connector or local URL>
+        destination: <System Destination name if in BAS>
+      - path: /resources/cc/spreadsheetimporter/v1_1_1
+        destination: <System Destination name if in BAS>
+        pathPrefix: /sap/bc/ui5_ui5/sap/<BSP NAME>/thirdparty/customcontrol/spreadsheetimporter/v1_1_1/
+        url: <Cloud Connector or local URL>
+```
+
+**`ui5-middleware-simpleproxy`**
+
+```yml
+   - name: ui5-middleware-simpleproxy
+      afterMiddleware: compression
+      mountPath: /resources/cc/spreadsheetimporter/v1_1_1/
+      configuration:
+        baseUri: "<SAP SYSTEM URL>/sap/bc/ui5_ui5/sap/<BSP NAME>/thirdparty/customcontrol/spreadsheetimporter/v1_1_1/"
+        username: <SAP USERNAME>
+        password: <SAP PASSWORD
+        query:
+          sap-client: '100'
+```
