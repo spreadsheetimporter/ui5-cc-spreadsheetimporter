@@ -58,6 +58,15 @@ jobs:
           TESTAPPPORT=$(node ./dev/get-port.js ${{ matrix.scenario }} ${{ matrix.ui5version }})
           echo "TESTAPPPORT=$TESTAPPPORT" >> $GITHUB_ENV
 
+      - name: Remove cds-plugin-ui5 
+        run: |
+          cd examples/packages/server
+          node -e "const fs = require('fs'); \
+                    const pkg = require('./package.json'); \
+                    delete pkg.devDependencies['cds-plugin-ui5']; \
+                    delete pkg.cds['cds-plugin-ui5']; \
+                    fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));"
+
       - name: pnpm install
         run: |
           npm pkg delete scripts.prepare
@@ -72,13 +81,6 @@ jobs:
       - name: install @sap/cds-dk
         run: |
           npm i -g @sap/cds-dk
-      
-      - name: Remove cds-plugin-ui5 
-        run: |
-          cd examples/packages/server
-          node -e "const pkg = require('./package.json'); \
-                    delete pkg.cds['cds-plugin-ui5']; \
-                    require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2));"
 
       # run app      # wait for cap server to install ui5 component, remove when switch to fiori tools
       - name: start cap server

@@ -19,20 +19,9 @@ server:
       afterMiddleware: compression
       configuration:
         ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
-        ui5:
-          path:
-            - /resources
-            - /test-resources
-          url: https://ui5.sap.com
         backend:
           - path: /odata/v2/orders
             url: http://localhost:4004
-    - name: fiori-tools-appreload
-      afterMiddleware: compression
-      configuration:
-        port: 35729
-        path: webapp
-        delay: 300
     - name: ui5-middleware-ui5
       afterMiddleware: compression
       configuration:
@@ -42,12 +31,12 @@ server:
     - name: ui5-tooling-modules-middleware
       afterMiddleware: compression
       configuration:
-        debug: false
-        # only for build
-        # addToNamespace: true
-        # prependPathMappings: true
-    - name: fiori-tools-preview
-      afterMiddleware: fiori-tools-appreload
+        debug: "verbose"
+        addToNamespace: true
+        prependPathMappings: true
+    - name: fiori-tools-appreload
+      afterMiddleware: compression
       configuration:
-        component: ui.v2.ordersv2fe
-        ui5Theme: sap_horizon
+        port: 35731
+        path: webapp
+        delay: 300
