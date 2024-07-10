@@ -1,7 +1,10 @@
-const replace = require("replace-in-file");
 const fs = require("fs");
 const path = require('path')
 const yaml = require('js-yaml');
+
+async function getReplaceInFile() {
+    return await import('replace-in-file');
+}
 
 function copyDirectorySync(src, dest, excludedFolder) {
 	const files = fs.readdirSync(src);
@@ -23,14 +26,15 @@ function copyDirectorySync(src, dest, excludedFolder) {
 	}
 }
 
-function replaceSomething(copyFrom, copyTo, files, from, to) {
-	fs.copyFileSync(copyFrom, copyTo);
-	const options = {
-		files: files,
-		from: from,
-		to: to,
-	};
-	return replace.sync(options);
+async function replaceSomething(copyFrom, copyTo, files, from, to) {
+    fs.copyFileSync(copyFrom, copyTo);
+    const replace = await getReplaceInFile();
+    const options = {
+        files: files,
+        from: from,
+        to: to,
+    };
+    return replace.default.sync(options);
 }
 
 // replace version in examples folder

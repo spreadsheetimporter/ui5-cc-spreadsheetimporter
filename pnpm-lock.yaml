@@ -673,6 +673,9 @@ importers:
       '@ui5/cli':
         specifier: 3.11.0
         version: 3.11.0(bluebird@3.7.2)
+      estree-walker:
+        specifier: ^3.0.3
+        version: 3.0.3
       ui5-middleware-serveframework:
         specifier: 3.1.1
         version: 3.1.1(bluebird@3.7.2)(encoding@0.1.13)
@@ -682,6 +685,9 @@ importers:
       ui5-middleware-ui5:
         specifier: 3.1.5
         version: 3.1.5(bluebird@3.7.2)
+      ui5-task-btp-manifest:
+        specifier: 0.2.1
+        version: 0.2.1
       ui5-tooling-modules:
         specifier: 3.7.0
         version: 3.7.0(typescript@5.5.3)
@@ -704,6 +710,9 @@ importers:
       '@ui5/cli':
         specifier: 3.11.0
         version: 3.11.0(bluebird@3.7.2)
+      estree-walker:
+        specifier: ^3.0.3
+        version: 3.0.3
       ui5-middleware-serveframework:
         specifier: 3.1.1
         version: 3.1.1(bluebird@3.7.2)(encoding@0.1.13)
@@ -713,6 +722,9 @@ importers:
       ui5-middleware-ui5:
         specifier: 3.1.5
         version: 3.1.5(bluebird@3.7.2)
+      ui5-task-btp-manifest:
+        specifier: 0.2.1
+        version: 0.2.1
       ui5-tooling-modules:
         specifier: 3.7.0
         version: 3.7.0(typescript@5.5.3)
@@ -735,6 +747,9 @@ importers:
       '@ui5/cli':
         specifier: 3.11.0
         version: 3.11.0(bluebird@3.7.2)
+      estree-walker:
+        specifier: ^3.0.3
+        version: 3.0.3
       ui5-middleware-serveframework:
         specifier: 3.1.1
         version: 3.1.1(bluebird@3.7.2)(encoding@0.1.13)
@@ -744,6 +759,9 @@ importers:
       ui5-middleware-ui5:
         specifier: 3.1.5
         version: 3.1.5(bluebird@3.7.2)
+      ui5-task-btp-manifest:
+        specifier: 0.2.1
+        version: 0.2.1
       ui5-tooling-modules:
         specifier: 3.7.0
         version: 3.7.0(typescript@5.5.3)
@@ -766,6 +784,9 @@ importers:
       '@ui5/cli':
         specifier: 3.11.0
         version: 3.11.0(bluebird@3.7.2)
+      estree-walker:
+        specifier: ^3.0.3
+        version: 3.0.3
       ui5-middleware-serveframework:
         specifier: 3.1.1
         version: 3.1.1(bluebird@3.7.2)(encoding@0.1.13)
@@ -775,6 +796,9 @@ importers:
       ui5-middleware-ui5:
         specifier: 3.1.5
         version: 3.1.5(bluebird@3.7.2)
+      ui5-task-btp-manifest:
+        specifier: 0.2.1
+        version: 0.2.1
       ui5-tooling-modules:
         specifier: 3.7.0
         version: 3.7.0(typescript@5.5.3)

@@ -1,5 +1,4 @@
 const util = require("./util");
-const replace = require("replace-in-file");
 const fs = require("fs");
 const yaml = require('js-yaml');
 const action = process.argv[2];
