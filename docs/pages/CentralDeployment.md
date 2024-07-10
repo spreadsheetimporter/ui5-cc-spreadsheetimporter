@@ -110,6 +110,12 @@ When the component is deployed centrally, you can run the app locally by install
 
 You can install the component as dev dependency in your app to simulate the central deployed component either to ABAP Stack or BTP.
 
+0\. Install [`cds-plugin-ui5`](https://www.npmjs.com/package/cds-plugin-ui5?activeTab=versions) if you use CAP Project
+
+```sh
+npm install cds-plugin-ui5 --save-dev
+```
+
 1\. Install the component as dev dependency (install the component version that is used in your app)
 
 ```sh
