@@ -38,8 +38,8 @@ module.exports.config = {
 					process.argv.indexOf("--headless") > -1
 						? ["--headless=new", "--window-size=1920,1080"]
 						: process.argv.indexOf("--debug") > -1
-						? ["--window-size=1920,1080", "--auto-open-devtools-for-tabs"]
-						: ["--window-size=1920,1080"]
+							? ["--window-size=1920,1080", "--auto-open-devtools-for-tabs"]
+							: ["--window-size=1920,1080"]
 			},
 			acceptInsecureCerts: true
 		}
@@ -51,6 +51,9 @@ module.exports.config = {
 	connectionRetryTimeout: process.argv.indexOf("--debug") > -1 ? 1200000 : 120000,
 	connectionRetryCount: 3,
 	services: ["ui5"],
+	// services: [["selenium-standalone", { drivers: { chrome: true, chromiumedge: "latest" } }]],
+	port: 4444,
+	hostname: "selenium",
 	framework: "mocha",
 	reporters: ["spec"],
 	mochaOpts: {

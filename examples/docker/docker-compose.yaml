@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  myapp:
+    restart: always
+    build:
+      context: ./../../
+      dockerfile: examples/docker/Dockerfile.test
+    image: test-app
+    container_name: test-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - selenium
+    networks:
+      - mynetwork
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+
+  selenium:
+    restart: always
+    image: seleniarm/standalone-chromium:120.0-chromedriver-120.0-20231230 #seleniarm/standalone-docker
+    environment:
+      SE_NODE_MAX_SESSIONS: 15  # Increase the number of maximum sessions
+      SE_NODE_OVERRIDE_MAX_SESSIONS: "true"
+      START_XVFB: "false"
+    stdin_open: true # docker run -i
+    tty: true # docker run -t
+    ports:
+      - "4442:4442"
+      - "4443:4443"
+      - "4444:4444"
+      - "7900:7900"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
