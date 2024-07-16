@@ -9,7 +9,8 @@
     "cds-launchpad-plugin": "2.2.0",
     "cds-plugin-ui5": "0.9.3",
     "ordersv2fe120": "workspace:*",
-    "ordersv4fe120": "workspace:^"
+    "ordersv4fe120": "workspace:^",
+    "@cap-js/sqlite": "^1.7.3"
   },
   "scripts": {
     "watch": "cds watch"

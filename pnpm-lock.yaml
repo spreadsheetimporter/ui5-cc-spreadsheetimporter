@@ -896,6 +896,9 @@ importers:
         specifier: ^8.0.3
         version: 8.0.3(express@4.19.2)
     devDependencies:
+      '@cap-js/sqlite':
+        specifier: ^1.7.3
+        version: 1.7.3(@sap/cds@8.0.3(express@4.19.2))
       cds-launchpad-plugin:
         specifier: 2.2.0
         version: 2.2.0(@sap/cds-dk@8.0.2(@sap/hana-client@2.21.28))(@sap/cds@8.0.3(express@4.19.2))(express@4.19.2)
@@ -1043,10 +1046,10 @@ importers:
         version: 2.4.5
       yeoman-environment:
         specifier: ^4.4.1
-        version: 4.4.1(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@11.0.1(mem-fs@4.1.0))(mem-fs@4.1.0))(bluebird@3.7.2)(mem-fs@4.1.0)
+        version: 4.4.1(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@10.0.3)(mem-fs@4.1.0))(bluebird@3.7.2)(mem-fs@4.1.0)
       yeoman-generator:
         specifier: ^7.3.2
-        version: 7.3.2(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@11.0.1(mem-fs@4.1.0))(mem-fs@4.1.0))(encoding@0.1.13)(mem-fs@4.1.0)(yeoman-environment@4.4.1(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@11.0.1(mem-fs@4.1.0))(mem-fs@4.1.0))(bluebird@3.7.2)(mem-fs@4.1.0))
+        version: 7.3.2(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@10.0.3)(mem-fs@4.1.0))(encoding@0.1.13)(mem-fs@4.1.0)(yeoman-environment@4.4.1(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@10.0.3)(mem-fs@4.1.0))(bluebird@3.7.2)(mem-fs@4.1.0))
       yosay:
         specifier: ^3.0.0
         version: 3.0.0
@@ -1071,7 +1074,7 @@ importers:
         version: 3.1.1
       yeoman-test:
         specifier: 8.3.0
-        version: 8.3.0(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@11.0.1(mem-fs@4.1.0))(mem-fs@4.1.0))(mem-fs@4.1.0)(yeoman-environment@4.4.1(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@11.0.1(mem-fs@4.1.0))(mem-fs@4.1.0))(bluebird@3.7.2)(mem-fs@4.1.0))(yeoman-generator@7.3.2(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@11.0.1(mem-fs@4.1.0))(mem-fs@4.1.0))(encoding@0.1.13)(mem-fs@4.1.0)(yeoman-environment@4.4.1(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@11.0.1(mem-fs@4.1.0))(mem-fs@4.1.0))(bluebird@3.7.2)(mem-fs@4.1.0)))
+        version: 8.3.0(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@10.0.3)(mem-fs@4.1.0))(mem-fs@4.1.0)(yeoman-environment@4.4.1(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@10.0.3)(mem-fs@4.1.0))(bluebird@3.7.2)(mem-fs@4.1.0))(yeoman-generator@7.3.2(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@10.0.3)(mem-fs@4.1.0))(encoding@0.1.13)(mem-fs@4.1.0)(yeoman-environment@4.4.1(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@10.0.3)(mem-fs@4.1.0))(bluebird@3.7.2)(mem-fs@4.1.0)))
 
 packages:
 
@@ -1703,11 +1706,6 @@ packages:
     peerDependencies:
       '@sap/cds': '>=7.6'
 
-  '@cap-js/cds-types@0.2.0':
-    resolution: {integrity: sha512-s4iVwAjf+rRIUu6jaEooXFcJv16+sP5CTkreQPxDUyxLWWGlhvEr67TuIH0C6Cnp4PPIsYmBK3AVxSW2mNc2wg==}
-    peerDependencies:
-      '@sap/cds': '>=7'
-
   '@cap-js/db-service@1.11.0':
     resolution: {integrity: sha512-7IbDaFVCbRZ0tXN8xisbIt3Aecp3RjbSdL4J8HzLUhvC1Rm4Qtadxm298gJM6kn8KOKjOf5UowmEHZCJg6KgxA==}
     peerDependencies:
@@ -2327,11 +2325,6 @@ packages:
     resolution: {integrity: sha512-jojo+NDZyuguUmTznj+yof2luSRarfqR2x09jRoVhS0CT2oJaAxyd60yXRtuCUFW7FbuEii+jSf+aeBU7QSPVw==}
     engines: {node: '>=18.x'}
 
-  '@sap/cds-compiler@4.9.6':
-    resolution: {integrity: sha512-R7vUDJkdGZi/G5fRY6Pb6gyvf7poRyMTENZnvb4JUxnNrL6Hucl9swrW2fFQl7W6RpqvtmWM6e1CwobJq470/g==}
-    engines: {node: '>=16'}
-    hasBin: true
-
   '@sap/cds-compiler@5.0.6':
     resolution: {integrity: sha512-OxLlK3hGWQdMBOYmLw18tpusfb+5G+44yFq28cGegNVlUu1jKtnSu/VIb9fIDYExxbIs9E9J4R2bGmQzaawFFQ==}
     engines: {node: '>=18'}
@@ -2353,11 +2346,6 @@ packages:
 
   '@sap/cds-mtxs@2.0.2':
     resolution: {integrity: sha512-xNB0U14oGyGWH6moe2Ge+v41eV/pYCHwfg8UORTgvUBQbYi1crfmlZB2hrcOfH4+6D8rtO0iyviwXF3aodDUAg==}
-    hasBin: true
-
-  '@sap/cds@7.9.3':
-    resolution: {integrity: sha512-MtWILjftFcNwS4HAzBdObmAOYKkV1HiPCRLHjefDDEqrEOuZZ48fHNmiymNcUelmQwfMfrVf2s44OEPxrljavA==}
-    engines: {node: '>=16'}
     hasBin: true
 
   '@sap/cds@8.0.3':
@@ -8552,30 +8540,24 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@cap-js/asyncapi@1.0.2(@sap/cds@7.9.3(express@4.19.2))':
+  '@cap-js/asyncapi@1.0.2(@sap/cds@8.0.3(express@4.19.2))':
     dependencies:
-      '@sap/cds': 7.9.3(express@4.19.2)
+      '@sap/cds': 8.0.3(express@4.19.2)
 
-  '@cap-js/cds-types@0.2.0(@sap/cds@7.9.3(express@4.19.2))':
+  '@cap-js/db-service@1.11.0(@sap/cds@8.0.3(express@4.19.2))':
     dependencies:
-      '@sap/cds': 7.9.3(express@4.19.2)
+      '@sap/cds': 8.0.3(express@4.19.2)
 
-  '@cap-js/db-service@1.11.0(@sap/cds@7.9.3(express@4.19.2))':
+  '@cap-js/openapi@1.0.4(@sap/cds@8.0.3(express@4.19.2))':
     dependencies:
-      '@sap/cds': 7.9.3(express@4.19.2)
-    optional: true
-
-  '@cap-js/openapi@1.0.4(@sap/cds@7.9.3(express@4.19.2))':
-    dependencies:
-      '@sap/cds': 7.9.3(express@4.19.2)
+      '@sap/cds': 8.0.3(express@4.19.2)
       pluralize: 8.0.0
 
-  '@cap-js/sqlite@1.7.3(@sap/cds@7.9.3(express@4.19.2))':
+  '@cap-js/sqlite@1.7.3(@sap/cds@8.0.3(express@4.19.2))':
     dependencies:
-      '@cap-js/db-service': 1.11.0(@sap/cds@7.9.3(express@4.19.2))
-      '@sap/cds': 7.9.3(express@4.19.2)
+      '@cap-js/db-service': 1.11.0(@sap/cds@8.0.3(express@4.19.2))
+      '@sap/cds': 8.0.3(express@4.19.2)
       better-sqlite3: 11.1.2
-    optional: true
 
   '@chevrotain/types@9.1.0': {}
 
@@ -9472,19 +9454,15 @@ snapshots:
       lodash: 4.17.21
       yaml: 2.2.2
 
-  '@sap/cds-compiler@4.9.6':
-    dependencies:
-      antlr4: 4.9.3
-
   '@sap/cds-compiler@5.0.6':
     dependencies:
       antlr4: 4.9.3
 
   '@sap/cds-dk@8.0.2(@sap/hana-client@2.21.28)':
     dependencies:
-      '@cap-js/asyncapi': 1.0.2(@sap/cds@7.9.3(express@4.19.2))
-      '@cap-js/openapi': 1.0.4(@sap/cds@7.9.3(express@4.19.2))
-      '@sap/cds': 7.9.3(express@4.19.2)
+      '@cap-js/asyncapi': 1.0.2(@sap/cds@8.0.3(express@4.19.2))
+      '@cap-js/openapi': 1.0.4(@sap/cds@8.0.3(express@4.19.2))
+      '@sap/cds': 8.0.3(express@4.19.2)
       '@sap/cds-foss': 5.0.1
       '@sap/cds-mtxs': 2.0.2(@sap/hana-client@2.21.28)(hdb@0.19.8)
       '@sap/eslint-plugin-cds': 3.0.4(eslint@9.7.0)(express@4.19.2)
@@ -9499,18 +9477,13 @@ snapshots:
       ws: 8.18.0
       xml-js: 1.6.11
     optionalDependencies:
-      '@cap-js/sqlite': 1.7.3(@sap/cds@7.9.3(express@4.19.2))
+      '@cap-js/sqlite': 1.7.3(@sap/cds@8.0.3(express@4.19.2))
     transitivePeerDependencies:
       - '@sap/hana-client'
       - bufferutil
       - debug
       - supports-color
       - utf-8-validate
-
-  '@sap/cds-fiori@1.2.7(@sap/cds@7.9.3(express@4.19.2))(express@4.19.2)':
-    dependencies:
-      '@sap/cds': 7.9.3(express@4.19.2)
-      express: 4.19.2
 
   '@sap/cds-fiori@1.2.7(@sap/cds@8.0.3(express@4.19.2))(express@4.19.2)':
     dependencies:
@@ -9534,15 +9507,6 @@ snapshots:
       - hdb
       - supports-color
 
-  '@sap/cds@7.9.3(express@4.19.2)':
-    dependencies:
-      '@cap-js/cds-types': 0.2.0(@sap/cds@7.9.3(express@4.19.2))
-      '@sap/cds-compiler': 4.9.6
-      '@sap/cds-fiori': 1.2.7(@sap/cds@7.9.3(express@4.19.2))(express@4.19.2)
-      '@sap/cds-foss': 5.0.1
-    transitivePeerDependencies:
-      - express
-
   '@sap/cds@8.0.3(express@4.19.2)':
     dependencies:
       '@sap/cds-compiler': 5.0.6
@@ -9560,7 +9524,7 @@ snapshots:
 
   '@sap/eslint-plugin-cds@3.0.4(eslint@9.7.0)(express@4.19.2)':
     dependencies:
-      '@sap/cds': 7.9.3(express@4.19.2)
+      '@sap/cds': 8.0.3(express@4.19.2)
       eslint: 9.7.0
       semver: 7.6.2
     transitivePeerDependencies:
@@ -10224,10 +10188,10 @@ snapshots:
 
   '@xmldom/xmldom@0.8.10': {}
 
-  '@yeoman/adapter@1.4.0(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@11.0.1(mem-fs@4.1.0))(mem-fs@4.1.0))':
+  '@yeoman/adapter@1.4.0(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@10.0.3)(mem-fs@4.1.0))':
     dependencies:
       '@types/inquirer': 9.0.7
-      '@yeoman/types': 1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@11.0.1(mem-fs@4.1.0))(mem-fs@4.1.0)
+      '@yeoman/types': 1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@10.0.3)(mem-fs@4.1.0)
       chalk: 5.3.0
       inquirer: 9.3.5
       log-symbols: 5.1.0
@@ -10235,11 +10199,11 @@ snapshots:
       p-queue: 7.4.1
       text-table: 0.2.0
 
-  '@yeoman/conflicter@2.0.0(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@11.0.1(mem-fs@4.1.0))(mem-fs@4.1.0))(mem-fs@4.1.0)':
+  '@yeoman/conflicter@2.0.0(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@10.0.3)(mem-fs@4.1.0))(mem-fs@4.1.0)':
     dependencies:
       '@types/node': 16.18.101
       '@yeoman/transform': 1.2.0
-      '@yeoman/types': 1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@11.0.1(mem-fs@4.1.0))(mem-fs@4.1.0)
+      '@yeoman/types': 1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@10.0.3)(mem-fs@4.1.0)
       binary-extensions: 2.3.0
       cli-table: 0.3.11
       dateformat: 5.0.3
@@ -10260,13 +10224,13 @@ snapshots:
       minimatch: 9.0.5
       readable-stream: 4.5.2
 
-  '@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@11.0.1(mem-fs@4.1.0))(mem-fs@4.1.0)':
+  '@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@10.0.3)(mem-fs@4.1.0)':
     dependencies:
       '@types/inquirer': 9.0.7
       '@types/node': 16.18.101
     optionalDependencies:
       mem-fs: 4.1.0
-      mem-fs-editor: 11.0.1(mem-fs@4.1.0)
+      mem-fs-editor: 10.0.3
 
   '@zip.js/zip.js@2.7.45': {}
 
@@ -10588,7 +10552,6 @@ snapshots:
     dependencies:
       bindings: 1.5.0
       prebuild-install: 7.1.2
-    optional: true
 
   big-integer@1.6.52: {}
 
@@ -10608,7 +10571,6 @@ snapshots:
   bindings@1.5.0:
     dependencies:
       file-uri-to-path: 1.0.0
-    optional: true
 
   bl@4.1.0:
     dependencies:
@@ -11313,8 +11275,7 @@ snapshots:
 
   detect-content-type@1.2.0: {}
 
-  detect-libc@2.0.3:
-    optional: true
+  detect-libc@2.0.3: {}
 
   detect-node@2.1.0: {}
 
@@ -11722,8 +11683,7 @@ snapshots:
       strip-final-newline: 4.0.0
       yoctocolors: 2.1.1
 
-  expand-template@2.0.3:
-    optional: true
+  expand-template@2.0.3: {}
 
   expect-webdriverio@4.15.1(devtools@8.39.1(encoding@0.1.13)(typescript@5.5.3))(encoding@0.1.13)(typescript@5.5.3):
     dependencies:
@@ -11869,8 +11829,7 @@ snapshots:
     dependencies:
       flat-cache: 4.0.1
 
-  file-uri-to-path@1.0.0:
-    optional: true
+  file-uri-to-path@1.0.0: {}
 
   filelist@1.0.4:
     dependencies:
@@ -12112,8 +12071,7 @@ snapshots:
       meow: 12.1.1
       split2: 4.2.0
 
-  github-from-package@0.0.0:
-    optional: true
+  github-from-package@0.0.0: {}
 
   github-username@7.0.0(encoding@0.1.13):
     dependencies:
@@ -13368,8 +13326,7 @@ snapshots:
 
   mute-stream@1.0.0: {}
 
-  napi-build-utils@1.0.2:
-    optional: true
+  napi-build-utils@1.0.2: {}
 
   natural-compare@1.4.0: {}
 
@@ -13400,7 +13357,6 @@ snapshots:
   node-abi@3.65.0:
     dependencies:
       semver: 7.5.3
-    optional: true
 
   node-addon-api@4.3.0:
     optional: true
@@ -13892,7 +13848,6 @@ snapshots:
       simple-get: 4.0.1
       tar-fs: 2.1.1
       tunnel-agent: 0.6.0
-    optional: true
 
   prelude-ls@1.1.2: {}
 
@@ -14553,15 +14508,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  simple-concat@1.0.1:
-    optional: true
+  simple-concat@1.0.1: {}
 
   simple-get@4.0.1:
     dependencies:
       decompress-response: 6.0.0
       once: 1.4.0
       simple-concat: 1.0.1
-    optional: true
 
   simple-git@3.25.0:
     dependencies:
@@ -14991,7 +14944,6 @@ snapshots:
   tunnel-agent@0.6.0:
     dependencies:
       safe-buffer: 5.2.1
-    optional: true
 
   type-check@0.3.2:
     dependencies:
@@ -15690,13 +15642,13 @@ snapshots:
 
   yeoman-assert@3.1.1: {}
 
-  yeoman-environment@4.4.1(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@11.0.1(mem-fs@4.1.0))(mem-fs@4.1.0))(bluebird@3.7.2)(mem-fs@4.1.0):
+  yeoman-environment@4.4.1(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@10.0.3)(mem-fs@4.1.0))(bluebird@3.7.2)(mem-fs@4.1.0):
     dependencies:
-      '@yeoman/adapter': 1.4.0(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@11.0.1(mem-fs@4.1.0))(mem-fs@4.1.0))
-      '@yeoman/conflicter': 2.0.0(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@11.0.1(mem-fs@4.1.0))(mem-fs@4.1.0))(mem-fs@4.1.0)
+      '@yeoman/adapter': 1.4.0(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@10.0.3)(mem-fs@4.1.0))
+      '@yeoman/conflicter': 2.0.0(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@10.0.3)(mem-fs@4.1.0))(mem-fs@4.1.0)
       '@yeoman/namespace': 1.0.0
       '@yeoman/transform': 1.2.0
-      '@yeoman/types': 1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@11.0.1(mem-fs@4.1.0))(mem-fs@4.1.0)
+      '@yeoman/types': 1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@10.0.3)(mem-fs@4.1.0)
       arrify: 3.0.0
       chalk: 5.3.0
       commander: 11.1.0
@@ -15717,12 +15669,12 @@ snapshots:
       - bluebird
       - supports-color
 
-  yeoman-generator@7.3.2(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@11.0.1(mem-fs@4.1.0))(mem-fs@4.1.0))(encoding@0.1.13)(mem-fs@4.1.0)(yeoman-environment@4.4.1(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@11.0.1(mem-fs@4.1.0))(mem-fs@4.1.0))(bluebird@3.7.2)(mem-fs@4.1.0)):
+  yeoman-generator@7.3.2(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@10.0.3)(mem-fs@4.1.0))(encoding@0.1.13)(mem-fs@4.1.0)(yeoman-environment@4.4.1(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@10.0.3)(mem-fs@4.1.0))(bluebird@3.7.2)(mem-fs@4.1.0)):
     dependencies:
       '@types/lodash-es': 4.17.12
       '@types/node': 18.19.39
       '@yeoman/namespace': 1.0.0
-      '@yeoman/types': 1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@11.0.1(mem-fs@4.1.0))(mem-fs@4.1.0)
+      '@yeoman/types': 1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@10.0.3)(mem-fs@4.1.0)
       chalk: 5.3.0
       debug: 4.3.5(supports-color@8.1.1)
       execa: 8.0.1
@@ -15739,15 +15691,15 @@ snapshots:
       sort-keys: 5.0.0
       text-table: 0.2.0
     optionalDependencies:
-      yeoman-environment: 4.4.1(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@11.0.1(mem-fs@4.1.0))(mem-fs@4.1.0))(bluebird@3.7.2)(mem-fs@4.1.0)
+      yeoman-environment: 4.4.1(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@10.0.3)(mem-fs@4.1.0))(bluebird@3.7.2)(mem-fs@4.1.0)
     transitivePeerDependencies:
       - encoding
       - supports-color
 
-  yeoman-test@8.3.0(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@11.0.1(mem-fs@4.1.0))(mem-fs@4.1.0))(mem-fs@4.1.0)(yeoman-environment@4.4.1(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@11.0.1(mem-fs@4.1.0))(mem-fs@4.1.0))(bluebird@3.7.2)(mem-fs@4.1.0))(yeoman-generator@7.3.2(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@11.0.1(mem-fs@4.1.0))(mem-fs@4.1.0))(encoding@0.1.13)(mem-fs@4.1.0)(yeoman-environment@4.4.1(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@11.0.1(mem-fs@4.1.0))(mem-fs@4.1.0))(bluebird@3.7.2)(mem-fs@4.1.0))):
+  yeoman-test@8.3.0(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@10.0.3)(mem-fs@4.1.0))(mem-fs@4.1.0)(yeoman-environment@4.4.1(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@10.0.3)(mem-fs@4.1.0))(bluebird@3.7.2)(mem-fs@4.1.0))(yeoman-generator@7.3.2(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@10.0.3)(mem-fs@4.1.0))(encoding@0.1.13)(mem-fs@4.1.0)(yeoman-environment@4.4.1(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@10.0.3)(mem-fs@4.1.0))(bluebird@3.7.2)(mem-fs@4.1.0))):
     dependencies:
-      '@yeoman/adapter': 1.4.0(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@11.0.1(mem-fs@4.1.0))(mem-fs@4.1.0))
-      '@yeoman/types': 1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@11.0.1(mem-fs@4.1.0))(mem-fs@4.1.0)
+      '@yeoman/adapter': 1.4.0(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@10.0.3)(mem-fs@4.1.0))
+      '@yeoman/types': 1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@10.0.3)(mem-fs@4.1.0)
       inquirer: 9.3.5
       lodash-es: 4.17.21
       mem-fs: 4.1.0
@@ -15756,8 +15708,8 @@ snapshots:
       temp-dir: 3.0.0
       type-fest: 4.21.0
     optionalDependencies:
-      yeoman-environment: 4.4.1(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@11.0.1(mem-fs@4.1.0))(mem-fs@4.1.0))(bluebird@3.7.2)(mem-fs@4.1.0)
-      yeoman-generator: 7.3.2(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@11.0.1(mem-fs@4.1.0))(mem-fs@4.1.0))(encoding@0.1.13)(mem-fs@4.1.0)(yeoman-environment@4.4.1(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@11.0.1(mem-fs@4.1.0))(mem-fs@4.1.0))(bluebird@3.7.2)(mem-fs@4.1.0))
+      yeoman-environment: 4.4.1(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@10.0.3)(mem-fs@4.1.0))(bluebird@3.7.2)(mem-fs@4.1.0)
+      yeoman-generator: 7.3.2(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@10.0.3)(mem-fs@4.1.0))(encoding@0.1.13)(mem-fs@4.1.0)(yeoman-environment@4.4.1(@yeoman/types@1.2.0(@types/inquirer@9.0.7)(mem-fs-editor@10.0.3)(mem-fs@4.1.0))(bluebird@3.7.2)(mem-fs@4.1.0))
 
   yesno@0.4.0: {}
 
