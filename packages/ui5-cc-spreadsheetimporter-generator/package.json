@@ -34,13 +34,13 @@
   "dependencies": {
     "@sap-ux/axios-extension": "1.15.1",
     "@sap-ux/fe-fpm-writer": "0.25.0",
-    "@sap-ux/fiori-freestyle-writer": "0.23.0",
-    "@sap-ux/odata-service-writer": "0.21.0",
-    "@sap-ux/ui5-application-writer": "0.27.0",
-    "@sap-ux/ui5-config": "0.23.0",
+    "@sap-ux/fiori-freestyle-writer": "0.23.2",
+    "@sap-ux/odata-service-writer": "0.21.1",
+    "@sap-ux/ui5-application-writer": "0.27.2",
+    "@sap-ux/ui5-config": "0.23.1",
     "axios": "1.7.2",
     "chalk": "^5.3.0",
-    "directory-tree": "^3.5.1",
+    "directory-tree": "^3.5.2",
     "glob": "^11.0.0",
     "object-assign-deep": "^0.4.0",
     "valid-filename": "^4.0.0",
@@ -54,7 +54,7 @@
     "mem-fs": "4.1.0",
     "mocha": "^10.6.0",
     "nock": "13.5.4",
-    "prettier": "3.3.2",
+    "prettier": "3.3.3",
     "yeoman-assert": "3.1.1",
     "yeoman-test": "8.3.0"
   }
