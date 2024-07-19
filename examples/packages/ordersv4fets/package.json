@@ -13,7 +13,7 @@
     "ui5-cc-spreadsheetimporter": "link:../../../packages/ui5-cc-spreadsheetimporter"
   },
   "devDependencies": {
-    "@sap-ux/ui5-middleware-fe-mockserver": "^2.2.52",
+    "@sap-ux/ui5-middleware-fe-mockserver": "^2.2.53",
     "@sap/ux-specification": "^1.120.14",
     "@sap/ux-ui5-tooling": "1.14.1",
     "@sapui5/ts-types-esm": "~1.126.0",

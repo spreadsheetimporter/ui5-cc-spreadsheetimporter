@@ -32,11 +32,11 @@
     "generators"
   ],
   "dependencies": {
-    "@sap-ux/axios-extension": "1.15.1",
+    "@sap-ux/axios-extension": "1.16.0",
     "@sap-ux/fe-fpm-writer": "0.25.0",
-    "@sap-ux/fiori-freestyle-writer": "0.23.2",
-    "@sap-ux/odata-service-writer": "0.21.1",
-    "@sap-ux/ui5-application-writer": "0.27.2",
+    "@sap-ux/fiori-freestyle-writer": "1.0.3",
+    "@sap-ux/odata-service-writer": "0.22.0",
+    "@sap-ux/ui5-application-writer": "1.1.0",
     "@sap-ux/ui5-config": "0.23.1",
     "axios": "1.7.2",
     "chalk": "^5.3.0",
