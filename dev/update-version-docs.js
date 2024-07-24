@@ -9,35 +9,32 @@ function updateVersionInContent(content, spreadsheetUploadVersion, spreadsheetUp
   const mountPathRegex = /(mountPath: \/thirdparty\/customcontrol\/spreadsheetimporter\/)v\d+_\d+_\d+/;
   const ccSpreadsheetImporterRegex = /(cc\/spreadsheetimporter\/)v\d+_\d+_\d+/g;
   const newSpreadsheetImporterRegex = /spreadsheetimporter_v\d+_\d+_\d+/g;
-
-
-
+  const ui5SpreadsheetImporterRegex = /(ui5-cc-spreadsheetimporter-)v\d+-\d+-\d+/g;
 
   content = content.replace(spreadsheetImporterRegex, (match, p1) => {
     return `${p1}${spreadsheetUploadVersion}`;
   });
-
   content = content.replace(spreadsheetImporterButtonRegex, (match, p1) => {
     return `${p1}${spreadsheetUploadButtonVersion}`;
   });
-  
   content = content.replace(thirdpartySpreadsheetImporterRegex, (match, p1) => {
     return `${p1}${spreadsheetUploadVersion}`;
   });
-
   content = content.replace(ccSpreadsheetImporterRegex, (match, p1) => {
     return `${p1}${spreadsheetUploadVersion}`;
   });
-
   content = content.replace(mountPathRegex, (match, p1) => {
     return `${p1}${spreadsheetUploadVersion}`;
   });
-
   content = content.replace(newSpreadsheetImporterRegex, (match, p1) => {
     return `spreadsheetimporter_${spreadsheetUploadVersion}`;
   });
-
   content = content.replace(newSpreadsheetImporterRegex, `spreadsheetimporter_${spreadsheetUploadVersion}`);
+
+  // New replacement for ui5-cc-spreadsheetimporter-v1-1-1
+  content = content.replace(ui5SpreadsheetImporterRegex, (match, p1) => {
+    return `${p1}${spreadsheetUploadVersion.replace(/_/g, '-')}`;
+  });
 
   return content;
 }
