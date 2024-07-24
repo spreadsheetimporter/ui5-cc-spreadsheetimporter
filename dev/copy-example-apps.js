@@ -47,9 +47,16 @@ function copyApps(versionPathRoot, versionPathNew, version, port, versionName) {
 	const path = `${versionPathNew}/webapp/manifest.json`;
 	const manifest = fs.readFileSync(path, "utf8");
 	let manifestData = JSON.parse(manifest);
+
+	// Check if the version start with 1.71 and update the _version attribute
+	if (version.split(".")[1] === "71" && version.split(".")[0] === "1" ){
+		manifestData["_version"] = "1.17.0";
+	}
+
 	manifestData["sap.ui5"]["dependencies"]["minUI5Version"] = version;
 	manifestData = JSON.stringify(manifestData, null, 2);
 	fs.writeFileSync(path, manifestData, "utf8");
+
 	// replace ui5 version in yaml
 	// Read YAML file
     const yamlPath = `${versionPathNew}/ui5.yaml`;
@@ -62,6 +69,7 @@ function copyApps(versionPathRoot, versionPathNew, version, port, versionName) {
 		let yamlStr = yaml.dump(doc);
 		fs.writeFileSync(yamlPath, yamlStr, 'utf8');
 	}
+
 	// replace port number
 	const pathPackageJson = `${versionPathNew}/package.json`;
 	const packageJson = fs.readFileSync(pathPackageJson, "utf8");
@@ -69,6 +77,7 @@ function copyApps(versionPathRoot, versionPathNew, version, port, versionName) {
 	let startScript = packageJsonData["scripts"]["start"];
 	startScript = startScript.replace(/\b\d{1,4}\b/, port);
 	packageJsonData["scripts"]["start"] = startScript;
+
 	// replace port number in scripts
 	let startSilentScript = packageJsonData["scripts"]["start:silent"];
 	startSilentScript = startSilentScript.replace(/\b\d{1,4}\b/, port);
@@ -76,28 +85,34 @@ function copyApps(versionPathRoot, versionPathNew, version, port, versionName) {
 	let startFLPScript = packageJsonData["scripts"]["start-flp"];
 	if (startFLPScript) {
 		startFLPScript = startFLPScript.replace(/\b\d{1,4}\b/, port);
-	packageJsonData["scripts"]["start-flp"] = startFLPScript;
+		packageJsonData["scripts"]["start-flp"] = startFLPScript;
 	}
+
 	// change package.json name
 	packageJsonData["name"] = versionName;
 	packageJsonData = JSON.stringify(packageJsonData, null, 2);
 	fs.writeFileSync(pathPackageJson, packageJsonData, "utf8");
+
 	// replace i18n title
 	replaceInFile(`${versionPathNew}/webapp/i18n/i18n.properties`, 'appTitle=', 'appTitle=Test');
+
 	// replace theme to sap_fiori_3 in 1.71 and 1.84
 	if(version.split(".")[1] === "71" || version.split(".")[1] === "84"){
 		util.searchAndReplace(`${versionPathNew}/webapp/test/flpSandbox.html`,/sap_horizon/g,"sap_fiori_3")
 		util.searchAndReplace(`${versionPathNew}/webapp/index.html`,/sap_horizon/g,"sap_fiori_3")
 	}
+
 	// special script only for 1.71
 	if(version.split(".")[1] === "71"){
 		util.searchAndReplace(`${versionPathNew}/webapp/test/flpSandbox.html`,/<!-- only for 1.71 -->/g,`<script src="changes_preview.js"></script>`)
 	}
+
 	if(versionName.startsWith("ordersv4") && version.split(".")[1] === "84"){
 		util.searchAndReplace(`${versionPathNew}/webapp/ext/ListReportExtController.js`, /this.editFlow.getView\(\)/g, `this._view`);
 		util.searchAndReplace(`${versionPathNew}/webapp/ext/ObjectPageExtController.js`, /this.editFlow.getView\(\)/g, `this._view`);
 	}
 }
+
 
 // Read the .gitignore file
 
