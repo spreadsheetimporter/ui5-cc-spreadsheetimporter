@@ -1,4 +1,0 @@
-#!/bin/sh
-. "$(dirname "$0")/_/h"
-
-npm run hooks:pre-push
