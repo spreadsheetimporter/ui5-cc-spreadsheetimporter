@@ -47,7 +47,7 @@ npm install ui5-cc-spreadsheetimporter
 
 ```json
 "resourceRoots": {
-  "cc.spreadsheetimporter.v1_1_1": "./thirdparty/customcontrol/spreadsheetimporter/v1_1_1"
+  "cc.spreadsheetimporter.v1_1_2": "./thirdparty/customcontrol/spreadsheetimporter/v1_1_2"
 }
 ```
 
@@ -68,7 +68,7 @@ npm install ui5-cc-spreadsheetimporter
 ```json
 "componentUsages": {
   "spreadsheetImporter": {
-    "name": "cc.spreadsheetimporter.v1_1_1"
+    "name": "cc.spreadsheetimporter.v1_1_2"
   }
 }
 ```
@@ -80,12 +80,12 @@ If you deploy your app to a SAP System (S/4 On-Premise or SAP BTP ABAP environme
 To avoid this error, you can add the following to your `manifest.json` file:
 
 !!! warning ""
-    ⚠️ The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v1_1_1" changed from version 0.34.0 to lowercase. Please make sure to use the correct path.
+    ⚠️ The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v1_1_2" changed from version 0.34.0 to lowercase. Please make sure to use the correct path.
 
 
 ```json
 "sap.app": {
-  "embeds": ["thirdparty/customcontrol/spreadsheetimporter/v1_1_1"]
+  "embeds": ["thirdparty/customcontrol/spreadsheetimporter/v1_1_2"]
 }
 ```
 
@@ -101,7 +101,7 @@ To avoid this error, you can add the following to your `manifest.json` file:
 ```json
 "componentUsages": {
   "spreadsheetImporter": {
-    "name": "cc.spreadsheetimporter.v1_1_1"
+    "name": "cc.spreadsheetimporter.v1_1_2"
   }
 }
 ```
@@ -278,7 +278,7 @@ openSpreadsheetUploadDialog: async function (oEvent) {
         context: this,
       },
       url: "/sap/bc/ui5_ui5/sap/Z_XUP_v0_33_2",
-      name: "cc.spreadsheetimporter.v1_1_1"
+      name: "cc.spreadsheetimporter.v1_1_2"
     });
   this.spreadsheetUpload.openSpreadsheetUploadDialog();
   this.getView().setBusy(false);
@@ -289,17 +289,17 @@ This is alternative to using resourceRoots in the manifest.json when you don't h
 
 #### Error: library/component used in application does not exist
 
-When deploying the app to your ABAP system, you may get an error like this: `SAPUI5 library/component cc.spreadsheetimporter.v1_1_1 used in application Z*** does not exist`. The application is deployed, but the service returns an error.
+When deploying the app to your ABAP system, you may get an error like this: `SAPUI5 library/component cc.spreadsheetimporter.v1_1_2 used in application Z*** does not exist`. The application is deployed, but the service returns an error.
 
 To avoid this error, you can add the following to your `manifest.json` file:
 
 !!! warning ""
-    ⚠️ The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v1_1_1" changed from version 0.34.0 to lowercase. Please make sure to use the correct path.
+    ⚠️ The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v1_1_2" changed from version 0.34.0 to lowercase. Please make sure to use the correct path.
 
 
 ```json
 "sap.app": {
-  "embeds": ["thirdparty/customcontrol/spreadsheetimporter/v1_1_1"]
+  "embeds": ["thirdparty/customcontrol/spreadsheetimporter/v1_1_2"]
 }
 ```
 
@@ -372,7 +372,7 @@ builder:
 
 When you are using the decentral deployment and try to deploy, it is possible that the deployment fails with the following error:  
 
-`"Service name 'spreadsheetimporter_v1_1_1' and public setting 'true' in embedded manifest.json have to be equal to service name 'xxxxxxx' and public setting 'true' of root manifest.json"`
+`"Service name 'spreadsheetimporter_v1_1_2' and public setting 'true' in embedded manifest.json have to be equal to service name 'xxxxxxx' and public setting 'true' of root manifest.json"`
 
 As of now, according to SAP, this will not be changed.
 
@@ -398,7 +398,7 @@ builder:
 ```
 
 This will update the manifest file of the Spreadsheet Importer with the service name of the app like to this path:
-`dist/thirdparty/customcontrol/spreadsheetimporter/v1_1_1/manifest.json`
+`dist/thirdparty/customcontrol/spreadsheetimporter/v1_1_2/manifest.json`
 
 ##### Workaround 2
 
