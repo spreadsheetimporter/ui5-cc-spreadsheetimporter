@@ -57,7 +57,13 @@ export default class Parser extends ManagedObject {
 						}
 						try {
 							this.checkDate(date, metadataColumn, util, messageHandler, index);
-							payload[columnKey] = date;
+							if(!metadataColumn.precision){
+								// If precision is not defined, remove milliseconds from date (from '2023-11-25T00:00:00Z' to '2023-11-25T00:00:00.000Z')
+								// see https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/600
+								payload[columnKey] = date.toISOString().replace(/\.\d{3}/, '')
+							} else {
+								payload[columnKey] = date;
+							}
 						} catch (error) {
 							this.addMessageToMessages("spreadsheetimporter.errorWhileParsing", util, messageHandler, index, [metadataColumn.label], rawValue);
 						}

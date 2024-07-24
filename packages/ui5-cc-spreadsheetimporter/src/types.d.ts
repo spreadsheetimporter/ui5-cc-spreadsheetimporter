@@ -8,9 +8,10 @@ export interface Tags {
 }
 
 export interface Property {
-	maxLength: number;
+	maxLength?: number;
 	type: string;
 	label: string;
+	precision?: number;
 }
 export type ListObject = Map<string, Property>;
 export type PropertyArray = { [key: string]: any }[];
