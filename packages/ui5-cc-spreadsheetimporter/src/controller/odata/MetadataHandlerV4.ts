@@ -50,6 +50,7 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 					}
 					propertyObject.type = property.$Type;
 					propertyObject.maxLength = property.$MaxLength;
+					propertyObject.precision = property.$Precision;
 					listObject.set(propertyName, propertyObject);
 				} else {
 					Log.warning(`SpreadsheetUpload: Property ${propertyName} not found`, undefined, "SpreadsheetUpload: MetadataHandler");
