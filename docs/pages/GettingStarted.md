@@ -365,8 +365,13 @@ builder:
       configuration:
         archiveName: uimodule
         includeDependencies:
-        - ui5-cc-spreadsheetimporter
+        - ui5-cc-spreadsheetimporter-v1-1-1
 ```
+
+The metadata name is defined in the [`ui5.yaml`](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/9b61a778e5b0a5b66c15f5889334a6d684ae88de/packages/ui5-cc-spreadsheetimporter/ui5.yaml#L4) file of the component.
+
+!!! warning ""
+    Before version 0.34.0 the metadata name was `ui5-cc-spreadsheetimporter` without the version.
 
 #### Update `"sap.cloud".service` in Spreadsheet Importer manifest.json
 
