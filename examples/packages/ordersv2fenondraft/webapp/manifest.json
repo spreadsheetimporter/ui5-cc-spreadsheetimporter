@@ -20,7 +20,9 @@
         "uri": "/odata/v2/orders/",
         "type": "OData",
         "settings": {
-          "annotations": ["annotation"],
+          "annotations": [
+            "annotation"
+          ],
           "localUri": "localService/metadata.xml",
           "odataVersion": "2.0"
         }
@@ -97,11 +99,11 @@
     },
     "componentUsages": {
       "spreadsheetImporter": {
-        "name": "cc.spreadsheetimporter.v1_1_1"
+        "name": "cc.spreadsheetimporter.v1_1_2"
       }
     },
     "resourceRoots": {
-      "cc.spreadsheetimporter.v1_1_1": "./thirdparty/customcontrol/spreadsheetimporter/v1_1_1"
+      "cc.spreadsheetimporter.v1_1_2": "./thirdparty/customcontrol/spreadsheetimporter/v1_1_2"
     },
     "routing": {
       "config": {},
