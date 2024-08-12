@@ -100,7 +100,19 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	async onFileUpload(event: FileUploader$ChangeEvent) {
 		this.messageHandler.setMessages([]);
 		const file = event.getParameter("files")[0] as Blob;
-		this.handleFile(file);
+		try {
+			const asyncEventPreFileProcessing = await Util.fireEventAsync("preFileProcessing", { file: file }, this.component);
+			const isDefaultPrevented = asyncEventPreFileProcessing.bPreventDefault;
+			if (isDefaultPrevented) {
+				Log.info("preFileProcessing event was prevented", "SpreadsheetUpload: onFileUpload");
+				this.resetContent();
+				return;
+			} else {
+				this.handleFile(file);
+			}
+		} catch (error) {
+			Log.error("Error while calling the preFileProcessing event", error as Error, "SpreadsheetUpload: onFileUpload");
+		}
 	}
 
 	async handleFile(file: Blob) {

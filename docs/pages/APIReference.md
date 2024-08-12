@@ -30,6 +30,7 @@ more info see [Events](./Events.md)
 
 | Event                | Description                                                                                        |
 | -------------------- | -------------------------------------------------------------------------------------------------- |
+| `preFileProcessing`  | Execute custom logic before processing the spreadsheet file starts                                 |
 | `checkBeforeRead`    | Check data before it is uploaded to the UI5                                                        |
 | `changeBeforeCreate` | Change data before it is sent to the backend                                                       |
 | `requestCompleted`   | Event when the request is completed                                                                |

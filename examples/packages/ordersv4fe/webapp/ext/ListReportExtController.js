@@ -1,4 +1,4 @@
-sap.ui.define([], function () {
+sap.ui.define(["sap/m/MessageToast"], function (MessageToast) {
 	"use strict";
 	return {
 		/**
@@ -22,6 +22,23 @@ sap.ui.define([], function () {
 							i18nModel: this.getModel("i18n")
 						}
 					});
+			
+			this.spreadsheetUpload.attachPreFileProcessing(function (event) {
+				// example
+				let file = event.getParameter("file");
+				if (file.name.endsWith(".txt")) {
+					// prevent processing of file
+					event.preventDefault();
+					// show custom ui5 error message
+					new MessageToast.show("File with .txt extension is not allowed");
+					// change the file that will be processed
+					// Create a Blob with some text content
+					const blob = new Blob(["This is some dummy text content"], { type: "text/plain" });
+					// Create a File object from the Blob
+					const file2 = new File([blob], "TEXT.txt", { type: "text/plain" });
+					return file2;
+				}
+			})
 
 			// event to check before uploaded to app
 			this.spreadsheetUpload.attachCheckBeforeRead(function (oEvent) {

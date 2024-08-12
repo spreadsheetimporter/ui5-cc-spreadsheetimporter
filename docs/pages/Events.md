@@ -2,12 +2,39 @@ The following events can be used as extension points to intervene and manipulate
 
 | Event                | Description                                                                                        |
 | -------------------- | -------------------------------------------------------------------------------------------------- |
+| `preFileProcessing`  | Execute custom logic before processing the spreadsheet file starts                                 |
 | `checkBeforeRead`    | Check data before it is uploaded to the UI5                                                        |
 | `changeBeforeCreate` | Change data before it is sent to the backend                                                       |
 | `requestCompleted`   | Event when the request is completed                                                                |
 | `uploadButtonPress`  | Fired when the `Upload` button is pressed, possible to prevent data from being sent to the backend |
 
 You can attach async functions to the events by wrapping the function in a `Promise`. See [Attach async functions to events](#attach-async-functions-to-events) for more information.
+
+## Execute custom logic before processing the spreadsheet file starts
+
+When the file is uploaded to the app, the `preFileProcessing` event is fired. Use this event to execute custom logic before processing the spreadsheet file starts.
+The `file` is available in the event and can be manipulated. If you want to prevent the processing of the file, call the `preventDefault` method of the event. If you want to change the file that will be processed, return the new file.
+
+### Example
+
+```javascript
+this.spreadsheetUpload.attachPreFileProcessing(function (event) {
+// example
+let file = event.getParameter("file");
+if (file.name.endsWith(".txt")) {
+    // prevent processing of file
+    event.preventDefault();
+    // show custom ui5 error message
+    new MessageToast.show("File with .txt extension is not allowed");
+    // change the file that will be processed
+    // Create a Blob with some text content
+    const blob = new Blob(["This is some dummy text content"], { type: "text/plain" });
+    // Create a File object from the Blob
+    const file2 = new File([blob], "TEXT.txt", { type: "text/plain" });
+    return file2;
+}
+});
+```
 
 ## Check data before upload to app
 
