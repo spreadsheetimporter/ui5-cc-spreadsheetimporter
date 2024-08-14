@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.2.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.1.1...ui5-cc-spreadsheetimporter-v1.2.0) (2024-08-14)
+
+
+### Features
+
+* new event `preFileProcessing` ([#612](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/612)) ([966c3b1](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/966c3b1f833caaf0c6a7476445ddd535d849937b))
+
+
+### Bug Fixes
+
+* `Edm.DateTimeOffset` parsing with and without precision ([#603](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/603)) ([6649d53](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/6649d5330ed71f7087818e291fb65c9e30c9eb4c))
+* force refresh only for v2 and when refresh failed ([#596](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/596)) ([6f27348](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/6f27348f34409efe584583d3762aa11938dffeee))
+
 ## [1.1.1](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.1.0...ui5-cc-spreadsheetimporter-v1.1.1) (2024-06-18)
 
 
