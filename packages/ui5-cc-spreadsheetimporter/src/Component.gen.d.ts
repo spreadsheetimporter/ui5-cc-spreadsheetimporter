@@ -41,6 +41,7 @@ declare module "./Component" {
         i18nModel?: object | PropertyBindingInfo | `{${string}}`;
         debug?: boolean | PropertyBindingInfo | `{${string}}`;
         componentContainerData?: object | PropertyBindingInfo | `{${string}}`;
+        preFileProcessing?: (event: Component$PreFileProcessingEvent) => void;
         checkBeforeRead?: (event: Component$CheckBeforeReadEvent) => void;
         changeBeforeCreate?: (event: Component$ChangeBeforeCreateEvent) => void;
         requestCompleted?: (event: Component$RequestCompletedEvent) => void;
@@ -181,6 +182,12 @@ declare module "./Component" {
         getComponentContainerData(): object;
         setComponentContainerData(componentContainerData: object): this;
 
+        // event: preFileProcessing
+        attachPreFileProcessing(fn: (event: Component$PreFileProcessingEvent) => void, listener?: object): this;
+        attachPreFileProcessing<CustomDataType extends object>(data: CustomDataType, fn: (event: Component$PreFileProcessingEvent, data: CustomDataType) => void, listener?: object): this;
+        detachPreFileProcessing(fn: (event: Component$PreFileProcessingEvent) => void, listener?: object): this;
+        firePreFileProcessing(parameters?: Component$PreFileProcessingEventParameters): this;
+
         // event: checkBeforeRead
         attachCheckBeforeRead(fn: (event: Component$CheckBeforeReadEvent) => void, listener?: object): this;
         attachCheckBeforeRead<CustomDataType extends object>(data: CustomDataType, fn: (event: Component$CheckBeforeReadEvent, data: CustomDataType) => void, listener?: object): this;
@@ -204,6 +211,13 @@ declare module "./Component" {
         attachUploadButtonPress<CustomDataType extends object>(data: CustomDataType, fn: (event: Component$UploadButtonPressEvent, data: CustomDataType) => void, listener?: object): this;
         detachUploadButtonPress(fn: (event: Component$UploadButtonPressEvent) => void, listener?: object): this;
         fireUploadButtonPress(parameters?: Component$UploadButtonPressEventParameters): boolean;
+    }
+
+    /**
+     * Interface describing the parameters of Component's 'preFileProcessing' event.
+     */
+    export interface Component$PreFileProcessingEventParameters {
+        file?: object;
     }
 
     /**
@@ -237,6 +251,11 @@ declare module "./Component" {
         rawData?: object;
         parsedData?: object;
     }
+
+    /**
+     * Type describing the Component's 'preFileProcessing' event.
+     */
+    export type Component$PreFileProcessingEvent = Event<Component$PreFileProcessingEventParameters>;
 
     /**
      * Type describing the Component's 'checkBeforeRead' event.

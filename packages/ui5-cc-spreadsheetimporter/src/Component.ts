@@ -79,6 +79,11 @@ export default class Component extends UIComponent {
 			}
 		},
 		events: {
+			preFileProcessing: {
+				parameters: {
+					file: { type: "object" }
+				}
+			},
 			checkBeforeRead: {
 				parameters: {
 					sheetData: { type: "object" },
@@ -219,6 +224,7 @@ export default class Component extends UIComponent {
 	private _attachEvents(context: Controller) {
 		const componentContainerOptions = this.getComponentContainerData();
 		const eventMethodMap = {
+			preFileProcessing: this.attachPreFileProcessing,
 			uploadButtonPress: this.attachUploadButtonPress,
 			changeBeforeCreate: this.attachChangeBeforeCreate,
 			checkBeforeRead: this.attachCheckBeforeRead,
