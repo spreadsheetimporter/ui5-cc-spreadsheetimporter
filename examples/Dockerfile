@@ -28,6 +28,7 @@ RUN pnpm build
 # Specifically build the sub-project in the examples/packages/ordersv4fe folder
 RUN cd examples/packages/ordersv4fe && npm run build
 RUN cd examples/packages/ordersv2fe && npm run build
+RUN cd examples/packages/anyupload && npm run build
 
 # Expose the port the app runs on
 EXPOSE 4004
