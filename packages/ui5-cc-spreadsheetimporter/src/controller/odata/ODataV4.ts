@@ -100,10 +100,6 @@ export default class ODataV4 extends OData {
 		return Promise.all(activateActionsPromises);
 	}
 
-	getView(context: any) {
-		return context._view || context.oView || context.getView();
-	}
-
 	getOdataType(binding: any, tableObject: any, odataType: any) {
 		const tableBindingPath = binding.getPath();
 		const metaModel = tableObject.getModel().getMetaModel();
