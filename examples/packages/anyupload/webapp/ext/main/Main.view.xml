@@ -14,8 +14,8 @@
 				</Select>
 
 				<!-- <Button text="Execute" press=".onExecuteService" /> -->
-				<Text text="Entity Sets" />
-				<Select id="entitySetSelect" change=".onEntityChange" forceSelection="false" visible="true"
+				<Text id="entitySetText" text="Entity Sets" visible="false" />
+				<Select id="entitySetSelect" change=".onEntityChange" forceSelection="false" visible="false"
 				items="{
 					path: 'capEntitySets>/',
 					sorter: { path: 'name' }
@@ -23,7 +23,7 @@
 					<core:Item key="{capEntitySets>name}" text="{capEntitySets>name}" />
 				</Select>
 
-				<Button text="Excel Upload" press=".onUpload" />
+				<Button id="excelButton" text="Excel Upload" press=".onUpload" visible="false" />
 
 				<Table id="dynamicTable" visible="false" />
 			</VBox>

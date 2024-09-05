@@ -5,7 +5,11 @@ import ColumnListItem from "sap/m/ColumnListItem";
 import Select, { Select$ChangeEventParameters } from "sap/m/Select";
 import Table from "sap/m/Table";
 import JSONModel from "sap/ui/model/json/JSONModel";
-import ODataModel from "sap/ui/model/odata/v2/ODataModel";
+import ODataModelV4 from "sap/ui/model/odata/v4/ODataModel";
+import ODataModelV2 from "sap/ui/model/odata/v2/ODataModel";
+import Button from "sap/m/Button";
+import MessageStrip, { MessageType } from "sap/m/MessageStrip";
+
 
 /**
  * @namespace com.spreadsheetimporter.anyupload.ext.main.Main.controller
@@ -34,10 +38,27 @@ export default class Main extends Controller {
 		this.getView()?.setModel(new JSONModel(capServices), "capServices");
 	}
 
-	public onServiceChange(event: Select$ChangeEventParameters) {
+	public async onServiceChange(event: Select$ChangeEventParameters) {
 		// @ts-ignore
-		const selectedService = (event.getSource() as Select).getSelectedItem()?.getBindingContext("capServices")?.getObject() as ServiceObject;
-		this.selectedService = new ODataModel(selectedService?.url);
+		let selectedService = ""
+		try {
+			 selectedService = (event.getSource() as Select).getSelectedItem()?.getBindingContext("capServices")?.getObject() as ServiceObject;
+			if (selectedService?.url.includes("/v2/")) {
+				this.selectedService = new ODataModelV2(selectedService.url);
+			} else if (selectedService?.url.includes("/v4/")) {
+				// Import ODataModel V4 at the top of the file
+				// import ODataModelV4 from "sap/ui/model/odata/v4/ODataModel";
+				this.selectedService = new ODataModelV4({
+					serviceUrl: selectedService.url,
+					synchronizationMode: "None"
+				});
+			} else {
+				console.error("Unknown OData version");
+			}
+			await this.selectedService.getMetaModel().loaded();
+		} catch (error) {
+			console.error("Error creating ODataModel:", error);
+		}
 		const url = selectedService.url;
 		// query the single url
 		fetch(url)
@@ -63,6 +84,36 @@ export default class Main extends Controller {
 				// @ts-ignore
 				entitySets.sort((a, b) => a.name.localeCompare(b.name));
 				this.getView()?.setModel(new JSONModel(entitySets), "capEntitySets");
+
+				// Reset entitysets select
+				const entitySetSelect = this.byId("entitySetSelect") as Select;
+				const entitySetText = this.byId("entitySetText") as Text;
+				if (entitySetSelect) {
+					entitySetSelect.setSelectedKey(null);
+					const hasEntitySets = entitySets && entitySets.length > 0;
+					entitySetSelect.setVisible(hasEntitySets);
+					entitySetText.setVisible(hasEntitySets);
+					
+					if (!hasEntitySets) {
+						const messageStrip = new MessageStrip({
+							text: "No entity sets are available",
+							type: MessageType.Error,
+							showIcon: true
+						});
+						this.getView().addContent(messageStrip);
+					}
+				}
+
+				// Make table and excel button not visible
+				const dynamicTable = this.byId("dynamicTable") as Table;
+				if (dynamicTable) {
+					dynamicTable.setVisible(false);
+				}
+
+				const excelButton = this.byId("excelButton") as Button;
+				if (excelButton) {
+					excelButton.setVisible(false);
+				}
 			})
 			.catch((error) => {
 				console.error("Error fetching data:", error);
@@ -106,7 +157,6 @@ export default class Main extends Controller {
 			})
 		});
 
-
 		// Bind items to the table using the new model
 		dynamicTable.setModel(this.selectedService);
 		dynamicTable.bindItems({
@@ -115,18 +165,21 @@ export default class Main extends Controller {
 		});
 
 		dynamicTable.setVisible(true);
+
+		const excelButton = this.byId("excelButton") as Button;
+		if (excelButton) {
+			excelButton.setVisible(true);
+		}
 	}
 
 	async onUpload(): void {
-		this.spreadsheetUpload = await this.getAppComponent()
-			.createComponent({
-				usage: "spreadsheetImporter",
-				async: true,
-				componentData: {
-					context: this,
-					
-				},
-			});
+		this.spreadsheetUpload = await this.getAppComponent().createComponent({
+			usage: "spreadsheetImporter",
+			async: true,
+			componentData: {
+				context: this
+			}
+		});
 		this.spreadsheetUpload.openSpreadsheetUploadDialog();
 	}
 
