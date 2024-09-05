@@ -91,6 +91,7 @@ annotate OrdersService.OrderItems with @(
             {Value: timestamp, Label:'{i18n>timestamp}'},
             {Value: date, Label:'{i18n>date}'},
             {Value: time, Label:'{i18n>time}'},
+            {Value: boolean, Label:'{i18n>time}'},
 		],
 		Facets: [
 			{$Type: 'UI.ReferenceFacet', Label: '{i18n>OrderItems}', Target: '@UI.Identification'},
