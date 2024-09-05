@@ -114,9 +114,10 @@ export default class SpreadsheetUpload extends ManagedObject {
 		if (this.context.base) {
 			this.context = this.context.base;
 		}
+		this.view = OData.prototype.getView(this.context);
+		this.tableObject = await OData.prototype.getTableObject(this.component.getTableId(), this.view, this);
 		this.isODataV4 = this._checkIfODataIsV4();
 		this.odataHandler = this.createODataHandler(this);
-		this.view = this.odataHandler.getView(this.context);
 		this.controller = this.view.getController();
 		Log.debug("View", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ view: this.view }));
 		this.view.addDependent(this.spreadsheetUploadDialogHandler.getDialog());
@@ -287,8 +288,19 @@ export default class SpreadsheetUpload extends ManagedObject {
 		}
 	}
 
-	_checkIfODataIsV4() {
+	_checkIfODataIsV4(tableObject: any) {
 		try {
+			// first try to get the odata version from the tableObject with this.tableObject.getModel().getMetadata().getName()
+			try {
+				const odataVersion = this.tableObject.getModel().getMetadata().getName();
+				if (odataVersion === "sap.ui.model.odata.v2.ODataModel") {
+					return false;
+				} else {
+					return true;
+				}
+			} catch (error) {
+				Log.debug("Error getting the odata version from the tableObject", error as Error, "SpreadsheetUpload: SpreadsheetUpload");
+			}
 			let model;
 			// @ts-ignore
 			if (this.component.getContext().base) {

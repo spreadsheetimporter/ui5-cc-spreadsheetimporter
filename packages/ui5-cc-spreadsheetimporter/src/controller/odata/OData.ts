@@ -220,6 +220,10 @@ export default abstract class OData extends ManagedObject {
 			}
 		}
 	}
+	
+	getView(context: any): any {
+        return context._view || context.oView || context.getView();
+    }
 
 	public get tables(): any[] {
 		return this._tables;
@@ -234,7 +238,6 @@ export default abstract class OData extends ManagedObject {
 	abstract waitForCreation(): Promise<any>;
 	abstract waitForDraft(): void;
 	abstract resetContexts(): void;
-	abstract getView(context: any): any;
 	abstract getMetadataHandler(): MetadataHandlerV2 | MetadataHandlerV4;
 	abstract getLabelList(columns: Columns, odataType: string, excludeColumns: Columns, tableObject?: any): Promise<ListObject>;
 	abstract getKeyList(odataType: string, tableObject: any): Promise<string[]>;

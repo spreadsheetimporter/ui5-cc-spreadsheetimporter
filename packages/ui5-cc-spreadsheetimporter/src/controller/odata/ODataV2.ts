@@ -117,10 +117,6 @@ export default class ODataV2 extends OData {
 		return Promise.all(activateActionsPromises);
 	}
 
-	getView(context: any) {
-		return context.getView();
-	}
-
 	async getOdataType(binding: any, tableObject: any, odataType: any) {
 		if (!odataType) {
 			return binding._getEntityType().entityType;
