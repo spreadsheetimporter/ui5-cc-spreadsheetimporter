@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.2.0...ui5-cc-spreadsheetimporter-v1.2.1) (2024-09-05)
+
+
+### Bug Fixes
+
+* get odata version from binding instead of context ([#618](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/618)) ([cf1f3a4](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/cf1f3a48e3139f55e7b4e15c428c158a40b3a417))
+
 ## [1.2.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.1.1...ui5-cc-spreadsheetimporter-v1.2.0) (2024-08-14)
 
 
