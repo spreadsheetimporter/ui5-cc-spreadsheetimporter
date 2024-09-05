@@ -23,8 +23,8 @@ export default class Main extends Controller {
 	 * @memberOf com.spreadsheetimporter.anyupload.ext.main.Main
 	 */
 	public onInit(): void {
-		// const domain = "https://livedemo.spreadsheet-importer.com";
-		const domain = "http://localhost:4004";
+		const domain = "https://livedemo.spreadsheet-importer.com";
+		// const domain = "http://localhost:4004";
 		const capServices = [
 			{
 				name: "Orders V2",
@@ -173,12 +173,19 @@ export default class Main extends Controller {
 	}
 
 	async onUpload(): void {
+		const entitySelectObject = this.byId("entitySetSelect")?.getSelectedItem()?.getBindingContext("capEntitySets")?.getObject();
+		const serviceSelectObject = this.byId("serviceSelect")?.getSelectedItem()?.getBindingContext("capServices")?.getObject();
+		
+		const componentData = {
+			context: this
+		}
+		if(serviceSelectObject.name === "Orders V2") {
+			componentData.createActiveEntity = true;
+		}
 		this.spreadsheetUpload = await this.getAppComponent().createComponent({
 			usage: "spreadsheetImporter",
 			async: true,
-			componentData: {
-				context: this
-			}
+			componentData: componentData
 		});
 		this.spreadsheetUpload.openSpreadsheetUploadDialog();
 	}

@@ -3,6 +3,8 @@
     <Page id="Main" title="{i18n>MainTitle}">
         <content>
             <VBox spacing="1rem">
+				<Text text="I´d recommend to use the 'Orders' Entity Set to upload the data." />
+				
 				<Text text="OData Services" />
 				<Select id="serviceSelect" 
 				items="{
