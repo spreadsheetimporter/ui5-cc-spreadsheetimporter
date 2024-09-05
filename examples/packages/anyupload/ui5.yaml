@@ -41,6 +41,14 @@ server:
       configuration:
         component: com.spreadsheetimporter.anyupload
         ui5Theme: sap_horizon
+    - name: ui5-middleware-ui5
+      afterMiddleware: compression
+      configuration:
+        modules:
+          ui5-cc-spreadsheetimporter:
+            configFile: "ui5-serve.yaml"
+    - name: ui5-tooling-modules-middleware
+      afterMiddleware: compression
 builder:
   customTasks:
     - name: ui5-tooling-transpile-task

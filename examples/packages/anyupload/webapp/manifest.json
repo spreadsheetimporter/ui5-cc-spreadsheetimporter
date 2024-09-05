@@ -74,6 +74,9 @@
         "sap.ui.core": {},
         "sap.ushell": {},
         "sap.fe.templates": {}
+      },
+      "components": {
+        "cc.spreadsheetimporter.v1_2_0": {}
       }
     },
     "contentDensities": {
@@ -104,6 +107,14 @@
     },
     "resources": {
       "css": []
+    },
+    "componentUsages": {
+      "spreadsheetImporter": {
+        "name": "cc.spreadsheetimporter.v1_2_0"
+      }
+    },
+    "resourceRoots": {
+      "cc.spreadsheetimporter.v1_2_0": "./thirdparty/customcontrol/spreadsheetimporter/v1_2_0"
     },
     "routing": {
       "config": {},

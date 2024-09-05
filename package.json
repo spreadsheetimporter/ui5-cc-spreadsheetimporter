@@ -15,6 +15,7 @@
     "start": "npm-run-all --parallel start:server start:v4fe:120",
     "start:v2fe:120": "pnpm --filter ordersv2fe120 start",
     "start:v4fe:120": "pnpm --filter ordersv4fe120 start",
+    "start:anyupload": "pnpm --filter anyupload start",
     "test:v4fe:120": "pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- ordersv4fe 120",
     "test:opa5:v4fe:120": "pnpm --filter ui5-cc-spreadsheetimporter-sample ui5-test-runner --url http://localhost:8080/test/integration/opaTests.qunit.html",
     "test:v2fe:120": "pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- ordersv2fe 120",

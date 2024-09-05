@@ -2,19 +2,25 @@
     xmlns:html="http://www.w3.org/1999/xhtml" controllerName="com.spreadsheetimporter.anyupload.ext.main.Main">
     <Page id="Main" title="{i18n>MainTitle}">
         <content>
-            <Text text="OData Services" />
             <VBox spacing="1rem">
-				<Select id="serviceSelect" items="{
-						path: 'capInstances>/',
-						sorter: { path: 'Description' }
-					}" change=".onServiceChange" forceSelection="false">
-					<core:Item key="{capInstances>name}" text="{capInstances>url}" />
+				<Text text="OData Services" />
+				<Select id="serviceSelect" 
+				items="{
+					path: 'capServices>/',
+					sorter: { path: 'name' }
+				}" 
+				change=".onServiceChange" forceSelection="false">
+					<core:Item key="{capServices>name}" text="{capServices>url}" />
 				</Select>
 
 				<!-- <Button text="Execute" press=".onExecuteService" /> -->
 				<Text text="Entity Sets" />
-				<Select id="entitySetSelect" change=".onEntitySetChange" forceSelection="false" visible="false">
-					<core:Item key="{entitySets>key}" text="{entitySets>text}" />
+				<Select id="entitySetSelect" change=".onEntityChange" forceSelection="false" visible="true"
+				items="{
+					path: 'capEntitySets>/',
+					sorter: { path: 'name' }
+				}" >
+					<core:Item key="{capEntitySets>name}" text="{capEntitySets>name}" />
 				</Select>
 
 				<Button text="Excel Upload" press=".onUpload" />
