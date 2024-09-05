@@ -49,6 +49,9 @@ jobs:
               username: ${{ secrets.SERVER_USERNAME }}
               key: ${{ secrets.SSH_PRIVATE_KEY }}
               script: |
+                  # Clean up unused Docker resources before deploy
+                  docker system prune -af
+                  docker volume prune -f
                   # Update and restart the container
                   docker pull greatoceandrive/ui5-spreadsheet-importer-examples:latest 
                   docker stop thirsty_ritchie || true  
