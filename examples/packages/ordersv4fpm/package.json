@@ -13,11 +13,11 @@
     "ui5-cc-spreadsheetimporter": "link:../../../packages/ui5-cc-spreadsheetimporter"
   },
   "devDependencies": {
-    "@sap-ux/ui5-middleware-fe-mockserver": "^2.2.53",
-    "@sap/ux-specification": "^1.120.15",
-    "@sap/ux-ui5-tooling": "1.14.2",
-    "@ui5/cli": "4.0.0",
-    "ui5-middleware-simpleproxy": "3.2.18"
+    "@sap-ux/ui5-middleware-fe-mockserver": "^2.2.59",
+    "@sap/ux-specification": "^1.124.0",
+    "@sap/ux-ui5-tooling": "1.14.5",
+    "@ui5/cli": "4.0.6",
+    "ui5-middleware-simpleproxy": "3.3.0"
   },
   "scripts": {
     "start": "fiori run -p 8084 --open \"index.html?sap-ui-xx-viewCache=false&sap-language=EN\"",
