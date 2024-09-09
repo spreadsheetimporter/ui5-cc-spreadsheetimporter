@@ -31,7 +31,7 @@
     "@wdio/spec-reporter": "^8.24.12",
     "npm-run-all": "^4.1.5",
     "ts-node": "^10.9.2",
-    "ui5-test-runner": "5.3.2",
+    "ui5-test-runner": "5.3.3",
     "wdio-chromedriver-service": "8.1.1",
     "wdio-ui5-service": "2.0.10",
     "webdriverio": "^8.24.13"
