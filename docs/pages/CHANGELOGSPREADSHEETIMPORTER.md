@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.2.1...ui5-cc-spreadsheetimporter-v1.2.2) (2024-09-10)
+
+
+### Bug Fixes
+
+* update `SheetJS` dependency to 0.20.3 ([#626](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/626)) ([58000d7](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/58000d7f9f2e17dc8a87b149b07190073dcd22ce))
+
 ## [1.2.1](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.2.0...ui5-cc-spreadsheetimporter-v1.2.1) (2024-09-05)
 
 
