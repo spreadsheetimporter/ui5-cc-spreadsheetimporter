@@ -6,7 +6,7 @@ This is made possible by reading the Spreadsheet file and using the standard API
 The control will submit not the file, but just the data from the Spreadsheet File.  
 The integration of the control is designed to be as simple as possible and, in the best case, requires no configuration.
 
-The aim is to support as many Fiori Scenarios and UI5 Versions as possibile.  
+The aim is to support as many Fiori Scenarios and UI5 Versions as possible.  
 See here for all currently [supported Versions](https://docs.spreadsheet-importer.com/pages/SupportVersions/).
 
 ![Spreadsheet Upload Dialog](/images/SpreadsheetUploadDialog.png "Spreadsheet Upload Dialog")
@@ -18,7 +18,6 @@ https://livedemo.spreadsheet-importer.com/
 
 The app is an OData V4 app with UI5 version 1.108 and a CAP backend.  
 The data is reset every hour on the hour.
-
 
 ## Install
 
@@ -34,10 +33,28 @@ https://docs.spreadsheet-importer.com/
 
 ## Development
 
-You find the documentation for the development here:
+You can find the documentation for development here:
 
 https://docs.spreadsheet-importer.com/pages/Development/GettingStarted/
 
 ## Changelog
 
 See [CHANGELOG.md](CHANGELOG.md)
+
+## License
+
+This project uses SheetJS Community Edition for processing spreadsheet data:
+
+SheetJS Community Edition -- https://sheetjs.com/
+
+Copyright (C) 2012-present SheetJS LLC
+
+Licensed under the Apache License, Version 2.0 (the "License");  
+you may not use this file except in compliance with the License.  
+You may obtain a copy of the License at  
+http://www.apache.org/licenses/LICENSE-2.0  
+
+Unless required by applicable law or agreed to in writing, software  
+distributed under the License is distributed on an "AS IS" BASIS,  
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  
+See the License for the specific language governing permissions and limitations under the License.
