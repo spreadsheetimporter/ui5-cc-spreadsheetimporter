@@ -2,22 +2,23 @@
 
 How to use them see [Example Code](#example-code)
 
-
 ## Configuration Options
 
 The table below summarizes the options available for the UI5 Spreadsheet Importer Component. Detailed explanations and examples for each option are provided in the linked sections.
 
 ### File Handling Options
+
 | Option                  | Description                                                             | Default        | Details               |
 |-------------------------|-------------------------------------------------------------------------|----------------|-----------------------|
 | [`columns`](#columns) | Defines columns imported and shown in the template.                                  | `[]`| string[]                |
-| [`excludeColumns`](#excludeColumns) | Defines columns excluding in import and template.                                  | `[]`| string[]                |
+| [`excludeColumns`](#excludecolumns) | Defines columns excluding in import and template.                                  | `[]`| string[]                |
 | [`spreadsheetFileName`](#spreadsheetfilename) | Defines the file name for downloads.                                  | `Template.xlsx`| string                |
 | [`spreadsheetTemplateFile`](#spreadsheettemplatefile) | Use a custom template file instead of a generated one.                | `""`           | object                |
 | [`readAllSheets`](#readallsheets) | Access all sheets in standalone mode.                                    | `false`        | boolean               |
 | [`readSheet`](#readsheet) | Option to read a specific sheet or show a sheet selector.               | `0`            | number or string      |
 
 ### UI Customization Options
+
 | Option                  | Description                                                             | Default        | Details               |
 |-------------------------|-------------------------------------------------------------------------|----------------|-----------------------|
 | [`hidePreview`](#hidepreview) | Hide the button to preview uploaded data in the dialog.                  | `false`        | boolean               |
@@ -26,6 +27,7 @@ The table below summarizes the options available for the UI5 Spreadsheet Importe
 | [`showOptions`](#showoptions) | Show a menu to change configurations at runtime.                          | `false`        | boolean               |
 
 ### Data Processing Options
+
 | Option                  | Description                                                             | Default        | Details               |
 |-------------------------|-------------------------------------------------------------------------|----------------|-----------------------|
 | [`batchSize`](#batchsize) | Controls batch sizes sent to the backend server.                       | `1000`         | integer               |
@@ -37,6 +39,7 @@ The table below summarizes the options available for the UI5 Spreadsheet Importe
 | [`continueOnError`](#continueonerror) | Continue processing next batches even after errors.                      | `false`        | boolean               |
 
 ### Advanced Configuration Options
+
 | Option                  | Description                                                             | Default        | Details               |
 |-------------------------|-------------------------------------------------------------------------|----------------|-----------------------|
 | [`fieldMatchType`](#fieldmatchtype) | Strategy for matching spreadsheet columns to fields.                   | `label`        | string                |
@@ -48,10 +51,10 @@ The table below summarizes the options available for the UI5 Spreadsheet Importe
 | [`sampleData`](#sampledata) | Add custom sample data to the template file.                             | Generated data | object                |
 | [`debug`](#debug) | Enable debug mode to show more console statements and logs.              | `false`        | boolean               |
 | [`componentContainerData`](#componentcontainerdata) | Special options for using the component in a ComponentContainer.          | Not specified  | boolean               |
-| [`i18nModel`](#i18nmodel) | Use a custom internationalization model to overwrite default texts.      | Not specified  | object                |
+| [`bindingCustom`](#bindingcustom) |    Use a OData binding instead of a table binding.   | Not specified  | object                |
+| [`i18nModel`](#i18nmodel) | Use a custom internation alization model to overwrite default texts.      | Not specified  | object                |
 
 This structured layout now includes the default settings, providing complete and immediate visibility into the expected behavior of each option unless otherwise configured.
-
 
 ### `columns`
 
@@ -141,7 +144,6 @@ Will be overwritten by the `createActiveEntity` option.
 !!! warning
     Draft Activation for OData V2 in **OpenUI5** is not supported.
 
-
 ### `createActiveEntity`
 
 **default:** `false`
@@ -157,9 +159,8 @@ There is no information about which backend OData implementation is supported, b
 **CAP Backend**
 
 The feature to support `IsActiveEntity` was introduced in [`@sap/cds`](https://www.npmjs.com/package/@sap/cds) Version `7.5.3`.  
-https://cap.cloud.sap/docs/releases/changelog/#dec-23-added  
-https://cap.cloud.sap/docs/releases/archive/2023/dec23#sapui5-mass-edit  
-
+<https://cap.cloud.sap/docs/releases/changelog/#dec-23-added>  
+<https://cap.cloud.sap/docs/releases/archive/2023/dec23#sapui5-mass-edit>  
 
 #### When to use `activateDraft` or `createActiveEntity`
 
@@ -173,7 +174,6 @@ Of course, creating the draft entity and the subsequent activation takes longer 
 
 Together with the option `continueOnError`, it is also possible to create all entities and try to activate the other entities if the draft activation fails.
 This means that at least all drafts are available.
-
 
 ### `batchSize`
 
@@ -506,6 +506,30 @@ settings="{
   }" />
 ````
 
+### `bindingCustom`
+
+**default:** Not specified  
+This option allows you to provide custom binding settings for the component. It can be used to override default behavior to search for a table and to use the binding of the table.  
+Binding must be a OData binding, either V2 or V4.
+
+**example:**
+
+```javascript
+this.spreadsheetUpload = await this.editFlow.getView()
+     .getController()
+     .getAppComponent()
+     .createComponent({
+      usage: "spreadsheetImporter",
+      async: true,
+      componentData: {
+       context: this,
+       createActiveEntity: false,
+       i18nModel: this.getModel("i18n"),
+       bindingCustom: this.getView().byId("ui.v4.ordersv4fe::OrdersList--fe::table::Orders::LineItem-innerTable").getBinding("items")
+      }
+     });
+```
+
 ### `i18nModel`
 
 You can use your own i18n model to overwrite texts.  
@@ -514,21 +538,20 @@ You can see all the available texts in the [i18n files](https://github.com/sprea
 
 You don't have to overwrite all texts, only the ones you want to change. If you don't overwrite a text, the default text will be used.
 
-
 **Example:**
 
 ```javascript
 this.spreadsheetUpload = await this.editFlow.getView()
-					.getController()
-					.getAppComponent()
-					.createComponent({
-						usage: "spreadsheetImporter",
-						async: true,
-						componentData: {
-							context: this,
-							i18nModel: this.getModel("i18n")
-						}
-					});
+     .getController()
+     .getAppComponent()
+     .createComponent({
+      usage: "spreadsheetImporter",
+      async: true,
+      componentData: {
+       context: this,
+       i18nModel: this.getModel("i18n")
+      }
+     });
 ```
 
 ### `continueOnError`

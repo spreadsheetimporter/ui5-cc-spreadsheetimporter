@@ -19,8 +19,7 @@ sap.ui.define(["sap/m/MessageToast"], function (MessageToast) {
 						componentData: {
 							context: this,
 							createActiveEntity: false,
-							i18nModel: this.getModel("i18n"),
-							bindingCustom: this.editFlow.getView().byId("ui.v4.ordersv4fe::OrdersList--fe::table::Orders::LineItem-innerTable").getBinding("items")
+							i18nModel: this.getModel("i18n")
 						}
 					});
 			
