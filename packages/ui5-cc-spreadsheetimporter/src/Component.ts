@@ -68,7 +68,8 @@ export default class Component extends UIComponent {
 			createActiveEntity: { type: "boolean", defaultValue: false },
 			i18nModel: { type: "object" },
 			debug: { type: "boolean", defaultValue: false },
-			componentContainerData: { type: "object" }
+			componentContainerData: { type: "object" },
+			bindingCustom: { type: "object" }
 			//Pro Configurations
 		},
 		aggregations: {
@@ -155,6 +156,7 @@ export default class Component extends UIComponent {
 		this.setContinueOnError(compData?.continueOnError);
 		this.setCreateActiveEntity(compData?.createActiveEntity);
 		this.setI18nModel(compData?.i18nModel);
+		this.setBindingCustom(compData?.bindingCustom);
 		if (compData?.availableOptions && compData?.availableOptions.length > 0) {
 			// if availableOptions is set show the Options Menu
 			this.setShowOptions(true);

@@ -41,6 +41,7 @@ declare module "./Component" {
         i18nModel?: object | PropertyBindingInfo | `{${string}}`;
         debug?: boolean | PropertyBindingInfo | `{${string}}`;
         componentContainerData?: object | PropertyBindingInfo | `{${string}}`;
+        bindingCustom?: object | PropertyBindingInfo | `{${string}}`;
         preFileProcessing?: (event: Component$PreFileProcessingEvent) => void;
         checkBeforeRead?: (event: Component$CheckBeforeReadEvent) => void;
         changeBeforeCreate?: (event: Component$ChangeBeforeCreateEvent) => void;
@@ -181,6 +182,10 @@ declare module "./Component" {
         // property: componentContainerData
         getComponentContainerData(): object;
         setComponentContainerData(componentContainerData: object): this;
+
+        // property: bindingCustom
+        getBindingCustom(): object;
+        setBindingCustom(bindingCustom: object): this;
 
         // event: preFileProcessing
         attachPreFileProcessing(fn: (event: Component$PreFileProcessingEvent) => void, listener?: object): this;

@@ -7,7 +7,7 @@
                         <FlexItemData growFactor="2" styleClass="centeredFlex" />
                       </layoutData>
                 </BusyIndicator>
-                <ProgressIndicator displayValue="{busyModel>/progressText}" percentValue="{busyModel>/progressPercent}" showValue="true" size="1.5rem">
+                <ProgressIndicator displayValue="{busyModel>/progressText}" percentValue="{busyModel>/progressPercent}" showValue="true" width="1.5rem">
                     <layoutData>
                         <FlexItemData growFactor="4" styleClass="centeredFlex" />
                       </layoutData>

@@ -100,10 +100,10 @@ export default class ODataV4 extends OData {
 		return Promise.all(activateActionsPromises);
 	}
 
-	getOdataType(binding: any, tableObject: any, odataType: any) {
+	getOdataType(binding: any, odataType: any) {
 		const tableBindingPath = binding.getPath();
-		const metaModel = tableObject.getModel().getMetaModel();
-		const metaModelData = tableObject.getModel().getMetaModel().getData() as any;
+		const metaModel = binding.getModel().getMetaModel();
+		const metaModelData = binding.getModel().getMetaModel().getData() as any;
 		if (!odataType) {
 			// for list report
 			try {
@@ -143,7 +143,7 @@ export default class ODataV4 extends OData {
 		return this.getMetadataHandler().getLabelList(columns, odataType, excludeColumns);
 	}
 
-	async getKeyList(odataType: string, tableObject: any) {
+	async getKeyList(odataType: string, binding: any) {
 		return this.getMetadataHandler().getKeyList(odataType);
 	}
 
