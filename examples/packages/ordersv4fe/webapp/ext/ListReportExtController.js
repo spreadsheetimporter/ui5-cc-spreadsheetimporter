@@ -18,7 +18,7 @@ sap.ui.define(["sap/m/MessageToast"], function (MessageToast) {
 						async: true,
 						componentData: {
 							context: this,
-							createActiveEntity: false,
+							createActiveEntity: true,
 							i18nModel: this.getModel("i18n")
 						}
 					});
