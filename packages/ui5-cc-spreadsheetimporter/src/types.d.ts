@@ -113,6 +113,7 @@ export interface ComponentData {
 	componentContainerData?: object;
 	createActiveEntity?: boolean;
 	i18nModel?: object;
+	bindingCustom?: object;
 }
 
 export type FireEventReturnType = {

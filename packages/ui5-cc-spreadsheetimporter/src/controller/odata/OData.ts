@@ -44,7 +44,7 @@ export default abstract class OData extends ManagedObject {
 		// intializing the message manager for displaying the odata response messages
 		try {
 			// get binding of table to create rows
-			const model = tableObject.getModel();
+			const model = binding.getModel();
 
 			await this.createBusyDialog(spreadsheetUploadController);
 
@@ -111,7 +111,9 @@ export default abstract class OData extends ManagedObject {
 					}
 				}
 			}
-			spreadsheetUploadController.refreshBinding(context, binding, tableObject.getId());
+			if (tableObject) {
+				spreadsheetUploadController.refreshBinding(context, binding, tableObject.getId());
+			}
 			this.busyDialog.close();
 			fnResolve();
 		} catch (error) {
@@ -123,7 +125,7 @@ export default abstract class OData extends ManagedObject {
 		}
 	}
 
-	public getBinding(tableObject: any): any {
+	public getBindingFromTable(tableObject: any): any {
 		if (tableObject.getMetadata().getName() === "sap.m.Table" || tableObject.getMetadata().getName() === "sap.m.List") {
 			return tableObject.getBinding("items");
 		}
@@ -239,9 +241,9 @@ export default abstract class OData extends ManagedObject {
 	abstract waitForDraft(): void;
 	abstract resetContexts(): void;
 	abstract getMetadataHandler(): MetadataHandlerV2 | MetadataHandlerV4;
-	abstract getLabelList(columns: Columns, odataType: string, excludeColumns: Columns, tableObject?: any): Promise<ListObject>;
+	abstract getLabelList(columns: Columns, odataType: string, excludeColumns: Columns, binding?: any): Promise<ListObject>;
 	abstract getKeyList(odataType: string, tableObject: any): Promise<string[]>;
-	abstract getOdataType(binding: any, tableObject: any, odataType: any): string;
+	abstract getOdataType(binding: any, odataType: any): string;
 	abstract checkForErrors(model: any, binding: any, showBackendErrorMessages: Boolean): Promise<boolean>;
 	abstract createCustomBinding(binding: any): any;
 

@@ -117,7 +117,7 @@ export default class ODataV2 extends OData {
 		return Promise.all(activateActionsPromises);
 	}
 
-	async getOdataType(binding: any, tableObject: any, odataType: any) {
+	async getOdataType(binding: any, odataType: any) {
 		if (!odataType) {
 			return binding._getEntityType().entityType;
 		} else {
@@ -137,15 +137,15 @@ export default class ODataV2 extends OData {
 		}
 	}
 
-	async getLabelList(columns: Columns, odataType: string, excludeColumns: Columns, tableObject?: any) {
-		const metaModel = tableObject.getModel().getMetaModel();
+	async getLabelList(columns: Columns, odataType: string, excludeColumns: Columns, binding?: any) {
+		const metaModel = binding.getModel().getMetaModel();
 		await metaModel.loaded();
 		const odataEntityType = metaModel.getODataEntityType(odataType);
 		return this.getMetadataHandler().getLabelList(columns, odataType, odataEntityType, excludeColumns);
 	}
 
-	async getKeyList(odataType: string, tableObject: any) {
-		const metaModel = tableObject.getModel().getMetaModel();
+	async getKeyList(odataType: string, binding: any) {
+		const metaModel = binding.getModel().getMetaModel();
 		await metaModel.loaded();
 		const odataEntityType = metaModel.getODataEntityType(odataType);
 		return this.getMetadataHandler().getKeyList(odataEntityType);

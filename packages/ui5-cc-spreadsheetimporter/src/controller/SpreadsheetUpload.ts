@@ -115,28 +115,32 @@ export default class SpreadsheetUpload extends ManagedObject {
 			this.context = this.context.base;
 		}
 		this.view = OData.prototype.getView(this.context);
-		this.tableObject = await OData.prototype.getTableObject(this.component.getTableId(), this.view, this);
-		this.isODataV4 = this._checkIfODataIsV4();
+		if (this.component.getBindingCustom()) {
+			this.binding = this.component.getBindingCustom();
+			Log.debug("binding", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ binding: this.binding }));
+		} else {
+			this.tableObject = await OData.prototype.getTableObject(this.component.getTableId(), this.view, this);
+			Log.debug("tableObject", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ tableObject: this.tableObject }));
+			this.component.setTableId(this.tableObject.getId());
+			Log.debug("table Id", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ tableID: this.tableObject.getId() }));
+			this.binding = this.odataHandler.getBindingFromTable(this.tableObject);
+		}
+		if (!this.binding) {
+			throw new Error(this.util.geti18nText("spreadsheetimporter.bindingError"));
+		}
+		this.isODataV4 = this._checkIfODataIsV4(this.binding);
 		this.odataHandler = this.createODataHandler(this);
 		this.controller = this.view.getController();
 		Log.debug("View", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ view: this.view }));
 		this.view.addDependent(this.spreadsheetUploadDialogHandler.getDialog());
-		this.tableObject = await this.odataHandler.getTableObject(this.component.getTableId(), this.view, this);
-		Log.debug("tableObject", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ tableObject: this.tableObject }));
-		this.component.setTableId(this.tableObject.getId());
-		Log.debug("table Id", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ tableID: this.tableObject.getId() }));
-		this.binding = this.odataHandler.getBinding(this.tableObject);
-		if (!this.binding) {
-			throw new Error(this.util.geti18nText("spreadsheetimporter.bindingError"));
-		}
-		this._odataType = await this.odataHandler.getOdataType(this.binding, this.tableObject, this.component.getOdataType());
+		this._odataType = await this.odataHandler.getOdataType(this.binding, this.component.getOdataType());
 		Log.debug("odataType", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ odataType: this._odataType }));
-		this.odataKeyList = await this.odataHandler.getKeyList(this._odataType, this.tableObject);
+		this.odataKeyList = await this.odataHandler.getKeyList(this._odataType, this.binding);
 		Log.debug("odataKeyList", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ odataKeyList: this.odataKeyList }));
-		this.typeLabelList = await this.odataHandler.getLabelList(this.component.getColumns(), this._odataType, this.component.getExcludeColumns(), this.tableObject);
+		this.typeLabelList = await this.odataHandler.getLabelList(this.component.getColumns(), this._odataType, this.component.getExcludeColumns(), this.binding);
 		Log.debug("typeLabelList", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ typeLabelList: this.typeLabelList }));
 
-		this.model = this.tableObject.getModel();
+		this.model = this.binding.getModel();
 		Log.debug("model", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ model: this.model }));
 		this.odataHandler.createCustomBinding(this.binding);
 		try {
@@ -281,6 +285,9 @@ export default class SpreadsheetUpload extends ManagedObject {
 		if (options.hasOwnProperty("i18nModel")) {
 			this.component.setI18nModel(options.i18nModel);
 		}
+		if (options.hasOwnProperty("bindingCustom")) {
+			this.component.setBindingCustom(options.bindingCustom);
+		}
 
 		// Special case for showOptions
 		if (options.availableOptions && options.availableOptions.length > 0) {
@@ -288,35 +295,16 @@ export default class SpreadsheetUpload extends ManagedObject {
 		}
 	}
 
-	_checkIfODataIsV4(tableObject: any) {
+	_checkIfODataIsV4(binding: any) {
 		try {
-			// first try to get the odata version from the tableObject with this.tableObject.getModel().getMetadata().getName()
-			try {
-				const odataVersion = this.tableObject.getModel().getMetadata().getName();
+				const odataVersion = binding.getModel().getMetadata().getName();
 				if (odataVersion === "sap.ui.model.odata.v2.ODataModel") {
 					return false;
 				} else {
-					return true;
-				}
-			} catch (error) {
-				Log.debug("Error getting the odata version from the tableObject", error as Error, "SpreadsheetUpload: SpreadsheetUpload");
-			}
-			let model;
-			// @ts-ignore
-			if (this.component.getContext().base) {
-				// @ts-ignore
-				model = this.component.getContext().base.getModel();
-			} else {
-				// @ts-ignore
-				model = this.component.getContext().getModel();
-			}
-
-			if (model.getODataVersion() === "4.0") {
 				return true;
-			} else {
-				return false;
 			}
 		} catch (error) {
+			Log.debug("Error getting the odata version from the tableObject", error as Error, "SpreadsheetUpload: SpreadsheetUpload");
 			return false;
 		}
 	}
