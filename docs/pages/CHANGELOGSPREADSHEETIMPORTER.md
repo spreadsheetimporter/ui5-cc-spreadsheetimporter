@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.2.2...ui5-cc-spreadsheetimporter-v1.3.0) (2024-09-16)
+
+
+### Features
+
+* new parameter `bindingCustom` ([#628](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/628)) ([935ea47](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/935ea47628d098fe45f024f96e85111149a10694))
+
+
+### Bug Fixes
+
+* in V4 context check if it is possible to execute with `editFlow` ([#630](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/630)) ([c5701a9](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/c5701a918cfc1bb111c1e9b7d4002f4a92031f74))
+
 ## [1.2.2](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.2.1...ui5-cc-spreadsheetimporter-v1.2.2) (2024-09-10)
 
 
