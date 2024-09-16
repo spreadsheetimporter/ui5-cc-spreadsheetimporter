@@ -277,9 +277,15 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 		// calling the OData service using extension api
 		if (this.spreadsheetUploadController.isODataV4) {
 			try {
-				await this.spreadsheetUploadController.context.editFlow.securedExecution(fnAddMessage, mParameters);
+				if(this.spreadsheetUploadController.context.editFlow){
+					await this.spreadsheetUploadController.context.editFlow.securedExecution(fnAddMessage, mParameters);
+				}else{
+					await fnAddMessage();
+				}
 			} catch (error) {
 				Log.error("Error while calling the odata service", error as Error, "SpreadsheetUpload: onUploadSet");
+				this.spreadsheetUploadController.errorsFound = true;
+				this.resetContent();
 			}
 		} else {
 			try {
