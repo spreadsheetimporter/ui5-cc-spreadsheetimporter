@@ -64,7 +64,8 @@
             "it",
             "ja",
             "zh",
-            "pt"
+            "pt",
+            "nl"
           ],
           "fallbackLocale": "en"
         }
