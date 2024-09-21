@@ -1,8 +1,3 @@
-
-!!! warning
-      The seperate button control was deprecated and integrated in the `ui5-spreadsheet-importer` component from version `0.26.0`.
-
-
 ## Button in Component
 
 The usage of the [UIComponent](https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.core.UIComponent) enables the possibility to return a button with the usage of a [ComponentContainer](https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.core.ComponentContainer).  
@@ -39,6 +34,8 @@ npm install ui5-cc-spreadsheetimporter
 ```
 
 3\. Add `components` to your `manifest.json` under `sap.ui5.dependencies`
+
+This is optional and preloads the component on startup of the application.  
    
 ⚠️ You must always keep your `ui5-cc-spreadsheetimporter` version up to date here when updating the module.
 
