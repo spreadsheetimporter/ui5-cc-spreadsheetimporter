@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.3.0...ui5-cc-spreadsheetimporter-v1.4.0) (2024-09-18)
+
+
+### Features
+
+* new language dutch (LLM translated) ([#631](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/631)) ([f4a7fae](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/f4a7fae77a113134d31853eebe35eeede1e4537d))
+
 ## [1.3.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.2.2...ui5-cc-spreadsheetimporter-v1.3.0) (2024-09-16)
 
 
