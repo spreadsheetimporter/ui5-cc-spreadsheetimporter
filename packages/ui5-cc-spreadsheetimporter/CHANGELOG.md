@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.4.0...ui5-cc-spreadsheetimporter-v1.4.1) (2024-09-21)
+
+
+### Bug Fixes
+
+* add `nl` language to manifest ([#633](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/633)) ([c9ea8ab](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/c9ea8abb174cfd78c6b7e7642793425071eaa8ea))
+
 ## [1.4.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.3.0...ui5-cc-spreadsheetimporter-v1.4.0) (2024-09-18)
 
 
