@@ -1,6 +1,6 @@
 {
   "name": "ui5-cc-spreadsheetimporter",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "A UI5 Module to integrate a Spreadsheet Upload for Fiori Element Apps.",
   "main": "dist/Component.js",
   "types": "dist/index.d.ts",

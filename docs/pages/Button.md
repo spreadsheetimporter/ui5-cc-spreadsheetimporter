@@ -24,12 +24,12 @@ npm install ui5-cc-spreadsheetimporter
 ⚠️ You must always keep your `ui5-cc-spreadsheetimporter` and button version up to date here when updating the module.
 
 !!! warning ""
-    ⚠️ The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v1_4_1" changed from version 0.34.0 to lowercase. Please make sure to use the correct path.
+    ⚠️ The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v1_4_2" changed from version 0.34.0 to lowercase. Please make sure to use the correct path.
 
 
 ```json
 "resourceRoots": {
-    "cc.spreadsheetimporter.v1_4_1": "./thirdparty/customcontrol/spreadsheetimporter/v1_4_1"
+    "cc.spreadsheetimporter.v1_4_2": "./thirdparty/customcontrol/spreadsheetimporter/v1_4_2"
 }
 ```
 
@@ -49,7 +49,7 @@ This is optional and preloads the component on startup of the application.
     "sap.ui.table": {}
   },
   "components": {
-    "cc.spreadsheetimporter.v1_4_1": {}
+    "cc.spreadsheetimporter.v1_4_2": {}
   }
 }
 ```
@@ -61,7 +61,7 @@ This is optional and preloads the component on startup of the application.
 ```json
 "componentUsages": {
     "spreadsheetImporter": {
-        "name": "cc.spreadsheetimporter.v1_4_1"
+        "name": "cc.spreadsheetimporter.v1_4_2"
     }
 }
 ```
@@ -131,7 +131,7 @@ A sample configuration can be found in the manifest.json of the [OData V4 Fiori 
     "customSectionReuse": {
       "title": "Spreadsheet Upload",
       "embeddedComponent": {
-        "name": "cc.spreadsheetimporter.v1_4_1",
+        "name": "cc.spreadsheetimporter.v1_4_2",
         "settings": {
           "tableId": "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable"
         }
