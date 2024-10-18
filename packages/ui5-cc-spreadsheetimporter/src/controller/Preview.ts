@@ -47,7 +47,7 @@ export default class Preview extends ManagedObject {
 	createDynamicTable(data: any[], typeLabelList: ListObject, previewColumns: string[]) {
 		const table = new Table();
 
-		// Use the new static method to get all unique keys
+		// get all column names from the data to show all columns with data in the pr
 		const aColumns = Preview.getAllKeys(data);
 
 		aColumns.forEach((column) => {
