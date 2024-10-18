@@ -2,17 +2,17 @@
   "_version": "1.9.0",
   "sap.cloud": {
     "public": true,
-    "service": "spreadsheetimporter_v1_4_1"
+    "service": "spreadsheetimporter_v1_4_2"
   },
   "sap.app": {
-    "id": "cc.spreadsheetimporter.v1_4_1",
+    "id": "cc.spreadsheetimporter.v1_4_2",
     "type": "component",
     "i18n": "i18n/i18n.properties",
     "title": "{{spreadsheetimporter.compTitle}}",
     "description": "{{spreadsheetimporter.compDescription}}",
     "resources": "resources.json",
     "applicationVersion": {
-      "version": "1.4.1"
+      "version": "1.4.2"
     }
   },
   "sap.ui": {
@@ -36,7 +36,7 @@
     ]
   },
   "sap.ui5": {
-    "componentName": "cc.spreadsheetimporter.v1_4_1",
+    "componentName": "cc.spreadsheetimporter.v1_4_2",
     "dependencies": {
       "minUI5Version": "1.71.0",
       "libs": {
@@ -54,7 +54,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "cc.spreadsheetimporter.v1_4_1.i18n.i18n",
+          "bundleName": "cc.spreadsheetimporter.v1_4_2.i18n.i18n",
           "supportedLocales": [
             "de",
             "en",

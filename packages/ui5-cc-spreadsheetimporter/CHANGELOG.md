@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.2](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.4.1...ui5-cc-spreadsheetimporter-v1.4.2) (2024-10-18)
+
+
+### Bug Fixes
+
+* preview did not show all columns ([#638](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/638)) ([eca1534](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/eca15343c890cb6ab7725baef270d5004681ecec))
+
 ## [1.4.1](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.4.0...ui5-cc-spreadsheetimporter-v1.4.1) (2024-09-21)
 
 

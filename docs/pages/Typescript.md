@@ -20,16 +20,16 @@ You can consume the types from the `@sapui5/ts-types-esm` and the `ui5-cc-spread
 Add the component usage and the resource roots to the manifest.json as described in the [Getting Started](GettingStarted.md) section.
 
 !!! warning ""
-    ⚠️ The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v1_4_1" changed from version 0.34.0 to lowercase. Please make sure to use the correct path.
+    ⚠️ The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v1_4_2" changed from version 0.34.0 to lowercase. Please make sure to use the correct path.
 
 ```json
         "componentUsages": {
             "spreadsheetImporter": {
-                "name": "cc.spreadsheetimporter.v1_4_1"
+                "name": "cc.spreadsheetimporter.v1_4_2"
             }
         },
         "resourceRoots": {
-            "cc.spreadsheetimporter.v1_4_1": "./thirdparty/customcontrol/spreadsheetimporter/v1_4_1"
+            "cc.spreadsheetimporter.v1_4_2": "./thirdparty/customcontrol/spreadsheetimporter/v1_4_2"
         },
 ```
 
@@ -38,7 +38,7 @@ Add the component usage and the resource roots to the manifest.json as described
 This is an example of how you could create the component and attach an event handler to the `checkBeforeRead` event with the types `Component` and `Component$CheckBeforeReadEventParameters` for the event parameters with an OData V4 Fiori Elements Application and UI5 Version 1.116.
 
 ```typescript
-import Component, { Component$ChangeBeforeCreateEvent, Component$CheckBeforeReadEvent, Component$UploadButtonPressEvent } from "cc/spreadsheetimporter/v1_4_1/Component";
+import Component, { Component$ChangeBeforeCreateEvent, Component$CheckBeforeReadEvent, Component$UploadButtonPressEvent } from "cc/spreadsheetimporter/v1_4_2/Component";
 import BaseController from "sap/fe/core/BaseController";
 import ExtensionAPI from "sap/fe/core/ExtensionAPI";
 

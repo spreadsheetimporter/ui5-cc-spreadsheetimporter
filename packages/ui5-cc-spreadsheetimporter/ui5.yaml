@@ -1,8 +1,8 @@
 specVersion: '2.6'
 type: module
 metadata:
-  name: ui5-cc-spreadsheetimporter-v1-4-1
+  name: ui5-cc-spreadsheetimporter-v1-4-2
 resources:
   configuration:
     paths:
-      /thirdparty/customcontrol/spreadsheetimporter/v1_4_1/: ./dist/
+      /thirdparty/customcontrol/spreadsheetimporter/v1_4_2/: ./dist/
