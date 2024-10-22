@@ -35,8 +35,8 @@ To integrate the `ui5-cc-spreadsheetimporter` component manually, follow the ste
 
 2\. **Add `resourceRoots` to your `manifest.json` under `sap.ui5`:**
 
-   !!! warning "Version Management"
-       Ensure your `ui5-cc-spreadsheetimporter` version is up to date in your `manifest.json` whenever updating the module. For more information, see [Version Namespace](https://blogs.sap.com/2023/03/12/create-a-ui5-custom-library-with-versioning-using-a-multi-version-namespace/).
+!!! warning "Version Management"
+    Ensure your `ui5-cc-spreadsheetimporter` version is up to date in your `manifest.json` whenever updating the module. For more information, see [Version Namespace](https://blogs.sap.com/2023/03/12/create-a-ui5-custom-library-with-versioning-using-a-multi-version-namespace/).
 
    ```json
    "resourceRoots": {
@@ -54,8 +54,8 @@ To integrate the `ui5-cc-spreadsheetimporter` component manually, follow the ste
 
 4\. **Add `componentUsages` to your `manifest.json` under `sap.ui5`:**
 
-   !!! warning "Version Management"
-       Ensure your `ui5-cc-spreadsheetimporter` version is up to date in your `manifest.json` whenever updating the module. For more information, see [Version Namespace](https://blogs.sap.com/2023/03/12/create-a-ui5-custom-library-with-versioning-using-a-multi-version-namespace/).
+!!! warning "Version Management"
+    Ensure your `ui5-cc-spreadsheetimporter` version is up to date in your `manifest.json` whenever updating the module. For more information, see [Version Namespace](https://blogs.sap.com/2023/03/12/create-a-ui5-custom-library-with-versioning-using-a-multi-version-namespace/).
 
    ```json
    "componentUsages": {
@@ -69,8 +69,8 @@ To integrate the `ui5-cc-spreadsheetimporter` component manually, follow the ste
 
    If you encounter the `component does not exist` error when deploying to an SAP System (S/4 On-Premise or SAP BTP ABAP environment), add the following to your `manifest.json`:
 
-   !!! warning "Resource Roots Path"
-       Ensure the `resourceRoots` path is correct, especially the lowercase format change since version 0.34.0.
+!!! warning "Resource Roots Path"
+    Ensure the `resourceRoots` path is correct, especially the lowercase format change since version 0.34.0.
 
    ```json
    "sap.app": {
@@ -84,8 +84,8 @@ To integrate the `ui5-cc-spreadsheetimporter` component manually, follow the ste
 
 2\. **Add `componentUsages` to your `manifest.json` under `sap.ui5`:**
 
-   !!! warning "Version Management"
-       Ensure your `ui5-cc-spreadsheetimporter` version is up to date in your `manifest.json` whenever updating the module. For more information, see [Version Namespace](https://blogs.sap.com/2023/03/12/create-a-ui5-custom-library-with-versioning-using-a-multi-version-namespace/). Ensure the version is available in the system.
+!!! warning "Version Management"
+    Ensure your `ui5-cc-spreadsheetimporter` version is up to date in your `manifest.json` whenever updating the module. For more information, see [Version Namespace](https://blogs.sap.com/2023/03/12/create-a-ui5-custom-library-with-versioning-using-a-multi-version-namespace/). Ensure the version is available in the system.
 
    ```json
    "componentUsages": {
