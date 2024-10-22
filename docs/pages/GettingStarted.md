@@ -152,9 +152,9 @@ The following code sets the busy indicator, creates the component if not already
 
 ```javascript
 openSpreadsheetUploadDialog: async function (event) {
-  this.getView().setBusyIndicatorDelay(0);
-  this.getView().setBusy(true);
-  this.spreadsheetUpload = await this.getView()
+  this.editFlow.getView().setBusyIndicatorDelay(0);
+  this.editFlow.getView().setBusy(true);
+  this.spreadsheetUpload = await this.editFlow.getView()
     .getController()
     .getAppComponent()
     .createComponent({
@@ -165,7 +165,7 @@ openSpreadsheetUploadDialog: async function (event) {
       },
     });
   this.spreadsheetUpload.openSpreadsheetUploadDialog();
-  this.getView().setBusy(false);
+  this.editFlow.getView().setBusy(false);
 }
 ```
 
