@@ -32,30 +32,30 @@
     "generators"
   ],
   "dependencies": {
-    "@sap-ux/axios-extension": "1.16.5",
-    "@sap-ux/fe-fpm-writer": "0.29.0",
-    "@sap-ux/fiori-freestyle-writer": "1.0.22",
-    "@sap-ux/odata-service-writer": "0.22.5",
-    "@sap-ux/ui5-application-writer": "1.1.6",
-    "@sap-ux/ui5-config": "0.24.1",
+    "@sap-ux/axios-extension": "1.16.7",
+    "@sap-ux/fe-fpm-writer": "0.31.12",
+    "@sap-ux/fiori-freestyle-writer": "1.2.10",
+    "@sap-ux/odata-service-writer": "0.23.0",
+    "@sap-ux/ui5-application-writer": "1.2.1",
+    "@sap-ux/ui5-config": "0.25.0",
     "axios": "1.7.7",
     "chalk": "^5.3.0",
     "directory-tree": "^3.5.2",
     "glob": "^11.0.0",
     "object-assign-deep": "^0.4.0",
     "valid-filename": "^4.0.0",
-    "yaml": "^2.5.1",
-    "yeoman-environment": "^4.4.1",
-    "yeoman-generator": "^7.3.2",
+    "yaml": "^2.6.0",
+    "yeoman-environment": "^4.4.3",
+    "yeoman-generator": "^7.3.3",
     "yosay": "^3.0.0"
   },
   "devDependencies": {
-    "execa": "^9.3.1",
-    "mem-fs": "4.1.0",
-    "mocha": "^10.7.3",
+    "execa": "^9.5.1",
+    "mem-fs": "4.1.1",
+    "mocha": "^10.8.2",
     "nock": "13.5.5",
     "prettier": "3.3.3",
     "yeoman-assert": "3.1.1",
-    "yeoman-test": "9.0.0"
+    "yeoman-test": "10.0.1"
   }
 }

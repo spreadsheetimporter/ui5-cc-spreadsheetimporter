@@ -2,16 +2,16 @@
   "name": "@capire/orders",
   "version": "1.0.0",
   "dependencies": {
-    "@cap-js-community/odata-v2-adapter": "1.13.2",
-    "@sap/cds": "^8.2.1"
+    "@cap-js-community/odata-v2-adapter": "1.13.7",
+    "@sap/cds": "^8.4.0"
   },
   "devDependencies": {
-    "@cap-js/sqlite": "^1.7.3",
+    "@cap-js/sqlite": "^1.7.5",
+    "anyupload": "workspace:*",
     "cds-launchpad-plugin": "2.2.0",
-    "cds-plugin-ui5": "0.11.0",
+    "cds-plugin-ui5": "0.11.1",
     "ordersv2fe120": "workspace:*",
-    "ordersv4fe120": "workspace:^",
-    "anyupload": "workspace:*"
+    "ordersv4fe120": "workspace:^"
   },
   "scripts": {
     "watch": "cds watch"
