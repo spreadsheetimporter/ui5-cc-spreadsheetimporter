@@ -182,16 +182,16 @@ export default class Util extends ManagedObject {
 	}
 
 	static async loadUI5RessourceAsync(moduleName: string): Promise<any> {
-		const alreadyLoadedLibrary = sap.ui.require(moduleName);
-		if (alreadyLoadedLibrary) {
-			return Promise.resolve(alreadyLoadedLibrary);
+		const alreadyLoadedModule = sap.ui.require(moduleName);
+		if (alreadyLoadedModule) {
+			return Promise.resolve(alreadyLoadedModule);
 		}
 
 		return new Promise(function (resolve, reject) {
 			sap.ui.require(
 				[moduleName],
-				function (Library: unknown) {
-					resolve(Library);
+				function (Module: unknown) {
+					resolve(Module);
 				},
 				function (err: any) {
 					reject(err);
