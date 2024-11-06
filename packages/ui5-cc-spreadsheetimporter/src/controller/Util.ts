@@ -1,10 +1,10 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 import Log from "sap/base/Log";
-import ResourceBundle from "sap/base/i18n/ResourceBundle";
+import type ResourceBundle from "sap/base/i18n/ResourceBundle";
 import MessageBox from "sap/m/MessageBox";
-import { FireEventReturnType, RowData, ValueData } from "../types";
-import Component from "../Component";
-import { FieldMatchType } from "../enums";
+import type { FireEventReturnType, RowData, ValueData } from "../types";
+import type Component from "../Component";
+import type { FieldMatchType } from "../enums";
 import ObjectPool from "sap/ui/base/ObjectPool";
 import Event from "sap/ui/base/Event";
 import ts from "sap/ui/model/odata/v4/ts";
@@ -181,16 +181,21 @@ export default class Util extends ManagedObject {
 		URL.revokeObjectURL(url);
 	}
 
-	static async loadUI5RessourceAsync(libraryName: string): Promise<any> {
+	static async loadUI5RessourceAsync(moduleName: string): Promise<any> {
+		const alreadyLoadedLibrary = sap.ui.require(moduleName);
+		if (alreadyLoadedLibrary) {
+			return Promise.resolve(alreadyLoadedLibrary);
+		}
+
 		return new Promise(function (resolve, reject) {
 			sap.ui.require(
-				[libraryName],
+				[moduleName],
 				function (Library: unknown) {
 					resolve(Library);
 				},
 				function (err: any) {
 					reject(err);
-				}
+				},
 			);
 		});
 	}
