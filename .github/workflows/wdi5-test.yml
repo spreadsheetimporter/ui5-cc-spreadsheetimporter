@@ -112,3 +112,10 @@ jobs:
         if: matrix.scenario == 'ordersv4fecds'
         run: |
           pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- --headless ${{ matrix.scenario }} ${{ matrix.ui5version }}
+
+      - name: Upload Timeline Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: timeline-report-${{ matrix.scenario }}-${{ matrix.ui5version }}
+          path: ./examples/reports/timeline

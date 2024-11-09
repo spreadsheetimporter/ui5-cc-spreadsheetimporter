@@ -1,5 +1,6 @@
 const { escape } = require("querystring");
 const util = require("./../../dev/util");
+const { TimelineService } = require('wdio-timeline-reporter/timeline-service');
 let scenario = "";
 let version = 0;
 
@@ -50,9 +51,12 @@ module.exports.config = {
 	waitforTimeout: 60000,
 	connectionRetryTimeout: process.argv.indexOf("--debug") > -1 ? 1200000 : 120000,
 	connectionRetryCount: 3,
-	services: ["ui5"],
+	services: ["ui5", [TimelineService]], // Add TimelineService here
 	framework: "mocha",
-	reporters: ["spec"],
+	reporters: [
+		"spec",
+		["timeline", { outputDir: "./reports/timeline", embedImages: true, screenshotStrategy: "before:click" }]
+	],
 	mochaOpts: {
 		ui: "bdd",
 		timeout: process.argv.indexOf("--debug") > -1 ? 600000 : 600000
