@@ -18,7 +18,6 @@
   },
   "cds": {
     "fiori": {
-      "lean_draft": true,
       "bypass_draft": true
     },
     "cds-plugin-ui5": {

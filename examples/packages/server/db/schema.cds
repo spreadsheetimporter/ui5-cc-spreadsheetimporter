@@ -7,6 +7,7 @@ using {
 
 namespace sap.capire.orders;
 
+@odata.draft.bypass
 entity Orders : cuid, managed {
   OrderNo        : String(22) @title: 'Order Number'; //> readable key
   Items          : Composition of many OrderItems
