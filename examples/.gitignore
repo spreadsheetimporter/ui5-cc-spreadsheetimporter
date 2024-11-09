@@ -20,3 +20,5 @@ server/db.json
 # Mac files
 .DS_Store
 
+# reports
+reports
