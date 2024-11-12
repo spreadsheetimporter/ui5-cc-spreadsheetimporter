@@ -99,7 +99,7 @@ export default class MetadataHandlerV2 extends MetadataHandler {
 		} catch (error) {
 			Log.debug(`SpreadsheetUpload: ${propertyName} not found as a LineItem Label`, undefined, "SpreadsheetUpload: MetadataHandlerV2");
 		}
-		if (label.startsWith("{") && label.endsWith("}")) {
+		if (typeof label === 'string' && label.startsWith("{") && label.endsWith("}")) {
 			try {
 				label = this.parseI18nText(label, this.spreadsheetUploadController.view);
 			} catch (error) {
