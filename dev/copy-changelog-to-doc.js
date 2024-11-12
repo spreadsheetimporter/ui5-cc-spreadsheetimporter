@@ -5,11 +5,7 @@ const filesToCopy = [
   {
     src: 'packages/ui5-cc-spreadsheetimporter/CHANGELOG.md',
     dest: 'docs/pages/CHANGELOGSPREADSHEETIMPORTER.md'
-  },
-  {
-    src: 'packages/ui5-cc-spreadsheetimporter-generator/CHANGELOG.md',
-    dest: 'docs/pages/CHANGELOGSPREADSHEETIMPORTERGENERATOR.md'
-  },
+  }
 ];
 
 filesToCopy.forEach(file => {

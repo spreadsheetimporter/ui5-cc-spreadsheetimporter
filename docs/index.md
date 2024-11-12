@@ -22,7 +22,6 @@ A quick integration tutorial for this component is available on YouTube [here](h
 - Functionality to preview uploaded data
 - Automatic draft activation
 - Button control for simplified integration
-- Generator for immediate integration
 
 ## **Support**
 

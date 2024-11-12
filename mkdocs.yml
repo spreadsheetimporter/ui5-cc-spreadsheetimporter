@@ -16,7 +16,6 @@ nav:
   - Typescript: pages/Typescript.md
   - Supported Versions: pages/SupportVersions.md
   - Central Deployment: pages/CentralDeployment.md
-  - yo Generator: pages/Generator.md
   - Button Control: pages/Button.md
   - API Reference: 'pages/APIReference.md'
   # - UI5 CLI: pages/CLI.md
@@ -33,8 +32,6 @@ nav:
       - Sample Apps: pages/Development/SampleApps.md
   - Changelogs:
       - spreadsheetimporter: pages/CHANGELOGSPREADSHEETIMPORTER.md
-      - spreadsheetimporter Button: pages/CHANGELOGSPREADSHEETIMPORTERBUTTON.md
-      - spreadsheetimporter Generator: pages/CHANGELOGSPREADSHEETIMPORTERGENERATOR.md
   - Troubleshooting: pages/Troubleshooting.md
   - User Documentation: pages/UserDocumentation.md
   - Use Cases: pages/UseCases.md
