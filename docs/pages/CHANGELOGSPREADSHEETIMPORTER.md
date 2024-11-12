@@ -7,6 +7,13 @@
 
 * label could be undefined and throws error([#649](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/649)) ([4b9fa59](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/4b9fa591fd039178921948b360e4c746e1d982ff))
 
+## [1.4.3](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.4.2...ui5-cc-spreadsheetimporter-v1.4.3) (2024-11-12)
+
+
+### Bug Fixes
+
+* label could be undefined and throws error([#649](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/649)) ([4b9fa59](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/4b9fa591fd039178921948b360e4c746e1d982ff))
+
 ## [1.4.2](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.4.1...ui5-cc-spreadsheetimporter-v1.4.2) (2024-10-18)
 
 
