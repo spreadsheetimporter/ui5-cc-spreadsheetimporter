@@ -53,19 +53,6 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Build ui5-cc-spreadsheetimporter-generator
-        run: echo "Build ui5-cc-spreadsheetimporter-generator"
-        if: ${{ steps.release.outputs['packages/ui5-cc-spreadsheetimporter-generator--release_created'] }}
-
-      - name: Publish ui5-cc-spreadsheetimporter-generator to NPM
-        if: ${{ steps.release.outputs['packages/ui5-cc-spreadsheetimporter-generator--release_created'] }}
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-          echo ":::: Publishing as $(npm whoami)"
-          cd ./packages/ui5-cc-spreadsheetimporter-generator/ && npm publish --provenance
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - name: Update the ABAP Deploy Repository
         if: ${{ steps.release.outputs['packages/ui5-cc-spreadsheetimporter--release_created'] }}
         run: |

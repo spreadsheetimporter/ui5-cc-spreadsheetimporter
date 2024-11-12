@@ -17,7 +17,7 @@ In centralized deployment, the Spreadsheet Upload component is stored centrally,
 
 ## Setup
 
-To integrate the `ui5-cc-spreadsheetimporter` component manually, follow the steps below. For a simplified setup, you can also use the [Yo generator](Generator.md).
+To integrate the `ui5-cc-spreadsheetimporter` component manually, follow the steps below.
 
 ### Requirements
 
