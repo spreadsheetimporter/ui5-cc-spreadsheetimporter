@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "dependencies": {
     "@cap-js-community/odata-v2-adapter": "1.13.7",
-    "@sap/cds": "^8.4.0"
+    "@sap/cds": "^8.4.0",
+    "cors": "2.8.5"
   },
   "devDependencies": {
     "@cap-js/sqlite": "^1.7.5",
