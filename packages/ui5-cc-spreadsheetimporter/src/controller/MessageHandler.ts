@@ -5,9 +5,9 @@ import SpreadsheetUpload from "./SpreadsheetUpload";
 import Util from "./Util";
 import Fragment from "sap/ui/core/Fragment";
 import JSONModel from "sap/ui/model/json/JSONModel";
-import { MessageType, ValueState } from "sap/ui/core/library";
+import { ValueState } from "sap/ui/core/library";
 import Log from "sap/base/Log";
-import { CustomMessageTypes, FieldMatchType } from "../enums";
+import { CustomMessageTypes, FieldMatchType, MessageType } from "../enums";
 import * as XLSX from "xlsx";
 
 /**

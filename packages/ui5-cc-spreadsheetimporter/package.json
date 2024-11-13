@@ -48,7 +48,8 @@
     "deleteTestApps": "node ./dev/copy-example-apps.js  delete",
     "deploy": "npm run build && fiori deploy --config ui5-deploy.yaml -y",
     "deploy:cf": "cf deploy mta_archives/archive.mtar --retries 1",
-    "undeploy": "cf undeploy ui5-cc-spreadsheetimporter --delete-services --delete-service-keys"
+    "undeploy": "cf undeploy ui5-cc-spreadsheetimporter --delete-services --delete-service-keys",
+    "lint:ui5": "ui5lint --ui5-config ui5-serve.yaml --details"
   },
   "dependencies": {
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
@@ -63,6 +64,7 @@
     "@typescript-eslint/eslint-plugin": "^8.12.2",
     "@typescript-eslint/parser": "^8.12.2",
     "@ui5/cli": "4.0.9",
+    "@ui5/linter": "^1.3.0",
     "@ui5/ts-interface-generator": "0.9.0",
     "babel-preset-transform-ui5": "^7.7.0",
     "bluebird": "3.7.2",

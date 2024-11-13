@@ -71,9 +71,15 @@ export default class SpreadsheetUpload extends ManagedObject {
 		this.util = new Util(componentI18n.getResourceBundle() as ResourceBundle);
 		this.messageHandler = new MessageHandler(this);
 		this.spreadsheetUploadDialogHandler = new SpreadsheetUploadDialog(this, component, componentI18n, this.messageHandler);
+	}
+
+	/**
+	 * Executes initial setup.
+	 * @returns {Promise<void>} A promise that resolves when the initial setup is complete.
+	 */
+	async initialSetup(): Promise<void> {
 		// check if "sap.ui.generic" is available, if false it is OpenUI5
-		// @ts-ignore
-		this.isOpenUI5 = sap.ui.generic ? true : false;
+		this.isOpenUI5 = await this.isOpenUI5Context();
 		// load version from UI5 2.0
 		VersionInfo.load()
 			.catch(function (err) {
@@ -86,13 +92,6 @@ export default class SpreadsheetUpload extends ManagedObject {
 					Log.debug("constructor", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ ui5version: version, isOpenUI5: this.isOpenUI5 }));
 				}.bind(this)
 			);
-	}
-
-	/**
-	 * Executes initial setup.
-	 * @returns {Promise<void>} A promise that resolves when the initial setup is complete.
-	 */
-	async initialSetup(): Promise<void> {
 		await this.spreadsheetUploadDialogHandler.createSpreadsheetUploadDialog();
 		if (!this.component.getStandalone()) {
 			try {
@@ -442,5 +441,16 @@ export default class SpreadsheetUpload extends ManagedObject {
 	}
 	public getOdataType(): string {
 		return this._odataType;
+	}
+
+	private async isOpenUI5Context(): Promise<boolean> {
+		try {
+			// sap.ui.core.Messaging is only available in UI5 version 1.118 and above, prefer this over sap.ui.getCore().getMessageManager() = Util.loadUI5RessourceAsync("sap/ui/core/Messaging");
+			await Util.loadUI5RessourceAsync("sap/ui/generic");
+			return true;
+		} catch (error) {
+			Log.debug("sap/ui/generic not found", undefined, "SpreadsheetUpload: isOpenUI5");
+			return false;
+		}
 	}
 }

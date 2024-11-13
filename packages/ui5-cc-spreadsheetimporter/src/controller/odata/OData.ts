@@ -215,7 +215,7 @@ export default abstract class OData extends ManagedObject {
 			} catch (error) {
 				Log.debug("sap/ui/core/Messaging not found", undefined, "SpreadsheetUpload: checkForODataErrors");
 			}
-			// fallback for UI5 versions below 1.118
+			// ui5lint-disable-next-line -- fallback for UI5 versions below 1.118
 			const messages = sap.ui.getCore().getMessageManager().getMessageModel().getData();
 			if (messages.length > 0) {
 				this.odataMessageHandler.displayMessages(messages);

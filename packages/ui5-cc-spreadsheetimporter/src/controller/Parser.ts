@@ -1,10 +1,9 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
-import { MessageType } from "sap/ui/core/library";
 import Component from "../Component";
 import { ArrayData, ListObject, Payload, PayloadArray, Property, ValueData } from "../types";
 import MessageHandler from "./MessageHandler";
 import Util from "./Util";
-import { CustomMessageTypes, FieldMatchType } from "../enums";
+import { CustomMessageTypes, FieldMatchType, MessageType } from "../enums";
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX

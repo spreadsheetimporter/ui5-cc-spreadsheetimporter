@@ -35,7 +35,8 @@
     "deploy": "npm run build && fiori deploy --config ui5-deploy.yaml -y",
     "runDocs": "docker run --rm -it -p 8000:8000 -v ${PWD}:/docs squidfunk/mkdocs-material",
     "coypChangelogToDoc": "node ./dev/copy-changelog-to-doc.js",
-    "updateAllDependencies": "pnpm up --latest -r"
+    "updateAllDependencies": "pnpm up --latest -r",
+    "lint:ui5": "pnpm --filter ui5-cc-spreadsheetimporter lint:ui5"
   },
   "devDependencies": {
     "@babel/eslint-parser": "7.25.9",

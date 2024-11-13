@@ -68,3 +68,26 @@ export const CustomMessageTypes: { [key: string]: CustomMessageType } = {
 		group: true
 	}
 };
+
+export enum MessageType {
+    /**
+     * Message is an error
+     */
+    Error = "Error",
+    /**
+     * Message should be just an information
+     */
+    Information = "Information",
+    /**
+     * Message has no specific level
+     */
+    None = "None",
+    /**
+     * Message is a success message
+     */
+    Success = "Success",
+    /**
+     * Message is a warning
+     */
+	Warning = "Warning"
+}
