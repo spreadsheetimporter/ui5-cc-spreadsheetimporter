@@ -728,7 +728,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 		} catch (error) {
 			Log.debug("sap/base/i18n/Localization not found", undefined, "SpreadsheetUpload: checkForODataErrors");
 		}
-		// fallback for UI5 versions below 2.0
+		// ui5lint-disable-next-line -- fallback for UI5 versions below 2.0
 		return sap.ui.getCore().getConfiguration().getLanguage();
 	}
 }
