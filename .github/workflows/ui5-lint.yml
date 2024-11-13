@@ -1,0 +1,33 @@
+name: ui5-lint
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-ui5-linter:
+    runs-on: ubuntu-latest
+    if: "github.event.pull_request.title != 'chore: release main'"
+
+    steps:
+
+      - name: checkout spreadsheetupload Repo
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - run: corepack enable pnpm
+      - name: use node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: pnpm install
+        run: |
+          npm pkg delete scripts.prepare
+          pnpm install --no-frozen-lockfile
+
+      - name: lint ui5
+        run: pnpm lint:ui5
