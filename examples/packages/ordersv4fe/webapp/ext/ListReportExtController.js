@@ -19,7 +19,34 @@ sap.ui.define(["sap/m/MessageToast"], function (MessageToast) {
 						componentData: {
 							context: this,
 							createActiveEntity: true,
-							i18nModel: this.getModel("i18n")
+							i18nModel: this.getModel("i18n"),
+							deepDownloadConfig: {
+								deepLevel: 2,
+								deepExport: true,
+								addKeysToExport: true,
+								showOptions: true,
+								columns : {
+									"OrderNo":{
+										"order": 1
+									},
+									"buyer": {
+										"order": 3
+									},
+									"Items": {
+										"quantity" : {
+											"order": 2
+										},
+										"title": {
+											"order": 4
+										}
+									},
+									"Shipping": {
+										"address" : {
+											"order": 5
+										},
+									}
+								}
+							}
 						}
 					});
 			

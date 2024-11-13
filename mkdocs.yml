@@ -13,6 +13,7 @@ nav:
   - Events: pages/Events.md
   - Error Handling: pages/Checks.md
   - Table Selector: pages/TableSelector.md
+  - Spreadsheet Download: pages/Spreadsheetdownload.md
   - Typescript: pages/Typescript.md
   - Supported Versions: pages/SupportVersions.md
   - Central Deployment: pages/CentralDeployment.md
@@ -21,7 +22,6 @@ nav:
   # - UI5 CLI: pages/CLI.md
   - Pro:
       - Getting Started: pages/Pro/install.md
-      - Spreadsheet Download: pages/Pro/spreadsheetdownload.md
       - Deep Create: pages/Pro/deepcreate.md
   - Development:
       - Getting Started: pages/Development/GettingStarted.md
@@ -30,6 +30,7 @@ nav:
       - Docs: pages/Development/Docs.md
       - GitHub Actions: pages/Development/GitHubActions.md
       - Sample Apps: pages/Development/SampleApps.md
+      - Spreadsheet Download: pages/Development/SpreadsheetDownload.md
   - Changelogs:
       - spreadsheetimporter: pages/CHANGELOGSPREADSHEETIMPORTER.md
   - Troubleshooting: pages/Troubleshooting.md

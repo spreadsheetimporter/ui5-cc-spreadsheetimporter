@@ -2,7 +2,7 @@ import UIComponent from "sap/ui/core/UIComponent";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Device from "sap/ui/Device";
 import SpreadsheetUpload from "./controller/SpreadsheetUpload";
-import { ComponentData, Messages } from "./types";
+import { ComponentData, DeepDownloadConfig, Messages } from "./types";
 import Log from "sap/base/Log";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import Logger from "./controller/Logger";
@@ -10,6 +10,7 @@ import ComponentContainer from "sap/ui/core/ComponentContainer";
 import Button from "sap/m/Button";
 import Controller from "sap/ui/core/mvc/Controller";
 import View from "sap/ui/core/mvc/View";
+import Util from "./controller/Util";
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
@@ -69,7 +70,8 @@ export default class Component extends UIComponent {
 			i18nModel: { type: "object" },
 			debug: { type: "boolean", defaultValue: false },
 			componentContainerData: { type: "object" },
-			bindingCustom: { type: "object" }
+			bindingCustom: { type: "object" },
+			deepDownloadConfig: { type: "object", defaultValue: {} }
 			//Pro Configurations
 		},
 		aggregations: {
@@ -161,6 +163,17 @@ export default class Component extends UIComponent {
 			// if availableOptions is set show the Options Menu
 			this.setShowOptions(true);
 		}
+
+		const defaultDeepDownloadConfig: DeepDownloadConfig = {
+				addKeysToExport: false,
+				deepExport: false,
+				deepLevel: 1,
+				showOptions: true,
+				columns: []
+		};
+
+	    const mergedDeepDownloadConfig = Util.mergeConfig(defaultDeepDownloadConfig, compData.deepDownloadConfig)
+		this.setDeepDownloadConfig(mergedDeepDownloadConfig);
 
 		// Pro Configurations - Start
 

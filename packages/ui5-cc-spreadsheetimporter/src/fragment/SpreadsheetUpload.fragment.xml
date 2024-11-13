@@ -9,6 +9,13 @@
         <Title text="{i18n>spreadsheetimporter.spreadsheetupload}" />
         <ToolbarSpacer />
         <Button press="showPreview" text="{i18n>spreadsheetimporter.showPreview}" visible="{= !${info>/hidePreview}}" enabled="{= ${info>/dataRows} > 0}" />
+        <Button press="onInitDownloadSpreadsheetProcess" 
+               text="{i18n>spreadsheetimporter.downloadDataSpreadsheet}" 
+               visible="{= ${info>/showDownload}}">
+               <layoutData>
+                <OverflowToolbarLayoutData priority="AlwaysOverflow"/>
+              </layoutData>
+        </Button>
         <Button press="onTempDownload" text="{i18n>spreadsheetimporter.downloadTemplate}" visible="{= !${info>/hideGenerateTemplateButton}}" />
         <Button press="onOpenOptionsDialog" icon="sap-icon://action-settings" visible="{= ${info>/showOptions}}" />
       </OverflowToolbar>

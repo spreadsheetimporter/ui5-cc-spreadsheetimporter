@@ -1,10 +1,11 @@
-import { Columns } from "../../types";
+import { Columns, ListObject } from "../../types";
 import OData from "./OData";
 import SpreadsheetUpload from "../SpreadsheetUpload";
 import Util from "../Util";
 import ODataListBinding from "sap/ui/model/odata/v4/ODataListBinding";
 import Log from "sap/base/Log";
 import MetadataHandlerV4 from "./MetadataHandlerV4";
+import ODataModel from "sap/ui/model/odata/v4/ODataModel";
 
 type EntityObject = {
 	$kind: string;
@@ -171,5 +172,62 @@ export default class ODataV4 extends OData {
 		const entityContainer = model.getMetaModel().getData()["$EntityContainer"];
 		const containerName = model.getMetaModel().getData()[entityContainer];
 		return containerName;
+	}
+
+	getODataEntitiesRecursive(entityName: string, lowestLevel: number) {
+		return this.metadataHandler.getODataEntitiesRecursive(entityName, lowestLevel);
+	}
+
+	getBindingFromBinding(binding: ODataListBinding, expand?: any): ODataListBinding {
+		const expandParameter = expand ? expand : "";
+		let path = binding.getPath();
+		if (binding.getResolvedPath) {
+			path = binding.getResolvedPath();
+		} else {
+			// workaround for getResolvedPath only available from 1.88
+			path = (binding.getModel() as ODataModel).resolve(binding.getPath(), binding.getContext());
+		}
+		return binding.getModel().bindList(path, null, [], [], { $$updateGroupId: this.updateGroupId, $count: true, $expand: expand }) as ODataListBinding;
+	}
+
+	fetchBatch(customBinding: ODataListBinding, batchSize: number): Promise<any> {
+		let totalResults = [] as any[]; // is an array of sap.ui.model.odata.v4.Context
+		let fetchedResults = 0;
+		// TODO: check if this is correct
+		let count = Infinity;
+
+		return new Promise((resolve, reject) => {
+			const recursiveFetch = () => {
+				if (fetchedResults >= count) {
+					resolve(totalResults);
+					return;
+				}
+
+				customBinding
+					.requestContexts(fetchedResults, batchSize)
+					.then(async (results) => {
+						totalResults.push(...results);
+						fetchedResults += results.length;
+
+						// Using await inside an async function callback
+						count = await customBinding.getHeaderContext().requestProperty("$count");
+
+						console.log(`Fetched ${fetchedResults}/${count} results`);
+
+						// Recursively call
+						recursiveFetch();
+					})
+					.catch((error) => {
+						console.error(`Error fetching results: ${error}`);
+						reject(error);
+					});
+			};
+
+			recursiveFetch();
+		});
+	}
+
+	addKeys(labelList: ListObject, entityName: string, parentEntity?: any, partner?: string) {
+		this.metadataHandler.addKeys(labelList, entityName, parentEntity, partner);
 	}
 }

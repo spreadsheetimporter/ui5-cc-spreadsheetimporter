@@ -11,6 +11,8 @@ import JSONModel from "sap/ui/model/json/JSONModel";
 import Fragment from "sap/ui/core/Fragment";
 import Dialog from "sap/m/Dialog";
 import Util from "../Util";
+import ODataListBindingV2 from "sap/ui/model/odata/v2/ODataListBinding";
+import ODataListBindingV4 from "sap/ui/model/odata/v4/ODataListBinding";
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -246,6 +248,10 @@ export default abstract class OData extends ManagedObject {
 	abstract getOdataType(binding: any, odataType: any): string;
 	abstract checkForErrors(model: any, binding: any, showBackendErrorMessages: Boolean): Promise<boolean>;
 	abstract createCustomBinding(binding: any): any;
-
+	abstract getODataEntitiesRecursive(entityName: string, deepLevel: number): any;
+	abstract getBindingFromBinding(binding: any, expand?: any): ODataListBindingV4 | ODataListBindingV2;
+	abstract fetchBatch(customBinding: ODataListBindingV4 | ODataListBindingV2, batchSize: number): Promise<any>;
+	abstract addKeys(labelList: ListObject, entityName: string, parentEntity?: any, partner?: string): void;
+	
 	// Pro Methods
 }

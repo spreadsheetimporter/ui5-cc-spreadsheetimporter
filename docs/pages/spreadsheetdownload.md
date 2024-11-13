@@ -21,6 +21,7 @@ This means that you can download all Orders, including the OrderItems, ShippingI
 | `deepExport` | Also exports sibling entities | object |
 | `deepLevel` | Defines the level of sibling entities to export | object |
 | `showOptions` | Shows options dialog for users to change configurations | object |
+| `columns` | Defines the columns to export | object |
 
 ### Sample Usage
 
@@ -92,12 +93,10 @@ download: async function () {
             componentData: {
                 context: this,
                 activateDraft: true,
-                pro: {
-                    spreadsheetExportConfig: {
-                        deepLevel: 1,
-                        deepExport: true,
-                        addKeysToExport: true
-                    }
+                deepDownloadConfig: {
+                    deepLevel: 1,
+                    deepExport: true,
+                    addKeysToExport: true
                 }
             }
         });

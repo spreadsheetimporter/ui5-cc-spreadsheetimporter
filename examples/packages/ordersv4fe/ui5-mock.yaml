@@ -29,7 +29,7 @@ server:
       configuration:
         mountPath: /
         services:
-          - urlPath: /orders
+          - urlPath: /odata/v4/Orders
             metadataPath: ./webapp/localService/metadata.xml
             mockdataPath: ./webapp/localService/data
             generateMockData: true
