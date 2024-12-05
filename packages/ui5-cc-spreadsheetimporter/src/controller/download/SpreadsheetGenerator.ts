@@ -4,6 +4,7 @@ import { EntityDefinition, DeepDownloadConfig } from "../../types";
 import SpreadsheetUpload from "../SpreadsheetUpload";
 import Component from "../../Component";
 import OData from "../odata/OData";
+import Util from "../Util";
 
 /**
  * @namespace cc.spreadsheetimporter.download.XXXnamespaceXXX
@@ -12,6 +13,7 @@ export default class SpreadsheetGenerator extends ManagedObject {
     spreadsheetUploadController: SpreadsheetUpload;
     component: Component;
     odataHandler: OData;
+    currentLang: string;
 
     constructor(spreadsheetUploadController: SpreadsheetUpload, component: Component, odataHandler: OData) {
         super();
@@ -21,6 +23,7 @@ export default class SpreadsheetGenerator extends ManagedObject {
     }
 
     async downloadSpreadsheet(entityDefinition: EntityDefinition, spreadsheetExportConfig: DeepDownloadConfig): Promise<void> {
+        this.currentLang = await Util.getLanguage();
         let filename = spreadsheetExportConfig.filename || this.spreadsheetUploadController.getOdataType() + ".xlsx";
         const wb = XLSX.utils.book_new(); // creating the new spreadsheet work book
 
@@ -162,8 +165,7 @@ export default class SpreadsheetGenerator extends ManagedObject {
                 return { v: value, t: "s" };
             case "Edm.DateTimeOffset":
             case "Edm.DateTime":
-                const currentLang = sap.ui.getCore().getConfiguration().getLanguage();
-                const format = currentLang.startsWith("en") ? "mm/dd/yyyy hh:mm AM/PM" : "dd.mm.yyyy hh:mm";
+                const format = this.currentLang.startsWith("en") ? "mm/dd/yyyy hh:mm AM/PM" : "dd.mm.yyyy hh:mm";
                 return { v: value, t: "d", z: format };
             case "Edm.Date":
                 return { v: value, t: "d" };

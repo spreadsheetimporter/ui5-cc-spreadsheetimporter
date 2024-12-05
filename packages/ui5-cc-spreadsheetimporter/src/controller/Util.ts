@@ -181,6 +181,18 @@ export default class Util extends ManagedObject {
 		URL.revokeObjectURL(url);
 	}
 
+	static async getLanguage(): Promise<string> {
+		try {
+			// getCore is not available in UI5 version 2.0 and above, prefer this over sap.ui.getCore().getConfiguration().getLanguage()
+			const Localization = await Util.loadUI5RessourceAsync("sap/base/i18n/Localization");
+			return Localization.getLanguage();
+		} catch (error) {
+			Log.debug("sap/base/i18n/Localization not found", undefined, "SpreadsheetUpload: checkForODataErrors");
+		}
+		// ui5lint-disable-next-line -- fallback for UI5 versions below 2.0
+		return sap.ui.getCore().getConfiguration().getLanguage();
+	}
+
 	static async loadUI5RessourceAsync(moduleName: string): Promise<any> {
 		const alreadyLoadedModule = sap.ui.require(moduleName);
 		if (alreadyLoadedModule) {
