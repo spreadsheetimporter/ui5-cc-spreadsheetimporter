@@ -91,7 +91,7 @@ componentData: {
 
 This option defines the columns to export.  
 By default, all columns are exported.
-It is possible to define the order of the columns by using the `order` property but only for the flat structure.
+It is possible to define the order of the columns by using the `order` property.
 To know which columns are available, it is possible to turn on `debug` as an option.
 With this option, the `mainEntity` is logged and then you can use it as a reference.
 
@@ -124,12 +124,6 @@ This option defines how deep sibling entities should be exported.
 **default:** `true`
 
 This option determines whether the options dialog should be shown to the user.
-
-### flatSheet
-
-**default:** `false`
-
-This option determines whether the data should be exported in a flat structure.
 
 
 ## API

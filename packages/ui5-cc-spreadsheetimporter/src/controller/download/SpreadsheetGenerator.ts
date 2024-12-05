@@ -38,23 +38,6 @@ export default class SpreadsheetGenerator extends ManagedObject {
         XLSX.writeFile(wb, filename);
     }
 
-    async generateFlatTemplate(entityDefinition: EntityDefinition, downloadTemplate: boolean, spreadsheetExportConfig: DeepDownloadConfig): Promise<void> {
-        const properties = await this._extractProperties(spreadsheetExportConfig.columns, entityDefinition, "root");
-        // Sort properties based on the order and then map to get the property names
-        const sortedProperties = properties.sort((a, b) => a.order - b.order).map((p) => p.name);
-        var worksheet = {} as XLSX.WorkSheet;
-        // loop over sorted properties and add them to the worksheet
-        for (let i = 0; i < sortedProperties.length; i++) {
-            worksheet[XLSX.utils.encode_cell({ c: i, r: 0 })] = { v: sortedProperties[i], t: "s" };
-        }
-        worksheet["!ref"] = XLSX.utils.encode_range({ s: { c: 0, r: 0 }, e: { c: sortedProperties.length - 1, r: 0 } });
-        const wb = XLSX.utils.book_new();
-        wb.SheetNames.push("Template");
-        wb.Sheets["Template"] = worksheet;
-        // download the created spreadsheet file
-        XLSX.writeFile(wb, "Template.xlsx");
-    }
-
     private async _appendRootEntitySheet(wb: XLSX.WorkBook, entityDefinition: EntityDefinition, spreadsheetExportConfig: DeepDownloadConfig): Promise<void> {
         if (entityDefinition.$XYZData) {
             const data = entityDefinition.$XYZData;

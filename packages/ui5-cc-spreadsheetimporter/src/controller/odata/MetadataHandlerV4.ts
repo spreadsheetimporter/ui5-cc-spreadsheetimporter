@@ -175,7 +175,7 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 		const entities: any = this.spreadsheetUploadController.binding.getModel().getMetaModel().getData();
 
 		if (!entities || !entities[entityName]) {
-			throw new Error("Entity not found"); // Add appropriate error message and handling
+			throw new Error(`Entity '${entityName}' not found`); // Add appropriate error message and handling
 		}
 
 		const mainEntity: any = entities[entityName];

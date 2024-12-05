@@ -26,12 +26,6 @@ export default class SpreadsheetDownload extends ManagedObject {
 		this.dataAssigner = new DataAssigner();
 	}
 
-	async downloadSpreadsheetFlatTemplate(entityDefinition: EntityDefinition, downloadTemplate: boolean, spreadsheetExportConfig: DeepDownloadConfig): Promise<void> {
-		await this.spreadsheetGenerator.generateFlatTemplate(entityDefinition, downloadTemplate, spreadsheetExportConfig);
-	}
-
-	getFlatSheet() {}
-
 	// Function to extract the properties from input config and metadata
 	async _extractProperties(proConfigColumns: any, entityMetadata: any, entityType: string): Promise<PropertyWithOrder[]> {
 		const labelList = await this.odataHandler.getLabelList([], entityType, this.component.getExcludeColumns());

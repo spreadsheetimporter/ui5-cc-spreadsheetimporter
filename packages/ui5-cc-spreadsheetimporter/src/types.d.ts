@@ -125,7 +125,6 @@ export interface DeepDownloadConfig {
 	deepLevel: number;
 	showOptions: boolean;
 	columns: any;
-	flatSheet?: boolean;
 	filename?: string;
 }
 
