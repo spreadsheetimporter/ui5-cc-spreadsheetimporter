@@ -206,7 +206,16 @@ export default class Component extends UIComponent {
 		this.spreadsheetUpload = new SpreadsheetUpload(this, this.getModel("i18n") as ResourceModel);
 		const componentContainerData = this.getComponentContainerData?.() || {};
 		const buttonText = componentContainerData.buttonText ?? "Excel Import";
-		return new Button({ text: buttonText, press: () => this.openSpreadsheetUploadDialog() });
+		
+		// Check if the download button should be enabled
+		const showDownloadButton = componentContainerData.downloadButton ?? false;
+		let pressMethod = () => this.openSpreadsheetUploadDialog();
+
+		if(showDownloadButton) {
+			pressMethod = () => this.triggerDownloadSpreadsheet();
+		}
+
+		return new Button({ text: buttonText, press: pressMethod });
 	}
 
 	//=============================================================================
@@ -231,6 +240,22 @@ export default class Component extends UIComponent {
 		}
 		Log.debug("openSpreadsheetUploadDialog", undefined, "SpreadsheetUpload: Component");
 		this.spreadsheetUpload.openSpreadsheetUploadDialog(options);
+	}
+
+	async triggerDownloadSpreadsheet(deepDownloadConfig?: DeepDownloadConfig) {
+		if (!this.getContext()) {
+			// if loaded via ComponentContainer, context is not set
+			const context = this._getViewControllerOfControl(this.oContainer);
+			this.setContext(context);
+			// attach event from ComponentContainer
+			this._attachEvents(context);
+		}
+		await this.spreadsheetUpload.initializeComponent();
+		Log.debug("triggerDownloadSpreadsheet", undefined, "SpreadsheetUpload: Component");
+		if (deepDownloadConfig) {
+			this.setDeepDownloadConfig(deepDownloadConfig);
+		}
+		this.spreadsheetUpload.triggerDownloadSpreadsheet();
 	}
 
 	/**
@@ -279,22 +304,6 @@ export default class Component extends UIComponent {
 
 	getMessages(): Messages[] {
 		return this.spreadsheetUpload.getMessages();
-	}
-
-	async triggerDownloadSpreadsheet(deepDownloadConfig?: DeepDownloadConfig) {
-		await this.spreadsheetUpload.initializeComponent();
-		if (!this.getContext()) {
-			// if loaded via ComponentContainer, context is not set
-			const context = this._getViewControllerOfControl(this.oContainer);
-			this.setContext(context);
-			// attach event from ComponentContainer
-			this._attachEvents(context);
-		}
-		Log.debug("triggerDownloadSpreadsheet", undefined, "SpreadsheetUpload: Component");
-		if (deepDownloadConfig) {
-			this.setDeepDownloadConfig(deepDownloadConfig);
-		}
-		this.spreadsheetUpload.triggerDownloadSpreadsheet();
 	}
 
 	//=============================================================================

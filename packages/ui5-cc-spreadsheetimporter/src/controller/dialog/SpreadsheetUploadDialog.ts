@@ -25,8 +25,8 @@ import Select from "sap/m/Select";
 import Item from "sap/ui/core/Item";
 import SpreadsheetDownloadDialog from "../download/SpreadsheetDownloadDialog";
 import SpreadsheetGenerator from "../download/SpreadsheetGenerator";
-import ODataV4 from "../odata/ODataV4";
 import SpreadsheetDownload from "../download/SpreadsheetDownload";
+import OData from "../odata/OData";
 
 type InputType = {
 	[key: string]: {
@@ -49,7 +49,6 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	optionsHandler: OptionsDialog;
 	messageHandler: MessageHandler;
 	spreadsheetOptionsModel: JSONModel;
-	odataHandler: ODataV4;
 	spreadsheetGenerator: SpreadsheetGenerator;
 	spreadsheetDownload: SpreadsheetDownload;
 
@@ -62,9 +61,6 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 		this.previewHandler = new Preview(this.util);
 		this.optionsHandler = new OptionsDialog(spreadsheetUploadController);
 		this.messageHandler = messageHandler;
-		this.odataHandler = new ODataV4(this.spreadsheetUploadController);
-		this.spreadsheetGenerator = new SpreadsheetGenerator(this.spreadsheetUploadController, this.component, this.odataHandler);
-		this.spreadsheetDownload = new SpreadsheetDownload(this.spreadsheetUploadController, this.component, this.odataHandler);
 		this.spreadsheetDownloadDialog = new SpreadsheetDownloadDialog(this.spreadsheetUploadController, this);
 	}
 
@@ -743,6 +739,11 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 		}
 		// ui5lint-disable-next-line -- fallback for UI5 versions below 2.0
 		return sap.ui.getCore().getConfiguration().getLanguage();
+	}
+
+	setODataHandler(odataHandler: OData) {
+		this.spreadsheetGenerator = new SpreadsheetGenerator(this.spreadsheetUploadController, this.component, odataHandler);
+		this.spreadsheetDownload = new SpreadsheetDownload(this.spreadsheetUploadController, this.component, odataHandler);
 	}
 
 	/**

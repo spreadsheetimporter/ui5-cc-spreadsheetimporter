@@ -131,6 +131,7 @@ export default class SpreadsheetUpload extends ManagedObject {
 		}
 		this.isODataV4 = this._checkIfODataIsV4(this.binding);
 		this.odataHandler = this.createODataHandler(this);
+		this.spreadsheetUploadDialogHandler.setODataHandler(this.odataHandler);
 		this.controller = this.view.getController();
 		Log.debug("View", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ view: this.view }));
 		this.view.addDependent(this.spreadsheetUploadDialogHandler.getDialog());
@@ -141,9 +142,11 @@ export default class SpreadsheetUpload extends ManagedObject {
 		this.typeLabelList = await this.odataHandler.getLabelList(this.component.getColumns(), this._odataType, this.component.getExcludeColumns(), this.binding);
 		Log.debug("typeLabelList", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ typeLabelList: this.typeLabelList }));
 
-		const { mainEntity, expands } = this.odataHandler.getODataEntitiesRecursive(this.getOdataType(), Infinity);
-		Log.debug("mainEntity", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ mainEntity: mainEntity }));
-		Log.debug("expands", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ expands: expands }));
+		if(this.isODataV4) {
+			const { mainEntity, expands } = this.odataHandler.getODataEntitiesRecursive(this.getOdataType(), Infinity);
+			Log.debug("mainEntity", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ mainEntity: mainEntity }));
+			Log.debug("expands", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ expands: expands }));
+		}
 
 		this.model = this.binding.getModel();
 		Log.debug("model", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ model: this.model }));

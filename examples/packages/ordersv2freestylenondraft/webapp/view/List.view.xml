@@ -14,8 +14,29 @@
           usage="spreadsheetImporter"
           propagateModel="true"
           async="true"
-          settings="{tableId:'container-todo---list--list',componentContainerData:{uploadButtonPress:'uploadButtonPress',buttonText:'Excel Upload'}}"
+          settings="{tableId:'container-todo---list--list',
+          componentContainerData:{uploadButtonPress:'uploadButtonPress',buttonText:'Excel Download',downloadButton:true},
+          deepDownloadConfig:{deepLevel: 2,
+            deepExport: true,
+            addKeysToExport: true,
+            showOptions: true,
+            filename: 'Orders12',
+            columns : {
+              'OrderNo':{
+                  'order': 1
+              }
+            }
+          }
+        }"
         />
+        <core:ComponentContainer
+        id="123"
+        width="100%"
+        usage="spreadsheetImporter"
+        propagateModel="true"
+        async="true"
+        settings="{tableId:'container-todo---list--list',componentContainerData:{uploadButtonPress:'uploadButtonPress',buttonText:'Upload Download',downloadButton:false}}"
+      />
         <List
           id="list"
           width="auto"

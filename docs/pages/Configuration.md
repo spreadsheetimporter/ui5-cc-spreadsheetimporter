@@ -491,6 +491,7 @@ For the event, the method from your view controller is attached to the event.
 | Option | Description | Details |
 | ------ | --- | --- |
 | `buttonText` | Text to be displayed on the button | string |
+| `downloadButton` | Defines whether the download event should be triggered instead of the upload event | boolean |
 | `uploadButtonPress` | Event after the upload button is pressed | string |
 | `changeBeforeCreate` | Event before data sent to the backend | string |
 | `checkBeforeRead` | Event before data is uploaded to the app | string |
@@ -505,9 +506,22 @@ usage="spreadsheetImporter" propagateModel="true" async="true"
 settings="{
   standalone:true,
   columns: ['product_ID', 'username'],
+  deepDownloadConfig:{
+    deepLevel: 2,
+    deepExport: true,
+    addKeysToExport: true,
+    showOptions: true,
+    filename: 'Orders12',
+    columns : {
+        'OrderNo':{
+            'order': 1
+        }
+    }
+  },
   componentContainerData:{
     uploadButtonPress:'uploadButtonPress',
-    buttonText:'Excel Upload'
+    buttonText:'Excel Upload',
+    downloadButton:true
     }
   }" />
 ````
