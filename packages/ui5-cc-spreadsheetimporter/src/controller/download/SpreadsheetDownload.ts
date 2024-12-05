@@ -6,6 +6,7 @@ import OData from "../odata/OData";
 import Util from "../Util";
 import SpreadsheetGenerator from "./SpreadsheetGenerator";
 import DataAssigner from "./DataAssigner";
+import Log from "sap/base/Log";
 /**
  * @namespace cc.spreadsheetimporter.download.XXXnamespaceXXX
  */
@@ -68,6 +69,9 @@ export default class SpreadsheetDownload extends ManagedObject {
 
 	public async fetchData(deepDownloadConfig: DeepDownloadConfig) {
 		const { mainEntity, expands } = this.odataHandler.getODataEntitiesRecursive(this.spreadsheetUploadController.getOdataType(), deepDownloadConfig.deepLevel);
+		// Log the mainEntity and expands
+		Log.debug("MainEntity:", mainEntity, "SpreadsheetDownload: fetchData");
+		Log.debug("Expands:", expands, "SpreadsheetDownload: fetchData");
 		const batchSize = 1000;
 		const customBinding = this.odataHandler.getBindingFromBinding(this.spreadsheetUploadController.binding, expands);
 

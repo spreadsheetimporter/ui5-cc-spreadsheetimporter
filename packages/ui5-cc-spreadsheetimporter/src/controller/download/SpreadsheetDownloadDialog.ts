@@ -31,7 +31,8 @@ export default class SpreadsheetDownloadDialog extends ManagedObject {
 		this.spreadsheetUploadController.view.setBusy(true);
 		if (!this.spreadsheetDownloadDialog) {
 			this.spreadsheetOptionsModel = new JSONModel(this.component.getDeepDownloadConfig());
-			this.spreadsheetOptionsModel.setProperty("/filename", this.spreadsheetUploadController.getOdataType());
+			const modelData = this.spreadsheetOptionsModel.getData();
+			this.spreadsheetOptionsModel.setProperty("/filename", modelData.filename || this.spreadsheetUploadController.getOdataType());
 			this.spreadsheetDownloadDialog = (await Fragment.load({
 				name: "cc.spreadsheetimporter.XXXnamespaceXXX.fragment.SpreadsheetDownload",
 				type: "XML",

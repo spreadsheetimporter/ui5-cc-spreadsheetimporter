@@ -1,28 +1,26 @@
-This feature is experimental and only available with a OData V4 backend.
+# Deep Download Feature
 
-## Triggering the download
+This feature is experimental and only available with an OData V4 backend. It allows downloading data from OData V4 backends with support for nested entities and relationships, handling complex data structures efficiently.
 
-The spreadsheet download is triggered by a button in the spreadsheet upload dialog.
+## Triggering the Download
 
-This will run onInitDownloadSpreadsheetProcess in SpreadsheetUploadDialog.ts.  
-If config.showOptions is true, the SpreadsheetDownloadDialog will be created and opened. With this dialog it is possible to set options as a user.
-From the SpreadsheetDownloadDialog the method onSave is triggered, which sets the deepDownloadConfig and then calls onDownloadDataSpreadsheet.
+The spreadsheet download is triggered by a button in the spreadsheet upload dialog. This process is managed by the `SpreadsheetUploadDialog.ts` file.
 
-If config.showOptions is false, the SpreadsheetDownload will be triggered directly with the default or developer defined options.
+- **onInitDownloadSpreadsheetProcess**: This method initializes the download process. If `config.showOptions` is true, it opens the `SpreadsheetDownloadDialog` to allow users to set options. Otherwise, it triggers the download directly with default settings.
+
+- **onSave**: This method in `SpreadsheetDownloadDialog.ts` sets the `deepDownloadConfig` and calls `onDownloadDataSpreadsheet`.
 
 ## Method onDownloadDataSpreadsheet
 
-The method first checks if there are any errors. Errors can occur in the setContext method of SpreadsheetUpload.ts.
+This method checks for errors before proceeding with the download. Errors can occur in the `setContext` method of `SpreadsheetUpload.ts`.
 
 ## MetadataHandlerV4
 
-In the MetadataHandler the code builds the metadata model, which is a tree of all the entities and their properties.  
-Here the entityName should be the root entity of the download and deepLevel should be the maximum depth of the download.
+The `MetadataHandlerV4` class builds the metadata model, which is a tree of all entities and their properties. The `entityName` should be the root entity of the download, and `deepLevel` should be the maximum depth of the download.
 
-From the rootEntity the method _findEntitiesByNavigationProperty is called. This method traverses the metadata model and collects all the entities that are related to the rootEntity by navigation properties.  
-If the `$kind` and `$Partner` properties are present and the `$ReferentialConstraint` is not, the full entity is added to the parent entity (or root entity) as property name `$XYZEntity` and making it explicitly fetchable with `$XYZFetchableEntity` property.
+- **_findEntitiesByNavigationProperty**: This method traverses the metadata model and collects all entities related to the root entity by navigation properties. If the `$kind` and `$Partner` properties are present and the `$ReferentialConstraint` is not, the full entity is added to the parent entity as `$XYZEntity`, making it explicitly fetchable with `$XYZFetchableEntity`.
 
-In this example to the entity `OrdersService.Order` the entity `OrdersService.OrderItems` is added as `$XYZEntity` and `$XYZFetchableEntity` is set to true.
+### JSON Sample
 
 This is the root entity without some properties for brevity before the navigation property was added:
 
@@ -195,24 +193,24 @@ This is the root entity after navigation properties for `Items` (here `Infos` un
 }
 ```
 
-With this metadata model it is much easier to fetch data and have a overview of all the entities that are related to the root entity.
+With this metadata model, it is much easier to fetch data and have an overview of all the entities related to the root entity.
 
 ### Expands
 
-In the next step the method _getExpandsRecursive is called. This method traverses the metadata model and creates a list of expands for the Odata Binding which is created in getBindingFromBinding in ODataV4.ts.  
-The expands are used to fetch the related entities in one request.
+The method `_getExpandsRecursive` is called to traverse the metadata model and create a list of expands for the OData binding, which is created in `getBindingFromBinding` in `ODataV4.ts`. The expands are used to fetch related entities in one request.
 
 ### Binding
 
-With the binding from the root entity a custom binding is created with the expands in getBindingFromBinding in ODataV4.ts to fetch the data.
+With the binding from the root entity, a custom binding is created with the expands in `getBindingFromBinding` in `ODataV4.ts` to fetch the data.
 
 ### fetchBatch
 
-The method fetchBatch in ODataV4.ts is used to fetch the data in batches of 1000. This is done to prevent the OData V4 backend from timing out.  
-This is done inside the current context and might be failing on memory issues.  
-The data is requested with `requestContexts` from the binding and the results are of type `sap.ui.model.odata.v4.Context[]`and returned in the variable `totalResults`.
+The method `fetchBatch` in `ODataV4.ts` is used to fetch the data in batches of 1000. This is done to prevent the OData V4 backend from timing out. The data is requested with `requestContexts` from the binding, and the results are of type `sap.ui.model.odata.v4.Context[]` and returned in the variable `totalResults`.
 
 ### extractObjects Method
 
-The variable `totalResults` is then processed with the method `extractObjects` in Util.ts. This method converts the `sap.ui.model.odata.v4.Context` to the requested object with requesting `getObject` from the binding. With this method the data is converted to an array of objects.
+The `extractObjects` method is used to process the fetched data and prepare it for spreadsheet generation.
 
+## Spreadsheet Generation
+
+The `SpreadsheetGenerator` class handles the creation of the spreadsheet file. It uses the fetched data to generate sheets for each entity and its related entities, ensuring that all necessary data is included in the final output.

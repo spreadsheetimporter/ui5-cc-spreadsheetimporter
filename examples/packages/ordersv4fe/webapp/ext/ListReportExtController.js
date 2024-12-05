@@ -20,11 +20,14 @@ sap.ui.define(["sap/m/MessageToast"], function (MessageToast) {
 							context: this,
 							createActiveEntity: true,
 							i18nModel: this.getModel("i18n"),
+							debug: true,
+							showDownloadButton: true,
 							deepDownloadConfig: {
 								deepLevel: 1,
-								deepExport: true,
-								addKeysToExport: false,
-								showOptions: false,
+								deepExport: false,
+								addKeysToExport: true,
+								showOptions: true,
+								filename: "Orders123",
 								columns : {
 									"OrderNo":{
 										"order": 1
@@ -115,6 +118,31 @@ sap.ui.define(["sap/m/MessageToast"], function (MessageToast) {
 			}, this);
 
 			this.spreadsheetUpload.openSpreadsheetUploadDialog();
+			// this.spreadsheetUpload.triggerDownloadSpreadsheet({
+			// 	deepLevel: 1,
+			// 	deepExport: true,
+			// 	addKeysToExport: true,
+			// 	showOptions: true,
+			// 	filename: "Orders12",
+			// 	columns : {
+			// 		"OrderNo":{
+			// 			"order": 1
+			// 		},
+			// 		"buyer": {
+			// 			"order": 3
+			// 		},
+			// 		"Items": {
+			// 			"quantity" : {
+			// 				"order": 2
+			// 			}
+			// 		},
+			// 		"Shipping": {
+			// 			"address" : {
+			// 				"order": 5
+			// 			},
+			// 		}
+			// 	}
+			// });
 			this.editFlow.getView().setBusy(false);
 		},
 

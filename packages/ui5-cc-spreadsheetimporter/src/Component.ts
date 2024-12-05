@@ -281,6 +281,22 @@ export default class Component extends UIComponent {
 		return this.spreadsheetUpload.getMessages();
 	}
 
+	async triggerDownloadSpreadsheet(deepDownloadConfig?: DeepDownloadConfig) {
+		await this.spreadsheetUpload.initializeComponent();
+		if (!this.getContext()) {
+			// if loaded via ComponentContainer, context is not set
+			const context = this._getViewControllerOfControl(this.oContainer);
+			this.setContext(context);
+			// attach event from ComponentContainer
+			this._attachEvents(context);
+		}
+		Log.debug("triggerDownloadSpreadsheet", undefined, "SpreadsheetUpload: Component");
+		if (deepDownloadConfig) {
+			this.setDeepDownloadConfig(deepDownloadConfig);
+		}
+		this.spreadsheetUpload.triggerDownloadSpreadsheet();
+	}
+
 	//=============================================================================
 	//EVENT HANDLERS
 	//=============================================================================

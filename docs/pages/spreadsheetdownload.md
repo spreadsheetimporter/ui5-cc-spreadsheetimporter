@@ -50,16 +50,46 @@ The configuration is done in the `pro` section of the component data:
 componentData: {
     context: this,
     activateDraft: true,
-    pro: {
-        spreadsheetExportConfig: {
-            deepLevel: 2,
-            deepExport: true,
-            addKeysToExport: true,
-            filename: 'MyExport'
+    showDownloadButton: true,
+    deepDownloadConfig: {
+        deepLevel: 1,
+        deepExport: false,
+        addKeysToExport: false,
+        showOptions: false,
+        columns : {
+            "OrderNo":{
+                "order": 1
+            },
+            "buyer": {
+                "order": 3
+            },
+            "Items": {
+                "quantity" : {
+                    "order": 2
+                },
+                "title": {
+                    "order": 4
+                }
+            },
+            "Shipping": {
+                "address" : {
+                    "order": 5
+                },
+            }
         }
     }
 }
 ```
+
+### columns
+
+**default:** `{}`
+
+This option defines the columns to export.  
+By default, all columns are exported.
+It is possible to define the order of the columns by using the `order` property but only for the flat structure.
+To know which columns are available, it is possible to turn on `debug` as an option.
+With this option, the `mainEntity` is logged and then you can use it as a reference.
 
 ### addKeysToExport
 
@@ -91,14 +121,20 @@ This option defines how deep sibling entities should be exported.
 
 This option determines whether the options dialog should be shown to the user.
 
+### flatSheet
+
+**default:** `false`
+
+This option determines whether the data should be exported in a flat structure.
+
 
 ## API
 
-### triggerSpreadsheetDownload
+### triggerDownloadSpreadsheet
 
 This method triggers the Spreadsheet Download without the need to open the spreadsheet upload dialog.  
-The input parameter for `triggerSpreadsheetDownload` is the same as the configuration for the `spreadsheetExportConfig` in the `pro` section of the component data.  
-You can overwrite the configuration from the component data by passing the configuration to the `triggerSpreadsheetDownload` method.
+The input parameter for `triggerDownloadSpreadsheet` is the same as the configuration for the `deepDownloadConfig`.  
+You can overwrite the configuration from the component data by passing the configuration to the `triggerDownloadSpreadsheet` method.
 
 ```js
 download: async function () {
@@ -119,7 +155,8 @@ download: async function () {
                 }
             }
         });
-    this.spreadsheetUpload.triggerSpreadsheetDownload({
+    this.spreadsheetUpload.triggerDownloadSpreadsheet({
+        deepLevel: 2,
         deepExport: true,
         addKeysToExport: true
     });
