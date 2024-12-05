@@ -25,6 +25,7 @@ The table below summarizes the options available for the UI5 Spreadsheet Importe
 | [`previewColumns`](#previewcolumns)                 | Specifies columns to display in the preview dialog.   | `[]`    | `string[]` |
 | [`showBackendErrorMessages`](#showbackenderrormessages)| Displays backend error messages in the UI.          | `false` | `boolean`  |
 | [`showOptions`](#showoptions)                       | Shows a menu to change configurations at runtime.     | `false` | `boolean`  |
+| [`showDownloadButton`](#showdownloadbutton)         | Shows the button to download the uploaded data.       | `false` | `boolean`  |
 
 ### Data Processing Options
 
@@ -360,7 +361,12 @@ There are also only a few selected configurations available.
 
 ### `availableOptions`
 
-**default:** `[]`
+### `showDownloadButton`
+
+**default:** `false`
+
+This option defines whether the button to download data should be displayed or not.  
+More information can be found in the [Spreadsheet Deep Download](spreadsheetdownload.md) documentation.
 
 #### Available Options
 

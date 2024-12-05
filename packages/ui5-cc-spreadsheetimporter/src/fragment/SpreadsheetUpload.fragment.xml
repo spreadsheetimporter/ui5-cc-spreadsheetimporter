@@ -11,7 +11,7 @@
         <Button press="showPreview" text="{i18n>spreadsheetimporter.showPreview}" visible="{= !${info>/hidePreview}}" enabled="{= ${info>/dataRows} > 0}" />
         <Button press="onInitDownloadSpreadsheetProcess" 
                text="{i18n>spreadsheetimporter.downloadDataSpreadsheet}" 
-               visible="{= ${info>/showDownload}}">
+               visible="{= ${info>/showDownloadButton}}">
                <layoutData>
                 <OverflowToolbarLayoutData priority="AlwaysOverflow"/>
               </layoutData>

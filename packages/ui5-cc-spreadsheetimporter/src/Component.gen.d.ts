@@ -42,6 +42,7 @@ declare module "./Component" {
         debug?: boolean | PropertyBindingInfo | `{${string}}`;
         componentContainerData?: object | PropertyBindingInfo | `{${string}}`;
         bindingCustom?: object | PropertyBindingInfo | `{${string}}`;
+        showDownloadButton?: boolean | PropertyBindingInfo | `{${string}}`;
         deepDownloadConfig?: object | PropertyBindingInfo | `{${string}}`;
         preFileProcessing?: (event: Component$PreFileProcessingEvent) => void;
         checkBeforeRead?: (event: Component$CheckBeforeReadEvent) => void;
@@ -187,6 +188,10 @@ declare module "./Component" {
         // property: bindingCustom
         getBindingCustom(): object;
         setBindingCustom(bindingCustom: object): this;
+
+        // property: showDownloadButton
+        getShowDownloadButton(): boolean;
+        setShowDownloadButton(showDownloadButton: boolean): this;
 
         // property: deepDownloadConfig
         getDeepDownloadConfig(): object;

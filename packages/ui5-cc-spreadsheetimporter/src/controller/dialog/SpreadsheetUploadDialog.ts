@@ -24,9 +24,9 @@ import Dialog from "sap/m/Dialog";
 import Select from "sap/m/Select";
 import Item from "sap/ui/core/Item";
 import SpreadsheetDownloadDialog from "../download/SpreadsheetDownloadDialog";
-import SpreadsheetDownload from "../download/SpreadsheetDownload";
-import OData from "../odata/OData";
+import SpreadsheetGenerator from "../download/SpreadsheetGenerator";
 import ODataV4 from "../odata/ODataV4";
+import SpreadsheetDownload from "../download/SpreadsheetDownload";
 
 type InputType = {
 	[key: string]: {
@@ -42,7 +42,6 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	spreadsheetUploadController: SpreadsheetUpload;
 	spreadsheetUploadDialog: SpreadsheetDialog;
 	spreadsheetDownloadDialog: SpreadsheetDownloadDialog;
-	spreadsheetDownload: SpreadsheetDownload;
 	component: Component;
 	previewHandler: Preview;
 	util: Util;
@@ -51,6 +50,8 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	messageHandler: MessageHandler;
 	spreadsheetOptionsModel: JSONModel;
 	odataHandler: ODataV4;
+	spreadsheetGenerator: SpreadsheetGenerator;
+	spreadsheetDownload: SpreadsheetDownload;
 
 	constructor(spreadsheetUploadController: SpreadsheetUpload, component: Component, componentI18n: ResourceModel, messageHandler: MessageHandler) {
 		super();
@@ -62,6 +63,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 		this.optionsHandler = new OptionsDialog(spreadsheetUploadController);
 		this.messageHandler = messageHandler;
 		this.odataHandler = new ODataV4(this.spreadsheetUploadController);
+		this.spreadsheetGenerator = new SpreadsheetGenerator(this.spreadsheetUploadController, this.component, this.odataHandler);
 		this.spreadsheetDownload = new SpreadsheetDownload(this.spreadsheetUploadController, this.component, this.odataHandler);
 		this.spreadsheetDownloadDialog = new SpreadsheetDownloadDialog(this.spreadsheetUploadController, this);
 	}
@@ -73,6 +75,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 				strict: this.component.getStrict(),
 				hidePreview: this.component.getHidePreview(),
 				showOptions: this.component.getShowOptions(),
+				showDownloadButton: this.component.getShowDownloadButton(),
 				hideGenerateTemplateButton: false,
 				fileUploadValue: "",
 				densityClass: this.component._densityClass
@@ -742,6 +745,13 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 		return sap.ui.getCore().getConfiguration().getLanguage();
 	}
 
+	/**
+	 * Initializes the spreadsheet download process.
+	 * If showOptions is enabled in the DeepDownloadConfig, opens a dialog allowing users to configure download options.
+	 * Otherwise, directly triggers the spreadsheet download.
+	 * 
+	 * @returns {Promise<void>} A promise that resolves when the download process is initialized
+	 */
 	async onInitDownloadSpreadsheetProcess(): Promise<void> {
 		const showOptionsToUser = (this.component.getDeepDownloadConfig() as DeepDownloadConfig).showOptions;
 		if (showOptionsToUser) {
@@ -755,9 +765,8 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	async onDownloadDataSpreadsheet(): Promise<void> {
 		if (!this.spreadsheetUploadController.errorState) {
 			try {
-				const mainEntitySiblings = await this.spreadsheetDownload._fetchData(this.component.getDeepDownloadConfig());
-
-				this.spreadsheetDownload.downloadSpreadsheet(mainEntitySiblings, this.component.getDeepDownloadConfig());
+				const mainEntitySiblings = await this.spreadsheetDownload.fetchData(this.component.getDeepDownloadConfig() as DeepDownloadConfig);
+				this.spreadsheetGenerator.downloadSpreadsheet(mainEntitySiblings, this.component.getDeepDownloadConfig() as DeepDownloadConfig);
 			} catch (error) {
 				console.error("Error in onDownloadDataSpreadsheet:", error);
 			}

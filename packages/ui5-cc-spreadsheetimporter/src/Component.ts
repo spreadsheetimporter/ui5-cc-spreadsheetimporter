@@ -71,6 +71,7 @@ export default class Component extends UIComponent {
 			debug: { type: "boolean", defaultValue: false },
 			componentContainerData: { type: "object" },
 			bindingCustom: { type: "object" },
+			showDownloadButton: { type: "boolean", defaultValue: false },
 			deepDownloadConfig: { type: "object", defaultValue: {} }
 			//Pro Configurations
 		},
@@ -159,6 +160,7 @@ export default class Component extends UIComponent {
 		this.setCreateActiveEntity(compData?.createActiveEntity);
 		this.setI18nModel(compData?.i18nModel);
 		this.setBindingCustom(compData?.bindingCustom);
+		this.setShowDownloadButton(compData?.showDownloadButton);
 		if (compData?.availableOptions && compData?.availableOptions.length > 0) {
 			// if availableOptions is set show the Options Menu
 			this.setShowOptions(true);

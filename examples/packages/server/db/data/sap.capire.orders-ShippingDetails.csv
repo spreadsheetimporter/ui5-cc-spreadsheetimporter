@@ -1,0 +1,4 @@
+ID;order_ID;address;city;state;postalCode;country;shipmentDate;arrivalDate;shipmentStatus
+58040e66-1dcd-4ffb-ab10-fdce32028b80;7e2f2640-6866-4dcf-8f4d-3027aa831cad;test street;test city;test state;12345;test country;2022-01-01T12:00:00Z;2022-01-01T12:00:00Z;test status
+64e718c9-ff99-47f1-8ca3-950c850777d5;7e2f2640-6866-4dcf-8f4d-3027aa831cad;test street;test city;test state;12345;test country;2022-01-01T12:00:00Z;2022-01-01T12:00:00Z;test status
+e9641166-e050-4261-bfee-d1e797e6cb8f;64e718c9-ff99-47f1-8ca3-950c850777d4;test street;test city;test state;12345;test country;2022-01-01T12:00:00Z;2022-01-01T12:00:00Z;test status

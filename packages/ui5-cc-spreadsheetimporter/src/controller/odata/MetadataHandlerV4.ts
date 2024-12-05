@@ -179,25 +179,33 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 		}
 
 		const mainEntity: any = entities[entityName];
-		this._findEntitiesByNavigationProperty(entities, entityName);
+		// Find all entities by navigation properties and add them to the mainEntity, only till the deepLevel (i.e. only mainEntity if deepLevel is 0)
+		this._findEntitiesByNavigationProperty(entities, entityName, deepLevel);
 
 		const expands: any = {};
+		// Get the expands for the mainEntity till the deepLevel
 		this._getExpandsRecursive(mainEntity, expands, undefined, undefined, 0, deepLevel);
 
 		return { mainEntity, expands };
 	}
 
-	private _findEntitiesByNavigationProperty(entities: any, rootEntityName: any): void {
-		const queue: { entity: any; entityName: string; parentEntityName: string }[] = [];
+	private _findEntitiesByNavigationProperty(entities: any, rootEntityName: any, deepLevel: number = Infinity): void {
+		const queue: { entity: any; entityName: string; parentEntityName: string; level: number }[] = [];
 		const traversedEntities: Set<string> = new Set();
 
 		const rootEntity = entities[rootEntityName];
 
-		queue.push({ entity: rootEntity, entityName: rootEntityName, parentEntityName: "" });
+		// Add level tracking to queue items
+		queue.push({ entity: rootEntity, entityName: rootEntityName, parentEntityName: "", level: 0 });
 		traversedEntities.add(rootEntityName);
 
 		while (queue.length > 0) {
-			const { entity, entityName, parentEntityName } = queue.shift()!;
+			const { entity, entityName, parentEntityName, level } = queue.shift()!;
+
+			// Skip if we've reached the maximum depth level
+			if (level >= deepLevel) {
+				continue;
+			}
 
 			for (const property in entity) {
 				const navProperty = entity[property];
@@ -214,7 +222,7 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 					navProperty.$XYZEntity = entities[navProperty.$Type];
 					navProperty.$XYZFetchableEntity = true;
 
-					queue.push({ entity: navProperty.$XYZEntity, entityName: navProperty.$Type, parentEntityName: entityName });
+					queue.push({ entity: navProperty.$XYZEntity, entityName: navProperty.$Type, parentEntityName: entityName, level: level + 1 });
 					traversedEntities.add(navProperty.$Type);
 				}
 			}
@@ -240,6 +248,13 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 		}
 	}
 
+	/**
+	 * Adds keys from entity to labelList so it will be added to the sheet
+	 * @param labelList 
+	 * @param entityName 
+	 * @param parentEntity 
+	 * @param partner 
+	 */
 	addKeys(labelList: ListObject, entityName: string, parentEntity?: any, partner?: string) {
 		const annotations = this.spreadsheetUploadController.context.getModel().getMetaModel().getData()["$Annotations"];
 		const properties = this.spreadsheetUploadController.context.getModel().getMetaModel().getData()[entityName];
@@ -264,6 +279,10 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 			keys.push(propertyObject);
 		}
 
+		// Create a new Map to make sure the are in the beginning of the spreadsheet
+		const newLabelList = new Map<string, Property>();
+		
+		// Add keys to the new Map
 		for (const key of keys) {
 			const propertyObject = {} as Property;
 			propertyObject.label = this.getLabel(annotations, properties, key.propertyName, key.propertyLabel, entityName);
@@ -272,8 +291,20 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 			}
 			propertyObject.type = key.propertyValue.$Type;
 			propertyObject.maxLength = key.propertyValue.$MaxLength;
-			labelList.set(key.propertyName, propertyObject);
+			propertyObject.$XYZKey = true;
+			newLabelList.set(key.propertyName, propertyObject);
 		}
+
+		// Merge existing entries after the keys
+		labelList.forEach((value, key) => {
+			newLabelList.set(key, value);
+		});
+
+		// Replace the content of labelList with the new ordered entries
+		labelList.clear();
+		newLabelList.forEach((value, key) => {
+			labelList.set(key, value);
+		});
 	}
 
 	static getAnnotationProperties(context: any, odataType: string) {

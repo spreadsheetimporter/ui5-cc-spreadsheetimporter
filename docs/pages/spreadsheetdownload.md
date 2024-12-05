@@ -1,9 +1,10 @@
-This feature downloads data from the backend and converts it to a Spreadsheet file.  
-In the future, the feature will allow users to upload data in order to update the data in the backend.  
+# Spreadsheet Deep Download
+
+This feature downloads data from the backend and converts it to a Spreadsheet file. In the future, the feature will allow users to upload data in order to update the data in the backend.
+
 The main difference between this feature and the integrated Spreadsheet Download is that it can download data from multiple entities at once.
 
-For example, if you have Orders and OrderItems, you can download both entities at once and the data will be structured in the Spreadsheet file in a way that allows for easy data updates and re-uploading.  
-It is also possible to recursively download data from multiple entities indefinitely.
+For example, if you have Orders and OrderItems, you can download both entities at once and the data will be structured in the Spreadsheet file in a way that allows for easy data updates and re-uploading. It is also possible to recursively download data from multiple entities indefinitely.
 
 - Orders
     - OrderItems
@@ -12,20 +13,38 @@ It is also possible to recursively download data from multiple entities indefini
 
 This means that you can download all Orders, including the OrderItems, ShippingInfos, and the Info of the OrderItems.
 
+## Technical Details
+
+The download process involves several key components:
+
+1. **Data Fetching**: The system fetches data recursively based on the configured deep level with expands, handling batch processing for large datasets.
+
+2. **Data Assignment**: The DataAssigner handles:
+   - Root entity data assignment
+   - Column assignments
+   - Recursive data assignment for nested entities
+   - Handling of fetchable entities
+
+3. **Spreadsheet Generation**: The SpreadsheetGenerator creates:
+   - Multiple sheets for different entities
+   - Proper column formatting based on data types
+   - Sheet naming with collision handling
+   - Column width optimization
+
 ## Configuration
 
-| Option | Description | Details |
-| ------ | --- | --- |
-| `addKeysToExport` | Adds hidden keys to the export | object |
-| `filename` | Defines the filename for the export XLSX file | object |
-| `deepExport` | Also exports sibling entities | object |
-| `deepLevel` | Defines the level of sibling entities to export | object |
-| `showOptions` | Shows options dialog for users to change configurations | object |
-| `columns` | Defines the columns to export | object |
+| Option | Description | Default | Type |
+| ------ | ----------- | ------- | ---- |
+| `addKeysToExport` | Adds hidden keys to the export | `false` | boolean |
+| `filename` | Defines the filename for the export XLSX file | Entity Name | string |
+| `deepExport` | Also exports sibling entities | `false` | boolean |
+| `deepLevel` | Defines the level of sibling entities to export | `1` | number |
+| `showOptions` | Shows options dialog for users | `true` | boolean |
+| `columns` | Defines the columns to export | `{}` | object |
 
 ### Sample Usage
 
-The configuration is done in the `pro` section of the component data.
+The configuration is done in the `pro` section of the component data:
 
 ```json
 componentData: {

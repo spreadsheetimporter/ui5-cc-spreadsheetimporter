@@ -290,6 +290,9 @@ export default class SpreadsheetUpload extends ManagedObject {
 		if (options.hasOwnProperty("bindingCustom")) {
 			this.component.setBindingCustom(options.bindingCustom);
 		}
+		if (options.hasOwnProperty("showDownloadButton")) {
+			this.component.setShowDownloadButton(options.showDownloadButton);
+		}
 
 		// Special case for showOptions
 		if (options.availableOptions && options.availableOptions.length > 0) {

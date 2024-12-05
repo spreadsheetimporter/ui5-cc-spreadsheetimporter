@@ -21,10 +21,10 @@ sap.ui.define(["sap/m/MessageToast"], function (MessageToast) {
 							createActiveEntity: true,
 							i18nModel: this.getModel("i18n"),
 							deepDownloadConfig: {
-								deepLevel: 2,
+								deepLevel: 1,
 								deepExport: true,
-								addKeysToExport: true,
-								showOptions: true,
+								addKeysToExport: false,
+								showOptions: false,
 								columns : {
 									"OrderNo":{
 										"order": 1

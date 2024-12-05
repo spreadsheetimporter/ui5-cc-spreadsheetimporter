@@ -12,6 +12,7 @@ export interface Property {
 	type: string;
 	label: string;
 	precision?: number;
+	$XYZKey?: boolean;
 }
 export type ListObject = Map<string, Property>;
 export type PropertyArray = { [key: string]: any }[];
@@ -114,6 +115,7 @@ export interface ComponentData {
 	createActiveEntity?: boolean;
 	i18nModel?: object;
 	bindingCustom?: object;
+	showDownloadButton?: boolean;
 	deepDownloadConfig?: DeepDownloadConfig;
 }
 
