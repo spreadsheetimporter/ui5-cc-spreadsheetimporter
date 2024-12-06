@@ -5,6 +5,7 @@ import SpreadsheetUpload from "../SpreadsheetUpload";
 import Component from "../../Component";
 import OData from "../odata/OData";
 import Util from "../Util";
+import Log from "sap/base/Log";
 
 /**
  * @namespace cc.spreadsheetimporter.download.XXXnamespaceXXX
@@ -35,6 +36,19 @@ export default class SpreadsheetGenerator extends ManagedObject {
         // check if filename ends with .xlsx if not add it
         if (!filename.endsWith(".xlsx")) {
             filename = filename.concat(".xlsx");
+        }
+
+        let isDefaultPrevented = false;
+
+        try {
+            const asyncEventBeforeDownloadFileExport = await Util.fireEventAsync("beforeDownloadFileExport", { workbook: wb, filename: filename }, this.component);
+            isDefaultPrevented = asyncEventBeforeDownloadFileExport.bPreventDefault;
+        } catch (error) {
+            Log.error("Error while calling the beforeDownloadFileExport event", error as Error, "SpreadsheetGenerator.ts", "downloadSpreadsheet");
+        }
+
+        if (isDefaultPrevented) {
+            return;
         }
 
         // download the created spreadsheet file

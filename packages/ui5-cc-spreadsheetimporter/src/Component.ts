@@ -112,6 +112,17 @@ export default class Component extends UIComponent {
 					rawData: { type: "object" },
 					parsedData: { type: "object" }
 				}
+			},
+			beforeDownloadFileProcessing: {
+				parameters: {
+					data: { type: "object" }
+				}
+			},
+			beforeDownloadFileExport: {
+				parameters: {
+					workbook: { type: "object" },
+					filename: { type: "string" }
+				}
 			}
 		}
 	};
@@ -275,7 +286,9 @@ export default class Component extends UIComponent {
 			uploadButtonPress: this.attachUploadButtonPress,
 			changeBeforeCreate: this.attachChangeBeforeCreate,
 			checkBeforeRead: this.attachCheckBeforeRead,
-			requestCompleted: this.attachRequestCompleted
+			requestCompleted: this.attachRequestCompleted,
+			beforeDownloadFileProcessing: this.attachBeforeDownloadFileProcessing,
+			beforeDownloadFileExport: this.attachBeforeDownloadFileExport
 		};
 		if (componentContainerOptions) {
 			for (const [eventName, attachMethod] of Object.entries(eventMethodMap)) {

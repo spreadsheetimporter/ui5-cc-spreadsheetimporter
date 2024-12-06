@@ -755,7 +755,17 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 		if (!this.spreadsheetUploadController.errorState) {
 			try {
 				const mainEntitySiblings = await this.spreadsheetDownload.fetchData(this.component.getDeepDownloadConfig() as DeepDownloadConfig);
-				this.spreadsheetGenerator.downloadSpreadsheet(mainEntitySiblings, this.component.getDeepDownloadConfig() as DeepDownloadConfig);
+
+				let isDefaultPrevented = false;
+				try {
+					const asyncEventBeforeDownloadFileProcessing = await Util.fireEventAsync("beforeDownloadFileProcessing", { data: mainEntitySiblings }, this.component);
+					isDefaultPrevented = asyncEventBeforeDownloadFileProcessing.bPreventDefault;
+				} catch (error) {
+					Log.error("Error while calling the beforeDownloadFileProcessing event", error as Error, "SpreadsheetUploadDialog.ts");
+				}
+				if (!isDefaultPrevented) {
+					this.spreadsheetGenerator.downloadSpreadsheet(mainEntitySiblings, this.component.getDeepDownloadConfig() as DeepDownloadConfig);
+				}
 			} catch (error) {
 				console.error("Error in onDownloadDataSpreadsheet:", error);
 			}
