@@ -13,11 +13,12 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 		let listObject: ListObject = new Map();
 		let entityTypeLabel;
 
-		// get the property list of the entity for which we need to download the template
-		var annotations = this.spreadsheetUploadController.context.getModel().getMetaModel().getData()["$Annotations"];
-		const properties = this.spreadsheetUploadController.context.getModel().getMetaModel().getData()[odataType];
+		const { annotations, properties } = MetadataHandlerV4.getAnnotationProperties(this.spreadsheetUploadController.context, odataType);
 		Log.debug("SpreadsheetUpload: Annotations", undefined, "SpreadsheetUpload: MetadataHandler", () =>
-			this.spreadsheetUploadController.component.logger.returnObject(this.spreadsheetUploadController.context.getModel().getMetaModel().getData())
+			this.spreadsheetUploadController.component.logger.returnObject(annotations)
+		);
+		Log.debug("SpreadsheetUpload: Properties", undefined, "SpreadsheetUpload: MetadataHandler", () =>
+			this.spreadsheetUploadController.component.logger.returnObject(properties)
 		);
 		// try get facet label
 		try {
@@ -144,8 +145,7 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 			return keys;
 		}
 
-		var annotations = this.spreadsheetUploadController.context.getModel().getMetaModel().getData()["$Annotations"];
-		const properties = this.spreadsheetUploadController.context.getModel().getMetaModel().getData()[odataType];
+		const { annotations, properties } = MetadataHandlerV4.getAnnotationProperties(this.spreadsheetUploadController.context, odataType);
 		const messagesPath = annotations[odataType]?.["@com.sap.vocabularies.Common.v1.Messages"] ?? undefined;
 
 		const propertiesFiltered = Object.entries(properties).filter(([propertyName, propertyValue]) => (propertyValue as any)["$kind"] === "Property");
@@ -169,5 +169,12 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 			}
 		}
 		return keys;
+	}
+
+	static getAnnotationProperties(context: any, odataType: string) {
+		const model = (context?.getModel && context.getModel()) || context.getView().getModel();
+		const annotations = model.getMetaModel().getData()["$Annotations"];
+		const properties = model.getMetaModel().getData()[odataType];
+		return { annotations, properties };
 	}
 }

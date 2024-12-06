@@ -120,6 +120,9 @@ export default class SpreadsheetUpload extends ManagedObject {
 		} else {
 			this.tableObject = await OData.prototype.getTableObject(this.component.getTableId(), this.view, this);
 			Log.debug("tableObject", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ tableObject: this.tableObject }));
+			if(!this.tableObject) {
+				throw new Error("No table object found");
+			}
 			this.component.setTableId(this.tableObject.getId());
 			Log.debug("table Id", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ tableID: this.tableObject.getId() }));
 			this.binding = OData.prototype.getBindingFromTable(this.tableObject);
