@@ -15,7 +15,10 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 
 		const { annotations, properties } = MetadataHandlerV4.getAnnotationProperties(this.spreadsheetUploadController.context, odataType);
 		Log.debug("SpreadsheetUpload: Annotations", undefined, "SpreadsheetUpload: MetadataHandler", () =>
-			this.spreadsheetUploadController.component.logger.returnObject(model.getMetaModel().getData())
+			this.spreadsheetUploadController.component.logger.returnObject(annotations)
+		);
+		Log.debug("SpreadsheetUpload: Properties", undefined, "SpreadsheetUpload: MetadataHandler", () =>
+			this.spreadsheetUploadController.component.logger.returnObject(properties)
 		);
 		// try get facet label
 		try {

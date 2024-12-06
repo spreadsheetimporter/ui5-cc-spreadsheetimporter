@@ -68,8 +68,7 @@ export default class ODataV4 extends OData {
 
 	createCustomBinding(binding: any) {
 		if (this.spreadsheetUploadController.component.getOdataType()) {
-			const containerName = this.spreadsheetUploadController.context.getModel().getMetaModel().getData()["$EntityContainer"];
-			const entityContainer = this.spreadsheetUploadController.context.getModel().getMetaModel().getData()[containerName];
+			const entityContainer = ODataV4.getContainerName(this.spreadsheetUploadController.context)
 			const typeToSearch = this.spreadsheetUploadController.component.getOdataType();
 			const odataEntityTypeParameterPath = this._findAttributeByType(entityContainer, typeToSearch);
 			this.customBinding = this.spreadsheetUploadController.view
@@ -124,8 +123,7 @@ export default class ODataV4 extends OData {
 				Log.error("Error while getting OData Type. Please specify 'odataType' in options", undefined, "SpreadsheetUpload: ODataV4");
 			}
 		} else {
-			const containerName = this.spreadsheetUploadController.context.getModel().getMetaModel().getData()["$EntityContainer"];
-			const entityContainer = this.spreadsheetUploadController.context.getModel().getMetaModel().getData()[containerName];
+			const entityContainer = ODataV4.getContainerName(this.spreadsheetUploadController.context)
 			const odataEntityType = this._findAttributeByType(entityContainer, odataType);
 			if (!odataEntityType) {
 				// filter out $kind
@@ -166,5 +164,12 @@ export default class ODataV4 extends OData {
 			}
 		}
 		return undefined; // if not found
+	}
+
+	static getContainerName(context: any) {
+		const model = (context?.getModel && context.getModel()) || context.getView().getModel();
+		const entityContainer = model.getMetaModel().getData()["$EntityContainer"];
+		const containerName = model.getMetaModel().getData()[entityContainer];
+		return containerName;
 	}
 }

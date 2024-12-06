@@ -135,7 +135,7 @@ export default abstract class OData extends ManagedObject {
 	}
 
 	public _getActionName(context: any, sOperation: string) {
-		var model = context.getModel(),
+		const model = (context?.getModel && context.getModel()) || context.getView().getModel(),
 			metaModel = model.getMetaModel(),
 			entitySetPath = metaModel.getMetaPath(context.getPath());
 		return metaModel.getObject("".concat(entitySetPath, "@com.sap.vocabularies.Common.v1.DraftRoot/").concat(sOperation));
