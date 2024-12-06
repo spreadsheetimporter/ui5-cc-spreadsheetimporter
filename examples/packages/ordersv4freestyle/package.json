@@ -21,6 +21,7 @@
   },
   "scripts": {
     "start": "fiori run -p 8190 --open \"index.html?sap-ui-xx-viewCache=false\"",
+    "start:dist": "fiori run -p 8190 --config ./ui5-dist.yaml --open \"index.html?sap-ui-xx-viewCache=false\"",
     "start:silent": "fiori run -p 8190",
     "start-local": "fiori run --config ./ui5-local.yaml --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#ordersv4freestyle-display\"",
     "build": "ui5 build --config=ui5.yaml --all --clean-dest --dest dist",

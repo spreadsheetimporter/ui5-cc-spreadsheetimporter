@@ -25,10 +25,13 @@
     "cds-plugin-ui5": {
       "modules": {
         "ordersv4fe120": {
-          "configFile": "ui5.yaml"
+          "configFile": "ui5-dist.yaml"
         },
         "ordersv2fe120": {
-          "configFile": "ui5.yaml"
+          "configFile": "ui5-dist.yaml"
+        },
+        "ordersv4freestyle120": {
+          "configFile": "ui5-dist.yaml"
         }
       }
     },

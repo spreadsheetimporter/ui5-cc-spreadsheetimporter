@@ -4,6 +4,10 @@ specVersion: "2.5"
 metadata:
   name: ui.v2.ordersv2fe
 type: application
+resources:
+  configuration:
+    paths:
+      webapp: dist
 server:
   customMiddleware:
     - name: fiori-tools-proxy
@@ -18,7 +22,13 @@ server:
         backend:
           - path: /odata/v2/orders
             url: http://localhost:4004
-resources:
-  configuration:
-    paths:
-      webapp: dist
+    - name: ui5-middleware-ui5
+      afterMiddleware: compression
+      configuration:
+        modules:
+          ui5-cc-spreadsheetimporter:
+            configFile: "ui5-serve.yaml"
+    - name: ui5-tooling-modules-middleware
+      afterMiddleware: compression
+      configuration:
+        debug: false
