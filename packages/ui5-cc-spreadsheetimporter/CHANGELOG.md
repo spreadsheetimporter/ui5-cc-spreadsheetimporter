@@ -12,6 +12,21 @@
 ### Bug Fixes
 
 * in V4 Freestyle MetaModel was not found ([#663](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/663)) ([7dee888](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/7dee8886bf57ca81ff0bc25dec411565fa93a1c6))
+* label could be undefined and throws error([#649](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/649)) ([4b9fa59](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/4b9fa591fd039178921948b360e4c746e1d982ff))
+* label not found if no annotations available ([#670](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/670)) ([3801d1a](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/3801d1a17c708e09dec0451bec5c4d2c4787da10))
+
+## [1.5.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.4.2...ui5-cc-spreadsheetimporter-v1.5.0) (2024-12-06)
+
+
+### Features
+
+* add icon option to xml view button ([#664](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/664)) ([5fa1c5c](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/5fa1c5c6184416ff7b3d6313a68c0e74f2a82f93))
+* Deep Spreadsheet Export ([#657](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/657)) ([7258af7](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/7258af781362820c48004b053ce90193a21859ec))
+
+
+### Bug Fixes
+
+* in V4 Freestyle MetaModel was not found ([#663](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/663)) ([7dee888](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/7dee8886bf57ca81ff0bc25dec411565fa93a1c6))
 * label not found if no annotations available ([#670](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/670)) ([3801d1a](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/3801d1a17c708e09dec0451bec5c4d2c4787da10))
 
 ## [1.4.3](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.4.2...ui5-cc-spreadsheetimporter-v1.4.3) (2024-11-12)
