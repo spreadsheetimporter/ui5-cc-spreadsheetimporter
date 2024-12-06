@@ -20,7 +20,7 @@ sap.ui.define([
                     componentData: {
                         context: this,
                         createActiveEntity: true,
-                        debug: true,
+                        debug: false,
                         deepDownloadConfig: {
                             deepLevel: 2,
                             deepExport: true,
@@ -52,7 +52,18 @@ sap.ui.define([
                     }
                 });
 
+                // this.spreadsheetUpload.attachBeforeDownloadFileProcessing(this.onBeforeDownloadFileProcessing, this);
+                // this.spreadsheetUpload.attachBeforeDownloadFileExport(this.onBeforeDownloadFileExport, this);
+
                 this.spreadsheetUpload.triggerDownloadSpreadsheet();
-            }
+            },
+
+            // onBeforeDownloadFileProcessing: function (event) {
+            //     event.getParameters().data.$XYZData[0].buyer = "Customer 123";
+            // },
+
+            // onBeforeDownloadFileExport: function (event) {
+            //     event.getParameters().filename = "Orders123_modified";
+            // }
         });
     });
