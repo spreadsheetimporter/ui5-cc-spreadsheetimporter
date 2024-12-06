@@ -1,5 +1,5 @@
 # Use the official Node 20 Debian image as a base
-FROM node:20
+FROM node:20-slim
 
 # Set the working directory
 WORKDIR /app
@@ -29,6 +29,7 @@ RUN pnpm build
 RUN cd examples/packages/ordersv4fe && npm run build
 RUN cd examples/packages/ordersv2fe && npm run build
 RUN cd examples/packages/anyupload && npm run build
+RUN cd examples/packages/ordersv4freestyle && npm run build
 
 # Expose the port the app runs on
 EXPOSE 4004

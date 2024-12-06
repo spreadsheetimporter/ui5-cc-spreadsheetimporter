@@ -13,7 +13,7 @@ nav:
   - Events: pages/Events.md
   - Error Handling: pages/Checks.md
   - Table Selector: pages/TableSelector.md
-  - Deep Download: pages/Spreadsheetdownload.md
+  - Deep Download: pages/spreadsheetdownload.md
   - Typescript: pages/Typescript.md
   - Supported Versions: pages/SupportVersions.md
   - Central Deployment: pages/CentralDeployment.md

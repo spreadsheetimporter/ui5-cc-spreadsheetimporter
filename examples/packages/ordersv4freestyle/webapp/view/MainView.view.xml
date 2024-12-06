@@ -26,7 +26,8 @@
                     }
                   }"
                 />
-                <Button id="downloadButtonCode" text="Excel Download Code" press="onDownload"/>
+                <Button id="downloadButtonCode" text="Excel Deep Download" press="onDownload"/>
+                <Button id="goToSampleApp" text="Show Sample App Code" press="goToSampleApp"/>
                 <!-- Added Table with OData binding -->
                 <Table id="ordersTable" items="{/Orders}">
                     <columns>
