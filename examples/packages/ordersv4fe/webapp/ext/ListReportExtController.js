@@ -19,7 +19,37 @@ sap.ui.define(["sap/m/MessageToast"], function (MessageToast) {
 						componentData: {
 							context: this,
 							createActiveEntity: true,
-							i18nModel: this.getModel("i18n")
+							i18nModel: this.getModel("i18n"),
+							debug: true,
+							showDownloadButton: true,
+							deepDownloadConfig: {
+								deepLevel: 1,
+								deepExport: false,
+								addKeysToExport: true,
+								showOptions: true,
+								filename: "Orders123",
+								columns : {
+									"OrderNo":{
+										"order": 1
+									},
+									"buyer": {
+										"order": 3
+									},
+									"Items": {
+										"quantity" : {
+											"order": 2
+										},
+										"title": {
+											"order": 4
+										}
+									},
+									"Shipping": {
+										"address" : {
+											"order": 5
+										},
+									}
+								}
+							}
 						}
 					});
 			
@@ -88,6 +118,31 @@ sap.ui.define(["sap/m/MessageToast"], function (MessageToast) {
 			}, this);
 
 			this.spreadsheetUpload.openSpreadsheetUploadDialog();
+			// this.spreadsheetUpload.triggerDownloadSpreadsheet({
+			// 	deepLevel: 1,
+			// 	deepExport: true,
+			// 	addKeysToExport: true,
+			// 	showOptions: true,
+			// 	filename: "Orders12",
+			// 	columns : {
+			// 		"OrderNo":{
+			// 			"order": 1
+			// 		},
+			// 		"buyer": {
+			// 			"order": 3
+			// 		},
+			// 		"Items": {
+			// 			"quantity" : {
+			// 				"order": 2
+			// 			}
+			// 		},
+			// 		"Shipping": {
+			// 			"address" : {
+			// 				"order": 5
+			// 			},
+			// 		}
+			// 	}
+			// });
 			this.editFlow.getView().setBusy(false);
 		},
 

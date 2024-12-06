@@ -7,10 +7,13 @@ The following events can be used as extension points to intervene and manipulate
 | `changeBeforeCreate` | Change data before it is sent to the backend                                                       |
 | `requestCompleted`   | Event when the request is completed                                                                |
 | `uploadButtonPress`  | Fired when the `Upload` button is pressed, possible to prevent data from being sent to the backend |
+| `beforeDownloadFileProcessing`  | Fired before the data is converted to a spreadsheet file |
+| `beforeDownloadFileExport`      | Fired just before the file is downloaded                                                  |
+
 
 You can attach async functions to the events by wrapping the function in a `Promise`. See [Attach async functions to events](#attach-async-functions-to-events) for more information.
 
-## Execute custom logic before processing the spreadsheet file starts
+## Event `preFileProcessing`
 
 When the file is uploaded to the app, the `preFileProcessing` event is fired. Use this event to execute custom logic before processing the spreadsheet file starts.
 The `file` is available in the event and can be manipulated. If you want to prevent the processing of the file, call the `preventDefault` method of the event. If you want to change the file that will be processed, return the new file.
@@ -36,7 +39,7 @@ if (file.name.endsWith(".txt")) {
 });
 ```
 
-## Check data before upload to app
+## Event `checkBeforeRead`
 
 When the file is uploaded to the app, the `checkBeforeRead` event is fired.
 
@@ -80,7 +83,7 @@ Errors with the same title will be grouped.
 
 ![Error Dialog](./../images/error_dialog.png){ loading=lazy }
 
-## Manipulate data before it is sent to the backend
+## Event `changeBeforeCreate`
 
 When the `Upload` button is pressed, the `changeBeforeCreate` event is fired.  Use this event to manipulate the data before it is sent to the backend. The event expects a payload object to be returned.  
 Make sure only one handler is attached to this event. If multiple handlers are attached, only the first payload will be used.
@@ -100,7 +103,7 @@ this.spreadsheetUpload.attachChangeBeforeCreate(function (event) {
 }, this);
 ```
 
-## Event when the request is completed
+## Event `requestCompleted`
 
 When the request is completed, the `requestCompleted` event is fired. Use the `success` parameter to check if the request was successful.
 
@@ -117,7 +120,7 @@ this.spreadsheetUpload.attachRequestCompleted(function (event) {
 }, this);
 ```
 
-## Event when the upload button is pressed
+## Event `uploadButtonPress`
 
 When the `Upload` button is pressed, the `uploadButtonPress` event is fired. The event is fired before the `changeBeforeCreate` event. Prevent the data from being sent to the backend by calling the `preventDefault` method of the event.
 
@@ -157,6 +160,61 @@ this.spreadsheetUpload.attachUploadButtonPress(async function (event) {
     // Code here will execute after the 2-second wait
 }, this);
 ```
+
+## Event `beforeDownloadFileProcessing`
+
+Parameters:  
+
+- `data`- the data that will be converted to a spreadsheet file, the data is always the `$XYZData` property of the data object
+
+This event is fired before the data is converted to a spreadsheet file. Use this event to manipulate the data before it is converted.  
+You can change directly the data parameter of the event as this is a reference to the data.
+
+### Example
+
+```javascript
+onDownload: async function () {
+    // init your spreadsheet upload component
+    this.spreadsheetUpload.attachBeforeDownloadFileProcessing(this.onBeforeDownloadFileProcessing, this);
+    this.spreadsheetUpload.triggerDownloadSpreadsheet();
+},
+
+onBeforeDownloadFileProcessing: function (event) {
+    const data = event.getParameters().data;
+    // change buyer of first row of the root entity
+    data.$XYZData[0].buyer = "Customer 123";
+    // change quantity of first row of the Items entity
+    data.Items.$XYZData[0].quantity = 4
+}
+```
+
+## Event `beforeDownloadFileExport`
+
+Parameters:
+
+- `workbook` - the SheetJS [workbook object](https://docs.sheetjs.com/docs/csf/book)
+- `filename` - the filename of the file that will be downloaded
+
+This event is fired just before the file is downloaded. Use this event to manipulate the filename or other parameters before the file is downloaded.
+
+
+
+### Example
+
+```javascript
+onDownload: async function () {
+    // init your spreadsheet upload component
+    this.spreadsheetUpload.attachBeforeDownloadFileExport(this.onBeforeDownloadFileExport, this);
+    this.spreadsheetUpload.triggerDownloadSpreadsheet();
+},
+
+onBeforeDownloadFileExport: function (event) {
+
+    const workbook = event.getParameters().workbook;
+    event.getParameters().filename = filename + "_modified";
+}
+```
+
 
 ## Attach async functions to events
 

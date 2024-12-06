@@ -9,13 +9,13 @@
     <semantic:content>
       <VBox>
         <core:ComponentContainer
-          id="test"
-          width="100%"
-          usage="spreadsheetImporter"
-          propagateModel="true"
-          async="true"
-          settings="{tableId:'container-todo---list--list',componentContainerData:{uploadButtonPress:'uploadButtonPress',buttonText:'Excel Upload'}}"
-        />
+        id="123"
+        width="100%"
+        usage="spreadsheetImporter"
+        propagateModel="true"
+        async="true"
+        settings="{tableId:'container-todo---list--list',componentContainerData:{uploadButtonPress:'uploadButtonPress',buttonText:'Upload Download',downloadButton:false}}"
+      />
         <List
           id="list"
           width="auto"

@@ -36,4 +36,5 @@ export default abstract class MetadataHandler extends ManagedObject {
 
 	abstract getLabelList(columns: Columns, odataType: string, odataEntityType: any, excludeColumns: Columns): ListObject;
 	abstract getKeyList(odataEntityType: any): string[];
+	abstract getODataEntitiesRecursive(entityName: string, deepLevel: number): any;
 }

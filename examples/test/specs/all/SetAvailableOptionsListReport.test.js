@@ -82,7 +82,7 @@ describe("Upload File List Report", () => {
 		if (settingsButton._domId === undefined) {
 			const toolbarContent = await overflowToolbar.getContent();
 			// 4 is the index of the settings button
-			settingsButton = toolbarContent[4];
+			settingsButton = toolbarContent[5];
 		}
 		await settingsButton.press();
 	});

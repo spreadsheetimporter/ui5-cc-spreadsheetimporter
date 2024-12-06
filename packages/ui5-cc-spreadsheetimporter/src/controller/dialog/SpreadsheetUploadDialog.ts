@@ -17,12 +17,16 @@ import Log from "sap/base/Log";
 import SheetHandler from "../SheetHandler";
 import Parser from "../Parser";
 import Button from "sap/m/Button";
-import { ArrayData, AvailableOptionsType, FireEventReturnType } from "../../types";
+import { ArrayData, AvailableOptionsType, DeepDownloadConfig, FireEventReturnType } from "../../types";
 import FlexBox from "sap/m/FlexBox";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Dialog from "sap/m/Dialog";
 import Select from "sap/m/Select";
 import Item from "sap/ui/core/Item";
+import SpreadsheetDownloadDialog from "../download/SpreadsheetDownloadDialog";
+import SpreadsheetGenerator from "../download/SpreadsheetGenerator";
+import SpreadsheetDownload from "../download/SpreadsheetDownload";
+import OData from "../odata/OData";
 
 type InputType = {
 	[key: string]: {
@@ -37,6 +41,7 @@ type InputType = {
 export default class SpreadsheetUploadDialog extends ManagedObject {
 	spreadsheetUploadController: SpreadsheetUpload;
 	spreadsheetUploadDialog: SpreadsheetDialog;
+	spreadsheetDownloadDialog: SpreadsheetDownloadDialog;
 	component: Component;
 	previewHandler: Preview;
 	util: Util;
@@ -44,6 +49,8 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	optionsHandler: OptionsDialog;
 	messageHandler: MessageHandler;
 	spreadsheetOptionsModel: JSONModel;
+	spreadsheetGenerator: SpreadsheetGenerator;
+	spreadsheetDownload: SpreadsheetDownload;
 
 	constructor(spreadsheetUploadController: SpreadsheetUpload, component: Component, componentI18n: ResourceModel, messageHandler: MessageHandler) {
 		super();
@@ -54,6 +61,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 		this.previewHandler = new Preview(this.util);
 		this.optionsHandler = new OptionsDialog(spreadsheetUploadController);
 		this.messageHandler = messageHandler;
+		this.spreadsheetDownloadDialog = new SpreadsheetDownloadDialog(this.spreadsheetUploadController, this);
 	}
 
 	async createSpreadsheetUploadDialog() {
@@ -63,6 +71,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 				strict: this.component.getStrict(),
 				hidePreview: this.component.getHidePreview(),
 				showOptions: this.component.getShowOptions(),
+				showDownloadButton: this.component.getShowDownloadButton(),
 				hideGenerateTemplateButton: false,
 				fileUploadValue: "",
 				densityClass: this.component._densityClass
@@ -483,7 +492,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 							colWidths.push({ wch: colWidthDefault });
 						} else if (value.type === "Edm.DateTimeOffset" || value.type === "Edm.DateTime") {
 							let format;
-							const currentLang = await this.getLanguage();
+							const currentLang = await Util.getLanguage();
 							if (currentLang.startsWith("en")) {
 								format = "mm/dd/yyyy hh:mm AM/PM";
 							} else {
@@ -720,15 +729,49 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 		});
 	}
 
-	private async getLanguage(): Promise<string> {
-		try {
-			// getCore is not available in UI5 version 2.0 and above, prefer this over sap.ui.getCore().getConfiguration().getLanguage()
-			const Localization = await Util.loadUI5RessourceAsync("sap/base/i18n/Localization");
-			return Localization.getLanguage();
-		} catch (error) {
-			Log.debug("sap/base/i18n/Localization not found", undefined, "SpreadsheetUpload: checkForODataErrors");
+	setODataHandler(odataHandler: OData) {
+		this.spreadsheetGenerator = new SpreadsheetGenerator(this.spreadsheetUploadController, this.component, odataHandler);
+		this.spreadsheetDownload = new SpreadsheetDownload(this.spreadsheetUploadController, this.component, odataHandler);
+	}
+
+	/**
+	 * Initializes the spreadsheet download process.
+	 * If showOptions is enabled in the DeepDownloadConfig, opens a dialog allowing users to configure download options.
+	 * Otherwise, directly triggers the spreadsheet download.
+	 * 
+	 * @returns {Promise<void>} A promise that resolves when the download process is initialized
+	 */
+	async onInitDownloadSpreadsheetProcess(): Promise<void> {
+		const showOptionsToUser = (this.component.getDeepDownloadConfig() as DeepDownloadConfig).showOptions;
+		if (showOptionsToUser) {
+			await this.spreadsheetDownloadDialog.createSpreadsheetDownloadDialog();
+			this.spreadsheetDownloadDialog.spreadsheetDownloadDialog.open();
+		} else {
+			this.onDownloadDataSpreadsheet();
 		}
-		// ui5lint-disable-next-line -- fallback for UI5 versions below 2.0
-		return sap.ui.getCore().getConfiguration().getLanguage();
+	}
+
+	async onDownloadDataSpreadsheet(): Promise<void> {
+		if (!this.spreadsheetUploadController.errorState) {
+			try {
+				const mainEntitySiblings = await this.spreadsheetDownload.fetchData(this.component.getDeepDownloadConfig() as DeepDownloadConfig);
+
+				let isDefaultPrevented = false;
+				try {
+					const asyncEventBeforeDownloadFileProcessing = await Util.fireEventAsync("beforeDownloadFileProcessing", { data: mainEntitySiblings }, this.component);
+					isDefaultPrevented = asyncEventBeforeDownloadFileProcessing.bPreventDefault;
+				} catch (error) {
+					Log.error("Error while calling the beforeDownloadFileProcessing event", error as Error, "SpreadsheetUploadDialog.ts");
+				}
+				if (!isDefaultPrevented) {
+					this.spreadsheetGenerator.downloadSpreadsheet(mainEntitySiblings, this.component.getDeepDownloadConfig() as DeepDownloadConfig);
+				}
+			} catch (error) {
+				console.error("Error in onDownloadDataSpreadsheet:", error);
+			}
+		} else {
+			Util.showError(this.spreadsheetUploadController.errorMessage, "SpreadsheetUpload.ts", "initialSetup");
+			Log.error("Error opening the dialog", undefined, "SpreadsheetUpload: SpreadsheetUpload");
+		}
 	}
 }

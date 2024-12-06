@@ -1,5 +1,5 @@
 import Log from "sap/base/Log";
-import { Columns, Property, ListObject, PropertyArray } from "../../types";
+import { Columns, Property, ListObject, PropertyArray, PropertyObject } from "../../types";
 import MetadataHandler from "./MetadataHandler";
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -169,6 +169,141 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 			}
 		}
 		return keys;
+	}
+
+	public getODataEntitiesRecursive(entityName: string, deepLevel: number = Infinity): { mainEntity: any; expands: any } {
+		const entities: any = this.spreadsheetUploadController.binding.getModel().getMetaModel().getData();
+
+		if (!entities || !entities[entityName]) {
+			throw new Error(`Entity '${entityName}' not found`); // Add appropriate error message and handling
+		}
+
+		const mainEntity: any = entities[entityName];
+		// Find all entities by navigation properties and add them to the mainEntity, only till the deepLevel (i.e. only mainEntity if deepLevel is 0)
+		this._findEntitiesByNavigationProperty(entities, entityName, deepLevel);
+
+		const expands: any = {};
+		// Get the expands for the mainEntity till the deepLevel
+		this._getExpandsRecursive(mainEntity, expands, undefined, undefined, 0, deepLevel);
+
+		return { mainEntity, expands };
+	}
+
+	private _findEntitiesByNavigationProperty(entities: any, rootEntityName: any, deepLevel: number = Infinity): void {
+		const queue: { entity: any; entityName: string; parentEntityName: string; level: number }[] = [];
+		const traversedEntities: Set<string> = new Set();
+
+		const rootEntity = entities[rootEntityName];
+
+		// Add level tracking to queue items
+		queue.push({ entity: rootEntity, entityName: rootEntityName, parentEntityName: "", level: 0 });
+		traversedEntities.add(rootEntityName);
+
+		while (queue.length > 0) {
+			const { entity, entityName, parentEntityName, level } = queue.shift()!;
+
+			// Skip if we've reached the maximum depth level
+			if (level >= deepLevel) {
+				continue;
+			}
+
+			for (const property in entity) {
+				const navProperty = entity[property];
+
+				if (
+					navProperty.$kind === "NavigationProperty" &&
+					navProperty.$Partner &&
+					// TODO: that does not work on 1:1 relationships
+					!navProperty.$ReferentialConstraint
+
+					// && !this.isReverseRelationship(entities, navProperty, entityName)
+					// && !traversedEntities.has(navProperty.$Type)
+				) {
+					navProperty.$XYZEntity = entities[navProperty.$Type];
+					navProperty.$XYZFetchableEntity = true;
+
+					queue.push({ entity: navProperty.$XYZEntity, entityName: navProperty.$Type, parentEntityName: entityName, level: level + 1 });
+					traversedEntities.add(navProperty.$Type);
+				}
+			}
+		}
+		
+	}
+	
+	_getExpandsRecursive(mainEntity: any, expands: any, parent?: string, parentExpand?: any, currentLevel: number = 0, deepLevel: number = Infinity) {
+		if (currentLevel >= deepLevel) return;
+
+		for (const entity in mainEntity) {
+			if (mainEntity[entity].$XYZFetchableEntity) {
+				if (parent) {
+					parentExpand.$expand = entity;
+				} else {
+					if (!expands[entity]) {
+						expands[entity] = {};
+					}
+					parentExpand = expands[entity];
+				}
+				this._getExpandsRecursive(mainEntity[entity].$XYZEntity, expands, entity, parentExpand, currentLevel + 1, deepLevel);
+			}
+		}
+	}
+
+	/**
+	 * Adds keys from entity to labelList so it will be added to the sheet
+	 * @param labelList 
+	 * @param entityName 
+	 * @param parentEntity 
+	 * @param partner 
+	 */
+	addKeys(labelList: ListObject, entityName: string, parentEntity?: any, partner?: string) {
+		const { annotations, properties } = MetadataHandlerV4.getAnnotationProperties(this.spreadsheetUploadController.context, entityName);
+		const keys = [];
+		// if parentEntity is set, we need to get the key from the parent Entity
+		if (parentEntity) {
+			const propertyObject = {} as PropertyObject;
+			const refConstraint = properties[partner]["$ReferentialConstraint"];
+			propertyObject.propertyName = Object.keys(refConstraint)[0];
+			const parentPropertyName = refConstraint[propertyObject.propertyName];
+			propertyObject.propertyValue = parentEntity[parentPropertyName];
+			propertyObject.propertyLabel = annotations[`${entityName}/${propertyObject.propertyName}`];
+			keys.push(propertyObject);
+		}
+		// if parentEntity is not set, we need to get the key from the entity itself
+		const entityKeys = properties.$Key;
+		for (const key in entityKeys) {
+			const propertyObject = {} as PropertyObject;
+			propertyObject.propertyName = entityKeys[key];
+			propertyObject.propertyValue = properties[entityKeys[key]];
+			propertyObject.propertyLabel = annotations[`${entityName}/${propertyObject.propertyName}`];
+			keys.push(propertyObject);
+		}
+
+		// Create a new Map to make sure the are in the beginning of the spreadsheet
+		const newLabelList = new Map<string, Property>();
+		
+		// Add keys to the new Map
+		for (const key of keys) {
+			const propertyObject = {} as Property;
+			propertyObject.label = this.getLabel(annotations, properties, key.propertyName, key.propertyLabel, entityName);
+			if (!propertyObject.label) {
+				propertyObject.label = key.propertyName;
+			}
+			propertyObject.type = key.propertyValue.$Type;
+			propertyObject.maxLength = key.propertyValue.$MaxLength;
+			propertyObject.$XYZKey = true;
+			newLabelList.set(key.propertyName, propertyObject);
+		}
+
+		// Merge existing entries after the keys
+		labelList.forEach((value, key) => {
+			newLabelList.set(key, value);
+		});
+
+		// Replace the content of labelList with the new ordered entries
+		labelList.clear();
+		newLabelList.forEach((value, key) => {
+			labelList.set(key, value);
+		});
 	}
 
 	static getAnnotationProperties(context: any, odataType: string) {

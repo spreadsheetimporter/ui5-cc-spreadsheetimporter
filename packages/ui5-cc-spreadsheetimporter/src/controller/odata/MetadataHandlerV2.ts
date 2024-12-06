@@ -141,4 +141,8 @@ export default class MetadataHandlerV2 extends MetadataHandler {
 		}
 		return keys;
 	}
+
+	getODataEntitiesRecursive(entityName: string, deepLevel: number): any {
+		throw new Error("Method not implemented.");
+	}
 }

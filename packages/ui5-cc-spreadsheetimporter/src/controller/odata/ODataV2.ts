@@ -159,4 +159,18 @@ export default class ODataV2 extends OData {
 	getMetadataHandler(): MetadataHandlerV2 {
 		return this.metadataHandler;
 	}
+
+	getODataEntitiesRecursive(entityName: string, deepLevel: number): any {
+		return this.metadataHandler.getODataEntitiesRecursive(entityName, deepLevel);
+	}
+
+	getBindingFromBinding(binding: ODataListBinding, expand?: any): ODataListBinding {
+		throw new Error("Method not implemented.");
+	}
+
+	fetchBatch(customBinding: ODataListBinding, batchSize: number): Promise<any>{
+		throw new Error("Method not implemented.");
+	}
+
+	addKeys(labelList: ListObject, entityName: string, parentEntity?: any, partner?: string) {}
 }

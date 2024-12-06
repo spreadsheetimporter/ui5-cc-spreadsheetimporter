@@ -23,7 +23,6 @@ export default class SpreadsheetUpload extends ManagedObject {
 	public component: Component;
 	public context: any;
 	private _isODataV4: boolean;
-	private isOpenUI5: boolean;
 	private _view: XMLView;
 	private _tableObject: any;
 	private messageHandler: MessageHandler;
@@ -132,6 +131,7 @@ export default class SpreadsheetUpload extends ManagedObject {
 		}
 		this.isODataV4 = this._checkIfODataIsV4(this.binding);
 		this.odataHandler = this.createODataHandler(this);
+		this.spreadsheetUploadDialogHandler.setODataHandler(this.odataHandler);
 		this.controller = this.view.getController();
 		Log.debug("View", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ view: this.view }));
 		this.view.addDependent(this.spreadsheetUploadDialogHandler.getDialog());
@@ -141,6 +141,12 @@ export default class SpreadsheetUpload extends ManagedObject {
 		Log.debug("odataKeyList", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ odataKeyList: this.odataKeyList }));
 		this.typeLabelList = await this.odataHandler.getLabelList(this.component.getColumns(), this._odataType, this.component.getExcludeColumns(), this.binding);
 		Log.debug("typeLabelList", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ typeLabelList: this.typeLabelList }));
+
+		if(this.isODataV4) {
+			const { mainEntity, expands } = this.odataHandler.getODataEntitiesRecursive(this.getOdataType(), Infinity);
+			Log.debug("mainEntity", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ mainEntity: mainEntity }));
+			Log.debug("expands", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ expands: expands }));
+		}
 
 		this.model = this.binding.getModel();
 		Log.debug("model", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ model: this.model }));
@@ -170,26 +176,37 @@ export default class SpreadsheetUpload extends ManagedObject {
 	}
 
 	/**
-	 * Opens the Spreadsheet upload dialog.
-	 * @param {object} options - all component options.
+	 * Initializes the component with options and performs initial setup
+	 * @param {ComponentData} options - Configuration options
+	 * @returns {Promise<void>}
 	 */
-	async openSpreadsheetUploadDialog(options: ComponentData) {
-		if (options) {
-			// set options to component
-			this.setComponentOptions(options);
-			this.initialSetupPromise = this.initialSetup();
-		} else {
-			this.initialSetupPromise = this.initialSetup();
-		}
+	async initializeComponent(): Promise<void> {
+		this.initialSetupPromise = this.initialSetup();
 		await this.initialSetupPromise;
-		if (!this.errorState) {
-			// ((this.spreadsheetUploadDialogHandler.getDialog().getContent()[0] as FlexBox).getItems()[1] as FileUploader).clear();
-			this.spreadsheetUploadDialogHandler.openSpreadsheetUploadDialog();
-		} else {
+		
+		if (this.errorState) {
 			Util.showError(this.errorMessage, "SpreadsheetUpload.ts", "initialSetup");
+			Log.error("Error during initialization", undefined, "SpreadsheetUpload: SpreadsheetUpload");
+			throw this.errorMessage;
+		}
+	}
+
+	/**
+	 * Opens the Spreadsheet upload dialog.
+	 * @param {ComponentData} options - Optional configuration options
+	 */
+	async openSpreadsheetUploadDialog(options?: ComponentData) {
+		try {
+			if (options) {
+				this.setComponentOptions(options);
+			}
+			await this.initializeComponent();
+			this.spreadsheetUploadDialogHandler.openSpreadsheetUploadDialog();
+		} catch (error) {
 			Log.error("Error opening the dialog", undefined, "SpreadsheetUpload: SpreadsheetUpload");
 		}
 	}
+
 	setComponentOptions(options: ComponentData) {
 		if (options.hasOwnProperty("spreadsheetFileName")) {
 			this.component.setSpreadsheetFileName(options.spreadsheetFileName);
@@ -290,6 +307,9 @@ export default class SpreadsheetUpload extends ManagedObject {
 		if (options.hasOwnProperty("bindingCustom")) {
 			this.component.setBindingCustom(options.bindingCustom);
 		}
+		if (options.hasOwnProperty("showDownloadButton")) {
+			this.component.setShowDownloadButton(options.showDownloadButton);
+		}
 
 		// Special case for showOptions
 		if (options.availableOptions && options.availableOptions.length > 0) {
@@ -374,6 +394,10 @@ export default class SpreadsheetUpload extends ManagedObject {
 		this.payload = [];
 		this.odataHandler.resetContexts();
 		this.spreadsheetUploadDialogHandler.resetContent();
+	}
+
+	triggerDownloadSpreadsheet() {
+		this.spreadsheetUploadDialogHandler.onInitDownloadSpreadsheetProcess();
 	}
 
 	/**

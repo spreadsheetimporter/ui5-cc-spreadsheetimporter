@@ -1,0 +1,56 @@
+<mvc:View controllerName="ordersv4freestyle.controller.MainView"
+    xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" displayBlock="true"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+        <content>
+            <VBox>
+                <core:ComponentContainer
+                    id="test"
+                    width="100%"
+                    usage="spreadsheetImporter"
+                    propagateModel="true"
+                    async="true"
+                    settings="{
+                    componentContainerData:{uploadButtonPress:'uploadButtonPress',buttonText:'Excel Download',buttonId:'downloadButton',downloadButton:true},
+                    deepDownloadConfig:{
+                        deepLevel: 0,
+                        deepExport: false,
+                        addKeysToExport: true,
+                        showOptions: false,
+                        filename: 'Orders12',
+                        columns : {
+                            'OrderNo':{
+                                'order': 1
+                        }
+                      }
+                    }
+                  }"
+                />
+                <Button id="downloadButtonCode" text="Excel Download Code" press="onDownload"/>
+                <!-- Added Table with OData binding -->
+                <Table id="ordersTable" items="{/Orders}">
+                    <columns>
+                        <Column>
+                            <Text text="Order Number"/>
+                        </Column>
+                        <Column>
+                            <Text text="Buyer"/>
+                        </Column>
+                        <Column>
+                            <Text text="Created At"/>
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{OrderNo}"/>
+                                <Text text="{buyer}"/>
+                                <Text text="{createdAt}"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>
