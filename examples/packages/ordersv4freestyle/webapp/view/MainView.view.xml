@@ -5,7 +5,7 @@
         <content>
             <VBox>
                 <core:ComponentContainer
-                    id="test"
+                    id="test1"
                     width="100%"
                     usage="spreadsheetImporter"
                     propagateModel="true"
@@ -27,6 +27,41 @@
                   }"
                 />
                 <Button id="downloadButtonCode" text="Excel Deep Download" press="onDownload"/>
+                <core:ComponentContainer
+                    id="test2"
+                    width="100%"
+                    usage="spreadsheetImporter"
+                    propagateModel="true"
+                    async="true"
+                    settings="{
+                    componentContainerData:{uploadButtonPress:'uploadButtonPress',buttonText:'Excel Download with Dialog',buttonId:'downloadButtonDialog',buttonIcon:'sap-icon://download',downloadButton:true},
+                    deepDownloadConfig:{
+                        deepLevel: 2,
+                        deepExport: true,
+                        addKeysToExport: true,
+                        showOptions: true,
+                        filename: 'Orders_Dialog',
+                        columns : {
+                            'OrderNo':{
+                                'order': 1
+                            },
+                            'buyer': {
+                                'order': 3
+                            },
+                            'Items': {
+                                'quantity' : {
+                                    'order': 2
+                                }
+                            },
+                            'Shipping': {
+                                'address' : {
+                                    'order': 5
+                                }
+                            }
+                        }
+                    }
+                  }"
+                />
                 <Button id="goToSampleApp" text="Show Sample App Code" press="goToSampleApp"/>
                 <!-- Added Table with OData binding -->
                 <Table id="ordersTable" items="{/Orders}">
