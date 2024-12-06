@@ -81,6 +81,17 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 					propertyObject.maxLength = propertyValue.$MaxLength;
 					listObject.set(propertyName, propertyObject);
 				}
+				// if no annotation is found, still try to add the property
+				if(!propertyLabel && !propertyName.startsWith("SAP__")){
+					let propertyObject: Property = {} as Property;
+					propertyObject.label = this.getLabel(annotations, properties, propertyName, propertyLabel, odataType);
+					if (!propertyObject.label) {
+						propertyObject.label = propertyName;
+					}
+					propertyObject.type = propertyValue.$Type;
+					propertyObject.maxLength = propertyValue.$MaxLength;
+					listObject.set(propertyName, propertyObject);
+				}
 			}
 		} else {
 			const propertiesFiltered = [];
@@ -93,6 +104,17 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 			for (const [propertyName, propertyValue] of propertiesFiltered) {
 				const propertyLabel = annotations[`${odataType}/${propertyName}`];
 				if (propertyLabel && !propertyLabel["@com.sap.vocabularies.UI.v1.Hidden"] && !propertyName.startsWith("SAP__")) {
+					let propertyObject: Property = {} as Property;
+					propertyObject.label = this.getLabel(annotations, properties, propertyName, propertyLabel, odataType);
+					if (!propertyObject.label) {
+						propertyObject.label = propertyName;
+					}
+					propertyObject.type = propertyValue.$Type;
+					propertyObject.maxLength = propertyValue.$MaxLength;
+					listObject.set(propertyName, propertyObject);
+				}
+				// if no annotation is found, still try to add the property
+				if(!propertyLabel && !propertyName.startsWith("SAP__")){
 					let propertyObject: Property = {} as Property;
 					propertyObject.label = this.getLabel(annotations, properties, propertyName, propertyLabel, odataType);
 					if (!propertyObject.label) {
