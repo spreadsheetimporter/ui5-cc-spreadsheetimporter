@@ -11,7 +11,7 @@
                     propagateModel="true"
                     async="true"
                     settings="{
-                    componentContainerData:{uploadButtonPress:'uploadButtonPress',buttonText:'Excel Download',buttonId:'downloadButton',downloadButton:true},
+                    componentContainerData:{uploadButtonPress:'uploadButtonPress',buttonText:'Excel Download',buttonId:'downloadButton',buttonIcon:'sap-icon://download',downloadButton:true},
                     deepDownloadConfig:{
                         deepLevel: 0,
                         deepExport: false,
