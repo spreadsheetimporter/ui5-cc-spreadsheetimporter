@@ -397,7 +397,7 @@ export default class SpreadsheetUpload extends ManagedObject {
 	}
 
 	triggerDownloadSpreadsheet() {
-		this.spreadsheetUploadDialogHandler.onDownloadDataSpreadsheet();
+		this.spreadsheetUploadDialogHandler.onInitDownloadSpreadsheetProcess();
 	}
 
 	/**
