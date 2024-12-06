@@ -35,8 +35,8 @@ To integrate the `ui5-cc-spreadsheetimporter` component manually, follow the ste
 
 2\. **Add `resourceRoots` to the `sap.ui5` section of your `manifest.json`:**
 
-   !!! warning "Version Management"
-       Whenever you update the `ui5-cc-spreadsheetimporter` module, ensure that the version specified in your `manifest.json` is up to date. For more information, see [Version Namespace](https://blogs.sap.com/2023/03/12/create-a-ui5-custom-library-with-versioning-using-a-multi-version-namespace/).
+!!! warning "Version Management"
+    Whenever you update the `ui5-cc-spreadsheetimporter` module, ensure that the version specified in your `manifest.json` is up to date. For more information, see [Version Namespace](https://blogs.sap.com/2023/03/12/create-a-ui5-custom-library-with-versioning-using-a-multi-version-namespace/).
 
    ```json
    "resourceRoots": {
@@ -54,8 +54,8 @@ To integrate the `ui5-cc-spreadsheetimporter` component manually, follow the ste
 
 4\. **Add `componentUsages` to the `sap.ui5` section of your `manifest.json`:**
 
-   !!! warning "Version Management"
-       Whenever you update the `ui5-cc-spreadsheetimporter` module, ensure that the version specified in your `manifest.json` is up to date. For more information, see [Version Namespace](https://blogs.sap.com/2023/03/12/create-a-ui5-custom-library-with-versioning-using-a-multi-version-namespace/).
+!!! warning "Version Management"
+    Whenever you update the `ui5-cc-spreadsheetimporter` module, ensure that the version specified in your `manifest.json` is up to date. For more information, see [Version Namespace](https://blogs.sap.com/2023/03/12/create-a-ui5-custom-library-with-versioning-using-a-multi-version-namespace/).
 
    ```json
    "componentUsages": {
