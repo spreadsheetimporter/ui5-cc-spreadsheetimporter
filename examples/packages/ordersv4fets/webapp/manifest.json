@@ -94,11 +94,11 @@
     },
     "componentUsages": {
       "spreadsheetImporter": {
-        "name": "cc.spreadsheetimporter.v1_4_3"
+        "name": "cc.spreadsheetimporter.v1_5_0"
       }
     },
     "resourceRoots": {
-      "cc.spreadsheetimporter.v1_4_3": "./thirdparty/customcontrol/spreadsheetimporter/v1_4_3"
+      "cc.spreadsheetimporter.v1_5_0": "./thirdparty/customcontrol/spreadsheetimporter/v1_5_0"
     },
     "routing": {
       "routes": [
