@@ -989,8 +989,11 @@ importers:
         specifier: workspace:*
         version: link:../ordersv2fe
       ordersv4fe120:
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../ordersv4fe
+      ordersv4freestyle120:
+        specifier: workspace:*
+        version: link:../ordersv4freestyle
 
   packages/ui5-cc-spreadsheetimporter:
     dependencies:

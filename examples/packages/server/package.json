@@ -12,7 +12,8 @@
     "cds-launchpad-plugin": "2.2.0",
     "cds-plugin-ui5": "0.11.1",
     "ordersv2fe120": "workspace:*",
-    "ordersv4fe120": "workspace:^"
+    "ordersv4fe120": "workspace:*",
+    "ordersv4freestyle120": "workspace:*"
   },
   "scripts": {
     "watch": "cds watch"

@@ -25,6 +25,22 @@
           "odataVersion": "4.0"
         }
       }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "intent1": {
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          },
+          "semanticObject": "ordersv4freestyle",
+          "action": "120",
+          "title": "Orders Sample App Deep Download",
+          "info": "Freestyle",
+          "subTitle": "UI5 1.120 / OData V4",
+          "icon": "sap-icon://course-book"
+        }
+      }
     }
   },
   "sap.ui": {

@@ -12,6 +12,11 @@ sap.ui.define([
 
             },
 
+            goToSampleApp: function () {
+                // open https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/tree/main/examples/packages/ordersv4freestyle
+                window.open("https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/tree/main/examples/packages/ordersv4freestyle", "_blank");
+            },
+
             onDownload: async function () {
                 this.spreadsheetUpload = await this.getView().getController().getOwnerComponent()
                 .createComponent({

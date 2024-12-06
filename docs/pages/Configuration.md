@@ -492,6 +492,7 @@ For the event, the method from your view controller is attached to the event.
 | ------ | --- | --- |
 | `buttonText` | Text to be displayed on the button | string |
 | `buttonId` | Id of the button | string |
+| `buttonIcon` | Icon of the button like `sap-icon://download` | string |
 | `downloadButton` | Defines whether the download event should be triggered instead of the upload event | boolean |
 | `uploadButtonPress` | Event after the upload button is pressed | string |
 | `changeBeforeCreate` | Event before data sent to the backend | string |
