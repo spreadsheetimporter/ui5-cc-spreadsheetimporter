@@ -10,6 +10,7 @@ package-lock.json
 packages/ui5-cc-spreadsheetimporter/webapp
 dev/thirdparty
 .ui5-tooling-modules
+examples/test/downloads
 # test apps start
 /examples/packages/ordersv2fe108
 /examples/packages/ordersv2fe96

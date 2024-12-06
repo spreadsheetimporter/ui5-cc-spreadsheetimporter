@@ -1,4 +1,6 @@
 const { escape } = require("querystring");
+const path = require('path');
+const downloadDir = path.resolve(__dirname, 'downloads');
 const util = require("./../../dev/util");
 const { TimelineService } = require('wdio-timeline-reporter/timeline-service');
 let scenario = "";
@@ -40,7 +42,12 @@ module.exports.config = {
 						? ["--headless=new", "--window-size=1920,1080"]
 						: process.argv.indexOf("--debug") > -1
 						? ["--window-size=1920,1080", "--auto-open-devtools-for-tabs"]
-						: ["--window-size=1920,1080"]
+						: ["--window-size=1920,1080"],
+            prefs: {
+                'download.default_directory': downloadDir,
+                'download.prompt_for_download': false,
+                'download.directory_upgrade': true
+            }
 			},
 			acceptInsecureCerts: true
 		}

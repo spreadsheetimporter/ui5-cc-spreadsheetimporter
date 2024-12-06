@@ -11,20 +11,22 @@
                     propagateModel="true"
                     async="true"
                     settings="{
-                    componentContainerData:{uploadButtonPress:'uploadButtonPress',buttonText:'Excel Download',downloadButton:true},
-                    deepDownloadConfig:{deepLevel: 2,
-                      deepExport: true,
-                      addKeysToExport: true,
-                      showOptions: true,
-                      filename: 'Orders12',
-                      columns : {
-                        'OrderNo':{
-                            'order': 1
+                    componentContainerData:{uploadButtonPress:'uploadButtonPress',buttonText:'Excel Download',buttonId:'downloadButton',downloadButton:true},
+                    deepDownloadConfig:{
+                        deepLevel: 0,
+                        deepExport: false,
+                        addKeysToExport: true,
+                        showOptions: false,
+                        filename: 'Orders12',
+                        columns : {
+                            'OrderNo':{
+                                'order': 1
                         }
                       }
                     }
                   }"
                 />
+                <Button id="downloadButtonCode" text="Excel Download Code" press="onDownload"/>
                 <!-- Added Table with OData binding -->
                 <Table id="ordersTable" items="{/Orders}">
                     <columns>

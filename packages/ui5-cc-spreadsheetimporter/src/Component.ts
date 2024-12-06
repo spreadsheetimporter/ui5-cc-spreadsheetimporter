@@ -206,6 +206,7 @@ export default class Component extends UIComponent {
 		this.spreadsheetUpload = new SpreadsheetUpload(this, this.getModel("i18n") as ResourceModel);
 		const componentContainerData = this.getComponentContainerData?.() || {};
 		const buttonText = componentContainerData.buttonText ?? "Excel Import";
+		const buttonId = this.createId(componentContainerData.buttonId)
 		
 		// Check if the download button should be enabled
 		const showDownloadButton = componentContainerData.downloadButton ?? false;
@@ -213,6 +214,10 @@ export default class Component extends UIComponent {
 
 		if(showDownloadButton) {
 			pressMethod = () => this.triggerDownloadSpreadsheet();
+		}
+
+		if(buttonId) {
+			return new Button({ id: buttonId, text: buttonText, press: pressMethod });
 		}
 
 		return new Button({ text: buttonText, press: pressMethod });

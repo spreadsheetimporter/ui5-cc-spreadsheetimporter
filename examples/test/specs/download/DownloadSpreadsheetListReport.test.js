@@ -1,109 +1,102 @@
-const FEV2ND = require("../Objects/FEV2ND");
+const path = require("path");
+const fs = require("fs");
+const XLSX = require("xlsx");
 const Base = require("./../Objects/Base");
-const FEV2 = require("./../Objects/FEV2");
-const FEV4 = require("./../Objects/FEV4");
-const { optionsLong, optionsShort } = require("./../Objects/types");
-const path = require('path');
-const fs = require('fs');
-const XLSX = require('xlsx');
-
-let FE = undefined;
-let BaseClass = undefined;
-let scenario = undefined;
 
 describe("Download Spreadsheet List Report", () => {
-    before(async () => {
-        BaseClass = new Base();
-        scenario = global.scenario;
-        if (scenario.startsWith("ordersv2")) {
-            FE = new FEV2();
-        }
-        if (scenario.startsWith("ordersv4")) {
-            FE = new FEV4();
-        }
-        if (scenario.startsWith("ordersv2fenondraft")) {
-            FE = new FEV2ND();
-        }
-    });
+	let downloadDir;
 
-    it("should trigger search on ListReport page", async () => {
-        try {
-            await BaseClass.pressById(FE.listReportGoButton);
-        } catch (error) {
-            await BaseClass.pressById(FE.listReportDynamicPageTitle);
-            await BaseClass.dummyWait(500);
-            await BaseClass.pressById(FE.listReportGoButton);
-        }
-    });
+	before(async () => {
+		BaseClass = new Base();
+		scenario = global.scenario;
+		// If you need it globally, you can set it on browser.config, or just reuse the same path logic as in wdio.conf.js.
+		downloadDir = path.resolve(__dirname, "../../downloads"); // Adjust the relative path if needed
+	});
 
-    it("Open Spreadsheet Upload Dialog", async () => {
-        await BaseClass.pressById(FE.listReportSpreadsheetuploadButton);
-        const spreadsheetUploadDialog = await browser.asControl({
-            selector: {
-                controlType: "sap.m.Dialog",
-                properties: {
-                    contentWidth: "40vw"
-                },
-                searchOpenDialogs: true
-            }
-        });
-        expect(spreadsheetUploadDialog.isOpen()).toBeTruthy();
-    });
+	it("should trigger download button", async () => {
+		// Trigger the download
+		await BaseClass.pressById("__component0---downloadButton");
+	});
 
-    it("Download spreadsheet and verify content", async () => {
-        // Click download button
-        await browser.asControl({
-            selector: {
-                controlType: "sap.m.Button",
-                properties: {
-                    text: "Download Spreadsheet"
-                },
-                searchOpenDialogs: true
-            }
-        }).press();
+    it("should trigger download code", async () => {
+		// Trigger the download
+		await BaseClass.pressById("container-ordersv4freestyle---MainView--downloadButtonCode");
+	});
 
-        // Wait for download to complete
-        await browser.pause(2000);
+	it("Download spreadsheet and verify content", async () => {
+		const expectedFileName = "Orders12.xlsx";
+		
+		// Wait until the specific file is downloaded
+		await browser.waitUntil(
+			() => {
+				const files = fs.readdirSync(downloadDir);
+				return files.includes(expectedFileName);
+			},
+			{
+				timeout: 20000,
+				timeoutMsg: `Expected ${expectedFileName} to be downloaded within 20s`
+			}
+		);
 
-        // Get the downloaded file
-        const downloadDir = browser.config.downloadDir;
-        const files = fs.readdirSync(downloadDir);
-        const downloadedFile = files.find(file => file.endsWith('.xlsx'));
-        expect(downloadedFile).toBeDefined();
+		const filePath = path.join(downloadDir, expectedFileName);
+		expect(fs.existsSync(filePath)).toBeTruthy();
 
-        // Read the Excel file
-        const filePath = path.join(downloadDir, downloadedFile);
-        const workbook = XLSX.readFile(filePath);
+		const workbook = XLSX.readFile(filePath);
+		expect(workbook.SheetNames.length).toBeGreaterThan(0);
 
-        // Verify workbook structure
-        expect(workbook.SheetNames.length).toBeGreaterThan(0);
+		const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+		const data = XLSX.utils.sheet_to_json(firstSheet);
+		expect(data.length).toBeGreaterThan(0);
 
-        // Read the first sheet
-        const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-        const data = XLSX.utils.sheet_to_json(firstSheet);
+		if (data[0]) {
+			expect(data[0]["ID[ID]"]).toBeDefined();
+			expect(data[0]["Order Number[OrderNo]"]).toBe("2");
+		}
+	});
 
-        // Verify data
-        expect(data.length).toBeGreaterThan(0);
-        
-        // Example verification - adjust according to your expected data structure
-        if (data[0]) {
-            expect(data[0]).toHaveProperty('OrderNo');
-            // Add more specific checks based on your data structure
-        }
+	it("Download spreadsheet and verify multiple sheets and OrderItems content", async () => {
+		const expectedFileName = "Orders123.xlsx";
+		
+		// Wait until the specific file is downloaded
+		await browser.waitUntil(
+			() => {
+				const files = fs.readdirSync(downloadDir);
+				return files.includes(expectedFileName);
+			},
+			{
+				timeout: 20000,
+				timeoutMsg: `Expected ${expectedFileName} to be downloaded within 20s`
+			}
+		);
 
-        // Clean up - delete the downloaded file
-        fs.unlinkSync(filePath);
-    });
+		const filePath = path.join(downloadDir, expectedFileName);
+		expect(fs.existsSync(filePath)).toBeTruthy();
 
-    it("Close SpreadsheetUpload Dialog", async () => {
-        await browser.asControl({
-            selector: {
-                controlType: "sap.m.Button",
-                properties: {
-                    text: "Close"
-                },
-                searchOpenDialogs: true
-            }
-        }).press();
-    });
-}); 
+		const workbook = XLSX.readFile(filePath);
+		expect(workbook.SheetNames.length).toBe(4);
+		expect(workbook.SheetNames).toContain('OrderItems');
+
+		const orderItemsSheet = workbook.Sheets['OrderItems'];
+		const orderItemsData = XLSX.utils.sheet_to_json(orderItemsSheet);
+		expect(orderItemsData.length).toBeGreaterThan(0);
+
+        const orderItem = orderItemsData[0];
+		expect(orderItem['ID[ID]']).toBeDefined();
+		expect(orderItem['IsActiveEntity[IsActiveEntity]']).toBeDefined();
+		expect(orderItem['Quantity[quantity]']).toBeDefined();
+		expect(orderItem['order_ID[order_ID]']).toBeDefined();
+	});
+
+	after(async () => {
+		// Clean up
+        let files = fs.readdirSync(downloadDir);
+		const downloadedFile = files.find((file) => file.endsWith(".xlsx"));
+		const filePath = path.join(downloadDir, downloadedFile);
+		fs.unlinkSync(filePath);
+		// remove content in download dir
+        files = fs.readdirSync(downloadDir);
+		files.forEach((file) => {
+			fs.unlinkSync(path.join(downloadDir, file));
+		});
+	});
+});

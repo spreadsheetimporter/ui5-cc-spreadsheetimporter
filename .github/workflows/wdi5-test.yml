@@ -23,7 +23,7 @@ jobs:
             ui5version: 84
           - scenario: ordersv4freestyle
             ui5version: 96
-            - scenario: ordersv4freestyle
+          - scenario: ordersv4freestyle
             ui5version: 108
 
     steps:
