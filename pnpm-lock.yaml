@@ -122,6 +122,9 @@ importers:
       webdriverio:
         specifier: ^9.2.8
         version: 9.2.12
+      xlsx:
+        specifier: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
+        version: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
 
   examples/packages/anyupload:
     dependencies:

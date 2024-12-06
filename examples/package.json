@@ -18,6 +18,7 @@
     "start:uiv2fenondraft": "pnpm --filter ordersv2fenondraft start",
     "start:uiv2fe": "pnpm --filter ordersv2fe start",
     "start:uiv2freestyle": "pnpm --filter ordersv2freestyle start",
+    "start:uiv24reestyle": "pnpm --filter ordersv4freestyle start",
     "start:uiv4fpm": "pnpm --filter ordersv4fpm start",
     "watch:server": "pnpm --filter @capire/orders watch",
     "test": "wdio run ./test/wdio-base.conf.js",
@@ -36,6 +37,7 @@
     "wdio-chromedriver-service": "8.1.1",
     "wdio-ui5-service": "3.0.0-rc.0",
     "webdriverio": "^9.2.8",
-    "wdio-timeline-reporter": "5.1.4"
+    "wdio-timeline-reporter": "5.1.4",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
   }
 }

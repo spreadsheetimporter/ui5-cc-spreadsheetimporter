@@ -30,6 +30,6 @@ util.updateManifestVersion(version)
 updateVersionDocs.updateVersions(versionUnderscore)
 
 if (!develop) {
-	let ui5Apps = ["ordersv2fe", "ordersv2fenondraft", "ordersv2freestylenondraft", "ordersv2freestylenondraftopenui5", "ordersv4fe", "ordersv4fpm", "ordersv4fets", "anyupload"];
+	let ui5Apps = ["ordersv2fe", "ordersv2fenondraft", "ordersv2freestylenondraft", "ordersv2freestylenondraftopenui5", "ordersv4fe", "ordersv4fpm", "ordersv4fets", "anyupload", "ordersv4freestyle"];
 	util.replaceVersionInExamples(versionUnderscore, versionUnderscore, ui5Apps);
 }
