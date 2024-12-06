@@ -44,7 +44,7 @@
     }
   },
   "sap.ui5": {
-    "flexEnabled": true,
+    "flexEnabled": false,
     "dependencies": {
       "minUI5Version": "1.120.24",
       "libs": {
@@ -56,6 +56,9 @@
         "sap.ui.generic.app": {},
         "sap.ui.table": {},
         "sap.ushell": {}
+      },
+      "components": {
+        "cc.spreadsheetimporter.v1_4_3": {}
       }
     },
     "contentDensities": {
@@ -86,6 +89,14 @@
           "uri": "css/style.css"
         }
       ]
+    },
+    "componentUsages": {
+      "spreadsheetImporter": {
+        "name": "cc.spreadsheetimporter.v1_4_3"
+      }
+    },
+    "resourceRoots": {
+      "cc.spreadsheetimporter.v1_4_3": "./thirdparty/customcontrol/spreadsheetimporter/v1_4_3"
     },
     "routing": {
       "config": {

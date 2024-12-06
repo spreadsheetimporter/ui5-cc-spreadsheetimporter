@@ -312,6 +312,20 @@
     "copyVersions": []
   },
   {
+    "rootAppName": "ordersv4freestyle",
+    "id": "uordersv4freestyle",
+    "path": "./examples/packages/",
+    "port": "8190",
+    "versionMinor": 120,
+    "appTitel": "Orders V4 FS 120",
+    "testMapping": {
+      "specs": [
+        "../test/specs/download/**.test.js"
+      ]
+    },
+    "copyVersions": []
+  },
+  {
     "rootAppName": "ordersv4fpm",
     "port": "8084",
     "versionMinor": 120,

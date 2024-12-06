@@ -256,8 +256,7 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 	 * @param partner 
 	 */
 	addKeys(labelList: ListObject, entityName: string, parentEntity?: any, partner?: string) {
-		const annotations = this.spreadsheetUploadController.context.getModel().getMetaModel().getData()["$Annotations"];
-		const properties = this.spreadsheetUploadController.context.getModel().getMetaModel().getData()[entityName];
+		const { annotations, properties } = MetadataHandlerV4.getAnnotationProperties(this.spreadsheetUploadController.context, entityName);
 		const keys = [];
 		// if parentEntity is set, we need to get the key from the parent Entity
 		if (parentEntity) {

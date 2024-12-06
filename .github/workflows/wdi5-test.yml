@@ -17,12 +17,14 @@ jobs:
         exclude:
           - scenario: ordersv4fe
             ui5version: 71
-          # - scenario: ordersv4fets
-          #   ui5version: 71
-          # - scenario: ordersv4fets
-          #   ui5version: 84
-          # - scenario: ordersv4fets
-          #   ui5version: 96
+          - scenario: ordersv4freestyle
+            ui5version: 71
+          - scenario: ordersv4freestyle
+            ui5version: 84
+          - scenario: ordersv4freestyle
+            ui5version: 96
+            - scenario: ordersv4freestyle
+            ui5version: 108
 
     steps:
       # - name: update chrome
