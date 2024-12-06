@@ -99,8 +99,7 @@ settings="{
   columns: ['product_ID', 'username'],
   componentContainerData:{
     uploadButtonPress:'uploadButtonPress',
-    buttonText:'Excel Upload',
-    downloadButton:true
+    buttonText:'Excel Upload'
     }
   }" />
 ```
