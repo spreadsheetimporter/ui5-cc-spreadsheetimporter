@@ -33,6 +33,7 @@ export default class Component extends UIComponent {
 		manifest: "json",
 		properties: {
 			spreadsheetFileName: { type: "string", defaultValue: "Template.xlsx" },
+			action: { type: "string", defaultValue: "CREATE" },
 			context: { type: "object" },
 			// @ts-ignore
 			columns: { type: "string[]", defaultValue: [] },
@@ -138,6 +139,7 @@ export default class Component extends UIComponent {
 			componentData != null ? (Object.keys(componentData).length === 0 ? (this.settingsFromContainer as ComponentData) : componentData) : (this.settingsFromContainer as ComponentData);
 		this.getContentDensityClass();
 		this.setSpreadsheetFileName(compData?.spreadsheetFileName);
+		this.setAction(compData?.action);
 		this.setContext(compData?.context);
 		this.setColumns(compData?.columns);
 		this.setExcludeColumns(compData?.excludeColumns);

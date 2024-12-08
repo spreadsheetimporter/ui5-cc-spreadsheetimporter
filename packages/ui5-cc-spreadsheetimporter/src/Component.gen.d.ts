@@ -9,6 +9,7 @@ declare module "./Component" {
      */
     interface $ComponentSettings extends $UIComponentSettings {
         spreadsheetFileName?: string | PropertyBindingInfo;
+        action?: string | PropertyBindingInfo;
         context?: object | PropertyBindingInfo | `{${string}}`;
         columns?: string[] | PropertyBindingInfo | `{${string}}`;
         excludeColumns?: string[] | PropertyBindingInfo | `{${string}}`;
@@ -58,6 +59,10 @@ declare module "./Component" {
         // property: spreadsheetFileName
         getSpreadsheetFileName(): string;
         setSpreadsheetFileName(spreadsheetFileName: string): this;
+
+        // property: action
+        getAction(): string;
+        setAction(action: string): this;
 
         // property: context
         getContext(): object;

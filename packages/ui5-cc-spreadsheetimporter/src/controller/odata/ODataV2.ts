@@ -44,6 +44,10 @@ export default class ODataV2 extends OData {
 		this.createPromises.push(returnObject);
 	}
 
+	updateAsync(model: any, binding: any, payload: any) {
+		throw new Error("Method not implemented.");
+	}
+
 	async checkForErrors(model: any, binding: any, showBackendErrorMessages: Boolean): Promise<boolean> {
 		// check if this.submitChangesResponse and this.submitChangesResponse.__batchResponses exist
 		if (this.submitChangesResponse && this.submitChangesResponse.__batchResponses) {

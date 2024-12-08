@@ -6,6 +6,7 @@ import ODataListBinding from "sap/ui/model/odata/v4/ODataListBinding";
 import Log from "sap/base/Log";
 import MetadataHandlerV4 from "./MetadataHandlerV4";
 import ODataModel from "sap/ui/model/odata/v4/ODataModel";
+import ODataContextBinding from "sap/ui/model/odata/v4/ODataContextBinding";
 
 type EntityObject = {
 	$kind: string;
@@ -41,6 +42,45 @@ export default class ODataV4 extends OData {
 		const returnObject = this.create(model, this.customBinding, payload);
 		this.createContexts.push(returnObject.context);
 		this.createPromises.push(returnObject.promise);
+	}
+
+	async updateAsync(model: any, binding: any, payload: any) {
+		let path = binding.getPath();
+		if (binding.getResolvedPath) {
+			path = binding.getResolvedPath();
+		} else {
+			// workaround for getResolvedPath only available from 1.88
+			path = binding.getModel().resolve(binding.getPath(), binding.getContext());
+		}
+		
+		// Create context for the single payload object
+		const context = binding.getModel().bindContext(
+			`${path}(ID='${payload.ID}',IsActiveEntity=${payload.IsActiveEntity})`
+		) as ODataContextBinding;
+
+		this.createContexts.push(context)
+
+		const getOnlyUpdateChangedProperties = false // this.getOnlyUpdateChangedProperties()
+		if(getOnlyUpdateChangedProperties) {
+
+		await context.requestObject()
+
+		const object = context.getBoundContext().getObject()
+		
+		// Set the OrderNo property from the payload
+		// check if property changed
+		if (object.OrderNo !== payload.OrderNo) {
+			// returns promise
+			this.createPromises.push(context.getBoundContext().setProperty("OrderNo", payload.OrderNo));
+		}
+		if (object.buyer !== payload.buyer) {
+			// returns promise
+			this.createPromises.push(context.getBoundContext().setProperty("buyer", payload.buyer));
+			}
+		} else {
+			this.createPromises.push(context.getBoundContext().setProperty("OrderNo", payload.OrderNo));
+			this.createPromises.push(context.getBoundContext().setProperty("buyer", payload.buyer));
+		}
 	}
 
 	async submitChanges(model: any): Promise<any> {
@@ -83,7 +123,7 @@ export default class ODataV4 extends OData {
 				// workaround for getResolvedPath only available from 1.88
 				path = binding.getModel().resolve(binding.getPath(), binding.getContext());
 			}
-			this.customBinding = binding.getModel().bindList(path, null, [], [], { $$updateGroupId: this.updateGroupId });
+			this.customBinding = binding.getModel().bindList(path, this.contexts, [], [], { $$updateGroupId: this.updateGroupId });
 		}
 	}
 

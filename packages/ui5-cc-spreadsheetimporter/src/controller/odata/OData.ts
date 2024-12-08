@@ -75,7 +75,12 @@ export default abstract class OData extends ManagedObject {
 						if (fireEventAsyncReturn.returnValue) {
 							payload = fireEventAsyncReturn.returnValue;
 						}
-						this.createAsync(model, binding, payload);
+						if(component.getAction() === "CREATE") {
+							this.createAsync(model, binding, payload);
+						}
+						if(component.getAction() === "UPDATE") {
+							this.updateAsync(model, binding, payload);
+						}
 					}
 					// wait for all drafts to be created
 					await this.submitChanges(model);
@@ -238,6 +243,7 @@ export default abstract class OData extends ManagedObject {
 
 	abstract create(model: any, binding: any, payload: any): any;
 	abstract createAsync(model: any, binding: any, payload: any): any;
+	abstract updateAsync(model: any, binding: any, payload: any): any;
 	abstract submitChanges(model: any): Promise<any>;
 	abstract waitForCreation(): Promise<any>;
 	abstract waitForDraft(): void;

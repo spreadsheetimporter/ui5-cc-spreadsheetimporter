@@ -140,6 +140,9 @@ export default class SpreadsheetUpload extends ManagedObject {
 		this.odataKeyList = await this.odataHandler.getKeyList(this._odataType, this.binding);
 		Log.debug("odataKeyList", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ odataKeyList: this.odataKeyList }));
 		this.typeLabelList = await this.odataHandler.getLabelList(this.component.getColumns(), this._odataType, this.component.getExcludeColumns(), this.binding);
+		if(this.component.getAction() === "UPDATE"){
+			this.odataHandler.addKeys(this.typeLabelList, this._odataType);
+		}
 		Log.debug("typeLabelList", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ typeLabelList: this.typeLabelList }));
 
 		if(this.isODataV4) {
