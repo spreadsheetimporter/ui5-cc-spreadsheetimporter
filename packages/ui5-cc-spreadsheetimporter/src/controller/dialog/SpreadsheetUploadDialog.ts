@@ -158,7 +158,8 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 					return;
 				}
 				spreadsheetSheetsData = SheetHandler.sheet_to_json(workbook.Sheets[sheetName]);
-				columnNames = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })[0] as string[];
+				const rawColumns = SheetHandler.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })[0] as Array<{rawValue: string}>;
+				columnNames = rawColumns.map(column => column.rawValue || column as unknown as string);
 			}
 
 			if (!spreadsheetSheetsData || spreadsheetSheetsData.length === 0) {
