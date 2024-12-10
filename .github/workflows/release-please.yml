@@ -12,7 +12,7 @@ jobs:
       deployments: write
       id-token: write
     steps:
-      - uses: google-github-actions/release-please-action@v3
+      - uses: googleapis/release-please-action@v3
         id: release
         with:
           token: ${{ secrets.GH_WORKFLOW_TOKEN }}
