@@ -5,7 +5,7 @@ This control simply enables the mass upload of data, independent of the backend,
 This is made possible by reading the Spreadsheet file and using the standard APIs.  
 The control will submit not the file, but just the data from the Spreadsheet File.  
 The integration of the control is designed to be as simple as possible and, in the best case, requires no configuration.
-
+****
 The aim is to support as many Fiori Scenarios and UI5 Versions as possible.  
 See here for all currently [supported Versions](https://docs.spreadsheet-importer.com/pages/SupportVersions/).
 
@@ -16,7 +16,7 @@ See here for all currently [supported Versions](https://docs.spreadsheet-importe
 It is possible to try this out directly at:  
 https://livedemo.spreadsheet-importer.com/
 
-The app is an OData V4 app with UI5 version 1.108 and a CAP backend.  
+The app is an OData V4 app with UI5 version 1.120 and a CAP backend.  
 The data is reset every hour on the hour.
 
 ## Install

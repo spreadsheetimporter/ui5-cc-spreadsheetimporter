@@ -106,7 +106,6 @@ This option defines how deep sibling entities should be exported.
 
 This option determines whether the options dialog should be shown to the user.
 
-
 ## API
 
 ### triggerDownloadSpreadsheet
@@ -142,11 +141,24 @@ download: async function () {
 }
 ```
 
+## Events
+
+See more details at [Events](Events.md#event-beforedownloadfileprocessing)
+
+### `beforeDownloadFileProcessing`
+
+This event is fired before the data is converted to a spreadsheet file. Use this event to manipulate the data before it is converted.  
+You can change directly the data parameter of the event as this is a reference to the data.
+
+### `beforeDownloadFileExport`
+
+This event is fired just before the file is downloaded. Use this event to manipulate the filename or other parameters before the file is downloaded.
+
 ## Download Button
 
 Same as the [Button control](./Button.md), the Download Button can be used to trigger the Spreadsheet Download directly in the XML View.  
 A sample usage can be found [here](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/tree/main/examples/packages/ordersv4freestyle).  
-For the configuration options, see [Button](./Configuration.md#componentcontainerdata).
+For the configuration options, see [componentContainerData Configuration](./Configuration.md#componentcontainerdata).
 
 A usage can look like this:
 
@@ -208,4 +220,3 @@ A usage can look like this:
 </mvc:View>
 
 ```
-
