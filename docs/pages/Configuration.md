@@ -2,7 +2,7 @@
 
 How to use them see [Example Code](#example-code)
 
-## Configuration Options
+## Configuration Overview
 
 The table below summarizes the options available for the UI5 Spreadsheet Importer Component. Detailed explanations and examples for each option are provided in the linked sections.
 
@@ -31,6 +31,7 @@ The table below summarizes the options available for the UI5 Spreadsheet Importe
 
 | Option                                              | Description                                           | Default         | Type       |
 |-----------------------------------------------------|-------------------------------------------------------|-----------------|------------|
+| [`action`](#action)               | Continues processing next batches even after errors.  | `CREATE`         | `string`  |
 | [`batchSize`](#batchsize)                           | Controls the size of batches sent to the backend.     | `1000`          | `number`   |
 | [`strict`](#strict)                                 | Controls availability of the "Continue" button in error dialogs. | `false` | `boolean`  |
 | [`decimalSeparator`](#decimalseparator)             | Sets the decimal separator for numbers.               | Browser default | `string`   |
@@ -38,6 +39,8 @@ The table below summarizes the options available for the UI5 Spreadsheet Importe
 | [`skipMandatoryFieldCheck`](#skipmandatoryfieldcheck)| Skips the check for mandatory fields.                | `false`         | `boolean`  |
 | [`skipColumnsCheck`](#skipcolumnscheck)             | Skips the check for unknown columns not in metadata.  | `false`         | `boolean`  |
 | [`continueOnError`](#continueonerror)               | Continues processing next batches even after errors.  | `false`         | `boolean`  |
+| [`onlyUpdateChangedProperties`](#onlyupdatechangedproperties) | Only updates properties that have changed. | `false`         | `boolean`  |
+
 
 ### Advanced Configuration Options
 
@@ -56,6 +59,8 @@ The table below summarizes the options available for the UI5 Spreadsheet Importe
 | [`i18nModel`](#i18nmodel)                         | Uses a custom i18n model to override default texts.       | Not specified      | `object`   |
 
 ---
+
+## Configuration Options
 
 ### `columns`
 
@@ -175,6 +180,15 @@ Of course, creating the draft entity and the subsequent activation takes longer 
 
 Together with the option `continueOnError`, it is also possible to create all entities and try to activate the other entities if the draft activation fails.
 This means that at least all drafts are available.
+
+### `action`
+
+**default:** `CREATE`
+
+Options:  
+
+- `CREATE` : Create
+- `UPDATE` : Update
 
 ### `batchSize`
 
@@ -584,6 +598,15 @@ This option defines whether the batch processing should continue if an error occ
 If you have, for example, set `batchSize` to 2 and have 4 rows, and an error occurs in the first batch of two rows, the processing will stop. If you set this flag to `true`, the processing will continue, and the second batch of two rows will be processed.  
 This may lead to errors in the backend because the first batch of two rows was not processed correctly.  
 Use this option with caution.
+
+### `onlyUpdateChangedProperties`
+
+**default:** `false`
+
+This option defines whether only the properties that have changed should be updated or not.  
+If set to `true`, only the properties that have changed will be updated.  
+If set to `false`, all properties will be updated.  
+This will take longer to process because the backend will be called for each row to check if the property has changed.
 
 ### `debug`
 

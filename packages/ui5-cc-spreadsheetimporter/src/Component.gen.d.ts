@@ -45,6 +45,7 @@ declare module "./Component" {
         bindingCustom?: object | PropertyBindingInfo | `{${string}}`;
         showDownloadButton?: boolean | PropertyBindingInfo | `{${string}}`;
         deepDownloadConfig?: object | PropertyBindingInfo | `{${string}}`;
+        onlyUpdateChangedProperties?: boolean | PropertyBindingInfo | `{${string}}`;
         preFileProcessing?: (event: Component$PreFileProcessingEvent) => void;
         checkBeforeRead?: (event: Component$CheckBeforeReadEvent) => void;
         changeBeforeCreate?: (event: Component$ChangeBeforeCreateEvent) => void;
@@ -203,6 +204,10 @@ declare module "./Component" {
         // property: deepDownloadConfig
         getDeepDownloadConfig(): object;
         setDeepDownloadConfig(deepDownloadConfig: object): this;
+
+        // property: onlyUpdateChangedProperties
+        getOnlyUpdateChangedProperties(): boolean;
+        setOnlyUpdateChangedProperties(onlyUpdateChangedProperties: boolean): this;
 
         // event: preFileProcessing
         attachPreFileProcessing(fn: (event: Component$PreFileProcessingEvent) => void, listener?: object): this;

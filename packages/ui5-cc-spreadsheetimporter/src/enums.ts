@@ -91,3 +91,9 @@ export enum MessageType {
      */
 	Warning = "Warning"
 }
+
+export enum Action {
+	Create = "CREATE",
+	Update = "UPDATE",
+	Delete = "DELETE"
+}
