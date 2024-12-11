@@ -13,7 +13,7 @@ import Log from "sap/base/Log";
 import OptionsDialog from "./dialog/OptionsDialog";
 import SpreadsheetDialog from "../control/SpreadsheetDialog";
 import SpreadsheetUploadDialog from "./dialog/SpreadsheetUploadDialog";
-import { CustomMessageTypes } from "../enums";
+import { Action, CustomMessageTypes } from "../enums";
 import VersionInfo from "sap/ui/VersionInfo";
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -140,7 +140,8 @@ export default class SpreadsheetUpload extends ManagedObject {
 		this.odataKeyList = await this.odataHandler.getKeyList(this._odataType, this.binding);
 		Log.debug("odataKeyList", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ odataKeyList: this.odataKeyList }));
 		this.typeLabelList = await this.odataHandler.getLabelList(this.component.getColumns(), this._odataType, this.component.getExcludeColumns(), this.binding);
-		if(this.component.getAction() === "UPDATE"){
+		if(this.component.getAction() === Action.Update || this.component.getAction() === Action.Delete){
+			// keys are needed for the update/delete action in the labellist
 			this.odataHandler.addKeys(this.typeLabelList, this._odataType);
 		}
 		Log.debug("typeLabelList", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ typeLabelList: this.typeLabelList }));
@@ -312,6 +313,12 @@ export default class SpreadsheetUpload extends ManagedObject {
 		}
 		if (options.hasOwnProperty("showDownloadButton")) {
 			this.component.setShowDownloadButton(options.showDownloadButton);
+		}
+		if (options.hasOwnProperty("action")) {
+			this.component.setAction(options.action);
+		}
+		if (options.hasOwnProperty("onlyUpdateChangedProperties")) {
+			this.component.setOnlyUpdateChangedProperties(options.onlyUpdateChangedProperties);
 		}
 
 		// Special case for showOptions

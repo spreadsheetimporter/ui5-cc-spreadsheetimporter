@@ -73,7 +73,8 @@ export default class Component extends UIComponent {
 			componentContainerData: { type: "object" },
 			bindingCustom: { type: "object" },
 			showDownloadButton: { type: "boolean", defaultValue: false },
-			deepDownloadConfig: { type: "object", defaultValue: {} }
+			deepDownloadConfig: { type: "object", defaultValue: {} },
+			onlyUpdateChangedProperties: { type: "boolean", defaultValue: false },
 			//Pro Configurations
 		},
 		aggregations: {
@@ -174,6 +175,7 @@ export default class Component extends UIComponent {
 		this.setI18nModel(compData?.i18nModel);
 		this.setBindingCustom(compData?.bindingCustom);
 		this.setShowDownloadButton(compData?.showDownloadButton);
+		this.setOnlyUpdateChangedProperties(compData?.onlyUpdateChangedProperties);
 		if (compData?.availableOptions && compData?.availableOptions.length > 0) {
 			// if availableOptions is set show the Options Menu
 			this.setShowOptions(true);

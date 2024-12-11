@@ -53,33 +53,66 @@ export default class ODataV4 extends OData {
 			path = binding.getModel().resolve(binding.getPath(), binding.getContext());
 		}
 		
-		// Create context for the single payload object
-		const context = binding.getModel().bindContext(
-			`${path}(ID='${payload.ID}',IsActiveEntity=${payload.IsActiveEntity})`
-		) as ODataContextBinding;
+		// Get the key properties for this entity type
+		const keys = MetadataHandlerV4.getAnnotationProperties(
+			this.spreadsheetUploadController.context,
+			this.spreadsheetUploadController.getOdataType()
+		).properties.$Key as string[];
 
-		this.createContexts.push(context)
-
-		const getOnlyUpdateChangedProperties = false // this.getOnlyUpdateChangedProperties()
-		if(getOnlyUpdateChangedProperties) {
-
-		await context.requestObject()
-
-		const object = context.getBoundContext().getObject()
-		
-		// Set the OrderNo property from the payload
-		// check if property changed
-		if (object.OrderNo !== payload.OrderNo) {
-			// returns promise
-			this.createPromises.push(context.getBoundContext().setProperty("OrderNo", payload.OrderNo));
-		}
-		if (object.buyer !== payload.buyer) {
-			// returns promise
-			this.createPromises.push(context.getBoundContext().setProperty("buyer", payload.buyer));
+		// Build the key predicates for the context binding (e.g., "ID='123',IsActiveEntity=true")
+		const keyPredicates = keys.map(key => {
+			// Check if the key exists in our payload
+			if (!(key in payload)) {
+				throw new Error(`Required key property '${key}' not found in payload`);
 			}
+			// Format the value based on its type:
+			// - Strings need to be wrapped in quotes: ID='123'
+			// - Other types (like boolean, number) don't: IsActiveEntity=true
+			const value = payload[key];
+			const formattedValue = typeof value === 'string' 
+				? `'${value}'` 
+				: value;
+
+			// Combine key and value: "key=value"
+			return `${key}=${formattedValue}`;
+		}).join(',');  // Join all key-value pairs with commas
+
+		// Create context with dynamic key predicates
+		const context = binding.getModel().bindContext(
+				`${path}(${keyPredicates})`
+			) as ODataContextBinding;
+
+		this.createContexts.push(context);
+
+		const getOnlyUpdateChangedProperties = this.spreadsheetUploadController.component.getOnlyUpdateChangedProperties();
+		
+		if (getOnlyUpdateChangedProperties) {
+			// Get current object state, may request data from backend
+			await context.requestObject();
+			const currentObject = context.getBoundContext().getObject();
+			
+			// Process all properties from payload except keys
+			Object.entries(payload).forEach(([property, newValue]) => {
+				// Skip if property is a key
+				if (keys.includes(property)) {
+					return;
+				}
+				// Only update if value has changed
+				if (currentObject[property] !== newValue) {
+					this.createPromises.push(
+						context.getBoundContext().setProperty(property, newValue)
+					);
+				}
+			});
 		} else {
-			this.createPromises.push(context.getBoundContext().setProperty("OrderNo", payload.OrderNo));
-			this.createPromises.push(context.getBoundContext().setProperty("buyer", payload.buyer));
+			// Update all non-key properties without checking changes
+			Object.entries(payload).forEach(([property, newValue]) => {
+				if (!keys.includes(property)) {
+					this.createPromises.push(
+						context.getBoundContext().setProperty(property, newValue)
+					);
+				}
+			});
 		}
 	}
 

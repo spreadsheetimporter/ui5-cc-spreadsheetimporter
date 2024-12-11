@@ -14,6 +14,7 @@ sap.ui.define([], function () {
 						async: true,
 						componentData: {
 							context: this,
+
 							useTableSelector: true,
 							i18nModel: this.getModel("i18n")
 						}
@@ -77,6 +78,8 @@ sap.ui.define([], function () {
 						async: true,
 						componentData: {
 							context: this,
+							action: "UPDATE",
+							showDownloadButton: true,
 							tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable",
 							columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time", "boolean", "decimal", "byte","binary"],
 							mandatoryFields: ["product_ID", "quantity"],
