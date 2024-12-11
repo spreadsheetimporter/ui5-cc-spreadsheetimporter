@@ -10,9 +10,12 @@ Another overview will show you which apps are already tested automatically with 
 All the example apps can be found in the [`examples`](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/tree/main/examples/packages) folder. The test scripts can be found in the [`test`](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/tree/main/examples/test) folder.  
 More info at [wdi5 tests](./Development/wdi5.md)
 
-**To summarize: All stable UI5 versions are currently supported (from 1.71). Also, 2.0 is already supported but is still experimental, as version 2.0 may still change.**
+!!! success 
+    **To summarize: All stable UI5 versions are currently supported (from 1.71). Also, 2.0 is already supported but is still experimental, as version 2.0 may still change. Also every OData Service, including SEGW, RAP, and CAP, is supported.**
 
-## Apps
+## Apps used for the tests
+
+Here is an overview of the apps that were created and used for the tests.
 
 ### CAP V2
 
