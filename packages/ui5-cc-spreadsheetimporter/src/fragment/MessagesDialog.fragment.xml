@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-  <Dialog title="{i18n>spreadsheetimporter.messageDialogTitle}" resizable="true" state="{info>/dialogState}" verticalScrolling="false" contentHeight="50%" contentWidth="50%">
+  <Dialog title="{i18n>spreadsheetimporter.messageDialogTitle}" state="{info>/dialogState}" verticalScrolling="false" contentHeight="50%" contentWidth="50%">
     <content>
       <MessageView items="{messages>/}">
         <MessageItem title="{messages>title}" type="{messages>ui5type}" counter="{messages>counter}" subtitle="{messages>subtitle}" description="{messages>description}" />
