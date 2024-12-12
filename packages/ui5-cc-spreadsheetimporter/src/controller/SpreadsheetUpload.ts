@@ -143,7 +143,7 @@ export default class SpreadsheetUpload extends ManagedObject {
 		Log.debug("typeLabelList", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ typeLabelList: this.typeLabelList }));
 
 		if(this.isODataV4) {
-			const { mainEntity, expands } = this.odataHandler.getODataEntitiesRecursive(this.getOdataType(), Infinity);
+			const { mainEntity, expands } = this.odataHandler.getODataEntitiesRecursive(this.getOdataType(), 99);
 			Log.debug("mainEntity", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ mainEntity: mainEntity }));
 			Log.debug("expands", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ expands: expands }));
 		}
