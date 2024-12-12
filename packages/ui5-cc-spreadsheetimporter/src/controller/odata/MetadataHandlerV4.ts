@@ -193,7 +193,7 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 		return keys;
 	}
 
-	public getODataEntitiesRecursive(entityName: string, deepLevel: number = Infinity): { mainEntity: any; expands: any } {
+	public getODataEntitiesRecursive(entityName: string, deepLevel: number = 99): { mainEntity: any; expands: any } {
 		const entities: any = this.spreadsheetUploadController.binding.getModel().getMetaModel().getData();
 
 		if (!entities || !entities[entityName]) {
@@ -211,7 +211,7 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 		return { mainEntity, expands };
 	}
 
-	private _findEntitiesByNavigationProperty(entities: any, rootEntityName: any, deepLevel: number = Infinity): void {
+	private _findEntitiesByNavigationProperty(entities: any, rootEntityName: any, deepLevel: number = 99): void {
 		const queue: { entity: any; entityName: string; parentEntityName: string; level: number }[] = [];
 		const traversedEntities: Set<string> = new Set();
 
@@ -244,15 +244,18 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 					navProperty.$XYZEntity = entities[navProperty.$Type];
 					navProperty.$XYZFetchableEntity = true;
 
-					queue.push({ entity: navProperty.$XYZEntity, entityName: navProperty.$Type, parentEntityName: entityName, level: level + 1 });
-					traversedEntities.add(navProperty.$Type);
+					// Only add to queue if we haven't traversed this entity type yet
+					if (!traversedEntities.has(navProperty.$Type)) {
+						queue.push({ entity: navProperty.$XYZEntity, entityName: navProperty.$Type, parentEntityName: entityName, level: level + 1 });
+						traversedEntities.add(navProperty.$Type);
+					}
 				}
 			}
 		}
 		
 	}
 	
-	_getExpandsRecursive(mainEntity: any, expands: any, parent?: string, parentExpand?: any, currentLevel: number = 0, deepLevel: number = Infinity) {
+	_getExpandsRecursive(mainEntity: any, expands: any, parent?: string, parentExpand?: any, currentLevel: number = 0, deepLevel: number = 99) {
 		if (currentLevel >= deepLevel) return;
 
 		for (const entity in mainEntity) {
