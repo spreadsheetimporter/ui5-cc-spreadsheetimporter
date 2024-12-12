@@ -60,56 +60,55 @@ export default class ODataV4 extends OData {
 		).properties.$Key as string[];
 
 		// Build the key predicates for the context binding (e.g., "ID='123',IsActiveEntity=true")
-		const keyPredicates = keys.map(key => {
-			// Check if the key exists in our payload
-			if (!(key in payload)) {
-				throw new Error(`Required key property '${key}' not found in payload`);
-			}
-			// Format the value based on its type:
-			// - Strings need to be wrapped in quotes: ID='123'
-			// - Other types (like boolean, number) don't: IsActiveEntity=true
-			const value = payload[key];
-			const formattedValue = typeof value === 'string' 
-				? `'${value}'` 
-				: value;
-
-			// Combine key and value: "key=value"
-			return `${key}=${formattedValue}`;
-		}).join(',');  // Join all key-value pairs with commas
+		let keyPredicates = ODataV4.formatKeyPredicates(keys, payload);
 
 		// Create context with dynamic key predicates
-		const context = binding.getModel().bindContext(
+		let context = binding.getModel().bindContext(
 				`${path}(${keyPredicates})`
 			) as ODataContextBinding;
 
-		this.createContexts.push(context);
-
 		const getOnlyUpdateChangedProperties = this.spreadsheetUploadController.component.getOnlyUpdateChangedProperties();
-		
+
 		if (getOnlyUpdateChangedProperties) {
-			// Get current object state, may request data from backend
+			// get current state of the object
 			await context.requestObject();
 			const currentObject = context.getBoundContext().getObject();
-			
+			// Determine if the current object is a draft
+			let isDraft = currentObject.HasDraftEntity || !currentObject.IsActiveEntity;
+			payload.IsActiveEntity = !isDraft;
+			// update the key predicates
+			keyPredicates = ODataV4.formatKeyPredicates(keys, payload);
+			// create a new context with the updated key predicates
+			context = binding.getModel().bindContext(
+				`${path}(${keyPredicates})`
+			) as ODataContextBinding;
+			this.createContexts.push(context);
 			// Process all properties from payload except keys
 			Object.entries(payload).forEach(([property, newValue]) => {
 				// Skip if property is a key
 				if (keys.includes(property)) {
 					return;
 				}
+				// decide if the full import payload should be sent or only the changed properties
+				const fullUpdate = true // this.getFullUpdate()
 				// Only update if value has changed
-				if (currentObject[property] !== newValue) {
+				if (fullUpdate || currentObject[property] !== newValue) {
 					this.createPromises.push(
-						context.getBoundContext().setProperty(property, newValue)
+						context.getBoundContext().setProperty(property, 
+							typeof newValue === 'object' ? `${newValue.getUTCFullYear()}-${("0" + (newValue.getUTCMonth() + 1)).slice(-2)}-${("0" + newValue.getUTCDate()).slice(-2)}` : newValue
+						)
 					);
 				}
 			});
 		} else {
+			this.createContexts.push(context);
 			// Update all non-key properties without checking changes
 			Object.entries(payload).forEach(([property, newValue]) => {
 				if (!keys.includes(property)) {
 					this.createPromises.push(
-						context.getBoundContext().setProperty(property, newValue)
+						context.getBoundContext().setProperty(property, 
+							typeof newValue === 'object' ? `${newValue.getUTCFullYear()}-${("0" + (newValue.getUTCMonth() + 1)).slice(-2)}-${("0" + newValue.getUTCDate()).slice(-2)}` : newValue
+						)
 					);
 				}
 			});
@@ -302,5 +301,24 @@ export default class ODataV4 extends OData {
 
 	addKeys(labelList: ListObject, entityName: string, parentEntity?: any, partner?: string) {
 		this.metadataHandler.addKeys(labelList, entityName, parentEntity, partner);
+	}
+
+	static formatKeyPredicates(keys: string[], payload: Record<string, any>): string {
+		return keys.map(key => {
+			// Check if the key exists in our payload
+			if (!(key in payload)) {
+				throw new Error(`Required key property '${key}' not found in payload`);
+			}
+			// Format the value based on its type:
+			// - Strings need to be wrapped in quotes: ID='123'
+			// - Other types (like boolean, number) don't: IsActiveEntity=true
+			const value = payload[key];
+			const formattedValue = typeof value === 'string' 
+				? `'${value}'` 
+				: value;
+
+			// Combine key and value: "key=value"
+			return `${key}=${formattedValue}`;
+		}).join(',');  // Join all key-value pairs with commas
 	}
 }
