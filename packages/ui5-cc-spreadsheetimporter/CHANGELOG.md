@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.1](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.5.0...ui5-cc-spreadsheetimporter-v1.5.1) (2024-12-12)
+
+
+### Bug Fixes
+
+* column names did not parse if cell type is date ([#677](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/677)) ([100771e](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/100771e96bb2ca15e939128b4fd937eda7a6ebbc))
+* resolve infinite loop in entity relationships navigation properties ([#683](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/683)) ([1b29c8a](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/1b29c8a85eb52f0c16ca15bce3c5e0cf13321b89))
+
 ## [1.5.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.4.2...ui5-cc-spreadsheetimporter-v1.5.0) (2024-12-06)
 
 
