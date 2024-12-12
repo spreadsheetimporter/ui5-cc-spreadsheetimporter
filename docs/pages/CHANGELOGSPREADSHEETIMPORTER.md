@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.2](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.5.1...ui5-cc-spreadsheetimporter-v1.5.2) (2024-12-12)
+
+
+### Bug Fixes
+
+* the `resize` icon of dialog caused chrome to crash ([#686](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/686)) ([9729a98](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/9729a98465161f90a12866f54a656ad8099ee111))
+
 ## [1.5.1](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.5.0...ui5-cc-spreadsheetimporter-v1.5.1) (2024-12-12)
 
 
