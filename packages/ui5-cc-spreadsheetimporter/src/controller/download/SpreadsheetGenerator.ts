@@ -146,7 +146,7 @@ export default class SpreadsheetGenerator extends ManagedObject {
             for (const [index, data] of dataArray.entries()) {
                 let sampleDataValue = "";
                 rows = index + 1 + startRow;
-                if (data[key]) {
+                if (data.hasOwnProperty(key)) {
                     sampleDataValue = data[key];
                 } else {
                     worksheet[XLSX.utils.encode_cell({ c: col, r: rows })] = { v: "", t: "s" }; // Set the cell as empty
@@ -172,7 +172,7 @@ export default class SpreadsheetGenerator extends ManagedObject {
     private _getCellForType(type: string, value: any): XLSX.CellObject {
         switch (type) {
             case "Edm.Boolean":
-                return { v: value.toString(), t: "b" };
+                return { v: value, t: "b" };
             case "Edm.String":
             case "Edm.Guid":
             case "Edm.Any":

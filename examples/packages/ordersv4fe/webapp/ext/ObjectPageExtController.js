@@ -85,6 +85,9 @@ sap.ui.define([], function () {
 							mandatoryFields: ["product_ID", "quantity"],
 							spreadsheetFileName: "Test.xlsx",
 							i18nModel: this.getModel("i18n"),
+							deepDownloadConfig: {
+								depth: 0
+							},
 							sampleData: [
 								{
 									product_ID: "HT-1000",
