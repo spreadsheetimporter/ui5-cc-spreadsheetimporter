@@ -13,6 +13,20 @@ type EntityObject = {
 	$Type?: string;
 	$NavigationPropertyBinding?: Record<string, string>;
 };
+interface ContextCreationResult {
+    context: ODataContextBinding;
+    path: string;
+    keyPredicates: string;
+    keys: string[];
+}
+
+interface BatchContext {
+    context: ODataContextBinding;
+    path: string;
+    keyPredicates: string;
+    keys: string[];
+    payload: any;
+}
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -23,7 +37,8 @@ export default class ODataV4 extends OData {
 	customBinding: ODataListBinding;
 	updateGroupId: string;
 	public metadataHandler: MetadataHandlerV4;
-
+	private objects: any[];
+	private contexts: BatchContext[];
 	constructor(spreadsheetUploadController: SpreadsheetUpload) {
 		super(spreadsheetUploadController);
 		this.updateGroupId = Util.getRandomString(10);
@@ -45,34 +60,27 @@ export default class ODataV4 extends OData {
 	}
 
 	async updateAsync(model: any, binding: any, payload: any) {
-		let path = binding.getPath();
-		if (binding.getResolvedPath) {
-			path = binding.getResolvedPath();
-		} else {
-			// workaround for getResolvedPath only available from 1.88
-			path = binding.getModel().resolve(binding.getPath(), binding.getContext());
-		}
-		
-		// Get the key properties for this entity type
-		const keys = MetadataHandlerV4.getAnnotationProperties(
-			this.spreadsheetUploadController.context,
-			this.spreadsheetUploadController.getOdataType()
-		).properties.$Key as string[];
-
-		// Build the key predicates for the context binding (e.g., "ID='123',IsActiveEntity=true")
-		let keyPredicates = ODataV4.formatKeyPredicates(keys, payload);
-
-		// Create context with dynamic key predicates
-		let context = binding.getModel().bindContext(
-				`${path}(${keyPredicates})`
-			) as ODataContextBinding;
-
 		const getOnlyUpdateChangedProperties = this.spreadsheetUploadController.component.getOnlyUpdateChangedProperties();
 
+		// also do this if we should check for draft entities, this should be default in draft scenarios
 		if (getOnlyUpdateChangedProperties) {
-			// get current state of the object
-			await context.requestObject();
+			// First get the binding context to get the keys
+			const { keys } = this.createBindingContext(binding, payload);
+			
+			// Now use the keys to find the matching context
+			const currentContext = this.contexts.find(ctx => 
+				keys.every(key => ctx.payload[key] === payload[key])
+			) as BatchContext;
+			
+			if (!currentContext) {
+				throw new Error('Could not find matching context for update operation');
+			}
+
+			const { path } = currentContext;
+			let { context, keyPredicates } = currentContext;
+			
 			const currentObject = context.getBoundContext().getObject();
+			
 			// Determine if the current object is a draft
 			let isDraft = currentObject.HasDraftEntity || !currentObject.IsActiveEntity;
 			payload.IsActiveEntity = !isDraft;
@@ -101,6 +109,7 @@ export default class ODataV4 extends OData {
 				}
 			});
 		} else {
+			let { context, path, keyPredicates, keys } = this.createBindingContext(binding, payload);
 			this.createContexts.push(context);
 			// Update all non-key properties without checking changes
 			Object.entries(payload).forEach(([property, newValue]) => {
@@ -301,6 +310,56 @@ export default class ODataV4 extends OData {
 
 	addKeys(labelList: ListObject, entityName: string, parentEntity?: any, partner?: string) {
 		this.metadataHandler.addKeys(labelList, entityName, parentEntity, partner);
+	}
+
+	// we need to get the objects first, lets do it in go/batch
+	async getObjects(model: any, binding: any, batch: any): Promise<any> {
+		this.objects = [];
+		this.contexts = [] as BatchContext[];
+		const promises = [];
+		
+		for (const payload of batch) {
+			const contextInfo = this.createBindingContext(binding, payload);
+			this.objects.push(contextInfo.context);
+			this.contexts.push({
+				...contextInfo,
+				payload
+			});
+			promises.push(contextInfo.context.requestObject());
+		}
+		return Promise.all(promises);
+	}
+
+	private createBindingContext(binding: any, payload: any): ContextCreationResult {
+		// Get the resolved path
+		let path = binding.getPath();
+		if (binding.getResolvedPath) {
+			path = binding.getResolvedPath();
+		} else {
+			// workaround for getResolvedPath only available from 1.88
+			path = binding.getModel().resolve(binding.getPath(), binding.getContext());
+		}
+		
+		// Get the key properties for this entity type
+		const keys = MetadataHandlerV4.getAnnotationProperties(
+			this.spreadsheetUploadController.context,
+			this.spreadsheetUploadController.getOdataType()
+		).properties.$Key as string[];
+	
+		// Build the key predicates
+		const keyPredicates = ODataV4.formatKeyPredicates(keys, payload);
+	
+		// Create context with dynamic key predicates
+		const context = binding.getModel().bindContext(
+			`${path}(${keyPredicates})`
+		) as ODataContextBinding;
+	
+		return {
+			context,
+			path,
+			keyPredicates,
+			keys
+		};
 	}
 
 	static formatKeyPredicates(keys: string[], payload: Record<string, any>): string {
