@@ -603,6 +603,9 @@ Use this option with caution.
 
 **default:** `false`
 
+This option is recommended to be set to `true` for OData V4 as it checks if the entity is in draft mode and updates the entity accordingly.  
+If this option is set to `false`, the property `IsActiveEntity` needs to be in the spreadsheet file.
+
 This option defines whether only the properties that have changed should be updated or not.  
 If set to `true`, only the properties that have changed will be updated.  
 If set to `false`, all properties will be updated.  

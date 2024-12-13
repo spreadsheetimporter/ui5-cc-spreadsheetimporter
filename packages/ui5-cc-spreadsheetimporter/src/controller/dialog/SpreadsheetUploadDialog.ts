@@ -191,6 +191,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 				if (!this.component.getSkipColumnsCheck()) {
 					this.messageHandler.checkColumnNames(columnNames, this.component.getFieldMatchType(), this.spreadsheetUploadController.typeLabelList);
 				}
+				// TODO: check for duplicate keys in payload when updating
 			}
 			this.spreadsheetUploadController.payload = spreadsheetSheetsData;
 

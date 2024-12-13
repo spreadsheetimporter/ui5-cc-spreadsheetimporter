@@ -64,9 +64,18 @@ export default abstract class OData extends ManagedObject {
 					// default for draft scenarios we need to request the object first to get draft status otherwise the update will fail
 					// with options the strategy could be changed to make the update quicker
 					// request all objects in the batch first
-					await this.getObjects(model, binding, batch);
+					if(component.getAction() === "UPDATE") {
+						try {
+							// TODO: do this only if getOnlyUpdateChangedProperties is true (or any other option i still have to define)
+							await this.getObjects(model, binding, batch);
+						} catch (error) {
+						// TODO: check which payloads are not found or causing the error
+						// TODO: add error message to message handler
+						// TODO: decide to continue or break depending on component.getContinueOnError()
+						// TODO: if getContinueOnError is true, continue with successfull fetched objects
+					}
 
-
+					// maybe move this loop to createAsync and updateAsync --> parameter will change (breaking change)
 					for (let payload of batch) {
 						let fireEventAsyncReturn: FireEventReturnType;
 						// skip draft and directly create
@@ -86,7 +95,7 @@ export default abstract class OData extends ManagedObject {
 							this.createAsync(model, binding, payload);
 						}
 						if(component.getAction() === "UPDATE") {
-							await this.updateAsync(model, binding, payload);
+							this.updateAsync(model, binding, payload);
 						}
 					}
 					// wait for all drafts to be created
