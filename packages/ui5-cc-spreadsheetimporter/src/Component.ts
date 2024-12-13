@@ -74,7 +74,7 @@ export default class Component extends UIComponent {
 			bindingCustom: { type: "object" },
 			showDownloadButton: { type: "boolean", defaultValue: false },
 			deepDownloadConfig: { type: "object", defaultValue: {} },
-			onlyUpdateChangedProperties: { type: "boolean", defaultValue: false },
+			onlyUpdateChangedProperties: { type: "boolean", defaultValue: true },
 			//Pro Configurations
 		},
 		aggregations: {

@@ -59,7 +59,7 @@ export default class ODataV4 extends OData {
 		this.createPromises.push(returnObject.promise);
 	}
 
-	async updateAsync(model: any, binding: any, payload: any) {
+	updateAsync(model: any, binding: any, payload: any) {
 		const getOnlyUpdateChangedProperties = this.spreadsheetUploadController.component.getOnlyUpdateChangedProperties();
 
 		// also do this if we should check for draft entities, this should be default in draft scenarios
@@ -81,6 +81,7 @@ export default class ODataV4 extends OData {
 			
 			const currentObject = context.getBoundContext().getObject();
 			
+			// TODO: maybe move creating a new context to getObjects
 			// Determine if the current object is a draft
 			let isDraft = currentObject.HasDraftEntity || !currentObject.IsActiveEntity;
 			payload.IsActiveEntity = !isDraft;
@@ -314,6 +315,7 @@ export default class ODataV4 extends OData {
 
 	// we need to get the objects first, lets do it in go/batch
 	async getObjects(model: any, binding: any, batch: any): Promise<any> {
+		// TODO: check if IsActiveEntity is available, add it to the payload?
 		this.objects = [];
 		this.contexts = [] as BatchContext[];
 		const promises = [];
@@ -327,7 +329,8 @@ export default class ODataV4 extends OData {
 			});
 			promises.push(contextInfo.context.requestObject());
 		}
-		return Promise.all(promises);
+		const results = await Promise.all(promises);
+		return results;
 	}
 
 	private createBindingContext(binding: any, payload: any): ContextCreationResult {
@@ -363,6 +366,11 @@ export default class ODataV4 extends OData {
 	}
 
 	static formatKeyPredicates(keys: string[], payload: Record<string, any>): string {
+		// If IsActiveEntity is a key but not in payload, add it with true value as ODataV4 is not able to create draft entities
+		if (keys.includes('IsActiveEntity') && !('IsActiveEntity' in payload)) {
+			payload = { ...payload, IsActiveEntity: true };
+		}
+
 		return keys.map(key => {
 			// Check if the key exists in our payload
 			if (!(key in payload)) {
