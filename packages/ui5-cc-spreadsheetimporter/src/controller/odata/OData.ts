@@ -60,6 +60,13 @@ export default abstract class OData extends ManagedObject {
 			for (const batch of slicedPayloadArray) {
 				// loop over data from spreadsheet file
 				try {
+
+					// default for draft scenarios we need to request the object first to get draft status otherwise the update will fail
+					// with options the strategy could be changed to make the update quicker
+					// request all objects in the batch first
+					await this.getObjects(model, binding, batch);
+
+
 					for (let payload of batch) {
 						let fireEventAsyncReturn: FireEventReturnType;
 						// skip draft and directly create
@@ -79,7 +86,7 @@ export default abstract class OData extends ManagedObject {
 							this.createAsync(model, binding, payload);
 						}
 						if(component.getAction() === "UPDATE") {
-							this.updateAsync(model, binding, payload);
+							await this.updateAsync(model, binding, payload);
 						}
 					}
 					// wait for all drafts to be created
@@ -258,6 +265,6 @@ export default abstract class OData extends ManagedObject {
 	abstract getBindingFromBinding(binding: any, expand?: any): ODataListBindingV4 | ODataListBindingV2;
 	abstract fetchBatch(customBinding: ODataListBindingV4 | ODataListBindingV2, batchSize: number): Promise<any>;
 	abstract addKeys(labelList: ListObject, entityName: string, parentEntity?: any, partner?: string): void;
-	
+	abstract getObjects(model: any, binding: any, batch: any): Promise<any>;
 	// Pro Methods
 }

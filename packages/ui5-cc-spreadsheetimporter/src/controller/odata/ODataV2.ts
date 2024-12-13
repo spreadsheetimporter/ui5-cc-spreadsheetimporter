@@ -141,6 +141,10 @@ export default class ODataV2 extends OData {
 		}
 	}
 
+	getObjects(model: any, binding: any, batch: any): Promise<any> {
+		throw new Error("Method not implemented.");
+	}
+
 	async getLabelList(columns: Columns, odataType: string, excludeColumns: Columns, binding?: any) {
 		const metaModel = binding.getModel().getMetaModel();
 		await metaModel.loaded();
