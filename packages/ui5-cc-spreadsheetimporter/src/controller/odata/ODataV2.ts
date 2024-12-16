@@ -6,19 +6,19 @@ import MetadataHandlerV2 from "./MetadataHandlerV2";
 import ODataListBinding from "sap/ui/model/odata/v2/ODataListBinding";
 import ODataModel from "sap/ui/model/odata/v2/ODataModel";
 import ODataMetaModel from "sap/ui/model/odata/ODataMetaModel";
+import MessageHandler from "../MessageHandler";
+import Util from "../Util";
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
 export default class ODataV2 extends OData {
-	public createPromises: Promise<any>[] = [];
-	public createContexts: any[] = [];
 	customBinding: ODataListBinding;
 	submitChangesResponse: any;
 	private metadataHandler: MetadataHandlerV2;
 
-	constructor(spreadsheetUploadController: SpreadsheetUpload) {
-		super(spreadsheetUploadController);
+	constructor(spreadsheetUploadController: SpreadsheetUpload, messageHandler: MessageHandler, util: Util) {
+		super(spreadsheetUploadController, messageHandler, util);
 		this.metadataHandler = new MetadataHandlerV2(spreadsheetUploadController);
 	}
 	create(model: any, binding: any, payload: any) {
