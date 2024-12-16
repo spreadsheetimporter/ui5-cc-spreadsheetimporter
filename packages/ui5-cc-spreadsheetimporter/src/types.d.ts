@@ -21,6 +21,7 @@ export type Columns = string[];
 export type CustomMessageType = {
 	title: string;
 	group: boolean;
+	update?: boolean;
 };
 
 export interface Messages {

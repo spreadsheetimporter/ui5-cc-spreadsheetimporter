@@ -69,7 +69,13 @@ export const CustomMessageTypes: { [key: string]: CustomMessageType } = {
 	},
 	ObjectNotFound: {
 		title: "ObjectNotFound",
-		group: true
+		group: true,
+		update: true
+	},
+	DraftEntityMismatch: {
+		title: "DraftEntityMismatch",
+		group: true,
+		update: true
 	}
 };
 

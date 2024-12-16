@@ -341,12 +341,18 @@ export default class ODataV4 extends OData {
 		// Map contexts to objects
 		const objects = await Promise.all(contexts.map((context) => context.getObject()));
 
+		let errorFound = false;
+
 		// Find which objects from batch weren't found
 		batch.forEach((batchItem, index) => {
-			const keys = this.getKeys(binding, batchItem, true);
-			const found = objects.some((obj) => Object.entries(keys).every(([key, value]) => obj[key] === value));
+			const keys = this.getKeys(binding, batchItem);
+			const keysIsActiveEntityTrue = this.getKeys(binding, batchItem, true);
+			const foundObject = objects.find((obj) => 
+				Object.entries(keysIsActiveEntityTrue).every(([key, value]) => obj[key] === value)
+			);
 
-			if (!found) {
+			if (!foundObject) {
+				errorFound = true;
 				this.messageHandler.addMessageToMessages({
 					title: this.util.geti18nText("spreadsheetimporter.objectNotFound"),
 					row: index + 1, // TODO: currently unknown
@@ -357,10 +363,31 @@ export default class ODataV4 extends OData {
 						.join(", "),
 					ui5type: MessageType.Error
 				});
+			} else{
+				// check if HasDraftEntity is the same as in the object
+				if (foundObject.HasDraftEntity === batchItem.IsActiveEntity) {
+					errorFound = true;
+					const currentEntity = foundObject.HasDraftEntity ? "Draft" : "Active";
+					const uploadedEntity = batchItem.IsActiveEntity ? "Active" : "Draft";
+					this.messageHandler.addMessageToMessages({
+						title: this.util.geti18nText("spreadsheetimporter.draftEntityMismatch"),
+						row: index + 1, // TODO: currently unknown
+						type: CustomMessageTypes.DraftEntityMismatch,
+						counter: 1,
+						ui5type: MessageType.Error,
+						formattedValue: [Object.entries(keys)
+							.map(([key, value]) => `${key}=${value}`)
+							.join(", "),uploadedEntity,currentEntity]
+					});
+				}
+
 			}
+
+			
 		});
 
-		if (objects.length !== batch.length) {
+
+		if (errorFound) {
 			if (this.messageHandler.areMessagesPresent()) {
 				try {
 					// Wait for user decision
@@ -392,9 +419,9 @@ export default class ODataV4 extends OData {
 				return;
 			}
 			if (key === "IsActiveEntity") {
-				// If IsActiveEntity is explicitly set to true or false in payload, use true
-				// If not set in payload, use the payload value
-				keyMap[key] = payload[key] !== undefined ? true : IsActiveEntity;
+				// If IsActiveEntity is explicitly provided as a parameter, use it
+				// Otherwise, use the value from the payload
+				keyMap[key] = IsActiveEntity !== undefined ? IsActiveEntity : payload[key];
 			} else {
 				keyMap[key] = payload[key];
 			}

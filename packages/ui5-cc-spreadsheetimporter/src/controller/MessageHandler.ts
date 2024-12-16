@@ -222,7 +222,7 @@ export default class MessageHandler extends ManagedObject {
 					},
 					onContinue: async () => {
 						// check if messages has type "ObjectNotFound"
-						if (this.messages.some((message) => message.type === CustomMessageTypes.ObjectNotFound)) {
+						if (this.messages.some((message) => message.type.update)) {
 							await this.showConfirmDialog();
 							this.messageDialog.close();
 						} else {
@@ -273,8 +273,9 @@ export default class MessageHandler extends ManagedObject {
 				messageText = this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.errorInRowWithValue", [message.row, message.rawValue]);
 			} else if (message.type === CustomMessageTypes.ObjectNotFound) {
 				messageText = this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.objectNotFoundWithKeys", [message.formattedValue]);
-			}
-			else {
+			} else if (message.type === CustomMessageTypes.DraftEntityMismatch) {
+				messageText = this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.draftEntityMismatchRow", message.formattedValue);
+			} else {
 				messageText = this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.errorInRow", [message.row]);
 			}
 			groups[message.title].push({ description: messageText, row: message.row });
@@ -308,7 +309,7 @@ export default class MessageHandler extends ManagedObject {
 	private async onContinue() {
 		try {
 			// check if messages has type "ObjectNotFound"
-			if (this.messages.some((message) => message.type === CustomMessageTypes.ObjectNotFound)) {
+			if (this.messages.some((message) => message.type.update)) {
 				await this.showConfirmDialog();
 				// continue with successful fetched objects
 			}
