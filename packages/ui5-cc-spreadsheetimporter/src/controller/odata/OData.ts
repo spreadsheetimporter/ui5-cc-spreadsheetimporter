@@ -75,9 +75,6 @@ export default abstract class OData extends ManagedObject {
 
 							// TODO: do this only if getOnlyUpdateChangedProperties is true (or any other option i still have to define)
 							await this.getObjects(model, binding, batch);
-
-						// TODO: check which payloads are not found or causing the error
-						// TODO: add error message to message handler
 						// TODO: decide to continue or break depending on component.getContinueOnError()
 						// TODO: if getContinueOnError is true, continue with successfull fetched objects
 					}
