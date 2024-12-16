@@ -80,9 +80,23 @@ export default class ODataV4 extends OData {
 
 		const currentObject = context.getObject();
 
-		// Determine if the current object is a draft
-		let isDraft = currentObject.HasDraftEntity || !currentObject.IsActiveEntity;
-		payload.IsActiveEntity = !isDraft;
+    // Determine if the current object is a draft or active entity
+    const isDraft = currentObject.HasDraftEntity || !currentObject.IsActiveEntity;
+
+    if (isDraft) {
+        // Switch to the draft entity by creating a new context with IsActiveEntity=false
+		payload.IsActiveEntity = false;
+        const draftKeyPredicates = ODataV4.formatKeyPredicates(keys, payload);
+		let path = binding.getPath();
+		if (binding.getResolvedPath) {
+			path = binding.getResolvedPath();
+		} else {
+			// workaround for getResolvedPath only available from 1.88
+			path = binding.getModel().resolve(binding.getPath(), binding.getContext());
+		}
+		const oDataContextBinding = binding.getModel().bindContext(`${path}(${draftKeyPredicates})`, undefined, { $$groupId: this.updateGroupId }) as ODataContextBinding;
+		context = oDataContextBinding.getBoundContext()
+    }
 
 		// Process all properties from payload except keys
 		Object.entries(payload).forEach(([property, newValue]) => {
