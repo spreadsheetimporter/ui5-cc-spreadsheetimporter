@@ -7,6 +7,11 @@ import Log from "sap/base/Log";
 import MetadataHandlerV4 from "./MetadataHandlerV4";
 import ODataModel from "sap/ui/model/odata/v4/ODataModel";
 import ODataContextBinding from "sap/ui/model/odata/v4/ODataContextBinding";
+import Filter from "sap/ui/model/Filter";
+import FilterOperator from "sap/ui/model/FilterOperator";
+import Context from "sap/ui/model/odata/v4/Context";
+import MessageHandler from "../MessageHandler";
+import { CustomMessageTypes, MessageType } from "../../enums";
 
 type EntityObject = {
 	$kind: string;
@@ -21,7 +26,7 @@ interface ContextCreationResult {
 }
 
 interface BatchContext {
-    context: ODataContextBinding;
+    context: Context;
     path: string;
     keyPredicates: string;
     keys: string[];
@@ -32,17 +37,16 @@ interface BatchContext {
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
 export default class ODataV4 extends OData {
-	public createPromises: Promise<any>[] = [];
-	public createContexts: any[] = [];
 	customBinding: ODataListBinding;
 	updateGroupId: string;
 	public metadataHandler: MetadataHandlerV4;
 	private objects: any[];
 	private contexts: BatchContext[];
-	constructor(spreadsheetUploadController: SpreadsheetUpload) {
-		super(spreadsheetUploadController);
+	constructor(spreadsheetUploadController: SpreadsheetUpload, messageHandler: MessageHandler, util: Util) {
+		super(spreadsheetUploadController, messageHandler, util);
 		this.updateGroupId = Util.getRandomString(10);
 		this.metadataHandler = new MetadataHandlerV4(spreadsheetUploadController);
+		this.contexts = [];
 	}
 
 	create(model: any, binding: any, payload: any) {
@@ -63,66 +67,41 @@ export default class ODataV4 extends OData {
 		const getOnlyUpdateChangedProperties = this.spreadsheetUploadController.component.getOnlyUpdateChangedProperties();
 
 		// also do this if we should check for draft entities, this should be default in draft scenarios
-		if (getOnlyUpdateChangedProperties) {
-			// First get the binding context to get the keys
-			const { keys } = this.createBindingContext(binding, payload);
-			
-			// Now use the keys to find the matching context
-			const currentContext = this.contexts.find(ctx => 
-				keys.every(key => ctx.payload[key] === payload[key])
-			) as BatchContext;
-			
-			if (!currentContext) {
-				throw new Error('Could not find matching context for update operation');
-			}
+		// TODO: maybe this should default and only way to update
+		const keys = this.getKeys(binding, payload);
 
-			const { path } = currentContext;
-			let { context, keyPredicates } = currentContext;
-			
-			const currentObject = context.getBoundContext().getObject();
-			
-			// TODO: maybe move creating a new context to getObjects
-			// Determine if the current object is a draft
-			let isDraft = currentObject.HasDraftEntity || !currentObject.IsActiveEntity;
-			payload.IsActiveEntity = !isDraft;
-			// update the key predicates
-			keyPredicates = ODataV4.formatKeyPredicates(keys, payload);
-			// create a new context with the updated key predicates
-			context = binding.getModel().bindContext(
-				`${path}(${keyPredicates})`
-			) as ODataContextBinding;
-			this.createContexts.push(context);
-			// Process all properties from payload except keys
-			Object.entries(payload).forEach(([property, newValue]) => {
-				// Skip if property is a key
-				if (keys.includes(property)) {
-					return;
-				}
-				// decide if the full import payload should be sent or only the changed properties
-				const fullUpdate = true // this.getFullUpdate()
-				// Only update if value has changed
-				if (fullUpdate || currentObject[property] !== newValue) {
-					this.createPromises.push(
-						context.getBoundContext().setProperty(property, 
-							typeof newValue === 'object' ? `${newValue.getUTCFullYear()}-${("0" + (newValue.getUTCMonth() + 1)).slice(-2)}-${("0" + newValue.getUTCDate()).slice(-2)}` : newValue
-						)
-					);
-				}
-			});
-		} else {
-			let { context, path, keyPredicates, keys } = this.createBindingContext(binding, payload);
-			this.createContexts.push(context);
-			// Update all non-key properties without checking changes
-			Object.entries(payload).forEach(([property, newValue]) => {
-				if (!keys.includes(property)) {
-					this.createPromises.push(
-						context.getBoundContext().setProperty(property, 
-							typeof newValue === 'object' ? `${newValue.getUTCFullYear()}-${("0" + (newValue.getUTCMonth() + 1)).slice(-2)}-${("0" + newValue.getUTCDate()).slice(-2)}` : newValue
-						)
-					);
-				}
-			});
+		// Now use the keys to find the matching context
+		const currentContext = this.contexts.find((ctx) => Object.entries(keys).every(([key, value]) => ctx.payload[key] === value)) as BatchContext;
+
+		if (!currentContext) {
+			throw new Error("Could not find matching context for update operation");
 		}
+		let { context } = currentContext;
+
+		const currentObject = context.getObject();
+
+		// Determine if the current object is a draft
+		let isDraft = currentObject.HasDraftEntity || !currentObject.IsActiveEntity;
+		payload.IsActiveEntity = !isDraft;
+
+		// Process all properties from payload except keys
+		Object.entries(payload).forEach(([property, newValue]) => {
+			// Skip if property is a key
+			if (property in keys) {
+				return;
+			}
+			// decide if the full import payload should be sent or only the changed properties
+			const fullUpdate = true; // this.getFullUpdate()
+			// Only update if value has changed
+			if (fullUpdate || currentObject[property] !== newValue) {
+				this.createPromises.push(
+					context.setProperty(
+						property,
+						typeof newValue === "object" ? `${newValue.getUTCFullYear()}-${("0" + (newValue.getUTCMonth() + 1)).slice(-2)}-${("0" + newValue.getUTCDate()).slice(-2)}` : newValue
+					)
+				);
+			}
+		});
 	}
 
 	async submitChanges(model: any): Promise<any> {
@@ -151,7 +130,7 @@ export default class ODataV4 extends OData {
 
 	createCustomBinding(binding: any) {
 		if (this.spreadsheetUploadController.component.getOdataType()) {
-			const entityContainer = ODataV4.getContainerName(this.spreadsheetUploadController.context)
+			const entityContainer = ODataV4.getContainerName(this.spreadsheetUploadController.context);
 			const typeToSearch = this.spreadsheetUploadController.component.getOdataType();
 			const odataEntityTypeParameterPath = this._findAttributeByType(entityContainer, typeToSearch);
 			this.customBinding = this.spreadsheetUploadController.view
@@ -206,7 +185,7 @@ export default class ODataV4 extends OData {
 				Log.error("Error while getting OData Type. Please specify 'odataType' in options", undefined, "SpreadsheetUpload: ODataV4");
 			}
 		} else {
-			const entityContainer = ODataV4.getContainerName(this.spreadsheetUploadController.context)
+			const entityContainer = ODataV4.getContainerName(this.spreadsheetUploadController.context);
 			const odataEntityType = this._findAttributeByType(entityContainer, odataType);
 			if (!odataEntityType) {
 				// filter out $kind
@@ -269,7 +248,7 @@ export default class ODataV4 extends OData {
 			// workaround for getResolvedPath only available from 1.88
 			path = (binding.getModel() as ODataModel).resolve(binding.getPath(), binding.getContext());
 		}
-		return binding.getModel().bindList(path, null, [], [], { $$updateGroupId: this.updateGroupId, $count: true, $expand: expand }) as ODataListBinding;
+		return binding.getModel().bindList(path, null, [], [], { $$updateGroupId: this.updateGroupId, $count: true }) as ODataListBinding;
 	}
 
 	fetchBatch(customBinding: ODataListBinding, batchSize: number): Promise<any> {
@@ -313,27 +292,88 @@ export default class ODataV4 extends OData {
 		this.metadataHandler.addKeys(labelList, entityName, parentEntity, partner);
 	}
 
-	// we need to get the objects first, lets do it in go/batch
-	async getObjects(model: any, binding: any, batch: any): Promise<any> {
+	async getObjects(model: any, binding: any, batch: any): Promise<any[]> {
 		// TODO: check if IsActiveEntity is available, add it to the payload?
-		this.objects = [];
-		this.contexts = [] as BatchContext[];
-		const promises = [];
-		
-		for (const payload of batch) {
-			const contextInfo = this.createBindingContext(binding, payload);
-			this.objects.push(contextInfo.context);
+		let path = binding.getPath();
+		if (binding.getResolvedPath) {
+			path = binding.getResolvedPath();
+		} else {
+			// workaround for getResolvedPath only available from 1.88
+			path = binding.getModel().resolve(binding.getPath(), binding.getContext());
+		}
+
+		// Create filters for each object in the batch
+		const batchFilters = batch.map((payload) => {
+			const keys = this.getKeys(binding, payload);
+			const filterConditions = Object.entries(keys).map(([property, value]) => new Filter(property, FilterOperator.EQ, value));
+			return new Filter({
+				filters: filterConditions,
+				and: true // Combine conditions for each key
+			});
+		});
+
+		// Combine all batch filters with OR
+		const combinedFilter = new Filter({
+			filters: batchFilters,
+			and: false // OR condition between different objects
+		});
+
+		// Bind the list with the filter
+		const listBinding = model.bindList(path, null, [], [], { $$updateGroupId: "$auto" }) as ODataListBinding;
+		listBinding.filter(combinedFilter);
+
+		// Request contexts (fetch all data matching the filters)
+		const contexts = await listBinding.requestContexts(0, batch.length);
+
+		// Store contexts with their corresponding paths and payloads
+		batch.forEach((payload, index) => {
+			const keys = this.getKeys(binding, payload);
 			this.contexts.push({
-				...contextInfo,
+				context: contexts[index],
+				path,
+				keyPredicates: ODataV4.formatKeyPredicates(keys, payload),
+				keys: Object.keys(keys),
 				payload
 			});
-			promises.push(contextInfo.context.requestObject());
+		});
+
+		// Map contexts to objects
+		const objects = await Promise.all(contexts.map((context) => context.getObject()));
+
+		// Find which objects from batch weren't found
+		batch.forEach((batchItem, index) => {
+			const keys = this.getKeys(binding, batchItem, true);
+			const found = objects.some(obj => 
+				Object.entries(keys).every(([key, value]) => obj[key] === value)
+			);
+
+			if (!found) {
+				this.messageHandler.addMessageToMessages({
+					title: this.util.geti18nText("spreadsheetimporter.objectNotFound"),
+					row: index + 1, // TODO: currently unknown
+					type: CustomMessageTypes.ObjectNotFound,
+					counter: 1,
+					formattedValue: Object.entries(keys)
+						.map(([key, value]) => `${key}=${value}`)
+						.join(', '),
+					ui5type: MessageType.Error
+				});
+			}
+		});
+
+		if (objects.length !== batch.length) {
+			if (this.messageHandler.areMessagesPresent()) {
+				// show error dialog
+				this.messageHandler.displayMessages();
+				throw new Error("Not all objects were found");
+			}
 		}
-		const results = await Promise.all(promises);
-		return results;
+
+		return objects;
 	}
 
-	private createBindingContext(binding: any, payload: any): ContextCreationResult {
+	// move to metadata handler
+	getKeys(binding: any, payload: any, excludeIsActiveEntity: boolean = false): Record<string, any> {
 		// Get the resolved path
 		let path = binding.getPath();
 		if (binding.getResolvedPath) {
@@ -342,21 +382,27 @@ export default class ODataV4 extends OData {
 			// workaround for getResolvedPath only available from 1.88
 			path = binding.getModel().resolve(binding.getPath(), binding.getContext());
 		}
-		
+
 		// Get the key properties for this entity type
-		const keys = MetadataHandlerV4.getAnnotationProperties(
-			this.spreadsheetUploadController.context,
-			this.spreadsheetUploadController.getOdataType()
-		).properties.$Key as string[];
-	
-		// Build the key predicates
-		const keyPredicates = ODataV4.formatKeyPredicates(keys, payload);
-	
+		const keyNames = MetadataHandlerV4.getAnnotationProperties(this.spreadsheetUploadController.context, this.spreadsheetUploadController.getOdataType()).properties.$Key as string[];
+
+		// Create a map of key names to their values from the payload
+		const keyMap: Record<string, any> = {};
+		keyNames.forEach((key) => {
+			if (excludeIsActiveEntity && key === "IsActiveEntity") {
+				return;
+			}
+			keyMap[key] = payload[key];
+		});
+
+		return keyMap;
+	}
+
+	private createBindingContext(binding: any, payload: any): ContextCreationResult {
+		const keyPredicates = this.getKeys(binding, payload);
 		// Create context with dynamic key predicates
-		const context = binding.getModel().bindContext(
-			`${path}(${keyPredicates})`
-		) as ODataContextBinding;
-	
+		const context = binding.getModel().bindContext(`${path}(${keyPredicates})`, undefined, { $$groupId: this.updateGroupId }) as ODataContextBinding;
+
 		return {
 			context,
 			path,
@@ -365,27 +411,27 @@ export default class ODataV4 extends OData {
 		};
 	}
 
-	static formatKeyPredicates(keys: string[], payload: Record<string, any>): string {
+	static formatKeyPredicates(keys: Record<string, any>, payload: Record<string, any>): string {
 		// If IsActiveEntity is a key but not in payload, add it with true value as ODataV4 is not able to create draft entities
-		if (keys.includes('IsActiveEntity') && !('IsActiveEntity' in payload)) {
+		if ("IsActiveEntity" in keys && !("IsActiveEntity" in payload)) {
 			payload = { ...payload, IsActiveEntity: true };
 		}
 
-		return keys.map(key => {
-			// Check if the key exists in our payload
-			if (!(key in payload)) {
-				throw new Error(`Required key property '${key}' not found in payload`);
-			}
-			// Format the value based on its type:
-			// - Strings need to be wrapped in quotes: ID='123'
-			// - Other types (like boolean, number) don't: IsActiveEntity=true
-			const value = payload[key];
-			const formattedValue = typeof value === 'string' 
-				? `'${value}'` 
-				: value;
+		return Object.entries(keys)
+			.map(([key, _]) => {
+				// Check if the key exists in our payload
+				if (!(key in payload)) {
+					throw new Error(`Required key property '${key}' not found in payload`);
+				}
+				// Format the value based on its type:
+				// - Strings need to be wrapped in quotes: ID='123'
+				// - Other types (like boolean, number) don't: IsActiveEntity=true
+				const value = payload[key];
+				const formattedValue = typeof value === "string" ? `'${value}'` : value;
 
-			// Combine key and value: "key=value"
-			return `${key}=${formattedValue}`;
-		}).join(',');  // Join all key-value pairs with commas
+				// Combine key and value: "key=value"
+				return `${key}=${formattedValue}`;
+			})
+			.join(","); // Join all key-value pairs with commas
 	}
 }

@@ -130,7 +130,7 @@ export default class SpreadsheetUpload extends ManagedObject {
 			throw new Error(this.util.geti18nText("spreadsheetimporter.bindingError"));
 		}
 		this.isODataV4 = this._checkIfODataIsV4(this.binding);
-		this.odataHandler = this.createODataHandler(this);
+		this.odataHandler = this.createODataHandler(this, this.messageHandler, this.util);
 		this.spreadsheetUploadDialogHandler.setODataHandler(this.odataHandler);
 		this.controller = this.view.getController();
 		Log.debug("View", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ view: this.view }));
@@ -171,11 +171,11 @@ export default class SpreadsheetUpload extends ManagedObject {
 	 * @param {number} version - UI5 version number.
 	 * @returns {OData} OData handler instance.
 	 */
-	createODataHandler(spreadsheetUploadController: SpreadsheetUpload): OData {
+	createODataHandler(spreadsheetUploadController: SpreadsheetUpload, messageHandler: MessageHandler, util: Util): OData {
 		if (this.isODataV4) {
-			return new ODataV4(spreadsheetUploadController);
+			return new ODataV4(spreadsheetUploadController, messageHandler, util);
 		} else {
-			return new ODataV2(spreadsheetUploadController);
+			return new ODataV2(spreadsheetUploadController, messageHandler, util);
 		}
 	}
 

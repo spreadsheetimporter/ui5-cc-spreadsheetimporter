@@ -66,6 +66,10 @@ export const CustomMessageTypes: { [key: string]: CustomMessageType } = {
 	MaxLengthExceeded: {
 		title: "MaxLengthExceeded",
 		group: true
+	},
+	ObjectNotFound: {
+		title: "ObjectNotFound",
+		group: true
 	}
 };
 

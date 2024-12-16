@@ -13,6 +13,7 @@ import Dialog from "sap/m/Dialog";
 import Util from "../Util";
 import ODataListBindingV2 from "sap/ui/model/odata/v2/ODataListBinding";
 import ODataListBindingV4 from "sap/ui/model/odata/v4/ODataListBinding";
+import MessageHandler from "../MessageHandler";
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -23,11 +24,17 @@ export default abstract class OData extends ManagedObject {
 	private _tables: any[] = [];
 	busyDialog: Dialog;
 	spreadsheetUploadController: SpreadsheetUpload;
-
-	constructor(spreadsheetUploadController: SpreadsheetUpload) {
+	contexts: any;
+	public createPromises: Promise<any>[] = [];
+	public createContexts: any[] = [];
+	messageHandler: MessageHandler;
+	util: Util;
+	constructor(spreadsheetUploadController: SpreadsheetUpload, messageHandler: MessageHandler, util: Util) {
 		super();
 		this.odataMessageHandler = new ODataMessageHandler(spreadsheetUploadController);
 		this.spreadsheetUploadController = spreadsheetUploadController;
+		this.messageHandler = messageHandler;
+		this.util = util;
 	}
 
 	/**
@@ -65,10 +72,10 @@ export default abstract class OData extends ManagedObject {
 					// with options the strategy could be changed to make the update quicker
 					// request all objects in the batch first
 					if(component.getAction() === "UPDATE") {
-						try {
+
 							// TODO: do this only if getOnlyUpdateChangedProperties is true (or any other option i still have to define)
 							await this.getObjects(model, binding, batch);
-						} catch (error) {
+
 						// TODO: check which payloads are not found or causing the error
 						// TODO: add error message to message handler
 						// TODO: decide to continue or break depending on component.getContinueOnError()

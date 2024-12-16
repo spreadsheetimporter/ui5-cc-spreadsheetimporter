@@ -242,7 +242,10 @@ export default class MessageHandler extends ManagedObject {
 				messageText = this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.errorInRowWithValueFormatted", [message.row, message.formattedValue, message.rawValue]);
 			} else if (message.rawValue) {
 				messageText = this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.errorInRowWithValue", [message.row, message.rawValue]);
-			} else {
+			} else if (message.type === CustomMessageTypes.ObjectNotFound) {
+				messageText = this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.objectNotFoundWithKeys", [message.formattedValue]);
+			}
+			else {
 				messageText = this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.errorInRow", [message.row]);
 			}
 			groups[message.title].push({ description: messageText, row: message.row });
