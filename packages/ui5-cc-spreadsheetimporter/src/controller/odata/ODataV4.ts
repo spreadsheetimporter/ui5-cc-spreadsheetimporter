@@ -73,8 +73,15 @@ export default class ODataV4 extends OData {
 		// Now use the keys to find the matching context
 		const currentContext = this.contexts.find((ctx) => Object.entries(keys).every(([key, value]) => ctx.payload[key] === value)) as BatchContext;
 
-		if (!currentContext) {
-			throw new Error("Could not find matching context for update operation");
+		if (!currentContext.context) {
+			if(false){
+				// in which context should we continue?
+				throw new Error("Could not find matching context for update operation");
+			} else {
+				// TODO: continue with successfull fetched objects
+				return
+			}
+		
 		}
 		let { context } = currentContext;
 
@@ -87,13 +94,7 @@ export default class ODataV4 extends OData {
         // Switch to the draft entity by creating a new context with IsActiveEntity=false
 		payload.IsActiveEntity = false;
         const draftKeyPredicates = ODataV4.formatKeyPredicates(keys, payload);
-		let path = binding.getPath();
-		if (binding.getResolvedPath) {
-			path = binding.getResolvedPath();
-		} else {
-			// workaround for getResolvedPath only available from 1.88
-			path = binding.getModel().resolve(binding.getPath(), binding.getContext());
-		}
+		const path = ODataV4.getResolvedPath(binding);
 		const oDataContextBinding = binding.getModel().bindContext(`${path}(${draftKeyPredicates})`, undefined, { $$groupId: this.updateGroupId }) as ODataContextBinding;
 		context = oDataContextBinding.getBoundContext()
     }
@@ -151,13 +152,7 @@ export default class ODataV4 extends OData {
 				.getModel()
 				.bindList("/" + odataEntityTypeParameterPath, null, [], [], { $$updateGroupId: this.updateGroupId }) as ODataListBinding;
 		} else {
-			let path = binding.getPath();
-			if (binding.getResolvedPath) {
-				path = binding.getResolvedPath();
-			} else {
-				// workaround for getResolvedPath only available from 1.88
-				path = binding.getModel().resolve(binding.getPath(), binding.getContext());
-			}
+			let path = ODataV4.getResolvedPath(binding);
 			this.customBinding = binding.getModel().bindList(path, this.contexts, [], [], { $$updateGroupId: this.updateGroupId });
 		}
 	}
@@ -308,13 +303,7 @@ export default class ODataV4 extends OData {
 
 	async getObjects(model: any, binding: any, batch: any): Promise<any[]> {
 		// TODO: check if IsActiveEntity is available, add it to the payload?
-		let path = binding.getPath();
-		if (binding.getResolvedPath) {
-			path = binding.getResolvedPath();
-		} else {
-			// workaround for getResolvedPath only available from 1.88
-			path = binding.getModel().resolve(binding.getPath(), binding.getContext());
-		}
+		let path = ODataV4.getResolvedPath(binding);
 
 		// Create filters for each object in the batch
 		const batchFilters = batch.map((payload) => {
@@ -378,9 +367,15 @@ export default class ODataV4 extends OData {
 
 		if (objects.length !== batch.length) {
 			if (this.messageHandler.areMessagesPresent()) {
-				// show error dialog
-				this.messageHandler.displayMessages();
-				throw new Error("Not all objects were found");
+				try {
+					// Wait for user decision
+					await this.messageHandler.displayMessages();
+					// If we get here, user clicked continue
+					return objects;
+				} catch (error) {
+					// User clicked close
+					throw new Error("Operation cancelled by user");
+				}
 			}
 		}
 
@@ -390,13 +385,7 @@ export default class ODataV4 extends OData {
 	// move to metadata handler
 	getKeys(binding: any, payload: any, IsActiveEntity?: boolean, excludeIsActiveEntity: boolean = false): Record<string, any> {
 		// Get the resolved path
-		let path = binding.getPath();
-		if (binding.getResolvedPath) {
-			path = binding.getResolvedPath();
-		} else {
-			// workaround for getResolvedPath only available from 1.88
-			path = binding.getModel().resolve(binding.getPath(), binding.getContext());
-		}
+		let path = ODataV4.getResolvedPath(binding);
 
 		// Get the key properties for this entity type
 		const keyNames = MetadataHandlerV4.getAnnotationProperties(this.spreadsheetUploadController.context, this.spreadsheetUploadController.getOdataType()).properties.$Key as string[];
@@ -441,5 +430,16 @@ export default class ODataV4 extends OData {
 				return `${key}=${formattedValue}`;
 			})
 			.join(","); // Join all key-value pairs with commas
+	}
+
+	static getResolvedPath(binding: any): string {
+		let path = binding.getPath();
+		if (binding.getResolvedPath) {
+			path = binding.getResolvedPath();
+		} else {
+			// workaround for getResolvedPath only available from 1.88
+			path = binding.getModel().resolve(binding.getPath(), binding.getContext());
+		}
+		return path;
 	}
 }
