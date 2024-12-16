@@ -72,6 +72,15 @@ export default class SpreadsheetDownload extends ManagedObject {
 		// Start fetching the batches
 		const totalResults = await this.odataHandler.fetchBatch(customBinding, batchSize);
 		const data = Util.extractObjects(totalResults);
+
+		if((this.component.getDeepDownloadConfig() as DeepDownloadConfig).setDraftStatus && (this.component.getDeepDownloadConfig() as DeepDownloadConfig).addKeysToExport){
+			for(const row in data){
+				// check if the row has a draft entity and IsActiveEntity is in the data row
+				if(data[row].HasDraftEntity && typeof data[row].IsActiveEntity !== 'undefined'){
+					data[row].IsActiveEntity = false;
+				}
+			}
+		}
 		
 		// Use the DataAssigner for all data assignments
 		this.dataAssigner.assignData(data, mainEntity);

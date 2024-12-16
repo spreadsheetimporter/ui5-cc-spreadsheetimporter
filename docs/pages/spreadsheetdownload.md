@@ -22,6 +22,7 @@ This means that you can download all Orders, including the OrderItems, ShippingI
 | Option | Description | Default | Type |
 | ------ | ----------- | ------- | ---- |
 | `addKeysToExport` | Adds keys to the export file | `false` | boolean |
+| `setDraftStatus` | Sets the draft status in `IsActiveEntity` | `false` | boolean |
 | `filename` | Defines the filename for the export  file | Entity Name | string |
 | `deepExport` | Turn on to export of sibling entities | `false` | boolean |
 | `deepLevel` | Defines the level of sibling entities to export | `0` | number |
@@ -81,6 +82,16 @@ With this option, the `mainEntity` is logged and then you can use it as a refere
 **default:** `false`
 
 This option adds keys (which can be hidden in the UI) to the export, such as GUIDs.
+
+### setDraftStatus
+
+**default:** `true`
+
+If the option `addKeysToExport` is set to `true` the keys, including the `IsActiveEntity` field, are added to the export.  
+By default, the field `IsActiveEntity` is set to `false` if the field `HasDraftEntity` is set to `true`.  
+This makes it easier to identify which rows have a draft entity for the reupload to update the entities.  
+This option is only used if all the `IsActiveEntity` fields should be set to `true` in the export.
+
 
 ### filename
 
