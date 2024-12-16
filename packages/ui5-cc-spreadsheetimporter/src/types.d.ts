@@ -121,6 +121,7 @@ export interface ComponentData {
 
 export interface DeepDownloadConfig {
 	addKeysToExport: boolean;
+	setDraftStatus: boolean;
 	deepExport: boolean;
 	deepLevel: number;
 	showOptions: boolean;

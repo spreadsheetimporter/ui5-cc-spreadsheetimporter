@@ -179,6 +179,7 @@ export default class Component extends UIComponent {
 
 		const defaultDeepDownloadConfig: DeepDownloadConfig = {
 				addKeysToExport: false,
+				setDraftStatus: true,
 				deepExport: false,
 				deepLevel: 1,
 				showOptions: true,
