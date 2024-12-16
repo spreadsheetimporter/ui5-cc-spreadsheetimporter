@@ -1,4 +1,4 @@
-import { Columns, ListObject } from "../../types";
+import { Columns, ListObject, UpdateConfig } from "../../types";
 import OData from "./OData";
 import SpreadsheetUpload from "../SpreadsheetUpload";
 import Util from "../Util";
@@ -64,8 +64,6 @@ export default class ODataV4 extends OData {
 	}
 
 	updateAsync(model: any, binding: any, payload: any) {
-		const getOnlyUpdateChangedProperties = this.spreadsheetUploadController.component.getOnlyUpdateChangedProperties();
-
 		// also do this if we should check for draft entities, this should be default in draft scenarios
 		// TODO: maybe this should default and only way to update
 		const keys = this.getKeys(binding, payload);
@@ -74,30 +72,29 @@ export default class ODataV4 extends OData {
 		const currentContext = this.contexts.find((ctx) => Object.entries(keys).every(([key, value]) => ctx.payload[key] === value)) as BatchContext;
 
 		if (!currentContext.context) {
-			if(false){
+			if (false) {
 				// in which context should we continue?
 				throw new Error("Could not find matching context for update operation");
 			} else {
 				// TODO: continue with successfull fetched objects
-				return
+				return;
 			}
-		
 		}
 		let { context } = currentContext;
 
 		const currentObject = context.getObject();
 
-    // Determine if the current object is a draft or active entity
-    const isDraft = currentObject.HasDraftEntity || !currentObject.IsActiveEntity;
+		// Determine if the current object is a draft or active entity
+		const isDraft = currentObject.HasDraftEntity || !currentObject.IsActiveEntity;
 
-    if (isDraft) {
-        // Switch to the draft entity by creating a new context with IsActiveEntity=false
-		payload.IsActiveEntity = false;
-        const draftKeyPredicates = ODataV4.formatKeyPredicates(keys, payload);
-		const path = ODataV4.getResolvedPath(binding);
-		const oDataContextBinding = binding.getModel().bindContext(`${path}(${draftKeyPredicates})`, undefined, { $$groupId: this.updateGroupId }) as ODataContextBinding;
-		context = oDataContextBinding.getBoundContext()
-    }
+		if (isDraft) {
+			// Switch to the draft entity by creating a new context with IsActiveEntity=false
+			payload.IsActiveEntity = false;
+			const draftKeyPredicates = ODataV4.formatKeyPredicates(keys, payload);
+			const path = ODataV4.getResolvedPath(binding);
+			const oDataContextBinding = binding.getModel().bindContext(`${path}(${draftKeyPredicates})`, undefined, { $$groupId: this.updateGroupId }) as ODataContextBinding;
+			context = oDataContextBinding.getBoundContext();
+		}
 
 		// Process all properties from payload except keys
 		Object.entries(payload).forEach(([property, newValue]) => {
@@ -106,7 +103,7 @@ export default class ODataV4 extends OData {
 				return;
 			}
 			// decide if the full import payload should be sent or only the changed properties
-			const fullUpdate = true; // this.getFullUpdate()
+			const fullUpdate = (this.spreadsheetUploadController.component.getUpdateConfig() as UpdateConfig).fullUpdate;
 			// Only update if value has changed
 			if (fullUpdate || currentObject[property] !== newValue) {
 				this.createPromises.push(
@@ -347,9 +344,7 @@ export default class ODataV4 extends OData {
 		// Find which objects from batch weren't found
 		batch.forEach((batchItem, index) => {
 			const keys = this.getKeys(binding, batchItem, true);
-			const found = objects.some(obj => 
-				Object.entries(keys).every(([key, value]) => obj[key] === value)
-			);
+			const found = objects.some((obj) => Object.entries(keys).every(([key, value]) => obj[key] === value));
 
 			if (!found) {
 				this.messageHandler.addMessageToMessages({
@@ -359,7 +354,7 @@ export default class ODataV4 extends OData {
 					counter: 1,
 					formattedValue: Object.entries(keys)
 						.map(([key, value]) => `${key}=${value}`)
-						.join(', '),
+						.join(", "),
 					ui5type: MessageType.Error
 				});
 			}

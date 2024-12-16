@@ -317,8 +317,8 @@ export default class SpreadsheetUpload extends ManagedObject {
 		if (options.hasOwnProperty("action")) {
 			this.component.setAction(options.action);
 		}
-		if (options.hasOwnProperty("onlyUpdateChangedProperties")) {
-			this.component.setOnlyUpdateChangedProperties(options.onlyUpdateChangedProperties);
+		if (options.hasOwnProperty("updateConfig")) {
+			this.component.setUpdateConfig(options.updateConfig);
 		}
 
 		// Special case for showOptions
