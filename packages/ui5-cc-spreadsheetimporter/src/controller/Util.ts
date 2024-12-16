@@ -2,7 +2,7 @@ import ManagedObject from "sap/ui/base/ManagedObject";
 import Log from "sap/base/Log";
 import type ResourceBundle from "sap/base/i18n/ResourceBundle";
 import MessageBox from "sap/m/MessageBox";
-import type { DeepDownloadConfig, FireEventReturnType, RowData, ValueData } from "../types";
+import type { DeepDownloadConfig, FireEventReturnType, RowData, UpdateConfig, ValueData } from "../types";
 import type Component from "../Component";
 import type { FieldMatchType } from "../enums";
 import ObjectPool from "sap/ui/base/ObjectPool";
@@ -258,7 +258,7 @@ export default class Util extends ManagedObject {
 		};
 	}
 
-	static mergeConfig(defaultConfig: DeepDownloadConfig, providedConfig?: DeepDownloadConfig): DeepDownloadConfig {
+	static mergeDeepDownloadConfig(defaultConfig: DeepDownloadConfig, providedConfig?: DeepDownloadConfig): DeepDownloadConfig {
 		if (!providedConfig) return defaultConfig;
 
 		// Deep merge for spreadsheetExportConfig
@@ -268,5 +268,16 @@ export default class Util extends ManagedObject {
 		};
 
 		return mergedDeepDownloadConfig;
+	}
+
+	static mergeUpdateConfig(defaultConfig: UpdateConfig, providedConfig?: UpdateConfig): UpdateConfig {
+		if (!providedConfig) return defaultConfig;
+
+		const mergedUpdateConfig: UpdateConfig = {
+			...defaultConfig,
+			...providedConfig
+		};
+
+		return mergedUpdateConfig;
 	}
 }

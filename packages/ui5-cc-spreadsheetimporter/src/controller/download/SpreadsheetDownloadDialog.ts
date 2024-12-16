@@ -48,7 +48,7 @@ export default class SpreadsheetDownloadDialog extends ManagedObject {
 
 	onSave() {
 		const deepDownloadConfig = this.spreadsheetDownloadDialog.getModel("spreadsheetOptions").getData() as DeepDownloadConfig;
-		const mergedConfig = Util.mergeConfig(this.component.getDeepDownloadConfig(), deepDownloadConfig);
+		const mergedConfig = Util.mergeDeepDownloadConfig(this.component.getDeepDownloadConfig(), deepDownloadConfig);
 		this.component.setDeepDownloadConfig(mergedConfig);
 		this.spreadsheetUploadDialog.onDownloadDataSpreadsheet();
 		this.spreadsheetDownloadDialog.close();

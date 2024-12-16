@@ -67,14 +67,11 @@ export default abstract class OData extends ManagedObject {
 			for (const batch of slicedPayloadArray) {
 				// loop over data from spreadsheet file
 				try {
-
 					// default for draft scenarios we need to request the object first to get draft status otherwise the update will fail
 					// with options the strategy could be changed to make the update quicker
 					// request all objects in the batch first
-					if(component.getAction() === "UPDATE") {
-
-							// TODO: do this only if getOnlyUpdateChangedProperties is true (or any other option i still have to define)
-							await this.getObjects(model, binding, batch);
+					if (component.getAction() === "UPDATE") {
+						await this.getObjects(model, binding, batch);
 						// TODO: decide to continue or break depending on component.getContinueOnError()
 						// TODO: if getContinueOnError is true, continue with successfull fetched objects
 					}
@@ -95,10 +92,10 @@ export default abstract class OData extends ManagedObject {
 						if (fireEventAsyncReturn.returnValue) {
 							payload = fireEventAsyncReturn.returnValue;
 						}
-						if(component.getAction() === "CREATE") {
+						if (component.getAction() === "CREATE") {
 							this.createAsync(model, binding, payload);
 						}
-						if(component.getAction() === "UPDATE") {
+						if (component.getAction() === "UPDATE") {
 							this.updateAsync(model, binding, payload);
 						}
 					}

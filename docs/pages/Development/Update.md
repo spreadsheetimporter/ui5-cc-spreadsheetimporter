@@ -5,6 +5,17 @@ Only V4 is supported for now.
 
 The problem with Draft is that when updating lot of objects, the update will fail if one of the objects is not found because of the draft status.  
 Draft status will determined with `IsActiveEntity` property.  
-To make it as seamless as possible, the process will try to find every object with `IsActiveEntity=true`. This does not find objects that dont have a active entity.  
-The finding of the object result in a get request to the OData service for each batch.  
-After that the process know the state of the object and can update it.
+To make it as seamless as possible, the process will try to find every object with `IsActiveEntity=true`. This does not find objects that dont have a active entity (draft but not yet created).  
+The finding of the object result in a get request to the OData service for each row.  
+After that the process knows the state of the object and can update it.  
+So if on the object `HasDraftEntity` is true or `IsActiveEntity` is false, the process will create a new context with `IsActiveEntity=false` and use the draft entity automatically to update the object.
+
+
+## Technical Details
+
+To get the all the objects that are imported from the spreadsheet, the process will create a new empty list binding with a filter of all the keys from the spreadsheet with all of them include the filter `IsActiveEntity=true`.  
+This will result in a get request to the OData service for each row combined in one batch request for each batch.
+If a row is not found it is just not included in the List Binding.
+So the process will not fail if a row is not found and can match which objects are not found from the List Binding.  
+If a object was not found the user can then decide to continue with the found objects or to cancel the process.  
+Each context will then be used to update the object with `setProperty`.

@@ -2,7 +2,7 @@ import UIComponent from "sap/ui/core/UIComponent";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Device from "sap/ui/Device";
 import SpreadsheetUpload from "./controller/SpreadsheetUpload";
-import { ComponentData, DeepDownloadConfig, Messages } from "./types";
+import { ComponentData, DeepDownloadConfig, Messages, UpdateConfig } from "./types";
 import Log from "sap/base/Log";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import Logger from "./controller/Logger";
@@ -74,7 +74,7 @@ export default class Component extends UIComponent {
 			bindingCustom: { type: "object" },
 			showDownloadButton: { type: "boolean", defaultValue: false },
 			deepDownloadConfig: { type: "object", defaultValue: {} },
-			onlyUpdateChangedProperties: { type: "boolean", defaultValue: true },
+			updateConfig: { type: "object", defaultValue: {} },
 			//Pro Configurations
 		},
 		aggregations: {
@@ -175,7 +175,6 @@ export default class Component extends UIComponent {
 		this.setI18nModel(compData?.i18nModel);
 		this.setBindingCustom(compData?.bindingCustom);
 		this.setShowDownloadButton(compData?.showDownloadButton);
-		this.setOnlyUpdateChangedProperties(compData?.onlyUpdateChangedProperties);
 		if (compData?.availableOptions && compData?.availableOptions.length > 0) {
 			// if availableOptions is set show the Options Menu
 			this.setShowOptions(true);
@@ -190,12 +189,15 @@ export default class Component extends UIComponent {
 				columns: []
 		};
 
-	    const mergedDeepDownloadConfig = Util.mergeConfig(defaultDeepDownloadConfig, compData.deepDownloadConfig)
+		const defaultUpdateConfig: UpdateConfig = {
+			fullUpdate: false
+		};
+
+	    const mergedDeepDownloadConfig = Util.mergeDeepDownloadConfig(defaultDeepDownloadConfig, compData.deepDownloadConfig)
 		this.setDeepDownloadConfig(mergedDeepDownloadConfig);
 
-		// Pro Configurations - Start
-
-		// Pro Configurations - End
+		const mergedUpdateConfig = Util.mergeUpdateConfig(defaultUpdateConfig, compData.updateConfig)
+		this.setUpdateConfig(mergedUpdateConfig);
 
 		// // we could create a device model and use it
 		model = new JSONModel(Device);

@@ -39,7 +39,6 @@ The table below summarizes the options available for the UI5 Spreadsheet Importe
 | [`skipMandatoryFieldCheck`](#skipmandatoryfieldcheck)| Skips the check for mandatory fields.                | `false`         | `boolean`  |
 | [`skipColumnsCheck`](#skipcolumnscheck)             | Skips the check for unknown columns not in metadata.  | `false`         | `boolean`  |
 | [`continueOnError`](#continueonerror)               | Continues processing next batches even after errors.  | `false`         | `boolean`  |
-| [`onlyUpdateChangedProperties`](#onlyupdatechangedproperties) | Only updates properties that have changed. | `false`         | `boolean`  |
 
 
 ### Advanced Configuration Options
@@ -598,18 +597,6 @@ This option defines whether the batch processing should continue if an error occ
 If you have, for example, set `batchSize` to 2 and have 4 rows, and an error occurs in the first batch of two rows, the processing will stop. If you set this flag to `true`, the processing will continue, and the second batch of two rows will be processed.  
 This may lead to errors in the backend because the first batch of two rows was not processed correctly.  
 Use this option with caution.
-
-### `onlyUpdateChangedProperties`
-
-**default:** `false`
-
-This option is recommended to be set to `true` for OData V4 as it checks if the entity is in draft mode and updates the entity accordingly.  
-If this option is set to `false`, the property `IsActiveEntity` needs to be in the spreadsheet file.
-
-This option defines whether only the properties that have changed should be updated or not.  
-If set to `true`, only the properties that have changed will be updated.  
-If set to `false`, all properties will be updated.  
-This will take longer to process because the backend will be called for each row to check if the property has changed.
 
 ### `debug`
 
