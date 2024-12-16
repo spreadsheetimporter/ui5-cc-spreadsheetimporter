@@ -304,7 +304,8 @@ export default class ODataV4 extends OData {
 
 		// Create filters for each object in the batch
 		const batchFilters = batch.map((payload) => {
-			const keys = this.getKeys(binding, payload);
+			// i always want to filter for the active entity so filter for IsActiveEntity=true
+			const keys = this.getKeys(binding, payload, false, true);
 			const filterConditions = Object.entries(keys).map(([property, value]) => new Filter(property, FilterOperator.EQ, value));
 			return new Filter({
 				filters: filterConditions,
@@ -373,7 +374,7 @@ export default class ODataV4 extends OData {
 	}
 
 	// move to metadata handler
-	getKeys(binding: any, payload: any, excludeIsActiveEntity: boolean = false): Record<string, any> {
+	getKeys(binding: any, payload: any, IsActiveEntity?: boolean, excludeIsActiveEntity: boolean = false): Record<string, any> {
 		// Get the resolved path
 		let path = binding.getPath();
 		if (binding.getResolvedPath) {
@@ -392,23 +393,16 @@ export default class ODataV4 extends OData {
 			if (excludeIsActiveEntity && key === "IsActiveEntity") {
 				return;
 			}
-			keyMap[key] = payload[key];
+			if (key === "IsActiveEntity") {
+				// If IsActiveEntity is explicitly set to true or false in payload, use true
+				// If not set in payload, use the payload value
+				keyMap[key] = payload[key] !== undefined ? true : IsActiveEntity;
+			} else {
+				keyMap[key] = payload[key];
+			}
 		});
 
 		return keyMap;
-	}
-
-	private createBindingContext(binding: any, payload: any): ContextCreationResult {
-		const keyPredicates = this.getKeys(binding, payload);
-		// Create context with dynamic key predicates
-		const context = binding.getModel().bindContext(`${path}(${keyPredicates})`, undefined, { $$groupId: this.updateGroupId }) as ODataContextBinding;
-
-		return {
-			context,
-			path,
-			keyPredicates,
-			keys
-		};
 	}
 
 	static formatKeyPredicates(keys: Record<string, any>, payload: Record<string, any>): string {
