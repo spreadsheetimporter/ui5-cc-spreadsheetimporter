@@ -298,54 +298,105 @@ export default class ODataV4 extends OData {
 		this.metadataHandler.addKeys(labelList, entityName, parentEntity, partner);
 	}
 
-	async getObjects(model: any, binding: any, batch: any): Promise<any[]> {
-		// TODO: check if IsActiveEntity is available, add it to the payload?
-		let path = MetadataHandlerV4.getResolvedPath(binding);
-
+	private async _getFilteredContexts(
+		model: any,
+		binding: any,
+		path: string,
+		batch: any[],
+		isActive: boolean
+	): Promise<{
+		contexts: Context[];
+		objects: any[];
+	}> {
 		// Create filters for each object in the batch
 		const batchFilters = batch.map((payload) => {
-			// Get keys but exclude IsActiveEntity as we'll add it separately
-			const keys = this.metadataHandler .getKeys(binding, payload, undefined, true);
-			const filterConditions = Object.entries(keys).map(([property, value]) => 
-				new Filter(property, FilterOperator.EQ, value)
-			);
-			
-			// Always add IsActiveEntity=true filter
-			filterConditions.push(new Filter("IsActiveEntity", FilterOperator.EQ, true));
+			const keys = this.metadataHandler.getKeys(binding, payload);
+			keys.IsActiveEntity = isActive;
+
+			const keyFilters = Object.entries(keys).map(([property, value]) => new Filter(property, FilterOperator.EQ, value));
 
 			return new Filter({
-				filters: filterConditions,
-				and: true // Combine conditions for each key
+				filters: keyFilters,
+				and: true
 			});
 		});
 
 		// Combine all batch filters with OR
 		const combinedFilter = new Filter({
 			filters: batchFilters,
-			and: false // OR condition between different objects
+			and: false
 		});
 
 		// Bind the list with the filter
 		const listBinding = model.bindList(path, null, [], [], { $$updateGroupId: "$auto" }) as ODataListBinding;
 		listBinding.filter(combinedFilter);
 
-		// Request contexts (fetch all data matching the filters)
+		// Request contexts and map to objects
 		const contexts = await listBinding.requestContexts(0, batch.length);
+		const objects = await Promise.all(contexts.map((context) => context.getObject()));
+
+		return { contexts, objects };
+	}
+
+	async getObjects(model: any, binding: any, batch: any): Promise<any[]> {
+		let path = MetadataHandlerV4.getResolvedPath(binding);
+
+		// Get both active and inactive contexts
+		const { contexts: contextsTrue, objects: objectsTrue } = await this._getFilteredContexts(model, binding, path, batch, true);
+		const { contexts: contextsFalse, objects: objectsFalse } = await this._getFilteredContexts(model, binding, path, batch, false);
+
+		const objects = [];
+
+		// get the objects state we need
+		batch.forEach((payload, index) => {
+			// Get keys excluding IsActiveEntity for matching
+			const keys = this.metadataHandler.getKeys(binding, payload);
+			const keysWithoutIsActiveEntity = { ...keys };
+			delete keysWithoutIsActiveEntity.IsActiveEntity;
+
+			// Find matching object based on IsActiveEntity flag
+			const matchingObject = payload.IsActiveEntity
+				? objectsTrue.find((obj) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => obj[key] === value))
+				: objectsFalse.find((obj) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => obj[key] === value));
+
+			if (matchingObject) {
+				objects.push(matchingObject);
+			} else {
+				const matchingObject = !payload.IsActiveEntity
+				? objectsTrue.find((obj) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => obj[key] === value))
+				: objectsFalse.find((obj) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => obj[key] === value));
+				objects.push(matchingObject);
+			}
+		});
 
 		// Store contexts with their corresponding paths and payloads
 		batch.forEach((payload, index) => {
 			const keys = this.metadataHandler.getKeys(binding, payload);
+			const keyPredicates = MetadataHandlerV4.formatKeyPredicates(keys, payload)
+			const isActiveEntity = payload.IsActiveEntity;
+			const keysWithoutIsActiveEntity = { ...keys };
+			delete keysWithoutIsActiveEntity.IsActiveEntity;
+
+			const matchingContext = isActiveEntity
+				? contextsTrue.find(ctx => 
+					Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => 
+						ctx.getObject()[key] === value
+					)
+				)
+				: contextsFalse.find(ctx => 
+					Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => 
+						ctx.getObject()[key] === value
+					)
+				);
+
 			this.contexts.push({
-				context: contexts[index],
+				context: matchingContext,
 				path,
-				keyPredicates: MetadataHandlerV4.formatKeyPredicates(keys, payload),
+				keyPredicates: keyPredicates,
 				keys: Object.keys(keys),
 				payload
 			});
 		});
-
-		// Map contexts to objects
-		const objects = await Promise.all(contexts.map((context) => context.getObject()));
 
 		let errorFound = false;
 
@@ -355,9 +406,7 @@ export default class ODataV4 extends OData {
 			const keysWithoutIsActiveEntity = { ...keys };
 			delete keysWithoutIsActiveEntity.IsActiveEntity;
 
-			const foundObject = objects.find((obj) => 
-				Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => obj[key] === value)
-			);
+			const foundObject = objects.find((obj) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => obj[key] === value));
 
 			if (!foundObject) {
 				errorFound = true;
@@ -424,6 +473,4 @@ export default class ODataV4 extends OData {
 			]
 		});
 	}
-
-
 }
