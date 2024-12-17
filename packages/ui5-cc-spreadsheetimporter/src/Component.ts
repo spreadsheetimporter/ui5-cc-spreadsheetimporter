@@ -2,7 +2,7 @@ import UIComponent from "sap/ui/core/UIComponent";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Device from "sap/ui/Device";
 import SpreadsheetUpload from "./controller/SpreadsheetUpload";
-import { ComponentData, DeepDownloadConfig, Messages } from "./types";
+import { ComponentData, DeepDownloadConfig, Messages, UpdateConfig } from "./types";
 import Log from "sap/base/Log";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import Logger from "./controller/Logger";
@@ -33,6 +33,7 @@ export default class Component extends UIComponent {
 		manifest: "json",
 		properties: {
 			spreadsheetFileName: { type: "string", defaultValue: "Template.xlsx" },
+			action: { type: "string", defaultValue: "CREATE" },
 			context: { type: "object" },
 			// @ts-ignore
 			columns: { type: "string[]", defaultValue: [] },
@@ -72,7 +73,8 @@ export default class Component extends UIComponent {
 			componentContainerData: { type: "object" },
 			bindingCustom: { type: "object" },
 			showDownloadButton: { type: "boolean", defaultValue: false },
-			deepDownloadConfig: { type: "object", defaultValue: {} }
+			deepDownloadConfig: { type: "object", defaultValue: {} },
+			updateConfig: { type: "object", defaultValue: {} },
 			//Pro Configurations
 		},
 		aggregations: {
@@ -138,6 +140,7 @@ export default class Component extends UIComponent {
 			componentData != null ? (Object.keys(componentData).length === 0 ? (this.settingsFromContainer as ComponentData) : componentData) : (this.settingsFromContainer as ComponentData);
 		this.getContentDensityClass();
 		this.setSpreadsheetFileName(compData?.spreadsheetFileName);
+		this.setAction(compData?.action);
 		this.setContext(compData?.context);
 		this.setColumns(compData?.columns);
 		this.setExcludeColumns(compData?.excludeColumns);
@@ -186,12 +189,16 @@ export default class Component extends UIComponent {
 				columns: []
 		};
 
-	    const mergedDeepDownloadConfig = Util.mergeConfig(defaultDeepDownloadConfig, compData.deepDownloadConfig)
+		const defaultUpdateConfig: UpdateConfig = {
+			fullUpdate: false,
+			columns: []
+		};
+
+	    const mergedDeepDownloadConfig = Util.mergeDeepDownloadConfig(defaultDeepDownloadConfig, compData.deepDownloadConfig)
 		this.setDeepDownloadConfig(mergedDeepDownloadConfig);
 
-		// Pro Configurations - Start
-
-		// Pro Configurations - End
+		const mergedUpdateConfig = Util.mergeUpdateConfig(defaultUpdateConfig, compData.updateConfig)
+		this.setUpdateConfig(mergedUpdateConfig);
 
 		// // we could create a device model and use it
 		model = new JSONModel(Device);

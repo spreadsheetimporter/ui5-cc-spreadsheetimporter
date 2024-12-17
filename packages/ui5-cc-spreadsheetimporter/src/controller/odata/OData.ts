@@ -13,6 +13,7 @@ import Dialog from "sap/m/Dialog";
 import Util from "../Util";
 import ODataListBindingV2 from "sap/ui/model/odata/v2/ODataListBinding";
 import ODataListBindingV4 from "sap/ui/model/odata/v4/ODataListBinding";
+import MessageHandler from "../MessageHandler";
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -23,11 +24,16 @@ export default abstract class OData extends ManagedObject {
 	private _tables: any[] = [];
 	busyDialog: Dialog;
 	spreadsheetUploadController: SpreadsheetUpload;
-
-	constructor(spreadsheetUploadController: SpreadsheetUpload) {
+	public createPromises: Promise<any>[] = [];
+	public createContexts: any[] = [];
+	messageHandler: MessageHandler;
+	util: Util;
+	constructor(spreadsheetUploadController: SpreadsheetUpload, messageHandler: MessageHandler, util: Util) {
 		super();
 		this.odataMessageHandler = new ODataMessageHandler(spreadsheetUploadController);
 		this.spreadsheetUploadController = spreadsheetUploadController;
+		this.messageHandler = messageHandler;
+		this.util = util;
 	}
 
 	/**
@@ -60,6 +66,16 @@ export default abstract class OData extends ManagedObject {
 			for (const batch of slicedPayloadArray) {
 				// loop over data from spreadsheet file
 				try {
+					// default for draft scenarios we need to request the object first to get draft status otherwise the update will fail
+					// with options the strategy could be changed to make the update quicker
+					// request all objects in the batch first
+					if (component.getAction() === "UPDATE") {
+						await this.getObjects(model, binding, batch);
+						// TODO: decide to continue or break depending on component.getContinueOnError()
+						// TODO: if getContinueOnError is true, continue with successfull fetched objects
+					}
+
+					// maybe move this loop to createAsync and updateAsync --> parameter will change (breaking change)
 					for (let payload of batch) {
 						let fireEventAsyncReturn: FireEventReturnType;
 						// skip draft and directly create
@@ -75,7 +91,12 @@ export default abstract class OData extends ManagedObject {
 						if (fireEventAsyncReturn.returnValue) {
 							payload = fireEventAsyncReturn.returnValue;
 						}
-						this.createAsync(model, binding, payload);
+						if (component.getAction() === "CREATE") {
+							this.createAsync(model, binding, payload);
+						}
+						if (component.getAction() === "UPDATE") {
+							this.updateAsync(model, binding, payload);
+						}
 					}
 					// wait for all drafts to be created
 					await this.submitChanges(model);
@@ -238,6 +259,7 @@ export default abstract class OData extends ManagedObject {
 
 	abstract create(model: any, binding: any, payload: any): any;
 	abstract createAsync(model: any, binding: any, payload: any): any;
+	abstract updateAsync(model: any, binding: any, payload: any): any;
 	abstract submitChanges(model: any): Promise<any>;
 	abstract waitForCreation(): Promise<any>;
 	abstract waitForDraft(): void;
@@ -252,6 +274,6 @@ export default abstract class OData extends ManagedObject {
 	abstract getBindingFromBinding(binding: any, expand?: any): ODataListBindingV4 | ODataListBindingV2;
 	abstract fetchBatch(customBinding: ODataListBindingV4 | ODataListBindingV2, batchSize: number): Promise<any>;
 	abstract addKeys(labelList: ListObject, entityName: string, parentEntity?: any, partner?: string): void;
-	
+	abstract getObjects(model: any, binding: any, batch: any): Promise<any>;
 	// Pro Methods
 }

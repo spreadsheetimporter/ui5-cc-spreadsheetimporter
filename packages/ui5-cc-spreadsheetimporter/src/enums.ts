@@ -66,6 +66,20 @@ export const CustomMessageTypes: { [key: string]: CustomMessageType } = {
 	MaxLengthExceeded: {
 		title: "MaxLengthExceeded",
 		group: true
+	},
+	ObjectNotFound: {
+		title: "ObjectNotFound",
+		group: true,
+		update: true
+	},
+	DraftEntityMismatch: {
+		title: "DraftEntityMismatch",
+		group: true,
+		update: true
+	},
+	DuplicateKeys: {
+		title: "DuplicateKeys",
+		group: true
 	}
 };
 
@@ -90,4 +104,10 @@ export enum MessageType {
      * Message is a warning
      */
 	Warning = "Warning"
+}
+
+export enum Action {
+	Create = "CREATE",
+	Update = "UPDATE",
+	Delete = "DELETE"
 }
