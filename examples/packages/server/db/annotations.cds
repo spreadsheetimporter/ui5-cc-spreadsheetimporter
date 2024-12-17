@@ -34,7 +34,9 @@ annotate OrdersService.Orders with @(
 		Identification: [ //Is the main field group
 			{Value: createdBy, Label:'{i18n>Customer}'},
 			{Value: createdAt, Label:'{i18n>Date}'},
-			{Value: OrderNo },
+			{Value: OrderNo , Label:'{i18n>OrderNo}'},
+			{Value: currency.code, Label:'{i18n>Currency}'},
+			{Value: buyer, Label:'{i18n>buyer}'},
 		],
 		HeaderFacets: [
 			{$Type: 'UI.ReferenceFacet', Label: '{i18n>Created}', Target: '@UI.FieldGroup#Created'},
@@ -47,7 +49,8 @@ annotate OrdersService.Orders with @(
 		],
 		FieldGroup#Details: {
 			Data: [
-				{Value: currency.code, Label:'{i18n>Currency}'}
+				{Value: currency.code, Label:'{i18n>Currency}'},
+				{Value: buyer, Label:'{i18n>buyer}'}
 			]
 		},
 		FieldGroup#Created: {

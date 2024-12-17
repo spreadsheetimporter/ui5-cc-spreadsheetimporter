@@ -190,7 +190,8 @@ export default class Component extends UIComponent {
 		};
 
 		const defaultUpdateConfig: UpdateConfig = {
-			fullUpdate: false
+			fullUpdate: false,
+			columns: []
 		};
 
 	    const mergedDeepDownloadConfig = Util.mergeDeepDownloadConfig(defaultDeepDownloadConfig, compData.deepDownloadConfig)

@@ -38,7 +38,7 @@ export class ODataV4RequestObjects {
 		const { contexts: contextsTrue, objects: objectsTrue } = await this._getFilteredContexts(model, binding, path, batch, true);
 		const { contexts: contextsFalse, objects: objectsFalse } = await this._getFilteredContexts(model, binding, path, batch, false);
 
-		const objects = this.findEntitiesFromSpreadsheet(batch, objectsTrue, objectsFalse, binding);
+		let objects = this.findEntitiesFromSpreadsheet(batch, objectsTrue, objectsFalse, binding);
 
 		// Store contexts with their corresponding paths and payloads
 		this.contexts = this.getContextsFromPayload(batch, contextsTrue, contextsFalse, path, binding);
@@ -51,6 +51,27 @@ export class ODataV4RequestObjects {
 					// Wait for user decision
 					await this.messageHandler.displayMessages();
 					// If we get here, user clicked continue
+					// Update objects with correct draft status versions, also to have correct partial update
+					objects = batch.map(payload => {
+						const keys = this.metadataHandler.getKeys(binding, payload);
+						const keysWithoutIsActiveEntity = { ...keys };
+						delete keysWithoutIsActiveEntity.IsActiveEntity;
+
+						// Find the object with opposite draft status
+						const oppositeStatusObject = payload.IsActiveEntity
+							? objectsFalse.find((obj) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => obj[key] === value))
+							: objectsTrue.find((obj) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => obj[key] === value));
+
+						// Update payload to match actual status
+						if (oppositeStatusObject) {
+							payload.IsActiveEntity = oppositeStatusObject.IsActiveEntity;
+							return oppositeStatusObject;
+						}
+						return payload;
+					});
+
+					// Update contexts with correct versions
+					this.contexts = this.getContextsFromPayload(batch, contextsTrue, contextsFalse, path, binding);
 					return objects;
 				} catch (error) {
 					// User clicked close

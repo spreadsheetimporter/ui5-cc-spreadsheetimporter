@@ -88,10 +88,13 @@ export default class ODataV4 extends OData {
 			}
 			// decide if the full import payload should be sent or only the changed properties
 			const fullUpdate = (this.spreadsheetUploadController.component.getUpdateConfig() as UpdateConfig).fullUpdate;
+			// only columns defined in the updateConfig should be updated
+			const columns = (this.spreadsheetUploadController.component.getUpdateConfig() as UpdateConfig).columns;
 
-			// Only update if value has changed
+			// Only update if value has changed and property is in configured columns
 			if (fullUpdate || 
 				(currentObject[property] !== newValue && 
+				columns.includes(property) && 
 				// for date values, we need to convert to the format yyyy-mm-dd
 				(!newValue?.toISOString || currentObject[property] !== newValue.toISOString().substr(0,10)))) {
 				this.createPromises.push(
