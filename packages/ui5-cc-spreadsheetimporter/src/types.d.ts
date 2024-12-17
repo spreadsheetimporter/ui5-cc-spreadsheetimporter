@@ -134,6 +134,7 @@ export interface DeepDownloadConfig {
 
 export interface UpdateConfig {
 	fullUpdate: boolean;
+	columns: string[];
 }
 
 export type FireEventReturnType = {
