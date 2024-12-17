@@ -304,9 +304,15 @@ export default class ODataV4 extends OData {
 
 		// Create filters for each object in the batch
 		const batchFilters = batch.map((payload) => {
-			// i always want to filter for the active entity so filter for IsActiveEntity=true
-			const keys = this.getKeys(binding, payload, false, true);
-			const filterConditions = Object.entries(keys).map(([property, value]) => new Filter(property, FilterOperator.EQ, value));
+			// Get keys but exclude IsActiveEntity as we'll add it separately
+			const keys = this.getKeys(binding, payload, undefined, true);
+			const filterConditions = Object.entries(keys).map(([property, value]) => 
+				new Filter(property, FilterOperator.EQ, value)
+			);
+			
+			// Always add IsActiveEntity=true filter
+			filterConditions.push(new Filter("IsActiveEntity", FilterOperator.EQ, true));
+
 			return new Filter({
 				filters: filterConditions,
 				and: true // Combine conditions for each key
@@ -346,16 +352,18 @@ export default class ODataV4 extends OData {
 		// Find which objects from batch weren't found
 		batch.forEach((batchItem, index) => {
 			const keys = this.getKeys(binding, batchItem);
-			const keysIsActiveEntityTrue = this.getKeys(binding, batchItem, true);
+			const keysWithoutIsActiveEntity = { ...keys };
+			delete keysWithoutIsActiveEntity.IsActiveEntity;
+
 			const foundObject = objects.find((obj) => 
-				Object.entries(keysIsActiveEntityTrue).every(([key, value]) => obj[key] === value)
+				Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => obj[key] === value)
 			);
 
 			if (!foundObject) {
 				errorFound = true;
 				this.messageHandler.addMessageToMessages({
 					title: this.util.geti18nText("spreadsheetimporter.objectNotFound"),
-					row: index + 1, // TODO: currently unknown
+					row: index + 1,
 					type: CustomMessageTypes.ObjectNotFound,
 					counter: 1,
 					formattedValue: Object.entries(keys)
@@ -363,29 +371,24 @@ export default class ODataV4 extends OData {
 						.join(", "),
 					ui5type: MessageType.Error
 				});
-			} else{
-				// check if HasDraftEntity is the same as in the object
-				if (foundObject.HasDraftEntity === batchItem.IsActiveEntity) {
-					errorFound = true;
-					const currentEntity = foundObject.HasDraftEntity ? "Draft" : "Active";
-					const uploadedEntity = batchItem.IsActiveEntity ? "Active" : "Draft";
-					this.messageHandler.addMessageToMessages({
-						title: this.util.geti18nText("spreadsheetimporter.draftEntityMismatch"),
-						row: index + 1, // TODO: currently unknown
-						type: CustomMessageTypes.DraftEntityMismatch,
-						counter: 1,
-						ui5type: MessageType.Error,
-						formattedValue: [Object.entries(keys)
-							.map(([key, value]) => `${key}=${value}`)
-							.join(", "),uploadedEntity,currentEntity]
-					});
-				}
-
+				return;
 			}
 
-			
+			// Check for valid draft states
+			if (foundObject.IsActiveEntity && !foundObject.HasDraftEntity && !batchItem.IsActiveEntity) {
+				// Active entity without draft - must import as active
+				this._addDraftMismatchError(index, keys, "Draft", "Active");
+				errorFound = true;
+			} else if (foundObject.IsActiveEntity && foundObject.HasDraftEntity && batchItem.IsActiveEntity) {
+				// Active entity with draft - must import as draft
+				this._addDraftMismatchError(index, keys, "Active", "Draft");
+				errorFound = true;
+			} else if (!foundObject.IsActiveEntity && batchItem.IsActiveEntity) {
+				// Draft entity - must import as draft
+				this._addDraftMismatchError(index, keys, "Active", "Draft");
+				errorFound = true;
+			}
 		});
-
 
 		if (errorFound) {
 			if (this.messageHandler.areMessagesPresent()) {
@@ -402,6 +405,24 @@ export default class ODataV4 extends OData {
 		}
 
 		return objects;
+	}
+
+	// Helper method to add draft mismatch error
+	private _addDraftMismatchError(index: number, keys: Record<string, any>, uploadedState: string, expectedState: string): void {
+		this.messageHandler.addMessageToMessages({
+			title: this.util.geti18nText("spreadsheetimporter.draftEntityMismatch"),
+			row: index + 1,
+			type: CustomMessageTypes.DraftEntityMismatch,
+			counter: 1,
+			ui5type: MessageType.Error,
+			formattedValue: [
+				Object.entries(keys)
+					.map(([key, value]) => `${key}=${value}`)
+					.join(", "),
+				uploadedState,
+				expectedState
+			]
+		});
 	}
 
 	// move to metadata handler

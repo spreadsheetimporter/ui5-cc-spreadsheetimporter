@@ -19,3 +19,35 @@ If a row is not found it is just not included in the List Binding.
 So the process will not fail if a row is not found and can match which objects are not found from the List Binding.  
 If a object was not found the user can then decide to continue with the found objects or to cancel the process.  
 Each context will then be used to update the object with `setProperty`.
+
+### Different States in Export
+
+For the export the process determines the state of the object by checking the `IsActiveEntity` and `HasDraftEntity` properties.  
+
+
+#### List Report
+
+- `IsActiveEntity=true` and `HasDraftEntity=false` -> `IsActiveEntity` column is set to true
+- `IsActiveEntity=true` and `HasDraftEntity=true` -> `IsActiveEntity` column is set to false
+
+#### Object Page
+
+- `IsActiveEntity=true` and `HasDraftEntity=false` -> `IsActiveEntity` column is set to true
+- `IsActiveEntity=true` and `HasDraftEntity=true` -> `IsActiveEntity` column is set to false
+
+### Different States in Upload
+
+#### List Report
+
+- `IsActiveEntity=true` and `HasDraftEntity=false` -> update the object (expecting `IsActiveEntity=true` in the spreadsheet import)
+- `IsActiveEntity=true` and `HasDraftEntity=true` -> create a new context with `IsActiveEntity=false` and use the draft entity automatically to update the object (expecting `IsActiveEntity=false` in the spreadsheet import)
+
+#### Table in Object Page
+
+##### Not in Edit Mode
+
+- `IsActiveEntity=true` and `HasDraftEntity=false` and `HasActiveEntity=false` -> update the object (expecting `IsActiveEntity=true` in the spreadsheet import)
+
+##### In Edit Mode
+
+- `IsActiveEntity=false` and `HasDraftEntity=false` and `HasActiveEntity=true` -> update the object (expecting `IsActiveEntity=false` in the spreadsheet import)
