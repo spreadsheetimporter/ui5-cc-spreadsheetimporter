@@ -27,6 +27,7 @@ import SpreadsheetDownloadDialog from "../download/SpreadsheetDownloadDialog";
 import SpreadsheetGenerator from "../download/SpreadsheetGenerator";
 import SpreadsheetDownload from "../download/SpreadsheetDownload";
 import OData from "../odata/OData";
+import { Action } from "../../enums";
 
 type InputType = {
 	[key: string]: {
@@ -191,7 +192,9 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 				if (!this.component.getSkipColumnsCheck()) {
 					this.messageHandler.checkColumnNames(columnNames, this.component.getFieldMatchType(), this.spreadsheetUploadController.typeLabelList);
 				}
-				// TODO: check for duplicate keys in payload when updating
+				if(this.component.getAction() === Action.Update){
+					this.messageHandler.checkDuplicateKeys(spreadsheetSheetsData);
+				}
 			}
 			this.spreadsheetUploadController.payload = spreadsheetSheetsData;
 

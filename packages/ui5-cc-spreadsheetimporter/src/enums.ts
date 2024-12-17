@@ -76,6 +76,10 @@ export const CustomMessageTypes: { [key: string]: CustomMessageType } = {
 		title: "DraftEntityMismatch",
 		group: true,
 		update: true
+	},
+	DuplicateKeys: {
+		title: "DuplicateKeys",
+		group: true
 	}
 };
 

@@ -12,6 +12,7 @@ import * as XLSX from "xlsx";
 import Text from "sap/m/Text";
 import Button from "sap/m/Button";
 import { DialogType, ButtonType } from "sap/m/library";
+import MetadataHandlerV4 from "./odata/MetadataHandlerV4";
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -196,6 +197,36 @@ export default class MessageHandler extends ManagedObject {
 		return availableKeyColumns;
 	}
 
+	checkDuplicateKeys(data: ArrayData) {
+		const keyNames = MetadataHandlerV4.getAnnotationProperties(this.spreadsheetUploadController.context, this.spreadsheetUploadController.getOdataType()).properties.$Key as string[];
+		const seenKeys = new Map<string, number>();
+		
+		data.forEach((row, index) => {
+			const keys = keyNames
+				.filter(key => key !== "IsActiveEntity")
+				.map(key => {
+					const matchingColumn = Object.keys(row).find(col => col.includes(`[${key}]`));
+					const value = matchingColumn ? row[matchingColumn].rawValue : undefined;
+					return `${key}=${value}`;
+				});
+			const keyString = JSON.stringify(keys);
+			
+			if (seenKeys.has(keyString)) {
+				const errorMessage = {
+					title: this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.duplicateKeys"),
+					type: CustomMessageTypes.DuplicateKeys,
+					row: index + 2,
+					counter: 1,
+					ui5type: MessageType.Error,
+					formattedValue: keys.join(", ")
+				} as Messages;
+				this.addMessageToMessages(errorMessage);
+			} else {
+				seenKeys.set(keyString, index);
+			}
+		});
+	}
+
 	areMessagesPresent(): boolean {
 		if (this.messages.some((message) => message.counter > 0)) {
 			return true;
@@ -275,6 +306,8 @@ export default class MessageHandler extends ManagedObject {
 				messageText = this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.objectNotFoundWithKeys", [message.formattedValue]);
 			} else if (message.type === CustomMessageTypes.DraftEntityMismatch) {
 				messageText = this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.draftEntityMismatchRow", message.formattedValue);
+			} else if (message.type === CustomMessageTypes.DuplicateKeys) {
+				messageText = this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.duplicateKeysRow", [message.formattedValue]);
 			} else {
 				messageText = this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.errorInRow", [message.row]);
 			}
