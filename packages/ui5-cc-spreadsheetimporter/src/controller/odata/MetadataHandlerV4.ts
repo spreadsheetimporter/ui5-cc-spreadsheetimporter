@@ -1,6 +1,7 @@
 import Log from "sap/base/Log";
 import { Columns, Property, ListObject, PropertyArray, PropertyObject } from "../../types";
 import MetadataHandler from "./MetadataHandler";
+import ODataV4 from "./ODataV4";
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
@@ -14,12 +15,8 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 		let entityTypeLabel;
 
 		const { annotations, properties } = MetadataHandlerV4.getAnnotationProperties(this.spreadsheetUploadController.context, odataType);
-		Log.debug("SpreadsheetUpload: Annotations", undefined, "SpreadsheetUpload: MetadataHandler", () =>
-			this.spreadsheetUploadController.component.logger.returnObject(annotations)
-		);
-		Log.debug("SpreadsheetUpload: Properties", undefined, "SpreadsheetUpload: MetadataHandler", () =>
-			this.spreadsheetUploadController.component.logger.returnObject(properties)
-		);
+		Log.debug("SpreadsheetUpload: Annotations", undefined, "SpreadsheetUpload: MetadataHandler", () => this.spreadsheetUploadController.component.logger.returnObject(annotations));
+		Log.debug("SpreadsheetUpload: Properties", undefined, "SpreadsheetUpload: MetadataHandler", () => this.spreadsheetUploadController.component.logger.returnObject(properties));
 		// try get facet label
 		try {
 			entityTypeLabel = annotations[odataType]["@com.sap.vocabularies.UI.v1.Facets"][0].Label;
@@ -82,7 +79,7 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 					listObject.set(propertyName, propertyObject);
 				}
 				// if no annotation is found, still try to add the property
-				if(!propertyLabel && !propertyName.startsWith("SAP__")){
+				if (!propertyLabel && !propertyName.startsWith("SAP__")) {
 					let propertyObject: Property = {} as Property;
 					propertyObject.label = this.getLabel(annotations, properties, propertyName, propertyLabel, odataType);
 					if (!propertyObject.label) {
@@ -114,7 +111,7 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 					listObject.set(propertyName, propertyObject);
 				}
 				// if no annotation is found, still try to add the property
-				if(!propertyLabel && !propertyName.startsWith("SAP__")){
+				if (!propertyLabel && !propertyName.startsWith("SAP__")) {
 					let propertyObject: Property = {} as Property;
 					propertyObject.label = this.getLabel(annotations, properties, propertyName, propertyLabel, odataType);
 					if (!propertyObject.label) {
@@ -143,7 +140,7 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 				Log.debug(`v: ${propertyName} not found as a LineItem Label`, undefined, "SpreadsheetUpload: MetadataHandlerV4");
 			}
 		}
-		if (typeof label === 'string' && label.startsWith("{") && label.endsWith("}")) {
+		if (typeof label === "string" && label.startsWith("{") && label.endsWith("}")) {
 			try {
 				label = this.parseI18nText(label, this.spreadsheetUploadController.view);
 			} catch (error) {
@@ -252,9 +249,8 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 				}
 			}
 		}
-		
 	}
-	
+
 	_getExpandsRecursive(mainEntity: any, expands: any, parent?: string, parentExpand?: any, currentLevel: number = 0, deepLevel: number = 99) {
 		if (currentLevel >= deepLevel) return;
 
@@ -273,12 +269,38 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 		}
 	}
 
+	// move to metadata handler
+	getKeys(binding: any, payload: any, IsActiveEntity?: boolean, excludeIsActiveEntity: boolean = false): Record<string, any> {
+		// Get the resolved path
+		let path = MetadataHandlerV4.getResolvedPath(binding);
+
+		// Get the key properties for this entity type
+		const keyNames = MetadataHandlerV4.getAnnotationProperties(this.spreadsheetUploadController.context, this.spreadsheetUploadController.getOdataType()).properties.$Key as string[];
+
+		// Create a map of key names to their values from the payload
+		const keyMap: Record<string, any> = {};
+		keyNames.forEach((key) => {
+			if (excludeIsActiveEntity && key === "IsActiveEntity") {
+				return;
+			}
+			if (key === "IsActiveEntity") {
+				// If IsActiveEntity is explicitly provided as a parameter, use it
+				// Otherwise, use the value from the payload
+				keyMap[key] = IsActiveEntity !== undefined ? IsActiveEntity : payload[key];
+			} else {
+				keyMap[key] = payload[key];
+			}
+		});
+
+		return keyMap;
+	}
+
 	/**
 	 * Adds keys from entity to labelList so it will be added to the sheet
-	 * @param labelList 
-	 * @param entityName 
-	 * @param parentEntity 
-	 * @param partner 
+	 * @param labelList
+	 * @param entityName
+	 * @param parentEntity
+	 * @param partner
 	 */
 	addKeys(labelList: ListObject, entityName: string, parentEntity?: any, partner?: string) {
 		const { annotations, properties } = MetadataHandlerV4.getAnnotationProperties(this.spreadsheetUploadController.context, entityName);
@@ -305,7 +327,7 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 
 		// Create a new Map to make sure the are in the beginning of the spreadsheet
 		const newLabelList = new Map<string, Property>();
-		
+
 		// Add keys to the new Map
 		for (const key of keys) {
 			const propertyObject = {} as Property;
@@ -336,5 +358,39 @@ export default class MetadataHandlerV4 extends MetadataHandler {
 		const annotations = model.getMetaModel().getData()["$Annotations"];
 		const properties = model.getMetaModel().getData()[odataType];
 		return { annotations, properties };
+	}
+
+	static formatKeyPredicates(keys: Record<string, any>, payload: Record<string, any>): string {
+		// If IsActiveEntity is a key but not in payload, add it with true value as ODataV4 is not able to create draft entities
+		if ("IsActiveEntity" in keys && !("IsActiveEntity" in payload)) {
+			payload = { ...payload, IsActiveEntity: true };
+		}
+
+		const aKeyProperties = Object.keys(keys).map((key) => {
+			// Check if the key exists in our payload
+			if (!(key in payload)) {
+				throw new Error(`Required key property '${key}' not found in payload`);
+			}
+
+			// Encode the key and value
+			const encodedKey = encodeURIComponent(key);
+			const encodedValue = encodeURIComponent(payload[key]);
+
+			// Return the formatted key-value pair
+			return Object.keys(keys).length > 1 ? `${encodedKey}=${encodedValue}` : encodedValue;
+		});
+
+		return `${aKeyProperties.join(",")}`;
+	}
+
+	static getResolvedPath(binding: any): string {
+		let path = binding.getPath();
+		if (binding.getResolvedPath) {
+			path = binding.getResolvedPath();
+		} else {
+			// workaround for getResolvedPath only available from 1.88
+			path = binding.getModel().resolve(binding.getPath(), binding.getContext());
+		}
+		return path;
 	}
 }

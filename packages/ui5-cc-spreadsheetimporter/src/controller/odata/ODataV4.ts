@@ -66,7 +66,7 @@ export default class ODataV4 extends OData {
 	updateAsync(model: any, binding: any, payload: any) {
 		// also do this if we should check for draft entities, this should be default in draft scenarios
 		// TODO: maybe this should default and only way to update
-		const keys = this.getKeys(binding, payload);
+		const keys = this.metadataHandler.getKeys(binding, payload);
 
 		// Now use the keys to find the matching context
 		const currentContext = this.contexts.find((ctx) => Object.entries(keys).every(([key, value]) => ctx.payload[key] === value)) as BatchContext;
@@ -90,8 +90,8 @@ export default class ODataV4 extends OData {
 		if (isDraft) {
 			// Switch to the draft entity by creating a new context with IsActiveEntity=false
 			payload.IsActiveEntity = false;
-			const draftKeyPredicates = ODataV4.formatKeyPredicates(keys, payload);
-			const path = ODataV4.getResolvedPath(binding);
+			const draftKeyPredicates = MetadataHandlerV4.formatKeyPredicates(keys, payload);
+			const path = MetadataHandlerV4.getResolvedPath(binding);
 			const oDataContextBinding = binding.getModel().bindContext(`${path}(${draftKeyPredicates})`, undefined, { $$groupId: this.updateGroupId }) as ODataContextBinding;
 			context = oDataContextBinding.getBoundContext();
 		}
@@ -149,7 +149,7 @@ export default class ODataV4 extends OData {
 				.getModel()
 				.bindList("/" + odataEntityTypeParameterPath, null, [], [], { $$updateGroupId: this.updateGroupId }) as ODataListBinding;
 		} else {
-			let path = ODataV4.getResolvedPath(binding);
+			let path = MetadataHandlerV4.getResolvedPath(binding);
 			this.customBinding = binding.getModel().bindList(path, this.contexts, [], [], { $$updateGroupId: this.updateGroupId });
 		}
 	}
@@ -300,12 +300,12 @@ export default class ODataV4 extends OData {
 
 	async getObjects(model: any, binding: any, batch: any): Promise<any[]> {
 		// TODO: check if IsActiveEntity is available, add it to the payload?
-		let path = ODataV4.getResolvedPath(binding);
+		let path = MetadataHandlerV4.getResolvedPath(binding);
 
 		// Create filters for each object in the batch
 		const batchFilters = batch.map((payload) => {
 			// Get keys but exclude IsActiveEntity as we'll add it separately
-			const keys = this.getKeys(binding, payload, undefined, true);
+			const keys = this.metadataHandler .getKeys(binding, payload, undefined, true);
 			const filterConditions = Object.entries(keys).map(([property, value]) => 
 				new Filter(property, FilterOperator.EQ, value)
 			);
@@ -334,11 +334,11 @@ export default class ODataV4 extends OData {
 
 		// Store contexts with their corresponding paths and payloads
 		batch.forEach((payload, index) => {
-			const keys = this.getKeys(binding, payload);
+			const keys = this.metadataHandler.getKeys(binding, payload);
 			this.contexts.push({
 				context: contexts[index],
 				path,
-				keyPredicates: ODataV4.formatKeyPredicates(keys, payload),
+				keyPredicates: MetadataHandlerV4.formatKeyPredicates(keys, payload),
 				keys: Object.keys(keys),
 				payload
 			});
@@ -351,7 +351,7 @@ export default class ODataV4 extends OData {
 
 		// Find which objects from batch weren't found
 		batch.forEach((batchItem, index) => {
-			const keys = this.getKeys(binding, batchItem);
+			const keys = this.metadataHandler.getKeys(binding, batchItem);
 			const keysWithoutIsActiveEntity = { ...keys };
 			delete keysWithoutIsActiveEntity.IsActiveEntity;
 
@@ -425,64 +425,5 @@ export default class ODataV4 extends OData {
 		});
 	}
 
-	// move to metadata handler
-	getKeys(binding: any, payload: any, IsActiveEntity?: boolean, excludeIsActiveEntity: boolean = false): Record<string, any> {
-		// Get the resolved path
-		let path = ODataV4.getResolvedPath(binding);
 
-		// Get the key properties for this entity type
-		const keyNames = MetadataHandlerV4.getAnnotationProperties(this.spreadsheetUploadController.context, this.spreadsheetUploadController.getOdataType()).properties.$Key as string[];
-
-		// Create a map of key names to their values from the payload
-		const keyMap: Record<string, any> = {};
-		keyNames.forEach((key) => {
-			if (excludeIsActiveEntity && key === "IsActiveEntity") {
-				return;
-			}
-			if (key === "IsActiveEntity") {
-				// If IsActiveEntity is explicitly provided as a parameter, use it
-				// Otherwise, use the value from the payload
-				keyMap[key] = IsActiveEntity !== undefined ? IsActiveEntity : payload[key];
-			} else {
-				keyMap[key] = payload[key];
-			}
-		});
-
-		return keyMap;
-	}
-
-	static formatKeyPredicates(keys: Record<string, any>, payload: Record<string, any>): string {
-		// If IsActiveEntity is a key but not in payload, add it with true value as ODataV4 is not able to create draft entities
-		if ("IsActiveEntity" in keys && !("IsActiveEntity" in payload)) {
-			payload = { ...payload, IsActiveEntity: true };
-		}
-
-		return Object.entries(keys)
-			.map(([key, _]) => {
-				// Check if the key exists in our payload
-				if (!(key in payload)) {
-					throw new Error(`Required key property '${key}' not found in payload`);
-				}
-				// Format the value based on its type:
-				// - Strings need to be wrapped in quotes: ID='123'
-				// - Other types (like boolean, number) don't: IsActiveEntity=true
-				const value = payload[key];
-				const formattedValue = typeof value === "string" ? `'${value}'` : value;
-
-				// Combine key and value: "key=value"
-				return `${key}=${formattedValue}`;
-			})
-			.join(","); // Join all key-value pairs with commas
-	}
-
-	static getResolvedPath(binding: any): string {
-		let path = binding.getPath();
-		if (binding.getResolvedPath) {
-			path = binding.getResolvedPath();
-		} else {
-			// workaround for getResolvedPath only available from 1.88
-			path = binding.getModel().resolve(binding.getPath(), binding.getContext());
-		}
-		return path;
-	}
 }
