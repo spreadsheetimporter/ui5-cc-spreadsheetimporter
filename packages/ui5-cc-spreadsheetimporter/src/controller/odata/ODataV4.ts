@@ -7,31 +7,14 @@ import Log from "sap/base/Log";
 import MetadataHandlerV4 from "./MetadataHandlerV4";
 import ODataModel from "sap/ui/model/odata/v4/ODataModel";
 import ODataContextBinding from "sap/ui/model/odata/v4/ODataContextBinding";
-import Filter from "sap/ui/model/Filter";
-import FilterOperator from "sap/ui/model/FilterOperator";
-import Context from "sap/ui/model/odata/v4/Context";
 import MessageHandler from "../MessageHandler";
-import { CustomMessageTypes, MessageType } from "../../enums";
+import { ODataV4RequestObjects, BatchContext } from './ODataV4RequestObjects';
 
 type EntityObject = {
 	$kind: string;
 	$Type?: string;
 	$NavigationPropertyBinding?: Record<string, string>;
 };
-interface ContextCreationResult {
-    context: ODataContextBinding;
-    path: string;
-    keyPredicates: string;
-    keys: string[];
-}
-
-interface BatchContext {
-    context: Context;
-    path: string;
-    keyPredicates: string;
-    keys: string[];
-    payload: any;
-}
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -40,12 +23,13 @@ export default class ODataV4 extends OData {
 	customBinding: ODataListBinding;
 	updateGroupId: string;
 	public metadataHandler: MetadataHandlerV4;
-	private objects: any[];
 	private contexts: BatchContext[];
+	private objectRetriever: ODataV4RequestObjects;
 	constructor(spreadsheetUploadController: SpreadsheetUpload, messageHandler: MessageHandler, util: Util) {
 		super(spreadsheetUploadController, messageHandler, util);
 		this.updateGroupId = Util.getRandomString(10);
 		this.metadataHandler = new MetadataHandlerV4(spreadsheetUploadController);
+		this.objectRetriever = new ODataV4RequestObjects(this.metadataHandler, messageHandler, util);
 		this.contexts = [];
 	}
 
@@ -108,6 +92,7 @@ export default class ODataV4 extends OData {
 			// Only update if value has changed
 			if (fullUpdate || 
 				(currentObject[property] !== newValue && 
+				// for date values, we need to convert to the format yyyy-mm-dd
 				(!newValue?.toISOString || currentObject[property] !== newValue.toISOString().substr(0,10)))) {
 				this.createPromises.push(
 					context.setProperty(
@@ -301,179 +286,9 @@ export default class ODataV4 extends OData {
 		this.metadataHandler.addKeys(labelList, entityName, parentEntity, partner);
 	}
 
-	private async _getFilteredContexts(
-		model: any,
-		binding: any,
-		path: string,
-		batch: any[],
-		isActive: boolean
-	): Promise<{
-		contexts: Context[];
-		objects: any[];
-	}> {
-		// Create filters for each object in the batch
-		const batchFilters = batch.map((payload) => {
-			const keys = this.metadataHandler.getKeys(binding, payload);
-			keys.IsActiveEntity = isActive;
-
-			const keyFilters = Object.entries(keys).map(([property, value]) => new Filter(property, FilterOperator.EQ, value));
-
-			return new Filter({
-				filters: keyFilters,
-				and: true
-			});
-		});
-
-		// Combine all batch filters with OR
-		const combinedFilter = new Filter({
-			filters: batchFilters,
-			and: false
-		});
-
-		// Bind the list with the filter
-		const listBinding = model.bindList(path, null, [], [], { $$updateGroupId: "$auto" }) as ODataListBinding;
-		listBinding.filter(combinedFilter);
-
-		// Request contexts and map to objects
-		const contexts = await listBinding.requestContexts(0, batch.length);
-		const objects = await Promise.all(contexts.map((context) => context.getObject()));
-
-		return { contexts, objects };
-	}
-
 	async getObjects(model: any, binding: any, batch: any): Promise<any[]> {
-		let path = MetadataHandlerV4.getResolvedPath(binding);
-
-		// Get both active and inactive contexts
-		const { contexts: contextsTrue, objects: objectsTrue } = await this._getFilteredContexts(model, binding, path, batch, true);
-		const { contexts: contextsFalse, objects: objectsFalse } = await this._getFilteredContexts(model, binding, path, batch, false);
-
-		const objects = [];
-
-		// get the objects state we need
-		batch.forEach((payload, index) => {
-			// Get keys excluding IsActiveEntity for matching
-			const keys = this.metadataHandler.getKeys(binding, payload);
-			const keysWithoutIsActiveEntity = { ...keys };
-			delete keysWithoutIsActiveEntity.IsActiveEntity;
-
-			// Find matching object based on IsActiveEntity flag
-			const matchingObject = payload.IsActiveEntity
-				? objectsTrue.find((obj) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => obj[key] === value))
-				: objectsFalse.find((obj) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => obj[key] === value));
-
-			if (matchingObject) {
-				objects.push(matchingObject);
-			} else {
-				const matchingObject = !payload.IsActiveEntity
-				? objectsTrue.find((obj) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => obj[key] === value))
-				: objectsFalse.find((obj) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => obj[key] === value));
-				objects.push(matchingObject);
-			}
-		});
-
-		// Store contexts with their corresponding paths and payloads
-		batch.forEach((payload, index) => {
-			const keys = this.metadataHandler.getKeys(binding, payload);
-			const keyPredicates = MetadataHandlerV4.formatKeyPredicates(keys, payload)
-			const isActiveEntity = payload.IsActiveEntity;
-			const keysWithoutIsActiveEntity = { ...keys };
-			delete keysWithoutIsActiveEntity.IsActiveEntity;
-
-			const matchingContext = isActiveEntity
-				? contextsTrue.find(ctx => 
-					Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => 
-						ctx.getObject()[key] === value
-					)
-				)
-				: contextsFalse.find(ctx => 
-					Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => 
-						ctx.getObject()[key] === value
-					)
-				);
-
-			this.contexts.push({
-				context: matchingContext,
-				path,
-				keyPredicates: keyPredicates,
-				keys: Object.keys(keys),
-				payload
-			});
-		});
-
-		let errorFound = false;
-
-		// Find which objects from batch weren't found
-		batch.forEach((batchItem, index) => {
-			const keys = this.metadataHandler.getKeys(binding, batchItem);
-			const keysWithoutIsActiveEntity = { ...keys };
-			delete keysWithoutIsActiveEntity.IsActiveEntity;
-
-			const foundObject = objects.find((obj) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => obj[key] === value));
-
-			if (!foundObject) {
-				errorFound = true;
-				this.messageHandler.addMessageToMessages({
-					title: this.util.geti18nText("spreadsheetimporter.objectNotFound"),
-					row: index + 1,
-					type: CustomMessageTypes.ObjectNotFound,
-					counter: 1,
-					formattedValue: Object.entries(keys)
-						.map(([key, value]) => `${key}=${value}`)
-						.join(", "),
-					ui5type: MessageType.Error
-				});
-				return;
-			}
-
-			// Check for valid draft states
-			if (foundObject.IsActiveEntity && !foundObject.HasDraftEntity && !batchItem.IsActiveEntity) {
-				// Active entity without draft - must import as active
-				this._addDraftMismatchError(index, keys, "Draft", "Active");
-				errorFound = true;
-			} else if (foundObject.IsActiveEntity && foundObject.HasDraftEntity && batchItem.IsActiveEntity) {
-				// Active entity with draft - must import as draft
-				this._addDraftMismatchError(index, keys, "Active", "Draft");
-				errorFound = true;
-			} else if (!foundObject.IsActiveEntity && batchItem.IsActiveEntity) {
-				// Draft entity - must import as draft
-				this._addDraftMismatchError(index, keys, "Active", "Draft");
-				errorFound = true;
-			}
-		});
-
-		if (errorFound) {
-			if (this.messageHandler.areMessagesPresent()) {
-				try {
-					// Wait for user decision
-					await this.messageHandler.displayMessages();
-					// If we get here, user clicked continue
-					return objects;
-				} catch (error) {
-					// User clicked close
-					throw new Error("Operation cancelled by user");
-				}
-			}
-		}
-
+		const objects = await this.objectRetriever.getObjects(model, binding, batch);
+		this.contexts = this.objectRetriever.getContexts();
 		return objects;
-	}
-
-	// Helper method to add draft mismatch error
-	private _addDraftMismatchError(index: number, keys: Record<string, any>, uploadedState: string, expectedState: string): void {
-		this.messageHandler.addMessageToMessages({
-			title: this.util.geti18nText("spreadsheetimporter.draftEntityMismatch"),
-			row: index + 1,
-			type: CustomMessageTypes.DraftEntityMismatch,
-			counter: 1,
-			ui5type: MessageType.Error,
-			formattedValue: [
-				Object.entries(keys)
-					.map(([key, value]) => `${key}=${value}`)
-					.join(", "),
-				uploadedState,
-				expectedState
-			]
-		});
 	}
 }

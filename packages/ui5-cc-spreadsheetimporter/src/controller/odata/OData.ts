@@ -24,7 +24,6 @@ export default abstract class OData extends ManagedObject {
 	private _tables: any[] = [];
 	busyDialog: Dialog;
 	spreadsheetUploadController: SpreadsheetUpload;
-	contexts: any;
 	public createPromises: Promise<any>[] = [];
 	public createContexts: any[] = [];
 	messageHandler: MessageHandler;
