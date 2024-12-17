@@ -13,8 +13,9 @@ So if on the object `HasDraftEntity` is true or `IsActiveEntity` is false, the p
 
 ## Technical Details
 
-To get the all the objects that are imported from the spreadsheet, the process will create a new empty list binding with a filter of all the keys from the spreadsheet with all of them include the filter `IsActiveEntity=true`.  
-This will result in a get request to the OData service for each row combined in one batch request for each batch.
+To get the all the objects that are imported from the spreadsheet, the process will create a new empty list binding with a filter of all the keys from the spreadsheet.
+Technically is has to query for `IsActiveEntity=true` and `IsActiveEntity=false` and combine the results.  
+This will result in two get requests to the OData service for each row combined in two batch request for each batch.
 If a row is not found it is just not included in the List Binding.
 So the process will not fail if a row is not found and can match which objects are not found from the List Binding.  
 If a object was not found the user can then decide to continue with the found objects or to cancel the process.  
