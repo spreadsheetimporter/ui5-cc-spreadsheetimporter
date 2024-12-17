@@ -19,6 +19,7 @@ entity Orders : cuid, managed {
   spreadsheetRow : Integer;
 }
 
+@odata.draft.bypass
 entity OrderItems : cuid {
   order     : Association to Orders;
   product   : Association to Products;

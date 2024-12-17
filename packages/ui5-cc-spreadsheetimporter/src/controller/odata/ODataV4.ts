@@ -104,8 +104,11 @@ export default class ODataV4 extends OData {
 			}
 			// decide if the full import payload should be sent or only the changed properties
 			const fullUpdate = (this.spreadsheetUploadController.component.getUpdateConfig() as UpdateConfig).fullUpdate;
+
 			// Only update if value has changed
-			if (fullUpdate || currentObject[property] !== newValue) {
+			if (fullUpdate || 
+				(currentObject[property] !== newValue && 
+				(!newValue?.toISOString || currentObject[property] !== newValue.toISOString().substr(0,10)))) {
 				this.createPromises.push(
 					context.setProperty(
 						property,
