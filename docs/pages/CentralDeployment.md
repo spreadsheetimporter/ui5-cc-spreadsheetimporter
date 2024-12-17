@@ -167,7 +167,7 @@ Simulate the centrally deployed component in your local environment by following
      customMiddleware:
        - name: ui5-middleware-servestatic
          afterMiddleware: compression
-         mountPath: /resources/cc/spreadsheetimporter/v1_5_2/
+         mountPath: /resources/cc/spreadsheetimporter/v1_6_0/
          configuration:
            rootPath: "node_modules/ui5-cc-spreadsheetimporter/dist"
    ```
@@ -181,7 +181,7 @@ To consume the centrally deployed component while developing locally in VS Code 
    Access the App Index to find the URL of the component:
 
    ```
-   <SAP_SYSTEM_URL>/sap/bc/ui2/app_index/ui5_app_info?id=cc.spreadsheetimporter.v1_5_2
+   <SAP_SYSTEM_URL>/sap/bc/ui2/app_index/ui5_app_info?id=cc.spreadsheetimporter.v1_6_0
    ```
 
 2\. **Configure Proxy Middleware**
@@ -200,9 +200,9 @@ To consume the centrally deployed component while developing locally in VS Code 
              - path: /sap
                url: <Cloud Connector or local URL>
                destination: <System Destination Name if in BAS>
-             - path: /resources/cc/spreadsheetimporter/v1_5_2
+             - path: /resources/cc/spreadsheetimporter/v1_6_0
                destination: <System Destination Name if in BAS>
-               pathPrefix: /sap/bc/ui5_ui5/sap/<BSP_NAME>/thirdparty/customcontrol/spreadsheetimporter/v1_5_2/
+               pathPrefix: /sap/bc/ui5_ui5/sap/<BSP_NAME>/thirdparty/customcontrol/spreadsheetimporter/v1_6_0/
                url: <Cloud Connector or local URL>
    ```
 
@@ -213,9 +213,9 @@ To consume the centrally deployed component while developing locally in VS Code 
      customMiddleware:
        - name: ui5-middleware-simpleproxy
          afterMiddleware: compression
-         mountPath: /resources/cc/spreadsheetimporter/v1_5_2/
+         mountPath: /resources/cc/spreadsheetimporter/v1_6_0/
          configuration:
-           baseUri: "<SAP_SYSTEM_URL>/sap/bc/ui5_ui5/sap/<BSP_NAME>/thirdparty/customcontrol/spreadsheetimporter/v1_5_2/"
+           baseUri: "<SAP_SYSTEM_URL>/sap/bc/ui5_ui5/sap/<BSP_NAME>/thirdparty/customcontrol/spreadsheetimporter/v1_6_0/"
            username: <SAP_USERNAME>
            password: <SAP_PASSWORD>
            query:

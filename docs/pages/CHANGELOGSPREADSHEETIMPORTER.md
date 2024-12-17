@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.6.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.5.2...ui5-cc-spreadsheetimporter-v1.6.0) (2024-12-17)
+
+
+### Features
+
+* have new property `IsActiveEntity` status in export ([#691](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/691)) ([fdefc5a](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/fdefc5ace261f108eacd4e853294b6cfd99b6905))
+
+
+### Bug Fixes
+
+* show download template button in standalone mode when spreadsheetTemplateFile is used ([51129c3](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/51129c3f25b1083533e1155fac310113414f0528))
+
 ## [1.5.2](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.5.1...ui5-cc-spreadsheetimporter-v1.5.2) (2024-12-12)
 
 
