@@ -6,6 +6,7 @@ import { CustomMessageTypes, MessageType } from "../../enums";
 import MetadataHandlerV4 from "./MetadataHandlerV4";
 import MessageHandler from "../MessageHandler";
 import Util from "../Util";
+import Log from "sap/base/Log";
 
 export interface BatchContext {
 	context: Context;
@@ -32,26 +33,79 @@ export class ODataV4RequestObjects {
 	}
 
 	async getObjects(model: any, binding: any, batch: any): Promise<any[]> {
+		Log.debug("Processing batch from spreadsheet", undefined, "SpreadsheetUpload: ODataV4RequestObjects", () => ({
+			batch,
+			bindingPath: binding.getPath(),
+			modelName: model.getMetadata().getName()
+		}));
 		let path = MetadataHandlerV4.getResolvedPath(binding);
 
-		// Get both active and inactive contexts, will trigger two get requests
+		// Get both active and inactive contexts
+		Log.debug("Fetching active entities...", undefined, "SpreadsheetUpload: ODataV4RequestObjects");
 		const { contexts: contextsTrue, objects: objectsTrue } = await this._getFilteredContexts(model, binding, path, batch, true);
+		Log.debug("Found active entities", undefined, "SpreadsheetUpload: ODataV4RequestObjects", () => ({
+			count: objectsTrue.length,
+			objects: objectsTrue
+		}));
+
+		Log.debug("Fetching inactive entities...", undefined, "SpreadsheetUpload: ODataV4RequestObjects");
 		const { contexts: contextsFalse, objects: objectsFalse } = await this._getFilteredContexts(model, binding, path, batch, false);
+		Log.debug("Found inactive entities", undefined, "SpreadsheetUpload: ODataV4RequestObjects", () => ({
+			count: objectsFalse.length,
+			objects: objectsFalse
+		}));
 
 		let objects = this.findEntitiesFromSpreadsheet(batch, objectsTrue, objectsFalse, binding);
+		Log.debug("Matched entities from spreadsheet", undefined, "SpreadsheetUpload: ODataV4RequestObjects", () => ({
+			count: objects.length,
+			objects
+		}));
 
-		// Store contexts with their corresponding paths and payloads
+		// Store contexts
 		this.contexts = this.getContextsFromPayload(batch, contextsTrue, contextsFalse, path, binding);
+		Log.debug("Generated contexts", undefined, "SpreadsheetUpload: ODataV4RequestObjects", () => ({
+			count: this.contexts.length,
+			contexts: this.contexts
+		}));
 
 		const errorFound = this.validateObjectsAndDraftStates(batch, objects, binding);
+		Log.debug("Validation completed", undefined, "SpreadsheetUpload: ODataV4RequestObjects", () => ({
+			errorFound,
+			messageCount: this.messageHandler.messages.length
+		}));
 
 		if (errorFound) {
 			if (this.messageHandler.areMessagesPresent()) {
 				try {
-					// Wait for user decision
 					await this.messageHandler.displayMessages();
-					// If we get here, user clicked continue
-					// Update objects with correct draft status versions, also to have correct partial update
+					
+					// Log status changes
+					const statusChanges = batch.map((payload, index) => {
+						const keys = this.metadataHandler.getKeys(binding, payload);
+						const keysWithoutIsActiveEntity = { ...keys };
+						delete keysWithoutIsActiveEntity.IsActiveEntity;
+
+						const originalStatus = payload.IsActiveEntity;
+						const oppositeStatusObject = payload.IsActiveEntity
+							? objectsFalse.find((obj) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => obj[key] === value))
+							: objectsTrue.find((obj) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => obj[key] === value));
+
+						return {
+							index,
+							keys: keysWithoutIsActiveEntity,
+							originalStatus,
+							newStatus: oppositeStatusObject?.IsActiveEntity,
+							statusChanged: originalStatus !== oppositeStatusObject?.IsActiveEntity
+						};
+					});
+
+					Log.debug("Status changes after user confirmation", undefined, "SpreadsheetUpload: ODataV4RequestObjects", () => ({
+						total: statusChanges.length,
+						changed: statusChanges.filter(c => c.statusChanged).length,
+							details: statusChanges
+					}));
+
+					// Update objects with correct draft status versions
 					objects = batch.map(payload => {
 						const keys = this.metadataHandler.getKeys(binding, payload);
 						const keysWithoutIsActiveEntity = { ...keys };
@@ -70,11 +124,11 @@ export class ODataV4RequestObjects {
 						return payload;
 					});
 
-					// Update contexts with correct versions
-					this.contexts = this.getContextsFromPayload(batch, contextsTrue, contextsFalse, path, binding);
 					return objects;
 				} catch (error) {
-					// User clicked close
+					Log.debug("Operation cancelled by user", undefined, "SpreadsheetUpload: ODataV4RequestObjects", () => ({
+						error: error.message
+					}));
 					throw new Error("Operation cancelled by user");
 				}
 			}
@@ -124,32 +178,34 @@ export class ODataV4RequestObjects {
 	}
 
 	private findEntitiesFromSpreadsheet(batch: any[], objectsTrue: any[], objectsFalse: any[], binding: any): any[] {
-		const objects = [];
-
-		// get the objects state we need
-		batch.forEach((payload) => {
-			// Get keys excluding IsActiveEntity for matching
+		const matchResults = [];
+		
+		batch.forEach((payload, index) => {
 			const keys = this.metadataHandler.getKeys(binding, payload);
 			const keysWithoutIsActiveEntity = { ...keys };
 			delete keysWithoutIsActiveEntity.IsActiveEntity;
 
-			// Find matching object based on IsActiveEntity flag
 			const matchingObject = payload.IsActiveEntity
 				? objectsTrue.find((obj) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => obj[key] === value))
 				: objectsFalse.find((obj) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => obj[key] === value));
 
-			if (matchingObject) {
-				objects.push(matchingObject);
-			} else {
-				// if no matching object found, maybe draft status is wrong, still add so it comes up in the messagehandler
-				const matchingObject = !payload.IsActiveEntity
-					? objectsTrue.find((obj) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => obj[key] === value))
-					: objectsFalse.find((obj) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => obj[key] === value));
-				objects.push(matchingObject);
-			}
+			matchResults.push({
+				index,
+				keys: keysWithoutIsActiveEntity,
+				requestedStatus: payload.IsActiveEntity,
+				foundIn: matchingObject ? (payload.IsActiveEntity ? 'objectsTrue' : 'objectsFalse') : 'notFound',
+				object: matchingObject
+			});
 		});
 
-		return objects;
+		Log.debug("Entity matching results", undefined, "SpreadsheetUpload: ODataV4RequestObjects", () => ({
+			total: matchResults.length,
+			found: matchResults.filter(r => r.object).length,
+			notFound: matchResults.filter(r => !r.object).length,
+			details: matchResults
+		}));
+		
+		return matchResults.map(result => result.object);
 	}
 
 	private getContextsFromPayload(batch: any[], contextsTrue: Context[], contextsFalse: Context[], path: string, binding: any): BatchContext[] {

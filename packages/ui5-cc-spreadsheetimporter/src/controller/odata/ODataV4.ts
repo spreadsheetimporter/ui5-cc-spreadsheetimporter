@@ -51,9 +51,18 @@ export default class ODataV4 extends OData {
 		// also do this if we should check for draft entities, this should be default in draft scenarios
 		// TODO: maybe this should default and only way to update
 		const keys = this.metadataHandler.getKeys(binding, payload);
+		Log.debug("Processing update operation", undefined, "SpreadsheetUpload: ODataV4", () => ({
+			keys,
+			payload,
+			bindingPath: binding.getPath()
+		}));
 
 		// Now use the keys to find the matching context
 		const currentContext = this.contexts.find((ctx) => Object.entries(keys).every(([key, value]) => ctx.payload[key] === value)) as BatchContext;
+		Log.debug("Found matching context", undefined, "SpreadsheetUpload: ODataV4", () => ({
+			found: !!currentContext,
+			contextDetails: currentContext
+		}));
 
 		if (!currentContext.context) {
 			if (false) {
@@ -61,12 +70,20 @@ export default class ODataV4 extends OData {
 				throw new Error("Could not find matching context for update operation");
 			} else {
 				// TODO: continue with successfull fetched objects
+				Log.debug("No context found for update operation", undefined, "SpreadsheetUpload: ODataV4", () => ({
+					keys,
+					availableContexts: this.contexts.length
+				}));
 				return;
 			}
 		}
 		let { context } = currentContext;
 
 		const currentObject = context.getObject();
+		Log.debug("Current object state", undefined, "SpreadsheetUpload: ODataV4", () => ({
+			currentObject,
+			isDraft: currentObject.HasDraftEntity || !currentObject.IsActiveEntity
+		}));
 
 		// Determine if the current object is a draft or active entity
 		const isDraft = currentObject.HasDraftEntity || !currentObject.IsActiveEntity;
@@ -76,6 +93,11 @@ export default class ODataV4 extends OData {
 			payload.IsActiveEntity = false;
 			const draftKeyPredicates = MetadataHandlerV4.formatKeyPredicates(keys, payload);
 			const path = MetadataHandlerV4.getResolvedPath(binding);
+			Log.debug("Switching to draft entity", undefined, "SpreadsheetUpload: ODataV4", () => ({
+				draftKeyPredicates,
+				path,
+				groupId: this.updateGroupId
+			}));
 			const oDataContextBinding = binding.getModel().bindContext(`${path}(${draftKeyPredicates})`, undefined, { $$groupId: this.updateGroupId }) as ODataContextBinding;
 			context = oDataContextBinding.getBoundContext();
 		}
@@ -97,6 +119,15 @@ export default class ODataV4 extends OData {
 				columns.includes(property) && 
 				// for date values, we need to convert to the format yyyy-mm-dd
 				(!newValue?.toISOString || currentObject[property] !== newValue.toISOString().substr(0,10)))) {
+				
+				Log.debug("Updating property", undefined, "SpreadsheetUpload: ODataV4", () => ({
+					property,
+					oldValue: currentObject[property],
+					newValue,
+					isDate: !!newValue?.toISOString,
+					updateReason: fullUpdate ? 'fullUpdate' : 'valueChanged'
+				}));
+
 				this.createPromises.push(
 					context.setProperty(
 						property,
@@ -105,6 +136,12 @@ export default class ODataV4 extends OData {
 				);
 			}
 		});
+
+		Log.debug("Update operation completed", undefined, "SpreadsheetUpload: ODataV4", () => ({
+			pendingPromises: this.createPromises.length,
+			isDraft,
+			context: context.getPath()
+		}));
 	}
 
 	async submitChanges(model: any): Promise<any> {
