@@ -16,16 +16,24 @@ describe("Download Spreadsheet List Report", () => {
 	it("should trigger download button", async () => {
 		// Trigger the download
 		await BaseClass.pressById("__component0---downloadButton");
+		// Trigger the download
+		const object = await browser.asControl({
+			forceSelect: true,
+			selector: {
+				id: new RegExp(".*downloadButton$")
+			}
+		});
+		await object.press();
 	});
 
-    it("should trigger download code", async () => {
+	it("should trigger download code", async () => {
 		// Trigger the download
 		await BaseClass.pressById("container-ordersv4freestyle---MainView--downloadButtonCode");
 	});
 
 	it("Download spreadsheet and verify content", async () => {
 		const expectedFileName = "Orders12.xlsx";
-		
+
 		// Wait until the specific file is downloaded
 		await browser.waitUntil(
 			() => {
@@ -56,7 +64,7 @@ describe("Download Spreadsheet List Report", () => {
 
 	it("Download spreadsheet and verify multiple sheets and OrderItems content", async () => {
 		const expectedFileName = "Orders123.xlsx";
-		
+
 		// Wait until the specific file is downloaded
 		await browser.waitUntil(
 			() => {
@@ -74,27 +82,27 @@ describe("Download Spreadsheet List Report", () => {
 
 		const workbook = XLSX.readFile(filePath);
 		expect(workbook.SheetNames.length).toBe(4);
-		expect(workbook.SheetNames).toContain('OrderItems');
+		expect(workbook.SheetNames).toContain("OrderItems");
 
-		const orderItemsSheet = workbook.Sheets['OrderItems'];
+		const orderItemsSheet = workbook.Sheets["OrderItems"];
 		const orderItemsData = XLSX.utils.sheet_to_json(orderItemsSheet);
 		expect(orderItemsData.length).toBeGreaterThan(0);
 
-        const orderItem = orderItemsData[0];
-		expect(orderItem['ID[ID]']).toBeDefined();
-		expect(orderItem['IsActiveEntity[IsActiveEntity]']).toBeDefined();
-		expect(orderItem['Quantity[quantity]']).toBeDefined();
-		expect(orderItem['order_ID[order_ID]']).toBeDefined();
+		const orderItem = orderItemsData[0];
+		expect(orderItem["ID[ID]"]).toBeDefined();
+		expect(orderItem["IsActiveEntity[IsActiveEntity]"]).toBeDefined();
+		expect(orderItem["Quantity[quantity]"]).toBeDefined();
+		expect(orderItem["order_ID[order_ID]"]).toBeDefined();
 	});
 
 	after(async () => {
 		// Clean up
-        let files = fs.readdirSync(downloadDir);
+		let files = fs.readdirSync(downloadDir);
 		const downloadedFile = files.find((file) => file.endsWith(".xlsx"));
 		const filePath = path.join(downloadDir, downloadedFile);
 		fs.unlinkSync(filePath);
 		// remove content in download dir
-        files = fs.readdirSync(downloadDir);
+		files = fs.readdirSync(downloadDir);
 		files.forEach((file) => {
 			fs.unlinkSync(path.join(downloadDir, file));
 		});
