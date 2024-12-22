@@ -78,8 +78,10 @@ sap.ui.define([], function () {
 						async: true,
 						componentData: {
 							context: this,
-							action: "UPDATE",
-							onlyUpdateChangedProperties: true,
+							// action: "UPDATE",
+							// updateConfig: {
+							// 	fullUpdate: false
+							// },
 							showDownloadButton: true,
 							tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable",
 							columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time", "boolean", "decimal", "byte","binary"],

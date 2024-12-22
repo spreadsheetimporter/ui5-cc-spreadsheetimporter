@@ -132,6 +132,13 @@
           "target": [
             "TargetMainView"
           ]
+        },
+        {
+          "name": "RouteOrdersTable",
+          "pattern": "orders",
+          "target": [
+            "TargetOrdersTable"
+          ]
         }
       ],
       "targets": {
@@ -141,6 +148,13 @@
           "clearControlAggregation": false,
           "viewId": "MainView",
           "viewName": "MainView"
+        },
+        "TargetOrdersTable": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "OrdersTable",
+          "viewName": "OrdersTable"
         }
       }
     },

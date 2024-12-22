@@ -7,14 +7,9 @@ sap.ui.define([
     function (Controller) {
         "use strict";
 
-        return Controller.extend("ordersv4freestyle.controller.MainView", {
+        return Controller.extend("ordersv4freestyle.controller.OrdersTable", {
             onInit: function () {
 
-            },
-
-            goToSampleApp: function () {
-                // open https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/tree/main/examples/packages/ordersv4freestyle
-                window.open("https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/tree/main/examples/packages/ordersv4freestyle", "_blank");
             },
 
             onDownload: async function () {

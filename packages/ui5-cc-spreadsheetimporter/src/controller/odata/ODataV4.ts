@@ -113,13 +113,19 @@ export default class ODataV4 extends OData {
 			// only columns defined in the updateConfig should be updated
 			const columns = (this.spreadsheetUploadController.component.getUpdateConfig() as UpdateConfig).columns;
 
-			// Only update if value has changed and property is in configured columns
-			if (fullUpdate || 
-				(currentObject[property] !== newValue && 
-				columns.includes(property) && 
-				// for date values, we need to convert to the format yyyy-mm-dd
-				(!newValue?.toISOString || currentObject[property] !== newValue.toISOString().substr(0,10)))) {
-				
+			// Helper function to check if value is a date and if it has changed
+			const hasDateValueChanged = (oldValue: any, newValue: any): boolean => {
+				if (!newValue?.toISOString) return true; // not a date, continue with normal comparison
+				const formattedNewDate = newValue.toISOString().substr(0,10);
+				return oldValue !== formattedNewDate;
+			};
+
+			// Check if property should be updated
+			const isPropertyConfigured = columns.length === 0 || columns.includes(property);
+			const hasValueChanged = currentObject[property] !== newValue;
+			const isDateChangeValid = hasDateValueChanged(currentObject[property], newValue);
+
+			if (fullUpdate || (hasValueChanged && isPropertyConfigured && isDateChangeValid)) {
 				Log.debug("Updating property", undefined, "SpreadsheetUpload: ODataV4", () => ({
 					property,
 					oldValue: currentObject[property],
