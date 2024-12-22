@@ -17,7 +17,12 @@
                         deepExport: false,
                         addKeysToExport: true,
                         showOptions: false,
-                        filename: 'Orders'
+                        filename: 'Orders12',
+                        columns : {
+                            'OrderNo':{
+                                'order': 1
+                        }
+                      }
                     }
                   }"
                 />
@@ -57,7 +62,6 @@
                     }
                   }"
                 />
-                <Button id="updatedButtonCode" text="Mass Update" press="onMassUpdate"/>
                 <Button id="goToSampleApp" text="Show Sample App Code" press="goToSampleApp"/>
                 <!-- Added Table with OData binding -->
                 <Table id="ordersTable" items="{/Orders}">

@@ -63,22 +63,6 @@ sap.ui.define([
                 this.spreadsheetUpload.triggerDownloadSpreadsheet();
             },
 
-            onMassUpdate: async function () {
-                this.spreadsheetUpload = await this.getView().getController().getOwnerComponent()
-                .createComponent({
-                    usage: "spreadsheetImporter",
-                    async: true,
-                    componentData: {
-                        context: this,
-                        action: "UPDATE",
-                        updateConfig: {
-                            fullUpdate: false
-                        },
-                    }
-                });
-                this.spreadsheetUpload.openSpreadsheetUploadDialog();
-            },
-
             // onBeforeDownloadFileProcessing: function (event) {
             //     event.getParameters().data.$XYZData[0].buyer = "Customer 123";
             // },
