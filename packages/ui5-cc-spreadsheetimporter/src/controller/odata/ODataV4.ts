@@ -288,7 +288,7 @@ export default class ODataV4 extends OData {
 			// workaround for getResolvedPath only available from 1.88
 			path = (binding.getModel() as ODataModel).resolve(binding.getPath(), binding.getContext());
 		}
-		return binding.getModel().bindList(path, null, [], [], { $$updateGroupId: this.updateGroupId, $count: true }) as ODataListBinding;
+		return binding.getModel().bindList(path, null, [], [], { $$updateGroupId: this.updateGroupId, $count: true, $expand: expand }) as ODataListBinding;
 	}
 
 	fetchBatch(customBinding: ODataListBinding, batchSize: number): Promise<any> {
