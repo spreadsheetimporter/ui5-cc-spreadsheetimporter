@@ -1,4 +1,4 @@
-<mvc:View controllerName="ordersv4freestyle.controller.MainView"
+<mvc:View controllerName="ordersv4freestyle.controller.OrdersTable"
     xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" displayBlock="true"
     xmlns="sap.m">
     <Page id="pageUpdate" title="{i18n>title}">
