@@ -25,8 +25,12 @@ export default class Component extends UIComponent {
 	constructor(idOrSettings?: string | $ComponentSettings);
 	constructor(id?: string, settings?: $ComponentSettings);
 	constructor(id?: string, settings?: $ComponentSettings) {
-		id.deepDownloadConfig = Util.mergeDeepDownloadConfig(DefaultConfigs.DeepDownload, id.deepDownloadConfig);
-		id.updateConfig = Util.mergeUpdateConfig(DefaultConfigs.Update, id.updateConfig);
+		if (id?.deepDownloadConfig) {
+			id.deepDownloadConfig = Util.mergeDeepDownloadConfig(DefaultConfigs.DeepDownload, id.deepDownloadConfig);
+		}
+		if (id?.updateConfig) {
+			id.updateConfig = Util.mergeUpdateConfig(DefaultConfigs.Update, id.updateConfig);
+		}
 		this.settingsFromContainer = id;
 		super(id, settings);
 	}
