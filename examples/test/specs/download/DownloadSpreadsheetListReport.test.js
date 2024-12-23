@@ -15,8 +15,6 @@ describe("Download Spreadsheet List Report", () => {
 
 	it("should trigger download button", async () => {
 		// Trigger the download
-		await BaseClass.pressById("__component0---downloadButton");
-		// Trigger the download
 		const object = await browser.asControl({
 			forceSelect: true,
 			selector: {
