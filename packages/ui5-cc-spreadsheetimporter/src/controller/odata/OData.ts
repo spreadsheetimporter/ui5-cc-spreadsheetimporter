@@ -135,7 +135,7 @@ export default abstract class OData extends ManagedObject {
 				}
 			}
 			if (tableObject) {
-				spreadsheetUploadController.refreshBinding(context, binding, tableObject.getId());
+				spreadsheetUploadController.refreshBinding(context, binding, tableObject);
 			}
 			this.busyDialog.close();
 			fnResolve();

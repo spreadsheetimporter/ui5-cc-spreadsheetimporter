@@ -341,41 +341,45 @@ export default class SpreadsheetUpload extends ManagedObject {
 		}
 	}
 
-	refreshBinding(context: any, binding: any, id: any) {
+	refreshBinding(context: any, binding: any, tableObject: any) {
+		const id = tableObject.getId();
+		let refreshFailed = true; // Track if all refresh attempts failed
+
 		if (context._controller?.getExtensionAPI()) {
 			// refresh binding in V4 FE context
 			try {
 				context._controller.getExtensionAPI().refresh(binding.getPath());
+				refreshFailed = false;
 			} catch (error) {
 				Log.error("Failed to refresh binding in V4 FE context: " + error);
 			}
 		} else if (context.extensionAPI) {
-			let refreshFailed = false;
 			// refresh binding in V2 FE context
 			if (context.extensionAPI.refresh) {
 				try {
 					context.extensionAPI.refresh(binding.getPath(id));
+					refreshFailed = false;
 				} catch (error) {
 					Log.error("Failed to refresh binding in Object Page V2 FE context: " + error);
-					refreshFailed = true;
 				}
 			}
 			if (context.extensionAPI.refreshTable) {
 				try {
 					context.extensionAPI.refreshTable(id);
+					refreshFailed = false;
 				} catch (error) {
 					Log.error("Failed to refresh binding in List Report V2 FE context: " + error);
-					refreshFailed = true;
 				}
 			}
-			// try refresh binding when refresh failed
-			if (refreshFailed) {
-				try {
-					// force refresh only available for v2
-					binding.refresh(true);
-				} catch (error) {
-					Log.error("Failed to refresh binding in other contexts: " + error);
-				}
+		}
+
+		// Try direct binding refresh as last resort if all other attempts failed
+		if (refreshFailed) {
+			try {
+				// force refresh parameter only for v2
+				binding.refresh(this._checkIfODataIsV4(binding) ? undefined : true);
+			} catch (error) {
+				Log.error("Failed to refresh binding in other contexts: " + error);
 			}
 		}
 	}
