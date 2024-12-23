@@ -119,10 +119,11 @@ describe("Download Spreadsheet List Report", () => {
 				}
 			})
 			.press();
-		await BaseClass.dummyWait(1000);
 	});
 
 	it("check if the file is uploaded", async () => {
+		await BaseClass.dummyWait(4000);
+
 		// check if the file is uploaded
 		const row1 = await fetch("http://localhost:4004/odata/v4/orders/Orders(ID=64e718c9-ff99-47f1-8ca3-950c850777d4,IsActiveEntity=true)");
 		const row2 = await fetch("http://localhost:4004/odata/v4/orders/Orders(ID=64e718c9-ff99-47f1-8ca3-950c850777d5,IsActiveEntity=true)");
