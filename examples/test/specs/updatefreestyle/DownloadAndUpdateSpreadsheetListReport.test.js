@@ -133,15 +133,13 @@ describe("Download Spreadsheet List Report", () => {
 	});
 
 	after(async () => {
-		// Clean up
-		let files = fs.readdirSync(downloadDir);
-		const downloadedFile = files.find((file) => file.endsWith(".xlsx"));
-		const filePath = path.join(downloadDir, downloadedFile);
-		fs.unlinkSync(filePath);
-		// remove content in download dir
-		files = fs.readdirSync(downloadDir);
-		files.forEach((file) => {
-			fs.unlinkSync(path.join(downloadDir, file));
+		// Clean up - only delete test files
+		const testFiles = ['Orders.xlsx'];
+		testFiles.forEach(file => {
+			const filePath = path.join(downloadDir, file);
+			if (fs.existsSync(filePath)) {
+				fs.unlinkSync(filePath);
+			}
 		});
 	});
 });
