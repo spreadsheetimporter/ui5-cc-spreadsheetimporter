@@ -39,7 +39,7 @@
                         deepLevel: 2,
                         deepExport: true,
                         addKeysToExport: true,
-                        showOptions: true,
+                        showOptions: false,
                         filename: 'Orders_Dialog',
                         columns : {
                             'OrderNo':{
