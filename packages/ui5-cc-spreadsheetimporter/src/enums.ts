@@ -111,3 +111,18 @@ export enum Action {
 	Update = "UPDATE",
 	Delete = "DELETE"
 }
+
+export const DefaultConfigs = {
+    DeepDownload: {
+        addKeysToExport: false,
+        setDraftStatus: true,
+        deepExport: false,
+        deepLevel: 0,
+        showOptions: true,
+        columns: []
+    },
+    Update: {
+        fullUpdate: false,
+        columns: []
+    }
+} as const;

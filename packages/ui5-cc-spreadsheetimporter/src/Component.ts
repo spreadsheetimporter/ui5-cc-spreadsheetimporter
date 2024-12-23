@@ -11,6 +11,7 @@ import Button from "sap/m/Button";
 import Controller from "sap/ui/core/mvc/Controller";
 import View from "sap/ui/core/mvc/View";
 import Util from "./controller/Util";
+import { DefaultConfigs } from "./enums";
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
@@ -24,6 +25,8 @@ export default class Component extends UIComponent {
 	constructor(idOrSettings?: string | $ComponentSettings);
 	constructor(id?: string, settings?: $ComponentSettings);
 	constructor(id?: string, settings?: $ComponentSettings) {
+		id.deepDownloadConfig = Util.mergeDeepDownloadConfig(DefaultConfigs.DeepDownload, id.deepDownloadConfig);
+		id.updateConfig = Util.mergeUpdateConfig(DefaultConfigs.Update, id.updateConfig);
 		this.settingsFromContainer = id;
 		super(id, settings);
 	}
@@ -74,7 +77,7 @@ export default class Component extends UIComponent {
 			bindingCustom: { type: "object" },
 			showDownloadButton: { type: "boolean", defaultValue: false },
 			deepDownloadConfig: { type: "object", defaultValue: {} },
-			updateConfig: { type: "object", defaultValue: {} },
+			updateConfig: { type: "object", defaultValue: {} }
 			//Pro Configurations
 		},
 		aggregations: {
@@ -180,24 +183,10 @@ export default class Component extends UIComponent {
 			this.setShowOptions(true);
 		}
 
-		const defaultDeepDownloadConfig: DeepDownloadConfig = {
-				addKeysToExport: false,
-				setDraftStatus: true,
-				deepExport: false,
-				deepLevel: 1,
-				showOptions: true,
-				columns: []
-		};
-
-		const defaultUpdateConfig: UpdateConfig = {
-			fullUpdate: false,
-			columns: []
-		};
-
-	    const mergedDeepDownloadConfig = Util.mergeDeepDownloadConfig(defaultDeepDownloadConfig, compData.deepDownloadConfig)
+		const mergedDeepDownloadConfig = Util.mergeDeepDownloadConfig(DefaultConfigs.DeepDownload, compData.deepDownloadConfig)
 		this.setDeepDownloadConfig(mergedDeepDownloadConfig);
 
-		const mergedUpdateConfig = Util.mergeUpdateConfig(defaultUpdateConfig, compData.updateConfig)
+		const mergedUpdateConfig = Util.mergeUpdateConfig(DefaultConfigs.Update, compData.updateConfig)
 		this.setUpdateConfig(mergedUpdateConfig);
 
 		// // we could create a device model and use it
@@ -282,7 +271,7 @@ export default class Component extends UIComponent {
 		await this.spreadsheetUpload.initializeComponent();
 		Log.debug("triggerDownloadSpreadsheet", undefined, "SpreadsheetUpload: Component");
 		if (deepDownloadConfig) {
-			this.setDeepDownloadConfig(deepDownloadConfig);
+			this.setDeepDownloadConfig(Util.mergeDeepDownloadConfig(this.getDeepDownloadConfig() as DeepDownloadConfig, deepDownloadConfig));
 		}
 		this.spreadsheetUpload.triggerDownloadSpreadsheet();
 	}

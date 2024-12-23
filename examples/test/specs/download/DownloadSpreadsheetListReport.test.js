@@ -2,6 +2,18 @@ const path = require("path");
 const fs = require("fs");
 const XLSX = require("xlsx");
 const Base = require("./../Objects/Base");
+const { wdi5 } = require("wdio-ui5-service");
+
+// Test Constants
+const TEST_CONSTANTS = {
+	EXPECTED_FILE_NAME: "Orders12.xlsx",
+	DOWNLOAD_TIMEOUT: 20000,
+	EXPECTED_ORDER_NUMBER: "2",
+	EXPECTED_FIELDS: {
+		ID: "ID[ID]",
+		ORDER_NUMBER: "Order Number[OrderNo]"
+	}
+};
 
 describe("Download Spreadsheet List Report", () => {
 	let downloadDir;
@@ -9,8 +21,7 @@ describe("Download Spreadsheet List Report", () => {
 	before(async () => {
 		BaseClass = new Base();
 		scenario = global.scenario;
-		// If you need it globally, you can set it on browser.config, or just reuse the same path logic as in wdio.conf.js.
-		downloadDir = path.resolve(__dirname, "../../downloads"); // Adjust the relative path if needed
+		downloadDir = path.resolve(__dirname, "../../downloads");
 	});
 
 	it("should trigger download button", async () => {
@@ -30,21 +41,30 @@ describe("Download Spreadsheet List Report", () => {
 	});
 
 	it("Download spreadsheet and verify content", async () => {
-		const expectedFileName = "Orders12.xlsx";
+		const expectedFileName = TEST_CONSTANTS.EXPECTED_FILE_NAME;
+		
+		try {
+			await browser.waitUntil(
+				async () => {
+					try {
+						const files = await fs.promises.readdir(downloadDir);
+						return files.includes(expectedFileName);
+					} catch (error) {
+						console.warn(`Error reading directory: ${error.message}`);
+						return false;
+					}
+				},
+				{
+					timeout: TEST_CONSTANTS.DOWNLOAD_TIMEOUT,
+					timeoutMsg: `Expected ${expectedFileName} to be downloaded within ${TEST_CONSTANTS.DOWNLOAD_TIMEOUT}ms`,
+					interval: 500 // Check every 500ms
+				}
+			);
+		} catch (error) {
+			throw new Error(`Download failed: ${error.message}`);
+		}
 
-		// Wait until the specific file is downloaded
-		await browser.waitUntil(
-			() => {
-				const files = fs.readdirSync(downloadDir);
-				return files.includes(expectedFileName);
-			},
-			{
-				timeout: 20000,
-				timeoutMsg: `Expected ${expectedFileName} to be downloaded within 20s`
-			}
-		);
-
-		const filePath = path.join(downloadDir, expectedFileName);
+		const filePath = path.join(downloadDir, TEST_CONSTANTS.EXPECTED_FILE_NAME);
 		expect(fs.existsSync(filePath)).toBeTruthy();
 
 		const workbook = XLSX.readFile(filePath);
@@ -55,8 +75,8 @@ describe("Download Spreadsheet List Report", () => {
 		expect(data.length).toBeGreaterThan(0);
 
 		if (data[0]) {
-			expect(data[0]["ID[ID]"]).toBeDefined();
-			expect(data[0]["Order Number[OrderNo]"]).toBe("2");
+			expect(data[0][TEST_CONSTANTS.EXPECTED_FIELDS.ID]).toBeDefined();
+			expect(data[0][TEST_CONSTANTS.EXPECTED_FIELDS.ORDER_NUMBER]).toBe(TEST_CONSTANTS.EXPECTED_ORDER_NUMBER);
 		}
 	});
 

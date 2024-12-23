@@ -1,7 +1,7 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 import Component from "../Component";
 import XMLView from "sap/ui/core/mvc/XMLView";
-import { Messages, ListObject, ComponentData } from "../types";
+import { Messages, ListObject, ComponentData, DeepDownloadConfig } from "../types";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import ResourceBundle from "sap/base/i18n/ResourceBundle";
 import OData from "./odata/OData";
@@ -319,6 +319,9 @@ export default class SpreadsheetUpload extends ManagedObject {
 		}
 		if (options.hasOwnProperty("updateConfig")) {
 			this.component.setUpdateConfig(options.updateConfig);
+		}
+		if (options.hasOwnProperty("deepDownloadConfig")) {
+			this.component.setDeepDownloadConfig(Util.mergeDeepDownloadConfig(this.component.getDeepDownloadConfig() as DeepDownloadConfig, options.deepDownloadConfig));
 		}
 
 		// Special case for showOptions
