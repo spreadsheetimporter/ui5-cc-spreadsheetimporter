@@ -185,15 +185,22 @@ export class ODataV4RequestObjects {
 			const keysWithoutIsActiveEntity = { ...keys };
 			delete keysWithoutIsActiveEntity.IsActiveEntity;
 
-			const matchingObject = payload.IsActiveEntity
-				? objectsTrue.find((obj) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => obj[key] === value))
-				: objectsFalse.find((obj) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => obj[key] === value));
+			// try to find the matching object from the spreadsheet in the requested objects
+			const matchingObjectTrue = objectsTrue.find((obj) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => obj[key] === value));
+			const matchingObjectFalse = objectsFalse.find((obj) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => obj[key] === value));
 
-			matchResults.push({
+			let matchingObject = payload.IsActiveEntity ? matchingObjectTrue : matchingObjectFalse;
+
+			// if the matching object is not found, try to find it in the opposite status objects, a error will be later shown in the validation
+			if(!matchingObject) {
+				matchingObject = payload.IsActiveEntity ? matchingObjectFalse : matchingObjectTrue;
+			}
+
+			matchResults.push({ 
 				index,
 				keys: keysWithoutIsActiveEntity,
 				requestedStatus: payload.IsActiveEntity,
-				foundIn: matchingObject ? (payload.IsActiveEntity ? 'objectsTrue' : 'objectsFalse') : 'notFound',
+				foundIn: matchingObjectTrue ? 'objectsTrue' : (matchingObjectFalse ? 'objectsFalse' : 'notFound'),
 				object: matchingObject
 			});
 		});
@@ -216,9 +223,14 @@ export class ODataV4RequestObjects {
 			const keysWithoutIsActiveEntity = { ...keys };
 			delete keysWithoutIsActiveEntity.IsActiveEntity;
 
-			const matchingContext = isActiveEntity
-				? contextsTrue.find((ctx) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => ctx.getObject()[key] === value))
-				: contextsFalse.find((ctx) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => ctx.getObject()[key] === value));
+			const matchingContextTrue = contextsTrue.find((ctx) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => ctx.getObject()[key] === value));
+			const matchingContextFalse = contextsFalse.find((ctx) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => ctx.getObject()[key] === value));
+
+			let matchingContext = isActiveEntity ? matchingContextTrue : matchingContextFalse;
+
+			if(!matchingContext) {
+				matchingContext = isActiveEntity ? matchingContextFalse : matchingContextTrue;
+			}
 
 			return {
 				context: matchingContext,
