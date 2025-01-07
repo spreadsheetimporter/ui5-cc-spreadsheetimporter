@@ -222,7 +222,7 @@ describe("Download Spreadsheet List Report", () => {
 		}
 	});
 
-	it("change excel file and save", async () => {
+	it("change excel file with wrong draft state and save", async () => {
 		try {
 			// Wait for download and verify file exists
 			await browser.waitUntil(
@@ -245,9 +245,11 @@ describe("Download Spreadsheet List Report", () => {
 			data.forEach((row) => {
 				if (row["ID[ID]"] === TEST_CONSTANTS.API.ROW3_ID) {
 					row["Order Number[OrderNo]"] = "999";
+					row["IsActiveEntity[IsActiveEntity]"] = true;
 				}
 				if (row["ID[ID]"] === TEST_CONSTANTS.API.ROW4_ID) {
 					row["Order Number[OrderNo]"] = "888";
+					row["IsActiveEntity[IsActiveEntity]"] = false;
 				}
 			});
 
@@ -313,6 +315,57 @@ describe("Download Spreadsheet List Report", () => {
 			throw new Error(`Failed to upload file: ${error.message}`);
 		}
 	});
+
+	it("check if correct errors are shown", async () => {
+		const messageDialog = await browser.asControl({
+			selector: {
+				controlType: "sap.m.Dialog",
+				properties: {
+					title: "Upload Error"
+				},
+				searchOpenDialogs: true
+			}
+		});
+		const modelData = await messageDialog.getModel("messages");
+		const errorData = await modelData.getData();
+		const error = errorData._baseObject[0];
+		expect(error.title).toEqual('Active and draft entity mismatch');
+		expect(error.details.length).toEqual(2);
+		expect(error.details[0].description).toEqual('Uploaded Object ID=64e718c9-ff99-47f1-8ca3-950c850777d6, IsActiveEntity=true has Active status, but the current entity is Draft');
+		expect(error.details[1].description).toEqual('Uploaded Object ID=64e718c9-ff99-47f1-8ca3-950c850777d7, IsActiveEntity=false has Draft status, but the current entity is Active');
+	})
+
+	it("continue and upload data", async () => {
+		const continueAynwayButton = await browser.asControl({
+			selector: {
+				controlType: "sap.m.Button",
+				properties: {
+					text: "Continue Anyway"
+				},
+				searchOpenDialogs: true
+			}
+		});
+		await continueAynwayButton.press();
+		const continueButton = await browser.asControl({
+			selector: {
+				controlType: "sap.m.Button",
+				properties: {
+					text: "Continue"
+				},
+				searchOpenDialogs: true
+			}
+		});
+		await continueButton.press();
+
+	})
+
+	it("change excel back to correct state", async () => {
+
+	})
+
+	it("upload file", async () => {
+		
+	})
 
 	it("check if the file is correctly uploaded", async () => {
 		try {
