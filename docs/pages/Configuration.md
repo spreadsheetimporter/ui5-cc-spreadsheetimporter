@@ -205,6 +205,8 @@ The default value is 1,000, which means that when the number of lines in the Spr
 
 If you set the `batchSize` to 0, the payload array will not be divided, and the entire array will be sent as a single batch request.
 
+For updates, the batch size is limited to 100.
+
 ### `standalone`
 
 **default:** `false`

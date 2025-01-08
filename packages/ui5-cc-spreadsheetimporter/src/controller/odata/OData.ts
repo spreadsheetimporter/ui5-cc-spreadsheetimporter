@@ -56,7 +56,7 @@ export default abstract class OData extends ManagedObject {
 
 			await this.createBusyDialog(spreadsheetUploadController);
 
-			// Slice the array into chunks of 'batchSize' if necessary
+			// Slice the array into chunks of 'batchSize' if necessary, if UPDATE max batch size is 100
 			const slicedPayloadArray = this.processPayloadArray(component.getBatchSize(), payloadArray);
 			(this.busyDialog.getModel("busyModel") as JSONModel).setProperty("/progressText", `0/${payloadArray.length}`);
 			let currentProgressPercent = 0;
@@ -166,6 +166,11 @@ export default abstract class OData extends ManagedObject {
 
 	// Slice the array into chunks of 'batchSize' if necessary
 	public processPayloadArray(batchSize: number, payloadArray: string | any[]) {
+		// For UPDATE actions, enforce max batch size of 100
+		if (this.spreadsheetUploadController.component.getAction() === "UPDATE") {
+			batchSize = Math.min(batchSize > 0 ? batchSize : 100, 100);
+		}
+
 		if (batchSize > 0) {
 			let slicedPayloadArray = [];
 			const numOfSlices = Math.ceil(payloadArray.length / batchSize);

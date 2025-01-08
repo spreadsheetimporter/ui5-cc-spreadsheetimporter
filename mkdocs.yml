@@ -18,6 +18,7 @@ nav:
   - Central Deployment: pages/CentralDeployment.md
   - Button Control: pages/Button.md
   - Deep Download: pages/spreadsheetdownload.md
+  - Update: pages/Update.md
   - API Reference: 'pages/APIReference.md'
   # - UI5 CLI: pages/CLI.md
   - Pro:

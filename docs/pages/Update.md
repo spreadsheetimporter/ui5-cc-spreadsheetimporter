@@ -54,6 +54,9 @@ For every change a ODataContextBinding is created and the data is updated.
 
 ## Things to consider
 
+Because of those extra requests, the update is slower than the create and for mass updates this will take some time.  
+Also because of this reason, the batch size for update is limited to 100.
+
 If you download the data with the Spreadsheet Importer, only the active entities are downloaded. If you then update the data, the object will be updated in the current state that the object is in.  
 So if the object is in draft mode, the data from the active state will be used to update the draft object.
 
