@@ -13,8 +13,10 @@ class BaseUpload {
 				properties: {
 					contentWidth: "40vw"
 				},
-				searchOpenDialogs: true
-			}
+				searchOpenDialogs: true,
+				
+			},
+			forceSelect: true
 		});
 
 		// Only open dialog if it's not already open
@@ -29,7 +31,9 @@ class BaseUpload {
 					contentWidth: "40vw"
 				},
 				searchOpenDialogs: true
-			}
+				
+			},
+			forceSelect: true
 		});
 
 		// Verify dialog is open
