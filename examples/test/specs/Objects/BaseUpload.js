@@ -18,11 +18,9 @@ class BaseUpload {
 		});
 
 		// Only open dialog if it's not already open
-		try {
-			if (!(await spreadsheetUploadDialogFirstCheck.isOpen())) {
-				await this.base.pressById(uploadDialogButtonId);
-			}
-		} catch (error) {}
+		if (!spreadsheetUploadDialogFirstCheck?._domId) {
+			await this.base.pressById(uploadDialogButtonId);
+		}
 
 		const spreadsheetUploadDialog = await browser.asControl({
 			selector: {
