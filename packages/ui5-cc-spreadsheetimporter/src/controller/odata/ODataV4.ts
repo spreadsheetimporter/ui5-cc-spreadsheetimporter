@@ -49,7 +49,6 @@ export default class ODataV4 extends OData {
 
 	updateAsync(model: any, binding: any, payload: any) {
 		// also do this if we should check for draft entities, this should be default in draft scenarios
-		// TODO: maybe this should default and only way to update
 		const keys = this.metadataHandler.getKeys(binding, payload);
 		Log.debug("Processing update operation", undefined, "SpreadsheetUpload: ODataV4", () => ({
 			keys,
@@ -65,11 +64,10 @@ export default class ODataV4 extends OData {
 		}));
 
 		if (!currentContext.context) {
-			if (false) {
+			if (!this.spreadsheetUploadController.component.getContinueOnError()) {
 				// in which context should we continue?
 				throw new Error("Could not find matching context for update operation");
 			} else {
-				// TODO: continue with successfull fetched objects
 				Log.debug("No context found for update operation", undefined, "SpreadsheetUpload: ODataV4", () => ({
 					keys,
 					availableContexts: this.contexts.length

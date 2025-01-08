@@ -60,7 +60,6 @@ export default class SpreadsheetGenerator extends ManagedObject {
             const data = entityDefinition.$XYZData;
             const labelList = await this.odataHandler.getLabelList([], this.spreadsheetUploadController.getOdataType(), this.component.getExcludeColumns());
             if (spreadsheetExportConfig.addKeysToExport) {
-                // TODO: add option to remove IsActiveEntity from keys
                 this.odataHandler.addKeys(labelList, this.spreadsheetUploadController.getOdataType());
             }
             const sheet = this._getSheet(labelList, data, entityDefinition["$XYZColumns"]);
