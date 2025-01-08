@@ -2,6 +2,7 @@ const path = require("path");
 const fs = require("fs");
 const XLSX = require("xlsx");
 const Base = require("./../Objects/Base");
+const BaseUpload = require("./BaseUpload");
 const { wdi5 } = require("wdio-ui5-service");
 
 // Test Constants
@@ -39,11 +40,16 @@ const TEST_CONSTANTS = {
 	}
 };
 
+let BaseClass = undefined;
+let BaseUploadClass = undefined;
+
 describe("Download Spreadsheet List Report", () => {
+	let scenario;
 	let downloadDir;
 
 	before(async () => {
 		BaseClass = new Base();
+		BaseUploadClass = new BaseUpload();
 		scenario = global.scenario;
 		downloadDir = path.resolve(__dirname, "../../downloads");
 
@@ -100,60 +106,12 @@ describe("Download Spreadsheet List Report", () => {
 	});
 
 	it("upload file", async () => {
-		await BaseClass.pressById(TEST_CONSTANTS.SELECTORS.UPLOAD_DIALOG.BUTTON_ID);
-		const spreadsheetUploadDialog = await browser.asControl({
-			selector: {
-				controlType: "sap.m.Dialog",
-				properties: {
-					contentWidth: "40vw"
-				},
-				searchOpenDialogs: true
-			}
-		});
-		expect(spreadsheetUploadDialog.isOpen()).toBeTruthy();
-
-		// Remove block layer if present
-		try {
-			await browser.execute(() => {
-				const blockLayerPopup = document.getElementById("sap-ui-blocklayer-popup");
-				if (blockLayerPopup) {
-					blockLayerPopup.remove();
-				}
-			});
-		} catch (error) {
-			console.log("sap-ui-blocklayer-popup removed");
-		}
-
-		// Fix: Correct file upload process
-		const uploader = await browser.asControl({
-			forceSelect: true,
-			selector: {
-				interaction: "root",
-				controlType: "sap.ui.unified.FileUploader",
-				id: TEST_CONSTANTS.SELECTORS.UPLOAD_DIALOG.UPLOADER_ID
-			}
-		});
-		
-		// Fix: Use the correct uploadFile syntax
-		await browser.execute(
-			function (filePath) {
-				document.querySelector('input[type=file]').style.display = 'block';
-			}
+		await BaseUploadClass.uploadFile(
+			this.filePath,
+			TEST_CONSTANTS.SELECTORS.UPLOAD_DIALOG.BUTTON_ID,
+			TEST_CONSTANTS.SELECTORS.UPLOAD_DIALOG.UPLOADER_ID,
+			TEST_CONSTANTS.SELECTORS.UPLOAD_DIALOG.UPLOAD_BUTTON_TEXT
 		);
-		
-		const input = await $('input[type=file]');
-		await input.setValue(this.filePath);
-
-		await browser
-			.asControl({
-				selector: {
-					controlType: "sap.m.Button",
-					properties: {
-						text: TEST_CONSTANTS.SELECTORS.UPLOAD_DIALOG.UPLOAD_BUTTON_TEXT
-					}
-				}
-			})
-			.press();
 	});
 
 	it("check if the file is uploaded", async () => {
@@ -264,56 +222,12 @@ describe("Download Spreadsheet List Report", () => {
 	});
 
 	it("upload file again", async () => {
-		try {
-			await BaseClass.pressById(TEST_CONSTANTS.SELECTORS.UPLOAD_DIALOG.BUTTON_ID);
-			const spreadsheetUploadDialog = await browser.asControl({
-				selector: {
-					controlType: "sap.m.Dialog",
-					properties: {
-						contentWidth: "40vw"
-					},
-					searchOpenDialogs: true
-				}
-			});
-			expect(spreadsheetUploadDialog.isOpen()).toBeTruthy();
-
-			// Remove block layer if present
-			await browser.execute(() => {
-				const blockLayerPopup = document.getElementById("sap-ui-blocklayer-popup");
-				if (blockLayerPopup) {
-					blockLayerPopup.remove();
-				}
-			});
-
-			// Upload the file
-			const uploader = await browser.asControl({
-				forceSelect: true,
-				selector: {
-					interaction: "root",
-					controlType: "sap.ui.unified.FileUploader",
-					id: TEST_CONSTANTS.SELECTORS.FILE_UPLOADER
-				}
-			});
-			const remoteFilePath = await browser.uploadFile(this.filePath);
-			const $uploader = await uploader.getWebElement();
-			const $fileInput = await $uploader.$("input[type=file]");
-			await $fileInput.setValue(remoteFilePath);
-
-			// Click upload button
-			await browser
-				.asControl({
-					selector: {
-						controlType: "sap.m.Button",
-						properties: {
-							text: TEST_CONSTANTS.SELECTORS.UPLOAD_DIALOG.UPLOAD_BUTTON_TEXT
-						}
-					},
-					forceSelect: true
-				})
-				.press();
-		} catch (error) {
-			throw new Error(`Failed to upload file: ${error.message}`);
-		}
+		await BaseUploadClass.uploadFile(
+			this.filePath,
+			TEST_CONSTANTS.SELECTORS.UPLOAD_DIALOG.BUTTON_ID,
+			TEST_CONSTANTS.SELECTORS.UPLOAD_DIALOG.UPLOADER_ID,
+			TEST_CONSTANTS.SELECTORS.UPLOAD_DIALOG.UPLOAD_BUTTON_TEXT
+		);
 	});
 
 	it("check if correct errors are shown", async () => {
@@ -359,34 +273,78 @@ describe("Download Spreadsheet List Report", () => {
 
 	})
 
+	it("check if the file is uploaded", async () => {
+		await BaseClass.dummyWait(4000);
+
+		const row3 = await fetch(`${TEST_CONSTANTS.API.BASE_URL}(ID=${TEST_CONSTANTS.API.ROW3_ID},IsActiveEntity=true)`);
+		const row4 = await fetch(`${TEST_CONSTANTS.API.BASE_URL}(ID=${TEST_CONSTANTS.API.ROW4_ID},IsActiveEntity=true)`);
+		const row3Data = await row3.json();
+		const row4Data = await row4.json();
+
+		expect(row3Data.OrderNo).toBe("999");
+		expect(row4Data.OrderNo).toBe("888");
+	});
+
 	it("change excel back to correct state", async () => {
+		try {
+			// Wait for download and verify file exists
+			await browser.waitUntil(
+				() => {
+					const files = fs.readdirSync(downloadDir);
+					return files.includes(TEST_CONSTANTS.FILE.NAME);
+				},
+				{
+					timeout: TEST_CONSTANTS.DOWNLOAD.TIMEOUT,
+					timeoutMsg: `Expected ${TEST_CONSTANTS.FILE.NAME} to be downloaded within ${TEST_CONSTANTS.DOWNLOAD.TIMEOUT}ms`
+				}
+			);
 
+			this.filePath = path.join(downloadDir, TEST_CONSTANTS.FILE.NAME);
+			const workbook = XLSX.readFile(this.filePath);
+			const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+			const data = XLSX.utils.sheet_to_json(firstSheet);
+
+			// Update the draft and active entities
+			data.forEach((row) => {
+				if (row["ID[ID]"] === TEST_CONSTANTS.API.ROW3_ID) {
+					row["Order Number[OrderNo]"] = "788";
+					row["IsActiveEntity[IsActiveEntity]"] = false;
+				}
+				if (row["ID[ID]"] === TEST_CONSTANTS.API.ROW4_ID) {
+					row["Order Number[OrderNo]"] = "987";
+					row["IsActiveEntity[IsActiveEntity]"] = true;
+				}
+			});
+
+			// Save updated file
+			const workbookNew = XLSX.utils.book_new();
+			const worksheetNew = XLSX.utils.json_to_sheet(data);
+			XLSX.utils.book_append_sheet(workbookNew, worksheetNew, TEST_CONSTANTS.FILE.SHEET_NAME);
+			XLSX.writeFile(workbookNew, this.filePath);
+		} catch (error) {
+			throw new Error(`Failed to update excel file: ${error.message}`);
+		}
 	})
 
-	it("upload file", async () => {
-		
-	})
+	it("upload file again", async () => {
+		await BaseUploadClass.uploadFile(
+			this.filePath,
+			TEST_CONSTANTS.SELECTORS.UPLOAD_DIALOG.BUTTON_ID,
+			TEST_CONSTANTS.SELECTORS.UPLOAD_DIALOG.UPLOADER_ID,
+			TEST_CONSTANTS.SELECTORS.UPLOAD_DIALOG.UPLOAD_BUTTON_TEXT
+		);
+	});
 
 	it("check if the file is correctly uploaded", async () => {
-		try {
-			await BaseClass.dummyWait(TEST_CONSTANTS.DOWNLOAD.WAIT_AFTER_UPLOAD);
+		await BaseClass.dummyWait(4000);
 
-			const urlRow3 = `${TEST_CONSTANTS.API.BASE_URL}(ID=${TEST_CONSTANTS.API.ROW3_ID},IsActiveEntity=false)`;
-			const urlRow4 = `${TEST_CONSTANTS.API.BASE_URL}(ID=${TEST_CONSTANTS.API.ROW4_ID},IsActiveEntity=true)`;
+		const row3 = await fetch(`${TEST_CONSTANTS.API.BASE_URL}(ID=${TEST_CONSTANTS.API.ROW3_ID},IsActiveEntity=true)`);
+		const row4 = await fetch(`${TEST_CONSTANTS.API.BASE_URL}(ID=${TEST_CONSTANTS.API.ROW4_ID},IsActiveEntity=true)`);
+		const row3Data = await row3.json();
+		const row4Data = await row4.json();
 
-			// Check both updated rows
-			const [row3Draft, row4Active] = await Promise.all([
-				fetch(urlRow3),
-				fetch(urlRow4)
-			]);
-
-			const [row3Data, row4Data] = await Promise.all([row3Draft.json(), row4Active.json()]);
-
-			expect(row3Data.OrderNo).toBe("999");
-			expect(row4Data.OrderNo).toBe("888");
-		} catch (error) {
-			throw new Error(`Failed to verify uploaded data: ${error.message}`);
-		}
+		expect(row3Data.OrderNo).toBe("788");
+		expect(row4Data.OrderNo).toBe("987");
 	});
 
 	after(async () => {

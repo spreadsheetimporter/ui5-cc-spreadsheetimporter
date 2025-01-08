@@ -36,6 +36,7 @@ module.exports.config = {
 			maxInstances: 5,
 			//
 			browserName: "chrome",
+			browserVersion: 'stable',
 			"goog:chromeOptions": {
 				args:
 					process.argv.indexOf("--headless") > -1
