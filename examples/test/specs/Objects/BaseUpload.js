@@ -16,11 +16,13 @@ class BaseUpload {
 				searchOpenDialogs: true
 			}
 		});
-		
+
 		// Only open dialog if it's not already open
-		if (!(await spreadsheetUploadDialogFirstCheck.isOpen())) {
-			await this.base.pressById(uploadDialogButtonId);
-		}
+		try {
+			if (!(await spreadsheetUploadDialogFirstCheck.isOpen())) {
+				await this.base.pressById(uploadDialogButtonId);
+			}
+		} catch (error) {}
 
 		const spreadsheetUploadDialog = await browser.asControl({
 			selector: {
