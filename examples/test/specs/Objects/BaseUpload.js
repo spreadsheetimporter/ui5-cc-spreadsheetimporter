@@ -6,10 +6,22 @@ class BaseUpload {
 	}
 
 	async uploadFile(filePath, uploadDialogButtonId, uploaderId, uploadButtonText = "Upload") {
-		// Open upload dialog
-		await this.base.pressById(uploadDialogButtonId);
+		// Check if dialog is already open
+		const spreadsheetUploadDialogFirstCheck = await browser.asControl({
+			selector: {
+				controlType: "sap.m.Dialog",
+				properties: {
+					contentWidth: "40vw"
+				},
+				searchOpenDialogs: true
+			}
+		});
+		
+		// Only open dialog if it's not already open
+		if (!(await spreadsheetUploadDialogFirstCheck.isOpen())) {
+			await this.base.pressById(uploadDialogButtonId);
+		}
 
-		// Verify dialog is open
 		const spreadsheetUploadDialog = await browser.asControl({
 			selector: {
 				controlType: "sap.m.Dialog",
@@ -19,6 +31,8 @@ class BaseUpload {
 				searchOpenDialogs: true
 			}
 		});
+
+		// Verify dialog is open
 		expect(spreadsheetUploadDialog.isOpen()).toBeTruthy();
 
 		// Remove block layer if present

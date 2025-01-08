@@ -2,7 +2,7 @@ const path = require("path");
 const fs = require("fs");
 const XLSX = require("xlsx");
 const Base = require("./../Objects/Base");
-const BaseUpload = require("./BaseUpload");
+const BaseUpload = require("./../Objects/BaseUpload");
 const { wdi5 } = require("wdio-ui5-service");
 
 // Test Constants
@@ -35,8 +35,8 @@ const TEST_CONSTANTS = {
 		BASE_URL: "http://localhost:4004/odata/v4/orders/Orders",
 		ROW_1_ID: "64e718c9-ff99-47f1-8ca3-950c850777d4",
 		ROW_2_ID: "64e718c9-ff99-47f1-8ca3-950c850777d5",
-		ROW3_ID: "64e718c9-ff99-47f1-8ca3-950c850777d6",
-		ROW4_ID: "64e718c9-ff99-47f1-8ca3-950c850777d7"
+		ROW_3_ID: "64e718c9-ff99-47f1-8ca3-950c850777d6",
+		ROW_4_ID: "64e718c9-ff99-47f1-8ca3-950c850777d7"
 	}
 };
 
@@ -129,7 +129,7 @@ describe("Download Spreadsheet List Report", () => {
 	it("set entity to draft", async () => {
 		try {
 			// Make a POST request to create a draft version
-			const url = `${TEST_CONSTANTS.API.BASE_URL}(ID=${TEST_CONSTANTS.API.ROW3_ID},IsActiveEntity=true)/OrdersService.draftEdit`;
+			const url = `${TEST_CONSTANTS.API.BASE_URL}(ID=${TEST_CONSTANTS.API.ROW_3_ID},IsActiveEntity=true)/OrdersService.draftEdit`;
 			console.log(url);
 			const response = await fetch(url, {
 				method: "POST",
@@ -201,11 +201,11 @@ describe("Download Spreadsheet List Report", () => {
 
 			// Update the draft and active entities
 			data.forEach((row) => {
-				if (row["ID[ID]"] === TEST_CONSTANTS.API.ROW3_ID) {
+				if (row["ID[ID]"] === TEST_CONSTANTS.API.ROW_3_ID) {
 					row["Order Number[OrderNo]"] = "999";
 					row["IsActiveEntity[IsActiveEntity]"] = true;
 				}
-				if (row["ID[ID]"] === TEST_CONSTANTS.API.ROW4_ID) {
+				if (row["ID[ID]"] === TEST_CONSTANTS.API.ROW_4_ID) {
 					row["Order Number[OrderNo]"] = "888";
 					row["IsActiveEntity[IsActiveEntity]"] = false;
 				}
@@ -276,8 +276,8 @@ describe("Download Spreadsheet List Report", () => {
 	it("check if the file is uploaded", async () => {
 		await BaseClass.dummyWait(4000);
 
-		const row3 = await fetch(`${TEST_CONSTANTS.API.BASE_URL}(ID=${TEST_CONSTANTS.API.ROW3_ID},IsActiveEntity=false)`);
-		const row4 = await fetch(`${TEST_CONSTANTS.API.BASE_URL}(ID=${TEST_CONSTANTS.API.ROW4_ID},IsActiveEntity=true)`);
+		const row3 = await fetch(`${TEST_CONSTANTS.API.BASE_URL}(ID=${TEST_CONSTANTS.API.ROW_3_ID},IsActiveEntity=false)`);
+		const row4 = await fetch(`${TEST_CONSTANTS.API.BASE_URL}(ID=${TEST_CONSTANTS.API.ROW_4_ID},IsActiveEntity=true)`);
 		const row3Data = await row3.json();
 		const row4Data = await row4.json();
 
@@ -306,11 +306,11 @@ describe("Download Spreadsheet List Report", () => {
 
 			// Update the draft and active entities
 			data.forEach((row) => {
-				if (row["ID[ID]"] === TEST_CONSTANTS.API.ROW3_ID) {
+				if (row["ID[ID]"] === TEST_CONSTANTS.API.ROW_3_ID) {
 					row["Order Number[OrderNo]"] = "788";
 					row["IsActiveEntity[IsActiveEntity]"] = false;
 				}
-				if (row["ID[ID]"] === TEST_CONSTANTS.API.ROW4_ID) {
+				if (row["ID[ID]"] === TEST_CONSTANTS.API.ROW_4_ID) {
 					row["Order Number[OrderNo]"] = "987";
 					row["IsActiveEntity[IsActiveEntity]"] = true;
 				}
@@ -338,8 +338,8 @@ describe("Download Spreadsheet List Report", () => {
 	it("check if the file is correctly uploaded", async () => {
 		await BaseClass.dummyWait(4000);
 
-		const row3 = await fetch(`${TEST_CONSTANTS.API.BASE_URL}(ID=${TEST_CONSTANTS.API.ROW3_ID},IsActiveEntity=false)`);
-		const row4 = await fetch(`${TEST_CONSTANTS.API.BASE_URL}(ID=${TEST_CONSTANTS.API.ROW4_ID},IsActiveEntity=true)`);
+		const row3 = await fetch(`${TEST_CONSTANTS.API.BASE_URL}(ID=${TEST_CONSTANTS.API.ROW_3_ID},IsActiveEntity=false)`);
+		const row4 = await fetch(`${TEST_CONSTANTS.API.BASE_URL}(ID=${TEST_CONSTANTS.API.ROW_4_ID},IsActiveEntity=true)`);
 		const row3Data = await row3.json();
 		const row4Data = await row4.json();
 

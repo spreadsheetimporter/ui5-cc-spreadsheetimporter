@@ -242,7 +242,8 @@
     "testMapping": {
       "specs": [
         "../test/specs/all/**.test.js",
-        "../test/specs/v4/**.test.js"
+        "../test/specs/v4/**.test.js",
+        "../test/specs/update/**.test.js"
       ]
     },
     "copyVersions": [
