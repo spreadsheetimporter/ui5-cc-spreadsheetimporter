@@ -276,7 +276,7 @@ describe("Download Spreadsheet List Report", () => {
 	it("check if the file is uploaded", async () => {
 		await BaseClass.dummyWait(4000);
 
-		const row3 = await fetch(`${TEST_CONSTANTS.API.BASE_URL}(ID=${TEST_CONSTANTS.API.ROW3_ID},IsActiveEntity=true)`);
+		const row3 = await fetch(`${TEST_CONSTANTS.API.BASE_URL}(ID=${TEST_CONSTANTS.API.ROW3_ID},IsActiveEntity=false)`);
 		const row4 = await fetch(`${TEST_CONSTANTS.API.BASE_URL}(ID=${TEST_CONSTANTS.API.ROW4_ID},IsActiveEntity=true)`);
 		const row3Data = await row3.json();
 		const row4Data = await row4.json();
@@ -338,7 +338,7 @@ describe("Download Spreadsheet List Report", () => {
 	it("check if the file is correctly uploaded", async () => {
 		await BaseClass.dummyWait(4000);
 
-		const row3 = await fetch(`${TEST_CONSTANTS.API.BASE_URL}(ID=${TEST_CONSTANTS.API.ROW3_ID},IsActiveEntity=true)`);
+		const row3 = await fetch(`${TEST_CONSTANTS.API.BASE_URL}(ID=${TEST_CONSTANTS.API.ROW3_ID},IsActiveEntity=false)`);
 		const row4 = await fetch(`${TEST_CONSTANTS.API.BASE_URL}(ID=${TEST_CONSTANTS.API.ROW4_ID},IsActiveEntity=true)`);
 		const row3Data = await row3.json();
 		const row4Data = await row4.json();
