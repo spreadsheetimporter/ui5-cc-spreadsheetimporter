@@ -5,6 +5,18 @@
 
 ### Features
 
+* update records ([#673](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/673)) ([6fe3c90](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/6fe3c9011226edc1f2e3208f7d88354be7d43867))
+
+
+### Bug Fixes
+
+* download fails with empty `$expand` parameter ([#703](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/703)) ([0a930c2](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/0a930c2c13429a9e734201a6166ce348591c2721))
+
+## [1.7.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.6.0...ui5-cc-spreadsheetimporter-v1.7.0) (2025-02-07)
+
+
+### Features
+
 - update records (V4 only) ([#673](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/673)) ([6fe3c90](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/6fe3c9011226edc1f2e3208f7d88354be7d43867))
 -  new config option `action` to specify the action to be performed (`CREATE`, `UPDATE`)  ([#673](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/673)) ([6fe3c90](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/6fe3c9011226edc1f2e3208f7d88354be7d43867))
 -  Parser checking for `Edm.Guid`  ([#673](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/673)) ([6fe3c90](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/6fe3c9011226edc1f2e3208f7d88354be7d43867))
