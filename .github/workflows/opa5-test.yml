@@ -35,7 +35,7 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
-      - run: corepack enable pnpm
+      - run: npm i -g --force corepack && corepack enable
       - name: use node 20
         uses: actions/setup-node@v4
         with:
@@ -97,7 +97,7 @@ jobs:
           ui5-test-runner --url http://localhost:${{ env.TESTAPPPORT }}/test/integration/opaTests.qunit.html --screenshot false
 
       - name: upload artifact of report folder
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ui5testrunner-report-${{ matrix.scenario }}-${{ matrix.ui5version }}
           path: ./report
