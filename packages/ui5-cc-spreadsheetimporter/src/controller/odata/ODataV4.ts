@@ -278,7 +278,6 @@ export default class ODataV4 extends OData {
 	}
 
 	getBindingFromBinding(binding: ODataListBinding, expand?: any): ODataListBinding {
-		const expandParameter = expand ? expand : "";
 		let path = binding.getPath();
 		if (binding.getResolvedPath) {
 			path = binding.getResolvedPath();
@@ -286,7 +285,18 @@ export default class ODataV4 extends OData {
 			// workaround for getResolvedPath only available from 1.88
 			path = (binding.getModel() as ODataModel).resolve(binding.getPath(), binding.getContext());
 		}
-		return binding.getModel().bindList(path, null, [], [], { $$updateGroupId: this.updateGroupId, $count: true, $expand: expand }) as ODataListBinding;
+
+		const bindingParameters: any = {
+			$$updateGroupId: this.updateGroupId,
+			$count: true
+		};
+
+		// Only add $expand if it exists and is not empty
+		if (expand && Object.keys(expand).length > 0) {
+			bindingParameters.$expand = expand;
+		}
+
+		return binding.getModel().bindList(path, null, [], [], bindingParameters) as ODataListBinding;
 	}
 
 	fetchBatch(customBinding: ODataListBinding, batchSize: number): Promise<any> {
