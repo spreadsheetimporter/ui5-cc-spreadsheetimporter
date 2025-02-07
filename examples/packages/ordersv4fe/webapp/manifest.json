@@ -212,6 +212,13 @@
                       "requiresSelection": false,
                       "enabled": "{ui>/isEditable}",
                       "text": "Spreadsheet Upload"
+                    },
+                    "ObjectPageExtControllerUpdate": {
+                      "press": "ui.v4.ordersv4fe.ext.ObjectPageExtController.openSpreadsheetUploadDialogTableUpdate",
+                      "visible": true,
+                      "requiresSelection": false,
+                      "enabled": "{ui>/isEditable}",
+                      "text": "Spreadsheet Upload Update"
                     }
                   }
                 },
@@ -236,19 +243,6 @@
                       "requiresSelection": false,
                       "enabled": "{ui>/isEditable}",
                       "text": "Spreadsheet Upload"
-                    }
-                  }
-                },
-                "body": {
-                  "sections": {
-                    "customSectionReuse": {
-                      "title": "Spreadsheet Upload",
-                      "embeddedComponent": {
-                        "name": "cc.spreadsheetimporter.v0_30_0",
-                        "settings": {
-                          "tableId": "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable"
-                        }
-                      }
                     }
                   }
                 }

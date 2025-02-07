@@ -14,6 +14,7 @@ sap.ui.define([], function () {
 						async: true,
 						componentData: {
 							context: this,
+
 							useTableSelector: true,
 							i18nModel: this.getModel("i18n")
 						}
@@ -77,11 +78,19 @@ sap.ui.define([], function () {
 						async: true,
 						componentData: {
 							context: this,
+							// action: "UPDATE",
+							// updateConfig: {
+							// 	fullUpdate: false
+							// },
+							showDownloadButton: true,
 							tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable",
 							columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time", "boolean", "decimal", "byte","binary"],
 							mandatoryFields: ["product_ID", "quantity"],
 							spreadsheetFileName: "Test.xlsx",
 							i18nModel: this.getModel("i18n"),
+							deepDownloadConfig: {
+								depth: 0
+							},
 							sampleData: [
 								{
 									product_ID: "HT-1000",
@@ -180,6 +189,69 @@ sap.ui.define([], function () {
 					});
 			this.spreadsheetUploadTableShippingInfo.openSpreadsheetUploadDialog();
 			this.editFlow.getView().setBusy(false);
+		},
+
+		openSpreadsheetUploadDialogTableUpdate: async function (oEvent) {
+			this.spreadsheetUploadUpdate = await this.editFlow.getView().getController().getAppComponent()
+			.createComponent({
+				usage: "spreadsheetImporter",
+				async: true,
+				componentData: {
+					context: this,
+					tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable",
+					action: "UPDATE",
+					updateConfig: {
+						fullUpdate: false
+					},
+					deepDownloadConfig: {
+						addKeysToExport: true,
+						showOptions: false,
+						filename: "OrderItems"
+					},
+					showDownloadButton: true,
+					tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable",
+					columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time", "boolean", "decimal", "byte","binary"],
+					mandatoryFields: ["product_ID", "quantity"]
+				}
+			});
+			this.spreadsheetUploadUpdate.openSpreadsheetUploadDialog();
+		},
+
+		openSpreadsheetUpdateDialog: async function (oEvent) {
+			this.spreadsheetUpload = await this.editFlow.getView().getController().getAppComponent()
+			.createComponent({
+				usage: "spreadsheetImporter",
+				async: true,
+				componentData: {
+					context: this,
+					tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable",
+					action: "UPDATE",
+					updateConfig: {
+						fullUpdate: false
+					},
+				}
+			});
+			this.spreadsheetUpload.openSpreadsheetUploadDialog();
+		},
+
+		dowloadItems: async function(event) {
+			this.spreadsheetUpload = await this.editFlow.getView().getController().getAppComponent()
+			.createComponent({
+				usage: "spreadsheetImporter",
+				async: true,
+				componentData: {
+					context: this,
+					tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable",
+					createActiveEntity: true,
+					debug: false,
+					deepDownloadConfig: {
+						addKeysToExport: true,
+						showOptions: false,
+						filename: "OrderItems"
+					}
+				}
+			});
+			this.spreadsheetUpload.triggerDownloadSpreadsheet();
 		}
 	};
 });

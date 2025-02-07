@@ -62,7 +62,7 @@ export default class SpreadsheetGenerator extends ManagedObject {
             if (spreadsheetExportConfig.addKeysToExport) {
                 this.odataHandler.addKeys(labelList, this.spreadsheetUploadController.getOdataType());
             }
-            const sheet = this._getSheet(labelList, data, entityDefinition.SiblingEntity.$Type, spreadsheetExportConfig, entityDefinition["$XYZColumns"], undefined);
+            const sheet = this._getSheet(labelList, data, entityDefinition["$XYZColumns"]);
             const sheetName = this.spreadsheetUploadController.getOdataType().split(".").pop();
             if (wb.SheetNames.includes(sheetName)) {
                 sheetName.concat("_1");
@@ -89,7 +89,7 @@ export default class SpreadsheetGenerator extends ManagedObject {
                 this.odataHandler.addKeys(labelList, currentEntity.$Type, parentEntity, currentEntity.$Partner);
             }
 
-            const sheet = this._getSheet(labelList, data, currentEntity.$Type, spreadsheetExportConfig, currentEntity["$XYZColumns"], entityDefinition.SiblingEntity.$Type);
+            const sheet = this._getSheet(labelList, data, currentEntity["$XYZColumns"]);
             let sheetName = currentEntity.$Type.split(".").pop();
             let suffix = 0;
             let originalSheetName = sheetName;
@@ -110,7 +110,7 @@ export default class SpreadsheetGenerator extends ManagedObject {
         }
     }
 
-    private _getSheet(labelList: any, dataArray: any, entityType: string, spreadsheetExportConfig: DeepDownloadConfig, columnsConfig: string[], parentEntityType?: string): XLSX.WorkSheet {
+    private _getSheet(labelList: any, dataArray: any, columnsConfig: string[]): XLSX.WorkSheet {
         let rows = dataArray.length;
         let fieldMatchType = this.component.getFieldMatchType();
         var worksheet = {} as XLSX.WorkSheet;
@@ -146,7 +146,7 @@ export default class SpreadsheetGenerator extends ManagedObject {
             for (const [index, data] of dataArray.entries()) {
                 let sampleDataValue = "";
                 rows = index + 1 + startRow;
-                if (data[key]) {
+                if (data.hasOwnProperty(key)) {
                     sampleDataValue = data[key];
                 } else {
                     worksheet[XLSX.utils.encode_cell({ c: col, r: rows })] = { v: "", t: "s" }; // Set the cell as empty
@@ -172,7 +172,7 @@ export default class SpreadsheetGenerator extends ManagedObject {
     private _getCellForType(type: string, value: any): XLSX.CellObject {
         switch (type) {
             case "Edm.Boolean":
-                return { v: value.toString(), t: "b" };
+                return { v: value, t: "b" };
             case "Edm.String":
             case "Edm.Guid":
             case "Edm.Any":

@@ -134,6 +134,18 @@ export default class Parser extends ManagedObject {
 						} catch (error) {
 							this.addMessageToMessages("spreadsheetimporter.errorWhileParsing", util, messageHandler, index, [metadataColumn.label], rawValue);
 						}
+					} else if (metadataColumn.type === "Edm.Guid") {
+						try {
+							// Check if the value matches GUID format
+							const guidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+							if (typeof rawValue === "string" && guidPattern.test(rawValue)) {
+								payload[columnKey] = rawValue;
+							} else {
+								this.addMessageToMessages("spreadsheetimporter.invalidGuid", util, messageHandler, index, [metadataColumn.label], rawValue);
+							}
+						} catch (error) {
+							this.addMessageToMessages("spreadsheetimporter.errorWhileParsing", util, messageHandler, index, [metadataColumn.label], rawValue);
+						}
 					} else {
 						// assign "" only if rawValue is undefined or null
 						payload[columnKey] = `${rawValue ?? ""}`;

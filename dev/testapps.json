@@ -242,7 +242,8 @@
     "testMapping": {
       "specs": [
         "../test/specs/all/**.test.js",
-        "../test/specs/v4/**.test.js"
+        "../test/specs/v4/**.test.js",
+        "../test/specs/update/**.test.js"
       ]
     },
     "copyVersions": [
@@ -320,7 +321,8 @@
     "appTitel": "Orders V4 FS 120",
     "testMapping": {
       "specs": [
-        "../test/specs/download/**.test.js"
+        "../test/specs/download/**.test.js",
+        "../test/specs/updatefreestyle/**.test.js"
       ]
     },
     "copyVersions": []

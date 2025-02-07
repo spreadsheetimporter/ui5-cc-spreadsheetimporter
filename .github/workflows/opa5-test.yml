@@ -8,7 +8,7 @@ on:
 jobs:
   test-opa5:
     runs-on: ubuntu-latest
-    if: "github.event.pull_request.title != 'chore: release main'"
+    if: "github.event.pull_request.title != 'chore: release main' && !github.event.pull_request.draft"
     strategy:
       fail-fast: false
       matrix:

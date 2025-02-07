@@ -37,7 +37,7 @@
     "wdio-chromedriver-service": "8.1.1",
     "wdio-timeline-reporter": "5.1.4",
     "wdio-ui5-service": "3.0.0-rc.0",
-    "webdriverio": "^9.4.1",
+    "webdriverio": "^9.5.1",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
   }
 }

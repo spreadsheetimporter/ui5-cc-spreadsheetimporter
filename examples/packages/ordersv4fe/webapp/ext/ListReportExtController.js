@@ -18,6 +18,11 @@ sap.ui.define(["sap/m/MessageToast"], function (MessageToast) {
 						async: true,
 						componentData: {
 							context: this,
+							// action: "UPDATE",
+							// updateConfig: {
+							// 	fullUpdate: false,
+							// 	columns: ["OrderNo"]
+							// },
 							createActiveEntity: true,
 							i18nModel: this.getModel("i18n"),
 							debug: true,

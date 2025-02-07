@@ -1,7 +1,7 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 import Component from "../Component";
 import XMLView from "sap/ui/core/mvc/XMLView";
-import { Messages, ListObject, ComponentData } from "../types";
+import { Messages, ListObject, ComponentData, DeepDownloadConfig } from "../types";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import ResourceBundle from "sap/base/i18n/ResourceBundle";
 import OData from "./odata/OData";
@@ -13,7 +13,7 @@ import Log from "sap/base/Log";
 import OptionsDialog from "./dialog/OptionsDialog";
 import SpreadsheetDialog from "../control/SpreadsheetDialog";
 import SpreadsheetUploadDialog from "./dialog/SpreadsheetUploadDialog";
-import { CustomMessageTypes } from "../enums";
+import { Action, CustomMessageTypes } from "../enums";
 import VersionInfo from "sap/ui/VersionInfo";
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -130,7 +130,7 @@ export default class SpreadsheetUpload extends ManagedObject {
 			throw new Error(this.util.geti18nText("spreadsheetimporter.bindingError"));
 		}
 		this.isODataV4 = this._checkIfODataIsV4(this.binding);
-		this.odataHandler = this.createODataHandler(this);
+		this.odataHandler = this.createODataHandler(this, this.messageHandler, this.util);
 		this.spreadsheetUploadDialogHandler.setODataHandler(this.odataHandler);
 		this.controller = this.view.getController();
 		Log.debug("View", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ view: this.view }));
@@ -140,6 +140,10 @@ export default class SpreadsheetUpload extends ManagedObject {
 		this.odataKeyList = await this.odataHandler.getKeyList(this._odataType, this.binding);
 		Log.debug("odataKeyList", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ odataKeyList: this.odataKeyList }));
 		this.typeLabelList = await this.odataHandler.getLabelList(this.component.getColumns(), this._odataType, this.component.getExcludeColumns(), this.binding);
+		if(this.component.getAction() === Action.Update || this.component.getAction() === Action.Delete){
+			// keys are needed for the update/delete action in the labellist
+			this.odataHandler.addKeys(this.typeLabelList, this._odataType);
+		}
 		Log.debug("typeLabelList", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ typeLabelList: this.typeLabelList }));
 
 		if(this.isODataV4) {
@@ -167,11 +171,11 @@ export default class SpreadsheetUpload extends ManagedObject {
 	 * @param {number} version - UI5 version number.
 	 * @returns {OData} OData handler instance.
 	 */
-	createODataHandler(spreadsheetUploadController: SpreadsheetUpload): OData {
+	createODataHandler(spreadsheetUploadController: SpreadsheetUpload, messageHandler: MessageHandler, util: Util): OData {
 		if (this.isODataV4) {
-			return new ODataV4(spreadsheetUploadController);
+			return new ODataV4(spreadsheetUploadController, messageHandler, util);
 		} else {
-			return new ODataV2(spreadsheetUploadController);
+			return new ODataV2(spreadsheetUploadController, messageHandler, util);
 		}
 	}
 
@@ -310,6 +314,15 @@ export default class SpreadsheetUpload extends ManagedObject {
 		if (options.hasOwnProperty("showDownloadButton")) {
 			this.component.setShowDownloadButton(options.showDownloadButton);
 		}
+		if (options.hasOwnProperty("action")) {
+			this.component.setAction(options.action);
+		}
+		if (options.hasOwnProperty("updateConfig")) {
+			this.component.setUpdateConfig(options.updateConfig);
+		}
+		if (options.hasOwnProperty("deepDownloadConfig")) {
+			this.component.setDeepDownloadConfig(Util.mergeDeepDownloadConfig(this.component.getDeepDownloadConfig() as DeepDownloadConfig, options.deepDownloadConfig));
+		}
 
 		// Special case for showOptions
 		if (options.availableOptions && options.availableOptions.length > 0) {
@@ -331,41 +344,45 @@ export default class SpreadsheetUpload extends ManagedObject {
 		}
 	}
 
-	refreshBinding(context: any, binding: any, id: any) {
+	refreshBinding(context: any, binding: any, tableObject: any) {
+		const id = tableObject.getId();
+		let refreshFailed = true; // Track if all refresh attempts failed
+
 		if (context._controller?.getExtensionAPI()) {
 			// refresh binding in V4 FE context
 			try {
 				context._controller.getExtensionAPI().refresh(binding.getPath());
+				refreshFailed = false;
 			} catch (error) {
 				Log.error("Failed to refresh binding in V4 FE context: " + error);
 			}
 		} else if (context.extensionAPI) {
-			let refreshFailed = false;
 			// refresh binding in V2 FE context
 			if (context.extensionAPI.refresh) {
 				try {
 					context.extensionAPI.refresh(binding.getPath(id));
+					refreshFailed = false;
 				} catch (error) {
 					Log.error("Failed to refresh binding in Object Page V2 FE context: " + error);
-					refreshFailed = true;
 				}
 			}
 			if (context.extensionAPI.refreshTable) {
 				try {
 					context.extensionAPI.refreshTable(id);
+					refreshFailed = false;
 				} catch (error) {
 					Log.error("Failed to refresh binding in List Report V2 FE context: " + error);
-					refreshFailed = true;
 				}
 			}
-			// try refresh binding when refresh failed
-			if (refreshFailed) {
-				try {
-					// force refresh only available for v2
-					binding.refresh(true);
-				} catch (error) {
-					Log.error("Failed to refresh binding in other contexts: " + error);
-				}
+		}
+
+		// Try direct binding refresh as last resort if all other attempts failed
+		if (refreshFailed) {
+			try {
+				// force refresh parameter only for v2
+				binding.refresh(this._checkIfODataIsV4(binding) ? undefined : true);
+			} catch (error) {
+				Log.error("Failed to refresh binding in other contexts: " + error);
 			}
 		}
 	}

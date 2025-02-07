@@ -145,4 +145,8 @@ export default class MetadataHandlerV2 extends MetadataHandler {
 	getODataEntitiesRecursive(entityName: string, deepLevel: number): any {
 		throw new Error("Method not implemented.");
 	}
+
+	getKeys(binding: any, payload: any, IsActiveEntity?: boolean, excludeIsActiveEntity: boolean = false): Record<string, any> {
+		throw new Error("Method not implemented.");
+	}
 }

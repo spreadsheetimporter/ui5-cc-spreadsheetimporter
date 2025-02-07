@@ -9,6 +9,7 @@ declare module "./Component" {
      */
     interface $ComponentSettings extends $UIComponentSettings {
         spreadsheetFileName?: string | PropertyBindingInfo;
+        action?: string | PropertyBindingInfo;
         context?: object | PropertyBindingInfo | `{${string}}`;
         columns?: string[] | PropertyBindingInfo | `{${string}}`;
         excludeColumns?: string[] | PropertyBindingInfo | `{${string}}`;
@@ -44,6 +45,7 @@ declare module "./Component" {
         bindingCustom?: object | PropertyBindingInfo | `{${string}}`;
         showDownloadButton?: boolean | PropertyBindingInfo | `{${string}}`;
         deepDownloadConfig?: object | PropertyBindingInfo | `{${string}}`;
+        updateConfig?: object | PropertyBindingInfo | `{${string}}`;
         preFileProcessing?: (event: Component$PreFileProcessingEvent) => void;
         checkBeforeRead?: (event: Component$CheckBeforeReadEvent) => void;
         changeBeforeCreate?: (event: Component$ChangeBeforeCreateEvent) => void;
@@ -58,6 +60,10 @@ declare module "./Component" {
         // property: spreadsheetFileName
         getSpreadsheetFileName(): string;
         setSpreadsheetFileName(spreadsheetFileName: string): this;
+
+        // property: action
+        getAction(): string;
+        setAction(action: string): this;
 
         // property: context
         getContext(): object;
@@ -198,6 +204,10 @@ declare module "./Component" {
         // property: deepDownloadConfig
         getDeepDownloadConfig(): object;
         setDeepDownloadConfig(deepDownloadConfig: object): this;
+
+        // property: updateConfig
+        getUpdateConfig(): object;
+        setUpdateConfig(updateConfig: object): this;
 
         // event: preFileProcessing
         attachPreFileProcessing(fn: (event: Component$PreFileProcessingEvent) => void, listener?: object): this;

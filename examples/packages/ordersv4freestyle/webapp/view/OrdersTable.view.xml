@@ -1,34 +1,29 @@
-<mvc:View controllerName="ordersv4freestyle.controller.MainView"
+<mvc:View controllerName="ordersv4freestyle.controller.OrdersTable"
     xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" displayBlock="true"
     xmlns="sap.m">
-    <Page id="page" title="{i18n>title}">
+    <Page id="pageUpdate" title="{i18n>title}">
         <content>
             <VBox>
                 <core:ComponentContainer
-                    id="test1"
+                    id="updateButtonCode"
                     width="100%"
                     usage="spreadsheetImporter"
                     propagateModel="true"
                     async="true"
                     settings="{
-                    componentContainerData:{uploadButtonPress:'uploadButtonPress',buttonText:'Excel Download',buttonId:'downloadButton',buttonIcon:'sap-icon://download',downloadButton:true},
+                    componentContainerData:{uploadButtonPress:'uploadButtonPress',buttonText:'Excel Download',buttonId:'downloadButtonWithoutDialog',buttonIcon:'sap-icon://download',downloadButton:true},
                     deepDownloadConfig:{
                         deepLevel: 0,
                         deepExport: false,
                         addKeysToExport: true,
                         showOptions: false,
-                        filename: 'Orders12',
-                        columns : {
-                            'OrderNo':{
-                                'order': 1
-                        }
-                      }
+                        filename: 'Orders'
                     }
                   }"
                 />
-                <Button id="downloadButtonCode" text="Excel Deep Download" press="onDownload"/>
+                <Button id="downloadButtonCode2" text="Excel Deep Download" press="onDownload"/>
                 <core:ComponentContainer
-                    id="test2"
+                    id="updateButtonCode3"
                     width="100%"
                     usage="spreadsheetImporter"
                     propagateModel="true"
@@ -39,7 +34,7 @@
                         deepLevel: 2,
                         deepExport: true,
                         addKeysToExport: true,
-                        showOptions: false,
+                        showOptions: true,
                         filename: 'Orders_Dialog',
                         columns : {
                             'OrderNo':{
@@ -62,9 +57,10 @@
                     }
                   }"
                 />
-                <Button id="goToSampleApp" text="Show Sample App Code" press="goToSampleApp"/>
+                <Button id="updatedButtonCode4" text="Mass Update" press="onMassUpdate"/>
+                <Button id="goToSampleApp2" text="Show Sample App Code" press="goToSampleApp"/>
                 <!-- Added Table with OData binding -->
-                <Table id="ordersTable" items="{/Orders}">
+                <Table id="ordersTable2" items="{/Orders}">
                     <columns>
                         <Column>
                             <Text text="Order Number"/>

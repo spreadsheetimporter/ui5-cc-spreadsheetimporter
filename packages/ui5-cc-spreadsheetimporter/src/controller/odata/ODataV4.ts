@@ -1,4 +1,4 @@
-import { Columns, ListObject } from "../../types";
+import { Columns, ListObject, UpdateConfig } from "../../types";
 import OData from "./OData";
 import SpreadsheetUpload from "../SpreadsheetUpload";
 import Util from "../Util";
@@ -6,6 +6,9 @@ import ODataListBinding from "sap/ui/model/odata/v4/ODataListBinding";
 import Log from "sap/base/Log";
 import MetadataHandlerV4 from "./MetadataHandlerV4";
 import ODataModel from "sap/ui/model/odata/v4/ODataModel";
+import ODataContextBinding from "sap/ui/model/odata/v4/ODataContextBinding";
+import MessageHandler from "../MessageHandler";
+import { ODataV4RequestObjects, BatchContext } from './ODataV4RequestObjects';
 
 type EntityObject = {
 	$kind: string;
@@ -17,16 +20,17 @@ type EntityObject = {
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
 export default class ODataV4 extends OData {
-	public createPromises: Promise<any>[] = [];
-	public createContexts: any[] = [];
 	customBinding: ODataListBinding;
 	updateGroupId: string;
 	public metadataHandler: MetadataHandlerV4;
-
-	constructor(spreadsheetUploadController: SpreadsheetUpload) {
-		super(spreadsheetUploadController);
+	private contexts: BatchContext[];
+	private objectRetriever: ODataV4RequestObjects;
+	constructor(spreadsheetUploadController: SpreadsheetUpload, messageHandler: MessageHandler, util: Util) {
+		super(spreadsheetUploadController, messageHandler, util);
 		this.updateGroupId = Util.getRandomString(10);
 		this.metadataHandler = new MetadataHandlerV4(spreadsheetUploadController);
+		this.objectRetriever = new ODataV4RequestObjects(this.metadataHandler, messageHandler, util);
+		this.contexts = [];
 	}
 
 	create(model: any, binding: any, payload: any) {
@@ -41,6 +45,107 @@ export default class ODataV4 extends OData {
 		const returnObject = this.create(model, this.customBinding, payload);
 		this.createContexts.push(returnObject.context);
 		this.createPromises.push(returnObject.promise);
+	}
+
+	updateAsync(model: any, binding: any, payload: any) {
+		// also do this if we should check for draft entities, this should be default in draft scenarios
+		const keys = this.metadataHandler.getKeys(binding, payload);
+		Log.debug("Processing update operation", undefined, "SpreadsheetUpload: ODataV4", () => ({
+			keys,
+			payload,
+			bindingPath: binding.getPath()
+		}));
+
+		// Now use the keys to find the matching context
+		const currentContext = this.contexts.find((ctx) => Object.entries(keys).every(([key, value]) => ctx.payload[key] === value)) as BatchContext;
+		Log.debug("Found matching context", undefined, "SpreadsheetUpload: ODataV4", () => ({
+			found: !!currentContext,
+			contextDetails: currentContext
+		}));
+
+		if (!currentContext.context) {
+			if (!this.spreadsheetUploadController.component.getContinueOnError()) {
+				// in which context should we continue?
+				throw new Error("Could not find matching context for update operation");
+			} else {
+				Log.debug("No context found for update operation", undefined, "SpreadsheetUpload: ODataV4", () => ({
+					keys,
+					availableContexts: this.contexts.length
+				}));
+				return;
+			}
+		}
+		let { context } = currentContext;
+
+		const currentObject = context.getObject();
+		Log.debug("Current object state", undefined, "SpreadsheetUpload: ODataV4", () => ({
+			currentObject,
+			isDraft: currentObject.HasDraftEntity || !currentObject.IsActiveEntity
+		}));
+
+		// Determine if the current object is a draft or active entity
+		const isDraft = currentObject.HasDraftEntity || !currentObject.IsActiveEntity;
+
+		if (isDraft) {
+			// Switch to the draft entity by creating a new context with IsActiveEntity=false
+			payload.IsActiveEntity = false;
+			const draftKeyPredicates = MetadataHandlerV4.formatKeyPredicates(keys, payload);
+			const path = MetadataHandlerV4.getResolvedPath(binding);
+			Log.debug("Switching to draft entity", undefined, "SpreadsheetUpload: ODataV4", () => ({
+				draftKeyPredicates,
+				path,
+				groupId: this.updateGroupId
+			}));
+			const oDataContextBinding = binding.getModel().bindContext(`${path}(${draftKeyPredicates})`, undefined, { $$groupId: this.updateGroupId }) as ODataContextBinding;
+			context = oDataContextBinding.getBoundContext();
+		}
+
+		// Process all properties from payload except keys
+		Object.entries(payload).forEach(([property, newValue]) => {
+			// Skip if property is a key
+			if (property in keys) {
+				return;
+			}
+			// decide if the full import payload should be sent or only the changed properties
+			const fullUpdate = (this.spreadsheetUploadController.component.getUpdateConfig() as UpdateConfig).fullUpdate;
+			// only columns defined in the updateConfig should be updated
+			const columns = (this.spreadsheetUploadController.component.getUpdateConfig() as UpdateConfig).columns;
+
+			// Helper function to check if value is a date and if it has changed
+			const hasDateValueChanged = (oldValue: any, newValue: any): boolean => {
+				if (!newValue?.toISOString) return true; // not a date, continue with normal comparison
+				const formattedNewDate = newValue.toISOString().substr(0,10);
+				return oldValue !== formattedNewDate;
+			};
+
+			// Check if property should be updated
+			const isPropertyConfigured = columns.length === 0 || columns.includes(property);
+			const hasValueChanged = currentObject[property] !== newValue;
+			const isDateChangeValid = hasDateValueChanged(currentObject[property], newValue);
+
+			if (fullUpdate || (hasValueChanged && isPropertyConfigured && isDateChangeValid)) {
+				Log.debug("Updating property", undefined, "SpreadsheetUpload: ODataV4", () => ({
+					property,
+					oldValue: currentObject[property],
+					newValue,
+					isDate: !!newValue?.toISOString,
+					updateReason: fullUpdate ? 'fullUpdate' : 'valueChanged'
+				}));
+
+				this.createPromises.push(
+					context.setProperty(
+						property,
+						typeof newValue === "object" ? `${newValue.getUTCFullYear()}-${("0" + (newValue.getUTCMonth() + 1)).slice(-2)}-${("0" + newValue.getUTCDate()).slice(-2)}` : newValue
+					)
+				);
+			}
+		});
+
+		Log.debug("Update operation completed", undefined, "SpreadsheetUpload: ODataV4", () => ({
+			pendingPromises: this.createPromises.length,
+			isDraft,
+			context: context.getPath()
+		}));
 	}
 
 	async submitChanges(model: any): Promise<any> {
@@ -69,21 +174,15 @@ export default class ODataV4 extends OData {
 
 	createCustomBinding(binding: any) {
 		if (this.spreadsheetUploadController.component.getOdataType()) {
-			const entityContainer = ODataV4.getContainerName(this.spreadsheetUploadController.context)
+			const entityContainer = ODataV4.getContainerName(this.spreadsheetUploadController.context);
 			const typeToSearch = this.spreadsheetUploadController.component.getOdataType();
 			const odataEntityTypeParameterPath = this._findAttributeByType(entityContainer, typeToSearch);
 			this.customBinding = this.spreadsheetUploadController.view
 				.getModel()
 				.bindList("/" + odataEntityTypeParameterPath, null, [], [], { $$updateGroupId: this.updateGroupId }) as ODataListBinding;
 		} else {
-			let path = binding.getPath();
-			if (binding.getResolvedPath) {
-				path = binding.getResolvedPath();
-			} else {
-				// workaround for getResolvedPath only available from 1.88
-				path = binding.getModel().resolve(binding.getPath(), binding.getContext());
-			}
-			this.customBinding = binding.getModel().bindList(path, null, [], [], { $$updateGroupId: this.updateGroupId });
+			let path = MetadataHandlerV4.getResolvedPath(binding);
+			this.customBinding = binding.getModel().bindList(path, this.contexts, [], [], { $$updateGroupId: this.updateGroupId });
 		}
 	}
 
@@ -124,7 +223,7 @@ export default class ODataV4 extends OData {
 				Log.error("Error while getting OData Type. Please specify 'odataType' in options", undefined, "SpreadsheetUpload: ODataV4");
 			}
 		} else {
-			const entityContainer = ODataV4.getContainerName(this.spreadsheetUploadController.context)
+			const entityContainer = ODataV4.getContainerName(this.spreadsheetUploadController.context);
 			const odataEntityType = this._findAttributeByType(entityContainer, odataType);
 			if (!odataEntityType) {
 				// filter out $kind
@@ -229,5 +328,11 @@ export default class ODataV4 extends OData {
 
 	addKeys(labelList: ListObject, entityName: string, parentEntity?: any, partner?: string) {
 		this.metadataHandler.addKeys(labelList, entityName, parentEntity, partner);
+	}
+
+	async getObjects(model: any, binding: any, batch: any): Promise<any[]> {
+		const objects = await this.objectRetriever.getObjects(model, binding, batch);
+		this.contexts = this.objectRetriever.getContexts();
+		return objects;
 	}
 }

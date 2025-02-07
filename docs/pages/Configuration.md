@@ -2,7 +2,7 @@
 
 How to use them see [Example Code](#example-code)
 
-## Configuration Options
+## Configuration Overview
 
 The table below summarizes the options available for the UI5 Spreadsheet Importer Component. Detailed explanations and examples for each option are provided in the linked sections.
 
@@ -31,6 +31,7 @@ The table below summarizes the options available for the UI5 Spreadsheet Importe
 
 | Option                                              | Description                                           | Default         | Type       |
 |-----------------------------------------------------|-------------------------------------------------------|-----------------|------------|
+| [`action`](#action)               | Continues processing next batches even after errors.  | `CREATE`         | `string`  |
 | [`batchSize`](#batchsize)                           | Controls the size of batches sent to the backend.     | `1000`          | `number`   |
 | [`strict`](#strict)                                 | Controls availability of the "Continue" button in error dialogs. | `false` | `boolean`  |
 | [`decimalSeparator`](#decimalseparator)             | Sets the decimal separator for numbers.               | Browser default | `string`   |
@@ -38,6 +39,7 @@ The table below summarizes the options available for the UI5 Spreadsheet Importe
 | [`skipMandatoryFieldCheck`](#skipmandatoryfieldcheck)| Skips the check for mandatory fields.                | `false`         | `boolean`  |
 | [`skipColumnsCheck`](#skipcolumnscheck)             | Skips the check for unknown columns not in metadata.  | `false`         | `boolean`  |
 | [`continueOnError`](#continueonerror)               | Continues processing next batches even after errors.  | `false`         | `boolean`  |
+
 
 ### Advanced Configuration Options
 
@@ -56,6 +58,8 @@ The table below summarizes the options available for the UI5 Spreadsheet Importe
 | [`i18nModel`](#i18nmodel)                         | Uses a custom i18n model to override default texts.       | Not specified      | `object`   |
 
 ---
+
+## Configuration Options
 
 ### `columns`
 
@@ -176,6 +180,15 @@ Of course, creating the draft entity and the subsequent activation takes longer 
 Together with the option `continueOnError`, it is also possible to create all entities and try to activate the other entities if the draft activation fails.
 This means that at least all drafts are available.
 
+### `action`
+
+**default:** `CREATE`
+
+Options:  
+
+- `CREATE` : Create
+- `UPDATE` : Update
+
 ### `batchSize`
 
 **default:** `1.000`
@@ -191,6 +204,8 @@ When the number of lines in the Spreadsheet file exceeds the specified `batchSiz
 The default value is 1,000, which means that when the number of lines in the Spreadsheet file exceeds 1,000, the payload array will be divided into equal parts, and each part will be sent as a separate batch request.
 
 If you set the `batchSize` to 0, the payload array will not be divided, and the entire array will be sent as a single batch request.
+
+For updates, the batch size is limited to 100.
 
 ### `standalone`
 

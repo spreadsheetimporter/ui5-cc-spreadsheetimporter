@@ -1,5 +1,5 @@
 import { MessageType } from "sap/ui/core/library";
-import { AvailableOptions } from "./enums";
+import { Action, AvailableOptions } from "./enums";
 
 export interface Tags {
 	name: string;
@@ -21,6 +21,7 @@ export type Columns = string[];
 export type CustomMessageType = {
 	title: string;
 	group: boolean;
+	update?: boolean;
 };
 
 export interface Messages {
@@ -82,6 +83,7 @@ export type AvailableOptionsType = keyof typeof AvailableOptions;
 
 export interface ComponentData {
 	spreadsheetFileName?: string;
+	action?: Action;
 	context?: object;
 	columns?: string[];
 	excludeColumns?: string[];
@@ -117,6 +119,7 @@ export interface ComponentData {
 	bindingCustom?: object;
 	showDownloadButton?: boolean;
 	deepDownloadConfig?: DeepDownloadConfig;
+	updateConfig?: UpdateConfig;
 }
 
 export interface DeepDownloadConfig {
@@ -127,6 +130,11 @@ export interface DeepDownloadConfig {
 	showOptions: boolean;
 	columns: any;
 	filename?: string;
+}
+
+export interface UpdateConfig {
+	fullUpdate: boolean;
+	columns: string[];
 }
 
 export type FireEventReturnType = {
