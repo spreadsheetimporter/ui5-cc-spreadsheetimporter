@@ -36,7 +36,7 @@ export default class Component extends UIComponent {
 	}
 
 	public static metadata = {
-		// interfaces: ["sap.ui.core.IAsyncContentCreation"],
+		// interfaces: ["sap.ui.core.IAsyncContentCreation"]
 		manifest: "json",
 		properties: {
 			spreadsheetFileName: { type: "string", defaultValue: "Template.xlsx" },
