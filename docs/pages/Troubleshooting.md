@@ -40,7 +40,7 @@ Alternatively, you can try selecting all the messages and copying them to a text
 If you receive an error similar to the following:
 
 ```
-ui5loader-dbg.js:1042 Uncaught (in promise) ModuleError: failed to load 'cc/spreadsheetimporter/v1_6_0/Component.js' from resources/cc/spreadsheetimporter/v1_6_0/Component.js: script load error
+ui5loader-dbg.js:1042 Uncaught (in promise) ModuleError: failed to load 'cc/spreadsheetimporter/v1_7_0/Component.js' from resources/cc/spreadsheetimporter/v1_7_0/Component.js: script load error
 ```
 
 Since the component is designed to always use a specific version, you must ensure that the correct version is used after an update.  
@@ -59,16 +59,16 @@ See the configurations for this version below:
 ### manifest.json
 
 !!! warning ""
-    ⚠️ The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v1_6_0" changed from version 0.34.0 to lowercase. Please make sure to use the correct path.
+    ⚠️ The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v1_7_0" changed from version 0.34.0 to lowercase. Please make sure to use the correct path.
 
 
 ```json
 "componentUsages": {
     "spreadsheetImporter": {
-        "name": "cc.spreadsheetimporter.v1_6_0"
+        "name": "cc.spreadsheetimporter.v1_7_0"
     }
 },
 "resourceRoots": {
-    "cc.spreadsheetimporter.v1_6_0": "./thirdparty/customcontrol/spreadsheetimporter/v1_6_0"
+    "cc.spreadsheetimporter.v1_7_0": "./thirdparty/customcontrol/spreadsheetimporter/v1_7_0"
 }
 ```
