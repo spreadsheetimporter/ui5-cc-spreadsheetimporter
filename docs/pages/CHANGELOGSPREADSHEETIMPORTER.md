@@ -7,6 +7,13 @@
 
 * hotfix for wrong namespace ([#706](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/706)) ([a2861ae](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/a2861aec515853329eed8fc438c4590ea9da6ad4))
 
+## [1.7.1](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.7.0...ui5-cc-spreadsheetimporter-v1.7.1) (2025-02-09)
+
+
+### Bug Fixes
+
+* hotfix for wrong namespace ([#706](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/706)) ([a2861ae](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/a2861aec515853329eed8fc438c4590ea9da6ad4))
+
 ## [1.7.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.6.0...ui5-cc-spreadsheetimporter-v1.7.0) (2025-02-07)
 
 
