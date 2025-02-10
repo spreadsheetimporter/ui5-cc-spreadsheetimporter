@@ -40,7 +40,7 @@ module.exports.config = {
 			"goog:chromeOptions": {
 				args:
 					process.argv.indexOf("--headless") > -1
-						? ["--headless=new", "--window-size=1920,1080"]
+						? ["--headless=new", "--window-size=1920,1080", "--no-sandbox"]
 						: process.argv.indexOf("--debug") > -1
 						? ["--window-size=1920,1080", "--auto-open-devtools-for-tabs"]
 						: ["--window-size=1920,1080"],
