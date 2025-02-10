@@ -267,16 +267,18 @@ export class ODataV4RequestObjects {
 				return;
 			}
 
-			// Check for valid draft states
-			if (foundObject.IsActiveEntity && !foundObject.HasDraftEntity && !batchItem.IsActiveEntity) {
-				this.addDraftMismatchError(index, keys, "Draft", "Active");
-				errorFound = true;
-			} else if (foundObject.IsActiveEntity && foundObject.HasDraftEntity && batchItem.IsActiveEntity) {
-				this.addDraftMismatchError(index, keys, "Active", "Draft");
-				errorFound = true;
-			} else if (!foundObject.IsActiveEntity && batchItem.IsActiveEntity) {
-				this.addDraftMismatchError(index, keys, "Active", "Draft");
-				errorFound = true;
+			// Check for valid draft states only if batchItem.IsActiveEntity is defined
+			if (batchItem.IsActiveEntity !== undefined) {
+				if (foundObject.IsActiveEntity && !foundObject.HasDraftEntity && !batchItem.IsActiveEntity) {
+					this.addDraftMismatchError(index, keys, "Draft", "Active");
+					errorFound = true;
+				} else if (foundObject.IsActiveEntity && foundObject.HasDraftEntity && batchItem.IsActiveEntity) {
+					this.addDraftMismatchError(index, keys, "Active", "Draft");
+					errorFound = true;
+				} else if (!foundObject.IsActiveEntity && batchItem.IsActiveEntity) {
+					this.addDraftMismatchError(index, keys, "Active", "Draft");
+					errorFound = true;
+				}
 			}
 		});
 
