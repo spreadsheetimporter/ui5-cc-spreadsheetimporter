@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.2](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.7.1...ui5-cc-spreadsheetimporter-v1.7.2) (2025-02-10)
+
+
+### Bug Fixes
+
+* **update:** dont check draft state if not available ([#709](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/709)) ([e0f6f24](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/e0f6f2494c880c10af7e68972de318eb09b92a41))
+
 ## [1.7.1](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.7.0...ui5-cc-spreadsheetimporter-v1.7.1) (2025-02-09)
 
 
