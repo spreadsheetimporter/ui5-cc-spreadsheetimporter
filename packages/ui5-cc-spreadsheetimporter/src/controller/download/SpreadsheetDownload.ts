@@ -84,9 +84,9 @@ export default class SpreadsheetDownload extends ManagedObject {
 		
 		// Use the DataAssigner for all data assignments
 		this.dataAssigner.assignData(data, mainEntity);
-		this.dataAssigner.assignDataRoot(deepDownloadConfig.columns, mainEntity);
-		this.dataAssigner.assignColumnsRoot(deepDownloadConfig.columns, mainEntity);
-		this.dataAssigner.assignColumns(deepDownloadConfig.columns, mainEntity);
+		this.dataAssigner.assignDataRoot(deepDownloadConfig.columns, mainEntity, deepDownloadConfig.deepLevel);
+		this.dataAssigner.assignColumnsRoot(deepDownloadConfig.columns, mainEntity, deepDownloadConfig.deepLevel);
+		this.dataAssigner.assignColumns(deepDownloadConfig.columns, mainEntity, deepDownloadConfig.deepLevel);
 		
 		mainEntity.$XYZData = data;
 		return mainEntity;

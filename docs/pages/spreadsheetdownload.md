@@ -27,7 +27,7 @@ This means that you can download all Orders, including the OrderItems, ShippingI
 | `deepExport` | Turn on to export of sibling entities | `false` | boolean |
 | `deepLevel` | Defines the level of sibling entities to export | `0` | number |
 | `showOptions` | Shows options dialog for users | `false` | boolean |
-| `columns` | Defines the columns to export | `{}` | object |
+| `columns` | Defines the columns to export | `{}` | object or array |
 
 ### Sample Usage
 
@@ -77,6 +77,8 @@ It is possible to define the order of the columns by using the `order` property.
 To know which columns are available, it is possible to turn on `debug` as an option.
 With this option, the `mainEntity` is logged and then you can use it as a reference.
 
+It is also possible to define the columns as an array of strings but only if the deepLevel is 0.
+
 ### addKeysToExport
 
 **default:** `false`
@@ -103,13 +105,17 @@ This option defines the filename for the export XLSX file.
 
 **default:** `false`
 
-This option determines whether sibling entities should be exported as well.
+This option determines whether sibling entities should be exported as well.  
+If the deepExport is set to `false`, the deepLevel is set to `0`.
 
 ### deepLevel
 
 **default:** `0`
 
-This option defines how deep sibling entities should be exported.
+This option defines how deep sibling entities should be exported.  
+If the deepLevel is greater than 0, the columns option must a object.  
+If the deepLevel is 0, `deepExport` is set to `false`.  
+If the deepLevel is greater than 0, `deepExport` is set to `true`.
 
 ### showOptions
 
