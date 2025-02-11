@@ -759,6 +759,18 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	}
 
 	async onDownloadDataSpreadsheet(): Promise<void> {
+		// if deepLevel is 0, we set deepExport to false
+		if ((this.component.getDeepDownloadConfig() as DeepDownloadConfig).deepLevel === 0) {
+			(this.component.getDeepDownloadConfig() as DeepDownloadConfig).deepExport = false;
+		}
+		// if deepExport is false, we set deepLevel to 0
+		if ((this.component.getDeepDownloadConfig() as DeepDownloadConfig).deepExport === false) {
+			(this.component.getDeepDownloadConfig() as DeepDownloadConfig).deepLevel = 0;
+		}
+		// if deepLevel is greater 0, we set deepExport to true
+		if ((this.component.getDeepDownloadConfig() as DeepDownloadConfig).deepLevel > 0) {
+			(this.component.getDeepDownloadConfig() as DeepDownloadConfig).deepExport = true;
+		}
 		if (!this.spreadsheetUploadController.errorState) {
 			try {
 				const mainEntitySiblings = await this.spreadsheetDownload.fetchData(this.component.getDeepDownloadConfig() as DeepDownloadConfig);
