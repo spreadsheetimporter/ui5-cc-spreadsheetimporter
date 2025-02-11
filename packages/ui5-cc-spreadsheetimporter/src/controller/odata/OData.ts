@@ -14,6 +14,7 @@ import Util from "../Util";
 import ODataListBindingV2 from "sap/ui/model/odata/v2/ODataListBinding";
 import ODataListBindingV4 from "sap/ui/model/odata/v4/ODataListBinding";
 import MessageHandler from "../MessageHandler";
+import MessageBox from "sap/m/MessageBox";
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -143,6 +144,7 @@ export default abstract class OData extends ManagedObject {
 			this.busyDialog.close();
 			this.resetContexts();
 			Log.error("Error while calling the odata service", error as Error, "SpreadsheetUpload: callOdata");
+			await this.showInternalErrorDialog(error);
 			await this.checkForODataErrors(component.getShowBackendErrorMessages());
 			fnReject(error);
 		}
@@ -249,6 +251,10 @@ export default abstract class OData extends ManagedObject {
 				this.odataMessageHandler.displayMessages(messages);
 			}
 		}
+	}
+
+	private async showInternalErrorDialog(error: any) {
+		MessageBox.error(error.message);
 	}
 	
 	getView(context: any): any {

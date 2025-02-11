@@ -80,6 +80,11 @@ export const CustomMessageTypes: { [key: string]: CustomMessageType } = {
 	DuplicateKeys: {
 		title: "DuplicateKeys",
 		group: true
+	},
+	MissingKeys: {
+		title: "MissingKeys",
+		group: true,
+		update: true
 	}
 };
 

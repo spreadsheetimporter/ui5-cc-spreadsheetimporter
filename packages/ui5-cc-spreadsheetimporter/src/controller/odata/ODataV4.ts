@@ -341,8 +341,13 @@ export default class ODataV4 extends OData {
 	}
 
 	async getObjects(model: any, binding: any, batch: any): Promise<any[]> {
-		const objects = await this.objectRetriever.getObjects(model, binding, batch);
-		this.contexts = this.objectRetriever.getContexts();
-		return objects;
+		try {
+			const objects = await this.objectRetriever.getObjects(model, binding, batch);
+			this.contexts = this.objectRetriever.getContexts();
+			return objects;
+		} catch (error) {
+			Log.error("Error while fetching objects", error as Error, "SpreadsheetUpload: ODataV4");
+			throw new Error(`Error while fetching objects: ${(error as Error).message}\nStack trace: ${(error as Error).stack}`);
+		}
 	}
 }

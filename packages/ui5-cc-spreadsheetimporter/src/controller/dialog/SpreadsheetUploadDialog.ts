@@ -194,6 +194,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 				}
 				if(this.component.getAction() === Action.Update){
 					this.messageHandler.checkDuplicateKeys(spreadsheetSheetsData);
+					this.messageHandler.checkMissingKeys(spreadsheetSheetsData);
 				}
 			}
 			this.spreadsheetUploadController.payload = spreadsheetSheetsData;
