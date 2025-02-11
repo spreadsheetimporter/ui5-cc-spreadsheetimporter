@@ -200,10 +200,7 @@ A usage can look like this:
                         addKeysToExport: true,
                         showOptions: false,
                         filename: 'Orders12',
-                        columns : {
-                            'OrderNo':{
-                                'order': 1
-                        }
+                        columns : ["OrderNo"]
                       }
                     }
                   }"

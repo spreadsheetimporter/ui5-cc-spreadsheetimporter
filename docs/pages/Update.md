@@ -33,6 +33,7 @@ this.spreadsheetUploadUpdate = await this.editFlow.getView().getController().get
         showDownloadButton: true
     }
 });
+this.spreadsheetUploadUpdate.openSpreadsheetUploadDialog();
 ```
 
 This configuration will show the download button and download all the available data for the referenced table.  
