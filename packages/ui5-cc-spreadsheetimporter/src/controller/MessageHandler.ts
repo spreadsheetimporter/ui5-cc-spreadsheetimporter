@@ -227,6 +227,41 @@ export default class MessageHandler extends ManagedObject {
 		});
 	}
 
+	checkMissingKeys(data: ArrayData) {
+		// Get the key names from the metadata
+		const keyNames = MetadataHandlerV4.getAnnotationProperties(
+			this.spreadsheetUploadController.context,
+			this.spreadsheetUploadController.getOdataType()
+		).properties.$Key as string[];
+
+		// Exclude "IsActiveEntity" property as it is not mandatory
+		const mandatoryKeys = keyNames.filter(key => key !== "IsActiveEntity");
+
+		data.forEach((row, index) => {
+			// For each row, find which keys are missing or have empty values
+			const missingKeys = mandatoryKeys.filter((key) => {
+				const matchingColumn = Object.keys(row).find((col) => col.includes(`[${key}]`));
+				if (!matchingColumn) {
+					return true;
+				}
+				const value = row[matchingColumn].rawValue;
+				return value === undefined || value === null || value === "";
+			});
+
+			// If any mandatory keys are missing, create an error message
+			if (missingKeys.length > 0) {
+				const errorMessage = {
+					title: this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.missingKeys"), 
+					type: CustomMessageTypes.MissingKeys,
+					row: index + 2, // +2 because rows typically start at 2 in Excel
+					counter: 1,
+					ui5type: MessageType.Error
+				} as Messages;
+				this.addMessageToMessages(errorMessage);
+			}
+		});
+	}
+
 	areMessagesPresent(): boolean {
 		if (this.messages.some((message) => message.counter > 0)) {
 			return true;
