@@ -19,6 +19,7 @@ jobs:
           command: manifest
           monorepo-tags: true
           release-type: node
+          separate-pull-requests: false
       - name: log output
         run: |
           echo '${{toJSON(steps.release.outputs)}}'
