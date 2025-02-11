@@ -343,6 +343,24 @@ function updateManifestVersion(version){
 
 }
 
+function replaceReleasePleaseManifest(version){
+	// remove 'v' from version
+	version = version.replace('v', '');
+	// Define the file path for the .release-please-manifest.json file
+	const filePath = './.release-please-manifest.json';
+
+	// Read the JSON file
+	const jsonFile = fs.readFileSync(filePath, 'utf8');
+	const jsonData = JSON.parse(jsonFile);
+	
+	// Replace the version for the package "packages/ui5-cc-spreadsheetimporter"
+	const packageName = "packages/ui5-cc-spreadsheetimporter";
+	jsonData[packageName] = version;
+
+	// Write the updated JSON back to the .release-please-manifest.json file
+	fs.writeFileSync(filePath, JSON.stringify(jsonData, null, 2), "utf8");
+}
+
 
 
 module.exports.getPackageJson = getPackageJson;
@@ -363,3 +381,4 @@ module.exports.replaceVersionManifest = replaceVersionManifest;
 module.exports.deleteNodeModules = deleteNodeModules;
 module.exports.replaceMetadataName = replaceMetadataName;
 module.exports.updateManifestVersion = updateManifestVersion;
+module.exports.replaceReleasePleaseManifest = replaceReleasePleaseManifest;
