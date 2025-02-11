@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.7.3](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.7.2...ui5-cc-spreadsheetimporter-v1.7.3) (2025-02-11)
+
+
+### Bug Fixes
+
+* check for errors when fetching objects for update ([#714](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/714)) ([1bac0be](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/1bac0be507031982bca4127dbd772c1238e933c3))
+* support of columns as string array in deep export ([#712](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/712)) ([e15a9a9](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/e15a9a959a49a270abfcde0fb0271d8f692933a0))
+
 ## [1.7.2](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.7.1...ui5-cc-spreadsheetimporter-v1.7.2) (2025-02-10)
 
 
