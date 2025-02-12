@@ -15,13 +15,38 @@
               "tiles": [
                 {
                   "id": "chore-intent1",
-                  "properties": { "targetURL": "https://spreadsheet-importer.com/", "title": "Landing Page", "info": "Spreadsheet Importer", "subtitle": "", "icon": "sap-icon://course-book" },
+                  "properties": {
+                    "targetURL": "https://spreadsheet-importer.com/",
+                    "title": "Landing Page",
+                    "info": "Spreadsheet Importer",
+                    "subtitle": "",
+                    "icon": "sap-icon://course-book"
+                  },
                   "tileType": "sap.ushell.ui.tile.StaticTile",
                   "serviceRefreshInterval": 10000
                 },
                 {
                   "id": "chore-intent2",
-                  "properties": { "targetURL": "https://docs.spreadsheet-importer.com/", "title": "Documentation", "info": "Spreadsheet Importer", "subtitle": "", "icon": "sap-icon://course-book" },
+                  "properties": {
+                    "targetURL": "https://docs.spreadsheet-importer.com/",
+                    "title": "Documentation",
+                    "info": "Spreadsheet Importer",
+                    "subtitle": "",
+                    "icon": "sap-icon://course-book"
+                  },
+                  "tileType": "sap.ushell.ui.tile.StaticTile",
+                  "serviceRefreshInterval": 10000
+                },
+                {
+                  "id": "chore-intent3",
+                  "properties": {
+                    "targetURL": "launchpad.html#ordersv4freestyle-120&/orders",
+                    "navigationMode": "inplace",
+                    "title": "Orders Sample App Mass Update",
+                    "info": "Freestyle",
+                    "subTitle": "UI5 1.120 / OData V4",
+                    "icon": "sap-icon://course-book"
+                  },
                   "tileType": "sap.ushell.ui.tile.StaticTile",
                   "serviceRefreshInterval": 10000
                 }
