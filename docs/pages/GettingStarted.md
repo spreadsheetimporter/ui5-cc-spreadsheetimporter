@@ -376,6 +376,49 @@ If you are using CAP and installing the component as a dependency **to your UI5 
 npm install cds-plugin-ui5 --save-dev
 ```
 
+#### Handling Large File Uploads in CAP
+
+When uploading large spreadsheet files (e.g., files with thousands of entries), you might encounter the error `request entity too large`. This happens because CAP has a default request size limit.
+
+To resolve this issue, you have two options:
+
+1. **Increase the request size limit in your CAP application**:
+
+   Add the following configuration to your `package.json` file:
+
+   ```json
+   "cds": {
+     "server": {
+       "body_parser": {
+         "limit": "10mb" 
+       }
+     }
+   }
+   ```
+
+   You can adjust the `10mb` value based on your needs.
+
+2. **Reduce the batch size in the Spreadsheet Importer component**:
+
+   Set a smaller `batchSize` parameter when creating the component:
+
+   ```javascript
+   this.spreadsheetUpload = await this.editFlow.getView()
+     .getController()
+     .getAppComponent()
+     .createComponent({
+       usage: "spreadsheetImporter",
+       async: true,
+       componentData: {
+         context: this,
+         tableId: "your-table-id",
+         batchSize: 100 // Reduce batch size to handle large files
+       },
+     });
+   ```
+
+   The default batch size is 1000. Reducing it will create smaller requests that stay within CAP's limits.
+
 #### Configuring `ui5-task-zipper` in Your Deployment YAML File
 
 A full example can be found in this [sample project](https://github.com/spreadsheetimporter/sample-full-btp/blob/main/app/mitigations/ui5-deploy.yaml).
