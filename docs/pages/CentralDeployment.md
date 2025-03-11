@@ -25,6 +25,10 @@ The **recommended method** is to use a UI5 carrier app. This app contains all re
 
    Navigate to the repository's `README.md` file and follow the detailed deployment instructions provided there.
 
+2 a)\. **Delete versions you don't need**
+
+   If you don't need all versions, you can delete them from the `package.json` and `manifest.json` file.
+
 3\. **Use the Component in Your Fiori App**
 
    After successful deployment, the Spreadsheet Importer component is available for use in your Fiori applications.

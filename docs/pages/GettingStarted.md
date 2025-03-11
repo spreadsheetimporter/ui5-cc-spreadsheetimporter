@@ -1,15 +1,21 @@
 ## Deployment Strategy
 
-We recommend a **centralized deployment** approach for this component. Decentralized or packaged deployment methods are known to cause issues when used with ABAP systems and SAP Business Technology Platform (BTP). Therefore, use decentralized deployment only if centralized deployment is not feasible.
+We recommend different deployment approaches depending on your platform:
+
+- **For ABAP systems**: Only **centralized deployment** is possible. Decentralized deployment is not supported for ABAP systems.
+- **For SAP Business Technology Platform (BTP)**: **Decentralized deployment** is recommended, though centralized deployment is also possible.
 
 For decentralized deployment in ABAP, refer to [ABAP Component Deployment](#component-deployment). For BTP deployment, special considerations are necessary, which are detailed in [BTP Deployment](#btp-deployment). A full BTP deployment example is available in this [sample project](https://github.com/spreadsheetimporter/sample-full-btp).
 
 ### Decentralized Deployment
 
-!!! warning "Decentralized Deployment"
-    This method is **not recommended**. Please use [Central Deployment](CentralDeployment.md) instead.
+!!! warning "Decentralized Deployment for ABAP"
+    This method is **not possible for ABAP systems**. For ABAP, please use [Central Deployment](CentralDeployment.md) instead.
 
-In decentralized deployment, the component is included directly in each app and deployed with it. For ABAP-specific instructions, refer to [ABAP Component Deployment](#component-deployment).
+!!! info "Decentralized Deployment for BTP"
+    For BTP applications, decentralized deployment is the recommended approach.
+
+In decentralized deployment, the component is included directly in each app and deployed with it. For ABAP-specific instructions, refer to [ABAP Component Deployment](#component-deployment). For BTP-specific considerations, refer to [BTP Deployment](#btp-deployment).
 
 ### Central Deployment
 
@@ -26,6 +32,10 @@ To integrate the `ui5-cc-spreadsheetimporter` component manually, follow the ste
 - UI5 CLI v3.0.0 or higher
 
 ### Setup for Decentralized Deployment
+
+There are two ways to include the component in your application:
+
+#### Option A: Install from npm
 
 1\. **Install the component from npm:**
 
@@ -52,7 +62,35 @@ To integrate the `ui5-cc-spreadsheetimporter` component manually, follow the ste
    }
    ```
 
-4\. **Add `componentUsages` to the `sap.ui5` section of your `manifest.json`:**
+#### Option B: Using jsDelivr CDN
+
+For BTP applications (or apps using the index.html bootstrap), you can use jsDelivr CDN to include the component directly without npm installation:
+
+1\. **Add the CDN resource path to your `index.html` bootstrap:**
+
+   ```html
+   <script
+     id="sap-ui-bootstrap"
+     src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+     data-sap-ui-theme="sap_horizon"
+     data-sap-ui-resourceroots='{
+       "your.app.namespace": "./",
+       "cc.spreadsheetimporter.v1_7_3": "https://cdn.jsdelivr.net/npm/ui5-cc-spreadsheetimporter@1.7.3/dist"
+     }'
+     data-sap-ui-oninit="module:sap/ui/core/ComponentSupport"
+     data-sap-ui-async="true"
+     data-sap-ui-frameOptions="trusted">
+   </script>
+   ```
+
+!!! info "Version Specification"
+    Always specify the exact version in the CDN URL (e.g., `@1.7.3`) to ensure consistent behavior of your application.
+
+For more information on using jsDelivr CDN, see the [jsDelivr documentation](https://www.jsdelivr.com/documentation#id-npm).
+
+### Using the Component in your App
+
+1\. **Add `componentUsages` to the `sap.ui5` section of your `manifest.json` (same for both options):**
 
 !!! warning "Version Management"
     Whenever you update the `ui5-cc-spreadsheetimporter` module, ensure that the version specified in your `manifest.json` is up to date. For more information, see [Version Namespace](https://blogs.sap.com/2023/03/12/create-a-ui5-custom-library-with-versioning-using-a-multi-version-namespace/).
@@ -65,7 +103,7 @@ To integrate the `ui5-cc-spreadsheetimporter` component manually, follow the ste
    }
    ```
 
-5\. **Optional: Handle the "component does not exist" error**
+2\. **Optional: Handle the "component does not exist" error**
 
    If you encounter the error `component does not exist` when deploying to an SAP system (S/4 On-Premise or SAP BTP ABAP environment), add the following to your `manifest.json`:
 
@@ -148,7 +186,10 @@ Here is an example of a custom action from the [sample app](https://github.com/s
 
 ### Custom Code
 
-The following code sets the busy indicator, creates the component if it hasn't been created already, and opens the dialog. The `context` attribute is mandatory to allow the component to access the app's context, including binding paths and the model. You can pass options like `context` at runtime using the `openSpreadsheetUploadDialog` method. This is useful when opening the dialog for specific tables (see [TableSelector](TableSelector.md)).
+!!! tip "Using tableId Configuration"
+    It's highly recommended to explicitly specify the `tableId` in your configuration. The component searches for tables in the view, and sometimes additional tables may appear (e.g., through value helps), which can lead to errors when more than one table is available. Using `tableId` ensures the component always targets the correct table. Use the [UI5 Inspector](https://chromewebstore.google.com/detail/ui5-inspector/bebecogbafbighhaildooiibipcnbngo?hl=de) to find the correct table ID ([`sap.m.Table`](https://ui5.sap.com/#/api/sap.m.Table) and [`sap.ui.table.Table`](https://ui5.sap.com/#/api/sap.ui.table.Table) is supported).
+
+The following code sets the busy indicator, creates the component if it hasn't been created already, and opens the dialog. The `context` attribute is mandatory to allow the component to access the app's context, including binding paths and the model. You can pass options like `context` and `tableId` at runtime using the `openSpreadsheetUploadDialog` method. This is useful when opening the dialog for specific tables (see [TableSelector](TableSelector.md)).
 
 ```javascript
 openSpreadsheetUploadDialog: async function (event) {
@@ -162,6 +203,7 @@ openSpreadsheetUploadDialog: async function (event) {
       async: true,
       componentData: {
         context: this,
+        tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable"
       },
     });
   this.spreadsheetUpload.openSpreadsheetUploadDialog();
@@ -226,6 +268,7 @@ openSpreadsheetUploadDialog: async function (event) {
       async: true,
       componentData: {
         context: this,
+        tableId: "ui.v2.ordersv2::DetailsPage::Items::Table"
       },
     });
   this.spreadsheetUpload.openSpreadsheetUploadDialog();
@@ -332,6 +375,49 @@ If you are using CAP and installing the component as a dependency **to your UI5 
 ```sh
 npm install cds-plugin-ui5 --save-dev
 ```
+
+#### Handling Large File Uploads in CAP
+
+When uploading large spreadsheet files (e.g., files with thousands of entries), you might encounter the error `request entity too large`. This happens because CAP has a default request size limit.
+
+To resolve this issue, you have two options:
+
+1. **Increase the request size limit in your CAP application**:
+
+   Add the following configuration to your `package.json` file:
+
+   ```json
+   "cds": {
+     "server": {
+       "body_parser": {
+         "limit": "10mb" 
+       }
+     }
+   }
+   ```
+
+   You can adjust the `10mb` value based on your needs.
+
+2. **Reduce the batch size in the Spreadsheet Importer component**:
+
+   Set a smaller `batchSize` parameter when creating the component:
+
+   ```javascript
+   this.spreadsheetUpload = await this.editFlow.getView()
+     .getController()
+     .getAppComponent()
+     .createComponent({
+       usage: "spreadsheetImporter",
+       async: true,
+       componentData: {
+         context: this,
+         tableId: "your-table-id",
+         batchSize: 100 // Reduce batch size to handle large files
+       },
+     });
+   ```
+
+   The default batch size is 1000. Reducing it will create smaller requests that stay within CAP's limits.
 
 #### Configuring `ui5-task-zipper` in Your Deployment YAML File
 
