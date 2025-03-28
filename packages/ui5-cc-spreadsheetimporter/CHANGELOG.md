@@ -1,4 +1,18 @@
-# Changelog
+
+
+## [2.0.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.7.3...ui5-cc-spreadsheetimporter-v2.0.0) (2025-03-28)
+
+This release only changes the license to the SpreadsheetImporter Commercial License.  
+No other changes to the component are made. 
+
+
+### ⚠ BREAKING CHANGES
+
+* Switch to commercial license for version 2.0.0+
+
+### Miscellaneous Chores
+
+* Switch to commercial license for version 2.0.0+ ([88fe938](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/88fe93858072683cba0be4662dac7a8b999e4de1))
 
 ## [1.7.3](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.7.2...ui5-cc-spreadsheetimporter-v1.7.3) (2025-02-11)
 
