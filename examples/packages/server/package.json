@@ -2,12 +2,12 @@
   "name": "@capire/orders",
   "version": "1.0.0",
   "dependencies": {
-    "@cap-js-community/odata-v2-adapter": "1.14.1",
-    "@sap/cds": "^8.7.1",
+    "@cap-js-community/odata-v2-adapter": "1.14.2",
+    "@sap/cds": "^8.8.3",
     "cors": "2.8.5"
   },
   "devDependencies": {
-    "@cap-js/sqlite": "^1.8.0",
+    "@cap-js/sqlite": "^1.9.0",
     "anyupload": "workspace:*",
     "cds-launchpad-plugin": "2.2.0",
     "cds-plugin-ui5": "0.12.0",
