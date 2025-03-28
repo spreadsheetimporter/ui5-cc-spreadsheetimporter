@@ -21,7 +21,7 @@
     "dist",
     "ui5.yaml"
   ],
-  "license": "Apache-2.0",
+  "license": "See LICENSE.md",
   "scripts": {
     "start": "npm-run-all build --parallel start:server start:v4fe:108",
     "start:v2fe:108": "pnpm --filter ordersv2fe108 start",
