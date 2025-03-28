@@ -47,6 +47,14 @@ https://docs.spreadsheet-importer.com/pages/Development/GettingStarted/
 
 See the [CHANGELOG.md](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/packages/ui5-cc-spreadsheetimporter/CHANGELOG.md)
 
+# License
+
+Versions 1.x (including 1.7.x and below) are licensed under the Apache License 2.0 (see the [v1.x branch](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/tree/v1.x)).
+
+Versions 2.0.0 and above are licensed under the SpreadsheetImporter Commercial License. Non-production use is free; production or resale requires a paid license.
+
+For production or commercial usage, please see https://spreadsheet-importer.com/ or contact marian@marianzeis.de.
+
 # Open in GitHub Codespaces
 
 The postCreateCommand will automatically install all dependencies, which might take a few minutes.

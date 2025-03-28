@@ -43,6 +43,13 @@ See [CHANGELOG.md](CHANGELOG.md)
 
 ## License
 
+Versions 1.x are licensed under Apache License 2.0.
+
+From version 2.0.0 onward, this software is provided under the SpreadsheetImporter Commercial License. Non-production usage (testing/evaluation) is free; production use or embedding/reselling requires a paid license.
+
+For details, visit https://spreadsheet-importer.com/ or contact marian@marianzeis.de.
+
+Note about SheetJS:
 This project uses SheetJS Community Edition for processing spreadsheet data:
 
 SheetJS Community Edition -- https://sheetjs.com/
