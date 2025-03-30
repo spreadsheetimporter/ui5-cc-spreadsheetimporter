@@ -20,7 +20,7 @@ const port = testappObject.port;
 let baseUrl = `http://localhost:${port}/index.html?sap-language=EN`;
 global.scenario = scenario;
 
-const isDebugEnabled = process.env.ACTIONS_STEP_DEBUG === 'true';
+const isDebugEnabled = 'true';
 
 module.exports.config = {
 	wdi5: {
