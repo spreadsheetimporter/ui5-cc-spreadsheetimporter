@@ -62,13 +62,19 @@ module.exports.config = {
 	connectionRetryTimeout: process.argv.indexOf("--debug") > -1 ? 1200000 : 120000,
 	connectionRetryCount: 3,
 	services: isDebugEnabled 
-		? ["ui5", [TimelineService]]
+		? ["ui5", [TimelineService, {
+			screenshotStrategy: "none"
+		  }]]
 		: ["ui5"],
 	framework: "mocha",
 	reporters: isDebugEnabled 
 		? [
 			"spec",
-			["timeline", { outputDir: "./reports/timeline", embedImages: true, screenshotStrategy: "before:click" }]
+			["timeline", { 
+				outputDir: "./reports/timeline", 
+				embedImages: true, 
+				screenshotStrategy: "none"
+			}]
 		]
 		: ["spec"],
 	mochaOpts: {
