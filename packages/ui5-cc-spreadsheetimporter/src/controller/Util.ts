@@ -280,4 +280,110 @@ export default class Util extends ManagedObject {
 
 		return mergedUpdateConfig;
 	}
+
+	/**
+	 * Validates the component configuration for potential issues or incompatibilities.
+	 * Logs configuration issues to the console.
+	 * 
+	 * @param componentData The configuration data provided by the developer
+	 * @returns True if the configuration is valid, false if critical issues were found
+	 */
+	static validateConfiguration(componentData: any): boolean {
+		if (!componentData) {
+			return true; // No config to validate
+		}
+
+		const errors: string[] = [];
+		const warnings: string[] = [];
+
+		// Check for unknown configuration options
+		const knownProperties = [
+			"spreadsheetFileName", "action", "context", "columns", "excludeColumns", 
+			"tableId", "odataType", "mandatoryFields", "fieldMatchType", "activateDraft", 
+			"batchSize", "standalone", "strict", "decimalSeparator", "hidePreview", 
+			"previewColumns", "skipMandatoryFieldCheck", "skipColumnsCheck", "skipMaxLengthCheck", 
+			"showBackendErrorMessages", "showOptions", "availableOptions", "hideSampleData", 
+			"sampleData", "spreadsheetTemplateFile", "useTableSelector", "readAllSheets", 
+			"readSheet", "spreadsheetRowPropertyName", "continueOnError", "createActiveEntity", 
+			"i18nModel", "debug", "componentContainerData", "bindingCustom", "showDownloadButton", 
+			"deepDownloadConfig", "updateConfig"
+		];
+
+		// Find unknown properties in componentData
+		const unknownProperties = Object.keys(componentData).filter(prop => !knownProperties.includes(prop));
+		if (unknownProperties.length > 0) {
+			warnings.push(`Unknown configuration options found: ${unknownProperties.join(", ")}. These will be ignored.`);
+		}
+
+		// Check for standalone mode configuration issues
+		if (componentData.standalone === true) {
+			if (!componentData.columns || !Array.isArray(componentData.columns) || componentData.columns.length === 0) {
+				errors.push("When 'standalone' is true, 'columns' must be specified.");
+			}
+		}
+
+		// Check for incompatible config combinations
+		if (componentData.activateDraft === true && componentData.createActiveEntity === true) {
+			errors.push("'activateDraft' and 'createActiveEntity' cannot both be true - they are mutually exclusive.");
+		}
+
+		// Check for read sheet configuration
+		if (componentData.readAllSheets === true && componentData.readSheet !== 0) {
+			warnings.push("'readAllSheets' is true, but 'readSheet' is also specified. 'readSheet' will be ignored.");
+		}
+
+		// Validate column configuration
+		if (componentData.columns && componentData.excludeColumns) {
+			const columnsSet = new Set(componentData.columns);
+			const excludedInColumns = componentData.excludeColumns.filter((col: string) => columnsSet.has(col));
+			
+			if (excludedInColumns.length > 0) {
+				warnings.push(`Columns found in both 'columns' and 'excludeColumns': ${excludedInColumns.join(", ")}. These will be excluded.`);
+			}
+		}
+
+		// Check batch size for updates
+		if (componentData.action === "UPDATE" && componentData.batchSize > 100) {
+			warnings.push("For UPDATE operations, batch size is limited to 100. Your configured value will be capped.");
+		}
+
+		// Validate spreadsheetTemplateFile with related config options
+		if (componentData.spreadsheetTemplateFile && !componentData.skipColumnsCheck) {
+			warnings.push("When using 'spreadsheetTemplateFile', it's recommended to set 'skipColumnsCheck' to true to avoid errors with custom columns.");
+		}
+
+		// Validate field match type
+		if (componentData.fieldMatchType && 
+			componentData.fieldMatchType !== "label" && 
+			componentData.fieldMatchType !== "labelTypeBrackets") {
+			errors.push(`Invalid 'fieldMatchType' value: '${componentData.fieldMatchType}'. Valid options are 'label' or 'labelTypeBrackets'.`);
+		}
+
+		// Validate decimal separator
+		if (componentData.decimalSeparator && 
+			componentData.decimalSeparator !== "." && 
+			componentData.decimalSeparator !== ",") {
+			errors.push(`Invalid 'decimalSeparator' value: '${componentData.decimalSeparator}'. Valid options are '.' or ','.`);
+		}
+
+		// Handle configuration issues
+		if (errors.length > 0) {
+			const errorMessage = "Spreadsheet Importer Configuration Errors:\n" + errors.join("\n");
+			
+			if (warnings.length > 0) {
+				const warningText = "\nWarnings:\n" + warnings.join("\n");
+				Log.error(errorMessage + warningText, undefined, "SpreadsheetUpload: Configuration");
+			} else {
+				Log.error(errorMessage, undefined, "SpreadsheetUpload: Configuration");
+			}
+			
+			return false;
+		} else if (warnings.length > 0) {
+			const warningMessage = "Spreadsheet Importer Configuration Warnings:\n" + warnings.join("\n");
+			Log.warning(warningMessage, undefined, "SpreadsheetUpload: Configuration");
+			return true;
+		}
+
+		return true;
+	}
 }

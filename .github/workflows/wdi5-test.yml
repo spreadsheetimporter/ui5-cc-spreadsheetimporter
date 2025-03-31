@@ -80,9 +80,9 @@ jobs:
       - name: Run Build
         run: pnpm build
 
-      - name: install @sap/cds-dk
+      - name: install @sap/cds-dk@8.8.2
         run: |
-          npm i -g @sap/cds-dk
+          npm i -g @sap/cds-dk@8.8.2
 
       # run app      # wait for cap server to install ui5 component, remove when switch to fiori tools
       - name: start cap server

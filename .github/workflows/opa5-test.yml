@@ -55,9 +55,9 @@ jobs:
       - name: copy test apps
         run: npm run copyTestApps
 
-      - name: install @sap/cds-dk
+      - name: install @sap/cds-dk@8.8.2
         run: |
-          npm i -g @sap/cds-dk
+          npm i -g @sap/cds-dk@8.8.2
 
       - name: install ui5-test-runner
         run: |
