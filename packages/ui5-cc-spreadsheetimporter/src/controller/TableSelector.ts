@@ -76,7 +76,7 @@ export default class TableSelector extends ManagedObject {
 
 	private _getTableObject(view: any) {
 		return view.findAggregatedObjects(true, function (object: any) {
-			return object.isA("sap.m.Table") || object.isA("sap.ui.table.Table");
+			return object.isA("sap.m.Table") || object.isA("sap.ui.table.Table") || object.isA("sap.m.List");
 		});
 	}
 

@@ -157,6 +157,7 @@ export default abstract class OData extends ManagedObject {
 		if (tableObject.getMetadata().getName() === "sap.ui.table.Table") {
 			return tableObject.getBinding("rows");
 		}
+		throw new Error(`Unsupported table type: ${tableObject.getMetadata().getName()}. Only sap.m.Table, sap.m.List, and sap.ui.table.Table are supported. Alternatively you can specify custom binding in option 'binding'`);
 	}
 
 	public _getActionName(context: any, sOperation: string) {
@@ -206,7 +207,7 @@ export default abstract class OData extends ManagedObject {
 				}
 				return selectedTable;
 			} else if (this.tables.length === 0) {
-				throw new Error("Found more than one table on Object Page.\n Please specify table in option 'tableId'");
+				throw new Error("No table found on Object Page.\n Please specify table in option 'tableId'");
 			} else {
 				return this.tables[0];
 			}
