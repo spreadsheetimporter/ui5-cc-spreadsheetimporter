@@ -12,7 +12,7 @@
         text="{= ${info>/dialogState} === 'Error' ? ${i18n>spreadsheetimporter.messageDialogButtonContinueAnyway} : ${i18n>spreadsheetimporter.messageDialogButtonContinue} }"
         visible="{= !${info>/strict} &amp;&amp; !${info>/strictParameter}}"
       />
-      <Button text="{i18n>spreadsheetimporter.downloadButton}" press="onDownloadErrors" />
+      <Button text="{i18n>spreadsheetimporter.downloadButton}" press=".onDownloadErrors" />
       <Button press=".onCloseMessageDialog" text="{i18n>spreadsheetimporter.messageDialogButtonClose}" />
     </buttons>
   </Dialog>
