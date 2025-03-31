@@ -11,7 +11,9 @@ RUN apt-get update && \
 
 # Install pnpm
 RUN npm install -g pnpm
-RUN npm i -g @sap/cds-dk
+
+
+RUN npm i -g @sap/cds-dk@8.8.2
 
 # Copy package.json and other configuration files
 COPY package.json tsconfig.json ./
