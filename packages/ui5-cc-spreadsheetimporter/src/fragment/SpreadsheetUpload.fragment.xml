@@ -8,16 +8,16 @@
       <OverflowToolbar>
         <Title text="{i18n>spreadsheetimporter.spreadsheetupload}" />
         <ToolbarSpacer />
-        <Button press="showPreview" text="{i18n>spreadsheetimporter.showPreview}" visible="{= !${info>/hidePreview}}" enabled="{= ${info>/dataRows} > 0}" />
-        <Button press="onInitDownloadSpreadsheetProcess" 
+        <Button press=".showPreview" text="{i18n>spreadsheetimporter.showPreview}" visible="{= !${info>/hidePreview}}" enabled="{= ${info>/dataRows} > 0}" />
+        <Button press=".onInitDownloadSpreadsheetProcess" 
                text="{i18n>spreadsheetimporter.downloadDataSpreadsheet}" 
                visible="{= ${info>/showDownloadButton}}">
                <layoutData>
                 <OverflowToolbarLayoutData priority="AlwaysOverflow"/>
               </layoutData>
         </Button>
-        <Button press="onTempDownload" text="{i18n>spreadsheetimporter.downloadTemplate}" visible="{= !${info>/hideGenerateTemplateButton}}" />
-        <Button press="onOpenOptionsDialog" icon="sap-icon://action-settings" visible="{= ${info>/showOptions}}" />
+        <Button press=".onTempDownload" text="{i18n>spreadsheetimporter.downloadTemplate}" visible="{= !${info>/hideGenerateTemplateButton}}" />
+        <Button press=".onOpenOptionsDialog" icon="sap-icon://action-settings" visible="{= ${info>/showOptions}}" />
       </OverflowToolbar>
     </spreadsheetdialog:customHeader>
     <spreadsheetdialog:content>
@@ -43,7 +43,7 @@
         <upload:FileUploader
           placeholder="{i18n>spreadsheetimporter.spreadsheetuploadPlaceholder}"
           fileType="xlsx,xls,csv,xlsm"
-          change="onFileUpload"
+          change=".onFileUpload"
           sameFilenameAllowed="true"
           width="100%"
           value="{info>/fileUploadValue}"
@@ -55,8 +55,8 @@
       </VBox>
     </spreadsheetdialog:content>
     <spreadsheetdialog:buttons>
-      <Button text="{i18n>spreadsheetimporter.upload}" press="onUploadSet" type="Emphasized" enabled="{= ${info>/dataRows} > 0}" />
-      <Button press="onCloseDialog" text="{i18n>spreadsheetimporter.close}" />
+      <Button text="{i18n>spreadsheetimporter.upload}" press=".onUploadSet" type="Emphasized" enabled="{= ${info>/dataRows} > 0}" />
+      <Button press=".onCloseDialog" text="{i18n>spreadsheetimporter.close}" />
     </spreadsheetdialog:buttons>
   </spreadsheetdialog:SpreadsheetDialog>
 </core:FragmentDefinition>
