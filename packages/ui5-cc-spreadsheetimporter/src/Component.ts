@@ -145,6 +145,13 @@ export default class Component extends UIComponent {
 		const componentData = this.getComponentData() as ComponentData;
 		const compData =
 			componentData != null ? (Object.keys(componentData).length === 0 ? (this.settingsFromContainer as ComponentData) : componentData) : (this.settingsFromContainer as ComponentData);
+		
+		// Validate configuration - if critical issues are found, log them but continue with default settings
+		const validConfig = Util.validateConfiguration(compData);
+		if (!validConfig) {
+			Log.warning("Continuing with default configuration due to validation issues", undefined, "SpreadsheetUpload: Component");
+		}
+		
 		this.getContentDensityClass();
 		this.setSpreadsheetFileName(compData?.spreadsheetFileName);
 		this.setAction(compData?.action);

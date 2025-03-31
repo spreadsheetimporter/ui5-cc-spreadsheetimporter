@@ -141,6 +141,9 @@ For more information on using jsDelivr CDN, see the [jsDelivr documentation](htt
 !!! warning "OData Version Differences"
     There are different implementations for Fiori Elements depending on the OData version.
 
+If something may not work as expected, set the [`debug`](Configuration.md#debug) property to `true` in the component configuration. This will log additional information to the console that can help diagnose the issue.  
+Search for `Spreadsheet Importer` in the console output to find the log entries.  
+
 To start the Spreadsheet Upload Dialog, add a button to your Fiori Elements app. The [Guided Development](https://blogs.sap.com/2021/08/16/getting-up-to-speed-with-sap-fiori-tools-guided-development-overview/) extension is a recommended way to add a custom action:
 
 ![Guided Development](./../images/guided_development.png){ loading=lazy }
