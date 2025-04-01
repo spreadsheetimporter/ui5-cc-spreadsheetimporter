@@ -170,6 +170,88 @@ sap.ui.define([], function () {
 					});
 			this.spreadsheetUploadTableShipping.setHidePreview(true);
 			this.spreadsheetUploadTableShipping.openSpreadsheetUploadDialog(options);
+			
+			// Attach event to check before data is uploaded to UI5
+			this.spreadsheetUploadTableShipping.attachCheckBeforeRead(async function (event) {
+				return new Promise(async (resolve, reject) => {
+					try {
+						// Show busy state in the upload dialog
+						const eventParameters = event.getParameters();
+						const source = event.getSource();
+						const uploadDialog = source.spreadsheetUpload.getSpreadsheetUploadDialog();
+						uploadDialog.setBusyIndicatorDelay(0);
+						uploadDialog.setBusy(true);
+						
+						// Get the parsed data from the spreadsheet
+						const parsedData = eventParameters["parsedData"];
+						
+						// Prepare shipping details to be checked by the backend
+						const shippingDetails = [];
+						for (const [index, row] of parsedData.entries()) {
+							// Extract the relevant information for checking
+							if (row.city) {
+								shippingDetails.push({
+									city: row.city,
+									address: row.address || "",
+									row: index + 2 // Add 1 to account for header row and 1 for the index
+								});
+							}
+						}
+						
+						// Skip check if no shipping details with cities are present
+						if (shippingDetails.length === 0) {
+							uploadDialog.setBusy(false);
+							resolve();
+							return;
+						}
+						
+						// Get the model to call the unbound action
+						const model = event.getSource().getContext().getModel()
+						
+						// Create action binding for the unbound action
+						const actionBinding = model.bindContext('/checkShippingDetails(...)');
+						
+						// Set the parameters for the action
+						actionBinding.setParameter('shippingDetails', shippingDetails);
+						
+						// Execute the action and wait for the result
+						try {
+							await actionBinding.execute();
+							
+							// Get the result from the action
+							const actionResult = actionBinding.getBoundContext().getObject();
+							
+							// Check if there are any errors/warnings to display
+							if (actionResult && actionResult.value && actionResult.value.length > 0) {
+								// Add errors to the spreadsheet uploader component to be displayed
+								source.addArrayToMessages(actionResult.value);
+							}
+						} catch (actionError) {
+							console.error("Error executing action:", actionError);
+							source.addArrayToMessages([{
+								title: "Error checking city names",
+								row: 0,
+								group: true,
+								rawValue: "Error in backend check",
+								ui5type: "Error"
+							}]);
+						}
+						
+						uploadDialog.setBusy(false);
+					} catch (error) {
+						console.error("Error during city check:", error);
+						const uploadDialog = event.getSource().spreadsheetUpload.getSpreadsheetUploadDialog();
+						if (uploadDialog) {
+							uploadDialog.setBusy(false);
+						}
+					}
+					
+					// Important! This must not be deleted
+					// This tells the component that the code can continue running
+					resolve();
+				});
+			}, this);
+			
 			this.editFlow.getView().setBusy(false);
 		},
 		openSpreadsheetUploadDialogTableInfo: async function (oEvent) {
