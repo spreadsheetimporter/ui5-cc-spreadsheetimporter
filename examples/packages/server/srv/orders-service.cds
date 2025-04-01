@@ -7,4 +7,9 @@ service OrdersService {
   entity OrdersND as projection on my.OrdersND;
   entity OrderItemsND as projection on my.OrderItemsND;
   entity OrderItemsInfoND as projection on my.OrderItemsInfoND;
+  
+  // Unbound action to check shipping details against product titles
+  action checkShippingDetails(shippingDetails : many my.ShippingDetailCheck) returns {
+    value : many my.ShippingDetailResult
+  };
 }

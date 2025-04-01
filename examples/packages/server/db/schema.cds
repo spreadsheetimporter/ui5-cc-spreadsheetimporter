@@ -7,6 +7,23 @@ using {
 
 namespace sap.capire.orders;
 
+// Define action input type
+type ShippingDetailCheck {
+  city    : String;
+  address : String;
+  row     : Integer;
+}
+
+// Define action return type
+type ShippingDetailResult {
+  title      : String;
+  row        : Integer;
+  group      : Boolean;
+  rawValue   : String;
+  messageType: String; 
+  value      : String;
+}
+
 @odata.draft.bypass
 entity Orders : cuid, managed {
   OrderNo        : String(22) @title: 'Order Number'; //> readable key
@@ -18,6 +35,11 @@ entity Orders : cuid, managed {
   currency       : Currency;
   spreadsheetRow : Integer;
 }
+
+// Add the action
+action checkShippingDetails(shippingDetails : many ShippingDetailCheck) returns {
+  value : many ShippingDetailResult
+};
 
 @odata.draft.bypass
 entity OrderItems : cuid {
