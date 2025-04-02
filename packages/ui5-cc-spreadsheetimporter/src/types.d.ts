@@ -120,6 +120,7 @@ export interface ComponentData {
 	showDownloadButton?: boolean;
 	deepDownloadConfig?: DeepDownloadConfig;
 	updateConfig?: UpdateConfig;
+	readSheetCoordinates?: string;
 }
 
 export interface DeepDownloadConfig {

@@ -81,6 +81,7 @@ export default class Component extends UIComponent {
 			bindingCustom: { type: "object" },
 			showDownloadButton: { type: "boolean", defaultValue: false },
 			deepDownloadConfig: { type: "object", defaultValue: {} },
+			readSheetCoordinates: { type: "string", defaultValue: "A1" },
 			updateConfig: { type: "object", defaultValue: {} }
 			//Pro Configurations
 		},
@@ -193,6 +194,8 @@ export default class Component extends UIComponent {
 			// if availableOptions is set show the Options Menu
 			this.setShowOptions(true);
 		}
+		// readSheetCoordinates default config is {row: 0, column: 0}
+		this.setReadSheetCoordinates(compData?.readSheetCoordinates);
 
 		const mergedDeepDownloadConfig = Util.mergeDeepDownloadConfig(DefaultConfigs.DeepDownload, compData.deepDownloadConfig)
 		this.setDeepDownloadConfig(mergedDeepDownloadConfig);

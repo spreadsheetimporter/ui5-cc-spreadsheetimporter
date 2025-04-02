@@ -160,9 +160,26 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 					this.resetContent();
 					return;
 				}
-				spreadsheetSheetsData = SheetHandler.sheet_to_json(workbook.Sheets[sheetName]);
-				const rawColumns = SheetHandler.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })[0] as Array<{rawValue: string}>;
-				columnNames = rawColumns.map(column => column.rawValue || column as unknown as string);
+				
+				// Get the readSheetCoordinates from the component 
+				const readSheetCoordinates = this.component.getReadSheetCoordinates();
+				
+				// Pass readSheetCoordinates to sheet_to_json
+				spreadsheetSheetsData = SheetHandler.sheet_to_json(workbook.Sheets[sheetName], undefined, readSheetCoordinates);
+				
+				// Get the header row with header=1 option, starting from the custom coordinates if specified
+				const headerOptions = { header: 1 };
+				const firstRow = SheetHandler.sheet_to_json(workbook.Sheets[sheetName], headerOptions, readSheetCoordinates)[0];
+				// Ensure firstRow is an array and convert items to string for column names
+				const rawColumns = Array.isArray(firstRow) 
+					? firstRow 
+					: Object.values(firstRow || {});
+				columnNames = rawColumns.map(column => {
+					if (typeof column === 'object' && column !== null && 'rawValue' in column) {
+						return column.rawValue || '';
+					}
+					return String(column || '');
+				});
 			}
 
 			if (!spreadsheetSheetsData || spreadsheetSheetsData.length === 0) {

@@ -45,6 +45,7 @@ declare module "./Component" {
         bindingCustom?: object | PropertyBindingInfo | `{${string}}`;
         showDownloadButton?: boolean | PropertyBindingInfo | `{${string}}`;
         deepDownloadConfig?: object | PropertyBindingInfo | `{${string}}`;
+        readSheetCoordinates?: string | PropertyBindingInfo;
         updateConfig?: object | PropertyBindingInfo | `{${string}}`;
         preFileProcessing?: (event: Component$PreFileProcessingEvent) => void;
         checkBeforeRead?: (event: Component$CheckBeforeReadEvent) => void;
@@ -204,6 +205,10 @@ declare module "./Component" {
         // property: deepDownloadConfig
         getDeepDownloadConfig(): object;
         setDeepDownloadConfig(deepDownloadConfig: object): this;
+
+        // property: readSheetCoordinates
+        getReadSheetCoordinates(): string;
+        setReadSheetCoordinates(readSheetCoordinates: string): this;
 
         // property: updateConfig
         getUpdateConfig(): object;
