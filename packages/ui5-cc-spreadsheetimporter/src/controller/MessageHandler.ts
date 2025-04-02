@@ -315,7 +315,7 @@ export default class MessageHandler extends ManagedObject {
 			}
 			
 			const warningMessage = {
-				title: this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.emptyHeadersFound", [emptyColumns.join(", ")]),
+				title: this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.emptyHeadersFound"),
 				description: this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.emptyHeadersDescription", [startCell, dataStartCell]),
 				type: CustomMessageTypes.EmptyHeaders,
 				counter: 1,
