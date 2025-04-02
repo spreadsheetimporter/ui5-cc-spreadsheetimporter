@@ -203,6 +203,9 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 					this.spreadsheetUploadController.typeLabelList
 				);
 				this.messageHandler.checkDuplicateColumns(columnNames);
+				if (!this.component.getSkipEmptyHeadersCheck()) {
+					this.messageHandler.checkEmptyHeaders(spreadsheetSheetsData, columnNames);
+				}
 				if (!this.component.getSkipMaxLengthCheck()) {
 					this.messageHandler.checkMaxLength(spreadsheetSheetsData, this.spreadsheetUploadController.typeLabelList, this.component.getFieldMatchType());
 				}

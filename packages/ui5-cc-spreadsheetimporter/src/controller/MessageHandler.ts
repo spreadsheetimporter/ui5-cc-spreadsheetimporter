@@ -144,6 +144,11 @@ export default class MessageHandler extends ManagedObject {
 	checkColumnNames(columnNames: string[], fieldMatchType: string, typeLabelList: ListObject) {
 		for (let index = 0; index < columnNames.length; index++) {
 			const columnName = columnNames[index];
+			// Skip if columnName is undefined or not a string
+			if (columnName === undefined || typeof columnName !== 'string') {
+				continue;
+			}
+			
 			let found = false;
 			for (const [key, value] of typeLabelList) {
 				if (fieldMatchType === "label") {
@@ -177,7 +182,13 @@ export default class MessageHandler extends ManagedObject {
 			const columnName = odataKeyList[index];
 			let found = false;
 			for (const index in columnNames) {
-				if (columnNames[index].includes(`[${columnName}]`)) {
+				const colName = columnNames[index];
+				// Skip if column name is undefined or not a string
+				if (colName === undefined || typeof colName !== 'string') {
+					continue;
+				}
+				
+				if (colName.includes(`[${columnName}]`)) {
 					found = true;
 					availableKeyColumns.push(columnName);
 					break;
@@ -260,6 +271,60 @@ export default class MessageHandler extends ManagedObject {
 				this.addMessageToMessages(errorMessage);
 			}
 		});
+	}
+
+	checkEmptyHeaders(data: ArrayData, columnNames: string[]) {
+		// First check column names
+		const emptyColumnsFromHeaders = columnNames
+			.filter(name => typeof name === 'string') // Ensure we only process strings
+			.filter(name => name.includes("__EMPTY"));
+		
+		// Then check the actual data objects for keys starting with __EMPTY
+		const emptyColumnsFromData = new Set<string>();
+		
+		for (const row of data) {
+			for (const key in row) {
+				// Check if key starts with __EMPTY and is not __rowNum__
+				if (typeof key === 'string' && key.startsWith("__EMPTY") && key !== "__rowNum__") {
+					emptyColumnsFromData.add(key);
+				}
+			}
+		}
+		
+		// Combine both sources of empty column names
+		const emptyColumns = [
+			...emptyColumnsFromHeaders,
+			...Array.from(emptyColumnsFromData)
+		].filter((value, index, self) => self.indexOf(value) === index); // Remove duplicates
+		
+		if (emptyColumns.length > 0) {
+			// Get the starting cell reference from the component or default to "A1"
+			const startCell = this.spreadsheetUploadController.component.getReadSheetCoordinates() || "A1";
+			
+			// Calculate the data starting row (one row after the header row)
+			let dataStartCell = "A2";
+			if (startCell !== "A1") {
+				// Extract the column and row from the start cell
+				const cellMatch = startCell.match(/([A-Z]+)(\d+)/);
+				if (cellMatch) {
+					const column = cellMatch[1];
+					const row = parseInt(cellMatch[2], 10);
+					// Data starts one row after the header
+					dataStartCell = `${column}${row + 1}`;
+				}
+			}
+			
+			const warningMessage = {
+				title: this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.emptyHeadersFound", [emptyColumns.join(", ")]),
+				description: this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.emptyHeadersDescription", [startCell, dataStartCell]),
+				type: CustomMessageTypes.EmptyHeaders,
+				counter: 1,
+				ui5type: MessageType.Warning,
+				group: false
+			} as Messages;
+			
+			this.addMessageToMessages(warningMessage);
+		}
 	}
 
 	areMessagesPresent(): boolean {

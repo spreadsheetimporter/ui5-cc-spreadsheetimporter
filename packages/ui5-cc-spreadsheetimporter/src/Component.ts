@@ -61,6 +61,7 @@ export default class Component extends UIComponent {
 			previewColumns: { type: "string[]", defaultValue: [] },
 			skipMandatoryFieldCheck: { type: "boolean", defaultValue: false },
 			skipColumnsCheck: { type: "boolean", defaultValue: false },
+			skipEmptyHeadersCheck: { type: "boolean", defaultValue: false },
 			skipMaxLengthCheck: { type: "boolean", defaultValue: false },
 			showBackendErrorMessages: { type: "boolean", defaultValue: false },
 			showOptions: { type: "boolean", defaultValue: false },
@@ -175,6 +176,7 @@ export default class Component extends UIComponent {
 		this.setPreviewColumns(compData?.previewColumns);
 		this.setSkipMandatoryFieldCheck(compData?.skipMandatoryFieldCheck);
 		this.setSkipColumnsCheck(compData?.skipColumnsCheck);
+		this.setSkipEmptyHeadersCheck(compData?.skipEmptyHeadersCheck);
 		this.setSkipMaxLengthCheck(compData?.skipMaxLengthCheck);
 		this.setShowBackendErrorMessages(compData?.showBackendErrorMessages);
 		this.setShowOptions(compData?.showOptions);

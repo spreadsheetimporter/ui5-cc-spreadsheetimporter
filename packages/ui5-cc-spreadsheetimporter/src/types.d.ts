@@ -103,6 +103,7 @@ export interface ComponentData {
 	previewColumns?: string[];
 	skipMandatoryFieldCheck?: boolean;
 	skipColumnsCheck?: boolean;
+	skipEmptyHeadersCheck?: boolean;
 	skipMaxLengthCheck?: boolean;
 	showBackendErrorMessages?: boolean;
 	showOptions?: boolean;
