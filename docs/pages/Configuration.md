@@ -16,6 +16,7 @@ The table below summarizes the options available for the UI5 Spreadsheet Importe
 | [`spreadsheetTemplateFile`](#spreadsheettemplatefile)| Uses a custom template file instead of generating one.      | `""`               | `string` or `ArrayBuffer` |
 | [`readAllSheets`](#readallsheets)             | Reads all sheets in standalone mode.                         | `false`            | `boolean`                 |
 | [`readSheet`](#readsheet)                     | Reads a specific sheet or shows a sheet selector.            | `0`                | `number` or `string`      |
+| [`readSheetCoordinates`](#readsheetcoordinates) | Specifies the starting cell for reading spreadsheet data.   | `"A1"`             | `string`                  |
 
 ### UI Customization Options
 
@@ -31,13 +32,15 @@ The table below summarizes the options available for the UI5 Spreadsheet Importe
 
 | Option                                              | Description                                           | Default         | Type       |
 |-----------------------------------------------------|-------------------------------------------------------|-----------------|------------|
-| [`action`](#action)               | Continues processing next batches even after errors.  | `CREATE`         | `string`  |
+| [`action`](#action)                                 | Sets the operation type (CREATE or UPDATE).           | `CREATE`         | `string`  |
 | [`batchSize`](#batchsize)                           | Controls the size of batches sent to the backend.     | `1000`          | `number`   |
 | [`strict`](#strict)                                 | Controls availability of the "Continue" button in error dialogs. | `false` | `boolean`  |
 | [`decimalSeparator`](#decimalseparator)             | Sets the decimal separator for numbers.               | Browser default | `string`   |
 | [`mandatoryFields`](#mandatoryfields)               | Specifies mandatory fields to check in the spreadsheet.| Not defined     | `string[]` |
 | [`skipMandatoryFieldCheck`](#skipmandatoryfieldcheck)| Skips the check for mandatory fields.                | `false`         | `boolean`  |
 | [`skipColumnsCheck`](#skipcolumnscheck)             | Skips the check for unknown columns not in metadata.  | `false`         | `boolean`  |
+| [`skipMaxLengthCheck`](#skipmaxlengthcheck)         | Skips the max length check for column values.         | `false`         | `boolean`  |
+| [`skipEmptyHeadersCheck`](#skipemptyheaderscheck)   | Skips the check for empty headers in spreadsheet.     | `false`         | `boolean`  |
 | [`continueOnError`](#continueonerror)               | Continues processing next batches even after errors.  | `false`         | `boolean`  |
 
 
@@ -606,6 +609,89 @@ Use this option with caution.
 
 This option defines whether the debug mode should be activated or not.  
 If set to true, it will set the log level to `debug` (Log.Level.DEBUG) and activate the options menu with all available options.
+
+### `readSheetCoordinates`
+
+**default:** `"A1"`
+
+This option allows you to specify a starting cell (in Excel A1 notation) for reading data from the spreadsheet. Use this when your data doesn't start at cell A1, for example when the spreadsheet has title headers or metadata in the first few rows.
+
+The starting cell indicates where the column headers are located. Data rows are expected to start from the next row after the header row. For example, if `readSheetCoordinates` is set to `"C3"`, the component will:
+
+- Look for column headers in row 3, starting from column C
+- Start reading data from row 4, starting from column C
+
+This is useful when:
+
+- Your spreadsheet has header information above the actual column headers
+- The data doesn't start at the top-left corner of the sheet
+- You want to skip rows or columns at the beginning
+- You're working with spreadsheets that have complex layouts or multiple tables on a single sheet
+
+#### Visual Example
+
+When `readSheetCoordinates` is set to `"C3"`:
+
+```
+    A   B   C       D       E       F
+1           Company data report
+2           Generated: 2023-04-02
+3           ID      Name    Price   Status
+4           1001    Item A  12.50   Active
+5           1002    Item B  25.00   Inactive
+```
+
+The component will read:
+- Headers from row 3, cells C3-F3: "ID", "Name", "Price", "Status"
+- Data starting from row 4, cells C4-F4: "1001", "Item A", etc.
+
+**example:**
+
+```javascript
+this.spreadsheetUpload = await this.editFlow.getView()
+    .getController()
+    .getAppComponent()
+    .createComponent({
+        usage: "spreadsheetImporter",
+        async: true,
+        componentData: {
+            context: this,
+            readSheetCoordinates: "C3"  // Start reading from cell C3
+        }
+    });
+```
+
+### `skipEmptyHeadersCheck`
+
+**default:** `false`
+
+This option determines whether the component should check for empty headers (columns with names like `__EMPTY` or `__EMPTY_1`) in the spreadsheet data.  
+This checks in general the correct parsing of the data and will show a warning with a hint about the expected starting cell for headers (based on readSheetCoordinates or "A1" if not specified).
+
+When importing spreadsheets, empty columns sometimes get included in the import, which can cause confusion or data mapping issues. By default, the component will detect these empty headers and display a warning message that includes information about:
+
+- Which empty columns were detected
+- The expected starting cell for headers (based on readSheetCoordinates)
+- The expected starting cell for data rows
+
+If you set this option to `true`, the component will not perform this check and will not show warnings about empty columns.
+
+**example:**
+
+```javascript
+this.spreadsheetUpload = await this.editFlow.getView()
+    .getController()
+    .getAppComponent()
+    .createComponent({
+        usage: "spreadsheetImporter",
+        async: true,
+        componentData: {
+            context: this,
+            readSheetCoordinates: "B2",        // Start reading from cell B2
+            skipEmptyHeadersCheck: true         // Skip empty header checks
+        }
+    });
+```
 
 ## Example Code
 

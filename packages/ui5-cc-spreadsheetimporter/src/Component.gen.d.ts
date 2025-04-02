@@ -26,6 +26,7 @@ declare module "./Component" {
         previewColumns?: string[] | PropertyBindingInfo | `{${string}}`;
         skipMandatoryFieldCheck?: boolean | PropertyBindingInfo | `{${string}}`;
         skipColumnsCheck?: boolean | PropertyBindingInfo | `{${string}}`;
+        skipEmptyHeadersCheck?: boolean | PropertyBindingInfo | `{${string}}`;
         skipMaxLengthCheck?: boolean | PropertyBindingInfo | `{${string}}`;
         showBackendErrorMessages?: boolean | PropertyBindingInfo | `{${string}}`;
         showOptions?: boolean | PropertyBindingInfo | `{${string}}`;
@@ -45,6 +46,7 @@ declare module "./Component" {
         bindingCustom?: object | PropertyBindingInfo | `{${string}}`;
         showDownloadButton?: boolean | PropertyBindingInfo | `{${string}}`;
         deepDownloadConfig?: object | PropertyBindingInfo | `{${string}}`;
+        readSheetCoordinates?: string | PropertyBindingInfo;
         updateConfig?: object | PropertyBindingInfo | `{${string}}`;
         preFileProcessing?: (event: Component$PreFileProcessingEvent) => void;
         checkBeforeRead?: (event: Component$CheckBeforeReadEvent) => void;
@@ -129,6 +131,10 @@ declare module "./Component" {
         getSkipColumnsCheck(): boolean;
         setSkipColumnsCheck(skipColumnsCheck: boolean): this;
 
+        // property: skipEmptyHeadersCheck
+        getSkipEmptyHeadersCheck(): boolean;
+        setSkipEmptyHeadersCheck(skipEmptyHeadersCheck: boolean): this;
+
         // property: skipMaxLengthCheck
         getSkipMaxLengthCheck(): boolean;
         setSkipMaxLengthCheck(skipMaxLengthCheck: boolean): this;
@@ -204,6 +210,10 @@ declare module "./Component" {
         // property: deepDownloadConfig
         getDeepDownloadConfig(): object;
         setDeepDownloadConfig(deepDownloadConfig: object): this;
+
+        // property: readSheetCoordinates
+        getReadSheetCoordinates(): string;
+        setReadSheetCoordinates(readSheetCoordinates: string): this;
 
         // property: updateConfig
         getUpdateConfig(): object;

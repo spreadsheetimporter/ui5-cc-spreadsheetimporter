@@ -17,3 +17,5 @@ The following types of errors are handled by the UI5 Spreadsheet Upload Control:
 - **Duplicate Columns**: The control checks if the uploaded file contains duplicate columns. If there is a duplicate column, an error message is displayed.
 
 - **Max Length**: The control checks if the length of the data in the uploaded file does not exceed the maximum length of the corresponding field. If the length exceeds the maximum length, an error message is displayed.
+
+- **Empty Headers**: The control checks if the uploaded spreadsheet contains empty headers (columns labeled "__EMPTY", "__EMPTY_1", etc.). These typically occur when Excel adds empty columns during import. When an empty header is detected, the control displays a warning message indicating the presence of empty columns and providing guidance on the expected start position for data. This check helps ensure data is properly aligned with column headers, especially when using custom start coordinates. This check can be disabled using the `skipEmptyHeadersCheck` configuration option.

@@ -104,6 +104,7 @@ export interface ComponentData {
 	skipMandatoryFieldCheck?: boolean;
 	skipColumnsCheck?: boolean;
 	skipMaxLengthCheck?: boolean;
+	skipEmptyHeadersCheck?: boolean;
 	showBackendErrorMessages?: boolean;
 	showOptions?: boolean;
 	availableOptions?: AvailableOptionsType[];
@@ -120,6 +121,7 @@ export interface ComponentData {
 	showDownloadButton?: boolean;
 	deepDownloadConfig?: DeepDownloadConfig;
 	updateConfig?: UpdateConfig;
+	readSheetCoordinates?: string;
 }
 
 export interface DeepDownloadConfig {

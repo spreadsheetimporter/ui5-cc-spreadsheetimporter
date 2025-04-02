@@ -11,7 +11,7 @@ export default class SheetHandler extends ManagedObject {
 		super();
 	}
 
-	static sheet_to_json(sheet: WorkSheet, opts?: Sheet2JSONOpts): ArrayData {
+	static sheet_to_json(sheet: WorkSheet, opts?: Sheet2JSONOpts, readSheetCoordinates?: string): ArrayData {
 		if (sheet == null || sheet["!ref"] == null) return [];
 		var val = { t: "n", v: 0 },
 			header = 0,
@@ -22,6 +22,31 @@ export default class SheetHandler extends ManagedObject {
 		var r = { s: { r: 0, c: 0 }, e: { r: 0, c: 0 } };
 		var o = opts || {};
 		var range = o.range != null ? o.range : sheet["!ref"];
+		
+		// Apply readSheetCoordinates if provided
+		if (readSheetCoordinates && typeof readSheetCoordinates === 'string' && readSheetCoordinates !== 'A1') {
+			// Parse the cell reference to get row and column indices
+			// XLSX.utils.decode_cell converts A1 notation to {c: 0, r: 0} format
+			try {
+				const cellCoords = XLSX.utils.decode_cell(readSheetCoordinates);
+				
+				if (typeof range === "string") {
+					r = this.safe_decode_range(range);
+				} else {
+					r = range;
+				}
+				
+				// Set starting coordinates based on the cell reference
+				r.s.r = cellCoords.r;
+				r.s.c = cellCoords.c;
+				
+				// Create a new range string with adjusted coordinates
+				range = XLSX.utils.encode_range(r);
+			} catch (e) {
+				console.error("Invalid cell reference:", readSheetCoordinates);
+			}
+		}
+		
 		if (o.header === 1) header = 1;
 		else if (o.header === "A") header = 2;
 		else if (Array.isArray(o.header)) header = 3;

@@ -85,6 +85,10 @@ export const CustomMessageTypes: { [key: string]: CustomMessageType } = {
 		title: "MissingKeys",
 		group: true,
 		update: true
+	},
+	EmptyHeaders: {
+		title: "EmptyHeaders",
+		group: false
 	}
 };
 
