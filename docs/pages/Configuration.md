@@ -617,10 +617,12 @@ If set to true, it will set the log level to `debug` (Log.Level.DEBUG) and activ
 This option allows you to specify a starting cell (in Excel A1 notation) for reading data from the spreadsheet. Use this when your data doesn't start at cell A1, for example when the spreadsheet has title headers or metadata in the first few rows.
 
 The starting cell indicates where the column headers are located. Data rows are expected to start from the next row after the header row. For example, if `readSheetCoordinates` is set to `"C3"`, the component will:
+
 - Look for column headers in row 3, starting from column C
 - Start reading data from row 4, starting from column C
 
 This is useful when:
+
 - Your spreadsheet has header information above the actual column headers
 - The data doesn't start at the top-left corner of the sheet
 - You want to skip rows or columns at the beginning
@@ -667,6 +669,7 @@ This option determines whether the component should check for empty headers (col
 This checks in general the correct parsing of the data and will show a warning with a hint about the expected starting cell for headers (based on readSheetCoordinates or "A1" if not specified).
 
 When importing spreadsheets, empty columns sometimes get included in the import, which can cause confusion or data mapping issues. By default, the component will detect these empty headers and display a warning message that includes information about:
+
 - Which empty columns were detected
 - The expected starting cell for headers (based on readSheetCoordinates)
 - The expected starting cell for data rows
