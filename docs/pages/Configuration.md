@@ -624,6 +624,24 @@ This is useful when:
 - Your spreadsheet has header information above the actual column headers
 - The data doesn't start at the top-left corner of the sheet
 - You want to skip rows or columns at the beginning
+- You're working with spreadsheets that have complex layouts or multiple tables on a single sheet
+
+#### Visual Example
+
+When `readSheetCoordinates` is set to `"C3"`:
+
+```
+    A   B   C       D       E       F
+1           Company data report
+2           Generated: 2023-04-02
+3           ID      Name    Price   Status
+4           1001    Item A  12.50   Active
+5           1002    Item B  25.00   Inactive
+```
+
+The component will read:
+- Headers from row 3, cells C3-F3: "ID", "Name", "Price", "Status"
+- Data starting from row 4, cells C4-F4: "1001", "Item A", etc.
 
 **example:**
 
@@ -666,7 +684,8 @@ this.spreadsheetUpload = await this.editFlow.getView()
         async: true,
         componentData: {
             context: this,
-            skipEmptyHeadersCheck: true
+            readSheetCoordinates: "B2",        // Start reading from cell B2
+            skipEmptyHeadersCheck: true         // Skip empty header checks
         }
     });
 ```
