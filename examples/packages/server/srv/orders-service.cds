@@ -1,4 +1,5 @@
 using { sap.capire.orders as my } from '../db/schema';
+using from 'cds-spreadsheetimporter-plugin';
 
 service OrdersService {
   entity Orders as projection on my.Orders;

@@ -1,0 +1,50 @@
+<mvc:View controllerName="ordersv4freestyle.controller.CDSPlugin"
+    xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" displayBlock="true"
+    xmlns="sap.m">
+    <Page id="pageCDS" title="CDS Plugin View">
+        <content>
+            <VBox>
+                <Button id="backToMain" text="Back to Main" press="onNavBack" class="sapUiMediumMarginBegin"/>
+
+                <core:ComponentContainer
+                    id="spreadsheetToCAP"
+                    width="100%"
+                    usage="spreadsheetImporter"
+                    propagateModel="true"
+                    async="true"
+                    settings="{
+                    componentContainerData:{
+                        uploadButtonPress:'uploadButtonPress',
+                        preFileProcessing:'preFileProcessing',
+                        buttonText:'Excel Upload directly to CAP',
+                        buttonId:'uploadButton'
+                    }
+                  }"
+                />
+
+                <Table id="orderssTable2" items="{/Orders}">
+                    <columns>
+                        <Column>
+                            <Text text="Order Number"/>
+                        </Column>
+                        <Column>
+                            <Text text="Buyer"/>
+                        </Column>
+                        <Column>
+                            <Text text="Created At"/>
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{OrderNo}"/>
+                                <Text text="{buyer}"/>
+                                <Text text="{createdAt}"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View> 

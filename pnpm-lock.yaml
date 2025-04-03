@@ -969,6 +969,9 @@ importers:
       '@sap/cds':
         specifier: ^8.8.3
         version: 8.8.3(express@4.21.2)(tar@7.4.3)
+      cds-spreadsheetimporter-plugin:
+        specifier: ./../../../../cds-spreadsheetimporter-plugin/
+        version: link:../../../../cds-spreadsheetimporter-plugin
       cors:
         specifier: 2.8.5
         version: 2.8.5

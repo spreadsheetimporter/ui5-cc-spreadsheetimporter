@@ -24,6 +24,15 @@
           "localUri": "localService/metadata.xml",
           "odataVersion": "4.0"
         }
+      },
+      "importerService": {
+        "uri": "/odata/v4/ImporterService/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "localUri": "localService/metadata.xml",
+          "odataVersion": "4.0"
+        }
       }
     },
     "crossNavigation": {
@@ -98,6 +107,16 @@
           "autoExpandSelect": true,
           "earlyRequests": true
         }
+      },
+      "importerService": {
+        "dataSource": "importerService",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
       }
     },
     "resources": {
@@ -139,6 +158,13 @@
           "target": [
             "TargetOrdersTable"
           ]
+        },
+        {
+          "name": "RouteCDSPlugin",
+          "pattern": "cdsplugin",
+          "target": [
+            "TargetCDSPlugin"
+          ]
         }
       ],
       "targets": {
@@ -155,6 +181,13 @@
           "clearControlAggregation": false,
           "viewId": "OrdersTable",
           "viewName": "OrdersTable"
+        },
+        "TargetCDSPlugin": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "CDSPlugin",
+          "viewName": "CDSPlugin"
         }
       }
     },
