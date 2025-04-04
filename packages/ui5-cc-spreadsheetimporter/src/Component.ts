@@ -216,7 +216,8 @@ export default class Component extends UIComponent {
 				useCdsPlugin: true,
 				useCsrf: true,
 				localhostSupport: true,
-				localhostPort: 4004
+				localhostPort: 4004,
+				usePost: false // Default to PUT method
 			});
 		}
 

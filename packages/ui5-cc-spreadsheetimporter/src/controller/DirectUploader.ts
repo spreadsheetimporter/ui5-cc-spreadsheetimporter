@@ -52,45 +52,42 @@ export default class DirectUploader extends ManagedObject {
 
         let uploadUrl: string;
 
-        // If fullServiceUrl is provided, use it directly
-        if (this.config.fullServiceUrl) {
-            uploadUrl = this.config.fullServiceUrl;
+        // If uploadUrl is provided, use it directly
+        if (this.config.uploadUrl) {
+            uploadUrl = this.config.uploadUrl;
             
             // Handle localhost support for development
             if (this.config.localhostSupport && window.location.hostname === "localhost") {
                 const protocol = window.location.protocol;
                 const port = this.config.localhostPort || 4004;
                 
-                // If fullServiceUrl is a relative path, prefix with localhost
+                // If uploadUrl is a relative path, prefix with localhost
                 if (uploadUrl.startsWith('/')) {
                     uploadUrl = `${protocol}//localhost:${port}${uploadUrl}`;
                 }
                 
-                Log.info("Using localhost URL with fullServiceUrl", undefined, "DirectUploader", () => ({
+                Log.info("Using localhost URL with uploadUrl", undefined, "DirectUploader", () => ({
                     uploadUrl
                 }));
             }
         } else {
-            // Otherwise, build URL from serviceUrl and entityName
+            // Otherwise, build URL from entityName
             if (!this.config.entityName) {
                 const error = new Error(this.util.geti18nText("spreadsheetimporter.noEntityNameProvided"));
                 Log.error("No entity name provided for direct upload", error, "DirectUploader", () => this.component.logger.returnObject({ config: this.config }));
                 throw error;
             }
 
-            let serviceUrl = this.config.serviceUrl;
-            if (!serviceUrl) {
-                const error = new Error(this.util.geti18nText("spreadsheetimporter.noServiceUrlProvided"));
-                Log.error("No service URL provided for direct upload", error, "DirectUploader", () => this.component.logger.returnObject({ config: this.config }));
-                throw error;
-            }
+            let baseUrl = "";
             
             // Handle localhost support for development
             if (this.config.localhostSupport && window.location.hostname === "localhost") {
                 const protocol = window.location.protocol;
                 const port = this.config.localhostPort || 4004;
-                serviceUrl = `${protocol}//localhost:${port}${serviceUrl.startsWith('/') ? serviceUrl : '/' + serviceUrl}`;
-                Log.info("Using localhost URL for direct upload", undefined, "DirectUploader", () => this.component.logger.returnObject({ serviceUrl }));
+                baseUrl = `${protocol}//localhost:${port}/odata/v4/importer`;
+                Log.info("Using localhost URL for direct upload", undefined, "DirectUploader", () => this.component.logger.returnObject({ baseUrl }));
+            } else {
+                baseUrl = "/odata/v4/importer";
             }
 
             let entityPath = this.config.entityName;
@@ -107,10 +104,6 @@ export default class DirectUploader extends ManagedObject {
                 // Add /content for the upload path
                 entityPath = `${tokenPath}/content`;
             }
-            
-            const baseUrl = serviceUrl.endsWith('/') 
-                ? serviceUrl.slice(0, -1)
-                : serviceUrl;
                 
             uploadUrl = `${baseUrl}/${entityPath}`;
         }
@@ -157,8 +150,11 @@ export default class DirectUploader extends ManagedObject {
             // For direct upload without token like CDSPlugin.controller.js
             const xhr = new XMLHttpRequest();
             
-            // Configure exactly like CDSPlugin.controller.js
-            xhr.open('PUT', url, true);
+            // Determine HTTP method - Use POST if specified, otherwise default to PUT
+            const method = this.config.usePost ? 'POST' : 'PUT';
+            
+            // Configure XMLHttpRequest
+            xhr.open(method, url, true);
             
             // Set Content-Type header exactly like CDSPlugin.controller.js
             // Use contentType from config, which was determined based on file extension
@@ -167,7 +163,7 @@ export default class DirectUploader extends ManagedObject {
             // Log exactly what we're about to do
             Log.info("Starting direct upload with simplified approach", undefined, "DirectUploader", () => ({
                 url: url,
-                method: 'PUT',
+                method: method,
                 contentType: this.config.contentType || 'application/octet-stream'
             }));
             
@@ -234,7 +230,7 @@ export default class DirectUploader extends ManagedObject {
             // Send the file
             try {
                 xhr.send(fileContent);
-                Log.info(`PUT request started for file: ${fileName}`, undefined, "DirectUploader");
+                Log.info(`${method} request started for file: ${fileName}`, undefined, "DirectUploader");
             } catch (error) {
                 Log.error("Error sending file", error as Error, "DirectUploader");
                 reject(error);
@@ -266,8 +262,7 @@ export default class DirectUploader extends ManagedObject {
         return {
             enabled: false,
             entityName: "",
-            serviceUrl: "",
-            fullServiceUrl: "",
+            uploadUrl: "",
             useCsrf: true,
             usePost: false,
             localhostSupport: true,

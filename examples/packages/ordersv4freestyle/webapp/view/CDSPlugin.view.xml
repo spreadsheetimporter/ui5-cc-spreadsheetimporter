@@ -35,8 +35,7 @@
                         useCsrf: false,
                         localhostSupport: true,
                         localhostPort: 4004,
-                        serviceUrl: '/odata/v4/importer/',
-                        fullServiceUrl: '/odata/v4/importer/Spreadsheet(entity%3D%27OrdersService.Orders%27)/content',
+                        uploadUrl: '/odata/v4/importer/Spreadsheet(entity%3D%27OrdersService.Orders%27)/content',
                         useCdsPlugin: true
                     },
                 componentContainerData:{
