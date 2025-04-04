@@ -1,7 +1,6 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 import Component from "../Component";
 import { DirectUploadConfig } from "../types";
-import ResourceModel from "sap/ui/model/resource/ResourceBundle";
 import Log from "sap/base/Log";
 import Util from "./Util";
 import MessageHandler from "./MessageHandler";
@@ -15,9 +14,6 @@ export default class DirectUploader extends ManagedObject {
     private component: Component;
     private config: DirectUploadConfig;
     private util: Util;
-    private messageHandler: MessageHandler;
-    private resourceBundle: ResourceBundle;
-    private _storedCsrfToken: string | null = null;
 
     /**
      * Initializes DirectUploader instance.
@@ -28,8 +24,6 @@ export default class DirectUploader extends ManagedObject {
     constructor(component: Component, messageHandler: MessageHandler, resourceBundle: ResourceBundle) {
         super();
         this.component = component;
-        this.messageHandler = messageHandler;
-        this.resourceBundle = resourceBundle;
         this.util = new Util(resourceBundle);
         this.config = component.getDirectUploadConfig() || {
             enabled: false,
@@ -42,16 +36,6 @@ export default class DirectUploader extends ManagedObject {
         };
     }
 
-    /**
-     * Debug method to test pre-flight OPTIONS request
-     * 
-     * @param {string} url The URL to test
-     * @private
-     */
-    private debugPreflightRequest(url: string): void {
-        // Disable this method as it's causing CORS errors
-        Log.info("Preflight debug disabled due to CORS issues", undefined, "DirectUploader");
-    }
 
     /**
      * Uploads the spreadsheet file directly to the backend service.
@@ -66,17 +50,69 @@ export default class DirectUploader extends ManagedObject {
             throw error;
         }
 
-        if (!this.config.entityName) {
-            const error = new Error(this.util.geti18nText("spreadsheetimporter.noEntityNameProvided"));
-            Log.error("No entity name provided for direct upload", error, "DirectUploader", () => this.component.logger.returnObject({ config: this.config }));
-            throw error;
-        }
+        let uploadUrl: string;
 
-        let serviceUrl = this.config.serviceUrl;
-        if (!serviceUrl) {
-            const error = new Error(this.util.geti18nText("spreadsheetimporter.noServiceUrlProvided"));
-            Log.error("No service URL provided for direct upload", error, "DirectUploader", () => this.component.logger.returnObject({ config: this.config }));
-            throw error;
+        // If fullServiceUrl is provided, use it directly
+        if (this.config.fullServiceUrl) {
+            uploadUrl = this.config.fullServiceUrl;
+            
+            // Handle localhost support for development
+            if (this.config.localhostSupport && window.location.hostname === "localhost") {
+                const protocol = window.location.protocol;
+                const port = this.config.localhostPort || 4004;
+                
+                // If fullServiceUrl is a relative path, prefix with localhost
+                if (uploadUrl.startsWith('/')) {
+                    uploadUrl = `${protocol}//localhost:${port}${uploadUrl}`;
+                }
+                
+                Log.info("Using localhost URL with fullServiceUrl", undefined, "DirectUploader", () => ({
+                    uploadUrl
+                }));
+            }
+        } else {
+            // Otherwise, build URL from serviceUrl and entityName
+            if (!this.config.entityName) {
+                const error = new Error(this.util.geti18nText("spreadsheetimporter.noEntityNameProvided"));
+                Log.error("No entity name provided for direct upload", error, "DirectUploader", () => this.component.logger.returnObject({ config: this.config }));
+                throw error;
+            }
+
+            let serviceUrl = this.config.serviceUrl;
+            if (!serviceUrl) {
+                const error = new Error(this.util.geti18nText("spreadsheetimporter.noServiceUrlProvided"));
+                Log.error("No service URL provided for direct upload", error, "DirectUploader", () => this.component.logger.returnObject({ config: this.config }));
+                throw error;
+            }
+            
+            // Handle localhost support for development
+            if (this.config.localhostSupport && window.location.hostname === "localhost") {
+                const protocol = window.location.protocol;
+                const port = this.config.localhostPort || 4004;
+                serviceUrl = `${protocol}//localhost:${port}${serviceUrl.startsWith('/') ? serviceUrl : '/' + serviceUrl}`;
+                Log.info("Using localhost URL for direct upload", undefined, "DirectUploader", () => this.component.logger.returnObject({ serviceUrl }));
+            }
+
+            let entityPath = this.config.entityName;
+            let tokenPath = ""; // Path for CSRF token fetch (no /content)
+            
+            // For CDS plugins, we need to format the entity path differently
+            if (this.config.useCdsPlugin) {
+                // For CDS Plugin, entity path should be Spreadsheet(entity=EntityName)
+                const entityName = this.config.entityName;
+                
+                // Format base path: Spreadsheet(entity='EntityName')
+                tokenPath = `Spreadsheet(entity='${encodeURIComponent(entityName)}')`;
+                
+                // Add /content for the upload path
+                entityPath = `${tokenPath}/content`;
+            }
+            
+            const baseUrl = serviceUrl.endsWith('/') 
+                ? serviceUrl.slice(0, -1)
+                : serviceUrl;
+                
+            uploadUrl = `${baseUrl}/${entityPath}`;
         }
         
         // Detect content type based on filename if not explicitly set
@@ -91,42 +127,12 @@ export default class DirectUploader extends ManagedObject {
             }
             // Otherwise, leave default application/octet-stream
         }
-
-        // Handle localhost support for development
-        if (this.config.localhostSupport && window.location.hostname === "localhost") {
-            const protocol = window.location.protocol;
-            const port = this.config.localhostPort || 4004;
-            serviceUrl = `${protocol}//localhost:${port}${serviceUrl.startsWith('/') ? serviceUrl : '/' + serviceUrl}`;
-            Log.info("Using localhost URL for direct upload", undefined, "DirectUploader", () => this.component.logger.returnObject({ serviceUrl }));
-        }
-
-        let entityPath = this.config.entityName;
-        let tokenPath = ""; // Path for CSRF token fetch (no /content)
-        
-        // For CDS plugins, we need to format the entity path differently
-        if (this.config.useCdsPlugin) {
-            // For CDS Plugin, entity path should be Spreadsheet(entity=EntityName)
-            const entityName = this.config.entityName;
-            
-            // Format base path: Spreadsheet(entity='EntityName')
-            tokenPath = `Spreadsheet(entity='${encodeURIComponent(entityName)}')`;
-            
-            // Add /content for the upload path
-            entityPath = `${tokenPath}/content`;
-        }
-        
-        const baseUrl = serviceUrl.endsWith('/') 
-            ? serviceUrl.slice(0, -1)
-            : serviceUrl;
-            
-        // Remove filename parameter - keeping URL exactly as in CDSPlugin.controller.js
-        const uploadUrl = `${baseUrl}/${entityPath}`;
         
         Log.info(`Upload URL: ${uploadUrl}`, undefined, "DirectUploader");
 
         try {
             // Use XMLHttpRequest for all uploads
-            return await this.uploadWithXHR(uploadUrl, fileContent, fileName, tokenPath);
+            return await this.uploadWithXHR(uploadUrl, fileContent, fileName);
         } catch (error) {
             Log.error("Error during direct upload", error as Error, "DirectUploader", () => this.component.logger.returnObject({ error }));
             
@@ -140,54 +146,15 @@ export default class DirectUploader extends ManagedObject {
     }
 
     /**
-     * Fallback method to use fetch API if XMLHttpRequest fails
-     * @param {string} url - The upload URL
-     * @param {ArrayBuffer} fileContent - The file content
-     * @returns {Promise<any>} Promise that resolves with server response
-     */
-    private uploadWithFetch(url: string, fileContent: ArrayBuffer): Promise<any> {
-        // Log that we're trying fetch as alternative
-        Log.info("Trying upload with fetch API as alternative", undefined, "DirectUploader");
-        
-        return fetch(url, {
-            method: 'PUT',
-            body: fileContent,
-            headers: {
-                'Content-Type': this.config.contentType || 'application/octet-stream'
-            },
-            // IMPORTANT: Match working configuration
-            mode: 'cors',
-            credentials: 'omit',
-            // Add custom configurations
-            referrerPolicy: 'strict-origin-when-cross-origin'
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Upload failed with status ${response.status}: ${response.statusText}`);
-            }
-            
-            // Try to parse response as JSON, fall back to text if not valid JSON
-            return response.text().then(text => {
-                try {
-                    return JSON.parse(text);
-                } catch (e) {
-                    return text;
-                }
-            });
-        });
-    }
-
-    /**
      * Uploads the file using XMLHttpRequest.
      * @param {string} url - The upload URL.
      * @param {ArrayBuffer} fileContent - The file content as ArrayBuffer.
      * @param {string} fileName - The file name.
-     * @param {string} tokenPath - The path to use for token fetching (without /content)
      * @returns {Promise<any>} A promise that resolves with the server response.
      */
-    private uploadWithXHR(url: string, fileContent: ArrayBuffer, fileName: string, tokenPath: string = ""): Promise<any> {
+    private uploadWithXHR(url: string, fileContent: ArrayBuffer, fileName: string): Promise<any> {
         return new Promise((resolve, reject) => {
-            // For debug purpose with CAP, directly upload without token just like CDSPlugin.controller.js
+            // For direct upload without token like CDSPlugin.controller.js
             const xhr = new XMLHttpRequest();
             
             // Configure exactly like CDSPlugin.controller.js
@@ -204,8 +171,7 @@ export default class DirectUploader extends ManagedObject {
                 contentType: this.config.contentType || 'application/octet-stream'
             }));
             
-            // IMPORTANT: Set withCredentials to false explicitly
-            // This matches the working fetch behavior with credentials: "omit"
+            // IMPORTANT: Set withCredentials to false explicitly to avoid CORS issues
             xhr.withCredentials = false;
             
             // Handle completion
@@ -254,16 +220,7 @@ export default class DirectUploader extends ManagedObject {
                 Log.error("Network error during direct upload", error, "DirectUploader", () => this.component.logger.returnObject({ 
                     url: xhr.responseURL
                 }));
-                
-                // Try fetch API as fallback if XMLHttpRequest fails
-                if (this.config.useFetchApi) {
-                    Log.info("XMLHttpRequest failed, trying fetch API fallback", undefined, "DirectUploader");
-                    this.uploadWithFetch(url, fileContent)
-                        .then(resolve)
-                        .catch(reject);
-                } else {
-                    reject(error);
-                }
+                reject(error);
             };
             
             // Set up progress event handler
@@ -280,16 +237,7 @@ export default class DirectUploader extends ManagedObject {
                 Log.info(`PUT request started for file: ${fileName}`, undefined, "DirectUploader");
             } catch (error) {
                 Log.error("Error sending file", error as Error, "DirectUploader");
-                
-                // Try fetch API as fallback if XMLHttpRequest fails
-                if (this.config.useFetchApi) {
-                    Log.info("XMLHttpRequest failed, trying fetch API fallback", undefined, "DirectUploader");
-                    this.uploadWithFetch(url, fileContent)
-                        .then(resolve)
-                        .catch(reject);
-                } else {
-                    reject(error);
-                }
+                reject(error);
             }
         });
     }
@@ -319,6 +267,7 @@ export default class DirectUploader extends ManagedObject {
             enabled: false,
             entityName: "",
             serviceUrl: "",
+            fullServiceUrl: "",
             useCsrf: true,
             usePost: false,
             localhostSupport: true,
@@ -326,8 +275,7 @@ export default class DirectUploader extends ManagedObject {
             useCdsPlugin: false,
             appendContentPath: true,
             entityId: "",
-            contentType: "application/octet-stream",
-            useFetchApi: true // Enable fetch API fallback by default
+            contentType: "application/octet-stream"
         };
     }
 } 

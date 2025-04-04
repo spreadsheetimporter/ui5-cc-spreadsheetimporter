@@ -27,7 +27,7 @@ import SpreadsheetDownloadDialog from "../download/SpreadsheetDownloadDialog";
 import SpreadsheetGenerator from "../download/SpreadsheetGenerator";
 import SpreadsheetDownload from "../download/SpreadsheetDownload";
 import OData from "../odata/OData";
-import { Action, CustomMessageTypes } from "../../enums";
+import { Action } from "../../enums";
 import DirectUploader from "../DirectUploader";
 
 type InputType = {
@@ -54,7 +54,6 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	spreadsheetGenerator: SpreadsheetGenerator;
 	spreadsheetDownload: SpreadsheetDownload;
 	directUploader: DirectUploader;
-	private odataHandler: OData;
 	private currentFile: File | null = null;
 
 	constructor(spreadsheetUploadController: SpreadsheetUpload, component: Component, componentI18n: ResourceModel, messageHandler: MessageHandler) {

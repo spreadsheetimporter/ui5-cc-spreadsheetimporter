@@ -160,6 +160,12 @@ export interface DirectUploadConfig {
 	serviceUrl?: string;
 	
 	/**
+	 * Complete URL to the upload endpoint (has precedence over serviceUrl + entityName combinations)
+	 * Example: "/odata/v4/importer/Spreadsheet(entity='OrdersService.Orders')/content"
+	 */
+	fullServiceUrl?: string;
+	
+	/**
 	 * The ID used to identify the spreadsheet entity (if not provided, a random one will be generated)
 	 */
 	entityId?: string;
