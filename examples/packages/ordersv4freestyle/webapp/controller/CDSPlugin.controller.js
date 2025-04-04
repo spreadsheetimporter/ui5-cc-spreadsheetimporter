@@ -78,7 +78,7 @@ sap.ui.define([
           sBaseUrl = sBaseUrl.substring(0, sBaseUrl.length - "odata/v4/importer".length);
         }
         
-        var sUploadUrl = sBaseUrl + "odata/v4/importer/Spreadsheet(ID='" + encodeURIComponent(sEntityId) + "')/content";
+        var sUploadUrl = sBaseUrl + "odata/v4/importer/Spreadsheet(entity='" + encodeURIComponent(sEntityId) + "')/content";
         
         console.log("Base URL:", sBaseUrl);
         console.log("Computed upload URL:", sUploadUrl);
@@ -96,7 +96,7 @@ sap.ui.define([
       // Helper: Ensures the spreadsheet entity exists, creates it if it doesn't
       _ensureEntityExists: function(sEntityId) {
         var that = this;
-        var sEntityPath = "/Spreadsheet(ID='" + encodeURIComponent(sEntityId) + "')";
+        var sEntityPath = "/Spreadsheet(entity='" + encodeURIComponent(sEntityId) + "')";
         var oContext = this.oImporterModel.bindContext(sEntityPath).getBoundContext();
         
         return new Promise(function(resolve, reject) {
@@ -111,7 +111,7 @@ sap.ui.define([
               
               // Create the entity using list binding with $count
               var oListBinding = that.oImporterModel.bindList("/Spreadsheet", undefined, undefined, undefined, {$count : true});
-              var oCreationContext = oListBinding.create({ ID: sEntityId }, true, UPLOAD_GROUP_ID, false);
+              var oCreationContext = oListBinding.create({ entity: sEntityId }, true, UPLOAD_GROUP_ID, false);
               
               // Submit the batch to create the entity
               that.oImporterModel.submitBatch(UPLOAD_GROUP_ID).then(function() {

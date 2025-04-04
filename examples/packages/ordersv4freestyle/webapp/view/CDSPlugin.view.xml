@@ -22,6 +22,29 @@
                   }"
                 />
 
+                <core:ComponentContainer
+                id="spreadsheetToCAP2"
+                width="100%"
+                usage="spreadsheetImporter"
+                propagateModel="true"
+                async="true"
+                settings="{
+                    directUploadConfig:{
+                        enabled: true,
+                        entityName: 'OrdersService.Orders',
+                        useCsrf: false,
+                        localhostSupport: true,
+                        localhostPort: 4004,
+                        serviceUrl: '/odata/v4/importer/',
+                        useCdsPlugin: true
+                    },
+                componentContainerData:{
+                    buttonText:'Excel Upload directly with Spreadsheet Importer',
+                    buttonId:'uploadButton'
+                }
+              }"
+            />
+
                 <Table id="orderssTable2" items="{/Orders}">
                     <columns>
                         <Column>

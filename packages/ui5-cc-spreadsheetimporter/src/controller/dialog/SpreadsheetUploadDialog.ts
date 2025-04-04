@@ -17,7 +17,7 @@ import Log from "sap/base/Log";
 import SheetHandler from "../SheetHandler";
 import Parser from "../Parser";
 import Button from "sap/m/Button";
-import { ArrayData, AvailableOptionsType, DeepDownloadConfig, FireEventReturnType } from "../../types";
+import { ArrayData, AvailableOptionsType, DeepDownloadConfig, FireEventReturnType, DirectUploadConfig } from "../../types";
 import FlexBox from "sap/m/FlexBox";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Dialog from "sap/m/Dialog";
@@ -27,7 +27,8 @@ import SpreadsheetDownloadDialog from "../download/SpreadsheetDownloadDialog";
 import SpreadsheetGenerator from "../download/SpreadsheetGenerator";
 import SpreadsheetDownload from "../download/SpreadsheetDownload";
 import OData from "../odata/OData";
-import { Action } from "../../enums";
+import { Action, CustomMessageTypes } from "../../enums";
+import DirectUploader from "../DirectUploader";
 
 type InputType = {
 	[key: string]: {
@@ -52,6 +53,9 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	spreadsheetOptionsModel: JSONModel;
 	spreadsheetGenerator: SpreadsheetGenerator;
 	spreadsheetDownload: SpreadsheetDownload;
+	directUploader: DirectUploader;
+	private odataHandler: OData;
+	private currentFile: File | null = null;
 
 	constructor(spreadsheetUploadController: SpreadsheetUpload, component: Component, componentI18n: ResourceModel, messageHandler: MessageHandler) {
 		super();
@@ -63,6 +67,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 		this.optionsHandler = new OptionsDialog(spreadsheetUploadController);
 		this.messageHandler = messageHandler;
 		this.spreadsheetDownloadDialog = new SpreadsheetDownloadDialog(this.spreadsheetUploadController, this);
+		this.directUploader = new DirectUploader(component, messageHandler, componentI18n.getResourceBundle() as ResourceBundle);
 	}
 
 	async createSpreadsheetUploadDialog() {
@@ -111,17 +116,28 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	 */
 	async onFileUpload(event: FileUploader$ChangeEvent) {
 		this.messageHandler.setMessages([]);
-		const file = event.getParameter("files")[0] as Blob;
+		const file = event.getParameter("files")[0] as File;
 		try {
+
 			const asyncEventPreFileProcessing = await Util.fireEventAsync("preFileProcessing", { file: file }, this.component);
 			const isDefaultPrevented = asyncEventPreFileProcessing.bPreventDefault;
 			if (isDefaultPrevented) {
 				Log.info("preFileProcessing event was prevented", "SpreadsheetUpload: onFileUpload");
 				this.resetContent();
 				return;
-			} else {
-				this.handleFile(file);
+			} 
+			
+			// Check if direct upload is enabled - only for file selection, not for actual upload yet
+			const directUploadConfig = this.component.getDirectUploadConfig() as DirectUploadConfig;
+			if (directUploadConfig?.enabled === true) {
+				// Just proceed with parsing to show preview
+				// Store the file for potential direct upload later
+				this.currentFile = file;
+				Log.info("Direct upload is enabled - file will be processed on Upload button click", undefined, "SpreadsheetUploadDialog");
 			}
+			
+			// Continue with standard parsing to show preview regardless
+			this.handleFile(file);
 		} catch (error) {
 			Log.error("Error while calling the preFileProcessing event", error as Error, "SpreadsheetUpload: onFileUpload");
 		}
@@ -271,6 +287,50 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 			);
 			isDefaultPrevented = fireEventAsyncReturn.bPreventDefault;
 		} catch (error) {}
+		
+		// Check if direct upload is enabled
+		const directUploadConfig = this.component.getDirectUploadConfig() as DirectUploadConfig;
+		if (directUploadConfig?.enabled === true && !isDefaultPrevented && this.currentFile) {
+			try {
+				// Use the stored file from onFileUpload
+				const file = this.currentFile;
+				
+				// Convert file to ArrayBuffer
+				const arrayBuffer = await new Promise<ArrayBuffer>((resolve, reject) => {
+					const reader = new FileReader();
+					reader.onload = () => resolve(reader.result as ArrayBuffer);
+					reader.onerror = reject;
+					reader.readAsArrayBuffer(file);
+				});
+				
+				// Perform direct upload
+				this.spreadsheetUploadDialog.setBusy(true);
+				const result = await this.directUploader.uploadFile(arrayBuffer, file.name);
+				
+				// Show success message
+				MessageToast.show(this.util.geti18nText("spreadsheetimporter.uploadSuccessful"));
+				
+				// Fire upload completed event
+				await Util.fireEventAsync("requestCompleted", { success: true }, this.component);
+				
+				// Close dialog
+				this.getDialog().setBusy(false);
+				this.onCloseDialog();
+				return;
+			} catch (error) {
+				Log.error("Direct upload failed in onUploadSet", error as Error, "SpreadsheetUploadDialog");
+				
+				// Show error message
+				MessageToast.show(this.util.geti18nText("spreadsheetimporter.directUploadError"));
+				
+				// Fire upload error event
+				await Util.fireEventAsync("requestCompleted", { success: false }, this.component);
+				
+				// Reset state
+				this.getDialog().setBusy(false);
+			}
+		}
+		
 		this.getDialog().setBusy(false);
 		if (isDefaultPrevented || this.component.getStandalone()) {
 			this.onCloseDialog();
@@ -378,10 +438,14 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 		this.component.setAvailableOptions(availableOptions);
 	}
 
+	/**
+	 * Reset the dialog content and clear the current file
+	 */
 	resetContent() {
 		(this.spreadsheetUploadDialog.getModel("info") as JSONModel).setProperty("/dataRows", 0);
 		var fileUploader = (this.spreadsheetUploadDialog.getContent()[0] as FlexBox).getItems()[1] as FileUploader;
 		fileUploader.setValue();
+		this.currentFile = null;
 	}
 
 	setDataRows(length: number) {
@@ -758,6 +822,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	}
 
 	setODataHandler(odataHandler: OData) {
+		this.odataHandler = odataHandler;
 		this.spreadsheetGenerator = new SpreadsheetGenerator(this.spreadsheetUploadController, this.component, odataHandler);
 		this.spreadsheetDownload = new SpreadsheetDownload(this.spreadsheetUploadController, this.component, odataHandler);
 	}

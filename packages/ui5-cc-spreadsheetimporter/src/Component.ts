@@ -83,7 +83,8 @@ export default class Component extends UIComponent {
 			showDownloadButton: { type: "boolean", defaultValue: false },
 			deepDownloadConfig: { type: "object", defaultValue: {} },
 			readSheetCoordinates: { type: "string", defaultValue: "A1" },
-			updateConfig: { type: "object", defaultValue: {} }
+			updateConfig: { type: "object", defaultValue: {} },
+			directUploadConfig: { type: "object", defaultValue: {} }
 			//Pro Configurations
 		},
 		aggregations: {
@@ -204,6 +205,20 @@ export default class Component extends UIComponent {
 
 		const mergedUpdateConfig = Util.mergeUpdateConfig(DefaultConfigs.Update, compData.updateConfig)
 		this.setUpdateConfig(mergedUpdateConfig);
+
+		// Set default directUploadConfig
+		if (compData.directUploadConfig) {
+			this.setDirectUploadConfig(compData.directUploadConfig);
+		} else {
+			this.setDirectUploadConfig({
+				enabled: false,
+				entityName: "",
+				useCdsPlugin: true,
+				useCsrf: true,
+				localhostSupport: true,
+				localhostPort: 4004
+			});
+		}
 
 		// // we could create a device model and use it
 		model = new JSONModel(Device);
