@@ -69,6 +69,16 @@ sap.ui.define([
 
             // onBeforeDownloadFileExport: function (event) {
             //     event.getParameters().filename = "Orders123_modified";
-            // }
+            // },
+
+            onNavToCDSPlugin: function() {
+                var oRouter = this.getOwnerComponent().getRouter();
+                oRouter.navTo("RouteCDSPlugin");
+            },
+
+            onNavToOrders: function() {
+                var oRouter = this.getOwnerComponent().getRouter();
+                oRouter.navTo("RouteOrdersTable");
+            }
         });
     });

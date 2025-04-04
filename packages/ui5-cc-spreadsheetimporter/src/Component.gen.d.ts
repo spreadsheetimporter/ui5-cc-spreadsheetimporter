@@ -48,6 +48,7 @@ declare module "./Component" {
         deepDownloadConfig?: object | PropertyBindingInfo | `{${string}}`;
         readSheetCoordinates?: string | PropertyBindingInfo;
         updateConfig?: object | PropertyBindingInfo | `{${string}}`;
+        directUploadConfig?: object | PropertyBindingInfo | `{${string}}`;
         preFileProcessing?: (event: Component$PreFileProcessingEvent) => void;
         checkBeforeRead?: (event: Component$CheckBeforeReadEvent) => void;
         changeBeforeCreate?: (event: Component$ChangeBeforeCreateEvent) => void;
@@ -218,6 +219,10 @@ declare module "./Component" {
         // property: updateConfig
         getUpdateConfig(): object;
         setUpdateConfig(updateConfig: object): this;
+
+        // property: directUploadConfig
+        getDirectUploadConfig(): object;
+        setDirectUploadConfig(directUploadConfig: object): this;
 
         // event: preFileProcessing
         attachPreFileProcessing(fn: (event: Component$PreFileProcessingEvent) => void, listener?: object): this;

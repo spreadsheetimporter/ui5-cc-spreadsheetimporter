@@ -139,6 +139,13 @@
           "target": [
             "TargetOrdersTable"
           ]
+        },
+        {
+          "name": "RouteCDSPlugin",
+          "pattern": "cdsplugin",
+          "target": [
+            "TargetCDSPlugin"
+          ]
         }
       ],
       "targets": {
@@ -155,6 +162,13 @@
           "clearControlAggregation": false,
           "viewId": "OrdersTable",
           "viewName": "OrdersTable"
+        },
+        "TargetCDSPlugin": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "CDSPlugin",
+          "viewName": "CDSPlugin"
         }
       }
     },

@@ -4,6 +4,12 @@
     <Page id="page" title="{i18n>title}">
         <content>
             <VBox>
+                <!-- Navigation Buttons -->
+                <HBox class="sapUiSmallMargin">
+                    <Button id="navToCDSPlugin" text="Navigate to CDS Plugin" press="onNavToCDSPlugin" class="sapUiTinyMarginEnd"/>
+                    <Button id="navToOrders" text="Navigate to Orders" press="onNavToOrders" class="sapUiTinyMarginEnd"/>
+                </HBox>
+                
                 <core:ComponentContainer
                     id="test1"
                     width="100%"
