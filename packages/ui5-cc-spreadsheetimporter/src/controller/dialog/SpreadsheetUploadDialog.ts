@@ -304,7 +304,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 				
 				// Perform direct upload
 				this.spreadsheetUploadDialog.setBusy(true);
-				const result = await this.directUploader.uploadFile(arrayBuffer, file.name);
+				const result = await this.directUploader.uploadFile(arrayBuffer, file.name, this.spreadsheetUploadController.getOdataType());
 				
 				// Show success message
 				MessageToast.show(this.util.geti18nText("spreadsheetimporter.uploadSuccessful"));

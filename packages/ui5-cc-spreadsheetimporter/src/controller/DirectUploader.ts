@@ -43,7 +43,7 @@ export default class DirectUploader extends ManagedObject {
      * @param {string} fileName - The file name.
      * @returns {Promise<any>} A promise that resolves with the server response.
      */
-    async uploadFile(fileContent: ArrayBuffer, fileName: string): Promise<any> {
+    async uploadFile(fileContent: ArrayBuffer, fileName: string, entityNameBinding: string): Promise<any> {
         if (!this.config.enabled) {
             const error = new Error(this.util.geti18nText("spreadsheetimporter.directUploadNotEnabled"));
             Log.error("Direct upload not enabled", error, "DirectUploader", () => this.component.logger.returnObject({ config: this.config }));
@@ -72,7 +72,7 @@ export default class DirectUploader extends ManagedObject {
             }
         } else {
             // Otherwise, build URL from entityName
-            if (!this.config.entityName) {
+            if (!this.config.entityName && !entityNameBinding) {
                 const error = new Error(this.util.geti18nText("spreadsheetimporter.noEntityNameProvided"));
                 Log.error("No entity name provided for direct upload", error, "DirectUploader", () => this.component.logger.returnObject({ config: this.config }));
                 throw error;
@@ -96,7 +96,7 @@ export default class DirectUploader extends ManagedObject {
             // For CDS plugins, we need to format the entity path differently
             if (this.config.useCdsPlugin) {
                 // For CDS Plugin, entity path should be Spreadsheet(entity=EntityName)
-                const entityName = this.config.entityName;
+                const entityName = this.config.entityName || entityNameBinding;
                 
                 // Format base path: Spreadsheet(entity='EntityName')
                 tokenPath = `Spreadsheet(entity='${encodeURIComponent(entityName)}')`;
@@ -263,7 +263,7 @@ export default class DirectUploader extends ManagedObject {
             enabled: false,
             entityName: "",
             uploadUrl: "",
-            useCsrf: true,
+            useCsrf: false,
             usePost: false,
             localhostSupport: true,
             localhostPort: 4004,
