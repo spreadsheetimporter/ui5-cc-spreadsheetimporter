@@ -970,8 +970,8 @@ importers:
         specifier: ^8.8.3
         version: 8.8.3(express@4.21.2)(tar@7.4.3)
       cds-spreadsheetimporter-plugin:
-        specifier: ./../../../../cds-spreadsheetimporter-plugin/
-        version: link:../../../../cds-spreadsheetimporter-plugin
+        specifier: 1.0.3
+        version: 1.0.3(@sap/cds@8.8.3(express@4.21.2)(tar@7.4.3))
       cors:
         specifier: 2.8.5
         version: 2.8.5
@@ -3658,6 +3658,11 @@ packages:
     peerDependencies:
       '@sap/cds': '>=6.8.2'
       express: '>=4.18.2'
+
+  cds-spreadsheetimporter-plugin@1.0.3:
+    resolution: {integrity: sha512-wnTk2c0ApoNeWBcDMlMb8d3zKKoX/ABAlDAA/eenYTQnAwels/pof+Y30nATSIEOuB6xOuh7+JmK8fVaKT8a0w==}
+    peerDependencies:
+      '@sap/cds': '>=7'
 
   centra@2.7.0:
     resolution: {integrity: sha512-PbFMgMSrmgx6uxCdm57RUos9Tc3fclMvhLSATYN39XsDV29B89zZ3KA89jmY0vwSGazyU+uerqwa6t+KaodPcg==}
@@ -11761,6 +11766,11 @@ snapshots:
     transitivePeerDependencies:
       - '@ui5/builder'
       - supports-color
+
+  cds-spreadsheetimporter-plugin@1.0.3(@sap/cds@8.8.3(express@4.21.2)(tar@7.4.3)):
+    dependencies:
+      '@sap/cds': 8.8.3(express@4.21.2)(tar@7.4.3)
+      xlsx: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
 
   centra@2.7.0:
     dependencies:

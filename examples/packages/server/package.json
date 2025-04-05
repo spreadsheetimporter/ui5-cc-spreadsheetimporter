@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "dependencies": {
     "@cap-js-community/odata-v2-adapter": "1.14.2",
-    "cds-spreadsheetimporter-plugin": "./../../../../cds-spreadsheetimporter-plugin/",
+    "cds-spreadsheetimporter-plugin": "1.0.3",
     "@sap/cds": "^8.8.3",
     "cors": "2.8.5"
   },
