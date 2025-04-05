@@ -41,6 +41,7 @@ export default class DirectUploader extends ManagedObject {
      * Uploads the spreadsheet file directly to the backend service.
      * @param {ArrayBuffer} fileContent - The file content as ArrayBuffer.
      * @param {string} fileName - The file name.
+     * @param {string} odataType - The OData type for the entity.
      * @returns {Promise<any>} A promise that resolves with the server response.
      */
     async uploadFile(fileContent: ArrayBuffer, fileName: string, entityNameBinding: string): Promise<any> {
@@ -49,6 +50,14 @@ export default class DirectUploader extends ManagedObject {
             Log.error("Direct upload not enabled", error, "DirectUploader", () => this.component.logger.returnObject({ config: this.config }));
             throw error;
         }
+
+        // Log the upload attempt with detailed information
+        Log.info("Starting file upload", undefined, "DirectUploader", () => ({
+            fileName,
+            fileSize: fileContent.byteLength,
+            odataType: odataType || "Not provided",
+            uploadConfig: this.config
+        }));
 
         let uploadUrl: string;
 
@@ -117,8 +126,10 @@ export default class DirectUploader extends ManagedObject {
                 this.config.contentType = "application/vnd.ms-excel";
             } else if (lowerFileName.endsWith(".csv")) {
                 this.config.contentType = "text/csv";
+            } else {
+                // Default for unknown files
+                this.config.contentType = "application/octet-stream";
             }
-            // Otherwise, leave default application/octet-stream
         }
         
         Log.info(`Upload URL: ${uploadUrl}`, undefined, "DirectUploader");
@@ -164,11 +175,16 @@ export default class DirectUploader extends ManagedObject {
             Log.info("Starting direct upload with simplified approach", undefined, "DirectUploader", () => ({
                 url: url,
                 method: method,
-                contentType: this.config.contentType || 'application/octet-stream'
+                contentType: this.config.contentType || 'application/octet-stream',
+                fileSize: fileContent.byteLength,
+                fileName: fileName
             }));
             
             // IMPORTANT: Set withCredentials to false explicitly to avoid CORS issues
             xhr.withCredentials = false;
+            
+            // Debug headers
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             
             // Handle completion
             xhr.onload = () => {
@@ -191,20 +207,25 @@ export default class DirectUploader extends ManagedObject {
                 } else {
                     // Try to extract more detailed error message
                     let errorMessage = `Upload failed with status ${xhr.status}: ${xhr.statusText}`;
+                    let errorDetails = '';
+                    
                     try {
                         const errorResponse = JSON.parse(xhr.responseText);
                         if (errorResponse && errorResponse.error && errorResponse.error.message) {
                             errorMessage = errorResponse.error.message;
                         }
+                        errorDetails = JSON.stringify(errorResponse, null, 2);
                     } catch (e) {
-                        // Use default error message if parsing fails
+                        // If response isn't valid JSON, use the raw response text
+                        errorDetails = xhr.responseText;
                     }
                     
                     const error = new Error(errorMessage);
                     Log.error("Direct upload failed", error, "DirectUploader", () => this.component.logger.returnObject({ 
                         status: xhr.status, 
                         statusText: xhr.statusText,
-                        response: xhr.responseText
+                        responseHeaders: xhr.getAllResponseHeaders(),
+                        errorDetails: errorDetails
                     }));
                     reject(error);
                 }
@@ -214,7 +235,9 @@ export default class DirectUploader extends ManagedObject {
             xhr.onerror = () => {
                 const error = new Error("Network error during upload");
                 Log.error("Network error during direct upload", error, "DirectUploader", () => this.component.logger.returnObject({ 
-                    url: xhr.responseURL
+                    url: xhr.responseURL,
+                    withCredentials: xhr.withCredentials,
+                    contentType: this.config.contentType
                 }));
                 reject(error);
             };
@@ -229,10 +252,18 @@ export default class DirectUploader extends ManagedObject {
             
             // Send the file
             try {
+                // Ensure we're sending the raw ArrayBuffer directly
                 xhr.send(fileContent);
-                Log.info(`${method} request started for file: ${fileName}`, undefined, "DirectUploader");
+                Log.info(`${method} request started for file: ${fileName}`, undefined, "DirectUploader", () => ({
+                    fileSize: fileContent.byteLength,
+                    url: url
+                }));
             } catch (error) {
-                Log.error("Error sending file", error as Error, "DirectUploader");
+                Log.error("Error sending file", error as Error, "DirectUploader", () => ({
+                    fileSize: fileContent.byteLength,
+                    fileName: fileName,
+                    contentType: this.config.contentType
+                }));
                 reject(error);
             }
         });
