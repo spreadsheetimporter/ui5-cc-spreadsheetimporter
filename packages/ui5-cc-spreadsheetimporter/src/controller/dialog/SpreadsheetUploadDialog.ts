@@ -327,6 +327,9 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 				
 				// Reset state
 				this.getDialog().setBusy(false);
+				
+				// Important: Return here to prevent further execution after an error
+				return;
 			}
 		}
 		
