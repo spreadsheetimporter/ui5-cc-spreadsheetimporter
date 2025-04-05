@@ -7,22 +7,6 @@
                 <Button id="backToMain" text="Back to Main" press="onNavBack" class="sapUiMediumMarginBegin"/>
 
                 <core:ComponentContainer
-                    id="spreadsheetToCAP"
-                    width="100%"
-                    usage="spreadsheetImporter"
-                    propagateModel="true"
-                    async="true"
-                    settings="{
-                    componentContainerData:{
-                        uploadButtonPress:'uploadButtonPress',
-                        preFileProcessing:'preFileProcessing',
-                        buttonText:'Excel Upload directly to CAP',
-                        buttonId:'uploadButton'
-                    }
-                  }"
-                />
-
-                <core:ComponentContainer
                 id="spreadsheetToCAP2"
                 width="100%"
                 usage="spreadsheetImporter"
