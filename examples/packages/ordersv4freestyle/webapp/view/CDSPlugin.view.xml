@@ -1,10 +1,24 @@
 <mvc:View controllerName="ordersv4freestyle.controller.CDSPlugin"
     xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" displayBlock="true"
+    xmlns:u="sap.ui.unified"
     xmlns="sap.m">
     <Page id="pageCDS" title="CDS Plugin View">
         <content>
             <VBox>
                 <Button id="backToMain" text="Back to Main" press="onNavBack" class="sapUiMediumMarginBegin"/>
+
+                <u:FileUploader
+			id="fileUploader"
+			name="myFileUpload"
+			uploadUrl="/odata/v4/importer/Spreadsheet(entity=&apos;OrdersService.Orders&apos;)/content"
+			tooltip="Upload your file to the local server"
+            httpRequestMethod="Put"
+            sendXHR="true"
+            uploadOnChange="true"
+			style="Emphasized"
+			fileType="txt,jpg,xlsx"
+			placeholder="Choose a file for Upload...">
+			</u:FileUploader>
 
                 <core:ComponentContainer
                 id="spreadsheetToCAP2"
