@@ -5,7 +5,6 @@ import Log from "sap/base/Log";
 import Util from "./Util";
 import MessageHandler from "./MessageHandler";
 import ResourceBundle from "sap/base/i18n/ResourceBundle";
-import Device from "sap/ui/Device";
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -25,14 +24,15 @@ export default class DirectUploader extends ManagedObject {
         super();
         this.component = component;
         this.util = new Util(resourceBundle);
-        this.config = component.getDirectUploadConfig() || {
+        this.config = component.getDirectUploadConfig() as DirectUploadConfig || {
             enabled: false,
             entityName: "",
             useCsrf: true,
             localhostSupport: true,
             localhostPort: 4004,
             useCdsPlugin: false,
-            appendContentPath: true
+            appendContentPath: true,
+            contentType: "application/octet-stream"
         };
     }
 
@@ -41,7 +41,7 @@ export default class DirectUploader extends ManagedObject {
      * Uploads the spreadsheet file directly to the backend service.
      * @param {ArrayBuffer} fileContent - The file content as ArrayBuffer.
      * @param {string} fileName - The file name.
-     * @param {string} odataType - The OData type for the entity.
+     * @param {string} entityNameBinding - The entity name binding or OData type.
      * @returns {Promise<any>} A promise that resolves with the server response.
      */
     async uploadFile(fileContent: ArrayBuffer, fileName: string, entityNameBinding: string): Promise<any> {
@@ -55,7 +55,7 @@ export default class DirectUploader extends ManagedObject {
         Log.info("Starting file upload", undefined, "DirectUploader", () => ({
             fileName,
             fileSize: fileContent.byteLength,
-            odataType: odataType || "Not provided",
+            entityNameBinding: entityNameBinding || "Not provided",
             uploadConfig: this.config
         }));
 
@@ -171,6 +171,9 @@ export default class DirectUploader extends ManagedObject {
             // Use contentType from config, which was determined based on file extension
             xhr.setRequestHeader('Content-Type', this.config.contentType || 'application/octet-stream');
             
+            // Set binary transfer mode for large files
+            xhr.setRequestHeader('Content-Transfer-Encoding', 'binary');
+            
             // Log exactly what we're about to do
             Log.info("Starting direct upload with simplified approach", undefined, "DirectUploader", () => ({
                 url: url,
@@ -183,8 +186,23 @@ export default class DirectUploader extends ManagedObject {
             // IMPORTANT: Set withCredentials to false explicitly to avoid CORS issues
             xhr.withCredentials = false;
             
-            // Debug headers
-            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            // Handle timeout for large files
+            xhr.timeout = 0; // No timeout (infinite)
+            
+            // Set up progress event handler
+            xhr.upload.onprogress = (event) => {
+                if (event.lengthComputable && this.config.onProgress && typeof this.config.onProgress === 'function') {
+                    const percentComplete = Math.round((event.loaded / event.total) * 100);
+                    const loadedMB = (event.loaded / (1024 * 1024)).toFixed(2);
+                    const totalMB = (event.total / (1024 * 1024)).toFixed(2);
+                    
+                    // Log more detailed progress information for large files
+                    Log.info(`Upload progress: ${percentComplete}% (${loadedMB}MB of ${totalMB}MB)`, undefined, "DirectUploader");
+                    
+                    // Call the progress callback
+                    this.config.onProgress(percentComplete);
+                }
+            };
             
             // Handle completion
             xhr.onload = () => {
@@ -242,66 +260,39 @@ export default class DirectUploader extends ManagedObject {
                 reject(error);
             };
             
-            // Set up progress event handler
-            xhr.upload.onprogress = (event) => {
-                if (event.lengthComputable && this.config.onProgress && typeof this.config.onProgress === 'function') {
-                    const percentComplete = Math.round((event.loaded / event.total) * 100);
-                    this.config.onProgress(percentComplete);
-                }
+            // Handle timeouts
+            xhr.ontimeout = () => {
+                const error = new Error("Timeout during upload");
+                Log.error("Timeout during direct upload", error, "DirectUploader", () => this.component.logger.returnObject({ 
+                    url: xhr.responseURL,
+                    timeout: xhr.timeout
+                }));
+                reject(error);
             };
             
             // Send the file
             try {
-                // Ensure we're sending the raw ArrayBuffer directly
+                // Ensure we're sending the raw ArrayBuffer directly without any modifications
+                // For large files, this is crucial to ensure integrity
                 xhr.send(fileContent);
+                
+                // Log detailed information about the request
                 Log.info(`${method} request started for file: ${fileName}`, undefined, "DirectUploader", () => ({
-                    fileSize: fileContent.byteLength,
-                    url: url
+                    fileSize: `${(fileContent.byteLength / (1024 * 1024)).toFixed(2)} MB`,
+                    url: url,
+                    method: method,
+                    contentType: this.config.contentType
                 }));
             } catch (error) {
+                // Log error with detailed information for troubleshooting
                 Log.error("Error sending file", error as Error, "DirectUploader", () => ({
-                    fileSize: fileContent.byteLength,
+                    fileSize: `${(fileContent.byteLength / (1024 * 1024)).toFixed(2)} MB`,
                     fileName: fileName,
-                    contentType: this.config.contentType
+                    contentType: this.config.contentType,
+                    error: (error as Error).message
                 }));
                 reject(error);
             }
         });
-    }
-
-    /**
-     * Gets the current configuration.
-     * @returns {DirectUploadConfig} The current configuration.
-     */
-    public getConfig(): DirectUploadConfig {
-        return this.config;
-    }
-
-    /**
-     * Updates the configuration.
-     * @param {DirectUploadConfig} config - The new configuration.
-     */
-    public setConfig(config: DirectUploadConfig): void {
-        this.config = {...this.config, ...config};
-    }
-
-    /**
-     * Creates a default configuration object.
-     * @returns {DirectUploadConfig} The default configuration.
-     */
-    public static createDefaultConfig(): DirectUploadConfig {
-        return {
-            enabled: false,
-            entityName: "",
-            uploadUrl: "",
-            useCsrf: false,
-            usePost: false,
-            localhostSupport: true,
-            localhostPort: 4004,
-            useCdsPlugin: false,
-            appendContentPath: true,
-            entityId: "",
-            contentType: "application/octet-stream"
-        };
     }
 } 
