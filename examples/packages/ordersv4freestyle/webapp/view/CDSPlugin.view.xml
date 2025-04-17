@@ -1,0 +1,68 @@
+<mvc:View controllerName="ordersv4freestyle.controller.CDSPlugin"
+    xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" displayBlock="true"
+    xmlns:u="sap.ui.unified"
+    xmlns="sap.m">
+    <Page id="pageCDS" title="CDS Plugin View">
+        <content>
+            <VBox>
+                <Button id="backToMain" text="Back to Main" press="onNavBack" class="sapUiMediumMarginBegin"/>
+
+                <u:FileUploader
+			id="fileUploader"
+			name="myFileUpload"
+			uploadUrl="/odata/v4/importer/Spreadsheet(entity=&apos;OrdersService.Orders&apos;)/content"
+			tooltip="Upload your file to the local server"
+            httpRequestMethod="Put"
+            sendXHR="true"
+            uploadOnChange="true"
+			style="Emphasized"
+			fileType="txt,jpg,xlsx"
+			placeholder="Choose a file for Upload...">
+			</u:FileUploader>
+
+                <core:ComponentContainer
+                id="spreadsheetToCAP2"
+                width="100%"
+                usage="spreadsheetImporter"
+                propagateModel="true"
+                async="true"
+                settings="{
+                    directUploadConfig:{
+                        enabled: true,
+                        localhostSupport: true,
+                        localhostPort: 4004,
+                        useCdsPlugin: true
+                    },
+                componentContainerData:{
+                    buttonText:'Excel Upload directly with Spreadsheet Importer',
+                    buttonId:'uploadButton'
+                }
+              }"
+            />
+
+                <Table id="orderssTable2" items="{/Orders}">
+                    <columns>
+                        <Column>
+                            <Text text="Order Number"/>
+                        </Column>
+                        <Column>
+                            <Text text="Buyer"/>
+                        </Column>
+                        <Column>
+                            <Text text="Created At"/>
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{OrderNo}"/>
+                                <Text text="{buyer}"/>
+                                <Text text="{createdAt}"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View> 
