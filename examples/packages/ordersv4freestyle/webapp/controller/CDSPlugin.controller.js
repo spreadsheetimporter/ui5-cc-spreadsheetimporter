@@ -6,9 +6,6 @@ sap.ui.define([
   ], function (Controller, MessageToast, ODataModel, BusyIndicator) {
     "use strict";
   
-    // Define a group ID for batch requests if explicit control is needed
-    const UPLOAD_GROUP_ID = "uploadGroup"; 
-  
     return Controller.extend("ordersv4freestyle.controller.CDSPlugin", {
   
       onInit: function () {
