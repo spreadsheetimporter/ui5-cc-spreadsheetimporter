@@ -354,6 +354,14 @@ export default class Component extends UIComponent {
 		this.spreadsheetUpload.addToMessages(errorArray);
 	}
 
+	/**
+	 * set error messages array (replaces existing messages)
+	 * @public
+	 */
+	setArrayMessages(messagesArray: Messages[]) {
+		this.spreadsheetUpload.setMessages(messagesArray);
+	}
+
 	getMessages(): Messages[] {
 		return this.spreadsheetUpload.getMessages();
 	}
