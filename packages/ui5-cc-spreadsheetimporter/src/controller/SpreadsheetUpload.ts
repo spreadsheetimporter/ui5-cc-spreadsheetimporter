@@ -447,6 +447,23 @@ export default class SpreadsheetUpload extends ManagedObject {
 		this.messageHandler.addArrayToMessages(messagesArray);
 	}
 
+	/**
+	 * Sets the MessageHandler's messages array, replacing any existing messages.
+	 * @param {Messages[]} messagesArray - An array of messages to set.
+	 */
+	setMessages(messagesArray: Messages[]) {
+		// Process messages to ensure they have the right type and counter
+		messagesArray.forEach((message) => {
+			if (message.group) {
+				message.type = CustomMessageTypes.CustomErrorGroup;
+			} else {
+				message.type = CustomMessageTypes.CustomError;
+			}
+			message.counter = 1;
+		});
+		this.messageHandler.setMessages(messagesArray);
+	}
+
 	public getSpreadsheetUploadDialog(): SpreadsheetDialog {
 		return this.spreadsheetUploadDialogHandler.getDialog();
 	}

@@ -106,3 +106,37 @@ Returns the messages array.
 ##### Usage
 
 You can use this method to get the messages array from the message handler.
+
+#### setArrayMessages
+
+Sets the messages array, replacing any existing messages.
+
+##### Usage
+
+You can use this method to completely replace the current messages array with a new one. Unlike `addArrayToMessages` which appends messages, this method will overwrite any existing messages.
+
+##### Sample Code
+
+```javascript
+this.spreadsheetUpload.attachCheckBeforeRead(function(event) {
+    // Create a new messages array
+    let messagesArray = [];
+    
+    // Add validation messages based on your custom logic
+    const sheetdata = event.getParameter("sheetData");
+    for (const [index, row] of sheetData.entries()) {
+        if (someValidationCondition) {
+            const message = {
+                title: "Validation failed",
+                row: index + 2,
+                group: true,
+                ui5type: "Error"
+            };
+            messagesArray.push(message);
+        }
+    }
+    
+    // Replace all existing messages with the new array
+    event.getSource().setArrayMessages(messagesArray);
+}, this);
+```
