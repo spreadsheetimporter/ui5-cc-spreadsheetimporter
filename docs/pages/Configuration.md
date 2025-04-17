@@ -60,6 +60,58 @@ The table below summarizes the options available for the UI5 Spreadsheet Importe
 | [`bindingCustom`](#bindingcustom)                 | Uses a custom OData binding instead of a table binding.   | Not specified      | `object`   |
 | [`i18nModel`](#i18nmodel)                         | Uses a custom i18n model to override default texts.       | Not specified      | `object`   |
 
+### `directUploadConfig`
+
+**default:** Not specified
+
+The `directUploadConfig` option enables direct file upload to a CAP backend using the CDS plugin. Instead of extracting data from the Excel file and sending it through standard UI5 APIs, this approach uploads the entire Excel file directly to the backend for server-side processing, which is much more efficient for large files.
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `enabled` | Boolean | `false` | Enables direct upload to the CAP backend |
+| `useCdsPlugin` | Boolean | `false` | Indicates that the CAP backend uses the CDS plugin |
+| `localhostSupport` | Boolean | `false` | Enables support for localhost development |
+| `localhostPort` | Number | `4004` | Port for localhost development |
+| `prependPath` | String | `null` | Custom path to prepend to the upload URL |
+| `entity` | String | Auto-detected | The CDS entity name for processing the upload |
+| `collection` | String | Auto-detected | The collection path for the entity |
+| `service` | String | Auto-detected | The service name |
+
+**Example:**
+
+```xml
+<core:ComponentContainer
+    id="spreadsheetToCAP"
+    width="100%"
+    usage="spreadsheetImporter"
+    propagateModel="true"
+    async="true"
+    settings="{
+        directUploadConfig:{
+            enabled: true,
+            useCdsPlugin: true,
+            localhostSupport: true,
+            localhostPort: 4004,
+            csrf: true,
+            uploadTimeout: 30000
+        },
+        componentContainerData:{
+            buttonText:'Excel Upload with CDS Plugin',
+            buttonId:'uploadButton'
+        }
+    }"
+/>
+```
+
+The upload URL follows this format: `/odata/v4/importer/Spreadsheet(entity='<CDS_ENTITY_NAME>')/content`
+
+You can also pass additional parameters to the backend:
+```
+/odata/v4/importer/Spreadsheet(entity='OrdersService.Orders',action='UPDATE')/content
+```
+
+For more details, see the [CAP CDS Plugin documentation](CdsPlugin.md).
+
 ---
 
 ## Configuration Options

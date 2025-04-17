@@ -8,49 +8,38 @@ site_dir: "site" # default
 nav:
   - Home: index.md
   - Getting Started: pages/GettingStarted.md
-  - How it works: pages/HowItWorks.md
-  - Configuration: pages/Configuration.md
-  - Events: pages/Events.md
-  - Error Handling: pages/Checks.md
-  - Table Selector: pages/TableSelector.md
-  - Typescript: pages/Typescript.md
-  - Supported Versions: pages/SupportVersions.md
-  - Central Deployment: pages/CentralDeployment.md
-  - Button Control: pages/Button.md
-  - Deep Download: pages/spreadsheetdownload.md
-  - Update: pages/Update.md
-  - API Reference: 'pages/APIReference.md'
-  # - UI5 CLI: pages/CLI.md
-  - Pro:
-      - Getting Started: pages/Pro/install.md
-      - Deep Create: pages/Pro/deepcreate.md
+  - Core Concepts:
+      - How it works: pages/HowItWorks.md
+      - Configuration: pages/Configuration.md
+      - Events: pages/Events.md
+      - Error Handling: pages/Checks.md
+
+  - Features:
+      - Using UPDATE: pages/Update.md
+      - Button Control: pages/Button.md
+      - Deep Download: pages/spreadsheetdownload.md
+      - CAP CDS Plugin: pages/CdsPlugin.md
+      - Table Selector: pages/TableSelector.md
+      - Spreadsheet Download: pages/Development/SpreadsheetDownload.md
+  - Integration:
+      - Typescript: pages/Typescript.md
+      - Central Deployment: pages/CentralDeployment.md
+      - Supported Versions: pages/SupportVersions.md
+  - Reference:
+      - API Reference: 'pages/APIReference.md'
+      - Changelogs: pages/CHANGELOGSPREADSHEETIMPORTER.md
+      - Troubleshooting: pages/Troubleshooting.md
+  - Resources:
+      - User Documentation: pages/UserDocumentation.md
+      - Use Cases: pages/UseCases.md
   - Development:
       - Getting Started: pages/Development/GettingStarted.md
-      - wdi5 Tests: pages/Development/wdi5.md
-      - OPA5 Tests: pages/Development/opa5.md
-      - Docs: pages/Development/Docs.md
+      - Testing:
+          - wdi5 Tests: pages/Development/wdi5.md
+          - OPA5 Tests: pages/Development/opa5.md
+      - Documentation: pages/Development/Docs.md
       - GitHub Actions: pages/Development/GitHubActions.md
       - Sample Apps: pages/Development/SampleApps.md
-      - Spreadsheet Download: pages/Development/SpreadsheetDownload.md
-  - Changelogs:
-      - spreadsheetimporter: pages/CHANGELOGSPREADSHEETIMPORTER.md
-  - Troubleshooting: pages/Troubleshooting.md
-  - User Documentation: pages/UserDocumentation.md
-  - Use Cases: pages/UseCases.md
-  # - Extensibility:
-  #   - Custom Tasks: pages/extensibility/CustomTasks.md
-  #   - Custom Server Middleware: pages/extensibility/CustomServerMiddleware.md
-  #   - Project Shims: pages/extensibility/ProjectShims.md
-  # - Modules:
-  #   - Server: pages/Server.md
-  #   - Builder: pages/Builder.md
-  #   - Project: pages/Project.md
-  # - Upgrade Guides:
-  #   - Migrate to v2: updates/migrate-v2.md
-  #   - Migrate to v1: updates/migrate-v1.md
-  # - FAQ: pages/FAQ.md
-  # - Troubleshooting: pages/Troubleshooting.md
-  # - API Reference: 'api/index.html' # only available in final build, not serve
 
 theme:
   name: "material"
