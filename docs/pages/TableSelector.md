@@ -1,5 +1,8 @@
 # Table Selector Implementation Documentation
 
+!!! warning
+    This feature is available since version 0.23.0 
+
 The `TableSelector` is designed to help users select a table from a list of available tables in a SAP UI5 application. The tables are aggregated and presented in a dialog, from which a user can select a table.
 
 ## Usage

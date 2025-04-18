@@ -11,6 +11,9 @@ The CDS plugin offers the following benefits:
 - **Reduced network traffic**: Only sends the Excel file once instead of multiple OData calls
 - **Seamless integration**: Works with both UI5 Spreadsheet Importer components and direct file uploads
 
+The source code is available here:  
+ https://github.com/spreadsheetimporter/cds-spreadsheetimporter-plugin
+
 ## Installation
 
 To use the CDS plugin with your CAP application:
@@ -80,6 +83,9 @@ service ImporterService {
 There are two ways to use the CDS plugin: via the **UI5 Spreadsheet Importer component** or with a **direct file upload**.
 
 ### Method 1: Using UI5 Spreadsheet Importer Component
+
+!!! warning
+    This feature is available since version 2.1.0. 
 
 The simplest approach is to use the UI5 Spreadsheet Importer with the `directUploadConfig` option:
 
