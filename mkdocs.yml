@@ -20,7 +20,6 @@ nav:
       - Deep Download: pages/spreadsheetdownload.md
       - CAP CDS Plugin: pages/CdsPlugin.md
       - Table Selector: pages/TableSelector.md
-      - Spreadsheet Download: pages/Development/SpreadsheetDownload.md
   - Integration:
       - Typescript: pages/Typescript.md
       - Central Deployment: pages/CentralDeployment.md
@@ -40,6 +39,7 @@ nav:
       - Documentation: pages/Development/Docs.md
       - GitHub Actions: pages/Development/GitHubActions.md
       - Sample Apps: pages/Development/SampleApps.md
+      - Spreadsheet Download: pages/Development/SpreadsheetDownload.md
 
 theme:
   name: "material"

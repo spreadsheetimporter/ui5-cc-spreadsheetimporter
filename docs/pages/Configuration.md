@@ -8,61 +8,62 @@ The table below summarizes the options available for the UI5 Spreadsheet Importe
 
 ### File Handling Options
 
-| Option                                        | Description                                                  | Default            | Type                      |
-|-----------------------------------------------|--------------------------------------------------------------|--------------------|---------------------------|
-| [`columns`](#columns)                         | Defines columns to import and display in the template.       | All fields         | `string[]`                |
-| [`excludeColumns`](#excludecolumns)           | Specifies columns to exclude from import and template.       | `[]`               | `string[]`                |
-| [`spreadsheetFileName`](#spreadsheetfilename) | Sets the file name when downloading the template.            | `"Template.xlsx"`  | `string`                  |
-| [`spreadsheetTemplateFile`](#spreadsheettemplatefile)| Uses a custom template file instead of generating one.      | `""`               | `string` or `ArrayBuffer` |
-| [`readAllSheets`](#readallsheets)             | Reads all sheets in standalone mode.                         | `false`            | `boolean`                 |
-| [`readSheet`](#readsheet)                     | Reads a specific sheet or shows a sheet selector.            | `0`                | `number` or `string`      |
-| [`readSheetCoordinates`](#readsheetcoordinates) | Specifies the starting cell for reading spreadsheet data.   | `"A1"`             | `string`                  |
+| Option                                        | Description                                                  | Default            | Available since | Type                      |
+|-----------------------------------------------|--------------------------------------------------------------|--------------------|----------------|---------------------------|
+| [`columns`](#columns)                         | Defines columns to import and display in the template.       | All fields         | Initial release | `string[]`                |
+| [`excludeColumns`](#excludecolumns)           | Specifies columns to exclude from import and template.       | `[]`               | 1.1.0          | `string[]`                |
+| [`spreadsheetFileName`](#spreadsheetfilename) | Sets the file name when downloading the template.            | `"Template.xlsx"`  | Initial release | `string`                  |
+| [`spreadsheetTemplateFile`](#spreadsheettemplatefile)| Uses a custom template file instead of generating one.      | `""`               | 0.29.0         | `string` or `ArrayBuffer` |
+| [`readAllSheets`](#readallsheets)             | Reads all sheets in standalone mode.                         | `false`            | 0.25.0         | `boolean`                 |
+| [`readSheet`](#readsheet)                     | Reads a specific sheet or shows a sheet selector.            | `0`                | 0.27.0         | `number` or `string`      |
+| [`readSheetCoordinates`](#readsheetcoordinates) | Specifies the starting cell for reading spreadsheet data.   | `"A1"`             | 1.2.0          | `string`                  |
 
 ### UI Customization Options
 
-| Option                                              | Description                                           | Default | Type       |
-|-----------------------------------------------------|-------------------------------------------------------|---------|------------|
-| [`hidePreview`](#hidepreview)                       | Hides the button to preview uploaded data.            | `false` | `boolean`  |
-| [`previewColumns`](#previewcolumns)                 | Specifies columns to display in the preview dialog.   | `[]`    | `string[]` |
-| [`showBackendErrorMessages`](#showbackenderrormessages)| Displays backend error messages in the UI.          | `false` | `boolean`  |
-| [`showOptions`](#showoptions)                       | Shows a menu to change configurations at runtime.     | `false` | `boolean`  |
-| [`showDownloadButton`](#showdownloadbutton)         | Shows the button to download the uploaded data.       | `false` | `boolean`  |
+| Option                                              | Description                                           | Default | Available since | Type       |
+|-----------------------------------------------------|-------------------------------------------------------|---------|----------------|------------|
+| [`hidePreview`](#hidepreview)                       | Hides the button to preview uploaded data.            | `false` | 0.17.0         | `boolean`  |
+| [`previewColumns`](#previewcolumns)                 | Specifies columns to display in the preview dialog.   | `[]`    | 0.31.0         | `string[]` |
+| [`showBackendErrorMessages`](#showbackenderrormessages)| Displays backend error messages in the UI.          | `false` | 0.18.0         | `boolean`  |
+| [`showOptions`](#showoptions)                       | Shows a menu to change configurations at runtime.     | `false` | 0.18.0         | `boolean`  |
+| [`showDownloadButton`](#showdownloadbutton)         | Shows the button to download the uploaded data.       | `false` | Initial release | `boolean`  |
 
 ### Data Processing Options
 
-| Option                                              | Description                                           | Default         | Type       |
-|-----------------------------------------------------|-------------------------------------------------------|-----------------|------------|
-| [`action`](#action)                                 | Sets the operation type (CREATE or UPDATE).           | `CREATE`         | `string`  |
-| [`batchSize`](#batchsize)                           | Controls the size of batches sent to the backend.     | `1000`          | `number`   |
-| [`strict`](#strict)                                 | Controls availability of the "Continue" button in error dialogs. | `false` | `boolean`  |
-| [`decimalSeparator`](#decimalseparator)             | Sets the decimal separator for numbers.               | Browser default | `string`   |
-| [`mandatoryFields`](#mandatoryfields)               | Specifies mandatory fields to check in the spreadsheet.| Not defined     | `string[]` |
-| [`skipMandatoryFieldCheck`](#skipmandatoryfieldcheck)| Skips the check for mandatory fields.                | `false`         | `boolean`  |
-| [`skipColumnsCheck`](#skipcolumnscheck)             | Skips the check for unknown columns not in metadata.  | `false`         | `boolean`  |
-| [`skipMaxLengthCheck`](#skipmaxlengthcheck)         | Skips the max length check for column values.         | `false`         | `boolean`  |
-| [`skipEmptyHeadersCheck`](#skipemptyheaderscheck)   | Skips the check for empty headers in spreadsheet.     | `false`         | `boolean`  |
-| [`continueOnError`](#continueonerror)               | Continues processing next batches even after errors.  | `false`         | `boolean`  |
+| Option                                              | Description                                           | Default         | Available since | Type       |
+|-----------------------------------------------------|-------------------------------------------------------|-----------------|----------------|------------|
+| [`action`](#action)                                 | Sets the operation type (CREATE or UPDATE).           | `CREATE`        | 1.7.0          | `string`   |
+| [`batchSize`](#batchsize)                           | Controls the size of batches sent to the backend.     | `1000`          | 0.11.0         | `number`   |
+| [`strict`](#strict)                                 | Controls availability of the "Continue" button in error dialogs. | `false` | 0.16.0      | `boolean`  |
+| [`decimalSeparator`](#decimalseparator)             | Sets the decimal separator for numbers.               | Browser default | 0.17.0         | `string`   |
+| [`mandatoryFields`](#mandatoryfields)               | Specifies mandatory fields to check in the spreadsheet.| Not defined     | 0.15.0         | `string[]` |
+| [`skipMandatoryFieldCheck`](#skipmandatoryfieldcheck)| Skips the check for mandatory fields.                | `false`         | 0.17.0         | `boolean`  |
+| [`skipColumnsCheck`](#skipcolumnscheck)             | Skips the check for unknown columns not in metadata.  | `false`         | 0.29.0         | `boolean`  |
+| [`skipMaxLengthCheck`](#skipmaxlengthcheck)         | Skips the max length check for column values.         | `false`         | 0.31.0         | `boolean`  |
+| [`skipEmptyHeadersCheck`](#skipemptyheaderscheck)   | Skips the check for empty headers in spreadsheet.     | `false`         | 1.2.0          | `boolean`  |
+| [`continueOnError`](#continueonerror)               | Continues processing next batches even after errors.  | `false`         | 0.30.0         | `boolean`  |
 
 
 ### Advanced Configuration Options
 
-| Option                                            | Description                                               | Default            | Type       |
-|---------------------------------------------------|-----------------------------------------------------------|--------------------|------------|
-| [`fieldMatchType`](#fieldmatchtype)               | Strategy for matching spreadsheet columns to fields.      | `"labelTypeBrackets"` | `string` |
-| [`activateDraft`](#activatedraft)                 | Activates a draft immediately if possible.                | `false`            | `boolean`  |
-| [`createActiveEntity`](#createactiveentity)       | Directly creates an active entity in draft scenarios.     | `false`            | `boolean`  |
-| [`standalone`](#standalone)                       | Uses the component in standalone mode without a table.    | `false`            | `boolean`  |
-| [`useTableSelector`](#usetableselector)           | Allows choosing a table when multiple tables are present. | `false`            | `boolean`  |
-| [`hideSampleData`](#hidesampledata)               | Omits sample data in the template file.                   | `false`            | `boolean`  |
-| [`sampleData`](#sampledata)                       | Adds custom sample data to the template file.             | Auto-generated     | `object[]` |
-| [`debug`](#debug)                                 | Enables debug mode with additional console logs.          | `false`            | `boolean`  |
-| [`componentContainerData`](#componentcontainerdata)| Special options for using the component in a `ComponentContainer`.| Not specified     | `object`   |
-| [`bindingCustom`](#bindingcustom)                 | Uses a custom OData binding instead of a table binding.   | Not specified      | `object`   |
-| [`i18nModel`](#i18nmodel)                         | Uses a custom i18n model to override default texts.       | Not specified      | `object`   |
+| Option                                            | Description                                               | Default            | Available since | Type       |
+|---------------------------------------------------|-----------------------------------------------------------|--------------------|----------------|------------|
+| [`fieldMatchType`](#fieldmatchtype)               | Strategy for matching spreadsheet columns to fields.      | `"labelTypeBrackets"` | Initial release | `string` |
+| [`activateDraft`](#activatedraft)                 | Activates a draft immediately if possible.                | `false`            | 0.5.0          | `boolean`  |
+| [`createActiveEntity`](#createactiveentity)       | Directly creates an active entity in draft scenarios.     | `false`            | 0.31.0         | `boolean`  |
+| [`standalone`](#standalone)                       | Uses the component in standalone mode without a table.    | `false`            | 0.13.0         | `boolean`  |
+| [`useTableSelector`](#usetableselector)           | Allows choosing a table when multiple tables are present. | `false`            | 0.23.0         | `boolean`  |
+| [`hideSampleData`](#hidesampledata)               | Omits sample data in the template file.                  | `false`            | 0.20.0         | `boolean`  |
+| [`sampleData`](#sampledata)                       | Adds custom sample data to the template file.             | Auto-generated     | 0.22.0         | `object[]` |
+| [`debug`](#debug)                                 | Enables debug mode with additional console logs.          | `false`            | 0.19.0         | `boolean`  |
+| [`componentContainerData`](#componentcontainerdata)| Special options for using the component in a `ComponentContainer`.| Not specified     | 0.26.0      | `object`   |
+| [`bindingCustom`](#bindingcustom)                 | Uses a custom OData binding instead of a table binding.   | Not specified      | 1.3.0          | `object`   |
+| [`i18nModel`](#i18nmodel)                         | Uses a custom i18n model to override default texts.       | Not specified      | 0.33.0         | `object`   |
 
 ### `directUploadConfig`
 
-**default:** Not specified
+**default:** Not specified  
+**Available since:** 2.1.0
 
 The `directUploadConfig` option enables direct file upload to a CAP backend using the CDS plugin. Instead of extracting data from the Excel file and sending it through standard UI5 APIs, this approach uploads the entire Excel file directly to the backend for server-side processing, which is much more efficient for large files.
 
@@ -119,6 +120,8 @@ For more details, see the [CAP CDS Plugin documentation](CdsPlugin.md).
 ### `columns`
 
 **default:** all fields  
+**Available since:** Initial release
+
 This option defines which fields should only be taken into account during the upload.  
 **example:**
 
@@ -128,7 +131,8 @@ columns: ["ID", "Birthday","FirstName","LastName"],
 
 ### `excludeColumns`
 
-**default:** []
+**default:** []  
+**Available since:** 1.1.0
 
 You can specify columns to exclude from the import and the template.  
 If you have already defined the [`columns`](#columns) property in your configuration, any columns listed in `excludeColumns` will be omitted from the final display.  
@@ -137,10 +141,14 @@ This allows you to focus on including only the relevant columns, rather than ind
 ### `spreadsheetFileName`
 
 **default:** Template.xlsx  
+**Available since:** Initial release
+
 This option defines the file name when a template is downloaded.  
 If not defined, the code checks if Label for OData Type defined.
 
 ### `tableId`
+
+**Available since:** Initial release
 
 This plugin first checks whether exactly one table exists on an object page.
 If there is no table or more than one table, an error is returned.  
@@ -152,6 +160,8 @@ tableId: "ui5.isu.msb.createmeterread::RunObjectPage--fe::table::_Ableseauftrag:
 ````
 
 ### `odataType`
+
+**Available since:** 0.24.0
 
 With this option, it is possible to upload the data to a different Entity Set in the Service.  
 This is helpful when the service from the table is not the actual service where the data should be uploaded.
@@ -168,6 +178,8 @@ odataType: Orderservice.OrdersND
 
 ### `mandatoryFields`
 
+**Available since:** 0.15.0
+
 The selected fields are checked to see if they are present in the Spreadsheet file.
 If not defined, they will not be checked.  
 **example:**
@@ -178,7 +190,8 @@ mandatoryFields: ["product_ID", "quantity"]`
 
 ### `fieldMatchType`
 
-**default:** `labelTypeBrackets`
+**default:** `labelTypeBrackets`  
+**Available since:** Initial release
 
 Options:  
 
@@ -194,7 +207,8 @@ With `labelTypeBrackets`, the header columns would look like this: `ID[ID], Birt
 
 ### `activateDraft`
 
-**default:** `false`
+**default:** `false`  
+**Available since:** 0.5.0
 
 This option defines in draft scenarios whether a draft should be activated immediately or not.  
 The option only defines whether the attempt should be started. If a draft activation is basically not possible, it will not be executed and may lead to errors.  
@@ -206,7 +220,8 @@ Will be overwritten by the `createActiveEntity` option.
 
 ### `createActiveEntity`
 
-**default:** `false`
+**default:** `false`  
+**Available since:** 0.31.0
 
 This option defines whether the `IsActiveEntity` property should be inserted into the payload sent to the backend.  
 In draft scenarios, you can use this option to create an active entity instead of a draft.  
@@ -237,7 +252,8 @@ This means that at least all drafts are available.
 
 ### `action`
 
-**default:** `CREATE`
+**default:** `CREATE`  
+**Available since:** 1.7.0
 
 Options:  
 
@@ -246,7 +262,8 @@ Options:
 
 ### `batchSize`
 
-**default:** `1.000`
+**default:** `1.000`  
+**Available since:** 0.11.0
 
 Options:  
 
@@ -264,7 +281,8 @@ For updates, the batch size is limited to 100.
 
 ### `standalone`
 
-**default:** `false`
+**default:** `false`  
+**Available since:** 0.13.0
 
 This option defines whether the plugin should be used in standalone mode or not.  
 If this option is set to `true`, no table is searched, and therefore no context is needed.  
@@ -289,7 +307,8 @@ An example of an implementation to display data of a Spreadsheetupload in a free
 
 ### `readAllSheets`
 
-**default:** `false`
+**default:** `false`  
+**Available since:** 0.25.0
 
 This option defines whether all sheets in the Spreadsheet file should be read or not.  
 If this option is set to `true`, the `payload` returns an additional parameter with the sheet name.
@@ -349,7 +368,8 @@ this.spreadsheetUpload.attachUploadButtonPress(function (event) {
 
 ### `readSheet`
 
-**default:** `0`
+**default:** `0`  
+**Available since:** 0.27.0
 
 By default, the first spreadsheet is read.  
 With this option, you can specify which spreadsheet should be read with a number (0-based) or a name.  
@@ -365,7 +385,8 @@ If the option `readAllSheets` is set to `true`, this option is ignored.
 
 ### `strict`
 
-**default:** `false`
+**default:** `false`  
+**Available since:** 0.16.0
 
 When strict is set to its default value (false), the "Continue" button is displayed in the error dialog, allowing users to proceed despite encountering errors in the uploaded data.  
 
@@ -373,33 +394,38 @@ This option defines whether the "Continue" button should be displayed in the err
 
 ### `decimalSeparator`
 
-**default:** Browser Default
+**default:** Browser Default  
+**Available since:** 0.17.0
 
 This option defines the decimal separator for numbers as a string.  
 This option is only needed if there are numbers as strings in the Spreadsheet File or when importing a CSV. When the datatype in the Spreadsheet File is a number, the decimal separator is automatically recognized.
 
 ### `hidePreview`
 
-**default:** `false`
+**default:** `false`  
+**Available since:** 0.17.0
 
 This option defines whether the button to preview the uploaded data in the table dialog should be hidden or not.
 
 ### `previewColumns`
 
-**default:** `[]`
+**default:** `[]`  
+**Available since:** 0.31.0
 
 This option defines which columns should be shown in the preview dialog. This is an array of strings with the property names.
 
 ### `skipMandatoryFieldCheck`
 
-**default:** `false`
+**default:** `false`  
+**Available since:** 0.17.0
 
 This option defines whether the mandatory fields defined in the metadata should be checked or not.  
 Only the option `mandatoryFields` will be checked.
 
 ### `skipColumnsCheck`
 
-**default:** `false`
+**default:** `false`  
+**Available since:** 0.29.0
 
 This option determines whether or not the columns in the Spreadsheet File should be verified.  
 For instance, if there is a column named `Test column` in the Spreadsheet File, and this particular column name is absent from the metadata, an error will occur by default.  
@@ -407,14 +433,16 @@ However, if there are columns that are not being uploaded to the backend, you ca
 
 ### `skipMaxLengthCheck`
 
-**default:** `false`
+**default:** `false`  
+**Available since:** 0.31.0
 
 This option determines whether or not the max length of the columns in the Spreadsheet File should be verified.  
 If there is a `maxLength` defined in the metadata, the value in the Spreadsheet File will be checked.
 
 ### `showBackendErrorMessages`
 
-**default:** `false`
+**default:** `false`  
+**Available since:** 0.18.0
 
 This option defines whether backend error messages should be displayed or not.  
 In Fiori Elements scenarios, the error messages are displayed automatically. In FreeStyle scenarios, the error messages are not displayed automatically.  
@@ -422,7 +450,8 @@ If this option is set to `false`, only the error message `Error while uploading 
 
 ### `showOptions`
 
-**default:** `false`
+**default:** `false`  
+**Available since:** 0.18.0
 
 This option defines whether the button to show the options dialog should be displayed or not.  
 Currently, the menu is more for the development process.
@@ -431,9 +460,12 @@ There are also only a few selected configurations available.
 
 ### `availableOptions`
 
+**Available since:** 0.20.0
+
 ### `showDownloadButton`
 
-**default:** `false`
+**default:** `false`  
+**Available since:** Initial release
 
 This option defines whether the button to download data should be displayed or not.  
 More information can be found in the [Spreadsheet Deep Download](spreadsheetdownload.md) documentation.
@@ -448,14 +480,16 @@ This Option defines which option the user can influence.
 
 ### `hideSampleData`
 
-**default:** `false`
+**default:** `false`  
+**Available since:** 0.20.0
 
 This option defines whether the template file should be empty and not have any sample data.  
 This will overwrite the [`sampleData`](#sampledata) option.
 
 ### `sampleData`
 
-**default:** Using generated sample data
+**default:** Using generated sample data  
+**Available since:** 0.22.0
 
 This option defines the sample data that is displayed in the template file.  
 If no sample data is defined, the sample data is generated automatically.  
@@ -483,7 +517,8 @@ sampleData: [
 
 ### `spreadsheetTemplateFile`
 
-**default:** `""`
+**default:** `""`  
+**Available since:** 0.29.0
 
 **possible values:**
 
@@ -538,7 +573,8 @@ this.spreadsheetUpload = await this.editFlow.getView()
 
 ### `useTableSelector`
 
-**default:** `false`
+**default:** `false`  
+**Available since:** 0.23.0
 
 This option defines whether the Table Selector should be used or not.  
 If set to true and multiple tables in the view, the user can choose the table to upload the data to.  
@@ -546,10 +582,14 @@ It is also possible to set different options for each table (see [TableSelector]
 
 ### `spreadsheetRowPropertyName`
 
+**Available since:** 0.30.0
+
 If you want to send the spreadsheet row to the backend, you can define a property name here.  
 When the property name is defined, the payload will include the spreadsheet row as an integer with the defined property name.
 
 ### `componentContainerData`
+
+**Available since:** 0.26.0
 
 The ComponentContainer is a special control that can be used to embed the spreadsheet importer in a view without the need to instantiate it in the controller.  
 These are special options that can be used in the ComponentContainer.
@@ -601,6 +641,8 @@ settings="{
 ### `bindingCustom`
 
 **default:** Not specified  
+**Available since:** 1.3.0
+
 This option allows you to provide custom binding settings for the component. It can be used to override default behavior to search for a table and to use the binding of the table.  
 Binding must be a OData binding, either V2 or V4.
 
@@ -623,6 +665,8 @@ this.spreadsheetUpload = await this.editFlow.getView()
 ```
 
 ### `i18nModel`
+
+**Available since:** 0.33.0
 
 You can use your own i18n model to overwrite texts.  
 
@@ -648,7 +692,8 @@ this.spreadsheetUpload = await this.editFlow.getView()
 
 ### `continueOnError`
 
-**default:** `false`
+**default:** `false`  
+**Available since:** 0.30.0
 
 This option defines whether the batch processing should continue if an error occurs.  
 If you have, for example, set `batchSize` to 2 and have 4 rows, and an error occurs in the first batch of two rows, the processing will stop. If you set this flag to `true`, the processing will continue, and the second batch of two rows will be processed.  
@@ -657,14 +702,16 @@ Use this option with caution.
 
 ### `debug`
 
-**default:** `false`
+**default:** `false`  
+**Available since:** 0.19.0
 
 This option defines whether the debug mode should be activated or not.  
 If set to true, it will set the log level to `debug` (Log.Level.DEBUG) and activate the options menu with all available options.
 
 ### `readSheetCoordinates`
 
-**default:** `"A1"`
+**default:** `"A1"`  
+**Available since:** 1.2.0
 
 This option allows you to specify a starting cell (in Excel A1 notation) for reading data from the spreadsheet. Use this when your data doesn't start at cell A1, for example when the spreadsheet has title headers or metadata in the first few rows.
 
@@ -715,7 +762,8 @@ this.spreadsheetUpload = await this.editFlow.getView()
 
 ### `skipEmptyHeadersCheck`
 
-**default:** `false`
+**default:** `false`  
+**Available since:** 1.2.0
 
 This option determines whether the component should check for empty headers (columns with names like `__EMPTY` or `__EMPTY_1`) in the spreadsheet data.  
 This checks in general the correct parsing of the data and will show a warning with a hint about the expected starting cell for headers (based on readSheetCoordinates or "A1" if not specified).

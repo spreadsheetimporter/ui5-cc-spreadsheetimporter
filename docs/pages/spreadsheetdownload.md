@@ -1,7 +1,7 @@
 # Spreadsheet Deep Download
 
 !!! warning
-    This new feature is experimental and may change in the future and currently only available for OData V4.
+    This new feature is available since version 1.5.0 and experimental and may change in the future and currently only available for OData V4.
     If you deep download data, the OData Service need to support `expand`.
 
 This feature downloads data from the backend and converts it to a Spreadsheet file.

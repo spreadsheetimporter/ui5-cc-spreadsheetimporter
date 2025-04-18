@@ -1,14 +1,14 @@
 The following events can be used as extension points to intervene and manipulate data:
 
-| Event                | Description                                                                                        |
-| -------------------- | -------------------------------------------------------------------------------------------------- |
-| `preFileProcessing`  | Execute custom logic before processing the spreadsheet file starts                                 |
-| `checkBeforeRead`    | Check data before it is uploaded to the UI5                                                        |
-| `changeBeforeCreate` | Change data before it is sent to the backend                                                       |
-| `requestCompleted`   | Event when the request is completed                                                                |
-| `uploadButtonPress`  | Fired when the `Upload` button is pressed, possible to prevent data from being sent to the backend |
-| `beforeDownloadFileProcessing`  | Fired before the data is converted to a spreadsheet file |
-| `beforeDownloadFileExport`      | Fired just before the file is downloaded                                                  |
+| Event                | Description                                                                                        | Available since |
+| -------------------- | -------------------------------------------------------------------------------------------------- | --------------- |
+| `preFileProcessing`  | Execute custom logic before processing the spreadsheet file starts                                 | 1.2.0           |
+| `checkBeforeRead`    | Check data before it is uploaded to the UI5                                                        | Initial release |
+| `changeBeforeCreate` | Change data before it is sent to the backend                                                       | Initial release |
+| `requestCompleted`   | Event when the request is completed                                                                | 0.28.0          |
+| `uploadButtonPress`  | Fired when the `Upload` button is pressed, possible to prevent data from being sent to the backend | 0.13.0          |
+| `beforeDownloadFileProcessing`  | Fired before the data is converted to a spreadsheet file | 1.5.0           |
+| `beforeDownloadFileExport`      | Fired just before the file is downloaded                                                  | 1.5.0           |
 
 
 You can attach async functions to the events by wrapping the function in a `Promise`. See [Attach async functions to events](#attach-async-functions-to-events) for more information.
