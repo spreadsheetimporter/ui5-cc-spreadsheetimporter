@@ -53,6 +53,11 @@ describe("Download Spreadsheet List Report", () => {
 		scenario = global.scenario;
 		downloadDir = path.resolve(__dirname, "../../downloads");
 
+		// Ensure download directory exists
+		if (!fs.existsSync(downloadDir)) {
+			fs.mkdirSync(downloadDir, { recursive: true });
+		}
+
 		await wdi5.goTo("#/orders");
 	});
 
