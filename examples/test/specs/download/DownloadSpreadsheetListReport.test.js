@@ -17,11 +17,17 @@ const TEST_CONSTANTS = {
 
 describe("Download Spreadsheet List Report", () => {
 	let downloadDir;
+	let BaseClass;
+	let scenario;
 
 	before(async () => {
 		BaseClass = new Base();
 		scenario = global.scenario;
 		downloadDir = path.resolve(__dirname, "../../downloads");
+		// Ensure download directory exists
+		if (!fs.existsSync(downloadDir)) {
+			fs.mkdirSync(downloadDir, { recursive: true });
+		}
 	});
 
 	it("should trigger download button", async () => {
@@ -42,7 +48,7 @@ describe("Download Spreadsheet List Report", () => {
 
 	it("Download spreadsheet and verify content", async () => {
 		const expectedFileName = TEST_CONSTANTS.EXPECTED_FILE_NAME;
-		
+
 		try {
 			await browser.waitUntil(
 				async () => {

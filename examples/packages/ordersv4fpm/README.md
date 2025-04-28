@@ -12,7 +12,7 @@
 |**Application Title**<br>Orders V4 Flexible Programming Model|
 |**Namespace**<br>ui.v4|
 |**UI5 Theme**<br>sap_horizon|
-|**UI5 Version**<br>1.120.12|
+|**UI5 Version**<br>1.120.29|
 |**Enable Code Assist Libraries**<br>False|
 |**Enable TypeScript**<br>False|
 |**Add Eslint configuration**<br>False|

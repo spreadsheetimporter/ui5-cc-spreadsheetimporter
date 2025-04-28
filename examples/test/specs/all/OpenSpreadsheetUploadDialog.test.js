@@ -53,7 +53,7 @@ describe("Upload File List Report", () => {
 			await browser.keys(['Escape']);
 			await browser.pause(1000);
 			
-			console.log("Escape key sequence completed");
+			console.log("Escape key sequence complete");
 		} catch (error) {
 			console.error("Escape key sequence failed:", error.message);
 		}

@@ -106,6 +106,11 @@ describe("Download and Update Spreadsheet Object Page", () => {
 
         await downloadButton.press();
 
+		// create download directory if it doesn't exist
+		if (!fs.existsSync(downloadDir)) {
+			fs.mkdirSync(downloadDir, { recursive: true });
+		}
+
         // Wait for download
         await browser.waitUntil(
             () => {
@@ -162,7 +167,7 @@ describe("Download and Update Spreadsheet Object Page", () => {
     it("should verify updated quantities", async () => {
         const response = await fetch(`${TEST_CONSTANTS.API.BASE_URL}(ID=${TEST_CONSTANTS.ORDER.ID},IsActiveEntity=true)/Items`);
         const data = await response.json();
-        
+
         data.value.forEach(item => {
             expect(item.quantity).toBe(TEST_CONSTANTS.ORDER.NEW_QUANTITY);
         });
