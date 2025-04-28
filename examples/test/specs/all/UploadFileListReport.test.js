@@ -1,3 +1,5 @@
+const { default: _ui5Service } = require("wdio-ui5-service");
+const ui5Service = new _ui5Service();
 const FEV2ND = require("../Objects/FEV2ND");
 const Base = require("./../Objects/Base");
 const FEV2 = require("./../Objects/FEV2");
@@ -86,11 +88,34 @@ describe("Upload File List Report", () => {
 	});
 
 	it("entry created and activated", async () => {
-		const object = await FE.getTableObject(FE.listReportTable, FE.checkFileuploadListreportAttribute, FE.checkFileuploadListreportValue);
-		if (scenario.startsWith("ordersv2fenondraft")) {
-			expect(object.OrderNo).toBe("4");
+		let object = await FE.getTableObject(FE.listReportTable, FE.checkFileuploadListreportAttribute, FE.checkFileuploadListreportValue);
+		if (object) {
+			if (scenario.startsWith("ordersv2fenondraft")) {
+				expect(object.OrderNo).toBe("4");
+			} else {
+				expect(object.IsActiveEntity).toBeTruthy();
+			}
 		} else {
-			expect(object.IsActiveEntity).toBeTruthy();
+			await browser.refresh();
+			await ui5Service.injectUI5();
+			try {
+				await BaseClass.pressById(FE.listReportGoButton);
+			} catch (error) {
+				await BaseClass.pressById(FE.listReportDynamicPageTitle);
+				await BaseClass.dummyWait(500);
+				await BaseClass.pressById(FE.listReportGoButton);
+			}
+			object = await FE.getTableObject(FE.listReportTable, FE.checkFileuploadListreportAttribute, FE.checkFileuploadListreportValue);
+			if (object) {
+				if (scenario.startsWith("ordersv2fenondraft")) {
+					expect(object.OrderNo).toBe("4");
+				} else {
+					expect(object.IsActiveEntity).toBeTruthy();
+				}
+			} else {
+				throw new Error("Object not found");
+			}
+
 		}
 	});
 });
