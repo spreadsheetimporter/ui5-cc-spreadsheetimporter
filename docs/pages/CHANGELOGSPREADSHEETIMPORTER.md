@@ -1,4 +1,19 @@
+## [2.1.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v2.0.0...ui5-cc-spreadsheetimporter-v2.1.0) (2025-04-28)
 
+
+### Features
+
+* add new api setArrayMessages ([#744](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/744)) ([7396644](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/7396644f372644e2740a4d0fc7885da452010da8))
+* Add new config skipEmptyHeadersCheck and readSheetCoordinates features ([#741](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/741)) ([3380cb0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/3380cb046cf725f8214448c7ab2c68e524ab0325))
+* integrate the cds spreadsheetimporter plugin ([#742](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/742)) ([43add6a](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/43add6a1a6fd0808f93e423f0e2f8d6b1318f30a))
+
+
+### Bug Fixes
+
+* check configuration options if valid ([#737](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/737)) ([bb3a20b](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/bb3a20b00af0c409965bafd1be870be444224daf))
+* event handler prefixed with dot in xml views ([#738](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/738)) ([9f04a83](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/9f04a83f5c4cd00e93c81321cef0ad7901e7eae4))
+* handle process if object was not found in backend ([#735](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/735)) ([8aed7e9](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/8aed7e9b99c45aed593c1f00b4a5287f93bd890f))
+* return error if wrong table type is specified ([#739](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/739)) ([83c80dd](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/83c80ddefe75714414aa4064e93860510b87e5c2))
 
 ## [2.0.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.7.3...ui5-cc-spreadsheetimporter-v2.0.0) (2025-03-28)
 
