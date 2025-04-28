@@ -41,7 +41,7 @@ This is optional and preloads the component on startup of the application.
 
 ```json
 "dependencies": {
-  "minUI5Version": "1.108.30",
+  "minUI5Version": "1.108.40",
   "libs": {
     "sap.m": {},
     "sap.ui.core": {},

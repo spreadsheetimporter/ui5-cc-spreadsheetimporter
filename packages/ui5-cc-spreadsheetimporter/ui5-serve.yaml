@@ -11,7 +11,7 @@ customConfiguration:
     mountPath: /thirdparty/customcontrol/spreadsheetimporter/v2_0_0
 framework:
   name: OpenUI5
-  version: 1.120.17
+  version: 1.120.29
   libraries:
     - name: sap.m
     - name: sap.ui.core

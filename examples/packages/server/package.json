@@ -38,7 +38,7 @@
     },
     "launchpad": {
       "theme": "sap_horizon",
-      "version": "1.120.6",
+      "version": "1.120.29",
       "basePath": "launchpad.html",
       "appConfigPath": "app/appconfig.json"
     }
