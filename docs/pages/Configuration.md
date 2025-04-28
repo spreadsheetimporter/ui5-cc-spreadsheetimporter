@@ -291,6 +291,26 @@ The mandatory parameter `context` and the parameter `tableId` are no longer nece
 If you want to use the template download function, you have to set the parameter `columns`, otherwise the `Download Template` button will not be displayed.  
 The `payload` will be an array of objects with the keys named like the `columns` parameter.
 
+#### Configuration Parameters Not Compatible with Standalone Mode
+
+When using the component in standalone mode (`standalone: true`), the following configuration parameters will have no effect since no data is sent to a backend system:
+
+| Parameter | Reason |
+|-----------|--------|
+| `context` | Not needed in standalone mode as no binding context is required |
+| `tableId` | Not needed as no table binding is used |
+| `odataType` | Not applicable since no OData entity type is used |
+| `activateDraft` | Not applicable since no draft handling is performed |
+| `createActiveEntity` | Not applicable since no entity creation occurs |
+| `batchSize` | Not used since no batches are sent to the backend |
+| `continueOnError` | Not applicable since no backend communication occurs |
+| `action` | CREATE/UPDATE operations are not performed against a backend |
+| `showBackendErrorMessages` | No backend messages will be generated |
+| `bindingCustom` | Not used as no OData binding is required |
+| `directUploadConfig` | Direct file upload to backend is not performed |
+
+When in standalone mode, the spreadsheet data is simply parsed and made available to the application through the `uploadButtonPress` event.
+
 **Example:**
 
 ````javascript
