@@ -78,7 +78,7 @@ export class ODataV4RequestObjects {
 			if (this.messageHandler.areMessagesPresent()) {
 				try {
 					await this.messageHandler.displayMessages();
-					
+
 					// Log status changes
 					const statusChanges = batch.map((payload, index) => {
 						const keys = this.metadataHandler.getKeys(binding, payload);
@@ -179,7 +179,7 @@ export class ODataV4RequestObjects {
 
 	private findEntitiesFromSpreadsheet(batch: any[], objectsTrue: any[], objectsFalse: any[], binding: any): any[] {
 		const matchResults = [];
-		
+
 		batch.forEach((payload, index) => {
 			const keys = this.metadataHandler.getKeys(binding, payload);
 			const keysWithoutIsActiveEntity = { ...keys };
@@ -196,7 +196,7 @@ export class ODataV4RequestObjects {
 				matchingObject = payload.IsActiveEntity ? matchingObjectFalse : matchingObjectTrue;
 			}
 
-			matchResults.push({ 
+			matchResults.push({
 				index,
 				keys: keysWithoutIsActiveEntity,
 				requestedStatus: payload.IsActiveEntity,
@@ -211,7 +211,7 @@ export class ODataV4RequestObjects {
 			notFound: matchResults.filter(r => !r.object).length,
 			details: matchResults
 		}));
-		
+
 		return matchResults.map(result => result.object);
 	}
 
@@ -250,7 +250,7 @@ export class ODataV4RequestObjects {
 			const keysWithoutIsActiveEntity = { ...keys };
 			delete keysWithoutIsActiveEntity.IsActiveEntity;
 
-			const foundObject = objects.find((obj) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => obj[key] === value));
+			const foundObject = objects.find((obj) => obj && Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => obj[key] === value));
 
 			if (!foundObject) {
 				errorFound = true;
