@@ -48,18 +48,22 @@ theme:
     # Palette toggle for dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
+      primary: custom
+      accent: custom
       toggle:
         icon: material/brightness-4
         name: Switch to system preference
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
-      scheme: default 
+      scheme: default
+      primary: custom
+      accent: custom
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
 
-  # logo: "images/logo.svg"
-  # favicon: "images/favicon.png"
+  logo: "images/Logo_square.png"
+  favicon: "images/Logo_square.png"
   font: false
   features:
     - navigation.expand
@@ -69,8 +73,10 @@ theme:
 extra:
   analytics:
     provider: custom
-    property: foobar 
+    property: foobar
 
+extra_css:
+  - stylesheets/extra.css
 
 plugins:
   - search

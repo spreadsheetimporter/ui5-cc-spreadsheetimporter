@@ -19,7 +19,8 @@
   },
   "files": [
     "dist",
-    "ui5.yaml"
+    "ui5.yaml",
+    "CHANGELOG.md"
   ],
   "license": "See LICENSE.md",
   "scripts": {

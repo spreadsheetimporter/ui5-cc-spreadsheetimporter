@@ -1,5 +1,9 @@
 # UI5 `ui5-cc-spreadsheetimporter`
 
+<div align="left">
+  <img src="docs/images/Logo_wide.png" alt="UI5 Spreadsheet Importer Logo" width="400">
+</div>
+
 This monorepo houses the UI5 Component `ui5-cc-spreadsheetimporter`.
 
 `ui5-cc-spreadsheetimporter` is a UI5 Component designed for the integration of Spreadsheet Upload functionality into Fiori Elements and other UI5 Apps.  
