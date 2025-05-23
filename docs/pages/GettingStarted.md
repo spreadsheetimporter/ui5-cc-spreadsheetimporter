@@ -53,7 +53,7 @@ There are two ways to include the component in your application:
 
    ```json
    "resourceRoots": {
-     "cc.spreadsheetimporter.v2_1_0": "./thirdparty/customcontrol/spreadsheetimporter/v2_1_0"
+     "cc.spreadsheetimporter.v2_2_0": "./thirdparty/customcontrol/spreadsheetimporter/v2_2_0"
    }
    ```
 
@@ -78,7 +78,7 @@ For BTP applications (or apps using the index.html bootstrap), you can use jsDel
      data-sap-ui-theme="sap_horizon"
      data-sap-ui-resourceroots='{
        "your.app.namespace": "./",
-       "cc.spreadsheetimporter.v2_1_0": "https://cdn.jsdelivr.net/npm/ui5-cc-spreadsheetimporter@1.7.3/dist"
+       "cc.spreadsheetimporter.v2_2_0": "https://cdn.jsdelivr.net/npm/ui5-cc-spreadsheetimporter@1.7.3/dist"
      }'
      data-sap-ui-oninit="module:sap/ui/core/ComponentSupport"
      data-sap-ui-async="true"
@@ -101,7 +101,7 @@ For more information on using jsDelivr CDN, see the [jsDelivr documentation](htt
    ```json
    "componentUsages": {
      "spreadsheetImporter": {
-       "name": "cc.spreadsheetimporter.v2_1_0"
+       "name": "cc.spreadsheetimporter.v2_2_0"
      }
    }
    ```
@@ -115,7 +115,7 @@ For more information on using jsDelivr CDN, see the [jsDelivr documentation](htt
 
    ```json
    "sap.app": {
-     "embeds": ["thirdparty/customcontrol/spreadsheetimporter/v2_1_0"]
+     "embeds": ["thirdparty/customcontrol/spreadsheetimporter/v2_2_0"]
    }
    ```
 
@@ -131,7 +131,7 @@ For more information on using jsDelivr CDN, see the [jsDelivr documentation](htt
    ```json
    "componentUsages": {
      "spreadsheetImporter": {
-       "name": "cc.spreadsheetimporter.v2_1_0"
+       "name": "cc.spreadsheetimporter.v2_2_0"
      }
    }
    ```
@@ -312,7 +312,7 @@ openSpreadsheetUploadDialog: async function (oEvent) {
         context: this,
       },
       url: "/sap/bc/ui5_ui5/sap/Z_XUP_v0_33_2",
-      name: "cc.spreadsheetimporter.v2_1_0"
+      name: "cc.spreadsheetimporter.v2_2_0"
     });
   this.spreadsheetUpload.openSpreadsheetUploadDialog();
   this.getView().setBusy(false);
@@ -323,7 +323,7 @@ This method can be used as an alternative to `resourceRoots` in the `manifest.js
 
 #### Error: Library/Component Used in Application Does Not Exist
 
-When deploying the app to your ABAP system, you might encounter an error like `SAPUI5 library/component cc.spreadsheetimporter.v2_1_0 used in application Z*** does not exist`. The application is deployed, but the service returns an error.
+When deploying the app to your ABAP system, you might encounter an error like `SAPUI5 library/component cc.spreadsheetimporter.v2_2_0 used in application Z*** does not exist`. The application is deployed, but the service returns an error.
 
 To avoid this error, add the following to your `manifest.json` file:
 
@@ -332,7 +332,7 @@ To avoid this error, add the following to your `manifest.json` file:
 
 ```json
 "sap.app": {
-  "embeds": ["thirdparty/customcontrol/spreadsheetimporter/v2_1_0"]
+  "embeds": ["thirdparty/customcontrol/spreadsheetimporter/v2_2_0"]
 }
 ```
 
@@ -439,7 +439,7 @@ builder:
       configuration:
         archiveName: uimodule
         includeDependencies:
-        - ui5-cc-spreadsheetimporter-v2-1-0
+        - ui5-cc-spreadsheetimporter-v2-2-0
 ```
 
 The metadata name is defined in the [`ui5.yaml`](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/9b61a778e5b0a5b66c15f5889334a6d684ae88de/packages/ui5-cc-spreadsheetimporter/ui5.yaml#L4) file of the component.
@@ -451,7 +451,7 @@ The metadata name is defined in the [`ui5.yaml`](https://github.com/spreadsheeti
 
 When using decentralized deployment, deployment may fail with the following error:
 
-`"Service name 'spreadsheetimporter_v2_1_0' and public setting 'true' in embedded manifest.json have to be equal to service name 'xxxxxxx' and public setting 'true' of root manifest.json"`
+`"Service name 'spreadsheetimporter_v2_2_0' and public setting 'true' in embedded manifest.json have to be equal to service name 'xxxxxxx' and public setting 'true' of root manifest.json"`
 
 SAP currently does not provide a fix for this.
 
@@ -476,7 +476,7 @@ builder:
       afterTask: replaceVersion
 ```
 
-This task will update the Spreadsheet Importer manifest with the app's service name at this path: `dist/thirdparty/customcontrol/spreadsheetimporter/v2_1_0/manifest.json`.
+This task will update the Spreadsheet Importer manifest with the app's service name at this path: `dist/thirdparty/customcontrol/spreadsheetimporter/v2_2_0/manifest.json`.
 
 ##### Workaround 2
 
