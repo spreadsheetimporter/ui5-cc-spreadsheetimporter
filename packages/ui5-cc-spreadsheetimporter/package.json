@@ -1,6 +1,6 @@
 {
   "name": "ui5-cc-spreadsheetimporter",
-  "version": "2.0.0",
+  "version": "1.7.4",
   "description": "A UI5 Module to integrate a Spreadsheet Upload for Fiori Element Apps.",
   "main": "dist/Component.js",
   "types": "dist/index.d.ts",
@@ -49,7 +49,8 @@
     "deploy": "npm run build && fiori deploy --config ui5-deploy.yaml -y",
     "deploy:cf": "cf deploy mta_archives/archive.mtar --retries 1",
     "undeploy": "cf undeploy ui5-cc-spreadsheetimporter --delete-services --delete-service-keys",
-    "lint:ui5": "ui5lint --ui5-config ui5-serve.yaml --details"
+    "lint:ui5": "ui5lint --ui5-config ui5-serve.yaml --details",
+    "publish:v1-lts": "npm publish --tag v1-lts"
   },
   "dependencies": {
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"

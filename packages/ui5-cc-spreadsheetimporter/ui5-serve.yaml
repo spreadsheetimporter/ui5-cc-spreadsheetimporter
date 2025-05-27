@@ -1,6 +1,6 @@
 specVersion: '3.0'
 metadata:
-  name: cc.spreadsheetimporter.v2_0_0
+  name: cc.spreadsheetimporter.v1_7_4
 type: application
 resources:
   configuration:
@@ -8,7 +8,7 @@ resources:
       webapp: src
 customConfiguration:
   ui5-middleware-ui5:
-    mountPath: /thirdparty/customcontrol/spreadsheetimporter/v2_0_0
+    mountPath: /thirdparty/customcontrol/spreadsheetimporter/v1_7_4
 framework:
   name: OpenUI5
   version: 1.120.17
@@ -27,11 +27,11 @@ server:
           - '**/*.ts'
         replace:
           - placeholder: XXXnamespaceXXX
-            value: v2_0_0
+            value: v1_7_4
           - placeholder: XXXnamespaceShortXXX
-            value: v200
+            value: v174
           - placeholder: XXXnamespaceSlashXXX
-            value: v2_0_0
+            value: v1_7_4
     - name: ui5-tooling-transpile-middleware
       afterMiddleware: ui5-tooling-stringreplace-middleware
       configuration:
