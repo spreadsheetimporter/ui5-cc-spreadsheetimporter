@@ -22,31 +22,12 @@ export default class SheetHandler extends ManagedObject {
 		var r = { s: { r: 0, c: 0 }, e: { r: 0, c: 0 } };
 		var o = opts || {};
 		var range = o.range != null ? o.range : sheet["!ref"];
-		
-		// Apply readSheetCoordinates if provided
-		if (readSheetCoordinates && typeof readSheetCoordinates === 'string' && readSheetCoordinates !== 'A1') {
-			// Parse the cell reference to get row and column indices
-			// XLSX.utils.decode_cell converts A1 notation to {c: 0, r: 0} format
-			try {
-				const cellCoords = XLSX.utils.decode_cell(readSheetCoordinates);
-				
-				if (typeof range === "string") {
-					r = this.safe_decode_range(range);
-				} else {
-					r = range;
-				}
-				
-				// Set starting coordinates based on the cell reference
-				r.s.r = cellCoords.r;
-				r.s.c = cellCoords.c;
-				
-				// Create a new range string with adjusted coordinates
-				range = XLSX.utils.encode_range(r);
-			} catch (e) {
-				console.error("Invalid cell reference:", readSheetCoordinates);
-			}
+
+		// Apply readSheetCoordinates if provided using the dedicated method
+		if (readSheetCoordinates && typeof readSheetCoordinates === "string" && readSheetCoordinates !== "A1") {
+			range = this.applyCoordinatesToRange(range, readSheetCoordinates);
 		}
-		
+
 		if (o.header === 1) header = 1;
 		else if (o.header === "A") header = 2;
 		else if (Array.isArray(o.header)) header = 3;
@@ -151,7 +132,18 @@ export default class SheetHandler extends ManagedObject {
 					case "s":
 					case "d":
 					case "b":
+						break;
 					case "n":
+						// Check if it's a date formatted as a number
+						if (val.z && this.fmt_is_date(val.z)) {
+							v = this.numdate(v);
+							if (typeof v !== "number") {
+								// Handle date conversion
+								if (!(o && (o.UTC || o.raw === false))) {
+									v = this.utc_to_local(new Date(v));
+								}
+							}
+						}
 						break;
 					default:
 						throw new Error("unrecognized type " + val.t);
@@ -170,6 +162,134 @@ export default class SheetHandler extends ManagedObject {
 				}
 			}
 		return { row: row, isempty: isempty };
+	}
+
+	// Helper methods for date handling
+	static fmt_is_date(fmt) {
+		var i = 0,
+			/*cc = 0,*/ c = "",
+			o = "";
+		while (i < fmt.length) {
+			switch ((c = fmt.charAt(i))) {
+				case "G":
+					if (this.SSF_isgeneral(fmt, i)) i += 6;
+					i++;
+					break;
+				case '"':
+					for (; /*cc=*/ fmt.charCodeAt(++i) !== 34 && i < fmt.length; ) {
+						/*empty*/
+					}
+					++i;
+					break;
+				case "\\":
+					i += 2;
+					break;
+				case "_":
+					i += 2;
+					break;
+				case "@":
+					++i;
+					break;
+				case "B":
+				case "b":
+					if (fmt.charAt(i + 1) === "1" || fmt.charAt(i + 1) === "2") return true;
+				/* falls through */
+				case "M":
+				case "D":
+				case "Y":
+				case "H":
+				case "S":
+				case "E":
+				/* falls through */
+				case "m":
+				case "d":
+				case "y":
+				case "h":
+				case "s":
+				case "e":
+				case "g":
+					return true;
+				case "A":
+				case "a":
+				case "上":
+					if (fmt.substr(i, 3).toUpperCase() === "A/P") return true;
+					if (fmt.substr(i, 5).toUpperCase() === "AM/PM") return true;
+					if (fmt.substr(i, 5).toUpperCase() === "上午/下午") return true;
+					++i;
+					break;
+				case "[":
+					o = c;
+					while (fmt.charAt(i++) !== "]" && i < fmt.length) o += fmt.charAt(i);
+					if (o.match(SSF_abstime)) return true;
+					break;
+				case ".":
+				/* falls through */
+				case "0":
+				case "#":
+					while (i < fmt.length && ("0#?.,E+-%".indexOf((c = fmt.charAt(++i))) > -1 || (c == "\\" && fmt.charAt(i + 1) == "-" && "0#".indexOf(fmt.charAt(i + 2)) > -1))) {
+						/* empty */
+					}
+					break;
+				case "?":
+					while (fmt.charAt(++i) === c) {
+						/* empty */
+					}
+					break;
+				case "*":
+					++i;
+					if (fmt.charAt(i) == " " || fmt.charAt(i) == "*") ++i;
+					break;
+				case "(":
+				case ")":
+					++i;
+					break;
+				case "1":
+				case "2":
+				case "3":
+				case "4":
+				case "5":
+				case "6":
+				case "7":
+				case "8":
+				case "9":
+					while (i < fmt.length && "0123456789".indexOf(fmt.charAt(++i)) > -1) {
+						/* empty */
+					}
+					break;
+				case " ":
+					++i;
+					break;
+				default:
+					++i;
+					break;
+			}
+		}
+		return false;
+	}
+
+	static SSF_isgeneral(s, i) {
+		i = i || 0;
+		return (
+			s.length >= 7 + i &&
+			(s.charCodeAt(i) | 32) === 103 &&
+			(s.charCodeAt(i + 1) | 32) === 101 &&
+			(s.charCodeAt(i + 2) | 32) === 110 &&
+			(s.charCodeAt(i + 3) | 32) === 101 &&
+			(s.charCodeAt(i + 4) | 32) === 114 &&
+			(s.charCodeAt(i + 5) | 32) === 97 &&
+			(s.charCodeAt(i + 6) | 32) === 108
+		);
+	}
+
+	static numdate(v) {
+		if (v >= 60 && v < 61) return v;
+		var out = new Date();
+		out.setTime((v > 60 ? v : v + 1) * 24 * 60 * 60 * 1000 + dnthresh);
+		return out;
+	}
+
+	static utc_to_local(utc) {
+		return new Date(utc.getUTCFullYear(), utc.getUTCMonth(), utc.getUTCDate(), utc.getUTCHours(), utc.getUTCMinutes(), utc.getUTCSeconds(), utc.getUTCMilliseconds());
 	}
 
 	static safe_decode_range(range) {
@@ -213,27 +333,66 @@ export default class SheetHandler extends ManagedObject {
 
 	static renameAttributes(dataArray) {
 		const renameAttributesInObject = (obj) => {
+			const newObj = {} as any;
 			Object.keys(obj).forEach((key) => {
-				if (obj[key].hasOwnProperty("v")) {
-					obj[key].rawValue = obj[key].v;
-					delete obj[key].v;
+				const cell = obj[key];
+				if (cell && typeof cell === "object") {
+					const cloned = { ...cell } as any;
+					if (cloned.hasOwnProperty("v")) {
+						cloned.rawValue = cloned.v;
+						delete cloned.v;
 				}
-				if (obj[key].hasOwnProperty("t")) {
-					obj[key].sheetDataType = obj[key].t;
-					delete obj[key].t;
+					if (cloned.hasOwnProperty("t")) {
+						cloned.sheetDataType = cloned.t;
+						delete cloned.t;
 				}
-				if (obj[key].hasOwnProperty("z")) {
-					obj[key].format = obj[key].z;
-					delete obj[key].z;
+					if (cloned.hasOwnProperty("z")) {
+						cloned.format = cloned.z;
+						delete cloned.z;
 				}
-				if (obj[key].hasOwnProperty("w")) {
-					obj[key].formattedValue = obj[key].w;
-					delete obj[key].w;
+					if (cloned.hasOwnProperty("w")) {
+						cloned.formattedValue = cloned.w;
+						delete cloned.w;
+					}
+					newObj[key] = cloned;
+				} else {
+					newObj[key] = cell;
 				}
 			});
-			return obj;
+			return newObj;
 		};
 
 		return dataArray.map(renameAttributesInObject);
+	}
+
+	/**
+	 * Applies coordinates from A1 notation to a range
+	 * @param range The original range to modify
+	 * @param cellReference The cell reference in A1 notation (e.g., "A1")
+	 * @returns The modified range string
+	 */
+	static applyCoordinatesToRange(range: string | any, cellReference: string): string {
+		try {
+			// Parse the cell reference to get row and column indices
+			// XLSX.utils.decode_cell converts A1 notation to {c: 0, r: 0} format
+			const cellCoords = XLSX.utils.decode_cell(cellReference);
+
+			let r: any;
+			if (typeof range === "string") {
+				r = this.safe_decode_range(range);
+			} else {
+				r = range;
+			}
+
+			// Set starting coordinates based on the cell reference
+			r.s.r = cellCoords.r;
+			r.s.c = cellCoords.c;
+
+			// Create a new range string with adjusted coordinates
+			return XLSX.utils.encode_range(r);
+		} catch (e) {
+			console.error("Invalid cell reference:", cellReference);
+			return range; // Return original range if there's an error
+		}
 	}
 }

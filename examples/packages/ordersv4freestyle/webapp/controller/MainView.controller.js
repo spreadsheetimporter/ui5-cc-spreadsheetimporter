@@ -63,6 +63,20 @@ sap.ui.define([
                 this.spreadsheetUpload.triggerDownloadSpreadsheet();
             },
 
+			openWizard: async function() {
+				this.spreadsheetUpload = await this.getView().getController().getOwnerComponent()
+				.createComponent({
+					usage: "spreadsheetImporter",
+					async: true,
+					componentData: {
+						context: this,
+						debug: true
+					}
+				});
+
+				this.spreadsheetUpload.openMatchWizard();
+			},
+
             // onBeforeDownloadFileProcessing: function (event) {
             //     event.getParameters().data.$XYZData[0].buyer = "Customer 123";
             // },

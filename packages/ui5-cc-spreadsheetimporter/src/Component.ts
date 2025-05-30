@@ -2,7 +2,7 @@ import UIComponent from "sap/ui/core/UIComponent";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Device from "sap/ui/Device";
 import SpreadsheetUpload from "./controller/SpreadsheetUpload";
-import { ComponentData, DeepDownloadConfig, Messages, UpdateConfig } from "./types";
+import { ComponentData, DeepDownloadConfig, Messages, DirectUploadConfig } from "./types";
 import Log from "sap/base/Log";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import Logger from "./controller/Logger";
@@ -84,8 +84,8 @@ export default class Component extends UIComponent {
 			deepDownloadConfig: { type: "object", defaultValue: {} },
 			readSheetCoordinates: { type: "string", defaultValue: "A1" },
 			updateConfig: { type: "object", defaultValue: {} },
-			directUploadConfig: { type: "object", defaultValue: {} }
-			//Pro Configurations
+			directUploadConfig: { type: "object", defaultValue: {} },
+			useImportWizard: { type: "boolean", defaultValue: false }
 		},
 		aggregations: {
 			rootControl: {
@@ -148,13 +148,13 @@ export default class Component extends UIComponent {
 		const componentData = this.getComponentData() as ComponentData;
 		const compData =
 			componentData != null ? (Object.keys(componentData).length === 0 ? (this.settingsFromContainer as ComponentData) : componentData) : (this.settingsFromContainer as ComponentData);
-		
+
 		// Validate configuration - if critical issues are found, log them but continue with default settings
 		const validConfig = Util.validateConfiguration(compData);
 		if (!validConfig) {
 			Log.warning("Continuing with default configuration due to validation issues", undefined, "SpreadsheetUpload: Component");
 		}
-		
+
 		this.getContentDensityClass();
 		this.setSpreadsheetFileName(compData?.spreadsheetFileName);
 		this.setAction(compData?.action);
@@ -193,6 +193,7 @@ export default class Component extends UIComponent {
 		this.setI18nModel(compData?.i18nModel);
 		this.setBindingCustom(compData?.bindingCustom);
 		this.setShowDownloadButton(compData?.showDownloadButton);
+		this.setUseImportWizard(compData?.useImportWizard);
 		if (compData?.availableOptions && compData?.availableOptions.length > 0) {
 			// if availableOptions is set show the Options Menu
 			this.setShowOptions(true);
@@ -247,20 +248,27 @@ export default class Component extends UIComponent {
 		const componentContainerData = this.getComponentContainerData?.() || {};
 		const buttonText = componentContainerData.buttonText ?? "Excel Import";
 		const triggerDownload = componentContainerData.downloadButton ?? false;
-		
+
 		// Create base button configuration
 		const buttonConfig: any = {
 			text: buttonText,
-			press: triggerDownload 
+			press: triggerDownload
 				? () => this.triggerDownloadSpreadsheet()
-				: () => this.openSpreadsheetUploadDialog()
+				: () => {
+					// Check if wizard should be used, otherwise use regular dialog
+					if (this.getUseImportWizard()) {
+						this.openMatchWizard();
+					} else {
+						this.openSpreadsheetUploadDialog();
+					}
+				}
 		};
 
 		// Add optional properties if they exist
 		if (componentContainerData.buttonId) {
 			buttonConfig.id = this.createId(componentContainerData.buttonId);
 		}
-		
+
 		if (componentContainerData.buttonIcon) {
 			buttonConfig.icon = componentContainerData.buttonIcon;
 		}
@@ -277,29 +285,27 @@ export default class Component extends UIComponent {
 	//=============================================================================
 
 	/**
-	 * Opens the dialog for selecting a customer.
+	 * Opens the classic spreadsheet upload dialog.
 	 * @public
+	 * @param {ComponentData} [options] - Optional configuration overrides
 	 */
 	openSpreadsheetUploadDialog(options?: ComponentData) {
-		if (!this.getContext()) {
-			// if loaded via ComponentContainer, context is not set
-			const context = this._getViewControllerOfControl(this.oContainer);
-			this.setContext(context);
-			// attach event from ComponentContainer
-			this._attachEvents(context);
-		}
-		Log.debug("openSpreadsheetUploadDialog", undefined, "SpreadsheetUpload: Component");
-		this.spreadsheetUpload.openSpreadsheetUploadDialog(options);
+		this._openImportDialog(false, options);
+	}
+
+	/**
+	 * Opens the match-wizard based spreadsheet import dialog.
+	 * @public
+	 * @param {ComponentData} [options] - Optional configuration overrides
+	 */
+	openMatchWizard(options?: ComponentData) {
+		this._openImportDialog(true, options);
 	}
 
 	async triggerDownloadSpreadsheet(deepDownloadConfig?: DeepDownloadConfig) {
-		if (!this.getContext()) {
-			// if loaded via ComponentContainer, context is not set
-			const context = this._getViewControllerOfControl(this.oContainer);
-			this.setContext(context);
-			// attach event from ComponentContainer
-			this._attachEvents(context);
-		}
+		// Ensure context and events are set up
+		this._ensureContextAndEvents();
+
 		await this.spreadsheetUpload.initializeComponent();
 		Log.debug("triggerDownloadSpreadsheet", undefined, "SpreadsheetUpload: Component");
 		if (deepDownloadConfig) {
@@ -426,4 +432,77 @@ export default class Component extends UIComponent {
 	//=============================================================================
 	//PRO APIS
 	//=============================================================================
+
+	/**
+	 * Sets the read sheet coordinates.
+	 * @param {string|object} readSheetCoordinates - The read sheet coordinates as A1 notation or as object with s and e properties
+	 */
+	setReadSheetCoordinates(readSheetCoordinates: string | any): void {
+		if (typeof readSheetCoordinates === "string") {
+			// Original behavior - string like "A1"
+			this.setProperty("readSheetCoordinates", readSheetCoordinates);
+		} else if (readSheetCoordinates && typeof readSheetCoordinates === "object" && readSheetCoordinates.s) {
+			// Convert from object format with s and e properties to A1 notation
+			try {
+				// Use the utility function to convert coordinates
+				const cellAddress = Util.convertCoordinatesToA1Notation(readSheetCoordinates);
+				if (cellAddress) {
+					this.setProperty("readSheetCoordinates", cellAddress);
+				} else {
+					// Fallback to default if conversion fails
+					Log.error("Failed to convert coordinates to A1 notation", undefined, "SpreadsheetUpload: Component");
+					this.setProperty("readSheetCoordinates", "A1");
+				}
+			} catch (error) {
+				// Fallback to default if conversion fails
+				Log.error("Error converting coordinates to A1 notation", error as Error, "SpreadsheetUpload: Component");
+				this.setProperty("readSheetCoordinates", "A1");
+			}
+		} else {
+			// Fallback to default
+			this.setProperty("readSheetCoordinates", "A1");
+		}
+	}
+
+	/**
+	 * Ensures context and events are properly set up.
+	 * This is needed when the component is loaded via ComponentContainer.
+	 * @private
+	 */
+	private _ensureContextAndEvents(): void {
+		if (!this.getContext()) {
+			// if loaded via ComponentContainer, context is not set
+			const context = this._getViewControllerOfControl(this.oContainer);
+			this.setContext(context);
+			// attach event from ComponentContainer
+			this._attachEvents(context);
+		}
+	}
+
+	/**
+	 * Internal method to open either the classic upload dialog or the match wizard.
+	 * Handles all the common setup logic for both dialog types.
+	 * @private
+	 * @param {boolean} useWizard - If true opens the wizard, otherwise opens the classic dialog
+	 * @param {ComponentData} [options] - Optional configuration overrides
+	 */
+	private _openImportDialog(useWizard: boolean, options?: ComponentData): void {
+		// Ensure context and events are set up
+		this._ensureContextAndEvents();
+
+		// Log which dialog is being opened
+		const dialogType = useWizard ? "MatchWizard" : "SpreadsheetUploadDialog";
+		Log.debug(`Opening ${dialogType}`, undefined, "SpreadsheetUpload: Component");
+
+		// Delegate to SpreadsheetUpload controller
+		if (useWizard) {
+			this.spreadsheetUpload.openDialog(true, options);
+		} else {
+			this.spreadsheetUpload.openDialog(false, options);
+		}
+	}
+
+	getDirectUploadConfig(): DirectUploadConfig {
+		return this.getProperty("directUploadConfig") as DirectUploadConfig;
+	}
 }

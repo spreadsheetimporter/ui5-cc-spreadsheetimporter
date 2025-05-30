@@ -210,14 +210,14 @@ importers:
         version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
-        specifier: ^2.2.93
-        version: 2.2.93
+        specifier: ^2.2.94
+        version: 2.2.94
       '@sap/ux-specification':
-        specifier: ^1.124.12
-        version: 1.124.12
+        specifier: ^1.124.14
+        version: 1.124.15
       '@sap/ux-ui5-tooling':
-        specifier: 1.17.0
-        version: 1.17.0(encoding@0.1.13)
+        specifier: 1.17.3
+        version: 1.17.3(encoding@0.1.13)
       '@ui5/cli':
         specifier: 4.0.14
         version: 4.0.14
@@ -225,8 +225,8 @@ importers:
         specifier: 3.3.0
         version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.5))(@ui5/server@4.0.5)
       ui5-tooling-modules:
-        specifier: 3.24.10
-        version: 3.24.10(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
+        specifier: 3.25.1
+        version: 3.25.1(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
 
   examples/packages/ordersv2fe71:
     dependencies:
@@ -235,14 +235,14 @@ importers:
         version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
-        specifier: ^2.2.93
-        version: 2.2.93
+        specifier: ^2.2.94
+        version: 2.2.94
       '@sap/ux-specification':
-        specifier: ^1.124.12
-        version: 1.124.12
+        specifier: ^1.124.14
+        version: 1.124.15
       '@sap/ux-ui5-tooling':
-        specifier: 1.17.0
-        version: 1.17.0(encoding@0.1.13)
+        specifier: 1.17.3
+        version: 1.17.3(encoding@0.1.13)
       '@ui5/cli':
         specifier: 4.0.14
         version: 4.0.14
@@ -250,8 +250,8 @@ importers:
         specifier: 3.3.0
         version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.5))(@ui5/server@4.0.5)
       ui5-tooling-modules:
-        specifier: 3.24.10
-        version: 3.24.10(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
+        specifier: 3.25.1
+        version: 3.25.1(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
 
   examples/packages/ordersv2fe84:
     dependencies:
@@ -260,14 +260,14 @@ importers:
         version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
-        specifier: ^2.2.93
-        version: 2.2.93
+        specifier: ^2.2.94
+        version: 2.2.94
       '@sap/ux-specification':
-        specifier: ^1.124.12
-        version: 1.124.12
+        specifier: ^1.124.14
+        version: 1.124.15
       '@sap/ux-ui5-tooling':
-        specifier: 1.17.0
-        version: 1.17.0(encoding@0.1.13)
+        specifier: 1.17.3
+        version: 1.17.3(encoding@0.1.13)
       '@ui5/cli':
         specifier: 4.0.14
         version: 4.0.14
@@ -275,8 +275,8 @@ importers:
         specifier: 3.3.0
         version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.5))(@ui5/server@4.0.5)
       ui5-tooling-modules:
-        specifier: 3.24.10
-        version: 3.24.10(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
+        specifier: 3.25.1
+        version: 3.25.1(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
 
   examples/packages/ordersv2fe96:
     dependencies:
@@ -285,14 +285,14 @@ importers:
         version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
-        specifier: ^2.2.93
-        version: 2.2.93
+        specifier: ^2.2.94
+        version: 2.2.94
       '@sap/ux-specification':
-        specifier: ^1.124.12
-        version: 1.124.12
+        specifier: ^1.124.14
+        version: 1.124.15
       '@sap/ux-ui5-tooling':
-        specifier: 1.17.0
-        version: 1.17.0(encoding@0.1.13)
+        specifier: 1.17.3
+        version: 1.17.3(encoding@0.1.13)
       '@ui5/cli':
         specifier: 4.0.14
         version: 4.0.14
@@ -300,8 +300,8 @@ importers:
         specifier: 3.3.0
         version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.5))(@ui5/server@4.0.5)
       ui5-tooling-modules:
-        specifier: 3.24.10
-        version: 3.24.10(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
+        specifier: 3.25.1
+        version: 3.25.1(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
 
   examples/packages/ordersv2fenondraft:
     dependencies:
@@ -335,14 +335,14 @@ importers:
         version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
-        specifier: ^2.2.93
-        version: 2.2.93
+        specifier: ^2.2.94
+        version: 2.2.94
       '@sap/ux-specification':
-        specifier: ^1.124.12
-        version: 1.124.12
+        specifier: ^1.124.14
+        version: 1.124.15
       '@sap/ux-ui5-tooling':
-        specifier: 1.17.0
-        version: 1.17.0(encoding@0.1.13)
+        specifier: 1.17.3
+        version: 1.17.3(encoding@0.1.13)
       '@ui5/cli':
         specifier: 4.0.14
         version: 4.0.14
@@ -350,8 +350,8 @@ importers:
         specifier: 3.3.0
         version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.5))(@ui5/server@4.0.5)
       ui5-tooling-modules:
-        specifier: 3.24.10
-        version: 3.24.10(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
+        specifier: 3.25.1
+        version: 3.25.1(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
 
   examples/packages/ordersv2fenondraft71:
     dependencies:
@@ -360,14 +360,14 @@ importers:
         version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
-        specifier: ^2.2.93
-        version: 2.2.93
+        specifier: ^2.2.94
+        version: 2.2.94
       '@sap/ux-specification':
-        specifier: ^1.124.12
-        version: 1.124.12
+        specifier: ^1.124.14
+        version: 1.124.15
       '@sap/ux-ui5-tooling':
-        specifier: 1.17.0
-        version: 1.17.0(encoding@0.1.13)
+        specifier: 1.17.3
+        version: 1.17.3(encoding@0.1.13)
       '@ui5/cli':
         specifier: 4.0.14
         version: 4.0.14
@@ -375,8 +375,8 @@ importers:
         specifier: 3.3.0
         version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.5))(@ui5/server@4.0.5)
       ui5-tooling-modules:
-        specifier: 3.24.10
-        version: 3.24.10(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
+        specifier: 3.25.1
+        version: 3.25.1(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
 
   examples/packages/ordersv2fenondraft84:
     dependencies:
@@ -385,14 +385,14 @@ importers:
         version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
-        specifier: ^2.2.93
-        version: 2.2.93
+        specifier: ^2.2.94
+        version: 2.2.94
       '@sap/ux-specification':
-        specifier: ^1.124.12
-        version: 1.124.12
+        specifier: ^1.124.14
+        version: 1.124.15
       '@sap/ux-ui5-tooling':
-        specifier: 1.17.0
-        version: 1.17.0(encoding@0.1.13)
+        specifier: 1.17.3
+        version: 1.17.3(encoding@0.1.13)
       '@ui5/cli':
         specifier: 4.0.14
         version: 4.0.14
@@ -400,8 +400,8 @@ importers:
         specifier: 3.3.0
         version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.5))(@ui5/server@4.0.5)
       ui5-tooling-modules:
-        specifier: 3.24.10
-        version: 3.24.10(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
+        specifier: 3.25.1
+        version: 3.25.1(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
 
   examples/packages/ordersv2fenondraft96:
     dependencies:
@@ -410,14 +410,14 @@ importers:
         version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
-        specifier: ^2.2.93
-        version: 2.2.93
+        specifier: ^2.2.94
+        version: 2.2.94
       '@sap/ux-specification':
-        specifier: ^1.124.12
-        version: 1.124.12
+        specifier: ^1.124.14
+        version: 1.124.15
       '@sap/ux-ui5-tooling':
-        specifier: 1.17.0
-        version: 1.17.0(encoding@0.1.13)
+        specifier: 1.17.3
+        version: 1.17.3(encoding@0.1.13)
       '@ui5/cli':
         specifier: 4.0.14
         version: 4.0.14
@@ -425,8 +425,8 @@ importers:
         specifier: 3.3.0
         version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.5))(@ui5/server@4.0.5)
       ui5-tooling-modules:
-        specifier: 3.24.10
-        version: 3.24.10(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
+        specifier: 3.25.1
+        version: 3.25.1(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
 
   examples/packages/ordersv2freestylenondraft:
     dependencies:
@@ -457,11 +457,11 @@ importers:
         version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
-        specifier: ^2.2.93
-        version: 2.2.93
+        specifier: ^2.2.94
+        version: 2.2.94
       '@sap/ux-ui5-tooling':
-        specifier: 1.17.0
-        version: 1.17.0(encoding@0.1.13)
+        specifier: 1.17.3
+        version: 1.17.3(encoding@0.1.13)
       '@ui5/cli':
         specifier: 4.0.14
         version: 4.0.14
@@ -469,8 +469,8 @@ importers:
         specifier: 3.3.0
         version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.5))(@ui5/server@4.0.5)
       ui5-tooling-modules:
-        specifier: 3.24.10
-        version: 3.24.10(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
+        specifier: 3.25.1
+        version: 3.25.1(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
 
   examples/packages/ordersv2freestylenondraft2:
     dependencies:
@@ -501,11 +501,11 @@ importers:
         version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
-        specifier: ^2.2.93
-        version: 2.2.93
+        specifier: ^2.2.94
+        version: 2.2.94
       '@sap/ux-ui5-tooling':
-        specifier: 1.17.0
-        version: 1.17.0(encoding@0.1.13)
+        specifier: 1.17.3
+        version: 1.17.3(encoding@0.1.13)
       '@ui5/cli':
         specifier: 4.0.14
         version: 4.0.14
@@ -513,8 +513,8 @@ importers:
         specifier: 3.3.0
         version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.5))(@ui5/server@4.0.5)
       ui5-tooling-modules:
-        specifier: 3.24.10
-        version: 3.24.10(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
+        specifier: 3.25.1
+        version: 3.25.1(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
 
   examples/packages/ordersv2freestylenondraft84:
     dependencies:
@@ -523,11 +523,11 @@ importers:
         version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
-        specifier: ^2.2.93
-        version: 2.2.93
+        specifier: ^2.2.94
+        version: 2.2.94
       '@sap/ux-ui5-tooling':
-        specifier: 1.17.0
-        version: 1.17.0(encoding@0.1.13)
+        specifier: 1.17.3
+        version: 1.17.3(encoding@0.1.13)
       '@ui5/cli':
         specifier: 4.0.14
         version: 4.0.14
@@ -535,8 +535,8 @@ importers:
         specifier: 3.3.0
         version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.5))(@ui5/server@4.0.5)
       ui5-tooling-modules:
-        specifier: 3.24.10
-        version: 3.24.10(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
+        specifier: 3.25.1
+        version: 3.25.1(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
 
   examples/packages/ordersv2freestylenondraft96:
     dependencies:
@@ -545,11 +545,11 @@ importers:
         version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
-        specifier: ^2.2.93
-        version: 2.2.93
+        specifier: ^2.2.94
+        version: 2.2.94
       '@sap/ux-ui5-tooling':
-        specifier: 1.17.0
-        version: 1.17.0(encoding@0.1.13)
+        specifier: 1.17.3
+        version: 1.17.3(encoding@0.1.13)
       '@ui5/cli':
         specifier: 4.0.14
         version: 4.0.14
@@ -557,8 +557,8 @@ importers:
         specifier: 3.3.0
         version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.5))(@ui5/server@4.0.5)
       ui5-tooling-modules:
-        specifier: 3.24.10
-        version: 3.24.10(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
+        specifier: 3.25.1
+        version: 3.25.1(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
 
   examples/packages/ordersv2freestylenondraftopenui5:
     dependencies:
@@ -589,11 +589,11 @@ importers:
         version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
-        specifier: ^2.2.93
-        version: 2.2.93
+        specifier: ^2.2.94
+        version: 2.2.94
       '@sap/ux-ui5-tooling':
-        specifier: 1.17.0
-        version: 1.17.0(encoding@0.1.13)
+        specifier: 1.17.3
+        version: 1.17.3(encoding@0.1.13)
       '@ui5/cli':
         specifier: 4.0.14
         version: 4.0.14
@@ -601,8 +601,8 @@ importers:
         specifier: 3.3.0
         version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.5))(@ui5/server@4.0.5)
       ui5-tooling-modules:
-        specifier: 3.24.10
-        version: 3.24.10(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
+        specifier: 3.25.1
+        version: 3.25.1(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
 
   examples/packages/ordersv2freestylenondraftopenui571:
     dependencies:
@@ -611,11 +611,11 @@ importers:
         version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
-        specifier: ^2.2.93
-        version: 2.2.93
+        specifier: ^2.2.94
+        version: 2.2.94
       '@sap/ux-ui5-tooling':
-        specifier: 1.17.0
-        version: 1.17.0(encoding@0.1.13)
+        specifier: 1.17.3
+        version: 1.17.3(encoding@0.1.13)
       '@ui5/cli':
         specifier: 4.0.14
         version: 4.0.14
@@ -623,8 +623,8 @@ importers:
         specifier: 3.3.0
         version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.5))(@ui5/server@4.0.5)
       ui5-tooling-modules:
-        specifier: 3.24.10
-        version: 3.24.10(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
+        specifier: 3.25.1
+        version: 3.25.1(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
 
   examples/packages/ordersv2freestylenondraftopenui584:
     dependencies:
@@ -633,11 +633,11 @@ importers:
         version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
-        specifier: ^2.2.93
-        version: 2.2.93
+        specifier: ^2.2.94
+        version: 2.2.94
       '@sap/ux-ui5-tooling':
-        specifier: 1.17.0
-        version: 1.17.0(encoding@0.1.13)
+        specifier: 1.17.3
+        version: 1.17.3(encoding@0.1.13)
       '@ui5/cli':
         specifier: 4.0.14
         version: 4.0.14
@@ -645,8 +645,8 @@ importers:
         specifier: 3.3.0
         version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.5))(@ui5/server@4.0.5)
       ui5-tooling-modules:
-        specifier: 3.24.10
-        version: 3.24.10(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
+        specifier: 3.25.1
+        version: 3.25.1(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
 
   examples/packages/ordersv2freestylenondraftopenui596:
     dependencies:
@@ -655,11 +655,11 @@ importers:
         version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
-        specifier: ^2.2.93
-        version: 2.2.93
+        specifier: ^2.2.94
+        version: 2.2.94
       '@sap/ux-ui5-tooling':
-        specifier: 1.17.0
-        version: 1.17.0(encoding@0.1.13)
+        specifier: 1.17.3
+        version: 1.17.3(encoding@0.1.13)
       '@ui5/cli':
         specifier: 4.0.14
         version: 4.0.14
@@ -667,8 +667,8 @@ importers:
         specifier: 3.3.0
         version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.5))(@ui5/server@4.0.5)
       ui5-tooling-modules:
-        specifier: 3.24.10
-        version: 3.24.10(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
+        specifier: 3.25.1
+        version: 3.25.1(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
 
   examples/packages/ordersv4fe:
     dependencies:
@@ -714,14 +714,14 @@ importers:
         version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
-        specifier: ^2.2.93
-        version: 2.2.93
+        specifier: ^2.2.94
+        version: 2.2.94
       '@sap/ux-specification':
-        specifier: ^1.124.12
-        version: 1.124.12
+        specifier: ^1.124.14
+        version: 1.124.15
       '@sap/ux-ui5-tooling':
-        specifier: 1.17.0
-        version: 1.17.0(encoding@0.1.13)
+        specifier: 1.17.3
+        version: 1.17.3(encoding@0.1.13)
       '@ui5/cli':
         specifier: 4.0.14
         version: 4.0.14
@@ -741,8 +741,8 @@ importers:
         specifier: 0.2.2
         version: 0.2.2
       ui5-tooling-modules:
-        specifier: 3.24.10
-        version: 3.24.10(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
+        specifier: 3.25.1
+        version: 3.25.1(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
 
   examples/packages/ordersv4fe71:
     dependencies:
@@ -751,14 +751,14 @@ importers:
         version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
-        specifier: ^2.2.93
-        version: 2.2.93
+        specifier: ^2.2.94
+        version: 2.2.94
       '@sap/ux-specification':
-        specifier: ^1.124.12
-        version: 1.124.12
+        specifier: ^1.124.14
+        version: 1.124.15
       '@sap/ux-ui5-tooling':
-        specifier: 1.17.0
-        version: 1.17.0(encoding@0.1.13)
+        specifier: 1.17.3
+        version: 1.17.3(encoding@0.1.13)
       '@ui5/cli':
         specifier: 4.0.14
         version: 4.0.14
@@ -778,8 +778,8 @@ importers:
         specifier: 0.2.2
         version: 0.2.2
       ui5-tooling-modules:
-        specifier: 3.24.10
-        version: 3.24.10(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
+        specifier: 3.25.1
+        version: 3.25.1(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
 
   examples/packages/ordersv4fe84:
     dependencies:
@@ -788,14 +788,14 @@ importers:
         version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
-        specifier: ^2.2.93
-        version: 2.2.93
+        specifier: ^2.2.94
+        version: 2.2.94
       '@sap/ux-specification':
-        specifier: ^1.124.12
-        version: 1.124.12
+        specifier: ^1.124.14
+        version: 1.124.15
       '@sap/ux-ui5-tooling':
-        specifier: 1.17.0
-        version: 1.17.0(encoding@0.1.13)
+        specifier: 1.17.3
+        version: 1.17.3(encoding@0.1.13)
       '@ui5/cli':
         specifier: 4.0.14
         version: 4.0.14
@@ -815,8 +815,8 @@ importers:
         specifier: 0.2.2
         version: 0.2.2
       ui5-tooling-modules:
-        specifier: 3.24.10
-        version: 3.24.10(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
+        specifier: 3.25.1
+        version: 3.25.1(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
 
   examples/packages/ordersv4fe96:
     dependencies:
@@ -825,14 +825,14 @@ importers:
         version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
-        specifier: ^2.2.93
-        version: 2.2.93
+        specifier: ^2.2.94
+        version: 2.2.94
       '@sap/ux-specification':
-        specifier: ^1.124.12
-        version: 1.124.12
+        specifier: ^1.124.14
+        version: 1.124.15
       '@sap/ux-ui5-tooling':
-        specifier: 1.17.0
-        version: 1.17.0(encoding@0.1.13)
+        specifier: 1.17.3
+        version: 1.17.3(encoding@0.1.13)
       '@ui5/cli':
         specifier: 4.0.14
         version: 4.0.14
@@ -852,8 +852,8 @@ importers:
         specifier: 0.2.2
         version: 0.2.2
       ui5-tooling-modules:
-        specifier: 3.24.10
-        version: 3.24.10(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
+        specifier: 3.25.1
+        version: 3.25.1(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2)
 
   examples/packages/ordersv4fets:
     dependencies:
@@ -924,14 +924,14 @@ importers:
         version: link:../../../packages/ui5-cc-spreadsheetimporter
     devDependencies:
       '@sap-ux/ui5-middleware-fe-mockserver':
-        specifier: ^2.2.93
-        version: 2.2.93
+        specifier: ^2.2.94
+        version: 2.2.94
       '@sap/ux-specification':
-        specifier: ^1.124.12
-        version: 1.124.12
+        specifier: ^1.124.14
+        version: 1.124.15
       '@sap/ux-ui5-tooling':
-        specifier: 1.17.0
-        version: 1.17.0(encoding@0.1.13)
+        specifier: 1.17.3
+        version: 1.17.3(encoding@0.1.13)
       '@ui5/cli':
         specifier: 4.0.14
         version: 4.0.14
@@ -2503,6 +2503,10 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@sap-ux/adp-tooling@0.13.22':
+    resolution: {integrity: sha512-FD62cV4mhHiMbz0Fo1z45f1dJoi9x0HHaOuzI/92ND153LLLE43cGWwQIl2ftMccC/Ky9QT5rCrdNDVPwHFO1w==}
+    engines: {node: '>=18.x'}
+
   '@sap-ux/adp-tooling@0.13.8':
     resolution: {integrity: sha512-eIhqQXF9pASfigVQ2m18Kr1S44IhZ5nSVX0G3TKZRnH+IPhdLV4elcMn72Q5C4DS7YZvtj/sQBsqZTCw0s2nzA==}
     engines: {node: '>=18.x'}
@@ -2517,18 +2521,35 @@ packages:
     resolution: {integrity: sha512-Jyqf/F9xmCgVzFhdj65cBQo3J8U3nbUa4qyjuJD5uKCn13UOasG3S0auEdXsj6i9O0wpSKX7UMye9Tfkn35qpA==}
     engines: {node: '>=18.x'}
 
+  '@sap-ux/axios-extension@1.19.2':
+    resolution: {integrity: sha512-rmZl6kWysUCkROZXwpDyCBP8Mz6nffU7+CI/PZB3/j/TZI7F38PFl1EW2RpVUSmkLLR9cPqj3xtrHoHyWUdPeQ==}
+    engines: {node: '>=18.x'}
+
   '@sap-ux/btp-utils@1.0.1':
     resolution: {integrity: sha512-Frgabphu/pBqy8uz+ooSUlhouodayHwxm7YpwVvWfcH9nplmA5i4wPV4hts24wMSrEZRJGy4ysLY/+Obz50OZQ==}
+    engines: {node: '>=18.x'}
+
+  '@sap-ux/btp-utils@1.0.2':
+    resolution: {integrity: sha512-cuB7qRQoo9xBH2nm8CTyqseAzgq6YthxF5SApbcXaSbBxoGV1kFhQ18zoAEKQwSSQGjJGYm5yfYpVNi7Rb4S9A==}
     engines: {node: '>=18.x'}
 
   '@sap-ux/cds-annotation-parser@0.2.6':
     resolution: {integrity: sha512-vaklm9Ji4rfSvVg/kZSQm+0RzI+5fREoZXiZtQsBbX7bjsaWSH4ZsyEZHaDghaIetYE+qsRBNnpIsgkPPnnyFw==}
 
+  '@sap-ux/cds-annotation-parser@0.2.8':
+    resolution: {integrity: sha512-6J185jgQejvLFVny+RH9a2e3/6NzGWTJecSqs+Bfx/aK3Dtz0MJ7X43bv1OGf6ie3K0KtDTKggasIW+T7uBGuQ==}
+
   '@sap-ux/cds-odata-annotation-converter@0.5.1':
     resolution: {integrity: sha512-GFra4EKqvj29nLNFMT1kxNNL7BOSsPlm5NBCFqPIE9/mUdfXRdKRM1qgCa6qn+hqqn3395FgZQBEYysy6MpRmw==}
 
+  '@sap-ux/cds-odata-annotation-converter@0.5.3':
+    resolution: {integrity: sha512-g4W8TYrOpTGPVEdrEFdK+2u/iopNe9R3y+2d7Far4Px7WUptwnucoWGm+YaHRCiT6dgdo2TBDR2u0E4uuY124Q==}
+
   '@sap-ux/control-property-editor@0.5.37':
     resolution: {integrity: sha512-pVNqVkTKjk6E5QzdheNe7FQwnqXPpo0HWJcwaQNaMKShUSACMqDS45PqeGTEdnT0ZlFIsYmHNUU2mJefruSR5A==}
+
+  '@sap-ux/control-property-editor@0.6.2':
+    resolution: {integrity: sha512-2+GMDrMzNa32zXPFxOAj9BKRGgR8jCGfc7NSNBJdU+yf1ERRIFKGZAJbLjcE673d5+K999OT8mY3Let3yK6uJg==}
 
   '@sap-ux/edmx-parser@0.9.0':
     resolution: {integrity: sha512-X7yda14CsUqGhEK5/XYhP0W65ueObQxq6Dv5qmJQBvR73V0gNexrY5sWuzCQPcEVVh0sB9A0qesMU9qgp6R37A==}
@@ -2545,8 +2566,15 @@ packages:
     resolution: {integrity: sha512-nhxLiQpd6rEkGum2nl/fH47Ou5NvSt2gEGSVQxzmgawJ6EYNGEExzoOdQJEdJN49JBTKIsvTDOZaka2PLVqKPw==}
     engines: {node: '>=18.x'}
 
+  '@sap-ux/fe-fpm-writer@0.33.19':
+    resolution: {integrity: sha512-p6SDsluMojeeWrRhAHyrBNkdsgTELUG4hjjpvqasbGx+h/8DFl3Y2BIbO/AMrLWSs0FAv45ADOq0DF+JP4t6jw==}
+    engines: {node: '>=18.x'}
+
   '@sap-ux/fe-mockserver-core@1.4.21':
     resolution: {integrity: sha512-ftKtPPYzead9Yo03/rfOex1/SWuZhsiCnVsPQEtcgQ3FcHOy3h06Rw1IoJwf8X2IzOFk/scPDgEJuRTedQ17ZQ==}
+
+  '@sap-ux/fe-mockserver-core@1.4.22':
+    resolution: {integrity: sha512-CnhifRdr1ax8FXW/Rq8gaEuJ7TCqwq3usA+KV/D9KLww36VIScDXeHa0ui2y62+Sgfa1FDoQNOnt/9BBnjF2MA==}
 
   '@sap-ux/feature-toggle@0.2.3':
     resolution: {integrity: sha512-2pE6Fd5ldJgIr/HF5y/Qwkj86OFykSA4nckb/Cy4fwqPPCAO4adupnLLJ1KVe2O5iwxY488Mfjc4uqRaaoRT5w==}
@@ -2554,6 +2582,13 @@ packages:
 
   '@sap-ux/fiori-annotation-api@0.4.17':
     resolution: {integrity: sha512-Y2us8tuGuiO2JjlpV//xP8ScUUUSxWrUry75GY59TbH26C7R8D1n8ni/IL3QNdMorhlbibjoENdg6+KIBycsAg==}
+
+  '@sap-ux/fiori-annotation-api@0.4.22':
+    resolution: {integrity: sha512-Z0b1vrzhOqmZupK6IYyhzf4DBNkx9iG2T9ADlN9g4IVB0JN3pHjSlaBTx1RWVpoNrLAtd7ndVkRGrS6IAKnXvw==}
+
+  '@sap-ux/fiori-generator-shared@0.9.11':
+    resolution: {integrity: sha512-nFo/q6vjyvBIBF2WrSfsALq9oGXpIVRwhDC48D9qAyO9eB4DIkBXYGfSUMLkte3PjIoYL33cQTxuQMrXUS6dLw==}
+    engines: {node: '>=18.x'}
 
   '@sap-ux/fiori-generator-shared@0.9.5':
     resolution: {integrity: sha512-yMQXZ9l6E1FCe8ZGNg1PUpGWjoUkJ6hf3I8cVtk83IbiumX2P5pZS98m9AjZnofY/xsZTUnBn11xs/chdw/ORA==}
@@ -2571,8 +2606,16 @@ packages:
     resolution: {integrity: sha512-68JXYy7ePLHPJClIQpSyqPFvb3OZ1yoCaSYsbmwJKqfz+uSwK/h4uLGgCA7C6M89h4ts0kcM0TmGUId8sk0/vQ==}
     engines: {node: '>=18.x'}
 
+  '@sap-ux/inquirer-common@0.6.32':
+    resolution: {integrity: sha512-i2/qB6O9p6OS5qARBn6Y1/7t4r/Yaa4wxRyRilRGyVFmGLa7YzwrRwga2XTckpKa2tw24/ZVH0yYUeeU6xkuWQ==}
+    engines: {node: '>=18.x'}
+
   '@sap-ux/logger@0.6.0':
     resolution: {integrity: sha512-/p9Lv3GXdASJbs5CLJy69t2OLRK6VG2zOL/jLRyOPEK1tcZYFF/LerBYDFfFxkvCpHz+cYvUJuhAmxqljLxmJw==}
+    engines: {node: '>=18.x'}
+
+  '@sap-ux/mockserver-config-writer@0.8.11':
+    resolution: {integrity: sha512-wHbPf7qgUZ6GIsZ3564hFHAt/Af129S30tCLPpnKGh1Pyso+XrCSDSYpZ326Mv1JJ72n8+rfd5EP+TYFIwkitw==}
     engines: {node: '>=18.x'}
 
   '@sap-ux/mockserver-config-writer@0.8.5':
@@ -2581,6 +2624,10 @@ packages:
 
   '@sap-ux/nodejs-utils@0.1.7':
     resolution: {integrity: sha512-0D9pKy2kAKbana58L/vbzl7JPEdwQ/1CUW/4cDY7pII3f6WHhACM/C4JHFNx0agM88i1bJMnaWRJL0bXAAdzLA==}
+    engines: {node: '>=18.x'}
+
+  '@sap-ux/nodejs-utils@0.1.8':
+    resolution: {integrity: sha512-+SXYdKHYsPiFzzvtruGYl2sHy5Ma62OX0DXUIGfg+j/pMA4UPHr3k0NTGcKcFi3LXf+Ff+SIZk+IuA+Gmfpnvg==}
     engines: {node: '>=18.x'}
 
   '@sap-ux/odata-annotation-core-types@0.4.2':
@@ -2592,6 +2639,10 @@ packages:
   '@sap-ux/odata-entity-model@0.3.1':
     resolution: {integrity: sha512-mHyprQ26uRezlkTPrtHHRZFO/hWYnJcZkxGMftZZ0FLEZpzg5diO5sUgCsZZu6Qg3iVOS5+lPWaNmpPXhsGgqA==}
 
+  '@sap-ux/odata-service-writer@0.26.13':
+    resolution: {integrity: sha512-8NAZpkJuQ7ucstXZW4yXGP4lyykFzWo2s/j4dg7dOiqdMgT5pFIVA11hyZ3lcTqcERnsDckU731bAMtQG+yEIA==}
+    engines: {node: '>=18.x'}
+
   '@sap-ux/odata-service-writer@0.26.7':
     resolution: {integrity: sha512-nX598NjHHPgCUdHj/k0HXyE3deK5WhgcLR12shRBigIfYKS/KCkUi6Il7YbyWzuyqsoK1eeJtN50LwbSrUfcKg==}
     engines: {node: '>=18.x'}
@@ -2599,8 +2650,17 @@ packages:
   '@sap-ux/odata-vocabularies@0.4.6':
     resolution: {integrity: sha512-GHdDHvSUCT8SOVwOsAQ1wA/ZG2LmnBJAS4r71jpE4/ezNa+ifrS9VHMbiANNyULJwGwW89TEQwqdMWCIguASiw==}
 
+  '@sap-ux/odata-vocabularies@0.4.7':
+    resolution: {integrity: sha512-aVKsrV/Yd2D05k4bCkPrKB/7ssxpPf/0Lc2pZmuDi7mxW3zlAD54qG6jyU2JE0W/hPOZacQHEjW9NFNNRPZ8hg==}
+
   '@sap-ux/preview-middleware@0.18.8':
     resolution: {integrity: sha512-t1v8Wll7JOeiOM4mq/1d6M7h5Nq2Q0ed7EoLfcLXTi8nG/8YDqtz4FPeKL/VICBvW87Xkz6+v/UQSTmyzCxdog==}
+    engines: {node: '>=18.x'}
+    peerDependencies:
+      express: '4'
+
+  '@sap-ux/preview-middleware@0.19.12':
+    resolution: {integrity: sha512-V800BD4wc/1GKysVfL3fJEP2UA2+9RW+dZwy1eEGOMnW/CHbD0C3YcIBiwfN9D1Da4TQU9rDHumnlRqJbUMS0Q==}
     engines: {node: '>=18.x'}
     peerDependencies:
       express: '4'
@@ -2613,8 +2673,16 @@ packages:
     resolution: {integrity: sha512-AGKkG2moz/VzIuSChIIcYCRYFFuwvFspA33BA1ar3pzirPRvIz5FbP1vEzvwPV59GTW6XOR5/Iep2y4cxwPNPg==}
     engines: {node: '>=18.x'}
 
+  '@sap-ux/project-access@1.29.18':
+    resolution: {integrity: sha512-wZ6RRzTlFVCrQ2/KxBi+fN7+bNxZT9C42PIqCCVZA+/uOsuy7Q1nAl2Vb7FesegMRNsRTyNuth/PxmrlefEGIg==}
+    engines: {node: '>=18.x'}
+
   '@sap-ux/project-input-validator@0.3.4':
     resolution: {integrity: sha512-aQY/rh55T2Rj9lVw3766qwpbgauwsM0u7LsoayDvnoIUUBm85hCtDOaNzyyF4HoAVHlVCdAy1hQitcrcK3ZWVg==}
+    engines: {node: '>=18.x'}
+
+  '@sap-ux/project-input-validator@0.5.0':
+    resolution: {integrity: sha512-gEyzrYPwDUzjzoaFeZlCu/RPDmttagV9C5KezDsD4q+YXQSy5Fj4MqZtFpcPoyn/i88+P/MhraxLd3+suR2k/w==}
     engines: {node: '>=18.x'}
 
   '@sap-ux/store@1.0.0':
@@ -2625,8 +2693,16 @@ packages:
     resolution: {integrity: sha512-gqIkPAKt7td9NtvXCSPqGVfBkSpNhbVubZl6nTz7yBKUhWPEBhntcLVMzHyxFtkHgYPHTeCmsVH3r8ZxzT7jlg==}
     engines: {node: '>=18.x'}
 
+  '@sap-ux/system-access@0.5.34':
+    resolution: {integrity: sha512-er7sGKfya4zyiAbIpDdwXjW5JxVH3vzAGbhdBye91jts6lJSUolkByeVgGgC69f8ON92jSo+i1/LRQ/F8YkDdQ==}
+    engines: {node: '>=18.x'}
+
   '@sap-ux/telemetry@0.5.66':
     resolution: {integrity: sha512-VcChxQCaTUmjCa2CRkkkAkeNDFgvV1V1xFKNx9SXq8Qzz9xzZRbt298VJ+Wn7WFItf1tEYH/7rQ1LHb/3EEu0g==}
+    engines: {node: '>=18.x'}
+
+  '@sap-ux/telemetry@0.5.72':
+    resolution: {integrity: sha512-ueNKMYNw6iSGSbQbsw8j5/l9AECIUppw2UbjWPpyCaYZ8H4nyfVmNVnsz5p1zvqeNz4wHMLngVWu+I2poJB25w==}
     engines: {node: '>=18.x'}
 
   '@sap-ux/text-document-utils@0.2.0':
@@ -2641,12 +2717,23 @@ packages:
     resolution: {integrity: sha512-ZjcqYG9fFasF5+BZtebrSZjnZlGaKYsSk+9Ov8rPmeE342tbME/qu6H+SGmgLoNRMAlj4T5+99Jnt+jBJFDBXg==}
     engines: {node: '>=18.x'}
 
+  '@sap-ux/ui5-config@0.26.5':
+    resolution: {integrity: sha512-Q5ihhSgUesOkumZ57Cf0HBhzw0CyPaBXoSPqEUyii7nqwpJ/rqF9GCHEiHgen8YSklXYEytIrhz6GU3mdTqE9Q==}
+    engines: {node: '>=18.x'}
+
   '@sap-ux/ui5-info@0.9.0':
     resolution: {integrity: sha512-emeE4tie0viGOSPTXTV7i/ezmtWzubiHzVlxj10SXHYZX8cWAZpqThSd0+W6DnK5JxLk3zYzfOXyiuk3wCtM1Q==}
     engines: {node: '>=18.x'}
 
+  '@sap-ux/ui5-info@0.9.1':
+    resolution: {integrity: sha512-AtWwELs0abNtaI1X7im3n99Ltj2yLMJBIUt7SskP32D++rbUEZ7Fjb2EdpTLeEVzBHZ3QYo1ghnzQJ0yGWVyfg==}
+    engines: {node: '>=18.x'}
+
   '@sap-ux/ui5-middleware-fe-mockserver@2.2.93':
     resolution: {integrity: sha512-DlNIXtGDFN61I1+KLhCq0NJlNnhQ1GpHBIZpdVhenKAl0vs5OlzwgBB+i9xAHXHvBGBKb6J9mC9L3kQFNfSL2w==}
+
+  '@sap-ux/ui5-middleware-fe-mockserver@2.2.94':
+    resolution: {integrity: sha512-iU9H1tVwgOcn8d/39689RQxydfomYq+41UWjEa5jtINvLJAxTUxncSt1GRYRHpDsDdBAtCy0Dp1/HiCTHDJBEQ==}
 
   '@sap-ux/vocabularies-types@0.12.0':
     resolution: {integrity: sha512-3KeVIh0qxNJFldGpPMAp2v6nlDRMg3EcpfdVT9Z9BBiHD79yxC6WTNvD2V8r967Mzg1MzDjCupk6/7XnPp2aIQ==}
@@ -2747,8 +2834,16 @@ packages:
     resolution: {integrity: sha512-SIDd10EnOmNbAuT4/lJrH0nFUEfSZfjO1pKk+agovacoD80toBoS8OLchWhMuDkCZHZI9O2/c9BZFulgbddTMg==}
     engines: {node: '>= 18.0.0 < 19.0.0 || >= 20.0.0 < 21.0.0 || >= 22.0.0', yarn: '>=1.22.19 < 2'}
 
+  '@sap/ux-specification@1.124.15':
+    resolution: {integrity: sha512-TizWzVSeMFjROJqOnmShfKXAknd21TqpCWOBsntOSy/Nl9vV4nyjh690OgqYbQ+lUhnJqTIfupwK7hRRDvV0MQ==}
+    engines: {node: '>= 18.0.0 < 19.0.0 || >= 20.0.0 < 21.0.0 || >= 22.0.0', yarn: '>=1.22.19 < 2'}
+
   '@sap/ux-ui5-tooling@1.17.0':
     resolution: {integrity: sha512-k9Pq3T3CmWHHaZkof9d044AvW3RzJ2OntB1RWAV1AsDvQQ9y3hzRTJA1nSGfr6XvJGYFUw3ilGNxNCMYAefJYA==}
+    hasBin: true
+
+  '@sap/ux-ui5-tooling@1.17.3':
+    resolution: {integrity: sha512-L9z0JtyZJSNckGG0GAPCcTg3BPs6Ou4bjtVd5mgf0b4yKWuCMj2mDcb6pzgX8jTHxXxGnf/se4wg5OclFT+GdA==}
     hasBin: true
 
   '@sap/xsenv@5.5.0':
@@ -3349,6 +3444,9 @@ packages:
 
   axios@1.7.9:
     resolution: {integrity: sha512-LhLcE7Hbiryz8oMDdDptSrWowmB4Bl6RCt6sIJKpRB4XtVf0iEgewX3au/pJqm+Py1kCASkb/FFKjxQaLtxJvw==}
+
+  axios@1.8.2:
+    resolution: {integrity: sha512-ls4GYBm5aig9vWx8AWDSGLpnpDQRtWAfrjU+EuytuODrFBkqesN2RkOQCBzrA1RQNHw1SmRMSDDDSwzNAYQ6Rg==}
 
   axios@1.8.4:
     resolution: {integrity: sha512-eBSYY4Y68NNlHbHBMdeDmKNtDgXWhQsJcGqzO3iLUM0GraQFSS9cVgPX5I9b3lbdFKyYoAEGAZF1DwhTaljNAw==}
@@ -7629,6 +7727,11 @@ packages:
     peerDependencies:
       '@ui5/project': '>=3 <5'
 
+  ui5-tooling-modules@3.25.1:
+    resolution: {integrity: sha512-OmeMzVcSlWQSGYH/vVLj5iTItK5TIr+v1kf2RZsG+ejhB1rG2fZ0CqiZf0mnNVOW4sgP6YMB4KrMD7F8mrrQPQ==}
+    peerDependencies:
+      '@ui5/project': '>=3 <5'
+
   ui5-tooling-stringreplace@3.4.0:
     resolution: {integrity: sha512-IIfHcGLko9G9gWYu9nJXgWs0D8Nu6J/E60mh+XYfRD3oKAPANUoJUFiQzCgQPryDnQqxUeCKrbZdfMBo+ZY9bg==}
 
@@ -9848,6 +9951,36 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.38.0':
     optional: true
 
+  '@sap-ux/adp-tooling@0.13.22(debug@4.3.7)':
+    dependencies:
+      '@sap-ux/axios-extension': 1.19.2(debug@4.3.7)
+      '@sap-ux/btp-utils': 1.0.2(debug@4.3.7)
+      '@sap-ux/i18n': 0.2.3
+      '@sap-ux/inquirer-common': 0.6.32(debug@4.3.7)
+      '@sap-ux/logger': 0.6.0
+      '@sap-ux/nodejs-utils': 0.1.8(debug@4.3.7)
+      '@sap-ux/odata-service-writer': 0.26.13(debug@4.3.7)
+      '@sap-ux/project-access': 1.29.18(debug@4.3.7)
+      '@sap-ux/project-input-validator': 0.5.0(debug@4.3.7)
+      '@sap-ux/store': 1.0.0
+      '@sap-ux/system-access': 0.5.34(debug@4.3.7)
+      '@sap-ux/ui5-config': 0.26.5(debug@4.3.7)
+      adm-zip: 0.5.10
+      ejs: 3.1.10
+      i18next: 23.11.2
+      inquirer: 8.2.6
+      mem-fs: 2.1.0
+      mem-fs-editor: 9.4.0(mem-fs@2.1.0)
+      prompts: 2.4.2
+      sanitize-filename: 1.6.3
+      uuid: 10.0.0
+    transitivePeerDependencies:
+      - applicationinsights-native-metrics
+      - bufferutil
+      - debug
+      - supports-color
+      - utf-8-validate
+
   '@sap-ux/adp-tooling@0.13.8(debug@4.3.7)':
     dependencies:
       '@sap-ux/axios-extension': 1.19.0(debug@4.3.7)
@@ -9907,6 +10040,28 @@ snapshots:
       - supports-color
       - utf-8-validate
 
+  '@sap-ux/axios-extension@1.19.2(debug@4.3.7)':
+    dependencies:
+      '@sap-ux/btp-utils': 1.0.2(debug@4.3.7)
+      '@sap-ux/feature-toggle': 0.2.3
+      '@sap-ux/logger': 0.6.0
+      '@xmldom/xmldom': 0.8.10
+      axios: 1.8.2(debug@4.3.7)
+      detect-content-type: 1.2.0
+      fast-xml-parser: 4.4.1
+      http-proxy-agent: 7.0.2
+      https-proxy-agent: 7.0.5
+      lodash: 4.17.21
+      open: 7.0.3
+      proxy-from-env: 1.1.0
+      qs: 6.11.0
+      xpath: 0.0.33
+    transitivePeerDependencies:
+      - bufferutil
+      - debug
+      - supports-color
+      - utf-8-validate
+
   '@sap-ux/btp-utils@1.0.1(debug@4.3.7)':
     dependencies:
       '@sap/bas-sdk': 3.11.2(debug@4.3.7)
@@ -9917,11 +10072,29 @@ snapshots:
       - debug
       - utf-8-validate
 
+  '@sap-ux/btp-utils@1.0.2(debug@4.3.7)':
+    dependencies:
+      '@sap/bas-sdk': 3.11.2(debug@4.3.7)
+      '@sap/cf-tools': 3.2.2
+      axios: 1.8.2(debug@4.3.7)
+    transitivePeerDependencies:
+      - bufferutil
+      - debug
+      - utf-8-validate
+
   '@sap-ux/cds-annotation-parser@0.2.6':
     dependencies:
       '@sap-ux/odata-annotation-core': 0.2.2
       '@sap-ux/odata-entity-model': 0.3.1
       '@sap-ux/odata-vocabularies': 0.4.6
+      '@sap-ux/text-document-utils': 0.2.0
+      chevrotain: 7.1.1
+
+  '@sap-ux/cds-annotation-parser@0.2.8':
+    dependencies:
+      '@sap-ux/odata-annotation-core': 0.2.2
+      '@sap-ux/odata-entity-model': 0.3.1
+      '@sap-ux/odata-vocabularies': 0.4.7
       '@sap-ux/text-document-utils': 0.2.0
       chevrotain: 7.1.1
 
@@ -9937,7 +10110,21 @@ snapshots:
       - '@sap-ux/odata-annotation-core-types'
       - '@sap-ux/project-access'
 
+  '@sap-ux/cds-odata-annotation-converter@0.5.3(@sap-ux/odata-annotation-core-types@0.4.2)(@sap-ux/project-access@1.29.18)':
+    dependencies:
+      '@sap-ux/cds-annotation-parser': 0.2.8
+      '@sap-ux/odata-annotation-core': 0.2.2
+      '@sap-ux/odata-vocabularies': 0.4.7
+      '@sap-ux/text-document-utils': 0.2.0
+      '@sap/ux-cds-compiler-facade': 1.16.1(@sap-ux/odata-annotation-core-types@0.4.2)(@sap-ux/odata-annotation-core@0.2.2)(@sap-ux/project-access@1.29.18)
+      i18next: 20.6.1
+    transitivePeerDependencies:
+      - '@sap-ux/odata-annotation-core-types'
+      - '@sap-ux/project-access'
+
   '@sap-ux/control-property-editor@0.5.37': {}
+
+  '@sap-ux/control-property-editor@0.6.2': {}
 
   '@sap-ux/edmx-parser@0.9.0':
     dependencies:
@@ -9971,7 +10158,43 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
+  '@sap-ux/fe-fpm-writer@0.33.19':
+    dependencies:
+      '@sap-ux/annotation-converter': 0.10.2
+      '@sap-ux/fiori-annotation-api': 0.4.22
+      '@sap-ux/project-access': 1.29.18
+      '@sap-ux/vocabularies-types': 0.13.0
+      '@xmldom/xmldom': 0.8.10
+      ejs: 3.1.10
+      i18next: 21.6.11
+      i18next-fs-backend: 1.1.1
+      mem-fs: 2.1.0
+      mem-fs-editor: 9.4.0(mem-fs@2.1.0)
+      semver: 7.5.4
+      xml-formatter: 2.6.1
+      xpath: 0.0.33
+    transitivePeerDependencies:
+      - debug
+
   '@sap-ux/fe-mockserver-core@1.4.21':
+    dependencies:
+      '@sap-ux/annotation-converter': 0.10.3
+      '@sap-ux/edmx-parser': 0.9.0
+      balanced-match: 1.0.2
+      body-parser: 1.20.3
+      braces: 3.0.3
+      chevrotain: 9.1.0
+      chokidar: 3.6.0
+      etag: 1.8.1
+      graceful-fs: 4.2.11
+      lodash.clonedeep: 4.5.0
+      lodash.merge: 4.6.2
+      query-string: 7.1.3
+      router: 2.0.0
+    transitivePeerDependencies:
+      - supports-color
+
+  '@sap-ux/fe-mockserver-core@1.4.22':
     dependencies:
       '@sap-ux/annotation-converter': 0.10.3
       '@sap-ux/edmx-parser': 0.9.0
@@ -10012,6 +10235,47 @@ snapshots:
       vscode-languageserver-textdocument: 1.0.11
     transitivePeerDependencies:
       - debug
+
+  '@sap-ux/fiori-annotation-api@0.4.22':
+    dependencies:
+      '@sap-ux/annotation-converter': 0.10.2
+      '@sap-ux/cds-annotation-parser': 0.2.8
+      '@sap-ux/cds-odata-annotation-converter': 0.5.3(@sap-ux/odata-annotation-core-types@0.4.2)(@sap-ux/project-access@1.29.18)
+      '@sap-ux/logger': 0.6.0
+      '@sap-ux/odata-annotation-core': 0.2.2
+      '@sap-ux/odata-annotation-core-types': 0.4.2
+      '@sap-ux/odata-entity-model': 0.3.1
+      '@sap-ux/odata-vocabularies': 0.4.7
+      '@sap-ux/project-access': 1.29.18
+      '@sap-ux/vocabularies-types': 0.13.0
+      '@sap-ux/xml-odata-annotation-converter': 0.3.2
+      '@sap/ux-cds-compiler-facade': 1.16.1(@sap-ux/odata-annotation-core-types@0.4.2)(@sap-ux/odata-annotation-core@0.2.2)(@sap-ux/project-access@1.29.18)
+      '@xml-tools/ast': 5.0.5
+      '@xml-tools/parser': 1.0.11
+      mem-fs: 2.1.0
+      mem-fs-editor: 9.4.0(mem-fs@2.1.0)
+      vscode-languageserver-textdocument: 1.0.11
+    transitivePeerDependencies:
+      - debug
+
+  '@sap-ux/fiori-generator-shared@0.9.11(debug@4.3.7)':
+    dependencies:
+      '@sap-ux/btp-utils': 1.0.2(debug@4.3.7)
+      '@sap-ux/project-access': 1.29.18(debug@4.3.7)
+      '@sap-ux/telemetry': 0.5.72(debug@4.3.7)
+      '@vscode-logging/logger': 2.0.0
+      i18next: 20.6.1
+      logform: 2.4.0
+      mem-fs: 2.1.0
+      mem-fs-editor: 9.4.0(mem-fs@2.1.0)
+      os-name: 4.0.1
+      semver: 7.5.4
+    transitivePeerDependencies:
+      - applicationinsights-native-metrics
+      - bufferutil
+      - debug
+      - supports-color
+      - utf-8-validate
 
   '@sap-ux/fiori-generator-shared@0.9.5(debug@4.3.7)':
     dependencies:
@@ -10065,12 +10329,47 @@ snapshots:
       - supports-color
       - utf-8-validate
 
+  '@sap-ux/inquirer-common@0.6.32(debug@4.3.7)':
+    dependencies:
+      '@sap-ux/btp-utils': 1.0.2(debug@4.3.7)
+      '@sap-ux/feature-toggle': 0.2.3
+      '@sap-ux/fiori-generator-shared': 0.9.11(debug@4.3.7)
+      '@sap-ux/guided-answers-helper': 0.2.1
+      '@sap-ux/logger': 0.6.0
+      '@sap-ux/telemetry': 0.5.72(debug@4.3.7)
+      '@sap-ux/ui5-info': 0.9.1(debug@4.3.7)
+      '@sap/cf-tools': 3.2.2
+      axios: 1.8.2(debug@4.3.7)
+      chalk: 4.1.2
+      figures: 3.2.0
+      fuzzy: 0.1.3
+      i18next: 23.5.1
+      lodash: 4.17.21
+      os-name: 4.0.1
+      semver: 7.5.4
+    transitivePeerDependencies:
+      - applicationinsights-native-metrics
+      - bufferutil
+      - debug
+      - supports-color
+      - utf-8-validate
+
   '@sap-ux/logger@0.6.0':
     dependencies:
       chalk: 4.1.2
       lodash: 4.17.21
       winston: 3.11.0
       winston-transport: 4.7.0
+
+  '@sap-ux/mockserver-config-writer@0.8.11(debug@4.3.7)':
+    dependencies:
+      '@sap-ux/project-access': 1.29.18(debug@4.3.7)
+      '@sap-ux/ui5-config': 0.26.5(debug@4.3.7)
+      i18next: 20.6.1
+      mem-fs: 2.1.0
+      mem-fs-editor: 9.4.0(mem-fs@2.1.0)
+    transitivePeerDependencies:
+      - debug
 
   '@sap-ux/mockserver-config-writer@0.8.5(debug@4.3.7)':
     dependencies:
@@ -10093,6 +10392,17 @@ snapshots:
       - debug
       - utf-8-validate
 
+  '@sap-ux/nodejs-utils@0.1.8(debug@4.3.7)':
+    dependencies:
+      '@sap-ux/btp-utils': 1.0.2(debug@4.3.7)
+      fast-glob: 3.3.1
+      read-pkg-up: 7.0.1
+      semver: 7.5.4
+    transitivePeerDependencies:
+      - bufferutil
+      - debug
+      - utf-8-validate
+
   '@sap-ux/odata-annotation-core-types@0.4.2':
     dependencies:
       '@sap-ux/text-document-utils': 0.2.0
@@ -10103,6 +10413,21 @@ snapshots:
       '@sap-ux/text-document-utils': 0.2.0
 
   '@sap-ux/odata-entity-model@0.3.1': {}
+
+  '@sap-ux/odata-service-writer@0.26.13(debug@4.3.7)':
+    dependencies:
+      '@sap-ux/mockserver-config-writer': 0.8.11(debug@4.3.7)
+      '@sap-ux/project-access': 1.29.18(debug@4.3.7)
+      '@sap-ux/ui5-config': 0.26.5(debug@4.3.7)
+      ejs: 3.1.10
+      fast-xml-parser: 4.4.1
+      i18next: 20.6.1
+      mem-fs: 2.1.0
+      mem-fs-editor: 9.4.0(mem-fs@2.1.0)
+      prettify-xml: 1.2.0
+      semver: 7.5.4
+    transitivePeerDependencies:
+      - debug
 
   '@sap-ux/odata-service-writer@0.26.7(debug@4.3.7)':
     dependencies:
@@ -10123,6 +10448,10 @@ snapshots:
     dependencies:
       '@sap-ux/odata-annotation-core-types': 0.4.2
 
+  '@sap-ux/odata-vocabularies@0.4.7':
+    dependencies:
+      '@sap-ux/odata-annotation-core-types': 0.4.2
+
   '@sap-ux/preview-middleware@0.18.8(debug@4.3.7)(express@4.21.2)':
     dependencies:
       '@sap-ux/adp-tooling': 0.13.8(debug@4.3.7)
@@ -10131,6 +10460,26 @@ snapshots:
       '@sap-ux/feature-toggle': 0.2.3
       '@sap-ux/logger': 0.6.0
       '@sap-ux/project-access': 1.29.12(debug@4.3.7)
+      ejs: 3.1.10
+      express: 4.21.2
+      mem-fs: 2.1.0
+      mem-fs-editor: 9.4.0(mem-fs@2.1.0)
+    transitivePeerDependencies:
+      - applicationinsights-native-metrics
+      - bufferutil
+      - debug
+      - supports-color
+      - utf-8-validate
+
+  '@sap-ux/preview-middleware@0.19.12(debug@4.3.7)(express@4.21.2)':
+    dependencies:
+      '@sap-ux/adp-tooling': 0.13.22(debug@4.3.7)
+      '@sap-ux/btp-utils': 1.0.2(debug@4.3.7)
+      '@sap-ux/control-property-editor-sources': '@sap-ux/control-property-editor@0.6.2'
+      '@sap-ux/feature-toggle': 0.2.3
+      '@sap-ux/logger': 0.6.0
+      '@sap-ux/project-access': 1.29.18(debug@4.3.7)
+      '@sap-ux/system-access': 0.5.34(debug@4.3.7)
       ejs: 3.1.10
       express: 4.21.2
       mem-fs: 2.1.0
@@ -10168,10 +10517,44 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
+  '@sap-ux/project-access@1.29.18':
+    dependencies:
+      '@sap-ux/i18n': 0.2.3
+      '@sap-ux/ui5-config': 0.26.5
+      fast-xml-parser: 4.4.1
+      findit2: 2.2.3
+      json-parse-even-better-errors: 4.0.0
+      mem-fs: 2.1.0
+      mem-fs-editor: 9.4.0(mem-fs@2.1.0)
+      semver: 7.5.4
+    transitivePeerDependencies:
+      - debug
+
+  '@sap-ux/project-access@1.29.18(debug@4.3.7)':
+    dependencies:
+      '@sap-ux/i18n': 0.2.3
+      '@sap-ux/ui5-config': 0.26.5(debug@4.3.7)
+      fast-xml-parser: 4.4.1
+      findit2: 2.2.3
+      json-parse-even-better-errors: 4.0.0
+      mem-fs: 2.1.0
+      mem-fs-editor: 9.4.0(mem-fs@2.1.0)
+      semver: 7.5.4
+    transitivePeerDependencies:
+      - debug
+
   '@sap-ux/project-input-validator@0.3.4':
     dependencies:
       i18next: 23.5.1
       validate-npm-package-name: 5.0.0
+
+  '@sap-ux/project-input-validator@0.5.0(debug@4.3.7)':
+    dependencies:
+      '@sap-ux/project-access': 1.29.18(debug@4.3.7)
+      i18next: 23.5.1
+      validate-npm-package-name: 5.0.0
+    transitivePeerDependencies:
+      - debug
 
   '@sap-ux/store@1.0.0':
     dependencies:
@@ -10196,6 +10579,19 @@ snapshots:
       - supports-color
       - utf-8-validate
 
+  '@sap-ux/system-access@0.5.34(debug@4.3.7)':
+    dependencies:
+      '@sap-ux/axios-extension': 1.19.2(debug@4.3.7)
+      '@sap-ux/btp-utils': 1.0.2(debug@4.3.7)
+      '@sap-ux/logger': 0.6.0
+      '@sap-ux/store': 1.0.0
+      prompts: 2.4.2
+    transitivePeerDependencies:
+      - bufferutil
+      - debug
+      - supports-color
+      - utf-8-validate
+
   '@sap-ux/telemetry@0.5.66(debug@4.3.7)':
     dependencies:
       '@sap-ux/btp-utils': 1.0.1(debug@4.3.7)
@@ -10205,6 +10601,24 @@ snapshots:
       '@sap-ux/ui5-config': 0.26.2(debug@4.3.7)
       applicationinsights: 2.9.2
       axios: 1.7.9(debug@4.3.7)
+      performance-now: 2.1.0
+      yaml: 2.3.3
+    transitivePeerDependencies:
+      - applicationinsights-native-metrics
+      - bufferutil
+      - debug
+      - supports-color
+      - utf-8-validate
+
+  '@sap-ux/telemetry@0.5.72(debug@4.3.7)':
+    dependencies:
+      '@sap-ux/btp-utils': 1.0.2(debug@4.3.7)
+      '@sap-ux/logger': 0.6.0
+      '@sap-ux/project-access': 1.29.18(debug@4.3.7)
+      '@sap-ux/store': 1.0.0
+      '@sap-ux/ui5-config': 0.26.5(debug@4.3.7)
+      applicationinsights: 2.9.2
+      axios: 1.8.2(debug@4.3.7)
       performance-now: 2.1.0
       yaml: 2.3.3
     transitivePeerDependencies:
@@ -10240,6 +10654,28 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
+  '@sap-ux/ui5-config@0.26.5':
+    dependencies:
+      '@sap-ux/yaml': 0.16.0
+      ajv: 8.17.1
+      axios: 1.8.2
+      js-yaml: 4.1.0
+      lodash: 4.17.21
+      semver: 7.5.4
+    transitivePeerDependencies:
+      - debug
+
+  '@sap-ux/ui5-config@0.26.5(debug@4.3.7)':
+    dependencies:
+      '@sap-ux/yaml': 0.16.0
+      ajv: 8.17.1
+      axios: 1.8.2(debug@4.3.7)
+      js-yaml: 4.1.0
+      lodash: 4.17.21
+      semver: 7.5.4
+    transitivePeerDependencies:
+      - debug
+
   '@sap-ux/ui5-info@0.9.0(debug@4.3.7)':
     dependencies:
       '@sap-ux/logger': 0.6.0
@@ -10248,9 +10684,23 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
+  '@sap-ux/ui5-info@0.9.1(debug@4.3.7)':
+    dependencies:
+      '@sap-ux/logger': 0.6.0
+      axios: 1.8.2(debug@4.3.7)
+      semver: 7.5.4
+    transitivePeerDependencies:
+      - debug
+
   '@sap-ux/ui5-middleware-fe-mockserver@2.2.93':
     dependencies:
       '@sap-ux/fe-mockserver-core': 1.4.21
+    transitivePeerDependencies:
+      - supports-color
+
+  '@sap-ux/ui5-middleware-fe-mockserver@2.2.94':
+    dependencies:
+      '@sap-ux/fe-mockserver-core': 1.4.22
     transitivePeerDependencies:
       - supports-color
 
@@ -10386,6 +10836,12 @@ snapshots:
       '@sap-ux/odata-annotation-core-types': 0.4.2
       '@sap-ux/project-access': 1.29.14
 
+  '@sap/ux-cds-compiler-facade@1.16.1(@sap-ux/odata-annotation-core-types@0.4.2)(@sap-ux/odata-annotation-core@0.2.2)(@sap-ux/project-access@1.29.18)':
+    dependencies:
+      '@sap-ux/odata-annotation-core': 0.2.2
+      '@sap-ux/odata-annotation-core-types': 0.4.2
+      '@sap-ux/project-access': 1.29.18
+
   '@sap/ux-specification@1.124.12':
     dependencies:
       '@sap-ux/fe-fpm-writer': 0.33.14
@@ -10393,9 +10849,36 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
+  '@sap/ux-specification@1.124.15':
+    dependencies:
+      '@sap-ux/fe-fpm-writer': 0.33.19
+      '@sap-ux/vocabularies-types': 0.12.0
+    transitivePeerDependencies:
+      - debug
+
   '@sap/ux-ui5-tooling@1.17.0(encoding@0.1.13)':
     dependencies:
       '@sap-ux/preview-middleware': 0.18.8(debug@4.3.7)(express@4.21.2)
+      '@ui5/fs': 3.0.4
+      connect-livereload: 0.6.1
+      debug: 4.3.7
+      express: 4.21.2
+      livereload: 0.9.3
+      patch-package: 8.0.0
+      semver: 7.6.3
+      update-notifier-cjs: 5.1.6(encoding@0.1.13)
+    optionalDependencies:
+      '@zowe/secrets-for-zowe-sdk': 8.1.2
+    transitivePeerDependencies:
+      - applicationinsights-native-metrics
+      - bufferutil
+      - encoding
+      - supports-color
+      - utf-8-validate
+
+  '@sap/ux-ui5-tooling@1.17.3(encoding@0.1.13)':
+    dependencies:
+      '@sap-ux/preview-middleware': 0.19.12(debug@4.3.7)(express@4.21.2)
       '@ui5/fs': 3.0.4
       connect-livereload: 0.6.1
       debug: 4.3.7
@@ -11299,6 +11782,22 @@ snapshots:
       - debug
 
   axios@1.7.9(debug@4.3.7):
+    dependencies:
+      follow-redirects: 1.15.9(debug@4.3.7)
+      form-data: 4.0.2
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+
+  axios@1.8.2:
+    dependencies:
+      follow-redirects: 1.15.9(debug@4.4.0)
+      form-data: 4.0.2
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+
+  axios@1.8.2(debug@4.3.7):
     dependencies:
       follow-redirects: 1.15.9(debug@4.3.7)
       form-data: 4.0.2
@@ -14737,7 +15236,7 @@ snapshots:
       minimist: 1.2.8
       open: 7.4.2
       rimraf: 2.7.1
-      semver: 7.6.3
+      semver: 7.7.1
       slash: 2.0.0
       tmp: 0.0.33
       yaml: 2.7.1
@@ -16123,6 +16622,31 @@ snapshots:
       - supports-color
       - typescript
 
+  ui5-tooling-modules@3.25.1(@ui5/project@4.0.4(@ui5/builder@4.0.5))(typescript@5.8.2):
+    dependencies:
+      '@javascript-obfuscator/escodegen': 2.3.0
+      '@rollup/plugin-commonjs': 28.0.3(rollup@4.38.0)
+      '@rollup/plugin-inject': 5.0.5(rollup@4.38.0)
+      '@rollup/plugin-json': 6.1.0(rollup@4.38.0)
+      '@rollup/plugin-replace': 6.0.2(rollup@4.38.0)
+      '@rollup/plugin-terser': 0.4.4(rollup@4.38.0)
+      '@rollup/pluginutils': 5.1.4(rollup@4.38.0)
+      '@typescript-eslint/typescript-estree': 8.28.0(typescript@5.8.2)
+      '@ui5/project': 4.0.4(@ui5/builder@4.0.5)
+      chokidar: 4.0.3
+      estree-walker: 3.0.3
+      fast-xml-parser: 5.0.9
+      handlebars: 4.7.8
+      ignore-walk: 7.0.0
+      minimatch: 7.4.6
+      rollup: 4.38.0
+      rollup-plugin-polyfill-node: 0.13.0(rollup@4.38.0)
+      sanitize-filename: 1.6.3
+      semver: 7.7.1
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+
   ui5-tooling-stringreplace@3.4.0:
     dependencies:
       dotenv: 16.4.7
@@ -16238,7 +16762,7 @@ snapshots:
       pupa: 2.1.1
       registry-auth-token: 5.1.0
       registry-url: 5.1.0
-      semver: 7.6.3
+      semver: 7.7.1
       semver-diff: 3.1.1
       xdg-basedir: 4.0.0
     transitivePeerDependencies:
@@ -16536,7 +17060,7 @@ snapshots:
 
   winston-transport@4.6.0:
     dependencies:
-      logform: 2.4.0
+      logform: 2.7.0
       readable-stream: 3.6.2
       triple-beam: 1.4.1
 

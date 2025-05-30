@@ -14,28 +14,15 @@ import * as XLSX from "xlsx";
 import OptionsDialog from "./OptionsDialog";
 import MessageHandler from "../MessageHandler";
 import Log from "sap/base/Log";
-import SheetHandler from "../SheetHandler";
-import Parser from "../Parser";
 import Button from "sap/m/Button";
-import { ArrayData, AvailableOptionsType, DeepDownloadConfig, FireEventReturnType, DirectUploadConfig } from "../../types";
+import { AvailableOptionsType, DeepDownloadConfig } from "../../types";
 import FlexBox from "sap/m/FlexBox";
 import JSONModel from "sap/ui/model/json/JSONModel";
-import Dialog from "sap/m/Dialog";
-import Select from "sap/m/Select";
-import Item from "sap/ui/core/Item";
 import SpreadsheetDownloadDialog from "../download/SpreadsheetDownloadDialog";
 import SpreadsheetGenerator from "../download/SpreadsheetGenerator";
 import SpreadsheetDownload from "../download/SpreadsheetDownload";
 import OData from "../odata/OData";
-import { Action } from "../../enums";
-import DirectUploader from "../DirectUploader";
-
-type InputType = {
-	[key: string]: {
-		rawValue: any;
-		[additionalKeys: string]: any;
-	};
-};
+import ImportService from "../ImportService";
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -53,7 +40,8 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	spreadsheetOptionsModel: JSONModel;
 	spreadsheetGenerator: SpreadsheetGenerator;
 	spreadsheetDownload: SpreadsheetDownload;
-	directUploader: DirectUploader;
+	private odataHandler: OData;
+	private importService: ImportService;
 	private currentFile: File | null = null;
 
 	constructor(spreadsheetUploadController: SpreadsheetUpload, component: Component, componentI18n: ResourceModel, messageHandler: MessageHandler) {
@@ -62,11 +50,19 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 		this.component = component;
 		this.componentI18n = componentI18n;
 		this.util = new Util(componentI18n.getResourceBundle() as ResourceBundle);
+		this.messageHandler = messageHandler;
+
+		// Initialize the import service
+		this.importService = new ImportService(
+			spreadsheetUploadController,
+			component,
+			componentI18n.getResourceBundle() as ResourceBundle,
+			messageHandler
+		);
+
 		this.previewHandler = new Preview(this.util);
 		this.optionsHandler = new OptionsDialog(spreadsheetUploadController);
-		this.messageHandler = messageHandler;
 		this.spreadsheetDownloadDialog = new SpreadsheetDownloadDialog(this.spreadsheetUploadController, this);
-		this.directUploader = new DirectUploader(component, messageHandler, componentI18n.getResourceBundle() as ResourceBundle);
 	}
 
 	async createSpreadsheetUploadDialog() {
@@ -95,8 +91,8 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 			this.spreadsheetUploadDialog.attachAvailableOptionsChanged(this.onAvailableOptionsChanged.bind(this));
 			this.spreadsheetUploadDialog.attachFileDrop(this.onFileDrop.bind(this));
 		}
-		if (this.component.getStandalone() && 
-			this.component.getColumns().length === 0 && 
+		if (this.component.getStandalone() &&
+			this.component.getColumns().length === 0 &&
 			!this.component.getSpreadsheetTemplateFile()) {
 			this.spreadsheetOptionsModel.setProperty("/hideGenerateTemplateButton", true);
 		}
@@ -114,153 +110,47 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	 * @param {Event} event - The file upload event
 	 */
 	async onFileUpload(event: FileUploader$ChangeEvent) {
-		this.messageHandler.setMessages([]);
 		const file = event.getParameter("files")[0] as File;
-		try {
-
-			const asyncEventPreFileProcessing = await Util.fireEventAsync("preFileProcessing", { file: file }, this.component);
-			const isDefaultPrevented = asyncEventPreFileProcessing.bPreventDefault;
-			if (isDefaultPrevented) {
-				Log.info("preFileProcessing event was prevented", "SpreadsheetUpload: onFileUpload");
-				this.resetContent();
-				return;
-			} 
-			
-			// Check if direct upload is enabled - only for file selection, not for actual upload yet
-			const directUploadConfig = this.component.getDirectUploadConfig() as DirectUploadConfig;
-			if (directUploadConfig?.enabled === true) {
-				// Just proceed with parsing to show preview
-				// Store the file for potential direct upload later
-				this.currentFile = file;
-				Log.info("Direct upload is enabled - file will be processed on Upload button click", undefined, "SpreadsheetUploadDialog");
-			}
-			
-			// Continue with standard parsing to show preview regardless
-			this.handleFile(file);
-		} catch (error) {
-			Log.error("Error while calling the preFileProcessing event", error as Error, "SpreadsheetUpload: onFileUpload");
-		}
+		(this.spreadsheetUploadDialog.getModel("info") as JSONModel).setProperty("/fileUploadValue", file.name);
+		await this.handleFile(file);
 	}
 
+	/**
+	 * Process the uploaded file using the import pipeline
+	 * @param {Blob} file - The file to process
+	 */
 	async handleFile(file: Blob) {
 		try {
-			this.messageHandler.setMessages([]);
-			const workbook = (await this._readWorkbook(file)) as XLSX.WorkBook;
+			this.setBusy(true);
 
-			const isStandalone = this.component.getStandalone();
-			const readAllSheets = this.component.getReadAllSheets();
-
-			let spreadsheetSheetsData: ArrayData = [];
-			let columnNames: string[] = [];
-
-			if (isStandalone && readAllSheets) {
-				// Loop over the sheet names in the workbook
-				for (const sheetName of Object.keys(workbook.Sheets)) {
-					let currSheetData = SheetHandler.sheet_to_json(workbook.Sheets[sheetName]);
-					for (const dataVal of currSheetData) {
-						Object.keys(dataVal).forEach((key) => {
-							dataVal[key].sheetName = sheetName;
-						});
-					}
-
-					spreadsheetSheetsData = spreadsheetSheetsData.concat(currSheetData);
-					columnNames = columnNames.concat(XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })[0] as string[]);
-				}
-			} else {
-				const sheetOption = this.spreadsheetUploadController.component.getReadSheet();
-				let sheetName: string;
-				try {
-					sheetName = await this._getSheetName(workbook, sheetOption);
-				} catch (error) {
-					this.resetContent();
-					return;
-				}
-				
-				// Get the readSheetCoordinates from the component 
-				const readSheetCoordinates = this.component.getReadSheetCoordinates();
-				
-				// Pass readSheetCoordinates to sheet_to_json
-				spreadsheetSheetsData = SheetHandler.sheet_to_json(workbook.Sheets[sheetName], undefined, readSheetCoordinates);
-				
-				// Get the header row with header=1 option, starting from the custom coordinates if specified
-				const headerOptions = { header: 1 };
-				const firstRow = SheetHandler.sheet_to_json(workbook.Sheets[sheetName], headerOptions, readSheetCoordinates)[0];
-				// Ensure firstRow is an array and convert items to string for column names
-				const rawColumns = Array.isArray(firstRow) 
-					? firstRow 
-					: Object.values(firstRow || {});
-				columnNames = rawColumns.map(column => {
-					if (typeof column === 'object' && column !== null && 'rawValue' in column) {
-						return column.rawValue || '';
-					}
-					return String(column || '');
-				});
+			// Save file reference if it's a File object
+			if (file instanceof File) {
+				this.currentFile = file;
 			}
 
-			if (!spreadsheetSheetsData || spreadsheetSheetsData.length === 0) {
-				throw new Error(this.util.geti18nText("spreadsheetimporter.emptySheet"));
+			// Run import pipeline using the service
+			const sheetOption = this.spreadsheetUploadController.component.getReadSheet();
+			const result = await this.importService.processValidateAndUpload(
+				file,
+				sheetOption,
+				undefined,
+				{ resetMessages: true },
+				{
+					onBusy: (state) => this.setBusy(state),
+					onMessagesPresent: () => this.messageHandler.displayMessages(),
+					onImportSuccess: (rowCount) => this.setDataRows(rowCount)
+				}
+			);
+
+			if (!result.canceled && result.payloadArray) {
+				// Show a success message
+				MessageToast.show(this.util.geti18nText("spreadsheetimporter.fileReadyForUpload"));
 			}
 
-			//remove empty spaces before and after every value
-			for (const object of spreadsheetSheetsData) {
-				for (const key in object) {
-					object[key].rawValue = typeof object[key].rawValue === "string" ? object[key].rawValue.trim() : object[key].rawValue;
-				}
-			}
-
-			if (!isStandalone) {
-				this.messageHandler.checkFormat(spreadsheetSheetsData);
-				this.messageHandler.checkMandatoryColumns(
-					spreadsheetSheetsData,
-					columnNames,
-					this.spreadsheetUploadController.odataKeyList,
-					this.component.getMandatoryFields(),
-					this.spreadsheetUploadController.typeLabelList
-				);
-				this.messageHandler.checkDuplicateColumns(columnNames);
-				if (!this.component.getSkipEmptyHeadersCheck()) {
-					this.messageHandler.checkEmptyHeaders(spreadsheetSheetsData, columnNames);
-				}
-				if (!this.component.getSkipMaxLengthCheck()) {
-					this.messageHandler.checkMaxLength(spreadsheetSheetsData, this.spreadsheetUploadController.typeLabelList, this.component.getFieldMatchType());
-				}
-				if (!this.component.getSkipColumnsCheck()) {
-					this.messageHandler.checkColumnNames(columnNames, this.component.getFieldMatchType(), this.spreadsheetUploadController.typeLabelList);
-				}
-				if(this.component.getAction() === Action.Update){
-					this.messageHandler.checkDuplicateKeys(spreadsheetSheetsData);
-					this.messageHandler.checkMissingKeys(spreadsheetSheetsData);
-				}
-			}
-			this.spreadsheetUploadController.payload = spreadsheetSheetsData;
-
-			this.spreadsheetUploadController.payloadArray = isStandalone
-				? this.spreadsheetUploadController.payload
-				: Parser.parseSpreadsheetData(
-						this.spreadsheetUploadController.payload,
-						this.spreadsheetUploadController.typeLabelList,
-						this.component,
-						this.messageHandler,
-						this.util,
-						this.spreadsheetUploadController.isODataV4
-					);
-
-			this.getDialog().setBusy(true);
-			try {
-				await Util.fireEventAsync("checkBeforeRead", { sheetData: spreadsheetSheetsData, parsedData: this.spreadsheetUploadController.payloadArray }, this.component);
-			} catch (error) {
-				Log.error("Error while calling the checkBeforeRead event", error as Error, "SpreadsheetUpload: onFileUpload");
-			}
-			this.getDialog().setBusy(false);
-
-			if (this.messageHandler.areMessagesPresent()) {
-				// show error dialog
-				this.messageHandler.displayMessages();
-				return;
-			}
-			this.setDataRows(this.spreadsheetUploadController.payloadArray.length);
+			this.setBusy(false);
 		} catch (error) {
-			Util.showError(error, "SpreadsheetUpload.ts", "onFileUpload");
+			this.setBusy(false);
+			Log.error("Error handling file upload", error as Error, "SpreadsheetUploadDialog");
 			this.resetContent();
 		}
 	}
@@ -270,145 +160,62 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	 * @param {*} event
 	 */
 	async onUploadSet(event: Event) {
-		const source = event.getSource() as Button;
-		this.getDialog().setBusy(true);
-		let fireEventAsyncReturn: FireEventReturnType;
-		let isDefaultPrevented;
 		try {
-			fireEventAsyncReturn = await Util.fireEventAsync(
-				"uploadButtonPress",
-				{
-					payload: this.spreadsheetUploadController.payloadArray,
-					rawData: this._extractRawValues(this.spreadsheetUploadController.payloadArray),
-					parsedData: this._extractParsedValues(this.spreadsheetUploadController.payloadArray)
-				},
-				this.component
-			);
-			isDefaultPrevented = fireEventAsyncReturn.bPreventDefault;
-		} catch (error) {}
-		
-		// Check if direct upload is enabled
-		const directUploadConfig = this.component.getDirectUploadConfig() as DirectUploadConfig;
-		if (directUploadConfig?.enabled === true && !isDefaultPrevented && this.currentFile) {
-			try {
-				// Use the stored file from onFileUpload
-				const file = this.currentFile;
-				
-				// Convert file to ArrayBuffer
-				const arrayBuffer = await new Promise<ArrayBuffer>((resolve, reject) => {
-					const reader = new FileReader();
-					reader.onload = () => resolve(reader.result as ArrayBuffer);
-					reader.onerror = reject;
-					reader.readAsArrayBuffer(file);
-				});
-				
-				// Perform direct upload
-				this.spreadsheetUploadDialog.setBusy(true);
-				const result = await this.directUploader.uploadFile(arrayBuffer, file.name, this.spreadsheetUploadController.getOdataType());
-				
-				// Show success message
-				MessageToast.show(this.util.geti18nText("spreadsheetimporter.uploadSuccessful"));
-				
-				// Fire upload completed event
-				await Util.fireEventAsync("requestCompleted", { success: true }, this.component);
-				
-				// Close dialog
-				this.getDialog().setBusy(false);
-				this.onCloseDialog();
-				return;
-			} catch (error) {
-				Log.error("Direct upload failed in onUploadSet", error as Error, "SpreadsheetUploadDialog");
-				
-				// Show error message
-				MessageToast.show(this.util.geti18nText("spreadsheetimporter.directUploadError"));
-				
-				// Fire upload error event
-				await Util.fireEventAsync("requestCompleted", { success: false }, this.component);
-				
-				// Reset state
-				this.getDialog().setBusy(false);
-				
-				// Important: Return here to prevent further execution after an error
-				return;
-			}
-		}
-		
-		this.getDialog().setBusy(false);
-		if (isDefaultPrevented || this.component.getStandalone()) {
-			this.onCloseDialog();
-			if (this.messageHandler.areMessagesPresent()) {
-				this.messageHandler.displayMessages(true);
-			}
-			return;
-		}
-		// checking if spreadsheet file contains data or not
-		if (!this.spreadsheetUploadController.payloadArray.length) {
-			MessageToast.show(this.util.geti18nText("spreadsheetimporter.selectFileUpload"));
-			return;
-		}
+			this.setBusy(true);
 
-		var that = this;
-		const sourceParent = source.getParent() as SpreadsheetDialog;
+			// Get the button source to know which dialog to close afterwards
+			const source = event.getSource() as Button;
 
-		sourceParent.setBusyIndicatorDelay(0);
-		sourceParent.setBusy(true);
-		await Util.sleep(50);
+			if (this.currentFile || (this.spreadsheetUploadController.payloadArray && this.spreadsheetUploadController.payloadArray.length > 0)) {
+				let uploadSuccess = false;
 
-		// creating a promise as the extension api accepts odata call in form of promise only
-		var fnAddMessage = function () {
-			return new Promise((fnResolve, fnReject) => {
-				that.spreadsheetUploadController.getODataHandler().callOdata(fnResolve, fnReject, that.spreadsheetUploadController);
-			});
-		};
+				if (this.currentFile) {
+					// If we have a file, run validation first
+					const sheetOption = this.spreadsheetUploadController.component.getReadSheet();
+					const result = await this.importService.processAndValidate(
+						this.currentFile,
+						sheetOption,
+						undefined,
+						{
+							resetMessages: true,
+							validate: true,
+							showMessages: true
+						}
+					);
 
-		var mParameters = {
-			busy: {
-				set: true,
-				check: false
-			},
-			dataloss: {
-				popup: false,
-				navigation: false
-			},
-			sActionLabel: this.util.geti18nText("spreadsheetimporter.uploadingFile")
-		};
-
-		// calling the OData service using extension api
-		if (this.spreadsheetUploadController.isODataV4) {
-			try {
-				if(this.spreadsheetUploadController.context.editFlow){
-					await this.spreadsheetUploadController.context.editFlow.securedExecution(fnAddMessage, mParameters);
-				}else{
-					await fnAddMessage();
-				}
-			} catch (error) {
-				Log.error("Error while calling the odata service", error as Error, "SpreadsheetUpload: onUploadSet");
-				this.spreadsheetUploadController.errorsFound = true;
-				this.resetContent();
-			}
-		} else {
-			try {
-				if (this.spreadsheetUploadController.context.extensionAPI) {
-					await this.spreadsheetUploadController.context.extensionAPI.securedExecution(fnAddMessage, mParameters);
+					if (!result.canceled) {
+						// If validation passed, execute upload
+						uploadSuccess = await this.importService.executeUpload(
+							result.payloadArray,
+							this.currentFile
+						);
+					}
 				} else {
-					await fnAddMessage();
+					// No file, but we have payload data - execute upload directly
+					uploadSuccess = await this.importService.executeUpload(
+						this.spreadsheetUploadController.payloadArray
+					);
 				}
-			} catch (error) {
-				Log.error("Error while calling the odata service", error as Error, "SpreadsheetUpload: onUploadSet");
-				this.spreadsheetUploadController.errorsFound = true;
-				this.resetContent();
-			}
-		}
 
-		sourceParent.setBusy(false);
-		this.getDialog().setBusy(true);
-		try {
-			await Util.fireEventAsync("requestCompleted", { success: !this.spreadsheetUploadController.errorsFound }, this.component);
+				if (uploadSuccess) {
+					MessageToast.show(this.util.geti18nText("spreadsheetimporter.uploadSuccessful"));
+				} else {
+					MessageToast.show(this.util.geti18nText("spreadsheetimporter.uploadFailed"));
+				}
+
+			} else {
+				MessageToast.show(this.util.geti18nText("spreadsheetimporter.selectFileUpload"));
+				this.setBusy(false);
+				return;
+			}
+
+			// Close dialog after upload is handled
+			this.onCloseDialog();
 		} catch (error) {
-			Log.error("Error while calling the requestCompleted event", error as Error, "SpreadsheetUpload: onUploadSet");
+			Log.error("Error handling upload", error as Error, "SpreadsheetUploadDialog");
+		} finally {
+			this.setBusy(false);
 		}
-		this.getDialog().setBusy(false);
-		this.onCloseDialog();
 	}
 
 	openSpreadsheetUploadDialog() {
@@ -444,10 +251,33 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	 * Reset the dialog content and clear the current file
 	 */
 	resetContent() {
-		(this.spreadsheetUploadDialog.getModel("info") as JSONModel).setProperty("/dataRows", 0);
-		var fileUploader = (this.spreadsheetUploadDialog.getContent()[0] as FlexBox).getItems()[1] as FileUploader;
-		fileUploader.setValue();
+		if (this.spreadsheetUploadDialog) {
+			(this.spreadsheetUploadDialog.getModel("info") as JSONModel).setProperty("/dataRows", 0);
+
+			// Clear file uploader value
+			const content = this.spreadsheetUploadDialog.getContent();
+			if (content && content.length > 0) {
+				const flexBox = content[0] as FlexBox;
+				if (flexBox && flexBox.getItems && flexBox.getItems().length > 1) {
+					const fileUploader = flexBox.getItems()[1] as FileUploader;
+					if (fileUploader) {
+						fileUploader.setValue("");
+					}
+				}
+			}
+		}
+
+		// Clear the current file reference
 		this.currentFile = null;
+	}
+
+	/**
+	 * Set busy state on dialog
+	 */
+	setBusy(state: boolean): void {
+		if (this.spreadsheetUploadDialog) {
+			this.spreadsheetUploadDialog.setBusy(state);
+		}
 	}
 
 	setDataRows(length: number) {
@@ -459,10 +289,17 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	}
 
 	async showPreview() {
-		this.previewHandler.showPreview(this.spreadsheetUploadController.getPayloadArray(), this.spreadsheetUploadController.typeLabelList, this.component.getPreviewColumns());
+		if (this.spreadsheetUploadController.payloadArray) {
+			this.previewHandler.showPreview(
+				this.spreadsheetUploadController.payloadArray,
+				this.spreadsheetUploadController.typeLabelList,
+				this.component.getPreviewColumns()
+			);
+		}
 	}
 
 	async onTempDownload() {
+		// Template download implementation unchanged
 		// check if custom template is provided, otherwise generate it
 		if (this.component.getSpreadsheetTemplateFile() !== "") {
 			try {
@@ -579,7 +416,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 								newStr = sampleDataValue ? sampleDataValue : "test string";
 							}
 							// Set default value for sampleDataValue based on sampleDataDefined flag
-							let defaultValue = sampleDataDefined ? "" : newStr;
+							let defaultValue: string = sampleDataDefined ? "" : newStr;
 							// Assign sampleDataValue only if sampleDataValue is not undefined
 							sampleDataValue = sampleDataValue ? sampleDataValue : defaultValue;
 							cell = { v: sampleDataValue, t: "s" };
@@ -681,148 +518,6 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 		this.optionsHandler.openOptionsDialog();
 	}
 
-	/**
-	 * Read the uploaded workbook from the file.
-	 * @param {File} file - The uploaded file.
-	 * @returns {Promise} - Promise object representing the workbook.
-	 */
-	async _readWorkbook(file: Blob) {
-		return new Promise(async (resolve, reject) => {
-			try {
-				const data = await this.buffer_RS(file.stream());
-				let workbook = XLSX.read(data, { cellNF: true, cellDates: true, cellText: true, cellFormula: true });
-				resolve(workbook);
-			} catch (error) {
-				Log.error("Error while reading the uploaded workbook", error as Error, "SpreadsheetUpload: _readWorkbook");
-				reject(error);
-			}
-		});
-	}
-
-	async buffer_RS(stream: ReadableStream) {
-		/* collect data */
-		const buffers = [];
-		const reader = stream.getReader();
-		for (;;) {
-			const res = await reader.read();
-			if (res.value) buffers.push(res.value);
-			if (res.done) break;
-		}
-
-		/* concat */
-		const out = new Uint8Array(buffers.reduce((acc, v) => acc + v.length, 0));
-
-		let off = 0;
-		for (const u8 of buffers) {
-			out.set(u8, off);
-			off += u8.length;
-		}
-
-		return out;
-	}
-
-	_extractRawValues(data: InputType[]): any[] {
-		return data.map((item) => {
-			const newObj: { [key: string]: any } = {};
-
-			for (const key in item) {
-				if (item[key].hasOwnProperty("rawValue")) {
-					newObj[key] = item[key].rawValue;
-				}
-			}
-
-			return newObj;
-		});
-	}
-
-	_extractParsedValues(data: InputType[]): any[] {
-		return data.map((item) => {
-			const newObj: { [key: string]: any } = {};
-
-			for (const key in item) {
-				if (item[key].hasOwnProperty("formattedValue")) {
-					newObj[key] = item[key].formattedValue;
-				}
-			}
-
-			return newObj;
-		});
-	}
-
-	async _getSheetName(workbook: XLSX.WorkBook, sheetOption: string): Promise<string> {
-		let sheetName: string;
-		// Check if sheetOption is a number
-		if (typeof sheetOption === "number") {
-			if (sheetOption >= 0 && sheetOption < workbook.SheetNames.length) {
-				sheetName = workbook.SheetNames[sheetOption];
-			} else {
-				Log.error("Invalid sheet index, defaulting to first Sheet", "SpreadsheetUpload: _getSheetName");
-				sheetName = workbook.SheetNames[0];
-			}
-		}
-		// Check if sheetOption is "XXSelectorXX"
-		else if (sheetOption === "XXSelectorXX") {
-			if (workbook.SheetNames.length === 1) {
-				sheetName = workbook.SheetNames[0];
-				Log.debug("Only one sheet in workbook, defaulting to first Sheet", "SpreadsheetUpload: _getSheetName");
-			} else {
-				// Display a selector dialog and get the selected sheet name
-				sheetName = await this._displaySheetSelectorDialog(workbook.SheetNames);
-			}
-		}
-		// Check if sheetOption is a string and exists in workbook.SheetNames
-		else if (workbook.SheetNames.includes(sheetOption)) {
-			sheetName = sheetOption;
-		} else {
-			Log.error("Invalid sheet name, defaulting to first Sheet", "SpreadsheetUpload: _getSheetName");
-			sheetName = workbook.SheetNames[0];
-		}
-		return sheetName;
-	}
-
-	_displaySheetSelectorDialog(sheetNames: string[]): Promise<string> {
-		// Display a selector dialog and get the selected sheet name
-		// Assuming you have a function called displaySelectorDialog that returns the selected sheet name
-		return new Promise((resolve, reject) => {
-			const select = new Select();
-
-			sheetNames.forEach((sheetName) => {
-				select.addItem(
-					new Item({
-						key: sheetName,
-						text: sheetName
-					})
-				);
-			});
-
-			const i18n = this.componentI18n.getResourceBundle() as ResourceBundle;
-
-			const dialog = new Dialog({
-				title: i18n.getText("spreadsheetimporter.sheetSelectorDialogTitle"),
-				type: "Message",
-				content: [select],
-				beginButton: new Button({
-					text: i18n.getText("spreadsheetimporter.ok"),
-					press: () => {
-						const selectedKey = select.getSelectedKey();
-						resolve(selectedKey);
-						dialog.close();
-					}
-				}),
-				afterClose: () => dialog.destroy(),
-				endButton: new Button({
-					text: i18n.getText("close"),
-					press: () => {
-						reject(new Error(i18n.getText("close")));
-						dialog.close();
-					}
-				})
-			}) as Dialog;
-
-			dialog.open();
-		});
-	}
-
 	setODataHandler(odataHandler: OData) {
 		this.odataHandler = odataHandler;
 		this.spreadsheetGenerator = new SpreadsheetGenerator(this.spreadsheetUploadController, this.component, odataHandler);
@@ -833,7 +528,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 	 * Initializes the spreadsheet download process.
 	 * If showOptions is enabled in the DeepDownloadConfig, opens a dialog allowing users to configure download options.
 	 * Otherwise, directly triggers the spreadsheet download.
-	 * 
+	 *
 	 * @returns {Promise<void>} A promise that resolves when the download process is initialized
 	 */
 	async onInitDownloadSpreadsheetProcess(): Promise<void> {

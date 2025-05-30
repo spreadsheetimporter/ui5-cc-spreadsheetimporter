@@ -8,6 +8,7 @@ import type { FieldMatchType } from "../enums";
 import ObjectPool from "sap/ui/base/ObjectPool";
 import Event from "sap/ui/base/Event";
 import ts from "sap/ui/model/odata/v4/ts";
+import * as XLSX from "xlsx";
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
@@ -45,10 +46,6 @@ export default class Util extends ManagedObject {
 		value = value.replace(/[,]/g, ".");
 		// Convert string to number
 		return parseFloat(value);
-	}
-
-	static sleep(ms: number) {
-		return new Promise((resolve) => setTimeout(resolve, ms));
 	}
 
 	static showError(error: any, className: string, methodName: string) {
@@ -282,9 +279,74 @@ export default class Util extends ManagedObject {
 	}
 
 	/**
+	 * Converts coordinates from object format {s: {r: number, c: number}, e: {r: number, c: number}}
+	 * to A1 notation string (e.g., "A1")
+	 *
+	 * @param coordinates Object with start (s) and end (e) coordinates
+	 * @param includeEndCoordinate Whether to include the end coordinate in the result (e.g., "A1:C10")
+	 * @returns A1 notation string or null if conversion fails
+	 */
+	static convertCoordinatesToA1Notation(coordinates: any, includeEndCoordinate: boolean = false): string | null {
+		try {
+			if (!coordinates || !coordinates.s || typeof coordinates.s.r !== 'number' || typeof coordinates.s.c !== 'number') {
+				return null;
+			}
+
+			// Create a new cell reference in A1 notation for the starting point
+			const startColLetter = XLSX.utils.encode_col(coordinates.s.c);
+			const startRowNumber = coordinates.s.r + 1; // XLSX is 0-based for rows
+			let a1Notation = `${startColLetter}${startRowNumber}`;
+
+			// Add end coordinates if requested and valid
+			if (includeEndCoordinate && coordinates.e &&
+				typeof coordinates.e.r === 'number' &&
+				typeof coordinates.e.c === 'number') {
+				const endColLetter = XLSX.utils.encode_col(coordinates.e.c);
+				const endRowNumber = coordinates.e.r + 1; // XLSX is 0-based for rows
+				a1Notation += `:${endColLetter}${endRowNumber}`;
+			}
+
+			return a1Notation;
+		} catch (error) {
+			Log.error("Error converting coordinates to A1 notation", error as Error, "SpreadsheetUpload: Util");
+			return null;
+		}
+	}
+
+	/**
+	 * Converts A1 notation string (e.g., "A1" or "A1:C10") to coordinates object
+	 *
+	 * @param a1Notation A1 notation string
+	 * @returns Coordinates object or null if conversion fails
+	 */
+	static convertA1NotationToCoordinates(a1Notation: string): any | null {
+		try {
+			if (!a1Notation || typeof a1Notation !== 'string') {
+				return null;
+			}
+
+			// Handle range notation (e.g., "A1:C10")
+			if (a1Notation.includes(':')) {
+				return XLSX.utils.decode_range(a1Notation);
+			}
+			// Handle single cell notation (e.g., "A1")
+			else {
+				const cellCoords = XLSX.utils.decode_cell(a1Notation);
+				return {
+					s: { r: cellCoords.r, c: cellCoords.c },
+					e: { r: cellCoords.r, c: cellCoords.c }
+				};
+			}
+		} catch (error) {
+			Log.error("Error converting A1 notation to coordinates", error as Error, "SpreadsheetUpload: Util");
+			return null;
+		}
+	}
+
+	/**
 	 * Validates the component configuration for potential issues or incompatibilities.
 	 * Logs configuration issues to the console.
-	 * 
+	 *
 	 * @param componentData The configuration data provided by the developer
 	 * @returns True if the configuration is valid, false if critical issues were found
 	 */
@@ -298,14 +360,14 @@ export default class Util extends ManagedObject {
 
 		// Check for unknown configuration options
 		const knownProperties = [
-			"spreadsheetFileName", "action", "context", "columns", "excludeColumns", 
-			"tableId", "odataType", "mandatoryFields", "fieldMatchType", "activateDraft", 
-			"batchSize", "standalone", "strict", "decimalSeparator", "hidePreview", 
-			"previewColumns", "skipMandatoryFieldCheck", "skipColumnsCheck", "skipMaxLengthCheck", 
-			"showBackendErrorMessages", "showOptions", "availableOptions", "hideSampleData", 
-			"sampleData", "spreadsheetTemplateFile", "useTableSelector", "readAllSheets", 
-			"readSheet", "spreadsheetRowPropertyName", "continueOnError", "createActiveEntity", 
-			"i18nModel", "debug", "componentContainerData", "bindingCustom", "showDownloadButton", 
+			"spreadsheetFileName", "action", "context", "columns", "excludeColumns",
+			"tableId", "odataType", "mandatoryFields", "fieldMatchType", "activateDraft",
+			"batchSize", "standalone", "strict", "decimalSeparator", "hidePreview",
+			"previewColumns", "skipMandatoryFieldCheck", "skipColumnsCheck", "skipMaxLengthCheck",
+			"showBackendErrorMessages", "showOptions", "availableOptions", "hideSampleData",
+			"sampleData", "spreadsheetTemplateFile", "useTableSelector", "readAllSheets",
+			"readSheet", "spreadsheetRowPropertyName", "continueOnError", "createActiveEntity",
+			"i18nModel", "debug", "componentContainerData", "bindingCustom", "showDownloadButton",
 			"deepDownloadConfig", "updateConfig"
 		];
 
@@ -336,7 +398,7 @@ export default class Util extends ManagedObject {
 		if (componentData.columns && componentData.excludeColumns) {
 			const columnsSet = new Set(componentData.columns);
 			const excludedInColumns = componentData.excludeColumns.filter((col: string) => columnsSet.has(col));
-			
+
 			if (excludedInColumns.length > 0) {
 				warnings.push(`Columns found in both 'columns' and 'excludeColumns': ${excludedInColumns.join(", ")}. These will be excluded.`);
 			}
@@ -353,15 +415,15 @@ export default class Util extends ManagedObject {
 		}
 
 		// Validate field match type
-		if (componentData.fieldMatchType && 
-			componentData.fieldMatchType !== "label" && 
+		if (componentData.fieldMatchType &&
+			componentData.fieldMatchType !== "label" &&
 			componentData.fieldMatchType !== "labelTypeBrackets") {
 			errors.push(`Invalid 'fieldMatchType' value: '${componentData.fieldMatchType}'. Valid options are 'label' or 'labelTypeBrackets'.`);
 		}
 
 		// Validate decimal separator
-		if (componentData.decimalSeparator && 
-			componentData.decimalSeparator !== "." && 
+		if (componentData.decimalSeparator &&
+			componentData.decimalSeparator !== "." &&
 			componentData.decimalSeparator !== ",") {
 			errors.push(`Invalid 'decimalSeparator' value: '${componentData.decimalSeparator}'. Valid options are '.' or ','.`);
 		}
@@ -369,14 +431,14 @@ export default class Util extends ManagedObject {
 		// Handle configuration issues
 		if (errors.length > 0) {
 			const errorMessage = "Spreadsheet Importer Configuration Errors:\n" + errors.join("\n");
-			
+
 			if (warnings.length > 0) {
 				const warningText = "\nWarnings:\n" + warnings.join("\n");
 				Log.error(errorMessage + warningText, undefined, "SpreadsheetUpload: Configuration");
 			} else {
 				Log.error(errorMessage, undefined, "SpreadsheetUpload: Configuration");
 			}
-			
+
 			return false;
 		} else if (warnings.length > 0) {
 			const warningMessage = "Spreadsheet Importer Configuration Warnings:\n" + warnings.join("\n");
@@ -385,5 +447,20 @@ export default class Util extends ManagedObject {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Creates a deep copy of an XLSX workbook. This prevents accidental mutation of the original
+	 * workbook object when downstream code (e.g. import wizard) renames attributes or changes cell values.
+	 */
+	static deepCopyWorkbook(workbook: XLSX.WorkBook): XLSX.WorkBook {
+		// Fast path: if workbook has no sheets return shallow clone
+		if (!workbook || !workbook.SheetNames || workbook.SheetNames.length === 0) {
+			return XLSX.utils.book_new();
+		}
+
+		// Create a binary string of the workbook and read it back – simplest reliable deep-clone
+		const binary = XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
+		return XLSX.read(binary, { type: "binary" });
 	}
 }

@@ -27,6 +27,8 @@ jobs:
       #     sudo apt-get --only-upgrade install google-chrome-stable
       #     # check chrome version
       #     google-chrome --version
+      - name: update APT cache
+        run: sudo apt-get update -y
       - name: install gnome-keyring
         run: sudo apt install gnome-keyring
 
@@ -71,7 +73,7 @@ jobs:
       - name: Run Build
         run: npm run build
 
-      - name: Remove cds-plugin-ui5 
+      - name: Remove cds-plugin-ui5
         run: |
           cd examples/packages/server
           node -e "const pkg = require('./package.json'); \

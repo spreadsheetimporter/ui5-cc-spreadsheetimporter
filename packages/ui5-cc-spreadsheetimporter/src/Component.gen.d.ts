@@ -49,6 +49,7 @@ declare module "./Component" {
         readSheetCoordinates?: string | PropertyBindingInfo;
         updateConfig?: object | PropertyBindingInfo | `{${string}}`;
         directUploadConfig?: object | PropertyBindingInfo | `{${string}}`;
+        useImportWizard?: boolean | PropertyBindingInfo | `{${string}}`;
         preFileProcessing?: (event: Component$PreFileProcessingEvent) => void;
         checkBeforeRead?: (event: Component$CheckBeforeReadEvent) => void;
         changeBeforeCreate?: (event: Component$ChangeBeforeCreateEvent) => void;
@@ -223,6 +224,10 @@ declare module "./Component" {
         // property: directUploadConfig
         getDirectUploadConfig(): object;
         setDirectUploadConfig(directUploadConfig: object): this;
+
+        // property: useImportWizard
+        getUseImportWizard(): boolean;
+        setUseImportWizard(useImportWizard: boolean): this;
 
         // event: preFileProcessing
         attachPreFileProcessing(fn: (event: Component$PreFileProcessingEvent) => void, listener?: object): this;
