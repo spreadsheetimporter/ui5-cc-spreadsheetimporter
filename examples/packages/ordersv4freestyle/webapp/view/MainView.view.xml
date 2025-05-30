@@ -9,7 +9,35 @@
                     <Button id="navToCDSPlugin" text="Navigate to CDS Plugin" press="onNavToCDSPlugin" class="sapUiTinyMarginEnd"/>
                     <Button id="navToOrders" text="Navigate to Orders" press="onNavToOrders" class="sapUiTinyMarginEnd"/>
                 </HBox>
-                
+
+                <core:ComponentContainer
+                id="test122wer2"
+                width="100%"
+                usage="spreadsheetImporter"
+                propagateModel="true"
+                async="true"
+                settings="{
+                componentContainerData:{buttonText:'Excel Upload Wizard',buttonId:'uploadButton',downloadButton:false},
+                useImportWizard: true,
+                debug: true
+              }"
+              />
+
+              <Button id="openWizard" text="Excel Upladd Wizard Code" press="openWizard" class="sapUiTinyMarginEnd"/>
+
+                <core:ComponentContainer
+                id="test1222"
+                width="100%"
+                usage="spreadsheetImporter"
+                propagateModel="true"
+                async="true"
+                settings="{
+                componentContainerData:{buttonText:'Excel Upload  Coordinates',buttonId:'uploadButton',downloadButton:false},
+                useImportWizard: false,
+                readSheetCoordinates: 'A5'
+              }"
+            />
+
                 <core:ComponentContainer
                     id="test1"
                     width="100%"

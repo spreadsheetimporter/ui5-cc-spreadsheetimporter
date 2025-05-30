@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:l="sap.ui.layout"
+    xmlns:u="sap.ui.unified">
+    <Dialog
+        title="{i18n>spreadsheetimporter.wizardTitle}"
+        contentWidth="80%"
+        contentHeight="80%"
+        resizable="true"
+        draggable="true"
+        showHeader="true"
+        afterClose="onWizardClose">
+        <content>
+            <Wizard
+                width="100%"
+                height="100%"
+                showNextButton="false"
+                enableBranching="true"
+                renderMode="Page"
+                complete="onWizardComplete"
+                stepActivate="onWizardStepChanged">
+                <WizardStep
+                    title="{i18n>spreadsheetimporter.uploadFile}"
+                    validated="{= ${wizard>/fileUploaded} === true}">
+                    <VBox width="100%" class="sapUiSmallMargin">
+                        <Text text="{i18n>spreadsheetimporter.uploadFileDescription}" class="sapUiSmallMarginBottom"/>
+                        <FlexBox
+                            alignItems="Center"
+                            justifyContent="Center"
+                            width="100%"
+                            direction="Column"
+                            class="sapUiSmallMarginTopBottom" >
+                            <items>
+                                <u:FileUploader
+                                    width="100%"
+                                    fileType="xlsx,xls,csv"
+                                    placeholder="{i18n>spreadsheetimporter.chooseFile}"
+                                    uploadOnChange="false"
+                                    value="{wizard>/fileUploadValue}"
+                                    sameFilenameAllowed="true"
+                                    change="onFileUpload"
+                                    style="Emphasized"/>
+                                <Text text="{i18n>spreadsheetimporter.dropAreaLabel}" class="sapUiSmallMarginTop"/>
+                                <Panel
+                                    width="100%"
+                                    height="150px"
+                                    class="sapUiSmallMarginTop sapUiSmallMarginBottom sapUiMediumPadding"
+                                    backgroundDesign="Translucent"
+                                    accessibleRole="Region">
+                                    <FlexBox
+                                        alignItems="Center"
+                                        justifyContent="Center"
+                                        width="100%"
+                                        height="100%"
+                                        direction="Column">
+                                        <core:Icon
+                                            src="sap-icon://upload-to-cloud"
+                                            size="2rem"
+                                            class="sapUiSmallMarginBottom" />
+                                        <Text text="{i18n>spreadsheetimporter.dropFilesHere}" class="sapUiSmallMarginBottom" />
+                                    </FlexBox>
+                                    <dragDropConfig>
+                                        <dnd:DropInfo
+                                            targetAggregation="content"
+                                            drop="onFileDrop"
+                                            xmlns:dnd="sap.ui.core.dnd" />
+                                    </dragDropConfig>
+                                </Panel>
+                            </items>
+                        </FlexBox>
+                    </VBox>
+                    <customData>
+                        <core:CustomData key="stepName" value="uploadStep"/>
+                    </customData>
+                </WizardStep>
+                <WizardStep
+                    title="{i18n>spreadsheetimporter.headerSelectionTitle}"
+                    validated="{= ${wizard>/headerSelected} === true}">
+                    <VBox width="100%" class="sapUiSmallMargin">
+                        <Text text="{i18n>spreadsheetimporter.headerSelectionDescription}" class="sapUiSmallMarginBottom"/>
+                        <!-- Table container - table will be created in controller -->
+                        <VBox width="100%" />
+                    </VBox>
+                    <customData>
+                        <core:CustomData key="stepName" value="headerSelectionStep"/>
+                    </customData>
+                </WizardStep>
+                <WizardStep
+                    title="{i18n>spreadsheetimporter.previewDataTitle}"
+                    validated="true">
+                    <VBox width="100%" class="sapUiSmallMargin">
+                        <Text text="{i18n>spreadsheetimporter.previewDescription}" class="sapUiSmallMarginBottom"/>
+                        <VBox width="100%" height="100%">
+                            <!-- Preview content will be added dynamically -->
+                        </VBox>
+                    </VBox>
+                    <customData>
+                        <core:CustomData key="stepName" value="previewDataStep"/>
+                    </customData>
+                </WizardStep>
+            </Wizard>
+        </content>
+        <buttons>
+            <Button
+                text="{i18n>spreadsheetimporter.cancel}"
+                press="onWizardCancel"/>
+            <Button
+                text="{i18n>spreadsheetimporter.upload}"
+                type="Emphasized"
+                press="onWizardFinish"
+                enabled="{= ${wizard>/currentStep} === 'previewDataStep'}"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

@@ -337,7 +337,8 @@
             }
           }
         }
-      }
+      },
+      "config": {}
     },
     "extends": {
       "extensions": {

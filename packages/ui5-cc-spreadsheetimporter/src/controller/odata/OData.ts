@@ -257,7 +257,7 @@ export default abstract class OData extends ManagedObject {
 	private async showInternalErrorDialog(error: any) {
 		MessageBox.error(error.message);
 	}
-	
+
 	getView(context: any): any {
         return context._view || context.oView || context.getView();
     }
@@ -287,5 +287,4 @@ export default abstract class OData extends ManagedObject {
 	abstract fetchBatch(customBinding: ODataListBindingV4 | ODataListBindingV2, batchSize: number): Promise<any>;
 	abstract addKeys(labelList: ListObject, entityName: string, parentEntity?: any, partner?: string): void;
 	abstract getObjects(model: any, binding: any, batch: any): Promise<any>;
-	// Pro Methods
 }
