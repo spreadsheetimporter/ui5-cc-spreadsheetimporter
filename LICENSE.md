@@ -1,66 +1,77 @@
 # SpreadsheetImporter Commercial License (Version 2.0.0+)
 
-**Effective Date:** Upon release of version 2.0.0  
-**Licensor:** Marian Zeis ("Licensor")
+**Effective Date:** upon release of version 2.0.0  
+**Licensor:** Marian Zeis (“Licensor”)
 
-## 1. Definitions
+## 1. Definitions  
 
-1. **"Software"** means all code, documentation, and other materials in this repository identified as versions **2.0.0 and above** of "UI5-CC-SpreadsheetImporter," as published under this License by Licensor.  
-2. **"Non-Production Use"** means using the Software in a development, test, or evaluation environment for the purpose of testing functionality or suitability. Non-Production Use explicitly excludes serving real end users, handling live (production) data, or providing a public/internal live service where the Software is critical to operations.  
-3. **"Production Use"** means deploying or using the Software in any environment where it serves end users (internal or external), processes real data, or is part of a live service, product, or application.  
-4. **"Resale" or "Commercial Distribution"** means embedding, bundling, or otherwise including the Software as part of a product, service, or solution offered to third parties (whether for a fee or free).
+1. **“Software”** – all code, documentation and other materials in this repository identified as versions **2.0.0 and above** of “UI5-CC-SpreadsheetImporter”, as published by Licensor.  
+2. **“Non-Production Use”** – use in development, test or evaluation environments. It explicitly excludes serving real end-users or processing live data.  
+3. **“Production Use”** – any use that serves end-users, handles live data or runs as part of a live service.  
+4. **“Resale” / “Commercial Distribution”** – embedding, bundling or otherwise including the Software in a product or service offered to third parties (paid or free).
 
-## 2. License Grant for Non-Production Use
+## 2. Licence grant for Non-Production Use  
 
-Subject to your compliance with all terms and conditions of this License, Licensor grants you a royalty-free, worldwide, non-exclusive license to:
+Subject to compliance with this Licence, Licensor grants you a royalty-free, worldwide, non-exclusive right to use, modify and copy the Software **solely for Non-Production Use**. No other rights are granted.
 
-- Access, use, modify, and copy the Software **solely** for Non-Production Use.
+## 3. Production or Commercial Use requires a paid licence  
 
-No other rights are granted for Non-Production Use.
+1. **Production Use** – requires a paid commercial licence.  
+2. **Resale / Embedding** – requires a special commercial licence.  
+3. **How to obtain** – visit <https://spreadsheet-importer.com/> or e-mail <marian@marianzeis.de>.
 
-## 3. Production or Commercial Use Requires a Paid License
+## 4. No implied support or maintenance  
 
-1. **Production Use**: If you intend to use the Software in a production environment, you **must obtain a paid commercial license** from the Licensor.  
-2. **Resale / Embedding**: If you intend to distribute, bundle, or otherwise include the Software in a product or service you provide to third parties, you **must obtain a special commercial license** from the Licensor.  
-3. **How to Obtain**: For details on pricing and to obtain a license for Production or Resale, please visit [https://spreadsheet-importer.com/](https://spreadsheet-importer.com/) or contact Licensor at [marian@marianzeis.de](mailto:marian@marianzeis.de).
+The Software is provided **without** maintenance, support or updates. Support may be purchased under a separate agreement.
 
-## 4. No Implied Support or Maintenance
+## 5. Disclaimer of warranty  
 
-Licensor does **not** provide any maintenance, support, or updates under this License. Any support or maintenance may be offered under a **separate agreement** if available.
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED.
 
-## 5. Disclaimer of Warranty
+## 6. Termination  
 
-THE SOFTWARE IS PROVIDED "AS IS," WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT. IN NO EVENT SHALL LICENSOR BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+1. Breach of this Licence automatically terminates your rights.  
+2. Upon termination you must cease all use of the Software.  
+3. Sections 4 and 5 survive termination.
 
-## 6. Termination
+## 7. Previous versions  
 
-1. **Breach**: If you violate the terms of this License (including using the Software in a production environment without a paid license), your rights under this License terminate automatically.  
-2. **Effect of Termination**: Upon termination, you must cease all use of the Software.  
-3. **Survival**: Sections 4 (No Implied Support or Maintenance) and 5 (Disclaimer of Warranty) survive any termination of this License.
+All versions ≤ 1.x remain under the Apache 2.0 licence. This Commercial Licence applies **only** to versions 2.0.0 and above.
 
-## 7. Previous Versions
+## 8. Miscellaneous  
 
-All versions up to and including **1.x** (e.g., 1.7.x) are released under the Apache License, Version 2.0. That license remains in effect for those versions. This Commercial License applies **only** to versions **2.0.0 and above**.
+* **No waiver** – failure to enforce a provision is not a waiver.  
+* **Severability** – if any provision is held invalid, the remainder remains in effect.
 
-## 8. Miscellaneous
+## 9. Limitation of liability  
 
-- **No Waiver**: Failure by Licensor to enforce any provision of this License does not waive future enforcement.  
-- **Severability**: If any part of this License is held invalid or unenforceable, the remaining sections remain in full force and effect.
+Licensor’s total aggregate liability is limited to the licence fees actually paid by Licensee during the twelve (12) months preceding the event giving rise to liability.
 
-## 9. Limitation of Liability
-Licensor’s total aggregate liability shall not exceed the licence fees
-actually paid by Licensee during the twelve (12) months preceding the
-event giving rise to liability.
+## 10. Patent licence  
 
-## 10. Patent Licence
-Licensor grants Licensee a worldwide, royalty-free, non-exclusive patent
-licence under Licensor’s patent claims necessarily infringed by the use
-of the Software as permitted hereunder.
+Licensor grants Licensee a worldwide, royalty-free, non-exclusive patent licence for patent claims necessarily infringed by using the Software as permitted herein.
 
-## 11. Governing Law & Venue
-This Agreement is governed by German law. Exclusive venue is Munich.
+## 11. Governing law & venue  
 
-## 12. Export Compliance
-Licensee shall comply with all applicable EU and U.S. export-control and
-sanctions regulations. The Software is not designed for use in nuclear,
-chemical or biological weapons.
+This Licence is governed by German law. Exclusive venue is Munich, Germany.
+
+## 12. Export compliance  
+
+Licensee shall comply with applicable EU and U.S. export-control and sanctions regulations. The Software is not designed for use in nuclear, chemical or biological weapons.
+
+## 13. Support Addendum  
+
+If Licensee purchases a Support Plan, the terms published at  
+<https://spreadsheet-importer.com/support/> are incorporated by reference.
+
+## 14. Entire agreement  
+
+This Licence constitutes the entire agreement regarding the Software and supersedes all prior proposals or discussions. It may be modified only in writing signed by both parties.
+
+## 15. Assignment  
+
+Licensee may not assign this Licence without Licensor’s prior written consent, except to a successor in connection with a merger or sale of substantially all assets.
+
+## 16. Publicity
+
+Unless Licensee notifies Licensor in writing, Licensor may list Licensee’s name and logo as a customer reference.
