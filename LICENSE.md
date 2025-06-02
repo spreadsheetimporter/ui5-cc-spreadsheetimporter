@@ -45,4 +45,22 @@ All versions up to and including **1.x** (e.g., 1.7.x) are released under the Ap
 ## 8. Miscellaneous
 
 - **No Waiver**: Failure by Licensor to enforce any provision of this License does not waive future enforcement.  
-- **Severability**: If any part of this License is held invalid or unenforceable, the remaining sections remain in full force and effect. 
+- **Severability**: If any part of this License is held invalid or unenforceable, the remaining sections remain in full force and effect.
+
+## 9. Limitation of Liability
+Licensor’s total aggregate liability shall not exceed the licence fees
+actually paid by Licensee during the twelve (12) months preceding the
+event giving rise to liability.
+
+## 10. Patent Licence
+Licensor grants Licensee a worldwide, royalty-free, non-exclusive patent
+licence under Licensor’s patent claims necessarily infringed by the use
+of the Software as permitted hereunder.
+
+## 11. Governing Law & Venue
+This Agreement is governed by German law. Exclusive venue is Munich.
+
+## 12. Export Compliance
+Licensee shall comply with all applicable EU and U.S. export-control and
+sanctions regulations. The Software is not designed for use in nuclear,
+chemical or biological weapons.
