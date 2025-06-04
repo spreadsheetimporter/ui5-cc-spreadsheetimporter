@@ -126,6 +126,10 @@ export interface ComponentData {
 	 * Configuration for direct file uploads to backend services
 	 */
 	directUploadConfig?: DirectUploadConfig;
+	/**
+	 * Whether to use the import wizard for header row selection
+	 */
+	useImportWizard?: boolean;
 }
 
 export interface DeepDownloadConfig {
@@ -148,53 +152,53 @@ export interface DirectUploadConfig {
 	 * Whether to use direct file upload instead of standard OData operations
 	 */
 	enabled: boolean;
-	
+
 	/**
 	 * Target entity name for the direct upload (e.g., "my.bookshop.Authors")
 	 */
 	entityName: string;
-	
+
 	/**
 	 * Complete URL to the upload endpoint
 	 * Example: "/odata/v4/importer/Spreadsheet(entity='OrdersService.Orders')/content"
 	 */
 	uploadUrl?: string;
-	
+
 	/**
 	 * The ID used to identify the spreadsheet entity (if not provided, a random one will be generated)
 	 */
 	entityId?: string;
-	
+
 	/**
 	 * Whether to automatically adjust URLs for localhost environments
 	 */
 	localhostSupport?: boolean;
-	
+
 	/**
 	 * Port to use for localhost requests (default: 4004)
 	 */
 	localhostPort?: number;
-	
+
 	/**
 	 * Whether to use PUT (default) or POST for the upload
 	 */
 	usePost?: boolean;
-	
+
 	/**
 	 * Whether to include CSRF token in the request
 	 */
 	useCsrf?: boolean;
-	
+
 	/**
 	 * Additional request headers for the upload
 	 */
 	headers?: Record<string, string>;
-	
+
 	/**
 	 * Content-Type header for the upload (default: application/octet-stream)
 	 */
 	contentType?: string;
-	
+
 	/**
 	 * Whether to use Fetch API instead of XMLHttpRequest
 	 */
@@ -204,23 +208,23 @@ export interface DirectUploadConfig {
 	 * Whether to use CDS Plugin format for entity path
 	 */
 	useCdsPlugin?: boolean;
-	
+
 	/**
 	 * Whether to append /content to the entity path (for CDS Plugin)
 	 */
 	appendContentPath?: boolean;
-	
+
 	/**
 	 * Custom progress handler function for upload progress events
 	 * @param percent - Upload progress percentage (0-100)
 	 */
 	onProgress?: (percent: number) => void;
-	
+
 	/**
 	 * Custom error handler function for upload failures
 	 */
 	onError?: (error: any) => void;
-	
+
 	/**
 	 * Custom success handler function for successful uploads
 	 */
@@ -258,4 +262,7 @@ interface PropertyWithOrder {
 	order: number;
 }
 
-// Pro Types
+export interface DirectUploadConfig {
+    enabled: boolean;
+    [key: string]: any;
+}

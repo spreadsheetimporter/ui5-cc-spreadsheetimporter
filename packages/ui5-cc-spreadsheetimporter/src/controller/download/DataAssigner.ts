@@ -107,7 +107,6 @@ export default class DataAssigner extends ManagedObject {
             // If the property signifies a fetchable entity
             if (entity[property].$XYZFetchableEntity && data.hasOwnProperty(property)) {
                 let subEntity = entity[property].$XYZEntity;
-                // Defined Columns in the pro config
                 for (const column in data[property]) {
                     if (subEntity.hasOwnProperty(column) && !subEntity[column].$XYZFetchableEntity) {
                         if (!entity[property]["$XYZColumns"]) entity[property]["$XYZColumns"] = [];
@@ -118,4 +117,4 @@ export default class DataAssigner extends ManagedObject {
             }
         }
     }
-} 
+}
