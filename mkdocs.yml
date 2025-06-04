@@ -23,6 +23,7 @@ nav:
   - Integration:
       - Typescript: pages/Typescript.md
       - Central Deployment: pages/CentralDeployment.md
+      - Detailed Setup: pages/DetailedSetup.md
       - Supported Versions: pages/SupportVersions.md
   - Reference:
       - API Reference: 'pages/APIReference.md'
