@@ -22,7 +22,7 @@
     "start:uiv4fpm": "pnpm --filter ordersv4fpm start",
     "watch:server": "pnpm --filter @capire/orders watch",
     "test": "wdio run ./test/wdio-base.conf.js",
-    "test:single": "npm run test -- ordersv2fe  96 --spec OpenSpreadsheetUploadDialog",
+    "test:single": "npm run test -- ordersv2fe  96 --spec ./test/specs/all/OpenSpreadsheetUploadDialog.test.js",
     "ui5-test-runner": "ui5-test-runner"
   },
   "devDependencies": {

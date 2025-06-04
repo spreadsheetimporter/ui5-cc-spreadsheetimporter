@@ -63,28 +63,6 @@ sap.ui.define([
                 this.spreadsheetUpload.triggerDownloadSpreadsheet();
             },
 
-			openWizard: async function() {
-				this.spreadsheetUpload = await this.getView().getController().getOwnerComponent()
-				.createComponent({
-					usage: "spreadsheetImporter",
-					async: true,
-					componentData: {
-						context: this,
-						debug: true
-					}
-				});
-
-				this.spreadsheetUpload.openMatchWizard();
-			},
-
-            // onBeforeDownloadFileProcessing: function (event) {
-            //     event.getParameters().data.$XYZData[0].buyer = "Customer 123";
-            // },
-
-            // onBeforeDownloadFileExport: function (event) {
-            //     event.getParameters().filename = "Orders123_modified";
-            // },
-
             onNavToCDSPlugin: function() {
                 var oRouter = this.getOwnerComponent().getRouter();
                 oRouter.navTo("RouteCDSPlugin");
@@ -93,6 +71,11 @@ sap.ui.define([
             onNavToOrders: function() {
                 var oRouter = this.getOwnerComponent().getRouter();
                 oRouter.navTo("RouteOrdersTable");
+            },
+
+            onNavToWizard: function() {
+                var oRouter = this.getOwnerComponent().getRouter();
+                oRouter.navTo("RouteWizard");
             }
         });
     });
