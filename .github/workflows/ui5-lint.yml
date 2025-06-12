@@ -9,6 +9,8 @@ jobs:
   test-ui5-linter:
     runs-on: ubuntu-latest
     if: "github.event.pull_request.title != 'chore: release main' && !github.event.pull_request.draft"
+    permissions:
+      contents: read
 
     steps:
 
