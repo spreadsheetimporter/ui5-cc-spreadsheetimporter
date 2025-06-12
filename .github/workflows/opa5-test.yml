@@ -9,6 +9,9 @@ jobs:
   test-opa5:
     runs-on: ubuntu-latest
     if: "github.event.pull_request.title != 'chore: release main' && !github.event.pull_request.draft"
+    permissions:
+      contents: read
+      actions: write
     strategy:
       fail-fast: false
       matrix:
@@ -71,7 +74,7 @@ jobs:
       - name: Run Build
         run: npm run build
 
-      - name: Remove cds-plugin-ui5 
+      - name: Remove cds-plugin-ui5
         run: |
           cd examples/packages/server
           node -e "const pkg = require('./package.json'); \

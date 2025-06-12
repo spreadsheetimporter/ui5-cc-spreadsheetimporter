@@ -35,7 +35,7 @@ jobs:
         with:
           node-version: 20
           cache: "pnpm"
-        if: ${{ steps.release.outputs.releases_created }}       
+        if: ${{ steps.release.outputs.releases_created }}
 
       - name: Run pnpm install
         if: ${{ steps.release.outputs.releases_created }}
@@ -68,6 +68,9 @@ jobs:
     needs: release-please
     if: needs.release-please.outputs.prs
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     strategy:
       matrix:
         pr: ${{ fromJSON(needs.release-please.outputs.prs) }}
