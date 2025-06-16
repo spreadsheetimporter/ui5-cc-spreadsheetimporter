@@ -1,57 +1,45 @@
 import VBox from "sap/m/VBox";
-import StepBase from "./StepBase";
-import FileUploader from "sap/ui/unified/FileUploader";
-import Text from "sap/m/Text";
 import MessageToast from "sap/m/MessageToast";
 import Log from "sap/base/Log";
 import MatchWizard from "../MatchWizard";
+import Wizard from "sap/m/Wizard";
+import WizardStep from "sap/m/WizardStep";
+import HeaderSelectionStep from "./HeaderSelectionStep";
+import PreviewStep from "./PreviewStep";
 
 /**
  * UploadStep – first wizard step where the user selects the spreadsheet file.
  *
  * This step handles file upload, processes the file, and manages wizard navigation.
- * It reduces the logic burden on MatchWizardDialog by handling step-specific concerns.
  */
-export default class UploadStep extends StepBase {
+export default class UploadStep {
     public readonly stepName = "uploadStep";
 
-    private fileSelectedCallback: (file: File) => Promise<void>;
     private matchWizard: MatchWizard;
-    private wizard: any; // UI5 Wizard control
+    public wizard: Wizard;
     private util: any; // Util instance for i18n
 
-    constructor(
-        onFileSelected: (file: File) => Promise<void>,
-        matchWizard: MatchWizard,
-        wizard?: any,
-        util?: any
-    ) {
-        super();
-        this.fileSelectedCallback = onFileSelected;
+    constructor(matchWizard: MatchWizard, wizard?: Wizard, util?: any) {
         this.matchWizard = matchWizard;
         this.wizard = wizard;
         this.util = util;
     }
 
-    /**
-     * Set wizard and util references after construction
-     */
-    public setWizardReferences(wizard: any, util: any): void {
-        this.wizard = wizard;
-        this.util = util;
-    }
-
-    /** @inheritdoc */
+    /** Build method - The UI is already defined in the fragment */
     public build(container: VBox): void {
         // The UI is already defined in the fragment
         // This step only needs to handle the logic
         // The fragment will call onFileUpload and onFileDrop methods
     }
 
+    public validate(): boolean {
+        return true;
+    }
+
     /**
      * Handle file upload from FileUploader
      */
-    private async handleFileUpload(event: any): Promise<void> {
+    public async onFileUpload(event: any): Promise<void> {
         try {
             const files = event.getParameter("files");
             const file = files && files[0] as File;
@@ -67,54 +55,93 @@ export default class UploadStep extends StepBase {
     }
 
     /**
-     * Handle file drop from drag and drop
+     * Reset the wizard progress to avoid circular references when uploading a new file
      */
-    private async handleFileDrop(event: any): Promise<void> {
+    private resetWizardProgress(): void {
         try {
-            const files = event.getParameter("files");
-            const file = files && files[0] as File;
-            if (file) {
-                await this.processFileAndNavigate(file);
-            } else {
-                MessageToast.show("No file dropped");
+            if (this.wizard) {
+                // Reset wizard progress back to the upload step (first step)
+                const uploadStepControl = this.matchWizard.getStep("uploadStep");
+                if (uploadStepControl) {
+                    this.wizard.discardProgress(uploadStepControl);
+                    Log.debug("Wizard progress reset to upload step", undefined, "UploadStep");
+                }
+
+                // Clear any previous step configurations
+                const uploadStep = this.matchWizard.getStep("uploadStep");
+                const headerStep = this.matchWizard.getStep("headerSelectionStep");
+                const previewStep = this.matchWizard.getStep("previewDataStep");
+
+                // Reset step flow configurations
+                if (uploadStep) {
+                    uploadStep.setSubsequentSteps([]);
+                    uploadStep.setNextStep(null);
+                }
+                if (headerStep) {
+                    headerStep.setValidated(false);
+                }
+                if (previewStep) {
+                    previewStep.setValidated(false);
+                }
             }
         } catch (error) {
-            Log.error("Error handling file drop", error as Error, "UploadStep");
-            MessageToast.show("Error processing dropped file");
+            Log.warning("Error resetting wizard progress", error as Error, "UploadStep");
         }
     }
 
     /**
      * Process the file and handle wizard navigation
-     * This consolidates the logic that was previously in MatchWizardDialog.handleFileSelected
      */
     private async processFileAndNavigate(file: File): Promise<void> {
         try {
             // Process the file using enhanced pipeline
             const processedData = await this.matchWizard.processFile(file, undefined, true, false);
+			// Update MatchWizard with the file data
+            this.matchWizard.setFileData(file, processedData);
+
+			// create steps controllers
+			this.createStepsControllers();
 
             // Check for header validation issues
             const headerValidationResult = processedData.validationMessages.find(
                 (message: any) => message.type.title === "EmptyHeaders"
             );
 
+            let navigateToStep: WizardStep;
+
             if (headerValidationResult) {
                 // Wrong header detected - Configure wizard flow
-                const uploadStepControl = this.matchWizard.getStepControl("uploadStep");
-                const headerStepControl = this.matchWizard.getStepControl("headerSelectionStep");
-                if (uploadStepControl && headerStepControl) {
+                const uploadStepControl = this.matchWizard.getStep("uploadStep");
+                const headerStepControl = this.matchWizard.getStep("headerSelectionStep");
+                if (uploadStepControl && headerStepControl && uploadStepControl.getNextStep() !== headerStepControl.getId()) {
                     uploadStepControl.setNextStep(headerStepControl);
                 }
+                navigateToStep = headerStepControl;
+				// if build already rebuild headerSelectionStep
+				if (this.matchWizard.stepsBuilt.has("headerSelectionStep")) {
+					const headerSelectionController = this.matchWizard.getStepControl("headerSelectionStep") as HeaderSelectionStep;
+					headerSelectionController.build(this.matchWizard.findStepContainer("headerSelectionStep"));
+				} else {
+					this.matchWizard.activateStep("headerSelectionStep");
+				}
+            } else {
+                // Valid headers - Configure direct flow to preview
+                const uploadStepControl = this.matchWizard.getStep("uploadStep");
+                const previewStepControl = this.matchWizard.getStep("previewDataStep");
+                if (uploadStepControl && previewStepControl && uploadStepControl.getNextStep() !== previewStepControl.getId()) {
+                    uploadStepControl.setNextStep(previewStepControl);
+                }
+                navigateToStep = previewStepControl;
+				if (this.matchWizard.stepsBuilt.has("previewDataStep")) {
+					const previewStepController = this.matchWizard.getStepControl("previewDataStep") as PreviewStep;
+					previewStepController.build(this.matchWizard.findStepContainer("previewDataStep"), this.matchWizard.processedData );
+				} else {
+					this.matchWizard.activateStep("previewDataStep");
+				}
             }
 
-            // Update MatchWizard with the file data
-            this.matchWizard.setFileData(file, processedData);
-
-            // Validate this step and navigate to next
-            this.validateAndNavigate(headerValidationResult ? "headerSelectionStep" : undefined);
-
-            // Call the original callback for any additional processing
-            await this.fileSelectedCallback(file);
+            this.wizard.goToStep(navigateToStep, true);
+			this.wizard.nextStep();
         } catch (error) {
             Log.error("Error processing file", error as Error, "UploadStep");
             this.matchWizard.getWizardModel().setProperty("/fileUploaded", false);
@@ -124,52 +151,10 @@ export default class UploadStep extends StepBase {
         }
     }
 
-    /**
-     * Validate this step and navigate to the next step
-     */
-    private validateAndNavigate(targetStepName?: string): void {
-        if (!this.wizard) return;
-
-        try {
-            // Get the current UI5 wizard step and enable it to proceed
-            const wizardSteps = this.wizard.getSteps();
-            if (wizardSteps.length > 0) {
-                const currentStep = wizardSteps[0]; // Upload step is first
-                currentStep.setValidated(true);
-
-                // Automatically advance to the next step
-                setTimeout(() => {
-                    this.wizard.nextStep();
-
-                    // If we have a specific target step (like headerSelectionStep),
-                    // trigger its activation manually since the stepActivate event might not fire
-                    if (targetStepName) {
-                        setTimeout(() => {
-                            // Get the dialog controller and trigger step activation
-                            const dialogController = this.matchWizard.getDialogController();
-                            if (dialogController && typeof dialogController.activateStepManually === "function") {
-                                dialogController.activateStepManually(targetStepName);
-                            }
-                        }, 100);
-                    }
-                }, 500);
-            }
-        } catch (error) {
-            Log.error("Error validating and navigating", error as Error, "UploadStep");
-        }
-    }
-
-    /**
-     * Public method to handle file upload - called from fragment
-     */
-    public async onFileUpload(event: any): Promise<void> {
-        await this.handleFileUpload(event);
-    }
-
-    /**
-     * Public method to handle file drop - called from fragment
-     */
-    public async onFileDrop(event: any): Promise<void> {
-        await this.handleFileDrop(event);
-    }
+	private createStepsControllers(): void {
+		// init steps controllers creation and calling build method
+		// both steps need the data from the upload step
+		this.matchWizard.activateStep("headerSelectionStep");
+		this.matchWizard.activateStep("previewDataStep");
+	}
 }

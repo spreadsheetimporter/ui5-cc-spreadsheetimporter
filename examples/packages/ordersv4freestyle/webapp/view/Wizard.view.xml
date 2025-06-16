@@ -1,0 +1,58 @@
+<mvc:View controllerName="ordersv4freestyle.controller.Wizard"
+    xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" displayBlock="true"
+    xmlns="sap.m">
+    <Page id="wizardPage" title="Excel Import Wizard" showNavButton="true" navButtonPress="onNavBack">
+        <content>
+            <VBox class="sapUiMediumMargin">
+                <Title text="Excel Import Wizard Demo" class="sapUiMediumMarginBottom"/>
+
+                <!-- Wizard Component Container -->
+                <core:ComponentContainer
+                    id="wizardSpreadsheetImporter"
+                    width="100%"
+                    usage="spreadsheetImporter"
+                    propagateModel="true"
+                    async="true"
+                    settings="{
+                        componentContainerData:{buttonText:'Excel Upload Wizard',buttonId:'uploadButton',downloadButton:false},
+                        useImportWizard: true,
+                        debug: true,
+                        createActiveEntity: true
+                    }"
+                    class="sapUiMediumMarginBottom"
+                />
+
+                <!-- Manual Wizard Button -->
+                <Button id="openWizardCode" text="Excel Upload Wizard Code" press="openWizard" class="sapUiMediumMarginBottom"/>
+
+                <MessageStrip text="Use the wizard above to upload Excel files with guided step-by-step process including header selection and data preview."
+                             type="Information"
+                             class="sapUiMediumMarginTop"/>
+
+                                             <!-- Added Table with OData binding -->
+                <Table id="ordersTable123" items="{/Orders}">
+                  <columns>
+                      <Column>
+                          <Text text="Order Number"/>
+                      </Column>
+                      <Column>
+                          <Text text="Buyer"/>
+                      </Column>
+                      <Column>
+                          <Text text="Created At"/>
+                      </Column>
+                  </columns>
+                  <items>
+                      <ColumnListItem>
+                          <cells>
+                              <Text text="{OrderNo}"/>
+                              <Text text="{buyer}"/>
+                              <Text text="{createdAt}"/>
+                          </cells>
+                      </ColumnListItem>
+                  </items>
+              </Table>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

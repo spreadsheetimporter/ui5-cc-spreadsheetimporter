@@ -16,9 +16,8 @@ import SpreadsheetUpload from "../SpreadsheetUpload";
 import ImportService from "../ImportService";
 import OData from "../odata/OData";
 import MatchWizard from "../wizard/MatchWizard";
-import StepBase from "../wizard/steps/StepBase";
 import WizardStep from "sap/m/WizardStep";
-import { Wizard$StepChangeEvent } from "sap/ui/webc/fiori/Wizard";
+import UploadStep from "../wizard/steps/UploadStep";
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -41,12 +40,6 @@ export default class MatchWizardDialog extends ManagedObject {
 	private odataHandler: OData;
 	private matchWizard: MatchWizard;
 
-	// Track which steps have been built
-	private stepsBuilt: Set<string> = new Set();
-
-	// Map of step controls for quick access
-	private wizardStepControls: { [key: string]: WizardStep } = {};
-
 	/**
 	 * Creates a new instance of MatchWizardDialog
 	 */
@@ -59,77 +52,33 @@ export default class MatchWizardDialog extends ManagedObject {
 		this.util = new Util(componentI18n.getResourceBundle() as ResourceBundle);
 
 		// Initialize the core components
-		this.matchWizard = new MatchWizard(component, componentI18n.getResourceBundle() as ResourceBundle, messageHandler);
-		this.matchWizard.setSpreadsheetUploadController(spreadsheetUploadController);
+		this.matchWizard = new MatchWizard(component, componentI18n.getResourceBundle() as ResourceBundle, messageHandler, spreadsheetUploadController, this);
 
 		this.importService = new ImportService(spreadsheetUploadController, component, componentI18n.getResourceBundle() as ResourceBundle, messageHandler);
-
-		// Initialize the step controllers
-		this.initializeStepControllers();
-
-		// Set dialog controller reference in MatchWizard for step activation
-		this.matchWizard.setDialogController(this);
-	}
-
-	/**
-	 * Initialize all step controllers that will be used in the wizard
-	 */
-	private initializeStepControllers(): void {
-		this.matchWizard.initializeStepControllers(this.handleFileSelected.bind(this), this.handleHeaderSelected.bind(this));
-	}
-
-	/**
-	 * Set OData handler reference (used for optional upload)
-	 */
-	setODataHandler(odataHandler: OData): void {
-		this.odataHandler = odataHandler;
-	}
-
-	/**
-	 * Returns the dialog control
-	 */
-	getDialog(): Dialog {
-		return this.dialog;
 	}
 
 	/**
 	 * Opens the match wizard dialog
-	 * @param workbook Optional XLSX workbook (can be provided if file is already loaded)
-	 * @param sheetName Optional sheet name (can be provided if file is already loaded)
-	 * @param startStep Optional step to start with (if not provided, determined automatically)
-	 * @returns Promise that resolves when wizard completes or rejects when canceled
 	 */
-	openWizard(): Promise<{ coordinates: any; canceled: boolean; workbook?: XLSX.WorkBook; sheetName?: string; sheetData?: any }> {
-		return new Promise(async (resolve, reject) => {
-			try {
-				this.resolvePromise = resolve;
-				this.rejectPromise = reject;
+	openWizard(): Promise<void> {
+		return new Promise((resolve, reject) => {
+			this.resolvePromise = resolve;
+			this.rejectPromise = reject;
 
-				this.matchWizard.configureWizardSteps({});
-
-				await this.createDialog();
-
-				// Open the dialog first - don't try to navigate to steps yet
-				this.dialog.open();
-
-				try {
+			this.createDialog()
+				.then(() => {
+					this.dialog.open();
 					// Collect step references
-					this.collectStepReferences();
-
+					this.matchWizard.collectStepReferences(this.wizard);
 					// Configure the step sequence based on visibility
-					this.matchWizard.configureStepSequence(this.wizard, this.wizardStepControls);
-
-					// Set start step - either provided or first step from configuration
-					if (this.wizard) {
-						this.navigateToStep(this.matchWizard.getFirstStep());
-					}
-				} catch (error) {
-					Log.error("Error initializing wizard steps", error as Error, "MatchWizardDialog");
-				}
-			} catch (error) {
-				Log.error("Error opening match wizard", error as Error, "MatchWizardDialog");
-				reject(error);
-			}
+					this.matchWizard.configureStepSequence(this.wizard);
+					this.matchWizard.setWizardToSteps(this.wizard);
+					this.navigateToStep("uploadStep");
+				})
+				.catch((error) => {
+					Log.error("Error opening match wizard", error as Error, "MatchWizardDialog");
+					reject(error);
+				});
 		});
 	}
 
@@ -149,110 +98,16 @@ export default class MatchWizardDialog extends ManagedObject {
 
 		// Get wizard reference
 		this.wizard = this.dialog.getContent()[0] as Wizard;
-
-		// Set wizard and util references in step controllers after dialog creation
-		this.setStepReferences();
-	}
-
-	/**
-	 * Collects references to all wizard steps for easy access
-	 */
-	private collectStepReferences(): void {
-		if (!this.wizard) return;
-
-		this.wizardStepControls = {};
-
-		const wizardSteps = this.wizard.getSteps();
-		for (const step of wizardSteps) {
-			const customData = step.getCustomData();
-			if (customData && customData.length > 0) {
-				const stepName = customData[0].getValue();
-				if (stepName) {
-					// Store in local map
-					this.wizardStepControls[stepName] = step;
-
-					// Also store in MatchWizard's steps map
-					this.matchWizard.setStepControl(stepName, step);
-
-					Log.debug(`Collected step reference: ${stepName}`, undefined, "MatchWizardDialog");
-				}
-			}
-		}
-	}
-
-	/**
-	 * Activate a step by building its UI if needed
-	 */
-	private async activateStep(stepName: string): Promise<void> {
-		// Find the step controller
-		const stepController = this.matchWizard.getOrCreateStepController(stepName, this.handleHeaderSelected.bind(this));
-
-		if (!stepController) {
-			Log.error(`Step controller for '${stepName}' not found`, undefined, "MatchWizardDialog");
-			return;
-		}
-
-		// Find step container in the DOM
-		const container = this.findStepContainer(stepName);
-		if (!container) {
-			Log.error(`Container for step '${stepName}' not found`, undefined, "MatchWizardDialog");
-			return;
-		}
-
-		// Build the step UI if not already built
-		if (!this.stepsBuilt.has(stepName)) {
-			try {
-				// Handle both async and sync build methods
-				const buildResult = stepController.build(container);
-
-				// If build returns a Promise, wait for it
-				if (buildResult instanceof Promise) {
-					await buildResult;
-				}
-
-				this.stepsBuilt.add(stepName);
-			} catch (error) {
-				Log.error(`Error building step '${stepName}'`, error as Error, "MatchWizardDialog");
-			}
-		}
-
-		// Activate the step
-		stepController.activate();
-	}
-
-	/**
-	 * Find the container for a specific step
-	 */
-	private findStepContainer(stepName: string): VBox | null {
-		try {
-			// Use the step reference to get the container
-			const step = this.wizardStepControls[stepName];
-			if (!step) return null;
-
-			// Get the container within the step
-			const content = step.getContent();
-			if (content && content.length > 0) {
-				const vbox = content[0] as any;
-				if (vbox && vbox.getItems && vbox.getItems().length > 1) {
-					return vbox.getItems()[1] as VBox;
-				}
-			}
-		} catch (error) {
-			Log.error(`Error finding container for step ${stepName}`, error as Error, "MatchWizardDialog");
-		}
-		return null;
+		this.matchWizard.wizard = this.wizard;
 	}
 
 	/**
 	 * Navigate to a specific step in the wizard
-	 * @param stepName The name of the step to navigate to
 	 */
 	private navigateToStep(stepName: string): void {
-		if (!this.wizard) return;
-
 		try {
 			// Get step control from our map
-			const step = this.wizardStepControls[stepName];
+			const step = this.matchWizard.getWizardStepControl(stepName);
 			if (!step) {
 				Log.warning(`Step ${stepName} not found`, undefined, "MatchWizardDialog");
 				return;
@@ -271,50 +126,28 @@ export default class MatchWizardDialog extends ManagedObject {
 	}
 
 	/**
-	 * Handler for when a file is selected
-	 * Most logic is now handled by UploadStep, this is just a simplified callback
-	 */
-	private async handleFileSelected(file: File): Promise<void> {
-		try {
-			Log.debug(`File selected: ${file.name}`, undefined, "MatchWizardDialog");
-			// Most processing is now handled by UploadStep.processFileAndNavigate
-			// This method is kept for any dialog-specific logic if needed in the future
-		} catch (error) {
-			Log.error("Error in file selected callback", error as Error, "MatchWizardDialog");
-		}
-	}
-
-	/**
-	 * Handler for when a header row is selected
-	 */
-	private handleHeaderSelected(rowIndex: number, coordinates: any): void {
-		try {
-			// Update wizard model via the MatchWizard
-			this.matchWizard.setHeaderSelection(rowIndex, coordinates);
-
-			// Process data again with the selected coordinates to get validated data
-			// This is done asynchronously to avoid blocking the UI
-			this.matchWizard.reprocessWithCoordinates(coordinates.a1Coordinates);
-
-			Log.debug(`Header row selected: ${rowIndex}`, undefined, "MatchWizardDialog");
-		} catch (error) {
-			Log.error("Error handling header selection", error as Error, "MatchWizardDialog");
-		}
-	}
-
-	/**
 	 * Handler for wizard step change
 	 */
-	async onWizardStepChanged (event: Wizard$StepActivateEvent): Promise<void> {
+	async onWizardStepChanged(event: Wizard$StepActivateEvent): Promise<void> {
 		try {
-			const stepIndex = event.getParameter("index") as number;
+			const currentStepIndex = event.getParameter("index") as number;
 			const wizardSteps = this.wizard.getSteps();
-			if (stepIndex < 0 || stepIndex >= wizardSteps.length) return;
+			// Note: stepIndex is 1-based, but array is 0-based
+			if (currentStepIndex < 1 || currentStepIndex > wizardSteps.length) return;
 
-			const step = wizardSteps[stepIndex];
-			if (!step) return;
+			const currentStep = wizardSteps[currentStepIndex - 1]; // Convert to 0-based array index
+			if (!currentStep) return;
 
-			const customData = step.getCustomData();
+			let customData;
+
+			const nextStepId = currentStep.getNextStep();
+			if (!nextStepId) {
+				customData = currentStep.getCustomData();
+			} else {
+				const nextStep = wizardSteps.find((wizardStep) => wizardStep.getId() === nextStepId);
+				customData = nextStep?.getCustomData();
+			}
+
 			if (!customData || customData.length === 0) return;
 
 			const stepName = customData[0].getValue();
@@ -326,7 +159,7 @@ export default class MatchWizardDialog extends ManagedObject {
 			Log.debug(`Step changed to: ${stepName}`, undefined, "MatchWizardDialog");
 
 			try {
-				await this.activateStep(stepName);
+				// await this.matchWizard.activateStep(stepName);
 			} catch (error) {
 				Log.error(`Error activating step '${stepName}'`, error as Error, "MatchWizardDialog");
 			}
@@ -458,12 +291,6 @@ export default class MatchWizardDialog extends ManagedObject {
 			// Clear dialog references
 			this.dialog = null;
 
-			// Reset built steps
-			this.stepsBuilt.clear();
-
-			// Clear step controls references
-			this.wizardStepControls = {};
-
 			Log.debug("Dialog and resources fully destroyed", undefined, "MatchWizardDialog");
 		} catch (error) {
 			Log.error("Error during dialog cleanup", error as Error, "MatchWizardDialog");
@@ -477,6 +304,13 @@ export default class MatchWizardDialog extends ManagedObject {
 		if (this.dialog) {
 			this.dialog.setBusy(state);
 		}
+	}
+
+	/**
+	 * Gets the wizard control instance
+	 */
+	getWizard(): Wizard {
+		return this.wizard;
 	}
 
 	/**
@@ -497,60 +331,22 @@ export default class MatchWizardDialog extends ManagedObject {
 	 * Handler for file upload event from the fragment
 	 * Delegates to the UploadStep controller
 	 */
-	onFileUpload(event: any): void {
+	async onFileUpload(event: any): Promise<void> {
 		try {
-			const uploadStep = this.matchWizard.getOrCreateStepController("uploadStep");
-			if (uploadStep && typeof uploadStep.onFileUpload === "function") {
-				uploadStep.onFileUpload(event);
-			} else {
-				Log.error("UploadStep controller not found or onFileUpload method missing", undefined, "MatchWizardDialog");
+			const uploadStep = await this.matchWizard.activateStep("uploadStep") as UploadStep;
+			uploadStep.onFileUpload(event);
+			if(this.matchWizard.getStep("uploadStep")){
+				this.wizard.setCurrentStep(this.matchWizard.getStep("uploadStep"));
 			}
 		} catch (error) {
 			Log.error("Error delegating file upload to step", error as Error, "MatchWizardDialog");
 		}
 	}
 
-	/**
-	 * Handler for file drop event from the fragment
-	 * Delegates to the UploadStep controller
-	 */
-	onFileDrop(event: any): void {
-		try {
-			const uploadStep = this.matchWizard.getOrCreateStepController("uploadStep");
-			if (uploadStep && typeof uploadStep.onFileDrop === "function") {
-				uploadStep.onFileDrop(event);
-			} else {
-				Log.error("UploadStep controller not found or onFileDrop method missing", undefined, "MatchWizardDialog");
-			}
-		} catch (error) {
-			Log.error("Error delegating file drop to step", error as Error, "MatchWizardDialog");
-		}
+	setODataHandler(odataHandler: OData): void {
+		this.odataHandler = odataHandler;
 	}
-
-	/**
-	 * Set wizard and util references in step controllers after dialog creation
-	 */
-	private setStepReferences(): void {
-		try {
-			const uploadStep = this.matchWizard.getOrCreateStepController("uploadStep");
-			if (uploadStep && typeof uploadStep.setWizardReferences === "function") {
-				uploadStep.setWizardReferences(this.wizard, this.util);
-			}
-		} catch (error) {
-			Log.error("Error setting step references", error as Error, "MatchWizardDialog");
-		}
-	}
-
-	/**
-	 * Manually activate a step - used when automatic step change events don't fire
-	 * @param stepName The name of the step to activate
-	 */
-	public async activateStepManually(stepName: string): Promise<void> {
-		try {
-			Log.debug(`Manually activating step: ${stepName}`, undefined, "MatchWizardDialog");
-			await this.activateStep(stepName);
-		} catch (error) {
-			Log.error(`Error manually activating step '${stepName}'`, error as Error, "MatchWizardDialog");
-		}
+	getDialog(): Dialog {
+		return this.dialog;
 	}
 }

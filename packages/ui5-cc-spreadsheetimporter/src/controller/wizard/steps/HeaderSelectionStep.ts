@@ -1,5 +1,4 @@
 import VBox from "sap/m/VBox";
-import StepBase from "./StepBase";
 import MatchWizard from "../MatchWizard";
 import ColumnListItem from "sap/m/ColumnListItem";
 import Table from "sap/m/Table";
@@ -7,45 +6,134 @@ import Column from "sap/m/Column";
 import Text from "sap/m/Text";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Log from "sap/base/Log";
+import MessageToast from "sap/m/MessageToast";
+import PreviewStep from "./PreviewStep";
 
 /**
  * HeaderSelectionStep – lets user pick the header row from the sheet preview.
  */
-export default class HeaderSelectionStep extends StepBase {
+export default class HeaderSelectionStep {
     public readonly stepName = "headerSelectionStep";
 
     private matchWizard: MatchWizard;
-    private rawSheetData: any[][];
-    private onHeaderChosen: (rowIndex: number, coordinates: {
-        a1Coordinates: string,
-        objectCoordinates: any
-    }) => void;
+    private isValidated: boolean = false;
 
-    constructor(matchWizard: MatchWizard,
-        rawSheetData: any[][],
-        onHeaderChosen: (rowIndex: number, coordinates: { a1Coordinates: string, objectCoordinates: any }) => void) {
-        super();
+    constructor(matchWizard: MatchWizard) {
         this.matchWizard = matchWizard;
-        this.rawSheetData = rawSheetData;
-        this.onHeaderChosen = onHeaderChosen;
     }
 
     public build(container: VBox): void {
+		// unvalidate step
+		this.isValidated = false;
+		this.matchWizard.getWizardModel().setProperty("/headerSelected", false);
+		this.matchWizard.getStep("headerSelectionStep").setValidated(false);
+
         container.removeAllItems();
 
-        const table = this.createHeaderSelectionTable(this.rawSheetData, 10);
-        table.attachSelectionChange((e) => {
+        const table = this.createHeaderSelectionTable(this.matchWizard.rawSheetData, 10);
+        table.attachSelectionChange(async (e) => {
             const item = e.getParameter("listItem") as ColumnListItem;
             const context = item.getBindingContext();
             const rowData = context.getObject() as any;
             const rowIndex = rowData.__metadata__.rowNumber;
-            const coords = this.matchWizard.calculateReadCoordinates(rowIndex, rowData, this.rawSheetData.length);
+            const coords = this.matchWizard.calculateReadCoordinates(rowIndex, rowData, this.matchWizard.rawSheetData.length);
             if (coords) {
-                this.onHeaderChosen(rowIndex, coords);
+                await this.handleHeaderSelection(rowIndex, coords);
             }
         });
 
         container.addItem(table);
+    }
+
+    /**
+     * Handles header selection with validation and automatic step navigation
+     */
+    private async handleHeaderSelection(rowIndex: number, coordinates: {
+        a1Coordinates: string,
+        objectCoordinates: any
+    }): Promise<void> {
+        try {
+			if(this.matchWizard.getStep("headerSelectionStep")){
+				this.matchWizard.wizard.setCurrentStep(this.matchWizard.getStep("headerSelectionStep"));
+			}
+            // Update wizard model via the MatchWizard (moved from MatchWizardDialog)
+			this.matchWizard.getWizardModel().setProperty("/headerSelected", true);
+			this.matchWizard.getWizardModel().setProperty("/readSheetCoordinates", coordinates.a1Coordinates);
+			this.matchWizard.getWizardModel().setProperty("/readSheetObjectCoordinates", coordinates.objectCoordinates);
+
+            // Process data again with the selected coordinates to get validated data
+			this.matchWizard.processedData = await this.matchWizard.processFile(
+				this.matchWizard.currentFile,
+				coordinates.a1Coordinates,
+				true // Validate now that we have coordinates
+			);
+            // await this.matchWizard.reprocessWithCoordinates(coordinates.a1Coordinates);
+
+            Log.debug(`Header row selected: ${rowIndex}`, undefined, "HeaderSelectionStep");
+
+            // Validate the data with the selected coordinates
+            const validationResult = await this.matchWizard.checkHeaderValidityWithCoordinates(
+                coordinates.a1Coordinates
+            );
+
+            if (validationResult.isValid) {
+                // Data is valid - mark step as validated and show next button
+                this.isValidated = true;
+                this.validateStep(true);
+
+                // Show success message
+                const util = this.matchWizard.getUtil();
+                const successMessage = util.geti18nText("spreadsheetimporter.headerSelectionSuccess") ||
+                                     "Header row selected successfully. Click Next to continue.";
+                MessageToast.show(successMessage);
+
+				//rebuild preview step
+				const previewStep = this.matchWizard.getStepControl("previewDataStep") as PreviewStep;
+				previewStep.build(this.matchWizard.findStepContainer("previewDataStep"),	this.matchWizard.processedData);
+            } else {
+                // Data has validation issues
+                this.isValidated = false;
+				this.validateStep(false);
+                // Show validation messages
+                const util = this.matchWizard.getUtil();
+                const errorMessage = util.geti18nText("spreadsheetimporter.headerValidationFailed") ||
+                                    "Header validation failed. Please select a different row.";
+                MessageToast.show(errorMessage);
+
+                Log.warning(`Header validation failed for row ${rowIndex}`,
+                           JSON.stringify(validationResult.messages), "HeaderSelectionStep");
+            }
+        } catch (error) {
+            Log.error("Error handling header selection", error as Error, "HeaderSelectionStep");
+            this.isValidated = false;
+
+            // Show error message
+            const util = this.matchWizard.getUtil();
+            const errorMessage = util.geti18nText("spreadsheetimporter.headerSelectionError") ||
+                                "Error validating header selection.";
+            MessageToast.show(errorMessage);
+        }
+    }
+
+    /**
+     * Validates this step and shows the next button
+     */
+    private validateStep(validated: boolean): void {
+        try {
+            // Get the wizard step control and set it as validated
+            const headerStepControl = this.matchWizard.getStep("headerSelectionStep");
+            if (headerStepControl) {
+                headerStepControl.setValidated(validated);
+
+                // Update the wizard model to reflect header selection
+                this.matchWizard.getWizardModel().setProperty("/headerSelected", true);
+
+                Log.debug("Header selection step validated, next button should now be visible",
+                         undefined, "HeaderSelectionStep");
+            }
+        } catch (error) {
+            Log.error("Error validating step", error as Error, "HeaderSelectionStep");
+        }
     }
 
     /**
