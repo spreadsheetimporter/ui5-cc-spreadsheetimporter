@@ -37,9 +37,6 @@ export default class ValidationService extends ManagedObject {
         odataKeyList: string[]
     ): { isValid: boolean, messages: any[] } {
 
-        // Clear previous messages
-        this.messageHandler.setMessages([]);
-
         // Skip validation for standalone mode
         if (this.component.getStandalone()) {
             return { isValid: true, messages: [] };
