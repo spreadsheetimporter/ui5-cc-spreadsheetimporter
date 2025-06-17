@@ -33,6 +33,7 @@ describe("Wizard Upload Workflow", () => {
             async () => {
                 try {
                     const wizardDialog = await browser.asControl({
+						forceSelect: true,
                         selector: {
                             controlType: "sap.m.Dialog",
                             properties: {
