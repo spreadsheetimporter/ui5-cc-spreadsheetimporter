@@ -39,6 +39,7 @@ module.exports.config = {
 	capabilities: [
 		{
 			maxInstances: isWatchMode ? 1 : 5,
+			'wdio:enforceWebDriverClassic': true,
 			//
 			browserName: "chrome",
 			browserVersion: 'stable',
