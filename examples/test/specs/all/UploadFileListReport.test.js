@@ -60,9 +60,9 @@ describe("Upload File List Report", () => {
 	});
 
 	it("Upload file", async () => {
+		// await BaseClass.dummyWait(4000);
 		const uploader = await browser.asControl({
 			forceSelect: true,
-
 			selector: {
 				interaction: "root",
 				controlType: "sap.ui.unified.FileUploader"
