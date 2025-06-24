@@ -13,6 +13,7 @@ import SpreadsheetUpload from "../SpreadsheetUpload";
 import UploadStep from "./steps/UploadStep";
 import HeaderSelectionStep from "./steps/HeaderSelectionStep";
 import PreviewStep from "./steps/PreviewStep";
+import MessagesStep from "./steps/MessagesStep";
 import Wizard from "sap/m/Wizard";
 import VBox from "sap/m/VBox";
 
@@ -97,17 +98,21 @@ export default class MatchWizard extends ManagedObject {
             readSheetCoordinates: this.component.getReadSheetCoordinates() || "A1",
             fileUploadValue: "",
             fileUploaded: false,
+            uploadButtonEnabled: false, // Central control for upload button
             // Visibility flags for steps
             stepUploadVisible: true,
             stepHeaderSelectionVisible: true,
-            stepPreviewDataVisible: true
+            stepMessagesVisible: true,
+            stepPreviewDataVisible: true,
+			forceUpload: false
         });
 
         // Define the wizard step sequence
         this.stepDefinitions = [
             { stepName: "uploadStep", index: 1 },
             { stepName: "headerSelectionStep", index: 2 },
-            { stepName: "previewDataStep", index: 3 }
+            { stepName: "messagesStep", index: 3 },
+            { stepName: "previewDataStep", index: 4 }
         ];
     }
 
@@ -147,6 +152,11 @@ export default class MatchWizard extends ManagedObject {
 		return this.stepControllers["previewDataStep"];
 	}
 
+	createMessagesStep(): MessagesStep {
+		this.stepControllers["messagesStep"] = new MessagesStep(this);
+		return this.stepControllers["messagesStep"];
+	}
+
     /**
      * Configures the step sequence in the wizard using the setNextStep approach
      */
@@ -154,24 +164,28 @@ export default class MatchWizard extends ManagedObject {
         // Get references to the step controls
         const uploadStep = this.steps["uploadStep"];
         const headerSelectionStep = this.steps["headerSelectionStep"];
+        const messagesStep = this.steps["messagesStep"];
         const previewDataStep = this.steps["previewDataStep"];
 
-        if (!uploadStep || !headerSelectionStep || !previewDataStep) {
+        if (!uploadStep || !headerSelectionStep || !messagesStep || !previewDataStep) {
             Log.error("Missing step controls", undefined, "MatchWizard");
             return;
         }
 
-        // Default flow: Upload -> Preview (when headers are valid)
+        // Default flow: Upload -> Preview (when headers are valid and no validation errors)
         uploadStep.setNextStep(previewDataStep);
 
-        // Alternative flow: Upload -> Header Selection -> Preview (when headers are invalid)
-        // This will be set dynamically when header issues are detected
+        // Alternative flows that will be set dynamically:
+        // Upload -> Header Selection -> Preview (when headers are invalid)
+        // Upload -> Messages -> Preview (when headers are valid but there are validation errors)
         headerSelectionStep.setNextStep(previewDataStep);
+        messagesStep.setNextStep(previewDataStep);
 
 		uploadStep.addSubsequentStep(headerSelectionStep);
+		uploadStep.addSubsequentStep(messagesStep);
 		uploadStep.addSubsequentStep(previewDataStep);
 
-        Log.debug("Configured wizard step sequence", undefined, "MatchWizard");
+        Log.debug("Configured wizard step sequence with messagesStep", undefined, "MatchWizard");
     }
 
     /**
@@ -223,10 +237,41 @@ export default class MatchWizard extends ManagedObject {
     }
 
     /**
-     * Reprocesses the file data with the selected coordinates
+     * Gets the current coordinates from the wizard model
      */
-    async reprocessWithCoordinates(coordinates: string): Promise<any> {
+    getCurrentCoordinates(): string {
+        return this.wizardModel.getProperty("/readSheetCoordinates") || "A1";
+    }
+
+	resetCurrentCoordinates(): void {
+		this.wizardModel.setProperty("/readSheetCoordinates", this.component.getReadSheetCoordinates() || "A1");
+		this.wizardModel.setProperty("/readSheetObjectCoordinates", null);
+	}
+
+    /**
+     * Sets the coordinates in the wizard model
+     */
+    setCurrentCoordinates(coordinates: string, objectCoordinates?: any): void {
+        this.wizardModel.setProperty("/readSheetCoordinates", coordinates);
+        if (objectCoordinates) {
+            this.wizardModel.setProperty("/readSheetObjectCoordinates", objectCoordinates);
+        }
+        Log.debug(`Coordinates updated in wizard model: ${coordinates}`, undefined, "MatchWizard");
+    }
+
+    /**
+     * Gets the current object coordinates from the wizard model
+     */
+    getCurrentObjectCoordinates(): any {
+        return this.wizardModel.getProperty("/readSheetObjectCoordinates");
+    }
+
+    /**
+     * Reprocesses the file data with the currently selected coordinates from the model
+     */
+    async reprocessWithCurrentCoordinates(): Promise<any> {
         try {
+            const coordinates = this.getCurrentCoordinates();
             if (!this.currentFile && !this.workbook) {
                 return null;
             }
@@ -241,21 +286,22 @@ export default class MatchWizard extends ManagedObject {
             }
             return this.processedData;
         } catch (error) {
-            Log.error("Error reprocessing with coordinates", error as Error, "MatchWizard");
+            Log.error("Error reprocessing with current coordinates", error as Error, "MatchWizard");
             throw error;
         }
     }
 
     /**
-     * Checks if headers are valid using the given coordinates
+     * Checks if headers are valid using the current coordinates from the model
      */
-    async checkHeaderValidityWithCoordinates(coordinates: string): Promise<{ isValid: boolean, messages?: any[] }> {
+    async checkHeaderValidityWithCurrentCoordinates(): Promise<{ isValid: boolean, messages?: any[] }> {
         try {
+            const coordinates = this.getCurrentCoordinates();
             if (!this.workbook || !this.sheetName) {
                 return { isValid: false };
             }
 
-            // Use ImportService to validate the data with the given coordinates
+            // Use ImportService to validate the data with the current coordinates
             const result = await this.importService.processAndValidate(
                 this.workbook,
                 this.sheetName,
@@ -275,7 +321,7 @@ export default class MatchWizard extends ManagedObject {
                 messages: validationMessages
             };
         } catch (error) {
-            Log.error("Error checking header validity", error as Error, "MatchWizard");
+            Log.error("Error checking header validity with current coordinates", error as Error, "MatchWizard");
             return { isValid: false };
         }
     }
@@ -310,7 +356,15 @@ export default class MatchWizard extends ManagedObject {
     }
 
     /**
-     * Resets all wizard data
+     * Sets the upload button enabled state directly
+     */
+    setUploadButtonEnabled(enabled: boolean): void {
+        this.wizardModel.setProperty("/uploadButtonEnabled", enabled);
+        Log.debug(`Upload button manually set to: ${enabled}`, undefined, "MatchWizard");
+    }
+
+    /**
+     * Resets all wizard data including coordinates
      */
     reset(): void {
         this.stepControllers = {};
@@ -323,14 +377,19 @@ export default class MatchWizard extends ManagedObject {
         this.processedData = null;
         this.currentFile = null;
 
-        // Reset wizard model
+        // Reset wizard model including coordinates
+        const defaultCoordinates = this.component.getReadSheetCoordinates() || "A1";
         this.wizardModel.setProperty("/currentStep", "uploadStep");
         this.wizardModel.setProperty("/headerSelected", false);
-        this.wizardModel.setProperty("/readSheetCoordinates", this.component.getReadSheetCoordinates() || "A1");
+        this.wizardModel.setProperty("/readSheetCoordinates", defaultCoordinates);
+        this.wizardModel.setProperty("/readSheetObjectCoordinates", null);
         this.wizardModel.setProperty("/fileUploadValue", "");
         this.wizardModel.setProperty("/fileUploaded", false);
+        this.wizardModel.setProperty("/uploadButtonEnabled", false);
         this.wizardModel.setProperty("/headerValid", true);
         this.wizardModel.setProperty("/firstStep", "uploadStep");
+
+        Log.debug(`Wizard reset with coordinates: ${defaultCoordinates}`, undefined, "MatchWizard");
     }
 
     /**
@@ -394,9 +453,9 @@ export default class MatchWizard extends ManagedObject {
     }
 
     /**
-     * Calculates the read coordinates when a header row is selected
+     * Calculates the read coordinates when a header row is selected and updates the model
      */
-    calculateReadCoordinates(selectedRowIndex: number, rowData: any, totalRows: number) {
+    calculateAndSetReadCoordinates(selectedRowIndex: number, rowData: any, totalRows: number): { a1Coordinates: string; objectCoordinates: any } | null {
         try {
             // Calculate the read coordinates for future use
             // Assuming header row + 1 for data
@@ -412,14 +471,32 @@ export default class MatchWizard extends ManagedObject {
                 return null;
             }
 
+            // Update the wizard model with the new coordinates
+            this.setCurrentCoordinates(a1Coordinates, objectCoordinates);
+
             return {
                 a1Coordinates,
                 objectCoordinates
             };
         } catch (error) {
-            Log.error("Error calculating read coordinates", error as Error, "MatchWizard");
+            Log.error("Error calculating and setting read coordinates", error as Error, "MatchWizard");
             return null;
         }
+    }
+
+    /**
+     * @deprecated Use calculateAndSetReadCoordinates() instead for centralized coordinate management
+     */
+    calculateReadCoordinates(selectedRowIndex: number, rowData: any, totalRows: number) {
+        return this.calculateAndSetReadCoordinates(selectedRowIndex, rowData, totalRows);
+    }
+
+    /**
+     * Processes a file using ImportService's enhanced methods with current coordinates
+     */
+    async processFileWithCurrentCoordinates(file: Blob, validate = false, showMessages = false): Promise<any> {
+        const coordinates = this.getCurrentCoordinates();
+        return this.processFile(file, coordinates, validate, showMessages);
     }
 
     /**
@@ -444,6 +521,26 @@ export default class MatchWizard extends ManagedObject {
             Log.error("Error processing file", error as Error, "MatchWizard");
             throw error;
         }
+    }
+
+    /**
+     * Reprocesses the file data with the selected coordinates
+     * @deprecated Use reprocessWithCurrentCoordinates() instead for centralized coordinate management
+     */
+    async reprocessWithCoordinates(coordinates: string): Promise<any> {
+        // Update the model with the new coordinates first
+        this.setCurrentCoordinates(coordinates);
+        return this.reprocessWithCurrentCoordinates();
+    }
+
+    /**
+     * Checks if headers are valid using the given coordinates
+     * @deprecated Use checkHeaderValidityWithCurrentCoordinates() instead for centralized coordinate management
+     */
+    async checkHeaderValidityWithCoordinates(coordinates: string): Promise<{ isValid: boolean, messages?: any[] }> {
+        // Update the model with the new coordinates first
+        this.setCurrentCoordinates(coordinates);
+        return this.checkHeaderValidityWithCurrentCoordinates();
     }
 
     /**
@@ -526,7 +623,7 @@ export default class MatchWizard extends ManagedObject {
     /**
      * Activate a step by building its UI if needed (moved from MatchWizardDialog)
      */
-    async activateStep(stepName: string): Promise<UploadStep | HeaderSelectionStep | PreviewStep> {
+    async activateStep(stepName: string): Promise<UploadStep | HeaderSelectionStep | MessagesStep | PreviewStep> {
         // Find the step controller
         const stepController = this.getOrCreateStepController(stepName);
 
@@ -578,6 +675,9 @@ export default class MatchWizard extends ManagedObject {
 				return this.stepControllers[stepName];
 			} else if (stepName === "headerSelectionStep" && this.rawSheetData) {
 				this.stepControllers[stepName] = new HeaderSelectionStep(this);
+				return this.stepControllers[stepName];
+			} else if (stepName === "messagesStep") {
+				this.stepControllers[stepName] = new MessagesStep(this);
 				return this.stepControllers[stepName];
 			} else if (stepName === "previewDataStep") {
 				const coords = this.wizardModel.getProperty("/readSheetCoordinates") || "A1";

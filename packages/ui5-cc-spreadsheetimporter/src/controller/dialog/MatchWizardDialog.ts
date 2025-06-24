@@ -202,18 +202,16 @@ export default class MatchWizardDialog extends ManagedObject {
 			if (processedData && processedData.coordinates === a1Coordinates) {
 				// We already have processed data with validation
 				result = processedData;
+				if (this.matchWizard.getWizardModel().getProperty("/forceUpload")) {
+					result.canceled = false;
+				}
 			} else {
 				// Process the data using the import service
 				result = await this.importService.processAndValidate(workbook, sheetName, a1Coordinates, {
 					resetMessages: false,
-					validate: true,
+					validate: false,
 					showMessages: false
 				});
-
-				// Show messages if validation failed
-				if (result.canceled) {
-					this.messageHandler.displayMessages();
-				}
 			}
 
 			if (result.canceled) {
@@ -333,13 +331,17 @@ export default class MatchWizardDialog extends ManagedObject {
 	 */
 	async onFileUpload(event: any): Promise<void> {
 		try {
+			this.matchWizard.getStep("uploadStep").setBusyIndicatorDelay(0);
+			this.matchWizard.getStep("uploadStep").setBusy(true);
 			const uploadStep = await this.matchWizard.activateStep("uploadStep") as UploadStep;
 			uploadStep.onFileUpload(event);
 			if(this.matchWizard.getStep("uploadStep")){
 				this.wizard.setCurrentStep(this.matchWizard.getStep("uploadStep"));
 			}
+			// this.matchWizard.getStep("uploadStep").setBusy(false);
 		} catch (error) {
 			Log.error("Error delegating file upload to step", error as Error, "MatchWizardDialog");
+			this.matchWizard.getStep("uploadStep").setBusy(false);
 		}
 	}
 

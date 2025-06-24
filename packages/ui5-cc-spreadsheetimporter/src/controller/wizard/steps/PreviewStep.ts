@@ -17,7 +17,6 @@ export default class PreviewStep {
 	private matchWizard: MatchWizard;
 	private workbook: XLSX.WorkBook;
 	private sheetName: string;
-	private a1Coordinates: string;
 	private processedData: any;
 	private container: VBox; // Store container reference for rebuilding
 
@@ -25,8 +24,12 @@ export default class PreviewStep {
 		this.matchWizard = matchWizard;
 		this.workbook = workbook;
 		this.sheetName = sheetName;
-		this.a1Coordinates = a1Coordinates;
 		this.processedData = processedData;
+
+		// Set coordinates in the centralized model if provided
+		if (a1Coordinates) {
+			this.matchWizard.setCurrentCoordinates(a1Coordinates);
+		}
 	}
 
 	public async build(container: VBox, processedData?: any): Promise<void> {
@@ -34,7 +37,10 @@ export default class PreviewStep {
 		this.container = container;
 
 		if (processedData) {
-			this.a1Coordinates = processedData.coordinates || this.a1Coordinates;
+			// Update coordinates in the centralized model if provided
+			if (processedData.coordinates) {
+				this.matchWizard.setCurrentCoordinates(processedData.coordinates);
+			}
 			this.workbook = processedData.workbook;
 			this.sheetName = processedData.sheetName;
 			this.processedData = processedData;
@@ -52,11 +58,11 @@ export default class PreviewStep {
 				// Create preview from processed data
 				previewContent = this.createProcessedDataPreview();
 			} else {
-				// Fallback to basic preview - now using local method
+				// Fallback to basic preview - now using centralized coordinates
 				previewContent = await this.createDataPreviewTable(
 					this.workbook,
 					this.sheetName,
-					this.a1Coordinates,
+					this.matchWizard.getCurrentCoordinates(),
 					true // Enable validation
 				);
 			}
@@ -101,7 +107,7 @@ export default class PreviewStep {
 		// Update properties if provided
 		if (workbook) this.workbook = workbook;
 		if (sheetName) this.sheetName = sheetName;
-		if (a1Coordinates) this.a1Coordinates = a1Coordinates;
+		if (a1Coordinates) this.matchWizard.setCurrentCoordinates(a1Coordinates);
 		if (processedData) this.processedData = processedData;
 	}
 
