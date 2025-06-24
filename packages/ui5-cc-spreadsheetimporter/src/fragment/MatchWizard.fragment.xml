@@ -12,12 +12,13 @@
         resizable="true"
         draggable="true"
         showHeader="true"
-        afterClose="onWizardClose">
+        afterClose="onWizardClose"
+        verticalScrolling="false">
         <content>
             <Wizard
                 width="100%"
                 height="100%"
-                showNextButton="true"
+                showNextButton="false"
                 enableBranching="true"
                 renderMode="Page"
                 complete="onWizardComplete"
@@ -80,13 +81,27 @@
                     title="{i18n>spreadsheetimporter.headerSelectionTitle}"
                     validated="{= ${wizard>/headerSelected} === true}"
                     nextStep="previewDataStep">
-                    <VBox width="100%" class="sapUiSmallMargin">
+                    <VBox width="100%" class="sapUiSmallMargin" fitContainer="true">
                         <Text text="{i18n>spreadsheetimporter.headerSelectionDescription}" class="sapUiSmallMarginBottom"/>
                         <!-- Table container - table will be created in controller -->
-                        <VBox width="100%" />
+                        <VBox width="100%" fitContainer="true"/>
                     </VBox>
                     <customData>
                         <core:CustomData key="stepName" value="headerSelectionStep"/>
+                    </customData>
+                </WizardStep>
+                <WizardStep
+                    title="Validation Messages"
+                    validated="false"
+                    nextStep="previewDataStep"
+                    class="height-100">
+                    <VBox width="100%" class="sapUiSmallMargin" fitContainer="true">
+                        <Text text="Review validation messages and decide how to proceed" class="sapUiSmallMarginBottom"/>
+                        <VBox width="100%" fitContainer="true">
+                        </VBox>
+                    </VBox>
+                    <customData>
+                        <core:CustomData key="stepName" value="messagesStep"/>
                     </customData>
                 </WizardStep>
                 <WizardStep
@@ -112,7 +127,7 @@
                 text="{i18n>spreadsheetimporter.upload}"
                 type="Emphasized"
                 press="onWizardFinish"
-                enabled="{= ${wizard>/currentStep} === 'previewDataStep'}"/>
+                enabled="{wizard>/uploadButtonEnabled}"/>
         </buttons>
     </Dialog>
 </core:FragmentDefinition>
