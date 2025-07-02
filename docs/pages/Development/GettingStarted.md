@@ -64,7 +64,7 @@ To make this work, in the `ui5-cc-spreadsheetimporter` folder, the dist folder s
 
 Under the folder `./examples/packages` are all the UI5 Apps that are set up for the Consumption of the Custom Control.  
 There are five different apps for different scenarios (OData V2 Fiori Elements, V2 Freestyle, V2 FE Non Draft, V4 FE, V4 FPM).  
-There are currently only with version `1.120`. For testing, these apps are copied and tested with other maintenance versions.  
+There are currently only with version `1.136`. For testing, these apps are copied and tested with other maintenance versions including `1.120`.  
 If you want to test with lower maintenance versions, just run this command:  
 `npm run copyTestApps`  
 This will copy the apps according to this [json file](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/dev/testapps.json).

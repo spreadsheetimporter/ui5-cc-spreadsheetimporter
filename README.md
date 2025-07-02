@@ -26,7 +26,7 @@ https://docs.spreadsheet-importer.com/
 Give this a try directly at:  
 https://livedemo.spreadsheet-importer.com/
 
-The demo app uses OData V4 and UI5 version 1.120 with a CAP backend. The data resets every hour on the hour.
+The demo app uses OData V4 and UI5 version 1.136 with a CAP backend. The data resets every hour on the hour.
 
 # **Support**
 
@@ -43,7 +43,7 @@ https://docs.spreadsheet-importer.com/pages/Development/GettingStarted/
 1. Clone the repository `git clone https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter`
 2. Run `pnpm install`
 3. Run server with `pnpm start:server`
-4. Start Demo App for example a Fiori Elements App with OData V4 and UI5 1.120 with `pnpm --filter ordersv4fe120 start`
+4. Start Demo App for example a Fiori Elements App with OData V4 and UI5 1.136 with `pnpm --filter ordersv4fe136 start`
 
 # Changelogs
 

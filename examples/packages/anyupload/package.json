@@ -17,7 +17,7 @@
     "@sap-ux/ui5-middleware-fe-mockserver": "^2.2.97",
     "@sap/ux-specification": "^1.124.18",
     "@sap/ux-ui5-tooling": "^1.18.0",
-    "@sapui5/types": "~1.136.1",
+    "@sapui5/types": "~1.136.2",
     "@typescript-eslint/eslint-plugin": "^8.34.1",
     "@typescript-eslint/parser": "^8.34.1",
     "@ui5/cli": "^4.0.18",

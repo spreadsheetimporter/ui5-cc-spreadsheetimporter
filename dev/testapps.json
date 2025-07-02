@@ -1,17 +1,28 @@
 [
   {
     "rootAppName": "ordersv2fe",
-    "appTitel": "Orders V2 FE 120",
+    "appTitel": "Orders V2 FE 136",
     "port": "8081",
     "id": "ui.v2.ordersv2fe",
     "path": "./examples/packages/",
-    "versionMinor": 120,
+    "versionMinor": 136,
     "testMapping": {
       "specs": [
         "../test/specs/all/**.test.js"
       ]
     },
     "copyVersions": [
+      {
+        "version": "1.120.40",
+        "versionMinor": 120,
+        "port": "8089",
+        "appTitel": "Orders V2 FE 120",
+        "testMapping": {
+          "specs": [
+            "../test/specs/all/**.test.js"
+          ]
+        }
+      },
       {
         "version": "1.108.42",
         "versionMinor": 108,
@@ -61,8 +72,8 @@
   {
     "rootAppName": "ordersv2fenondraft",
     "port": "8083",
-    "versionMinor": 120,
-    "appTitel": "Orders V2 FE ND 120",
+    "versionMinor": 136,
+    "appTitel": "Orders V2 FE ND 136",
     "path": "./examples/packages/",
     "testMapping": {
       "specs": [
@@ -70,6 +81,17 @@
       ]
     },
     "copyVersions": [
+      {
+        "version": "1.120.40",
+        "versionMinor": 120,
+        "port": "8109",
+        "appTitel": "Orders V2 FE ND 120",
+        "testMapping": {
+          "specs": [
+            "../test/specs/all/**.test.js"
+          ]
+        }
+      },
       {
         "version": "1.108.42",
         "versionMinor": 108,
@@ -119,8 +141,8 @@
   {
     "rootAppName": "ordersv2freestylenondraft",
     "port": "8082",
-    "versionMinor": 120,
-    "appTitel": "Orders V2 FS ND 120",
+    "versionMinor": 136,
+    "appTitel": "Orders V2 FS ND 136",
     "path": "./examples/packages/",
     "testMapping": {
       "specs": [
@@ -128,6 +150,17 @@
       ]
     },
     "copyVersions": [
+      {
+        "version": "1.120.40",
+        "versionMinor": 120,
+        "port": "8110",
+        "appTitel": "Orders V2 FS ND 120",
+        "testMapping": {
+          "specs": [
+            "../test/specs/ordersv2freestylenondraft/**.test.js"
+          ]
+        }
+      },
       {
         "version": "1.108.42",
         "versionMinor": 108,
@@ -177,8 +210,8 @@
   {
     "rootAppName": "ordersv2freestylenondraftopenui5",
     "port": "8105",
-    "versionMinor": 120,
-    "appTitel": "Orders V2 FS ND OP 120",
+    "versionMinor": 136,
+    "appTitel": "Orders V2 FS ND OP 136",
     "path": "./examples/packages/",
     "testMapping": {
       "specs": [
@@ -186,6 +219,17 @@
       ]
     },
     "copyVersions": [
+      {
+        "version": "1.120.40",
+        "versionMinor": 120,
+        "port": "8111",
+        "appTitel": "Orders V2 FS ND OP 120",
+        "testMapping": {
+          "specs": [
+            "../test/specs/ordersv2freestylenondraft/**.test.js"
+          ]
+        }
+      },
       {
         "version": "1.108.40",
         "versionMinor": 108,
@@ -237,8 +281,8 @@
     "id": "ui.v4.ordersv4fe",
     "path": "./examples/packages/",
     "port": "8080",
-    "versionMinor": 120,
-    "appTitel": "Orders V4 FE 120",
+    "versionMinor": 136,
+    "appTitel": "Orders V4 FE 136",
     "testMapping": {
       "specs": [
         "../test/specs/all/**.test.js",
@@ -247,6 +291,19 @@
       ]
     },
     "copyVersions": [
+      {
+        "version": "1.120.40",
+        "versionMinor": 120,
+        "port": "8112",
+        "appTitel": "Orders V4 FE 120",
+        "testMapping": {
+          "specs": [
+            "../test/specs/all/**.test.js",
+            "../test/specs/v4/**.test.js",
+            "../test/specs/update/**.test.js"
+          ]
+        }
+      },
       {
         "version": "1.108.42",
         "versionMinor": 108,
@@ -302,23 +359,36 @@
     "id": "ui.v4.ordersv4fe",
     "path": "./examples/packages/",
     "port": "8101",
-    "versionMinor": 120,
-    "appTitel": "Orders V4 FE TS 120",
+    "versionMinor": 136,
+    "appTitel": "Orders V4 FE TS 136",
     "testMapping": {
       "specs": [
         "../test/specs/all/**.test.js",
         "../test/specs/v4/**.test.js"
       ]
     },
-    "copyVersions": []
+    "copyVersions": [
+      {
+        "version": "1.120.40",
+        "versionMinor": 120,
+        "port": "8113",
+        "appTitel": "Orders V4 FE TS 120",
+        "testMapping": {
+          "specs": [
+            "../test/specs/all/**.test.js",
+            "../test/specs/v4/**.test.js"
+          ]
+        }
+      }
+    ]
   },
   {
     "rootAppName": "ordersv4freestyle",
     "id": "uordersv4freestyle",
     "path": "./examples/packages/",
     "port": "8190",
-    "versionMinor": 120,
-    "appTitel": "Orders V4 FS 120",
+    "versionMinor": 136,
+    "appTitel": "Orders V4 FS 136",
     "testMapping": {
       "specs": [
         "../test/specs/download/**.test.js",
@@ -326,15 +396,35 @@
         "../test/specs/wizard/**.test.js"
       ]
     },
-    "copyVersions": []
+    "copyVersions": [
+      {
+        "version": "1.120.40",
+        "versionMinor": 120,
+        "port": "8114",
+        "appTitel": "Orders V4 FS 120",
+        "testMapping": {
+          "specs": [
+            "../test/specs/download/**.test.js",
+            "../test/specs/updatefreestyle/**.test.js",
+            "../test/specs/wizard/**.test.js"
+          ]
+        }
+      }
+    ]
   },
   {
     "rootAppName": "ordersv4fpm",
     "port": "8084",
-    "versionMinor": 120,
-    "appTitel": "Orders V4 FPM 120",
+    "versionMinor": 136,
+    "appTitel": "Orders V4 FPM 136",
     "path": "./examples/packages/",
     "copyVersions": [
+      {
+        "version": "1.120.40",
+        "versionMinor": 120,
+        "port": "8115",
+        "appTitel": "Orders V4 FPM 120"
+      },
       {
         "version": "1.96.40",
         "port": "8100",

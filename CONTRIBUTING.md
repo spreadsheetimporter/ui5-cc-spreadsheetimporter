@@ -53,7 +53,7 @@ The CLA helps us:
 
 4. Start a demo app:
    ```bash
-   pnpm --filter ordersv4fe120 start
+   pnpm --filter ordersv4fe136 start
    ```
 
 ## Code Style

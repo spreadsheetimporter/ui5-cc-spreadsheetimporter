@@ -15,13 +15,13 @@
               "tiles": [
                 {
                   "id": "ui.v2.ordersv2fe-intent1",
-                  "properties": { "targetURL": "#ordersv2fe-120", "title": "Orders V2 FE 120", "info": "", "subtitle": "", "icon": "sap-icon://course-book" },
+                  "properties": { "targetURL": "#ordersv2fe-136", "title": "Orders V2 FE", "info": "", "subtitle": "", "icon": "sap-icon://course-book" },
                   "tileType": "sap.ushell.ui.tile.StaticTile",
                   "serviceRefreshInterval": 10000
                 },
                 {
                   "id": "ui.v4.ordersv4fe-intent1",
-                  "properties": { "targetURL": "#ordersv4fe-120", "title": "Orders V4 FE 120", "info": "", "subtitle": "", "icon": "sap-icon://course-book" },
+                  "properties": { "targetURL": "#ordersv4fe-136", "title": "Orders V4 FE", "info": "", "subtitle": "", "icon": "sap-icon://course-book" },
                   "tileType": "sap.ushell.ui.tile.StaticTile",
                   "serviceRefreshInterval": 10000
                 },
@@ -42,13 +42,13 @@
               "tiles": [
                 {
                   "id": "ui.v2.ordersv2fe-intent1",
-                  "properties": { "targetURL": "#ordersv2fe-120", "title": "Orders V2 FE 120", "info": "", "subtitle": "", "icon": "sap-icon://course-book" },
+                  "properties": { "targetURL": "#ordersv2fe-136", "title": "Orders V2 FE", "info": "", "subtitle": "", "icon": "sap-icon://course-book" },
                   "tileType": "sap.ushell.ui.tile.StaticTile",
                   "serviceRefreshInterval": 10000
                 },
                 {
                   "id": "ui.v4.ordersv4fe-intent1",
-                  "properties": { "targetURL": "#ordersv4fe-120", "title": "Orders V4 FE 120", "info": "", "subtitle": "", "icon": "sap-icon://course-book" },
+                  "properties": { "targetURL": "#ordersv4fe-136", "title": "Orders V4 FE", "info": "", "subtitle": "", "icon": "sap-icon://course-book" },
                   "tileType": "sap.ushell.ui.tile.StaticTile",
                   "serviceRefreshInterval": 10000
                 },
@@ -72,8 +72,8 @@
             "ui.v2.ordersv2fe-intent1": {
               "signature": { "parameters": {}, "additionalParameters": "allowed" },
               "semanticObject": "ordersv2fe",
-              "action": "120",
-              "title": "Orders V2 FE 120",
+              "action": "136",
+              "title": "Orders V2 FE",
               "info": "",
               "subTitle": "",
               "icon": "sap-icon://course-book",
@@ -82,8 +82,8 @@
             "ui.v4.ordersv4fe-intent1": {
               "signature": { "parameters": {}, "additionalParameters": "allowed" },
               "semanticObject": "ordersv4fe",
-              "action": "120",
-              "title": "Orders V4 FE 120",
+              "action": "136",
+              "title": "Orders V4 FE",
               "info": "",
               "subTitle": "",
               "icon": "sap-icon://course-book",

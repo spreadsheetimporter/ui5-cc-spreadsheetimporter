@@ -60,7 +60,7 @@
     "@commitlint/config-conventional": "^19.8.1",
     "@prettier/plugin-xml": "^3.4.1",
     "@sap/ux-ui5-tooling": "1.18.0",
-    "@sapui5/ts-types-esm": "1.136.1",
+    "@sapui5/ts-types-esm": "1.136.2",
     "@types/node": "24.0.3",
     "@typescript-eslint/eslint-plugin": "^8.34.1",
     "@typescript-eslint/parser": "^8.34.1",
