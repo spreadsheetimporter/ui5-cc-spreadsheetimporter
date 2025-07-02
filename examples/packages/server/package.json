@@ -12,9 +12,9 @@
     "anyupload": "workspace:*",
     "cds-launchpad-plugin": "2.2.0",
     "cds-plugin-ui5": "0.13.1",
-    "ordersv2fe120": "workspace:*",
-    "ordersv4fe120": "workspace:*",
-    "ordersv4freestyle120": "workspace:*"
+    "ordersv2fe136": "workspace:*",
+    "ordersv4fe136": "workspace:*",
+    "ordersv4freestyle136": "workspace:*"
   },
   "scripts": {
     "watch": "cds watch"
@@ -25,20 +25,20 @@
     },
     "cds-plugin-ui5": {
       "modules": {
-        "ordersv4fe120": {
+        "ordersv4fe136": {
           "configFile": "ui5-dist.yaml"
         },
-        "ordersv2fe120": {
+        "ordersv2fe136": {
           "configFile": "ui5-dist.yaml"
         },
-        "ordersv4freestyle120": {
+        "ordersv4freestyle136": {
           "configFile": "ui5-dist.yaml"
         }
       }
     },
     "launchpad": {
       "theme": "sap_horizon",
-      "version": "1.120.29",
+      "version": "1.136.2",
       "basePath": "launchpad.html",
       "appConfigPath": "app/appconfig.json"
     }

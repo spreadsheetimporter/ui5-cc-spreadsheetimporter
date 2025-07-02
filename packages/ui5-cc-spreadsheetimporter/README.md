@@ -20,7 +20,7 @@ See here for all currently [supported Versions](https://docs.spreadsheet-importe
 It is possible to try this out directly at:  
 https://livedemo.spreadsheet-importer.com/
 
-The app is an OData V4 app with UI5 version 1.120 and a CAP backend.  
+The app is an OData V4 app with UI5 version 1.136 and a CAP backend.  
 The data is reset every hour on the hour.
 
 ## Install

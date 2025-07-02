@@ -34,10 +34,10 @@
             "additionalParameters": "allowed"
           },
           "semanticObject": "ordersv4freestyle",
-          "action": "120",
+          "action": "136",
           "title": "Orders Sample App Deep Download",
           "info": "Freestyle",
-          "subTitle": "UI5 1.120 / OData V4",
+          "subTitle": "UI5 1.136 / OData V4",
           "icon": "sap-icon://course-book"
         }
       }
@@ -63,7 +63,7 @@
   "sap.ui5": {
     "flexEnabled": false,
     "dependencies": {
-      "minUI5Version": "1.120.29",
+                "minUI5Version": "1.136.2",
       "libs": {
         "sap.m": {},
         "sap.ui.core": {},

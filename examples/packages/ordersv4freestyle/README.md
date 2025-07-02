@@ -9,10 +9,10 @@
 |**Service Type**<br>OData Url|
 |**Service URL**<br>http://localhost:4004/odata/v4/Orders/
 |**Module Name**<br>ordersv4freestyle|
-|**Application Title**<br>OrdersV4 Freestyle 120|
+|**Application Title**<br>OrdersV4 Freestyle 136|
 |**Namespace**<br>|
 |**UI5 Theme**<br>sap_horizon|
-|**UI5 Version**<br>1.120.29|
+|**UI5 Version**<br>1.136.2|
 |**Enable Code Assist Libraries**<br>False|
 |**Enable TypeScript**<br>False|
 |**Add Eslint configuration**<br>False|

@@ -43,10 +43,10 @@
             "additionalParameters": "allowed"
           },
           "semanticObject": "ordersv2fe",
-          "action": "120",
+          "action": "136",
           "title": "Orders Sample App",
           "info": "Fiori Elements",
-          "subTitle": "UI5 1.120 / OData V2",
+          "subTitle": "UI5 1.136 / OData V2",
           "icon": "sap-icon://course-book"
         }
       }
@@ -71,7 +71,7 @@
   "sap.ui5": {
     "flexEnabled": true,
     "dependencies": {
-      "minUI5Version": "1.120.29",
+      "minUI5Version": "1.136.2",
       "libs": {
         "sap.m": {},
         "sap.ui.core": {},

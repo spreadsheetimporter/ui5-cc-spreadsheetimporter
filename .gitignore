@@ -12,9 +12,18 @@ dev/thirdparty
 .ui5-tooling-modules
 examples/test/downloads
 # test apps start
+/examples/packages/ordersv2fe120
 /examples/packages/ordersv2fe108
 /examples/packages/ordersv2fe96
 /examples/packages/ordersv2fe84
+/examples/packages/ordersv4fe120
+/examples/packages/ordersv4fpm120
+/examples/packages/ordersv4freestyle120
+/examples/packages/ordersv4fets120
+/examples/packages/ordersv2fe120
+/examples/packages/ordersv2fenondraft120
+/examples/packages/ordersv2freestyle120
+/examples/packages/anyupload120
 /examples/packages/ordersv4fe108
 /examples/packages/ordersv4fe96
 /examples/packages/ordersv4fe84
@@ -31,10 +40,12 @@ examples/test/downloads
 /examples/packages/ordersv2freestylenondraft84
 /examples/packages/ordersv2freestylenondraft96
 /examples/packages/ordersv2freestylenondraft108
+/examples/packages/ordersv2freestylenondraft120
 /examples/packages/ordersv2freestylenondraftopenui571
 /examples/packages/ordersv2freestylenondraftopenui584
 /examples/packages/ordersv2freestylenondraftopenui596
 /examples/packages/ordersv2freestylenondraftopenui5108
+/examples/packages/ordersv2freestylenondraftopenui5120
 /examples/packages/ordersv4fe71
 /examples/packages/ordersv4fpm96
 # test apps end

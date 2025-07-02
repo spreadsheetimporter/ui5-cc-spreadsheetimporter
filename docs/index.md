@@ -41,7 +41,7 @@ For urgent assistance or special requirements, please schedule an appointment [h
 You can try this component live at:  
 <https://livedemo.spreadsheet-importer.com/>
 
-The demo app uses OData V4, UI5 version 1.108, and a CAP backend.  
+The demo app uses OData V4, UI5 version 1.136, and a CAP backend.  
 Data is reset every hour on the hour.
 
 ## Blogs

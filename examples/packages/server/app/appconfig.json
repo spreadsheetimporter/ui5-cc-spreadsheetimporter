@@ -40,11 +40,11 @@
                 {
                   "id": "chore-intent3",
                   "properties": {
-                    "targetURL": "launchpad.html#ordersv4freestyle-120&/orders",
+                    "targetURL": "launchpad.html#ordersv4freestyle-136&/orders",
                     "navigationMode": "inplace",
                     "title": "Orders Sample App Mass Update",
                     "info": "Freestyle",
-                    "subTitle": "UI5 1.120 / OData V4",
+                    "subTitle": "UI5 1.136 / OData V4",
                     "icon": "sap-icon://course-book"
                   },
                   "tileType": "sap.ushell.ui.tile.StaticTile",
