@@ -1,5 +1,5 @@
 import VBox from "sap/m/VBox";
-import MatchWizard from "../MatchWizard";
+import Wizard from "../Wizard";
 import MessageView from "sap/m/MessageView";
 import MessageItem from "sap/m/MessageItem";
 import Button from "sap/m/Button";
@@ -18,23 +18,23 @@ import PreviewStep from "./PreviewStep";
 export default class MessagesStep {
     public readonly stepName = "messagesStep";
 
-    private matchWizard: MatchWizard;
+    private wizard: Wizard;
     private isValidated: boolean = false;
     private messageView: MessageView;
     private backButton: Button;
     private isInitialBuildComplete: boolean = false;
 
-    constructor(matchWizard: MatchWizard) {
-        this.matchWizard = matchWizard;
+    constructor(wizard: Wizard) {
+        this.wizard = wizard;
     }
 
     public build(container: VBox): void {
         // Unvalidate step initially
         this.isValidated = false;
-        this.matchWizard.getStep("messagesStep")?.setValidated(false);
+        this.wizard.getStep("messagesStep")?.setValidated(false);
 
-        // Get message handler from MatchWizard
-        const messageHandler = this.matchWizard.getDialogController()?.messageHandler;
+        // Get message handler from Wizard
+        const messageHandler = this.wizard.getDialogController()?.messageHandler;
         if (!messageHandler) {
             Log.error("Message handler not found", undefined, "MessagesStep");
             return;
@@ -112,7 +112,7 @@ export default class MessagesStep {
 
         // Set i18n model if not already set
         if (!container.getModel("i18n")) {
-            const componentI18n = this.matchWizard.getDialogController()?.componentI18n;
+            const componentI18n = this.wizard.getDialogController()?.componentI18n;
             if (componentI18n) {
                 container.setModel(componentI18n, "i18n");
                 this.messageView.setModel(componentI18n, "i18n");
@@ -138,14 +138,14 @@ export default class MessagesStep {
      * Get strict mode setting from component
      */
     private getIsStrict(): boolean {
-        return this.matchWizard.getWizardModel().getProperty("/strict") || false;
+        return this.wizard.getWizardModel().getProperty("/strict") || false;
     }
 
     /**
      * Creates action buttons similar to MessagesDialog.fragment.xml
      */
     private createActionButtons(): FlexBox {
-        const util = this.matchWizard.getUtil();
+        const util = this.wizard.getUtil();
 
         const buttonContainer = new FlexBox({
             justifyContent: "End",
@@ -183,20 +183,20 @@ export default class MessagesStep {
             // Mark step as validated to allow navigation to next step
             this.isValidated = true;
             this.validateStep(true);
-			this.matchWizard.setUploadButtonEnabled(true);
+			this.wizard.setUploadButtonEnabled(true);
 
-			this.matchWizard.getWizardModel().setProperty("/forceUpload", true);
+			this.wizard.getWizardModel().setProperty("/forceUpload", true);
 
-			const messageStep = this.matchWizard.getStep("messagesStep");
-			const previewStep = this.matchWizard.getStep("previewDataStep");
+			const messageStep = this.wizard.getStep("messagesStep");
+			const previewStep = this.wizard.getStep("previewDataStep");
 			if (messageStep && previewStep && messageStep.getNextStep() !== previewStep.getId()) {
 				messageStep.setNextStep(previewStep);
 			}
 
 			// Rebuild preview step
-			const previewStepControl = this.matchWizard.getStepControl("previewDataStep") as PreviewStep;
-			previewStepControl.build(this.matchWizard.findStepContainer("previewDataStep"), this.matchWizard.processedData);
-			this.matchWizard.wizard.nextStep();
+			const previewStepControl = this.wizard.getStepControl("previewDataStep") as PreviewStep;
+			previewStepControl.build(this.wizard.findStepContainer("previewDataStep"), this.wizard.processedData);
+			this.wizard.wizard.nextStep();
         } catch (error) {
             Log.error("Error in MessagesStep continue action", error as Error, "MessagesStep");
         }
@@ -207,8 +207,8 @@ export default class MessagesStep {
      */
     private onDownloadErrors(): void {
         try {
-            // Get message handler from MatchWizard and trigger download
-            const messageHandler = this.matchWizard.getDialogController()?.messageHandler;
+            // Get message handler from Wizard and trigger download
+            const messageHandler = this.wizard.getDialogController()?.messageHandler;
             if (messageHandler && typeof messageHandler.onDownloadErrors === 'function') {
                 messageHandler.onDownloadErrors();
             } else {
@@ -227,7 +227,7 @@ export default class MessagesStep {
     private onCloseMessages(): void {
         try {
             // Close the wizard dialog
-            const dialogController = this.matchWizard.getDialogController();
+            const dialogController = this.wizard.getDialogController();
             if (dialogController && typeof dialogController.onWizardCancel === 'function') {
                 dialogController.onWizardCancel();
             }
@@ -244,7 +244,7 @@ export default class MessagesStep {
     private validateStep(validated: boolean): void {
         try {
             // Get the wizard step control and set it as validated
-            const messagesStepControl = this.matchWizard.getStep("messagesStep");
+            const messagesStepControl = this.wizard.getStep("messagesStep");
             if (messagesStepControl) {
                 messagesStepControl.setValidated(validated);
                 Log.debug("MessagesStep validation state changed", undefined, "MessagesStep");

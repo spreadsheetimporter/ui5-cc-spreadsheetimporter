@@ -15,22 +15,23 @@ import MessageHandler from "../MessageHandler";
 import SpreadsheetUpload from "../SpreadsheetUpload";
 import ImportService from "../ImportService";
 import OData from "../odata/OData";
-import MatchWizard from "../wizard/MatchWizard";
+import WizardController from "../wizard/Wizard";
 import WizardStep from "sap/m/WizardStep";
 import UploadStep from "../wizard/steps/UploadStep";
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
-export default class MatchWizardDialog extends ManagedObject {
+export default class WizardDialog extends ManagedObject {
 	/**
-	 * MatchWizardDialog orchestrates the wizard steps for the import process.
+	 * WizardDialog orchestrates the wizard steps for the import process.
 	 * It manages the dialog lifecycle, step navigation, and coordination between steps.
 	 */
 	private dialog: Dialog;
 	private component: Component;
 	private spreadsheetUploadController: SpreadsheetUpload;
 	private wizard: Wizard;
+	private wizardController: WizardController;
 	private util: Util;
 	private resolvePromise: (value: any) => void;
 	private rejectPromise: (reason?: any) => void;
@@ -38,10 +39,9 @@ export default class MatchWizardDialog extends ManagedObject {
 	private messageHandler: MessageHandler;
 	private importService: ImportService;
 	private odataHandler: OData;
-	private matchWizard: MatchWizard;
 
 	/**
-	 * Creates a new instance of MatchWizardDialog
+	 * Creates a new instance of WizardDialog
 	 */
 	constructor(spreadsheetUploadController: SpreadsheetUpload, component: Component, componentI18n: ResourceModel, messageHandler: MessageHandler) {
 		super();
@@ -52,7 +52,7 @@ export default class MatchWizardDialog extends ManagedObject {
 		this.util = new Util(componentI18n.getResourceBundle() as ResourceBundle);
 
 		// Initialize the core components
-		this.matchWizard = new MatchWizard(component, componentI18n.getResourceBundle() as ResourceBundle, messageHandler, spreadsheetUploadController, this);
+		this.wizardController = new WizardController(component, componentI18n.getResourceBundle() as ResourceBundle, messageHandler, spreadsheetUploadController, this);
 
 		this.importService = new ImportService(spreadsheetUploadController, component, componentI18n.getResourceBundle() as ResourceBundle, messageHandler);
 	}
@@ -67,16 +67,16 @@ export default class MatchWizardDialog extends ManagedObject {
 
 			this.createDialog()
 				.then(() => {
-					this.dialog.open();
-					// Collect step references
-					this.matchWizard.collectStepReferences(this.wizard);
-					// Configure the step sequence based on visibility
-					this.matchWizard.configureStepSequence(this.wizard);
-					this.matchWizard.setWizardToSteps(this.wizard);
+									this.dialog.open();
+				// Collect step references
+				this.wizardController.collectStepReferences(this.wizard);
+				// Configure the step sequence based on visibility
+				this.wizardController.configureStepSequence(this.wizard);
+				this.wizardController.setWizardToSteps(this.wizard);
 					this.navigateToStep("uploadStep");
 				})
 				.catch((error) => {
-					Log.error("Error opening match wizard", error as Error, "MatchWizardDialog");
+					Log.error("Error opening match wizard", error as Error, "WizardDialog");
 					reject(error);
 				});
 		});
@@ -87,18 +87,18 @@ export default class MatchWizardDialog extends ManagedObject {
 	 */
 	private async createDialog(): Promise<void> {
 		this.dialog = (await Fragment.load({
-			name: "cc.spreadsheetimporter.XXXnamespaceXXX.fragment.MatchWizard",
+			name: "cc.spreadsheetimporter.XXXnamespaceXXX.fragment.Wizard",
 			type: "XML",
 			controller: this
 		})) as Dialog;
 
 		// Set models
 		this.dialog.setModel(this.componentI18n, "i18n");
-		this.dialog.setModel(this.matchWizard.getWizardModel(), "wizard");
+		this.dialog.setModel(this.wizardController.getWizardModel(), "wizard");
 
 		// Get wizard reference
 		this.wizard = this.dialog.getContent()[0] as Wizard;
-		this.matchWizard.wizard = this.wizard;
+		this.wizardController.wizard = this.wizard;
 	}
 
 	/**
@@ -107,9 +107,9 @@ export default class MatchWizardDialog extends ManagedObject {
 	private navigateToStep(stepName: string): void {
 		try {
 			// Get step control from our map
-			const step = this.matchWizard.getWizardStepControl(stepName);
+			const step = this.wizardController.getWizardStepControl(stepName);
 			if (!step) {
-				Log.warning(`Step ${stepName} not found`, undefined, "MatchWizardDialog");
+				Log.warning(`Step ${stepName} not found`, undefined, "WizardDialog");
 				return;
 			}
 
@@ -117,11 +117,11 @@ export default class MatchWizardDialog extends ManagedObject {
 			this.wizard.goToStep(step, true);
 
 			// Update the current step in the model
-			this.matchWizard.getWizardModel().setProperty("/currentStep", stepName);
+			this.wizardController.getWizardModel().setProperty("/currentStep", stepName);
 
-			Log.debug(`Navigated to step: ${stepName}`, undefined, "MatchWizardDialog");
+			Log.debug(`Navigated to step: ${stepName}`, undefined, "WizardDialog");
 		} catch (error) {
-			Log.error(`Error navigating to step ${stepName}`, error as Error, "MatchWizardDialog");
+			Log.error(`Error navigating to step ${stepName}`, error as Error, "WizardDialog");
 		}
 	}
 
@@ -154,17 +154,17 @@ export default class MatchWizardDialog extends ManagedObject {
 			if (!stepName) return;
 
 			// Update current step in the model
-			this.matchWizard.getWizardModel().setProperty("/currentStep", stepName);
+			this.wizardController.getWizardModel().setProperty("/currentStep", stepName);
 
-			Log.debug(`Step changed to: ${stepName}`, undefined, "MatchWizardDialog");
+			Log.debug(`Step changed to: ${stepName}`, undefined, "WizardDialog");
 
 			try {
-				// await this.matchWizard.activateStep(stepName);
+				// await this.wizardController.activateStep(stepName);
 			} catch (error) {
-				Log.error(`Error activating step '${stepName}'`, error as Error, "MatchWizardDialog");
+				Log.error(`Error activating step '${stepName}'`, error as Error, "WizardDialog");
 			}
 		} catch (error) {
-			Log.error("Error in wizard step change", error as Error, "MatchWizardDialog");
+			Log.error("Error in wizard step change", error as Error, "WizardDialog");
 		}
 	}
 
@@ -172,7 +172,7 @@ export default class MatchWizardDialog extends ManagedObject {
 	 * Handler for wizard completion
 	 */
 	onWizardComplete(): void {
-		this.matchWizard.getWizardModel().setProperty("/currentStep", "previewDataStep");
+		this.wizardController.getWizardModel().setProperty("/currentStep", "previewDataStep");
 	}
 
 	/**
@@ -181,14 +181,14 @@ export default class MatchWizardDialog extends ManagedObject {
 	async onWizardFinish(): Promise<void> {
 		this.setBusy(true);
 		try {
-			// Get data from the MatchWizard model and state
-			const wizardModel = this.matchWizard.getWizardModel();
+			// Get data from the Wizard model and state
+			const wizardModel = this.wizardController.getWizardModel();
 			const a1Coordinates = wizardModel.getProperty("/readSheetCoordinates");
-			const workbookData = this.matchWizard.getWorkbookData();
-			const currentFile = this.matchWizard.getCurrentFile();
+			const workbookData = this.wizardController.getWorkbookData();
+			const currentFile = this.wizardController.getCurrentFile();
 
 			if (!a1Coordinates || !workbookData) {
-				Log.error("Missing data for finish operation", undefined, "MatchWizardDialog");
+				Log.error("Missing data for finish operation", undefined, "WizardDialog");
 				this.resolvePromise({ coordinates: null, canceled: true });
 				this.dialog.close();
 				return;
@@ -198,11 +198,11 @@ export default class MatchWizardDialog extends ManagedObject {
 
 			// Use the already processed data if available, or process again if needed
 			let result;
-			const processedData = this.matchWizard.getProcessedData();
+			const processedData = this.wizardController.getProcessedData();
 			if (processedData && processedData.coordinates === a1Coordinates) {
 				// We already have processed data with validation
 				result = processedData;
-				if (this.matchWizard.getWizardModel().getProperty("/forceUpload")) {
+				if (this.wizardController.getWizardModel().getProperty("/forceUpload")) {
 					result.canceled = false;
 				}
 			} else {
@@ -236,7 +236,7 @@ export default class MatchWizardDialog extends ManagedObject {
 				}
 			}
 		} catch (error) {
-			Log.error("Error in wizard finish", error as Error, "MatchWizardDialog");
+			Log.error("Error in wizard finish", error as Error, "WizardDialog");
 			this.resolvePromise({ coordinates: null, canceled: true });
 		} finally {
 			this.setBusy(false);
@@ -284,14 +284,14 @@ export default class MatchWizardDialog extends ManagedObject {
 			}
 
 			// Reset the wizard data
-			this.matchWizard.reset();
+			this.wizardController.reset();
 
 			// Clear dialog references
 			this.dialog = null;
 
-			Log.debug("Dialog and resources fully destroyed", undefined, "MatchWizardDialog");
+			Log.debug("Dialog and resources fully destroyed", undefined, "WizardDialog");
 		} catch (error) {
-			Log.error("Error during dialog cleanup", error as Error, "MatchWizardDialog");
+			Log.error("Error during dialog cleanup", error as Error, "WizardDialog");
 		}
 	}
 
@@ -331,17 +331,17 @@ export default class MatchWizardDialog extends ManagedObject {
 	 */
 	async onFileUpload(event: any): Promise<void> {
 		try {
-			this.matchWizard.getStep("uploadStep").setBusyIndicatorDelay(0);
-			this.matchWizard.getStep("uploadStep").setBusy(true);
-			const uploadStep = await this.matchWizard.activateStep("uploadStep") as UploadStep;
+			this.wizardController.getStep("uploadStep").setBusyIndicatorDelay(0);
+			this.wizardController.getStep("uploadStep").setBusy(true);
+			const uploadStep = await this.wizardController.activateStep("uploadStep") as UploadStep;
 			uploadStep.onFileUpload(event);
-			if(this.matchWizard.getStep("uploadStep")){
-				this.wizard.setCurrentStep(this.matchWizard.getStep("uploadStep"));
+			if(this.wizardController.getStep("uploadStep")){
+				this.wizard.setCurrentStep(this.wizardController.getStep("uploadStep"));
 			}
-			// this.matchWizard.getStep("uploadStep").setBusy(false);
+			// this.wizardController.getStep("uploadStep").setBusy(false);
 		} catch (error) {
-			Log.error("Error delegating file upload to step", error as Error, "MatchWizardDialog");
-			this.matchWizard.getStep("uploadStep").setBusy(false);
+			Log.error("Error delegating file upload to step", error as Error, "WizardDialog");
+			this.wizardController.getStep("uploadStep").setBusy(false);
 		}
 	}
 

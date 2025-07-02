@@ -14,16 +14,16 @@ import UploadStep from "./steps/UploadStep";
 import HeaderSelectionStep from "./steps/HeaderSelectionStep";
 import PreviewStep from "./steps/PreviewStep";
 import MessagesStep from "./steps/MessagesStep";
-import Wizard from "sap/m/Wizard";
+import WizardControl from "sap/m/Wizard";
 import VBox from "sap/m/VBox";
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
-export default class MatchWizard extends ManagedObject {
+export default class Wizard extends ManagedObject {
     /**
-     * MatchWizard contains utility methods for the wizard functionality,
-     * extracted from MatchWizardDialog to separate data processing from UI.
+     * Wizard contains utility methods for the wizard functionality,
+     * extracted from WizardDialog to separate data processing from UI.
      *
      * This class handles:
      * - Step management (creation, configuration, visibility)
@@ -39,15 +39,15 @@ export default class MatchWizard extends ManagedObject {
     private importService: ImportService;
     protected resourceBundle: ResourceBundle;
     private spreadsheetUploadController: SpreadsheetUpload;
-	public wizard: Wizard;
+	public wizard: WizardControl;
 
     // Registry of step controllers - Step instances for logic
     private stepControllers: { [key: string]: any } = {};
     // Registry of WizardStep UI controls from fragment
     private steps: { [key: string]: any } = {}; // WizardStep controls
-    // Map of step controls for quick access (moved from MatchWizardDialog)
+    // Map of step controls for quick access
     private wizardStepControls: { [key: string]: any } = {};
-    // Track which steps have been built (moved from MatchWizardDialog)
+    // Track which steps have been built
     public stepsBuilt: Set<string> = new Set();
 
     // Current wizard state
@@ -64,9 +64,9 @@ export default class MatchWizard extends ManagedObject {
     // Dialog controller reference for step activation
     private dialogController: any = null;
 
-    /**
-     * Creates a new instance of MatchWizard
-     */
+            /**
+         * Creates a new instance of Wizard
+         */
     constructor(
         component: Component,
         resourceBundle: ResourceBundle,
@@ -168,7 +168,7 @@ export default class MatchWizard extends ManagedObject {
         const previewDataStep = this.steps["previewDataStep"];
 
         if (!uploadStep || !headerSelectionStep || !messagesStep || !previewDataStep) {
-            Log.error("Missing step controls", undefined, "MatchWizard");
+            Log.error("Missing step controls", undefined, "Wizard");
             return;
         }
 
@@ -185,7 +185,7 @@ export default class MatchWizard extends ManagedObject {
 		uploadStep.addSubsequentStep(messagesStep);
 		uploadStep.addSubsequentStep(previewDataStep);
 
-        Log.debug("Configured wizard step sequence with messagesStep", undefined, "MatchWizard");
+        Log.debug("Configured wizard step sequence with messagesStep", undefined, "Wizard");
     }
 
     /**
@@ -256,7 +256,7 @@ export default class MatchWizard extends ManagedObject {
         if (objectCoordinates) {
             this.wizardModel.setProperty("/readSheetObjectCoordinates", objectCoordinates);
         }
-        Log.debug(`Coordinates updated in wizard model: ${coordinates}`, undefined, "MatchWizard");
+        Log.debug(`Coordinates updated in wizard model: ${coordinates}`, undefined, "Wizard");
     }
 
     /**
@@ -286,7 +286,7 @@ export default class MatchWizard extends ManagedObject {
             }
             return this.processedData;
         } catch (error) {
-            Log.error("Error reprocessing with current coordinates", error as Error, "MatchWizard");
+            Log.error("Error reprocessing with current coordinates", error as Error, "Wizard");
             throw error;
         }
     }
@@ -321,7 +321,7 @@ export default class MatchWizard extends ManagedObject {
                 messages: validationMessages
             };
         } catch (error) {
-            Log.error("Error checking header validity with current coordinates", error as Error, "MatchWizard");
+            Log.error("Error checking header validity with current coordinates", error as Error, "Wizard");
             return { isValid: false };
         }
     }
@@ -360,7 +360,7 @@ export default class MatchWizard extends ManagedObject {
      */
     setUploadButtonEnabled(enabled: boolean): void {
         this.wizardModel.setProperty("/uploadButtonEnabled", enabled);
-        Log.debug(`Upload button manually set to: ${enabled}`, undefined, "MatchWizard");
+        Log.debug(`Upload button manually set to: ${enabled}`, undefined, "Wizard");
     }
 
     /**
@@ -389,7 +389,7 @@ export default class MatchWizard extends ManagedObject {
         this.wizardModel.setProperty("/headerValid", true);
         this.wizardModel.setProperty("/firstStep", "uploadStep");
 
-        Log.debug(`Wizard reset with coordinates: ${defaultCoordinates}`, undefined, "MatchWizard");
+        Log.debug(`Wizard reset with coordinates: ${defaultCoordinates}`, undefined, "Wizard");
     }
 
     /**
@@ -443,7 +443,7 @@ export default class MatchWizard extends ManagedObject {
                 maxColumns: maxCols
             };
         } catch (error) {
-            Log.error("Error preparing table data", error as Error, "MatchWizard");
+            Log.error("Error preparing table data", error as Error, "Wizard");
             return {
                 data: [],
                 columns: [],
@@ -467,7 +467,7 @@ export default class MatchWizard extends ManagedObject {
             // Convert to A1 notation for use with SheetHandler.sheet_to_json
             const a1Coordinates = Util.convertCoordinatesToA1Notation(objectCoordinates);
             if (!a1Coordinates) {
-                Log.error("Failed to convert coordinates to A1 notation", undefined, "MatchWizard");
+                Log.error("Failed to convert coordinates to A1 notation", undefined, "Wizard");
                 return null;
             }
 
@@ -479,7 +479,7 @@ export default class MatchWizard extends ManagedObject {
                 objectCoordinates
             };
         } catch (error) {
-            Log.error("Error calculating and setting read coordinates", error as Error, "MatchWizard");
+            Log.error("Error calculating and setting read coordinates", error as Error, "Wizard");
             return null;
         }
     }
@@ -518,7 +518,7 @@ export default class MatchWizard extends ManagedObject {
 
             return result;
         } catch (error) {
-            Log.error("Error processing file", error as Error, "MatchWizard");
+            Log.error("Error processing file", error as Error, "Wizard");
             throw error;
         }
     }
@@ -575,7 +575,7 @@ export default class MatchWizard extends ManagedObject {
 	}
 
     /**
-     * Sets a wizard step control reference (moved from MatchWizardDialog)
+     * Sets a wizard step control reference
      */
     setWizardStepControl(stepName: string, stepControl: any): void {
         this.wizardStepControls[stepName] = stepControl;
@@ -584,7 +584,7 @@ export default class MatchWizard extends ManagedObject {
     }
 
     /**
-     * Gets a wizard step control reference (moved from MatchWizardDialog)
+     * Gets a wizard step control reference
      */
     getWizardStepControl(stepName: string): any {
         return this.wizardStepControls[stepName];
@@ -598,7 +598,7 @@ export default class MatchWizard extends ManagedObject {
     }
 
     /**
-     * Collects wizard step references (moved from MatchWizardDialog)
+     * Collects wizard step references
      */
     collectStepReferences(wizard: any): void {
         if (!wizard) return;
@@ -613,7 +613,7 @@ export default class MatchWizard extends ManagedObject {
                 if (stepName) {
                     // Use the unified method to store in both maps
                     this.setWizardStepControl(stepName, step);
-                    Log.debug(`Collected step reference: ${stepName}`, undefined, "MatchWizard");
+                    Log.debug(`Collected step reference: ${stepName}`, undefined, "Wizard");
                 }
             }
         }
@@ -621,21 +621,21 @@ export default class MatchWizard extends ManagedObject {
 
 
     /**
-     * Activate a step by building its UI if needed (moved from MatchWizardDialog)
+     * Activate a step by building its UI if needed
      */
     async activateStep(stepName: string): Promise<UploadStep | HeaderSelectionStep | MessagesStep | PreviewStep> {
         // Find the step controller
         const stepController = this.getOrCreateStepController(stepName);
 
         if (!stepController) {
-            Log.error(`Step controller for '${stepName}' not found`, undefined, "MatchWizard");
+            Log.error(`Step controller for '${stepName}' not found`, undefined, "Wizard");
             return;
         }
 
         // Find step container in the DOM
         const container = this.findStepContainer(stepName);
         if (!container) {
-            Log.error(`Container for step '${stepName}' not found`, undefined, "MatchWizard");
+            Log.error(`Container for step '${stepName}' not found`, undefined, "Wizard");
             return;
         }
 
@@ -652,7 +652,7 @@ export default class MatchWizard extends ManagedObject {
 
                 this.stepsBuilt.add(stepName);
             } catch (error) {
-                Log.error(`Error building step '${stepName}'`, error as Error, "MatchWizard");
+                Log.error(`Error building step '${stepName}'`, error as Error, "Wizard");
             }
         }
 		return stepController;
@@ -695,7 +695,7 @@ export default class MatchWizard extends ManagedObject {
 		}
 
 		    /**
-     * Find the container for a specific step (moved from MatchWizardDialog)
+     * Find the container for a specific step
      */
 			findStepContainer(stepName: string): VBox | null {
 				try {
@@ -712,7 +712,7 @@ export default class MatchWizard extends ManagedObject {
 						}
 					}
 				} catch (error) {
-					Log.error(`Error finding container for step ${stepName}`, error as Error, "MatchWizard");
+					Log.error(`Error finding container for step ${stepName}`, error as Error, "Wizard");
 				}
 				return null;
 			}

@@ -257,7 +257,7 @@ export default class Component extends UIComponent {
 				: () => {
 					// Check if wizard should be used, otherwise use regular dialog
 					if (this.getUseImportWizard()) {
-						this.openMatchWizard();
+						this.openWizard();
 					} else {
 						this.openSpreadsheetUploadDialog();
 					}
@@ -294,11 +294,11 @@ export default class Component extends UIComponent {
 	}
 
 	/**
-	 * Opens the match-wizard based spreadsheet import dialog.
+	 * Opens the wizard based spreadsheet import dialog.
 	 * @public
 	 * @param {ComponentData} [options] - Optional configuration overrides
 	 */
-	openMatchWizard(options?: ComponentData) {
+	openWizard(options?: ComponentData) {
 		this._openImportDialog(true, options);
 	}
 
@@ -480,7 +480,7 @@ export default class Component extends UIComponent {
 	}
 
 	/**
-	 * Internal method to open either the classic upload dialog or the match wizard.
+	 * Internal method to open either the classic upload dialog or the wizard.
 	 * Handles all the common setup logic for both dialog types.
 	 * @private
 	 * @param {boolean} useWizard - If true opens the wizard, otherwise opens the classic dialog
@@ -491,7 +491,7 @@ export default class Component extends UIComponent {
 		this._ensureContextAndEvents();
 
 		// Log which dialog is being opened
-		const dialogType = useWizard ? "MatchWizard" : "SpreadsheetUploadDialog";
+		const dialogType = useWizard ? "Wizard" : "SpreadsheetUploadDialog";
 		Log.debug(`Opening ${dialogType}`, undefined, "SpreadsheetUpload: Component");
 
 		// Delegate to SpreadsheetUpload controller

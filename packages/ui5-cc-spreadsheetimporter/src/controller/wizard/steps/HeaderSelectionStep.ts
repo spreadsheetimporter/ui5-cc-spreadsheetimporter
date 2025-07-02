@@ -1,5 +1,5 @@
 import VBox from "sap/m/VBox";
-import MatchWizard from "../MatchWizard";
+import Wizard from "../Wizard";
 import ColumnListItem from "sap/m/ColumnListItem";
 import Table from "sap/m/Table";
 import Column from "sap/m/Column";
@@ -15,28 +15,28 @@ import PreviewStep from "./PreviewStep";
 export default class HeaderSelectionStep {
 	public readonly stepName = "headerSelectionStep";
 
-	private matchWizard: MatchWizard;
+	private wizard: Wizard;
 	private isValidated: boolean = false;
 
-	constructor(matchWizard: MatchWizard) {
-		this.matchWizard = matchWizard;
+	constructor(wizard: Wizard) {
+		this.wizard = wizard;
 	}
 
 	public build(container: VBox): void {
 		// unvalidate step
 		this.isValidated = false;
-		this.matchWizard.getWizardModel().setProperty("/headerSelected", false);
-		this.matchWizard.getStep("headerSelectionStep").setValidated(false);
+		this.wizard.getWizardModel().setProperty("/headerSelected", false);
+		this.wizard.getStep("headerSelectionStep").setValidated(false);
 
 		container.removeAllItems();
 
-		const table = this.createHeaderSelectionTable(this.matchWizard.rawSheetData, 10);
+		const table = this.createHeaderSelectionTable(this.wizard.rawSheetData, 10);
 		table.attachSelectionChange(async (e) => {
 			const item = e.getParameter("listItem") as ColumnListItem;
 			const context = item.getBindingContext();
 			const rowData = context.getObject() as any;
 			const rowIndex = rowData.__metadata__.rowNumber;
-			const coords = this.matchWizard.calculateAndSetReadCoordinates(rowIndex, rowData, this.matchWizard.rawSheetData.length);
+			const coords = this.wizard.calculateAndSetReadCoordinates(rowIndex, rowData, this.wizard.rawSheetData.length);
 			if (coords) {
 				await this.handleHeaderSelection(rowIndex, coords);
 			}
@@ -56,58 +56,58 @@ export default class HeaderSelectionStep {
 		}
 	): Promise<void> {
 		try {
-			const headerStep = this.matchWizard.getStep("headerSelectionStep");
+			const headerStep = this.wizard.getStep("headerSelectionStep");
 			headerStep.setBusyIndicatorDelay(0);
 			headerStep.setBusy(true);
 
-			if (headerStep && this.matchWizard.wizard.getCurrentStep() !== headerStep.getId()) {
-				this.matchWizard.wizard.setCurrentStep(headerStep);
+			if (headerStep && this.wizard.wizard.getCurrentStep() !== headerStep.getId()) {
+				this.wizard.wizard.setCurrentStep(headerStep);
 			}
 
-			// Update wizard model via the centralized MatchWizard coordinate management
-			this.matchWizard.getWizardModel().setProperty("/headerSelected", true);
-			this.matchWizard.setCurrentCoordinates(coordinates.a1Coordinates, coordinates.objectCoordinates);
+			// Update wizard model via the centralized Wizard coordinate management
+			this.wizard.getWizardModel().setProperty("/headerSelected", true);
+			this.wizard.setCurrentCoordinates(coordinates.a1Coordinates, coordinates.objectCoordinates);
 
 			// Process data again with the selected coordinates to get validated data
-			this.matchWizard.processedData = await this.matchWizard.processFile(
-				this.matchWizard.currentFile,
-				this.matchWizard.getCurrentCoordinates(),
+			this.wizard.processedData = await this.wizard.processFile(
+				this.wizard.currentFile,
+				this.wizard.getCurrentCoordinates(),
 				true // Validate now that we have coordinates
 			);
 
 			Log.debug(`Header row selected: ${rowIndex}`, undefined, "HeaderSelectionStep");
 
 			// Validate the data with the selected coordinates using centralized method
-			const validationResult = await this.matchWizard.checkHeaderValidityWithCurrentCoordinates();
+			const validationResult = await this.wizard.checkHeaderValidityWithCurrentCoordinates();
 
 			// check if header messages still exist
-			const headerMessages = this.matchWizard.processedData.validationMessages.filter((message: any) => message.type.title === "EmptyHeaders");
+			const headerMessages = this.wizard.processedData.validationMessages.filter((message: any) => message.type.title === "EmptyHeaders");
 
 			if (validationResult.isValid) {
 				// Scenario 3: Data is valid - go directly to preview
 				this.isValidated = true;
 				this.validateStep(true);
-				this.matchWizard.setUploadButtonEnabled(true);
+				this.wizard.setUploadButtonEnabled(true);
 
 				// Valid headers but other errors found - Navigate to MessagesStep
 
-				const previewStep = this.matchWizard.getStep("previewDataStep");
+				const previewStep = this.wizard.getStep("previewDataStep");
 				if (headerStep && previewStep && headerStep.getNextStep() !== previewStep.getId()) {
 					headerStep.setNextStep(previewStep);
 				}
 
 				// Show success message
-				const util = this.matchWizard.getUtil();
+				const util = this.wizard.getUtil();
 				const successMessage = util.geti18nText("spreadsheetimporter.headerSelectionSuccess") || "Header row selected successfully. Click Next to continue.";
 				MessageToast.show(successMessage);
 
 				// Rebuild preview step
-				const previewStepControl = this.matchWizard.getStepControl("previewDataStep") as PreviewStep;
-				previewStepControl.build(this.matchWizard.findStepContainer("previewDataStep"), this.matchWizard.processedData);
-				this.matchWizard.wizard.nextStep();
+				const previewStepControl = this.wizard.getStepControl("previewDataStep") as PreviewStep;
+				previewStepControl.build(this.wizard.findStepContainer("previewDataStep"), this.wizard.processedData);
+				this.wizard.wizard.nextStep();
 			} else if (headerMessages.length > 0) {
 				// Scenario 2: Validation failed AND header messages exist - selection was false, show message to user
-				const util = this.matchWizard.getUtil();
+				const util = this.wizard.getUtil();
 				const errorMessage = util.geti18nText("spreadsheetimporter.headerValidationFailed") || "Header selection failed. Please select a different row.";
 				MessageToast.show(errorMessage);
 			} else {
@@ -116,25 +116,25 @@ export default class HeaderSelectionStep {
 				this.validateStep(true)
 
 				// Navigate to MessagesStep
-				const messagesStepControl = this.matchWizard.getStep("messagesStep");
+				const messagesStepControl = this.wizard.getStep("messagesStep");
 				if (headerStep && messagesStepControl && headerStep.getNextStep() !== messagesStepControl.getId()) {
 					headerStep.setNextStep(messagesStepControl);
 				}
 
 				// Store validation messages in the message handler for use in MessagesStep
-				if (this.matchWizard.getDialogController()?.messageHandler) {
-					this.matchWizard.getDialogController().messageHandler.setMessages(this.matchWizard.processedData.validationMessages);
+				if (this.wizard.getDialogController()?.messageHandler) {
+					this.wizard.getDialogController().messageHandler.setMessages(this.wizard.processedData.validationMessages);
 				}
 				// Build or rebuild messagesStep
-				if (this.matchWizard.stepsBuilt.has("messagesStep")) {
-					const messagesController = this.matchWizard.getStepControl("messagesStep");
-					messagesController.build(this.matchWizard.findStepContainer("messagesStep"));
+				if (this.wizard.stepsBuilt.has("messagesStep")) {
+					const messagesController = this.wizard.getStepControl("messagesStep");
+					messagesController.build(this.wizard.findStepContainer("messagesStep"));
 				} else {
-					this.matchWizard.activateStep("messagesStep");
+					this.wizard.activateStep("messagesStep");
 				}
 
 				Log.warning(`Header validation failed for row ${rowIndex}`, JSON.stringify(validationResult.messages), "HeaderSelectionStep");
-				this.matchWizard.wizard.nextStep();
+				this.wizard.wizard.nextStep();
 			}
 			headerStep.setBusy(false);
 		} catch (error) {
@@ -142,10 +142,10 @@ export default class HeaderSelectionStep {
 			this.isValidated = false;
 
 			// Show error message
-			const util = this.matchWizard.getUtil();
+			const util = this.wizard.getUtil();
 			const errorMessage = util.geti18nText("spreadsheetimporter.headerSelectionError") || "Error validating header selection.";
 			MessageToast.show(errorMessage);
-			this.matchWizard.getStep("headerSelectionStep").setBusy(false);
+			this.wizard.getStep("headerSelectionStep").setBusy(false);
 		}
 	}
 
@@ -155,12 +155,12 @@ export default class HeaderSelectionStep {
 	private validateStep(validated: boolean): void {
 		try {
 			// Get the wizard step control and set it as validated
-			const headerStepControl = this.matchWizard.getStep("headerSelectionStep");
+			const headerStepControl = this.wizard.getStep("headerSelectionStep");
 			if (headerStepControl) {
 				headerStepControl.setValidated(validated);
 
 				// Update the wizard model to reflect header selection
-				this.matchWizard.getWizardModel().setProperty("/headerSelected", true);
+				this.wizard.getWizardModel().setProperty("/headerSelected", true);
 
 				Log.debug("Header selection step validated, next button should now be visible", undefined, "HeaderSelectionStep");
 			}
@@ -171,12 +171,11 @@ export default class HeaderSelectionStep {
 
 	/**
 	 * Creates a table for header selection
-	 * Moved from MatchWizard to reduce its complexity
 	 */
 	private createHeaderSelectionTable(rawSheetData: any[][], maxRows: number = 10): Table {
 		try {
 			// Prepare table data - only first X rows for header selection
-			const preparedData = this.matchWizard.prepareTableData(rawSheetData, 0, maxRows);
+			const preparedData = this.wizard.prepareTableData(rawSheetData, 0, maxRows);
 
 			// Create a new table instance
 			const table = new Table({
@@ -190,7 +189,7 @@ export default class HeaderSelectionStep {
 				new Column({
 					width: "4rem",
 					header: new Text({
-						text: this.matchWizard.getUtil().geti18nText("spreadsheetimporter.rowNumber")
+						text: this.wizard.getUtil().geti18nText("spreadsheetimporter.rowNumber")
 					})
 				})
 			);

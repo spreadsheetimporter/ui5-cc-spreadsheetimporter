@@ -183,19 +183,6 @@ THEN wizard automatically advances based on file validation
 AND maintains consistent navigation behavior
 ```
 
-## Test Data Requirements
-
-### Valid Test Files
-- `valid_headers.xlsx` - File with correctly mapped headers (should auto-advance to Preview)
-- `valid_headers.csv` - CSV version with correct headers
-- `valid_large.xlsx` - Large file for auto-progression performance testing
-
-### Invalid Test Files
-- `wrong_headers.xlsx` - File with incorrect headers (should trigger Header Selection step)
-- `data_errors.xlsx` - File with correct headers but data validation errors
-- `mixed_errors.xlsx` - File with both header and data errors
-- `unsupported.txt` - Unsupported file format (should show error, stay on Upload step)
-
 
 ## Developer Implementation Notes
 
@@ -217,6 +204,21 @@ AND maintains consistent navigation behavior
 3. **Cancel Behavior**: Consistent dialog closure and state cleanup
 4. **File Upload UX**: Both button click and drag-drop should behave identically
 
+### 6. Validation Error Counting Scenarios
+
+#### 6.1 Error File Upload and Message Count Verification
+**Path**: Upload File → **Auto-advance** → Messages Step → Count Errors
+```
+GIVEN user clicks "Excel Upload Wizard" button
+WHEN user selects a file with validation errors (ListReportOrdersErros.xlsx)
+THEN wizard automatically advances to Messages Step due to validation failures
+AND Messages Step displays validation messages in MessageView
+WHEN user examines the message count
+THEN the number of displayed errors matches the expected validation failures
+AND error types include data validation, format, and business rule violations
+AND user can see Continue/Continue Anyway and Download buttons for error handling
+```
+
 ## Automated Test Implementation
 
 ### Test Categories
@@ -224,6 +226,7 @@ AND maintains consistent navigation behavior
 2. **File Upload Tests**: Both button and drag-drop functionality
 3. **Error Recovery Tests**: Header errors and file replacement scenarios
 4. **State Management Tests**: Persistence and cleanup across wizard usage
+5. **Error Count Validation Tests**: Verify correct error counting and display in Messages Step
 
 ### Key Test Points
 - Auto-advancement timing and reliability
@@ -231,6 +234,20 @@ AND maintains consistent navigation behavior
 - Error state handling with auto-progression
 - Dialog state cleanup on cancel/close
 - Loading state management during auto-advancement
+- Error message counting and verification in Messages Step
+- Message type categorization (Error, Warning, Information)
+
+### Implemented Tests
+
+#### Current Test Files:
+1. **Upload.test.js** - Tests standard success flow with clean data file
+2. **UploadCoordinates.test.js** - Tests coordinate-based data selection and upload  
+3. **UploadErrorsCount.test.js** - Tests error file upload and validation message counting
+
+#### Test File Mapping:
+- `ListReportOrdersNoErros.xlsx` - Clean data for success flow testing
+- `ListReportOrdersNoErrosCoordinates.xlsx` - Clean data with coordinate selection
+- `ListReportOrdersErros.xlsx` - Data with validation errors for error counting tests
 
 ## Success Criteria
 Each test scenario should verify:
@@ -240,6 +257,8 @@ Each test scenario should verify:
 - ✅ State persistence and cleanup behavior
 - ✅ User experience consistency across all paths
 - ✅ Import result correctness
+- ✅ Accurate error counting and display in Messages Step
+- ✅ Proper error categorization and user action availability
 
 ---
 *This document reflects the current wizard implementation with automatic step progression and should be updated as features evolve.*

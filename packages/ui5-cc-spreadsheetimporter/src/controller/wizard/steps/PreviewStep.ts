@@ -1,5 +1,5 @@
 import VBox from "sap/m/VBox";
-import MatchWizard from "../MatchWizard";
+import Wizard from "../Wizard";
 import * as XLSX from "xlsx";
 import Label from "sap/m/Label";
 import MessageStrip from "sap/m/MessageStrip";
@@ -14,21 +14,21 @@ import Log from "sap/base/Log";
 export default class PreviewStep {
 	public readonly stepName = "previewDataStep";
 
-	private matchWizard: MatchWizard;
+	private wizard: Wizard;
 	private workbook: XLSX.WorkBook;
 	private sheetName: string;
 	private processedData: any;
 	private container: VBox; // Store container reference for rebuilding
 
-	constructor(matchWizard: MatchWizard, workbook: XLSX.WorkBook, sheetName: string, a1Coordinates: string, processedData?: any) {
-		this.matchWizard = matchWizard;
+	constructor(wizard: Wizard, workbook: XLSX.WorkBook, sheetName: string, a1Coordinates: string, processedData?: any) {
+		this.wizard = wizard;
 		this.workbook = workbook;
 		this.sheetName = sheetName;
 		this.processedData = processedData;
 
 		// Set coordinates in the centralized model if provided
 		if (a1Coordinates) {
-			this.matchWizard.setCurrentCoordinates(a1Coordinates);
+			this.wizard.setCurrentCoordinates(a1Coordinates);
 		}
 	}
 
@@ -39,7 +39,7 @@ export default class PreviewStep {
 		if (processedData) {
 			// Update coordinates in the centralized model if provided
 			if (processedData.coordinates) {
-				this.matchWizard.setCurrentCoordinates(processedData.coordinates);
+				this.wizard.setCurrentCoordinates(processedData.coordinates);
 			}
 			this.workbook = processedData.workbook;
 			this.sheetName = processedData.sheetName;
@@ -62,7 +62,7 @@ export default class PreviewStep {
 				previewContent = await this.createDataPreviewTable(
 					this.workbook,
 					this.sheetName,
-					this.matchWizard.getCurrentCoordinates(),
+					this.wizard.getCurrentCoordinates(),
 					true // Enable validation
 				);
 			}
@@ -107,7 +107,7 @@ export default class PreviewStep {
 		// Update properties if provided
 		if (workbook) this.workbook = workbook;
 		if (sheetName) this.sheetName = sheetName;
-		if (a1Coordinates) this.matchWizard.setCurrentCoordinates(a1Coordinates);
+		if (a1Coordinates) this.wizard.setCurrentCoordinates(a1Coordinates);
 		if (processedData) this.processedData = processedData;
 	}
 
@@ -120,12 +120,11 @@ export default class PreviewStep {
 
 		// Use the processed data to create a table with advanced features
 		// The data here is already parsed according to field types and validated
-		return this.matchWizard.previewHandler.createDynamicTable(data, new Map(), []);
+		return this.wizard.previewHandler.createDynamicTable(data, new Map(), []);
 	}
 
 	/**
 	 * Creates a preview table for data with the selected header row
-	 * Moved from MatchWizard to reduce its complexity
 	 */
 	private async createDataPreviewTable(workbook: XLSX.WorkBook, sheetName: string, coordinates: string, validate = false) {
 		try {
@@ -135,7 +134,7 @@ export default class PreviewStep {
 			}
 
 			// Use ImportService's pipeline to get consistent data processing
-			const result = await this.matchWizard.getImportService().processAndValidate(workbook, sheetName, coordinates, {
+			const result = await this.wizard.getImportService().processAndValidate(workbook, sheetName, coordinates, {
 				resetMessages: false,
 				validate: validate
 			});
@@ -146,7 +145,7 @@ export default class PreviewStep {
 			const data = validate && result.payloadArray ? result.payloadArray : result.spreadsheetSheetsData;
 
 			// Use the Preview's createDynamicTable to create a table
-			return this.matchWizard.previewHandler.createDynamicTable(data, new Map(), []);
+			return this.wizard.previewHandler.createDynamicTable(data, new Map(), []);
 		} catch (error) {
 			Log.error("Error creating data preview", error as Error, "PreviewStep");
 			return null;

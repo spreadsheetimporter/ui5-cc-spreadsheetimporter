@@ -15,7 +15,7 @@ import SpreadsheetDialog from "../control/SpreadsheetDialog";
 import SpreadsheetUploadDialog from "./dialog/SpreadsheetUploadDialog";
 import { Action, CustomMessageTypes } from "../enums";
 import VersionInfo from "sap/ui/VersionInfo";
-import MatchWizardDialog from "./dialog/MatchWizardDialog";
+import WizardDialog from "./dialog/WizardDialog";
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
@@ -46,7 +46,7 @@ export default class SpreadsheetUpload extends ManagedObject {
 	odataKeyList: string[];
 	optionsHandler: OptionsDialog;
 	private _spreadsheetUploadDialogHandler: SpreadsheetUploadDialog;
-	private _matchWizardDialogHandler: MatchWizardDialog;
+	private _wizardDialogHandler: WizardDialog;
 	private _controller: import("sap/ui/core/mvc/Controller").default;
 
 	/**
@@ -73,7 +73,7 @@ export default class SpreadsheetUpload extends ManagedObject {
 		this.util = new Util(componentI18n.getResourceBundle() as ResourceBundle);
 		this.messageHandler = new MessageHandler(this);
 		this.spreadsheetUploadDialogHandler = new SpreadsheetUploadDialog(this, component, componentI18n, this.messageHandler);
-		this.matchWizardDialogHandler = new MatchWizardDialog(this, component, componentI18n, this.messageHandler);
+		this.wizardDialogHandler = new WizardDialog(this, component, componentI18n, this.messageHandler);
 	}
 
 	/**
@@ -143,11 +143,11 @@ export default class SpreadsheetUpload extends ManagedObject {
 		this.isODataV4 = this._checkIfODataIsV4(this.binding);
 		this.odataHandler = this.createODataHandler(this, this.messageHandler, this.util);
 		this.spreadsheetUploadDialogHandler.setODataHandler(this.odataHandler);
-		this.matchWizardDialogHandler.setODataHandler(this.odataHandler);
+		this.wizardDialogHandler.setODataHandler(this.odataHandler);
 		this.controller = this.view.getController();
 		Log.debug("View", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ view: this.view }));
 		this.view.addDependent(this.spreadsheetUploadDialogHandler.getDialog());
-		this.view.addDependent(this.matchWizardDialogHandler.getDialog());
+		this.view.addDependent(this.wizardDialogHandler.getDialog());
 		this._odataType = await this.odataHandler.getOdataType(this.binding, this.component.getOdataType());
 		Log.debug("odataType", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ odataType: this._odataType }));
 		this.odataKeyList = await this.odataHandler.getKeyList(this._odataType, this.binding);
@@ -230,7 +230,7 @@ export default class SpreadsheetUpload extends ManagedObject {
 			// Open the appropriate dialog
 			if (useWizard) {
 				// Open wizard directly - let it handle file upload from scratch
-				this.matchWizardDialogHandler.openWizard();
+				this.wizardDialogHandler.openWizard();
 			} else {
 				this.spreadsheetUploadDialogHandler.openSpreadsheetUploadDialog();
 			}
@@ -551,11 +551,11 @@ export default class SpreadsheetUpload extends ManagedObject {
 		}
 	}
 
-	public get matchWizardDialogHandler(): MatchWizardDialog {
-		return this._matchWizardDialogHandler;
+	public get wizardDialogHandler(): WizardDialog {
+		return this._wizardDialogHandler;
 	}
 
-	public set matchWizardDialogHandler(value: MatchWizardDialog) {
-		this._matchWizardDialogHandler = value;
+	public set wizardDialogHandler(value: WizardDialog) {
+		this._wizardDialogHandler = value;
 	}
 }

@@ -1,7 +1,7 @@
 import VBox from "sap/m/VBox";
 import MessageToast from "sap/m/MessageToast";
 import Log from "sap/base/Log";
-import MatchWizard from "../MatchWizard";
+import WizardController from "../Wizard";
 import Wizard from "sap/m/Wizard";
 import WizardStep from "sap/m/WizardStep";
 import HeaderSelectionStep from "./HeaderSelectionStep";
@@ -16,12 +16,12 @@ import MessagesStep from "./MessagesStep";
 export default class UploadStep {
 	public readonly stepName = "uploadStep";
 
-	private matchWizard: MatchWizard;
+	private wizardController: WizardController;
 	public wizard: Wizard;
 	private util: any; // Util instance for i18n
 
-	constructor(matchWizard: MatchWizard, wizard?: Wizard, util?: any) {
-		this.matchWizard = matchWizard;
+	constructor(wizardController: WizardController, wizard?: Wizard, util?: any) {
+		this.wizardController = wizardController;
 		this.wizard = wizard;
 		this.util = util;
 	}
@@ -50,7 +50,7 @@ export default class UploadStep {
 				MessageToast.show("No file selected");
 			}
 
-			this.matchWizard.getStep("uploadStep").setBusy(false);
+			this.wizardController.getStep("uploadStep").setBusy(false);
 		} catch (error) {
 			Log.error("Error handling file upload", error as Error, "UploadStep");
 			MessageToast.show("Error processing file");
@@ -64,16 +64,16 @@ export default class UploadStep {
 		try {
 			if (this.wizard) {
 				// Reset wizard progress back to the upload step (first step)
-				const uploadStepControl = this.matchWizard.getStep("uploadStep");
+				const uploadStepControl = this.wizardController.getStep("uploadStep");
 				if (uploadStepControl) {
 					this.wizard.discardProgress(uploadStepControl, false);
 					Log.debug("Wizard progress reset to upload step", undefined, "UploadStep");
 				}
 
 				// Clear any previous step configurations
-				const uploadStep = this.matchWizard.getStep("uploadStep");
-				const headerStep = this.matchWizard.getStep("headerSelectionStep");
-				const previewStep = this.matchWizard.getStep("previewDataStep");
+				const uploadStep = this.wizardController.getStep("uploadStep");
+				const headerStep = this.wizardController.getStep("headerSelectionStep");
+				const previewStep = this.wizardController.getStep("previewDataStep");
 
 				// Reset step flow configurations
 				if (uploadStep) {
@@ -97,14 +97,14 @@ export default class UploadStep {
 	 */
 	private async processFileAndNavigate(file: File): Promise<void> {
 		try {
-			this.matchWizard.setUploadButtonEnabled(false);
-			this.matchWizard.resetCurrentCoordinates();
+			this.wizardController.setUploadButtonEnabled(false);
+			this.wizardController.resetCurrentCoordinates();
 
 			// Process the file using enhanced pipeline with centralized coordinates
 			// Use current coordinates from the model (defaults to A1 if not set)
-			const processedData = await this.matchWizard.processFile(file, this.matchWizard.getCurrentCoordinates(), true, false);
-			// Update MatchWizard with the file data
-			this.matchWizard.setFileData(file, processedData);
+			const processedData = await this.wizardController.processFile(file, this.wizardController.getCurrentCoordinates(), true, false);
+			// Update Wizard with the file data
+			this.wizardController.setFileData(file, processedData);
 
 			// create steps controllers
 			this.createStepsControllers();
@@ -116,9 +116,9 @@ export default class UploadStep {
 
 			if (processedData.validationMessages.length > 0 && headerValidationResult) {
 				// Wrong headers but other errors found - Navigate to MessagesStep
-				const uploadStepControl = this.matchWizard.getStep("uploadStep");
-				const headerStepControl = this.matchWizard.getStep("headerSelectionStep");
-				const messagesStepControl = this.matchWizard.getStep("messagesStep");
+				const uploadStepControl = this.wizardController.getStep("uploadStep");
+				const headerStepControl = this.wizardController.getStep("headerSelectionStep");
+				const messagesStepControl = this.wizardController.getStep("messagesStep");
 				if (uploadStepControl && messagesStepControl && uploadStepControl.getNextStep() !== messagesStepControl.getId()) {
 					uploadStepControl.setNextStep(messagesStepControl);
 				}
@@ -127,72 +127,72 @@ export default class UploadStep {
 				}
 				navigateToStep = headerStepControl;
 				// if build already rebuild headerSelectionStep
-				if (this.matchWizard.stepsBuilt.has("headerSelectionStep")) {
-					const headerSelectionController = this.matchWizard.getStepControl("headerSelectionStep") as HeaderSelectionStep;
-					headerSelectionController.build(this.matchWizard.findStepContainer("headerSelectionStep"));
+				if (this.wizardController.stepsBuilt.has("headerSelectionStep")) {
+					const headerSelectionController = this.wizardController.getStepControl("headerSelectionStep") as HeaderSelectionStep;
+					headerSelectionController.build(this.wizardController.findStepContainer("headerSelectionStep"));
 				} else {
-					this.matchWizard.activateStep("headerSelectionStep");
+					this.wizardController.activateStep("headerSelectionStep");
 				}
 			}
 			if (headerValidationResult) {
 				// Wrong header detected - Configure wizard flow
-				const uploadStepControl = this.matchWizard.getStep("uploadStep");
-				const headerStepControl = this.matchWizard.getStep("headerSelectionStep");
+				const uploadStepControl = this.wizardController.getStep("uploadStep");
+				const headerStepControl = this.wizardController.getStep("headerSelectionStep");
 				if (uploadStepControl && headerStepControl && uploadStepControl.getNextStep() !== headerStepControl.getId()) {
 					uploadStepControl.setNextStep(headerStepControl);
 				}
 				navigateToStep = headerStepControl;
 				// if build already rebuild headerSelectionStep
-				if (this.matchWizard.stepsBuilt.has("headerSelectionStep")) {
-					const headerSelectionController = this.matchWizard.getStepControl("headerSelectionStep") as HeaderSelectionStep;
-					headerSelectionController.build(this.matchWizard.findStepContainer("headerSelectionStep"));
+				if (this.wizardController.stepsBuilt.has("headerSelectionStep")) {
+					const headerSelectionController = this.wizardController.getStepControl("headerSelectionStep") as HeaderSelectionStep;
+					headerSelectionController.build(this.wizardController.findStepContainer("headerSelectionStep"));
 				} else {
-					this.matchWizard.activateStep("headerSelectionStep");
+					this.wizardController.activateStep("headerSelectionStep");
 				}
 			} else if (processedData.validationMessages.length > 0) {
 				// Valid headers but other errors found - Navigate to MessagesStep
-				const uploadStepControl = this.matchWizard.getStep("uploadStep");
-				const messagesStepControl = this.matchWizard.getStep("messagesStep");
+				const uploadStepControl = this.wizardController.getStep("uploadStep");
+				const messagesStepControl = this.wizardController.getStep("messagesStep");
 				if (uploadStepControl && messagesStepControl && uploadStepControl.getNextStep() !== messagesStepControl.getId()) {
 					uploadStepControl.setNextStep(messagesStepControl);
 				}
 
 				// Store validation messages in the message handler for use in MessagesStep
-				if (this.matchWizard.getDialogController()?.messageHandler) {
-					this.matchWizard.getDialogController().messageHandler.setMessages(processedData.validationMessages);
+				if (this.wizardController.getDialogController()?.messageHandler) {
+					this.wizardController.getDialogController().messageHandler.setMessages(processedData.validationMessages);
 				}
 
 				navigateToStep = messagesStepControl;
 				// Build or rebuild messagesStep
-				if (this.matchWizard.stepsBuilt.has("messagesStep")) {
-					const messagesController = this.matchWizard.getStepControl("messagesStep");
-					messagesController.build(this.matchWizard.findStepContainer("messagesStep"));
+				if (this.wizardController.stepsBuilt.has("messagesStep")) {
+					const messagesController = this.wizardController.getStepControl("messagesStep");
+					messagesController.build(this.wizardController.findStepContainer("messagesStep"));
 				} else {
-					this.matchWizard.activateStep("messagesStep");
+					this.wizardController.activateStep("messagesStep");
 				}
 			} else {
 				// Valid headers - Configure direct flow to preview
-				const uploadStepControl = this.matchWizard.getStep("uploadStep");
-				const previewStepControl = this.matchWizard.getStep("previewDataStep");
+				const uploadStepControl = this.wizardController.getStep("uploadStep");
+				const previewStepControl = this.wizardController.getStep("previewDataStep");
 				if (uploadStepControl && previewStepControl && uploadStepControl.getNextStep() !== previewStepControl.getId()) {
 					uploadStepControl.setNextStep(previewStepControl);
 				}
 				navigateToStep = previewStepControl;
-				if (this.matchWizard.stepsBuilt.has("previewDataStep")) {
-					const previewStepController = this.matchWizard.getStepControl("previewDataStep") as PreviewStep;
-					previewStepController.build(this.matchWizard.findStepContainer("previewDataStep"), this.matchWizard.processedData);
+				if (this.wizardController.stepsBuilt.has("previewDataStep")) {
+					const previewStepController = this.wizardController.getStepControl("previewDataStep") as PreviewStep;
+					previewStepController.build(this.wizardController.findStepContainer("previewDataStep"), this.wizardController.processedData);
 				} else {
-					this.matchWizard.activateStep("previewDataStep");
+					this.wizardController.activateStep("previewDataStep");
 				}
 
-				this.matchWizard.setUploadButtonEnabled(true);
+				this.wizardController.setUploadButtonEnabled(true);
 			}
 
 			this.wizard.goToStep(navigateToStep, true);
 			this.wizard.nextStep();
 		} catch (error) {
 			Log.error("Error processing file", error as Error, "UploadStep");
-			this.matchWizard.getWizardModel().setProperty("/fileUploaded", false);
+			this.wizardController.getWizardModel().setProperty("/fileUploaded", false);
 
 			const errorMessage = this.util?.geti18nText?.("spreadsheetimporter.errorProcessingFile") || "Error processing file";
 			MessageToast.show(errorMessage);
@@ -202,8 +202,8 @@ export default class UploadStep {
 	private createStepsControllers(): void {
 		// init steps controllers creation and calling build method
 		// both steps need the data from the upload step
-		this.matchWizard.activateStep("headerSelectionStep");
-		// this.matchWizard.activateStep("messagesStep");
-		this.matchWizard.activateStep("previewDataStep");
+		this.wizardController.activateStep("headerSelectionStep");
+		// this.wizardController.activateStep("messagesStep");
+		this.wizardController.activateStep("previewDataStep");
 	}
 }
