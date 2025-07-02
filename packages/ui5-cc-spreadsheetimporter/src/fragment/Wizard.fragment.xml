@@ -15,6 +15,22 @@
         afterClose="onWizardClose"
         verticalScrolling="false">
         <content>
+            <!-- Action Indicator at top of wizard -->
+                <MessageStrip
+                                        text="{
+                        parts: [
+                            'wizard>/action',
+                            'i18n>spreadsheetimporter.actionCreate',
+                            'i18n>spreadsheetimporter.actionUpdate',
+                            'i18n>spreadsheetimporter.actionDelete',
+                            'i18n>spreadsheetimporter.actionUpsert'
+                        ],
+                        formatter: '.formatSimpleActionText'
+                    }"
+                    type="Information"
+                    class="sapUiNoMarginBottom"
+                    showIcon="true"
+                    enableFormattedText="true" />
             <Wizard
                 width="100%"
                 height="100%"

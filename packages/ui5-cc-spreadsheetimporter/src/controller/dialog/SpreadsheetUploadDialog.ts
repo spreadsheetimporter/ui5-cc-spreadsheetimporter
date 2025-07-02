@@ -23,6 +23,7 @@ import SpreadsheetGenerator from "../download/SpreadsheetGenerator";
 import SpreadsheetDownload from "../download/SpreadsheetDownload";
 import OData from "../odata/OData";
 import ImportService from "../ImportService";
+import { Action } from "../../enums";
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -75,7 +76,8 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 				showDownloadButton: this.component.getShowDownloadButton(),
 				hideGenerateTemplateButton: false,
 				fileUploadValue: "",
-				densityClass: this.component._densityClass
+				densityClass: this.component._densityClass,
+				action: this.component.getAction()
 			});
 			this.spreadsheetUploadDialog = (await Fragment.load({
 				name: "cc.spreadsheetimporter.XXXnamespaceXXX.fragment.SpreadsheetUpload",
@@ -576,4 +578,87 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 			Log.error("Error opening the dialog", undefined, "SpreadsheetUpload: SpreadsheetUpload");
 		}
 	}
+
+		/**
+	 * Formatter for simplified action and data rows text
+	 * @param {string} action - The current action (CREATE, UPDATE, DELETE, UPSERT)
+	 * @param {string} createText - i18n text for create action
+	 * @param {string} updateText - i18n text for update action
+	 * @param {string} deleteText - i18n text for delete action
+	 * @param {string} upsertText - i18n text for upsert action
+	 * @param {string} recordsReadyText - i18n text for records ready for upload
+	 * @param {number} dataRows - Number of data rows
+	 * @returns {string} Simplified formatted text
+	 */
+	formatSimplifiedText(action: string, createText: string, updateText: string, deleteText: string, upsertText: string,
+		recordsReadyText: string, dataRows: number): string {
+		let title = "";
+
+		switch (action) {
+			case Action.Create:
+				title = createText;
+				break;
+			case Action.Update:
+				title = updateText;
+				break;
+			case Action.Delete:
+				title = deleteText;
+				break;
+			case Action.Upsert:
+				title = upsertText;
+				break;
+			default:
+				title = createText;
+		}
+
+		// Format records ready message
+		const recordsMessage = recordsReadyText.replace("{0}", dataRows.toString());
+
+		return `${title}<br/>${recordsMessage}`;
+	}
+
+	/**
+	 * Formatter for action text display with title and description
+	 * @param {string} action - The current action (CREATE, UPDATE, DELETE, UPSERT)
+	 * @param {string} createText - i18n text for create action
+	 * @param {string} updateText - i18n text for update action
+	 * @param {string} deleteText - i18n text for delete action
+	 * @param {string} upsertText - i18n text for upsert action
+	 * @param {string} createDesc - i18n description for create action
+	 * @param {string} updateDesc - i18n description for update action
+	 * @param {string} deleteDesc - i18n description for delete action
+	 * @param {string} upsertDesc - i18n description for upsert action
+	 * @returns {string} Formatted text with title and description
+	 */
+	formatActionText(action: string, createText: string, updateText: string, deleteText: string, upsertText: string,
+		createDesc: string, updateDesc: string, deleteDesc: string, upsertDesc: string): string {
+		let title = "";
+		let description = "";
+
+		switch (action) {
+			case Action.Create:
+				title = createText;
+				description = createDesc;
+				break;
+			case Action.Update:
+				title = updateText;
+				description = updateDesc;
+				break;
+			case Action.Delete:
+				title = deleteText;
+				description = deleteDesc;
+				break;
+			case Action.Upsert:
+				title = upsertText;
+				description = upsertDesc;
+				break;
+			default:
+				title = createText;
+				description = createDesc;
+		}
+
+		return `<strong>${title}</strong><br/>${description}`;
+	}
+
+
 }

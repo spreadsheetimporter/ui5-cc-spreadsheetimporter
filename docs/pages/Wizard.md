@@ -29,8 +29,8 @@ The wizard replaces the traditional single-dialog approach with a multi-step gui
 - Step-by-step guidance
 - Responsive design with 80% screen coverage
 
-### **Note for UI5 Versions Below 1.84**: 
-The `sap.m.Wizard` Page Rendermode is not available in older UI5 versions. While the wizard functionality remains fully operational, the visual appearance may differ from the samples and screenshots shown in this documentation. The wizard will automatically fall back to the standard render mode for compatibility.
+!!! info "Not available in UI5 versions below 1.84"
+    The `sap.m.Wizard` used here is using the `Page` render mode, which is not available in UI5 versions below 1.84.
 
 ## Wizard Steps
 

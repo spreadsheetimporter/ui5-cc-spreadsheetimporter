@@ -18,6 +18,7 @@ import OData from "../odata/OData";
 import WizardController from "../wizard/Wizard";
 import WizardStep from "sap/m/WizardStep";
 import UploadStep from "../wizard/steps/UploadStep";
+import { Action } from "../../enums";
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -94,10 +95,14 @@ export default class WizardDialog extends ManagedObject {
 
 		// Set models
 		this.dialog.setModel(this.componentI18n, "i18n");
-		this.dialog.setModel(this.wizardController.getWizardModel(), "wizard");
 
-		// Get wizard reference
-		this.wizard = this.dialog.getContent()[0] as Wizard;
+		// Add action to wizard model
+		const wizardModel = this.wizardController.getWizardModel();
+		wizardModel.setProperty("/action", this.component.getAction());
+		this.dialog.setModel(wizardModel, "wizard");
+
+		// Get wizard reference - adjusted index due to added VBox
+		this.wizard = this.dialog.getContent()[1] as Wizard;
 		this.wizardController.wizard = this.wizard;
 	}
 
@@ -351,4 +356,73 @@ export default class WizardDialog extends ManagedObject {
 	getDialog(): Dialog {
 		return this.dialog;
 	}
+
+	/**
+	 * Formatter for simple action text display
+	 * @param {string} action - The current action (CREATE, UPDATE, DELETE, UPSERT)
+	 * @param {string} createText - i18n text for create action
+	 * @param {string} updateText - i18n text for update action
+	 * @param {string} deleteText - i18n text for delete action
+	 * @param {string} upsertText - i18n text for upsert action
+	 * @returns {string} Simple action title
+	 */
+	formatSimpleActionText(action: string, createText: string, updateText: string, deleteText: string, upsertText: string): string {
+		switch (action) {
+			case Action.Create:
+				return createText;
+			case Action.Update:
+				return updateText;
+			case Action.Delete:
+				return deleteText;
+			case Action.Upsert:
+				return upsertText;
+			default:
+				return createText;
+		}
+	}
+
+	/**
+	 * Formatter for action text display with title and description
+	 * @param {string} action - The current action (CREATE, UPDATE, DELETE, UPSERT)
+	 * @param {string} createText - i18n text for create action
+	 * @param {string} updateText - i18n text for update action
+	 * @param {string} deleteText - i18n text for delete action
+	 * @param {string} upsertText - i18n text for upsert action
+	 * @param {string} createDesc - i18n description for create action
+	 * @param {string} updateDesc - i18n description for update action
+	 * @param {string} deleteDesc - i18n description for delete action
+	 * @param {string} upsertDesc - i18n description for upsert action
+	 * @returns {string} Formatted text with title and description
+	 */
+	formatActionText(action: string, createText: string, updateText: string, deleteText: string, upsertText: string,
+		createDesc: string, updateDesc: string, deleteDesc: string, upsertDesc: string): string {
+		let title = "";
+		let description = "";
+
+		switch (action) {
+			case Action.Create:
+				title = createText;
+				description = createDesc;
+				break;
+			case Action.Update:
+				title = updateText;
+				description = updateDesc;
+				break;
+			case Action.Delete:
+				title = deleteText;
+				description = deleteDesc;
+				break;
+			case Action.Upsert:
+				title = upsertText;
+				description = upsertDesc;
+				break;
+			default:
+				title = createText;
+				description = createDesc;
+		}
+
+		return `<strong>${title}</strong><br/>${description}`;
+	}
+
+
 }
