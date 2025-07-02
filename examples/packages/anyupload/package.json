@@ -29,6 +29,7 @@
   },
   "scripts": {
     "start": "fiori run  --o \"index.html?sap-ui-xx-viewCache=false\"",
+    "start:silent": "fiori run --config=ui5-test.yaml",
     "start-local": "fiori run --config ./ui5-local.yaml --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#comspreadsheetimporteranyuploa-tile\"",
     "build": "ui5 build --config=ui5.yaml --clean-dest --dest dist",
     "lint": "eslint ./",

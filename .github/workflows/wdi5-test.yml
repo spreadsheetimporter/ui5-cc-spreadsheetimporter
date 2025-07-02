@@ -105,8 +105,10 @@ jobs:
         if: matrix.scenario != 'ordersv4fecds'
         continue-on-error: true
         run: |
-          while ! nc -z localhost 4004; do sleep 0.1; done
-          while ! nc -z localhost ${{ env.TESTAPPPORT }}; do sleep 0.1; done
+          # wait for port 4004 with 60 second timeout
+          timeout 60 bash -c 'until nc -z localhost 4004; do sleep 0.1; done' || (echo "Port 4004 not available after 60 seconds" && exit 1)
+          # wait for test app port with 60 second timeout
+          timeout 60 bash -c 'until nc -z localhost ${{ env.TESTAPPPORT }}; do sleep 0.1; done' || (echo "Port ${{ env.TESTAPPPORT }} not available after 60 seconds" && exit 1)
           pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- --headless ${{ matrix.scenario }} ${{ matrix.ui5version }}
 
       # special case for ordersv4fecds
