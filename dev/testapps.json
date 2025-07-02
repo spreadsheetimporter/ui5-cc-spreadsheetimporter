@@ -322,7 +322,8 @@
     "testMapping": {
       "specs": [
         "../test/specs/download/**.test.js",
-        "../test/specs/updatefreestyle/**.test.js"
+        "../test/specs/updatefreestyle/**.test.js",
+        "../test/specs/wizard/**.test.js"
       ]
     },
     "copyVersions": []

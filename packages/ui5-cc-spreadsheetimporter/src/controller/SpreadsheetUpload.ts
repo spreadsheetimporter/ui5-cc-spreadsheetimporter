@@ -15,6 +15,7 @@ import SpreadsheetDialog from "../control/SpreadsheetDialog";
 import SpreadsheetUploadDialog from "./dialog/SpreadsheetUploadDialog";
 import { Action, CustomMessageTypes } from "../enums";
 import VersionInfo from "sap/ui/VersionInfo";
+import WizardDialog from "./dialog/WizardDialog";
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
@@ -34,6 +35,7 @@ export default class SpreadsheetUpload extends ManagedObject {
 	public payload: any;
 	private _odataType: string;
 	private _binding: any;
+	public isOpenUI5: boolean;
 
 	public payloadArray: any[];
 	public errorState: boolean;
@@ -44,6 +46,7 @@ export default class SpreadsheetUpload extends ManagedObject {
 	odataKeyList: string[];
 	optionsHandler: OptionsDialog;
 	private _spreadsheetUploadDialogHandler: SpreadsheetUploadDialog;
+	private _wizardDialogHandler: WizardDialog;
 	private _controller: import("sap/ui/core/mvc/Controller").default;
 
 	/**
@@ -70,6 +73,7 @@ export default class SpreadsheetUpload extends ManagedObject {
 		this.util = new Util(componentI18n.getResourceBundle() as ResourceBundle);
 		this.messageHandler = new MessageHandler(this);
 		this.spreadsheetUploadDialogHandler = new SpreadsheetUploadDialog(this, component, componentI18n, this.messageHandler);
+		this.wizardDialogHandler = new WizardDialog(this, component, componentI18n, this.messageHandler);
 	}
 
 	/**
@@ -91,7 +95,14 @@ export default class SpreadsheetUpload extends ManagedObject {
 					Log.debug("constructor", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ ui5version: version, isOpenUI5: this.isOpenUI5 }));
 				}.bind(this)
 			);
-		await this.spreadsheetUploadDialogHandler.createSpreadsheetUploadDialog();
+
+		// Only create the dialog that will be used
+		const useWizard = this.component.getUseImportWizard();
+		if (!useWizard) {
+			// Only create the standard dialog if we're going to use it
+			await this.spreadsheetUploadDialogHandler.createSpreadsheetUploadDialog();
+		}
+
 		if (!this.component.getStandalone()) {
 			try {
 				await this.setContext();
@@ -132,9 +143,11 @@ export default class SpreadsheetUpload extends ManagedObject {
 		this.isODataV4 = this._checkIfODataIsV4(this.binding);
 		this.odataHandler = this.createODataHandler(this, this.messageHandler, this.util);
 		this.spreadsheetUploadDialogHandler.setODataHandler(this.odataHandler);
+		this.wizardDialogHandler.setODataHandler(this.odataHandler);
 		this.controller = this.view.getController();
 		Log.debug("View", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ view: this.view }));
 		this.view.addDependent(this.spreadsheetUploadDialogHandler.getDialog());
+		this.view.addDependent(this.wizardDialogHandler.getDialog());
 		this._odataType = await this.odataHandler.getOdataType(this.binding, this.component.getOdataType());
 		Log.debug("odataType", undefined, "SpreadsheetUpload: SpreadsheetUpload", () => this.component.logger.returnObject({ odataType: this._odataType }));
 		this.odataKeyList = await this.odataHandler.getKeyList(this._odataType, this.binding);
@@ -180,14 +193,13 @@ export default class SpreadsheetUpload extends ManagedObject {
 	}
 
 	/**
-	 * Initializes the component with options and performs initial setup
-	 * @param {ComponentData} options - Configuration options
+	 * Initializes the component and performs initial setup
 	 * @returns {Promise<void>}
 	 */
 	async initializeComponent(): Promise<void> {
 		this.initialSetupPromise = this.initialSetup();
 		await this.initialSetupPromise;
-		
+
 		if (this.errorState) {
 			Util.showError(this.errorMessage, "SpreadsheetUpload.ts", "initialSetup");
 			Log.error("Error during initialization", undefined, "SpreadsheetUpload: SpreadsheetUpload");
@@ -196,18 +208,36 @@ export default class SpreadsheetUpload extends ManagedObject {
 	}
 
 	/**
-	 * Opens the Spreadsheet upload dialog.
-	 * @param {ComponentData} options - Optional configuration options
+	 * Internal method to handle opening either dialog type.
+	 * Centralizes common logic for dialog initialization and opening.
+	 * @private
+	 * @param {boolean} useWizard - If true opens wizard, otherwise opens classic dialog
+	 * @param {ComponentData} [options] - Optional configuration options
 	 */
-	async openSpreadsheetUploadDialog(options?: ComponentData) {
+	public async openDialog(useWizard: boolean, options?: ComponentData): Promise<void> {
 		try {
+			// Apply any provided options
 			if (options) {
 				this.setComponentOptions(options);
 			}
+
+			// Set the wizard flag on the component
+			this.component.setUseImportWizard(useWizard);
+
+			// Initialize the component (context, bindings, etc.)
 			await this.initializeComponent();
-			this.spreadsheetUploadDialogHandler.openSpreadsheetUploadDialog();
+
+			// Open the appropriate dialog
+			if (useWizard) {
+				// Open wizard directly - let it handle file upload from scratch
+				this.wizardDialogHandler.openWizard();
+			} else {
+				this.spreadsheetUploadDialogHandler.openSpreadsheetUploadDialog();
+			}
 		} catch (error) {
-			Log.error("Error opening the dialog", undefined, "SpreadsheetUpload: SpreadsheetUpload");
+			const dialogType = useWizard ? "match wizard" : "spreadsheet upload dialog";
+			Log.error(`Error opening ${dialogType}`, error as Error, "SpreadsheetUpload");
+			throw error;
 		}
 	}
 
@@ -519,5 +549,13 @@ export default class SpreadsheetUpload extends ManagedObject {
 			Log.debug("sap/ui/generic not found", undefined, "SpreadsheetUpload: isOpenUI5");
 			return false;
 		}
+	}
+
+	public get wizardDialogHandler(): WizardDialog {
+		return this._wizardDialogHandler;
+	}
+
+	public set wizardDialogHandler(value: WizardDialog) {
+		this._wizardDialogHandler = value;
 	}
 }

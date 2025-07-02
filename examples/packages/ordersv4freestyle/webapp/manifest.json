@@ -141,6 +141,13 @@
           ]
         },
         {
+          "name": "RouteWizard",
+          "pattern": "wizard",
+          "target": [
+            "TargetWizard"
+          ]
+        },
+        {
           "name": "RouteCDSPlugin",
           "pattern": "cdsplugin",
           "target": [
@@ -162,6 +169,13 @@
           "clearControlAggregation": false,
           "viewId": "OrdersTable",
           "viewName": "OrdersTable"
+        },
+        "TargetWizard": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Wizard",
+          "viewName": "Wizard"
         },
         "TargetCDSPlugin": {
           "viewType": "XML",

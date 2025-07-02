@@ -30,6 +30,8 @@ jobs:
       #     sudo apt-get --only-upgrade install google-chrome-stable
       #     # check chrome version
       #     google-chrome --version
+      - name: update APT cache
+        run: sudo apt-get update -y
       - name: install gnome-keyring
         run: sudo apt install gnome-keyring
 

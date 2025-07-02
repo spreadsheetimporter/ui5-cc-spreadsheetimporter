@@ -6,6 +6,10 @@ const { TimelineService } = require('wdio-timeline-reporter/timeline-service');
 let scenario = "";
 let version = 0;
 
+// Check for watch mode flag
+const isWatchMode = process.argv.indexOf("--watch") > -1;
+const isDebugEnabled = true;
+
 for (let index = 0; index < process.argv.length; index++) {
 	const arg = process.argv[index];
 	if (arg.startsWith("orders")) {
@@ -20,8 +24,6 @@ const port = testappObject.port;
 let baseUrl = `http://localhost:${port}/index.html?sap-language=EN`;
 global.scenario = scenario;
 
-const isDebugEnabled = true;
-
 module.exports.config = {
 	wdi5: {
 		logLevel: "error",
@@ -31,11 +33,13 @@ module.exports.config = {
 	exclude: [
 		// 'path/to/excluded/files'
 	],
-	maxInstances: 10,
+	// Reduce instances for watch mode to keep browser stable
+	maxInstances: isWatchMode ? 1 : 10,
 	//
 	capabilities: [
 		{
-			maxInstances: 5,
+			maxInstances: isWatchMode ? 1 : 5,
+			'wdio:enforceWebDriverClassic': true,
 			//
 			browserName: "chrome",
 			browserVersion: 'stable',
@@ -56,29 +60,67 @@ module.exports.config = {
 		}
 	],
 	logLevel: "error",
-	bail: 0,
+	bail: isWatchMode ? 0 : 0, // Don't bail in watch mode
 	baseUrl: baseUrl,
 	waitforTimeout: 60000,
 	connectionRetryTimeout: process.argv.indexOf("--debug") > -1 ? 1200000 : 120000,
 	connectionRetryCount: 3,
-	services: isDebugEnabled 
+
+	// Watch mode configuration
+	watch: isWatchMode,
+	watchInterval: isWatchMode ? 1000 : undefined,
+	filesToWatch: isWatchMode ? [
+		'./test/specs/**/*.js',
+		'./specs/**/*.js',
+		'./test/specs/**/*.test.js',
+		'../packages/ui5-cc-spreadsheetimporter/src/**/*.js',
+		'../packages/ui5-cc-spreadsheetimporter/src/**/*.ts'
+	] : undefined,
+
+	services: isDebugEnabled
 		? ["ui5", [TimelineService, {
 			screenshotStrategy: "none"
 		  }]]
 		: ["ui5"],
 	framework: "mocha",
-	reporters: isDebugEnabled 
+	reporters: isDebugEnabled
 		? [
 			"spec",
-			["timeline", { 
-				outputDir: "./reports/timeline", 
-				embedImages: true, 
+			["timeline", {
+				outputDir: "./reports/timeline",
+				embedImages: true,
 				screenshotStrategy: "none"
 			}]
 		]
 		: ["spec"],
 	mochaOpts: {
 		ui: "bdd",
-		timeout: process.argv.indexOf("--debug") > -1 ? 600000 : 600000
+		timeout: process.argv.indexOf("--debug") > -1 ? 600000 : 600000,
+		bail: isWatchMode ? false : false // Don't stop on first failure in watch mode
+	},
+
+	// Hooks for better watch mode experience
+	beforeSession: function (config, capabilities, specs) {
+		if (isWatchMode) {
+			console.log('\n🔄 Watch mode enabled - tests will rerun on file changes');
+			console.log('📝 Press Ctrl+C to stop watching\n');
+		}
+	},
+
+	afterTest: function (test, context, { error, result, duration, passed, retries }) {
+		if (isWatchMode) {
+			if (!passed) {
+				console.log(`\n❌ Test failed: ${test.title}`);
+			} else {
+				console.log(`\n✅ Test passed: ${test.title}`);
+			}
+		}
+	},
+
+	afterSuite: function (suite) {
+		if (isWatchMode) {
+			console.log(`\n📊 Suite completed: ${suite.title}`);
+			console.log('👀 Watching for file changes...\n');
+		}
 	}
 };

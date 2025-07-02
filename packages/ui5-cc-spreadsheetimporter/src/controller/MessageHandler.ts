@@ -148,7 +148,7 @@ export default class MessageHandler extends ManagedObject {
 			if (columnName === undefined || typeof columnName !== 'string') {
 				continue;
 			}
-			
+
 			let found = false;
 			for (const [key, value] of typeLabelList) {
 				if (fieldMatchType === "label") {
@@ -187,7 +187,7 @@ export default class MessageHandler extends ManagedObject {
 				if (colName === undefined || typeof colName !== 'string') {
 					continue;
 				}
-				
+
 				if (colName.includes(`[${columnName}]`)) {
 					found = true;
 					availableKeyColumns.push(columnName);
@@ -211,7 +211,7 @@ export default class MessageHandler extends ManagedObject {
 	checkDuplicateKeys(data: ArrayData) {
 		const keyNames = MetadataHandlerV4.getAnnotationProperties(this.spreadsheetUploadController.context, this.spreadsheetUploadController.getOdataType()).properties.$Key as string[];
 		const seenKeys = new Map<string, number>();
-		
+
 		data.forEach((row, index) => {
 			const keys = keyNames
 				.filter(key => key !== "IsActiveEntity")
@@ -221,7 +221,7 @@ export default class MessageHandler extends ManagedObject {
 					return `${key}=${value}`;
 				});
 			const keyString = JSON.stringify(keys);
-			
+
 			if (seenKeys.has(keyString)) {
 				const errorMessage = {
 					title: this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.duplicateKeys"),
@@ -262,7 +262,7 @@ export default class MessageHandler extends ManagedObject {
 			// If any mandatory keys are missing, create an error message
 			if (missingKeys.length > 0) {
 				const errorMessage = {
-					title: this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.missingKeys"), 
+					title: this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.missingKeys"),
 					type: CustomMessageTypes.MissingKeys,
 					row: index + 2, // +2 because rows typically start at 2 in Excel
 					counter: 1,
@@ -278,10 +278,10 @@ export default class MessageHandler extends ManagedObject {
 		const emptyColumnsFromHeaders = columnNames
 			.filter(name => typeof name === 'string') // Ensure we only process strings
 			.filter(name => name.includes("__EMPTY"));
-		
+
 		// Then check the actual data objects for keys starting with __EMPTY
 		const emptyColumnsFromData = new Set<string>();
-		
+
 		for (const row of data) {
 			for (const key in row) {
 				// Check if key starts with __EMPTY and is not __rowNum__
@@ -290,17 +290,17 @@ export default class MessageHandler extends ManagedObject {
 				}
 			}
 		}
-		
+
 		// Combine both sources of empty column names
 		const emptyColumns = [
 			...emptyColumnsFromHeaders,
 			...Array.from(emptyColumnsFromData)
 		].filter((value, index, self) => self.indexOf(value) === index); // Remove duplicates
-		
+
 		if (emptyColumns.length > 0) {
 			// Get the starting cell reference from the component or default to "A1"
 			const startCell = this.spreadsheetUploadController.component.getReadSheetCoordinates() || "A1";
-			
+
 			// Calculate the data starting row (one row after the header row)
 			let dataStartCell = "A2";
 			if (startCell !== "A1") {
@@ -313,7 +313,7 @@ export default class MessageHandler extends ManagedObject {
 					dataStartCell = `${column}${row + 1}`;
 				}
 			}
-			
+
 			const warningMessage = {
 				title: this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.emptyHeadersFound"),
 				description: this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.emptyHeadersDescription", [startCell, dataStartCell]),
@@ -322,7 +322,7 @@ export default class MessageHandler extends ManagedObject {
 				ui5type: MessageType.Warning,
 				group: false
 			} as Messages;
-			
+
 			this.addMessageToMessages(warningMessage);
 		}
 	}
@@ -371,11 +371,9 @@ export default class MessageHandler extends ManagedObject {
 			}).then((dialog: Dialog) => {
 				this.messageDialog = dialog;
 				this.messageDialog.setModel(this.spreadsheetUploadController.componentI18n, "i18n");
-				this.messageDialog.setModel(new JSONModel(), "messages");
-				const messagesGrouped = this.groupMessages(this.messages);
-				const sortedMessagesGrouped = this.sortMessagesByTitle(messagesGrouped);
-				(this.messageDialog.getModel("messages") as JSONModel).setData(sortedMessagesGrouped);
-				const dialogState = this.getWorstType(sortedMessagesGrouped);
+				const jsonModelMessages = this.getGroupedSortedJsonModelMessages();
+				this.messageDialog.setModel(jsonModelMessages, "messages");
+				const dialogState = this.getWorstType(jsonModelMessages.getData() as GroupedMessage[]);
 				const infoModel = new JSONModel({
 					strict: this.spreadsheetUploadController.component.getStrict(),
 					strictParameter: strict,
@@ -432,6 +430,20 @@ export default class MessageHandler extends ManagedObject {
 		return allMessages;
 	}
 
+	getGroupedSortedJsonModelMessages(): JSONModel {
+		const messagesGrouped = this.groupMessages(this.messages);
+		const sortedMessagesGrouped = this.sortMessagesByTitle(messagesGrouped);
+		const jsonModel = new JSONModel();
+		jsonModel.setData(sortedMessagesGrouped);
+		return jsonModel;
+	}
+
+	getGroupedSortedMessages(): GroupedMessage[] {
+		const messagesGrouped = this.groupMessages(this.messages);
+		const sortedMessagesGrouped = this.sortMessagesByTitle(messagesGrouped);
+		return sortedMessagesGrouped;
+	}
+
 	private onCloseMessageDialog() {
 		this.messageDialog.close();
 		this.messageDialog.destroy();
@@ -446,12 +458,12 @@ export default class MessageHandler extends ManagedObject {
 				await this.showConfirmDialog();
 				// continue with successful fetched objects
 			}
-			
+
 			this.messageDialog.close();
 			const spreadsheetUploadDialog = this.spreadsheetUploadController.getSpreadsheetUploadDialog();
 			const payloadArrayLength = this.spreadsheetUploadController.payloadArray.length;
 			(spreadsheetUploadDialog.getModel("info") as JSONModel).setProperty("/dataRows", payloadArrayLength);
-			
+
 		} catch (error) {
 			// Handle cancellation
 			this.spreadsheetUploadController.resetContent();
@@ -459,7 +471,7 @@ export default class MessageHandler extends ManagedObject {
 	}
 
 	onDownloadErrors() {
-		const messages = (this.messageDialog.getModel("messages") as JSONModel).getData() as Messages[];
+		const messages = this.getGroupedSortedMessages();
 
 		// Define a mapping of original attribute names to custom headers
 		const headerMapping = {
@@ -555,8 +567,8 @@ export default class MessageHandler extends ManagedObject {
 				type: DialogType.Message,
 				title: this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.confirmTitle"),
 				resizable: false,
-				content: new Text({ 
-					text: this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.confirmMessage") 
+				content: new Text({
+					text: this.spreadsheetUploadController.util.geti18nText("spreadsheetimporter.confirmMessage")
 				}),
 				beginButton: new Button({
 					type: ButtonType.Emphasized,

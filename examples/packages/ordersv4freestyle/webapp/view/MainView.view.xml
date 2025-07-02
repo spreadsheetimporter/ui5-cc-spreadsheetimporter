@@ -8,8 +8,22 @@
                 <HBox class="sapUiSmallMargin">
                     <Button id="navToCDSPlugin" text="Navigate to CDS Plugin" press="onNavToCDSPlugin" class="sapUiTinyMarginEnd"/>
                     <Button id="navToOrders" text="Navigate to Orders" press="onNavToOrders" class="sapUiTinyMarginEnd"/>
+                    <Button id="navToWizard" text="Navigate to Wizard" press="onNavToWizard" class="sapUiTinyMarginEnd"/>
                 </HBox>
-                
+
+                <core:ComponentContainer
+                id="test1222"
+                width="100%"
+                usage="spreadsheetImporter"
+                propagateModel="true"
+                async="true"
+                settings="{
+                componentContainerData:{buttonText:'Excel Upload  Coordinates',buttonId:'uploadButton',downloadButton:false},
+                useImportWizard: false,
+                readSheetCoordinates: 'A5'
+              }"
+            />
+
                 <core:ComponentContainer
                     id="test1"
                     width="100%"
