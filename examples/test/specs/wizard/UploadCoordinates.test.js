@@ -164,7 +164,7 @@ describe("Wizard Upload Coordinates Workflow", () => {
 
         // Click on the fifth item (index 4)
         await correctItemHeader.press();
-		await webElement.click();
+		// await webElement.click();
 
         console.log("Successfully clicked on the fifth table row");
 
