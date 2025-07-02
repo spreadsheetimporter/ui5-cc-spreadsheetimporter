@@ -59,6 +59,7 @@ The table below summarizes the options available for the UI5 Spreadsheet Importe
 | [`componentContainerData`](#componentcontainerdata)| Special options for using the component in a `ComponentContainer`.| Not specified     | 0.26.0      | `object`   |
 | [`bindingCustom`](#bindingcustom)                 | Uses a custom OData binding instead of a table binding.   | Not specified      | 1.3.0          | `object`   |
 | [`i18nModel`](#i18nmodel)                         | Uses a custom i18n model to override default texts.       | Not specified      | 0.33.0         | `object`   |
+| [`useImportWizard`](#useimportwizard)             | Enables wizard-based import dialog with guided steps.      | `false`            | 2.2.0          | `boolean`  |
 
 ### `directUploadConfig`
 
@@ -497,6 +498,40 @@ More information can be found in the [Spreadsheet Deep Download](spreadsheetdown
 - `decimalSeperator`
 
 This Option defines which option the user can influence.
+
+### `useImportWizard`
+
+**default:** `false`  
+**Available since:** 2.1.0
+
+This option enables the wizard-based import dialog instead of the traditional single-step dialog. The wizard provides a guided, step-by-step interface that automatically progresses through upload, header validation, error handling, and data preview steps.
+
+The wizard offers several advantages:
+- **Enhanced User Experience**: Step-by-step guidance with clear visual progress
+- **Automatic Step Progression**: Smart routing based on file validation results
+- **Better Error Handling**: Dedicated error and message steps with recovery options
+- **Header Validation**: Interactive header selection when automatic detection fails
+- **Data Preview**: Final preview step before import confirmation
+
+**Example:**
+
+```xml
+<core:ComponentContainer
+    usage="spreadsheetImporter"
+    settings="{
+        useImportWizard: true,
+        debug: true,
+        createActiveEntity: true
+    }"
+/>
+```
+
+When enabled, you can open the wizard using either:
+- The automatic button (when `componentContainerData` is configured)
+- Programmatically using `openWizard()` method
+- The existing `openSpreadsheetUploadDialog()` method (automatically routes to wizard)
+
+For detailed wizard usage and examples, see [Wizard Documentation](Wizard.md).
 
 ### `hideSampleData`
 
