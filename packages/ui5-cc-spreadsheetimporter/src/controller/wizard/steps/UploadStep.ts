@@ -47,13 +47,15 @@ export default class UploadStep {
 			if (file) {
 				await this.processFileAndNavigate(file);
 			} else {
-				MessageToast.show("No file selected");
+				const noFileMessage = this.util?.geti18nText?.("spreadsheetimporter.noFileSelected") || "No file selected";
+				MessageToast.show(noFileMessage);
 			}
 
 			this.wizardController.getStep("uploadStep").setBusy(false);
 		} catch (error) {
 			Log.error("Error handling file upload", error as Error, "UploadStep");
-			MessageToast.show("Error processing file");
+			const errorMessage = this.util?.geti18nText?.("spreadsheetimporter.errorProcessingFileToast") || "Error processing file";
+			MessageToast.show(errorMessage);
 		}
 	}
 

@@ -212,7 +212,8 @@ export default class MessagesStep {
             if (messageHandler && typeof messageHandler.onDownloadErrors === 'function') {
                 messageHandler.onDownloadErrors();
             } else {
-                MessageToast.show("Download functionality not available");
+                const downloadMessage = this.wizard.getUtil().geti18nText("spreadsheetimporter.downloadNotAvailable") || "Download functionality not available";
+                MessageToast.show(downloadMessage);
             }
 
             Log.debug("MessagesStep: Download errors triggered", undefined, "MessagesStep");

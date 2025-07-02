@@ -131,7 +131,7 @@ export default class Wizard extends ManagedObject {
     }
 
 	createUploadStep(): UploadStep {
-		this.stepControllers["uploadStep"] = new UploadStep(this, this.wizard);
+		this.stepControllers["uploadStep"] = new UploadStep(this, this.wizard, this.util);
 		return this.stepControllers["uploadStep"];
 	}
 
@@ -671,7 +671,7 @@ export default class Wizard extends ManagedObject {
 
 			// Create controller if needed
 			if (stepName === "uploadStep") {
-				this.stepControllers[stepName] = new UploadStep(this, this.wizard);
+				this.stepControllers[stepName] = new UploadStep(this, this.wizard, this.util);
 				return this.stepControllers[stepName];
 			} else if (stepName === "headerSelectionStep" && this.rawSheetData) {
 				this.stepControllers[stepName] = new HeaderSelectionStep(this);

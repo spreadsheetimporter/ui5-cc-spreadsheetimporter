@@ -57,12 +57,12 @@
                     </customData>
                 </WizardStep>
                 <WizardStep
-                    title="Validation Messages"
+                    title="{i18n>spreadsheetimporter.messagesStepTitle}"
                     validated="false"
                     nextStep="previewDataStep"
                     class="height-100">
                     <VBox width="100%" class="sapUiSmallMargin" fitContainer="true">
-                        <Text text="Review validation messages and decide how to proceed" class="sapUiSmallMarginBottom"/>
+                        <Text text="{i18n>spreadsheetimporter.messagesStepDescription}" class="sapUiSmallMarginBottom"/>
                         <VBox width="100%" fitContainer="true">
                         </VBox>
                     </VBox>
