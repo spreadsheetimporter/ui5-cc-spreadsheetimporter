@@ -36,6 +36,7 @@ Here is an overview of the apps that were created and used for the tests.
 | UI5 Version  | List Report Draft  | List Report Non Draft  | Object Page Draft  | Object Page Non Draft  | Freestyle | OpenUI5 Freestyle |
 |---|---|---|---|---|---|---|
 | 2.0  |    |   | |   |   |  |
+| 1.136  | :white_check_mark:   |  :white_check_mark: | :white_check_mark: | :white_check_mark:  | :white_check_mark:  | :white_check_mark: |
 | 1.120  | :white_check_mark:   |  :white_check_mark: | :white_check_mark: | :white_check_mark:  | :white_check_mark:  | :white_check_mark: |
 | 1.108  | :white_check_mark:   |  :white_check_mark: | :white_check_mark: | :white_check_mark:  | :white_check_mark:  | :white_check_mark: |
 | 1.96  | :white_check_mark:  |  :white_check_mark: |  :white_check_mark: | :white_check_mark:  |  :white_check_mark: | :white_check_mark: |
@@ -50,6 +51,7 @@ Here is an overview of the apps that were created and used for the tests.
 | UI5 Version  | List Report Draft  | Object Page Draft  |  Freestyle | Flexible Programming Model | Typescript | CDS Plugin|
 |---|---|---|---|---|---|---|
 | 2.0 |    | |  |  |  |  |
+| 1.136  |  :white_check_mark:  | :white_check_mark: |  :white_check_mark: | :white_check_mark: |:white_check_mark:  |:white_check_mark:  |
 | 1.120  |  :white_check_mark:  | :white_check_mark: |  |  |:white_check_mark:  |:white_check_mark:  |
 | 1.108  |  :white_check_mark:  | :white_check_mark: |  |  |:white_check_mark:  |:white_check_mark:  |
 | 1.96  | :white_check_mark:  | :white_check_mark:  |   |   |   |   |
