@@ -118,7 +118,8 @@ export enum MessageType {
 export enum Action {
 	Create = "CREATE",
 	Update = "UPDATE",
-	Delete = "DELETE"
+	Delete = "DELETE",
+	Upsert = "UPSERT"
 }
 
 export const DefaultConfigs = {

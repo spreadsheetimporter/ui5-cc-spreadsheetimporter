@@ -38,7 +38,7 @@
   "sap.ui5": {
     "componentName": "cc.spreadsheetimporter.v2_1_0",
     "dependencies": {
-      "minUI5Version": "1.71.75",
+      "minUI5Version": "1.84.20",
       "libs": {
         "sap.ui.core": {},
         "sap.m": {}

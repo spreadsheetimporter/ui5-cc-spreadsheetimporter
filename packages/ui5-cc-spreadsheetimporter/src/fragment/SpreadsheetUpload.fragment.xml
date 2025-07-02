@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:upload="sap.ui.unified" xmlns:spreadsheetdialog="cc.spreadsheetimporter.XXXnamespaceXXX.control">
   <spreadsheetdialog:SpreadsheetDialog
     contentWidth="{= ${device>/system/phone} ? '100%' : '40vw' }"
-    contentHeight="{= ${info>/densityClass} === 'sapUiSizeCompact' ? '110px' : '120px'}"
+    contentHeight="{= ${info>/densityClass} === 'sapUiSizeCompact' ? '130px' : '140px'}"
     verticalScrolling="false"
   >
     <spreadsheetdialog:customHeader>
@@ -26,13 +26,18 @@
           xmlns:core="sap.ui.core"
           core:require="{ formatMessage: 'sap/base/strings/formatMessage' }"
           text="{
-        parts: [
-          'i18n>spreadsheetimporter.dataRows',
-          'info>/dataRows'
-        ],
-        formatter: 'formatMessage'
-      }"
-          type="{= ${info>/dataRows} > 0 ? 'Success' : 'Information'}"
+            parts: [
+              'info>/action',
+              'i18n>spreadsheetimporter.actionCreate',
+              'i18n>spreadsheetimporter.actionUpdate',
+              'i18n>spreadsheetimporter.actionDelete',
+              'i18n>spreadsheetimporter.actionUpsert',
+              'i18n>spreadsheetimporter.recordsReadyForUpload',
+              'info>/dataRows'
+            ],
+            formatter: '.formatSimplifiedText'
+          }"
+          type="{= ${info>/dataRows} > 0 ? 'Success' : 'Information' }"
           enableFormattedText="true"
           showIcon="true"
         >
