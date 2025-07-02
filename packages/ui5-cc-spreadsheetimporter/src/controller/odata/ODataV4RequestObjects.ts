@@ -16,6 +16,15 @@ export interface BatchContext {
 	payload: any;
 }
 
+// Add interface for match results
+interface MatchResult {
+	index: number;
+	keys: Record<string, any>;
+	requestedStatus: boolean;
+	foundIn: 'objectsTrue' | 'objectsFalse' | 'notFound';
+	object: any;
+}
+
 export class ODataV4RequestObjects {
 	private metadataHandler: MetadataHandlerV4;
 	private messageHandler: MessageHandler;
@@ -76,14 +85,14 @@ export class ODataV4RequestObjects {
 			originalDataCount: spreadsheetData.length,
 			filteredDataCount: filteredSpreadsheetData.length
 		}));
-		
+
 		// Update spreadsheetData with filtered data
 		spreadsheetData.length = 0;
 		spreadsheetData.push(...filteredSpreadsheetData);
-		
+
 		// Update matched entities to only include valid ones
 		matchedEntities = this.findEntitiesFromSpreadsheet(spreadsheetData, activeEntities, inactiveEntities, binding);
-		
+
 		// Update contexts with filtered data
 		this.contexts = this.getContextsFromPayload(spreadsheetData, activeContexts, inactiveContexts, path, binding);
 
@@ -91,7 +100,7 @@ export class ODataV4RequestObjects {
 			if (this.messageHandler.areMessagesPresent()) {
 				try {
 					await this.messageHandler.displayMessages();
-					
+
 					// Log status changes
 					const statusChanges = spreadsheetData.map((spreadsheetEntry: any, index: number) => {
 						const keys = this.metadataHandler.getKeys(binding, spreadsheetEntry);
@@ -100,8 +109,8 @@ export class ODataV4RequestObjects {
 
 						const originalStatus = spreadsheetEntry.IsActiveEntity;
 						const oppositeStatusEntity = spreadsheetEntry.IsActiveEntity
-							? inactiveEntities.find((entity) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => entity[key] === value))
-							: activeEntities.find((entity) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => entity[key] === value));
+							? inactiveEntities.find((entity) => entity && Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => entity[key] === value))
+							: activeEntities.find((entity) => entity && Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => entity[key] === value));
 
 						return {
 							index,
@@ -126,8 +135,8 @@ export class ODataV4RequestObjects {
 
 						// Find the entity with opposite draft status
 						const oppositeStatusEntity = spreadsheetEntry.IsActiveEntity
-							? inactiveEntities.find((entity) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => entity[key] === value))
-							: activeEntities.find((entity) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => entity[key] === value));
+							? inactiveEntities.find((entity) => entity && Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => entity[key] === value))
+							: activeEntities.find((entity) => entity && Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => entity[key] === value));
 
 						// Update spreadsheetEntry to match actual status
 						if (oppositeStatusEntity) {
@@ -190,16 +199,16 @@ export class ODataV4RequestObjects {
 	}
 
 	private findEntitiesFromSpreadsheet(batch: any[], objectsTrue: any[], objectsFalse: any[], binding: any): any[] {
-		const matchResults = [];
-		
+		const matchResults: MatchResult[] = [];
+
 		batch.forEach((payload, index) => {
 			const keys = this.metadataHandler.getKeys(binding, payload);
 			const keysWithoutIsActiveEntity = { ...keys };
 			delete keysWithoutIsActiveEntity.IsActiveEntity;
 
 			// try to find the matching object from the spreadsheet in the requested objects
-			const matchingObjectTrue = objectsTrue.find((obj) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => obj[key] === value));
-			const matchingObjectFalse = objectsFalse.find((obj) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => obj[key] === value));
+			const matchingObjectTrue = objectsTrue.find((obj) => obj && Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => obj[key] === value));
+			const matchingObjectFalse = objectsFalse.find((obj) => obj && Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => obj[key] === value));
 
 			let matchingObject = payload.IsActiveEntity ? matchingObjectTrue : matchingObjectFalse;
 
@@ -208,7 +217,7 @@ export class ODataV4RequestObjects {
 				matchingObject = payload.IsActiveEntity ? matchingObjectFalse : matchingObjectTrue;
 			}
 
-			matchResults.push({ 
+			matchResults.push({
 				index,
 				keys: keysWithoutIsActiveEntity,
 				requestedStatus: payload.IsActiveEntity,
@@ -223,16 +232,16 @@ export class ODataV4RequestObjects {
 			notFound: matchResults.filter(r => !r.object).length,
 			details: matchResults
 		}));
-		
+
 		// Filter out undefined objects before returning
 		const validEntities = matchResults.map(result => result.object).filter(entity => entity !== undefined);
-		
+
 		Log.debug("Final matched entities", undefined, "SpreadsheetUpload: ODataV4RequestObjects", () => ({
 			requested: batch.length,
 			matched: validEntities.length,
 			missingCount: batch.length - validEntities.length
 		}));
-		
+
 		return validEntities;
 	}
 
@@ -244,8 +253,14 @@ export class ODataV4RequestObjects {
 			const keysWithoutIsActiveEntity = { ...keys };
 			delete keysWithoutIsActiveEntity.IsActiveEntity;
 
-			const matchingActiveContext = activeContexts.find((ctx) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => ctx.getObject()[key] === value));
-			const matchingInactiveContext = inactiveContexts.find((ctx) => Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => ctx.getObject()[key] === value));
+			const matchingActiveContext = activeContexts.find((ctx) => {
+				const ctxObject = ctx.getObject();
+				return ctxObject && Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => ctxObject[key] === value);
+			});
+			const matchingInactiveContext = inactiveContexts.find((ctx) => {
+				const ctxObject = ctx.getObject();
+				return ctxObject && Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => ctxObject[key] === value);
+			});
 
 			let matchingContext = isActiveEntity ? matchingActiveContext : matchingInactiveContext;
 
@@ -272,8 +287,8 @@ export class ODataV4RequestObjects {
 			const keysWithoutIsActiveEntity = { ...keys };
 			delete keysWithoutIsActiveEntity.IsActiveEntity;
 
-			const matchingBackendEntity = backendEntities.find((entity) => 
-				Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => entity[key] === value)
+			const matchingBackendEntity = backendEntities.find((entity) =>
+				entity && Object.entries(keysWithoutIsActiveEntity).every(([key, value]) => entity[key] === value)
 			);
 
 			// If entity not found, add error message but don't include in filtered data
