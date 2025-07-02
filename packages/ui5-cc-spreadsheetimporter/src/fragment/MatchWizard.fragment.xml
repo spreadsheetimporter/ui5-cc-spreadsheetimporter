@@ -26,52 +26,18 @@
                 <WizardStep
                     title="{i18n>spreadsheetimporter.uploadFile}"
                     validated="{= ${wizard>/fileUploaded} === true}">
-                    <VBox width="100%" class="sapUiSmallMargin">
-                        <Text text="{i18n>spreadsheetimporter.uploadFileDescription}" class="sapUiSmallMarginBottom"/>
-                        <FlexBox
-                            alignItems="Center"
-                            justifyContent="Center"
-                            width="100%"
-                            direction="Column"
-                            class="sapUiSmallMarginTopBottom" >
-                            <items>
+                    <VBox width="100%" height="100%" class="sapUiResponsivePadding--content">
+                                <Label text="{i18n>spreadsheetimporter.chooseFile}" class="sapUiTinyMarginBottom"/>
                                 <u:FileUploader
-                                    width="100%"
-                                    fileType="xlsx,xls,csv"
+                                    width="50%"
+                                    fileType="xlsx,xls,csv,xlsm"
                                     placeholder="{i18n>spreadsheetimporter.chooseFile}"
                                     uploadOnChange="false"
                                     value="{wizard>/fileUploadValue}"
                                     sameFilenameAllowed="true"
                                     change="onFileUpload"
-                                    style="Emphasized"/>
-                                <Text text="{i18n>spreadsheetimporter.dropAreaLabel}" class="sapUiSmallMarginTop"/>
-                                <Panel
-                                    width="100%"
-                                    height="150px"
-                                    class="sapUiSmallMarginTop sapUiSmallMarginBottom sapUiMediumPadding"
-                                    backgroundDesign="Translucent"
-                                    accessibleRole="Region">
-                                    <FlexBox
-                                        alignItems="Center"
-                                        justifyContent="Center"
-                                        width="100%"
-                                        height="100%"
-                                        direction="Column">
-                                        <core:Icon
-                                            src="sap-icon://upload-to-cloud"
-                                            size="2rem"
-                                            class="sapUiSmallMarginBottom" />
-                                        <Text text="{i18n>spreadsheetimporter.dropFilesHere}" class="sapUiSmallMarginBottom" />
-                                    </FlexBox>
-                                    <dragDropConfig>
-                                        <dnd:DropInfo
-                                            targetAggregation="content"
-                                            drop="onFileUpload"
-                                            xmlns:dnd="sap.ui.core.dnd" />
-                                    </dragDropConfig>
-                                </Panel>
-                            </items>
-                        </FlexBox>
+                                    style="Emphasized"
+                                    class="sapUiMediumMarginBottom"/>
                     </VBox>
                     <customData>
                         <core:CustomData key="stepName" value="uploadStep"/>
