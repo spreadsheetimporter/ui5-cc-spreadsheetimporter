@@ -5,7 +5,6 @@ import Wizard, { Wizard$StepActivateEvent } from 'sap/m/Wizard';
 import JSONModel from 'sap/ui/model/json/JSONModel';
 import ResourceModel from 'sap/ui/model/resource/ResourceModel';
 import ResourceBundle from 'sap/base/i18n/ResourceBundle';
-import * as XLSX from 'xlsx';
 import Log from 'sap/base/Log';
 import Component from '../../Component';
 import Util from '../Util';
@@ -19,6 +18,7 @@ import WizardController from '../wizard/Wizard';
 import WizardStep from 'sap/m/WizardStep';
 import UploadStep from '../wizard/steps/UploadStep';
 import { Action } from '../../enums';
+import TemplateService from '../services/TemplateService';
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -40,6 +40,7 @@ export default class WizardDialog extends ManagedObject {
   private messageHandler: MessageHandler;
   private importService: ImportService;
   private odataHandler: OData;
+  private templateService: TemplateService;
 
   /**
    * Creates a new instance of WizardDialog
@@ -67,6 +68,9 @@ export default class WizardDialog extends ManagedObject {
       componentI18n.getResourceBundle() as ResourceBundle,
       messageHandler
     );
+
+    // Initialize template service
+    this.templateService = new TemplateService(component, spreadsheetUploadController, componentI18n.getResourceBundle() as ResourceBundle);
   }
 
   /**
@@ -106,6 +110,26 @@ export default class WizardDialog extends ManagedObject {
 
     // Set models
     this.dialog.setModel(this.componentI18n, 'i18n');
+
+    // Create info model similar to SpreadsheetUploadDialog
+    const infoModel = new JSONModel({
+      dataRows: 0,
+      strict: this.component.getStrict(),
+      hidePreview: this.component.getHidePreview(),
+      showOptions: this.component.getShowOptions(),
+      showDownloadButton: this.component.getShowDownloadButton(),
+      hideGenerateTemplateButton: false,
+      fileUploadValue: '',
+      densityClass: this.component._densityClass,
+      action: this.component.getAction()
+    });
+
+    // Control hideGenerateTemplateButton logic
+    if (this.component.getStandalone() && this.component.getColumns().length === 0 && !this.component.getSpreadsheetTemplateFile()) {
+      infoModel.setProperty('/hideGenerateTemplateButton', true);
+    }
+
+    this.dialog.setModel(infoModel, 'info');
 
     // Add action to wizard model
     const wizardModel = this.wizardController.getWizardModel();
@@ -389,6 +413,18 @@ export default class WizardDialog extends ManagedObject {
         return upsertText;
       default:
         return createText;
+    }
+  }
+
+  /**
+   * Template download handler using TemplateService
+   */
+  async onTempDownload(): Promise<void> {
+    try {
+      await this.templateService.downloadTemplate();
+    } catch (error) {
+      Log.error('Error downloading template', error as Error, 'WizardDialog');
+      MessageToast.show(this.util.geti18nText('spreadsheetimporter.errorDownloadingTemplate'));
     }
   }
 
