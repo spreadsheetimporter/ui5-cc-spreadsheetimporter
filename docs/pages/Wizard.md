@@ -298,18 +298,18 @@ flowchart LR
 
 **Flow Details:**
 
-1. :material-play-circle: **Start** - User initiates wizard
-2. :material-file-upload: **Upload File** - User selects file
-3. :material-cog: **File Processing** - System processes file
-4. :material-table-column: **Header Validation** - Column mapping validation
-5. :material-table-edit: **Header Selection Step** - Wizard shows header mapping step
-6. :material-link: **Map Columns** - User corrects column assignments
-7. :material-cog: **Re-validation** - System re-validates with new mapping
-8. :material-check-circle: **Data Validation** - Verify data quality
-9. :material-eye: **Preview Step** - Review mapped data
-10. :material-upload: **Confirm Upload** - User confirms final upload
-11. :material-cog: **Upload Process** - System processes upload
-12. :material-check: **Success** - Upload completed
+1. **Start** - User initiates wizard
+2. **Upload File** - User selects file
+3. **File Processing** - System processes file
+4. **Header Validation** - Column mapping validation
+5. **Header Selection Step** - Wizard shows header mapping step
+6. **Map Columns** - User corrects column assignments
+7. **Re-validation** - System re-validates with new mapping
+8. **Data Validation** - Verify data quality
+9. **Preview Step** - Review mapped data
+10. **Confirm Upload** - User confirms final upload
+11. **Upload Process** - System processes upload
+12. **Success** - Upload completed
 
 ---
 
@@ -338,18 +338,18 @@ flowchart LR
 
 **Flow Details:**
 
-1. :material-play-circle: **Start** - User initiates wizard
-2. :material-file-upload: **Upload File** - User selects file
-3. :material-cog: **File Processing** - System processes file
-4. :material-check-circle: **Header Validation** - Column mapping successful
-5. :material-alert: **Data Validation** - System finds data issues
-6. :material-message-alert: **Messages Step** - Wizard shows messages step
-7. :material-eye: **Review Errors** - User reviews detailed error messages
-8. :material-help-circle: **User Decision** - User chooses to proceed or fix
-9. :material-eye-off: **Preview Step** - Review data with errors highlighted
-10. :material-upload: **Confirm Upload** - User confirms upload with warnings
-11. :material-cog: **Upload Process** - System processes upload
-12. :material-check: **Success** - Upload completed with warnings
+1. **Start** - User initiates wizard
+2. **Upload File** - User selects file
+3. **File Processing** - System processes file
+4. **Header Validation** - Column mapping successful
+5. **Data Validation** - System finds data issues
+6. **Messages Step** - Wizard shows messages step
+7. **Review Errors** - User reviews detailed error messages
+8. **User Decision** - User chooses to proceed or fix
+9. **Preview Step** - Review data with errors highlighted
+10. **Confirm Upload** - User confirms upload with warnings
+11. **Upload Process** - System processes upload
+12. **Success** - Upload completed with warnings
 
 ## Wizard State Machine
 
