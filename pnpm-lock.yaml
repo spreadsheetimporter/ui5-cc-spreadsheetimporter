@@ -200,7 +200,257 @@ importers:
         specifier: 3.27.6
         version: 3.27.6(@ui5/project@4.0.4(@ui5/builder@4.0.7))(typescript@5.8.3)
 
+  examples/packages/ordersv2fe108:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.2.97
+        version: 2.2.97
+      '@sap/ux-specification':
+        specifier: ^1.124.18
+        version: 1.124.18
+      '@sap/ux-ui5-tooling':
+        specifier: 1.18.0
+        version: 1.18.0(encoding@0.1.13)
+      '@ui5/cli':
+        specifier: 4.0.18
+        version: 4.0.18
+      ui5-middleware-ui5:
+        specifier: 3.3.0
+        version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(@ui5/server@4.0.6)
+      ui5-tooling-modules:
+        specifier: 3.27.6
+        version: 3.27.6(@ui5/project@4.0.4(@ui5/builder@4.0.7))(typescript@5.8.3)
+
+  examples/packages/ordersv2fe120:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.2.97
+        version: 2.2.97
+      '@sap/ux-specification':
+        specifier: ^1.124.18
+        version: 1.124.18
+      '@sap/ux-ui5-tooling':
+        specifier: 1.18.0
+        version: 1.18.0(encoding@0.1.13)
+      '@ui5/cli':
+        specifier: 4.0.18
+        version: 4.0.18
+      ui5-middleware-ui5:
+        specifier: 3.3.0
+        version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(@ui5/server@4.0.6)
+      ui5-tooling-modules:
+        specifier: 3.27.6
+        version: 3.27.6(@ui5/project@4.0.4(@ui5/builder@4.0.7))(typescript@5.8.3)
+
+  examples/packages/ordersv2fe71:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.2.97
+        version: 2.2.97
+      '@sap/ux-specification':
+        specifier: ^1.124.18
+        version: 1.124.18
+      '@sap/ux-ui5-tooling':
+        specifier: 1.18.0
+        version: 1.18.0(encoding@0.1.13)
+      '@ui5/cli':
+        specifier: 4.0.18
+        version: 4.0.18
+      ui5-middleware-ui5:
+        specifier: 3.3.0
+        version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(@ui5/server@4.0.6)
+      ui5-tooling-modules:
+        specifier: 3.27.6
+        version: 3.27.6(@ui5/project@4.0.4(@ui5/builder@4.0.7))(typescript@5.8.3)
+
+  examples/packages/ordersv2fe84:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.2.97
+        version: 2.2.97
+      '@sap/ux-specification':
+        specifier: ^1.124.18
+        version: 1.124.18
+      '@sap/ux-ui5-tooling':
+        specifier: 1.18.0
+        version: 1.18.0(encoding@0.1.13)
+      '@ui5/cli':
+        specifier: 4.0.18
+        version: 4.0.18
+      ui5-middleware-ui5:
+        specifier: 3.3.0
+        version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(@ui5/server@4.0.6)
+      ui5-tooling-modules:
+        specifier: 3.27.6
+        version: 3.27.6(@ui5/project@4.0.4(@ui5/builder@4.0.7))(typescript@5.8.3)
+
+  examples/packages/ordersv2fe96:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.2.97
+        version: 2.2.97
+      '@sap/ux-specification':
+        specifier: ^1.124.18
+        version: 1.124.18
+      '@sap/ux-ui5-tooling':
+        specifier: 1.18.0
+        version: 1.18.0(encoding@0.1.13)
+      '@ui5/cli':
+        specifier: 4.0.18
+        version: 4.0.18
+      ui5-middleware-ui5:
+        specifier: 3.3.0
+        version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(@ui5/server@4.0.6)
+      ui5-tooling-modules:
+        specifier: 3.27.6
+        version: 3.27.6(@ui5/project@4.0.4(@ui5/builder@4.0.7))(typescript@5.8.3)
+
   examples/packages/ordersv2fenondraft:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.2.97
+        version: 2.2.97
+      '@sap/ux-specification':
+        specifier: ^1.124.18
+        version: 1.124.18
+      '@sap/ux-ui5-tooling':
+        specifier: 1.18.0
+        version: 1.18.0(encoding@0.1.13)
+      '@ui5/cli':
+        specifier: 4.0.18
+        version: 4.0.18
+      ui5-middleware-ui5:
+        specifier: 3.3.0
+        version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(@ui5/server@4.0.6)
+      ui5-tooling-modules:
+        specifier: 3.27.6
+        version: 3.27.6(@ui5/project@4.0.4(@ui5/builder@4.0.7))(typescript@5.8.3)
+
+  examples/packages/ordersv2fenondraft108:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.2.97
+        version: 2.2.97
+      '@sap/ux-specification':
+        specifier: ^1.124.18
+        version: 1.124.18
+      '@sap/ux-ui5-tooling':
+        specifier: 1.18.0
+        version: 1.18.0(encoding@0.1.13)
+      '@ui5/cli':
+        specifier: 4.0.18
+        version: 4.0.18
+      ui5-middleware-ui5:
+        specifier: 3.3.0
+        version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(@ui5/server@4.0.6)
+      ui5-tooling-modules:
+        specifier: 3.27.6
+        version: 3.27.6(@ui5/project@4.0.4(@ui5/builder@4.0.7))(typescript@5.8.3)
+
+  examples/packages/ordersv2fenondraft120:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.2.97
+        version: 2.2.97
+      '@sap/ux-specification':
+        specifier: ^1.124.18
+        version: 1.124.18
+      '@sap/ux-ui5-tooling':
+        specifier: 1.18.0
+        version: 1.18.0(encoding@0.1.13)
+      '@ui5/cli':
+        specifier: 4.0.18
+        version: 4.0.18
+      ui5-middleware-ui5:
+        specifier: 3.3.0
+        version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(@ui5/server@4.0.6)
+      ui5-tooling-modules:
+        specifier: 3.27.6
+        version: 3.27.6(@ui5/project@4.0.4(@ui5/builder@4.0.7))(typescript@5.8.3)
+
+  examples/packages/ordersv2fenondraft71:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.2.97
+        version: 2.2.97
+      '@sap/ux-specification':
+        specifier: ^1.124.18
+        version: 1.124.18
+      '@sap/ux-ui5-tooling':
+        specifier: 1.18.0
+        version: 1.18.0(encoding@0.1.13)
+      '@ui5/cli':
+        specifier: 4.0.18
+        version: 4.0.18
+      ui5-middleware-ui5:
+        specifier: 3.3.0
+        version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(@ui5/server@4.0.6)
+      ui5-tooling-modules:
+        specifier: 3.27.6
+        version: 3.27.6(@ui5/project@4.0.4(@ui5/builder@4.0.7))(typescript@5.8.3)
+
+  examples/packages/ordersv2fenondraft84:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.2.97
+        version: 2.2.97
+      '@sap/ux-specification':
+        specifier: ^1.124.18
+        version: 1.124.18
+      '@sap/ux-ui5-tooling':
+        specifier: 1.18.0
+        version: 1.18.0(encoding@0.1.13)
+      '@ui5/cli':
+        specifier: 4.0.18
+        version: 4.0.18
+      ui5-middleware-ui5:
+        specifier: 3.3.0
+        version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(@ui5/server@4.0.6)
+      ui5-tooling-modules:
+        specifier: 3.27.6
+        version: 3.27.6(@ui5/project@4.0.4(@ui5/builder@4.0.7))(typescript@5.8.3)
+
+  examples/packages/ordersv2fenondraft96:
     dependencies:
       ui5-cc-spreadsheetimporter:
         specifier: link:../../../packages/ui5-cc-spreadsheetimporter
@@ -247,7 +497,117 @@ importers:
         specifier: 3.27.6
         version: 3.27.6(@ui5/project@4.0.4(@ui5/builder@4.0.7))(typescript@5.8.3)
 
+  examples/packages/ordersv2freestylenondraft108:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.2.97
+        version: 2.2.97
+      '@sap/ux-ui5-tooling':
+        specifier: 1.18.0
+        version: 1.18.0(encoding@0.1.13)
+      '@ui5/cli':
+        specifier: 4.0.18
+        version: 4.0.18
+      ui5-middleware-ui5:
+        specifier: 3.3.0
+        version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(@ui5/server@4.0.6)
+      ui5-tooling-modules:
+        specifier: 3.27.6
+        version: 3.27.6(@ui5/project@4.0.4(@ui5/builder@4.0.7))(typescript@5.8.3)
+
+  examples/packages/ordersv2freestylenondraft120:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.2.97
+        version: 2.2.97
+      '@sap/ux-ui5-tooling':
+        specifier: 1.18.0
+        version: 1.18.0(encoding@0.1.13)
+      '@ui5/cli':
+        specifier: 4.0.18
+        version: 4.0.18
+      ui5-middleware-ui5:
+        specifier: 3.3.0
+        version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(@ui5/server@4.0.6)
+      ui5-tooling-modules:
+        specifier: 3.27.6
+        version: 3.27.6(@ui5/project@4.0.4(@ui5/builder@4.0.7))(typescript@5.8.3)
+
   examples/packages/ordersv2freestylenondraft2:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.2.97
+        version: 2.2.97
+      '@sap/ux-ui5-tooling':
+        specifier: 1.18.0
+        version: 1.18.0(encoding@0.1.13)
+      '@ui5/cli':
+        specifier: 4.0.18
+        version: 4.0.18
+      ui5-middleware-ui5:
+        specifier: 3.3.0
+        version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(@ui5/server@4.0.6)
+      ui5-tooling-modules:
+        specifier: 3.27.6
+        version: 3.27.6(@ui5/project@4.0.4(@ui5/builder@4.0.7))(typescript@5.8.3)
+
+  examples/packages/ordersv2freestylenondraft71:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.2.97
+        version: 2.2.97
+      '@sap/ux-ui5-tooling':
+        specifier: 1.18.0
+        version: 1.18.0(encoding@0.1.13)
+      '@ui5/cli':
+        specifier: 4.0.18
+        version: 4.0.18
+      ui5-middleware-ui5:
+        specifier: 3.3.0
+        version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(@ui5/server@4.0.6)
+      ui5-tooling-modules:
+        specifier: 3.27.6
+        version: 3.27.6(@ui5/project@4.0.4(@ui5/builder@4.0.7))(typescript@5.8.3)
+
+  examples/packages/ordersv2freestylenondraft84:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.2.97
+        version: 2.2.97
+      '@sap/ux-ui5-tooling':
+        specifier: 1.18.0
+        version: 1.18.0(encoding@0.1.13)
+      '@ui5/cli':
+        specifier: 4.0.18
+        version: 4.0.18
+      ui5-middleware-ui5:
+        specifier: 3.3.0
+        version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(@ui5/server@4.0.6)
+      ui5-tooling-modules:
+        specifier: 3.27.6
+        version: 3.27.6(@ui5/project@4.0.4(@ui5/builder@4.0.7))(typescript@5.8.3)
+
+  examples/packages/ordersv2freestylenondraft96:
     dependencies:
       ui5-cc-spreadsheetimporter:
         specifier: link:../../../packages/ui5-cc-spreadsheetimporter
@@ -291,7 +651,302 @@ importers:
         specifier: 3.27.6
         version: 3.27.6(@ui5/project@4.0.4(@ui5/builder@4.0.7))(typescript@5.8.3)
 
+  examples/packages/ordersv2freestylenondraftopenui5108:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.2.97
+        version: 2.2.97
+      '@sap/ux-ui5-tooling':
+        specifier: 1.18.0
+        version: 1.18.0(encoding@0.1.13)
+      '@ui5/cli':
+        specifier: 4.0.18
+        version: 4.0.18
+      ui5-middleware-ui5:
+        specifier: 3.3.0
+        version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(@ui5/server@4.0.6)
+      ui5-tooling-modules:
+        specifier: 3.27.6
+        version: 3.27.6(@ui5/project@4.0.4(@ui5/builder@4.0.7))(typescript@5.8.3)
+
+  examples/packages/ordersv2freestylenondraftopenui5120:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.2.97
+        version: 2.2.97
+      '@sap/ux-ui5-tooling':
+        specifier: 1.18.0
+        version: 1.18.0(encoding@0.1.13)
+      '@ui5/cli':
+        specifier: 4.0.18
+        version: 4.0.18
+      ui5-middleware-ui5:
+        specifier: 3.3.0
+        version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(@ui5/server@4.0.6)
+      ui5-tooling-modules:
+        specifier: 3.27.6
+        version: 3.27.6(@ui5/project@4.0.4(@ui5/builder@4.0.7))(typescript@5.8.3)
+
+  examples/packages/ordersv2freestylenondraftopenui571:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.2.97
+        version: 2.2.97
+      '@sap/ux-ui5-tooling':
+        specifier: 1.18.0
+        version: 1.18.0(encoding@0.1.13)
+      '@ui5/cli':
+        specifier: 4.0.18
+        version: 4.0.18
+      ui5-middleware-ui5:
+        specifier: 3.3.0
+        version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(@ui5/server@4.0.6)
+      ui5-tooling-modules:
+        specifier: 3.27.6
+        version: 3.27.6(@ui5/project@4.0.4(@ui5/builder@4.0.7))(typescript@5.8.3)
+
+  examples/packages/ordersv2freestylenondraftopenui584:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.2.97
+        version: 2.2.97
+      '@sap/ux-ui5-tooling':
+        specifier: 1.18.0
+        version: 1.18.0(encoding@0.1.13)
+      '@ui5/cli':
+        specifier: 4.0.18
+        version: 4.0.18
+      ui5-middleware-ui5:
+        specifier: 3.3.0
+        version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(@ui5/server@4.0.6)
+      ui5-tooling-modules:
+        specifier: 3.27.6
+        version: 3.27.6(@ui5/project@4.0.4(@ui5/builder@4.0.7))(typescript@5.8.3)
+
+  examples/packages/ordersv2freestylenondraftopenui596:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.2.97
+        version: 2.2.97
+      '@sap/ux-ui5-tooling':
+        specifier: 1.18.0
+        version: 1.18.0(encoding@0.1.13)
+      '@ui5/cli':
+        specifier: 4.0.18
+        version: 4.0.18
+      ui5-middleware-ui5:
+        specifier: 3.3.0
+        version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(@ui5/server@4.0.6)
+      ui5-tooling-modules:
+        specifier: 3.27.6
+        version: 3.27.6(@ui5/project@4.0.4(@ui5/builder@4.0.7))(typescript@5.8.3)
+
   examples/packages/ordersv4fe:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.2.97
+        version: 2.2.97
+      '@sap/ux-specification':
+        specifier: ^1.124.18
+        version: 1.124.18
+      '@sap/ux-ui5-tooling':
+        specifier: 1.18.0
+        version: 1.18.0(encoding@0.1.13)
+      '@ui5/cli':
+        specifier: 4.0.18
+        version: 4.0.18
+      estree-walker:
+        specifier: ^3.0.3
+        version: 3.0.3
+      ui5-middleware-serveframework:
+        specifier: 3.6.0
+        version: 3.6.0(@ui5/builder@4.0.7)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(encoding@0.1.13)
+      ui5-middleware-simpleproxy:
+        specifier: 3.4.2
+        version: 3.4.2
+      ui5-middleware-ui5:
+        specifier: 3.3.0
+        version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(@ui5/server@4.0.6)
+      ui5-task-btp-manifest:
+        specifier: 0.2.2
+        version: 0.2.2
+      ui5-tooling-modules:
+        specifier: 3.27.6
+        version: 3.27.6(@ui5/project@4.0.4(@ui5/builder@4.0.7))(typescript@5.8.3)
+
+  examples/packages/ordersv4fe108:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.2.97
+        version: 2.2.97
+      '@sap/ux-specification':
+        specifier: ^1.124.18
+        version: 1.124.18
+      '@sap/ux-ui5-tooling':
+        specifier: 1.18.0
+        version: 1.18.0(encoding@0.1.13)
+      '@ui5/cli':
+        specifier: 4.0.18
+        version: 4.0.18
+      estree-walker:
+        specifier: ^3.0.3
+        version: 3.0.3
+      ui5-middleware-serveframework:
+        specifier: 3.6.0
+        version: 3.6.0(@ui5/builder@4.0.7)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(encoding@0.1.13)
+      ui5-middleware-simpleproxy:
+        specifier: 3.4.2
+        version: 3.4.2
+      ui5-middleware-ui5:
+        specifier: 3.3.0
+        version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(@ui5/server@4.0.6)
+      ui5-task-btp-manifest:
+        specifier: 0.2.2
+        version: 0.2.2
+      ui5-tooling-modules:
+        specifier: 3.27.6
+        version: 3.27.6(@ui5/project@4.0.4(@ui5/builder@4.0.7))(typescript@5.8.3)
+
+  examples/packages/ordersv4fe120:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.2.97
+        version: 2.2.97
+      '@sap/ux-specification':
+        specifier: ^1.124.18
+        version: 1.124.18
+      '@sap/ux-ui5-tooling':
+        specifier: 1.18.0
+        version: 1.18.0(encoding@0.1.13)
+      '@ui5/cli':
+        specifier: 4.0.18
+        version: 4.0.18
+      estree-walker:
+        specifier: ^3.0.3
+        version: 3.0.3
+      ui5-middleware-serveframework:
+        specifier: 3.6.0
+        version: 3.6.0(@ui5/builder@4.0.7)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(encoding@0.1.13)
+      ui5-middleware-simpleproxy:
+        specifier: 3.4.2
+        version: 3.4.2
+      ui5-middleware-ui5:
+        specifier: 3.3.0
+        version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(@ui5/server@4.0.6)
+      ui5-task-btp-manifest:
+        specifier: 0.2.2
+        version: 0.2.2
+      ui5-tooling-modules:
+        specifier: 3.27.6
+        version: 3.27.6(@ui5/project@4.0.4(@ui5/builder@4.0.7))(typescript@5.8.3)
+
+  examples/packages/ordersv4fe71:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.2.97
+        version: 2.2.97
+      '@sap/ux-specification':
+        specifier: ^1.124.18
+        version: 1.124.18
+      '@sap/ux-ui5-tooling':
+        specifier: 1.18.0
+        version: 1.18.0(encoding@0.1.13)
+      '@ui5/cli':
+        specifier: 4.0.18
+        version: 4.0.18
+      estree-walker:
+        specifier: ^3.0.3
+        version: 3.0.3
+      ui5-middleware-serveframework:
+        specifier: 3.6.0
+        version: 3.6.0(@ui5/builder@4.0.7)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(encoding@0.1.13)
+      ui5-middleware-simpleproxy:
+        specifier: 3.4.2
+        version: 3.4.2
+      ui5-middleware-ui5:
+        specifier: 3.3.0
+        version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(@ui5/server@4.0.6)
+      ui5-task-btp-manifest:
+        specifier: 0.2.2
+        version: 0.2.2
+      ui5-tooling-modules:
+        specifier: 3.27.6
+        version: 3.27.6(@ui5/project@4.0.4(@ui5/builder@4.0.7))(typescript@5.8.3)
+
+  examples/packages/ordersv4fe84:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.2.97
+        version: 2.2.97
+      '@sap/ux-specification':
+        specifier: ^1.124.18
+        version: 1.124.18
+      '@sap/ux-ui5-tooling':
+        specifier: 1.18.0
+        version: 1.18.0(encoding@0.1.13)
+      '@ui5/cli':
+        specifier: 4.0.18
+        version: 4.0.18
+      estree-walker:
+        specifier: ^3.0.3
+        version: 3.0.3
+      ui5-middleware-serveframework:
+        specifier: 3.6.0
+        version: 3.6.0(@ui5/builder@4.0.7)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(encoding@0.1.13)
+      ui5-middleware-simpleproxy:
+        specifier: 3.4.2
+        version: 3.4.2
+      ui5-middleware-ui5:
+        specifier: 3.3.0
+        version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(@ui5/server@4.0.6)
+      ui5-task-btp-manifest:
+        specifier: 0.2.2
+        version: 0.2.2
+      ui5-tooling-modules:
+        specifier: 3.27.6
+        version: 3.27.6(@ui5/project@4.0.4(@ui5/builder@4.0.7))(typescript@5.8.3)
+
+  examples/packages/ordersv4fe96:
     dependencies:
       ui5-cc-spreadsheetimporter:
         specifier: link:../../../packages/ui5-cc-spreadsheetimporter
@@ -368,6 +1023,46 @@ importers:
         specifier: 3.8.0
         version: 3.8.0(@ui5/ts-interface-generator@0.10.0(typescript@5.8.3))
 
+  examples/packages/ordersv4fets120:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.2.97
+        version: 2.2.97
+      '@sap/ux-specification':
+        specifier: ^1.124.18
+        version: 1.124.18
+      '@sap/ux-ui5-tooling':
+        specifier: 1.18.0
+        version: 1.18.0(encoding@0.1.13)
+      '@sapui5/ts-types-esm':
+        specifier: ~1.136.2
+        version: 1.136.2
+      '@typescript-eslint/eslint-plugin':
+        specifier: 8.34.1
+        version: 8.34.1(@typescript-eslint/parser@8.34.1(eslint@9.29.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.29.0(jiti@2.4.2))(typescript@5.8.3)
+      '@typescript-eslint/parser':
+        specifier: 8.34.1
+        version: 8.34.1(eslint@9.29.0(jiti@2.4.2))(typescript@5.8.3)
+      '@ui5/cli':
+        specifier: ^4.0.18
+        version: 4.0.18
+      typescript:
+        specifier: 5.8.3
+        version: 5.8.3
+      ui5-middleware-ui5:
+        specifier: 3.3.0
+        version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(@ui5/server@4.0.6)
+      ui5-tooling-modules:
+        specifier: 3.27.6
+        version: 3.27.6(@ui5/project@4.0.4(@ui5/builder@4.0.7))(typescript@5.8.3)
+      ui5-tooling-transpile:
+        specifier: 3.8.0
+        version: 3.8.0(@ui5/ts-interface-generator@0.10.0(typescript@5.8.3))
+
   examples/packages/ordersv4fpm:
     dependencies:
       ui5-cc-spreadsheetimporter:
@@ -390,7 +1085,73 @@ importers:
         specifier: 3.4.2
         version: 3.4.2
 
+  examples/packages/ordersv4fpm120:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.2.97
+        version: 2.2.97
+      '@sap/ux-specification':
+        specifier: ^1.124.18
+        version: 1.124.18
+      '@sap/ux-ui5-tooling':
+        specifier: 1.18.0
+        version: 1.18.0(encoding@0.1.13)
+      '@ui5/cli':
+        specifier: 4.0.18
+        version: 4.0.18
+      ui5-middleware-simpleproxy:
+        specifier: 3.4.2
+        version: 3.4.2
+
+  examples/packages/ordersv4fpm96:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.2.97
+        version: 2.2.97
+      '@sap/ux-specification':
+        specifier: ^1.124.18
+        version: 1.124.18
+      '@sap/ux-ui5-tooling':
+        specifier: 1.18.0
+        version: 1.18.0(encoding@0.1.13)
+      '@ui5/cli':
+        specifier: 4.0.18
+        version: 4.0.18
+      ui5-middleware-simpleproxy:
+        specifier: 3.4.2
+        version: 3.4.2
+
   examples/packages/ordersv4freestyle:
+    dependencies:
+      ui5-cc-spreadsheetimporter:
+        specifier: link:../../../packages/ui5-cc-spreadsheetimporter
+        version: link:../../../packages/ui5-cc-spreadsheetimporter
+    devDependencies:
+      '@sap-ux/ui5-middleware-fe-mockserver':
+        specifier: ^2.2.97
+        version: 2.2.97
+      '@sap/ux-ui5-tooling':
+        specifier: ^1.18.0
+        version: 1.18.0(encoding@0.1.13)
+      '@ui5/cli':
+        specifier: ^4.0.18
+        version: 4.0.18
+      ui5-middleware-ui5:
+        specifier: 3.3.0
+        version: 3.3.0(@ui5/fs@4.0.1)(@ui5/project@4.0.4(@ui5/builder@4.0.7))(@ui5/server@4.0.6)
+      ui5-tooling-modules:
+        specifier: 3.27.6
+        version: 3.27.6(@ui5/project@4.0.4(@ui5/builder@4.0.7))(typescript@5.8.3)
+
+  examples/packages/ordersv4freestyle120:
     dependencies:
       ui5-cc-spreadsheetimporter:
         specifier: link:../../../packages/ui5-cc-spreadsheetimporter

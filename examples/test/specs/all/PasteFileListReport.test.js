@@ -110,22 +110,42 @@ describe("Paste File List Report", () => {
 		await putOnClipboard({ text: textContent });
 		await BaseClass.dummyWait(500);
 
-		// Focus on the dialog content area, not the file uploader to avoid opening file selector
+		// Try to find a non-interactive area in the dialog to focus on
+		// Look for dialog title or content area that won't trigger file upload
 		try {
-			const dialog = await browser.asControl({
+			// Try to find the dialog title area first
+			const dialogTitle = await browser.asControl({
 				selector: {
-					controlType: "sap.m.Dialog",
-					properties: {
-						contentWidth: "40vw"
-					},
+					controlType: "sap.m.Title",
 					searchOpenDialogs: true
 				}
 			});
-			const $dialog = await dialog.getWebElement();
-			await $dialog.click();
+			const $dialogTitle = await dialogTitle.getWebElement();
+			await $dialogTitle.click();
+			console.log("Focused on dialog title");
 		} catch (error) {
-			console.log("Could not focus on dialog");
+			try {
+				// Fallback: try to find a text element in the dialog
+				const dialogText = await browser.asControl({
+					selector: {
+						controlType: "sap.m.Text",
+						searchOpenDialogs: true
+					}
+				});
+				const $dialogText = await dialogText.getWebElement();
+				await $dialogText.click();
+				console.log("Focused on dialog text element");
+			} catch (error2) {
+				// Last fallback: focus on document body and then trigger paste
+				await browser.execute(() => {
+					document.body.focus();
+				});
+				console.log("Focused on document body");
+			}
 		}
+
+		// Small wait before paste
+		await BaseClass.dummyWait(300);
 
 		// Trigger paste
 		await triggerPaste();
@@ -235,22 +255,41 @@ describe("Paste File List Report", () => {
 			});
 			await BaseClass.dummyWait(500);
 
-			// Focus on the dialog content area, not the file uploader to avoid opening file selector
+			// Focus on a non-interactive area in the dialog to avoid opening file selector
 			try {
-				const dialog = await browser.asControl({
+				// Try to find the dialog title area first
+				const dialogTitle = await browser.asControl({
 					selector: {
-						controlType: "sap.m.Dialog",
-						properties: {
-							contentWidth: "40vw"
-						},
+						controlType: "sap.m.Title",
 						searchOpenDialogs: true
 					}
 				});
-				const $dialog = await dialog.getWebElement();
-				await $dialog.click();
+				const $dialogTitle = await dialogTitle.getWebElement();
+				await $dialogTitle.click();
+				console.log("Focused on dialog title for file paste");
 			} catch (error) {
-				console.log("Could not focus on dialog for file paste");
+				try {
+					// Fallback: try to find a text element in the dialog
+					const dialogText = await browser.asControl({
+						selector: {
+							controlType: "sap.m.Text",
+							searchOpenDialogs: true
+						}
+					});
+					const $dialogText = await dialogText.getWebElement();
+					await $dialogText.click();
+					console.log("Focused on dialog text element for file paste");
+				} catch (error2) {
+					// Last fallback: focus on document body
+					await browser.execute(() => {
+						document.body.focus();
+					});
+					console.log("Focused on document body for file paste");
+				}
 			}
+
+			// Small wait before paste
+			await BaseClass.dummyWait(300);
 
 			// Trigger paste
 			await triggerPaste();
