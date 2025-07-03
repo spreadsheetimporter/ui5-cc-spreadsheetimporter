@@ -1,6 +1,2 @@
-# Change to the spreadsheet importer package directory
-cd packages/ui5-cc-spreadsheetimporter
-
-# Run lint-staged with relative paths
-echo "Running lint-staged on staged files..."
+echo "Running lint-staged on all staged files in the repo..."
 npx lint-staged --relative

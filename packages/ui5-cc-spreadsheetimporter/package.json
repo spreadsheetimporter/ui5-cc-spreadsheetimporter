@@ -33,11 +33,8 @@
     "lint": "eslint .",
     "lint:staged": "lint-staged",
     "lint:commit": "commitlint -e",
-    "prettier": "prettier --write .",
-    "prettier:check": "prettier --check .",
-    "prettier:staged": "pretty-quick --staged --verbose",
     "ui5lint": "ui5lint --ui5-config ui5-serve.yaml --details",
-    "hooks:pre-commit": "npm-run-all --sequential ui5lint prettier:staged",
+    "hooks:pre-commit": "npm-run-all --sequential ui5lint",
     "hooks:pre-push": "npm-run-all --sequential lint:commit",
     "hooks:commit-msg": "commitlint --edit",
     "prepare": "husky",
@@ -55,23 +52,6 @@
     "deploy:cf": "cf deploy mta_archives/archive.mtar --retries 1",
     "undeploy": "cf undeploy ui5-cc-spreadsheetimporter --delete-services --delete-service-keys",
     "lint:ui5": "ui5lint --ui5-config ui5-serve.yaml --details"
-  },
-  "lint-staged": {
-    "*.{ts,tsx,js,jsx,json,md,yaml,yml,css,html}": [
-      "prettier --write"
-    ],
-    "*.{xml}": [
-      "prettier --write"
-    ],
-    "*.properties": [
-      "prettier --write"
-    ],
-    "*.config.{js,ts,json}": [
-      "prettier --write"
-    ],
-    "*.d.ts": [
-      "prettier --write"
-    ]
   },
   "dependencies": {
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"

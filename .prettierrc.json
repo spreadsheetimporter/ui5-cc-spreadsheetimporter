@@ -5,14 +5,14 @@
   "tabWidth": 4,
   "useTabs": true,
   "trailingComma": "none",
+  "htmlWhitespaceSensitivity": "ignore",
   "overrides": [
     {
-      "files": ["*.yaml", "*.yml", "*.md", "*.json", "*.xml", "*.properties"],
+      "files": ["*.yaml", "*.yml", "*.md", "*.json"],
       "options": {
         "useTabs": false,
         "tabWidth": 2
       }
     }
-  ],
-  "plugins": ["@prettier/plugin-xml"]
+  ]
 }

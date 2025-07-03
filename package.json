@@ -24,8 +24,8 @@
     "lint": "eslint .",
     "lint:staged": "lint-staged",
     "lint:commit": "commitlint -e",
-    "prettier": "prettier --config .prettierrc.json --write '**/*.{js,ts,json,xml}'",
-    "prettier:staged": "lint-staged",
+    "prettier": "prettier --write .",
+    "prettier:check": "prettier --check .",
     "build": "pnpm --filter ui5-cc-spreadsheetimporter build",
     "replaceString": "node ./dev/replace-string.js",
     "build:mta": "pnpm --filter ui5-cc-spreadsheetimporter build:mta",
@@ -61,16 +61,14 @@
     "lint-staged": "^16.1.2",
     "npm-run-all": "^4.1.5",
     "prettier": "3.5.3",
-    "prettier-plugin-properties": "^0.3.0",
     "replace-in-file": "^8.3.0",
     "shelljs": "^0.10.0",
     "typescript": "5.8.3"
   },
   "lint-staged": {
-    "**/*.js": [
-      "prettier --write --config .prettierrc.json"
-    ],
-    "**/*.{ts,json,xml}": "prettier --write --config .prettierrc.json"
+    "*.{js,jsx,ts,tsx,json,md,yaml,yml,css,html,d.ts}": [
+      "prettier --write"
+    ]
   },
   "packageManager": "pnpm@9.3.0+sha512.ee7b93e0c2bd11409c6424f92b866f31d3ea1bef5fbe47d3c7500cdc3c9668833d2e55681ad66df5b640c61fa9dc25d546efa54d76d7f8bf54b13614ac293631"
 }

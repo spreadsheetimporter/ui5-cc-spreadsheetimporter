@@ -37,6 +37,7 @@ nav:
           - wdi5 Tests: pages/Development/wdi5.md
           - OPA5 Tests: pages/Development/opa5.md
       - Documentation: pages/Development/Docs.md
+      - Prettier & Commit Linting: pages/Development/PrettierAndCommitlint.md
       - GitHub Actions: pages/Development/GitHubActions.md
       - Sample Apps: pages/Development/SampleApps.md
       - Spreadsheet Download: pages/Development/SpreadsheetDownload.md
