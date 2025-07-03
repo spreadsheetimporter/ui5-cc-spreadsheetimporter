@@ -12,7 +12,7 @@ For information about the currently supported OData and UI5 Versions, click [her
 A quick integration tutorial for this component is available on YouTube [here](https://www.youtube.com/watch?v=dODt9ZWmi4A).
 
 !!! danger "Commercial License Required"
-    This component is licensed under the SpreadsheetImporter Commercial License since version 2.0.0. For details, see [LICENSE.md](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/LICENSE.md). The version 1.x is licensed under the Apache License 2.0 and remains free of charge but no major updates will be provided.
+This component is licensed under the SpreadsheetImporter Commercial License since version 2.0.0. For details, see [LICENSE.md](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/LICENSE.md). The version 1.x is licensed under the Apache License 2.0 and remains free of charge but no major updates will be provided.
 
 ## Feature Overview
 

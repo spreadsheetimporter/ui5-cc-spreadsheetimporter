@@ -1,28 +1,37 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:upload="sap.ui.unified" xmlns:f="sap.ui.layout.form">
-    <Dialog contentWidth="{= ${device>/system/phone} ? '100%' : '20vw' }" contentHeight="auto" verticalScrolling="false">
-        <customHeader>
-            <OverflowToolbar>
-                <Title text="{i18n>spreadsheetimporter.spreadsheetDownloadOptionsDialogTitle}" />
-                <ToolbarSpacer />
-            </OverflowToolbar>
-        </customHeader>
-        <content>
-            <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" class="centered">
-                <f:content>
-                    <Label text="{i18n>spreadsheetimporter.spreadsheetDownloadDialogFilename}" />
-                    <Input value="{spreadsheetOptions>/filename}" />
-                    <Label text="{i18n>spreadsheetimporter.spreadsheetDownloadDialogForeignKeys}" />
-                    <CheckBox selected="{spreadsheetOptions>/addKeysToExport}" />
-                    <Label text="{i18n>spreadsheetimporter.spreadsheetDownloadDialogDeepExport}" />
-                    <CheckBox selected="{spreadsheetOptions>/deepExport}" />
-                    <Label text="{i18n>spreadsheetimporter.spreadsheetDownloadDialogDeepLevel}" />
-                    <Input value="{spreadsheetOptions>/deepLevel}" />
-                </f:content>
-            </f:SimpleForm>
-        </content>
-        <buttons>
-            <Button text="{i18n>spreadsheetimporter.startDownloadingSpreadsheet}" press=".onSave" type="Emphasized" />
-            <Button text="{i18n>spreadsheetimporter.closeSpreadsheetDownloadDialog}" press=".onCancel" />
-        </buttons>
-    </Dialog>
+  <Dialog contentWidth="{= ${device>/system/phone} ? '100%' : '20vw' }" contentHeight="auto" verticalScrolling="false">
+    <customHeader>
+      <OverflowToolbar>
+        <Title text="{i18n>spreadsheetimporter.spreadsheetDownloadOptionsDialogTitle}" />
+        <ToolbarSpacer />
+      </OverflowToolbar>
+    </customHeader>
+    <content>
+      <f:SimpleForm
+        editable="true"
+        layout="ResponsiveGridLayout"
+        labelSpanXL="3"
+        labelSpanL="3"
+        labelSpanM="3"
+        labelSpanS="12"
+        adjustLabelSpan="false"
+        class="centered"
+      >
+        <f:content>
+          <Label text="{i18n>spreadsheetimporter.spreadsheetDownloadDialogFilename}" />
+          <Input value="{spreadsheetOptions>/filename}" />
+          <Label text="{i18n>spreadsheetimporter.spreadsheetDownloadDialogForeignKeys}" />
+          <CheckBox selected="{spreadsheetOptions>/addKeysToExport}" />
+          <Label text="{i18n>spreadsheetimporter.spreadsheetDownloadDialogDeepExport}" />
+          <CheckBox selected="{spreadsheetOptions>/deepExport}" />
+          <Label text="{i18n>spreadsheetimporter.spreadsheetDownloadDialogDeepLevel}" />
+          <Input value="{spreadsheetOptions>/deepLevel}" />
+        </f:content>
+      </f:SimpleForm>
+    </content>
+    <buttons>
+      <Button text="{i18n>spreadsheetimporter.startDownloadingSpreadsheet}" press=".onSave" type="Emphasized" />
+      <Button text="{i18n>spreadsheetimporter.closeSpreadsheetDownloadDialog}" press=".onCancel" />
+    </buttons>
+  </Dialog>
 </core:FragmentDefinition>

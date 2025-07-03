@@ -1,15 +1,14 @@
 The following events can be used as extension points to intervene and manipulate data:
 
-| Event                | Description                                                                                        | Available since |
-| -------------------- | -------------------------------------------------------------------------------------------------- | --------------- |
-| `preFileProcessing`  | Execute custom logic before processing the spreadsheet file starts                                 | 1.2.0           |
-| `checkBeforeRead`    | Check data before it is uploaded to the UI5                                                        | Initial release |
-| `changeBeforeCreate` | Change data before it is sent to the backend                                                       | Initial release |
-| `requestCompleted`   | Event when the request is completed                                                                | 0.28.0          |
-| `uploadButtonPress`  | Fired when the `Upload` button is pressed, possible to prevent data from being sent to the backend | 0.13.0          |
-| `beforeDownloadFileProcessing`  | Fired before the data is converted to a spreadsheet file | 1.5.0           |
-| `beforeDownloadFileExport`      | Fired just before the file is downloaded                                                  | 1.5.0           |
-
+| Event                          | Description                                                                                        | Available since |
+| ------------------------------ | -------------------------------------------------------------------------------------------------- | --------------- |
+| `preFileProcessing`            | Execute custom logic before processing the spreadsheet file starts                                 | 1.2.0           |
+| `checkBeforeRead`              | Check data before it is uploaded to the UI5                                                        | Initial release |
+| `changeBeforeCreate`           | Change data before it is sent to the backend                                                       | Initial release |
+| `requestCompleted`             | Event when the request is completed                                                                | 0.28.0          |
+| `uploadButtonPress`            | Fired when the `Upload` button is pressed, possible to prevent data from being sent to the backend | 0.13.0          |
+| `beforeDownloadFileProcessing` | Fired before the data is converted to a spreadsheet file                                           | 1.5.0           |
+| `beforeDownloadFileExport`     | Fired just before the file is downloaded                                                           | 1.5.0           |
 
 You can attach async functions to the events by wrapping the function in a `Promise`. See [Attach async functions to events](#attach-async-functions-to-events) for more information.
 
@@ -22,20 +21,20 @@ The `file` is available in the event and can be manipulated. If you want to prev
 
 ```javascript
 this.spreadsheetUpload.attachPreFileProcessing(function (event) {
-// example
-let file = event.getParameter("file");
-if (file.name.endsWith(".txt")) {
+  // example
+  let file = event.getParameter('file');
+  if (file.name.endsWith('.txt')) {
     // prevent processing of file
     event.preventDefault();
     // show custom ui5 error message
-    new MessageToast.show("File with .txt extension is not allowed");
+    new MessageToast.show('File with .txt extension is not allowed');
     // change the file that will be processed
     // Create a Blob with some text content
-    const blob = new Blob(["This is some dummy text content"], { type: "text/plain" });
+    const blob = new Blob(['This is some dummy text content'], { type: 'text/plain' });
     // Create a File object from the Blob
-    const file2 = new File([blob], "TEXT.txt", { type: "text/plain" });
+    const file2 = new File([blob], 'TEXT.txt', { type: 'text/plain' });
     return file2;
-}
+  }
 });
 ```
 
@@ -48,26 +47,26 @@ When the file is uploaded to the app, the `checkBeforeRead` event is fired.
 This sample is from the [sample app](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/47d22cdc42aa1cacfd797bdc0e025b830330dc5e/examples/packages/ordersv4fe/webapp/ext/ObjectPageExtController.js#L24-L42). It checks whether the price is over 100.
 
 ```javascript
-this.spreadsheetUpload.attachCheckBeforeRead(function(event) {
-    // example
-    const sheetdata = event.getParameter("sheetData");
-    let errorArray = [];
-    for (const [index, row] of sheetData.entries()) {
-        // Check for invalid price
-        for (const key in row) {
-            if (key.endsWith("[price]") && row[key].rawValue > 100) {
-                const error = {
-                    title: "Price too high (max 100)",
-                    row: index + 2,
-                    group: true,
-                    rawValue: row[key].rawValue,
-                    ui5type: "Error"
-                };
-                errorArray.push(error);
-            }
-        }
+this.spreadsheetUpload.attachCheckBeforeRead(function (event) {
+  // example
+  const sheetdata = event.getParameter('sheetData');
+  let errorArray = [];
+  for (const [index, row] of sheetData.entries()) {
+    // Check for invalid price
+    for (const key in row) {
+      if (key.endsWith('[price]') && row[key].rawValue > 100) {
+        const error = {
+          title: 'Price too high (max 100)',
+          row: index + 2,
+          group: true,
+          rawValue: row[key].rawValue,
+          ui5type: 'Error'
+        };
+        errorArray.push(error);
+      }
     }
-    event.getSource().addArrayToMessages(errorArray);
+  }
+  event.getSource().addArrayToMessages(errorArray);
 }, this);
 ```
 
@@ -85,7 +84,7 @@ Errors with the same title will be grouped.
 
 ## Event `changeBeforeCreate`
 
-When the `Upload` button is pressed, the `changeBeforeCreate` event is fired.  Use this event to manipulate the data before it is sent to the backend. The event expects a payload object to be returned.  
+When the `Upload` button is pressed, the `changeBeforeCreate` event is fired. Use this event to manipulate the data before it is sent to the backend. The event expects a payload object to be returned.  
 Make sure only one handler is attached to this event. If multiple handlers are attached, only the first payload will be used.
 
 ### Example
@@ -94,12 +93,12 @@ This sample is from the [sample app](https://github.com/spreadsheetimporter/ui5-
 
 ```javascript
 this.spreadsheetUpload.attachChangeBeforeCreate(function (event) {
-    let payload = event.getParameter("payload");
-    // round number from 12,56 to 12,6
-    if (payload.price) {
-        payload.price = Number(payload.price.toFixed(1));
-    }
-    return payload;
+  let payload = event.getParameter('payload');
+  // round number from 12,56 to 12,6
+  if (payload.price) {
+    payload.price = Number(payload.price.toFixed(1));
+  }
+  return payload;
 }, this);
 ```
 
@@ -111,12 +110,12 @@ When the request is completed, the `requestCompleted` event is fired. Use the `s
 
 ```javascript
 this.spreadsheetUpload.attachRequestCompleted(function (event) {
-    const success = event.getParameter("success");
-    if (success) {
-        console.log("Request Completed");
-    } else {
-        console.log("Request Failed");
-    }
+  const success = event.getParameter('success');
+  if (success) {
+    console.log('Request Completed');
+  } else {
+    console.log('Request Failed');
+  }
 }, this);
 ```
 
@@ -128,10 +127,10 @@ When the `Upload` button is pressed, the `uploadButtonPress` event is fired. The
 
 ```javascript
 this.spreadsheetUpload.attachUploadButtonPress(function (event) {
-    // Prevent data from being sent to the backend
-    event.preventDefault();
-    // Get payload
-    const payload = event.getParameter("payload");
+  // Prevent data from being sent to the backend
+  event.preventDefault();
+  // Get payload
+  const payload = event.getParameter('payload');
 }, this);
 ```
 
@@ -141,29 +140,31 @@ You can also use this event to sent the data to the backend and add possible err
 
 ```javascript
 this.spreadsheetUpload.attachUploadButtonPress(async function (event) {
-    event.preventDefault();
-    
-    event.getSource().addArrayToMessages([{
-        title: "Error on creating",
-        group: false,
-        ui5type: "Error"
-    }]);
+  event.preventDefault();
 
-    // simulate async call
-    await new Promise((resolve) => {
-        // Wait for 2 seconds
-        setTimeout(() => {
-            resolve();
-        }, 2000);
-    });
+  event.getSource().addArrayToMessages([
+    {
+      title: 'Error on creating',
+      group: false,
+      ui5type: 'Error'
+    }
+  ]);
 
-    // Code here will execute after the 2-second wait
+  // simulate async call
+  await new Promise(resolve => {
+    // Wait for 2 seconds
+    setTimeout(() => {
+      resolve();
+    }, 2000);
+  });
+
+  // Code here will execute after the 2-second wait
 }, this);
 ```
 
 ## Event `beforeDownloadFileProcessing`
 
-Parameters:  
+Parameters:
 
 - `data`- the data that will be converted to a spreadsheet file, the data is always the `$XYZData` property of the data object
 
@@ -197,8 +198,6 @@ Parameters:
 
 This event is fired just before the file is downloaded. Use this event to manipulate the filename or other parameters before the file is downloaded.
 
-
-
 ### Example
 
 ```javascript
@@ -215,35 +214,35 @@ onBeforeDownloadFileExport: function (event) {
 }
 ```
 
-
 ## Attach async functions to events
 
 You can attach async functions to the events by wrapping the function in a `Promise`. This allows you to send a request to the backend for checks that are not possible in the frontend, for example with a function import.
 
 ```javascript
 // Init spreadsheet upload
-this.spreadsheetUpload = await this.editFlow.getView()
-        .getController()
-        .getAppComponent()
-        .createComponent({
-            usage: "spreadsheetImporter",
-            async: true,
-            componentData: {
-                context: this,
-                activateDraft: true
-            }
-        });
+this.spreadsheetUpload = await this.editFlow
+  .getView()
+  .getController()
+  .getAppComponent()
+  .createComponent({
+    usage: 'spreadsheetImporter',
+    async: true,
+    componentData: {
+      context: this,
+      activateDraft: true
+    }
+  });
 
 // Event to check before uploading to app
 this.spreadsheetUpload.attachCheckBeforeRead(async function (event) {
-    return new Promise(async (resolve, reject) => {
-        // Example
-        console.log("Start async wait");
-        await new Promise((resolve) => setTimeout(resolve, 5000));
-        console.log("End async wait");
-        // Don't forget to resolve the promise
-        resolve();
-    });
+  return new Promise(async (resolve, reject) => {
+    // Example
+    console.log('Start async wait');
+    await new Promise(resolve => setTimeout(resolve, 5000));
+    console.log('End async wait');
+    // Don't forget to resolve the promise
+    resolve();
+  });
 }, this);
 ```
 
@@ -254,8 +253,9 @@ Using this approach, you are able to validate the data in the backend with Actio
 
 ### Validating with CAP Backend Actions
 
-You can implement backend validation using an unbound action in CAP (Cloud Application Programming model) to check data before it gets saved. 
+You can implement backend validation using an unbound action in CAP (Cloud Application Programming model) to check data before it gets saved.
 You can find the files here:
+
 - [schema.cds](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/examples/packages/server/db/schema.cds)
 - [orders-service.cds](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/examples/packages/server/srv/orders-service.cds)
 - [orders-service.js](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/examples/packages/server/srv/orders-service.js)
@@ -279,7 +279,7 @@ type ShippingDetailResult {
   row        : Integer;
   group      : Boolean;
   rawValue   : String;
-  ui5type: String; 
+  ui5type: String;
   value      : String;
 }
 
@@ -307,26 +307,26 @@ service OrdersService {
 #### 3. Implement the Action Handler (orders-service.js)
 
 ```javascript
-const cds = require("@sap/cds");
+const cds = require('@sap/cds');
 class OrdersService extends cds.ApplicationService {
   /** register custom handlers */
   init() {
     const { OrderItems } = this.entities;
-    
+
     // Register action handler for checking shipping details
-    this.on("checkShippingDetails", async (req) => {
+    this.on('checkShippingDetails', async req => {
       const { shippingDetails } = req.data;
       const errors = [];
-      
+
       // Process each shipping detail entry
       for (const shippingDetail of shippingDetails) {
         const { city, row } = shippingDetail;
-        
+
         if (city) {
           try {
             // Query order items to see if city name is used in any product title
             const orderItems = await SELECT.from(OrderItems).where(`title like '%${city}%'`);
-            
+
             if (orderItems && orderItems.length > 0) {
               // Create error for city found in product titles
               errors.push({
@@ -334,24 +334,24 @@ class OrdersService extends cds.ApplicationService {
                 row: row || 0,
                 group: true,
                 rawValue: city,
-                messageType: "Warning",
+                messageType: 'Warning',
                 value: city
               });
             }
           } catch (error) {
-            console.error("Error in city check:", error);
+            console.error('Error in city check:', error);
             errors.push({
               title: `Error checking city "${city}"`,
               row: row || 0,
               group: true,
               rawValue: city,
-              messageType: "Error",
+              messageType: 'Error',
               value: city
             });
           }
         }
       }
-      
+
       // Return the list of errors/warnings
       return { value: errors };
     });
@@ -374,64 +374,66 @@ this.spreadsheetUploadTableShipping.attachCheckBeforeRead(async function (event)
       const uploadDialog = source.spreadsheetUpload.getSpreadsheetUploadDialog();
       uploadDialog.setBusyIndicatorDelay(0);
       uploadDialog.setBusy(true);
-      
+
       // Get the parsed data from the spreadsheet
-      const parsedData = eventParameters["parsedData"];
-      
+      const parsedData = eventParameters['parsedData'];
+
       // Prepare shipping details to be checked by the backend
       const shippingDetails = [];
       for (const [index, row] of parsedData.entries()) {
         if (row.city) {
           shippingDetails.push({
             city: row.city,
-            address: row.address || "",
+            address: row.address || '',
             row: index + 2 // Adjust for header row and zero-indexing
           });
         }
       }
-      
+
       // Skip check if no shipping details with cities are present
       if (shippingDetails.length === 0) {
         uploadDialog.setBusy(false);
         resolve();
         return;
       }
-      
+
       // Get the model and call the unbound action
       const model = this.getModel();
       const actionBinding = model.bindContext('/OrdersService/checkShippingDetails(...)');
       actionBinding.setParameter('shippingDetails', shippingDetails);
-      
+
       try {
         await actionBinding.execute();
-        
+
         // Get the result from the action
         const actionResult = actionBinding.getBoundContext().getObject();
-        
+
         // Add errors to the spreadsheet uploader component to be displayed
         if (actionResult && actionResult.value && actionResult.value.length > 0) {
           source.addArrayToMessages(actionResult.value);
         }
       } catch (actionError) {
-        console.error("Error executing action:", actionError);
-        source.addArrayToMessages([{
-          title: "Error checking city names",
-          row: 0,
-          group: true,
-          rawValue: "Error in backend check",
-          ui5type: "Error"
-        }]);
+        console.error('Error executing action:', actionError);
+        source.addArrayToMessages([
+          {
+            title: 'Error checking city names',
+            row: 0,
+            group: true,
+            rawValue: 'Error in backend check',
+            ui5type: 'Error'
+          }
+        ]);
       }
-      
+
       uploadDialog.setBusy(false);
     } catch (error) {
-      console.error("Error during city check:", error);
+      console.error('Error during city check:', error);
       const uploadDialog = event.getSource().spreadsheetUpload.getSpreadsheetUploadDialog();
       if (uploadDialog) {
         uploadDialog.setBusy(false);
       }
     }
-    
+
     // Important! Don't forget to resolve the promise
     resolve();
   });
@@ -440,10 +442,10 @@ this.spreadsheetUploadTableShipping.attachCheckBeforeRead(async function (event)
 
 ### Validating with RAP Backend Actions
 
-For SAP S/4HANA or BTP ABAP environments, you can use the RAP (RESTful ABAP Programming) model to implement similar validations using unbound actions.  
+For SAP S/4HANA or BTP ABAP environments, you can use the RAP (RESTful ABAP Programming) model to implement similar validations using unbound actions.
 
 !!! warning
-    This is just sample code to show how it could be done. It is not tested and might not work as expected.
+This is just sample code to show how it could be done. It is not tested and might not work as expected.
 
 #### 1. Define the Action in Behavior Definition
 
@@ -451,10 +453,10 @@ For SAP S/4HANA or BTP ABAP environments, you can use the RAP (RESTful ABAP Prog
 define behavior for ZI_OrderDocument alias Order
 {
   // ... other behavior definitions
-  
-  action checkCityNames deep parameter ZI_CITY_CHECK_ROOT 
+
+  action checkCityNames deep parameter ZI_CITY_CHECK_ROOT
     result [0..*] ZI_CITY_CHECK_RETURN;
-    
+
   // ... other behavior definitions
 }
 ```
@@ -487,7 +489,7 @@ METHOD checkCityNames.
   IF lines( lt_order ) NE 1.
     " Return error if order not found
     APPEND VALUE #( guid = lv_guid
-       %param = VALUE zi_city_check_return( 
+       %param = VALUE zi_city_check_return(
                      row_number = 0
                      title = 'Order not found'
                      messageType = 'E'
@@ -499,24 +501,24 @@ METHOD checkCityNames.
   LOOP AT shipping_details ASSIGNING FIELD-SYMBOL(<detail>).
     " Extract city name
     DATA(lv_city) = <detail>-city.
-    
+
     IF lv_city IS NOT INITIAL.
       " Check if city exists in any product titles
-      SELECT COUNT(*) 
-        FROM zorderitems 
+      SELECT COUNT(*)
+        FROM zorderitems
         WHERE title LIKE '%' && lv_city && '%'
         INTO @DATA(lv_count).
-      
+
       IF lv_count > 0.
         " Add warning if city is found in product titles
         APPEND VALUE #( guid = lv_guid
-          %param = VALUE zi_city_check_return( 
+          %param = VALUE zi_city_check_return(
             row_number = <detail>-row_number
             title = |City "{ lv_city }" found in product title|
             messageType = 'W'
             value = lv_city ) ) TO result.
       ENDIF.
-      
+
       " Additional validations can be added here
       " For example, check address format, postal code validity, etc.
       lr_validator->check_address_format(
@@ -535,70 +537,66 @@ ENDMETHOD.
 #### 3. Call the Action from Frontend
 
 ```javascript
-this.spreadsheetUpload.attachCheckBeforeRead(async (oEvent) => {
+this.spreadsheetUpload.attachCheckBeforeRead(async oEvent => {
   return new Promise(async (resolve, reject) => {
     const eventParameter = oEvent.getParameters();
     const source = oEvent.getSource();
     const uploadDialog = source.spreadsheetUpload.getSpreadsheetUploadDialog();
     uploadDialog.setBusyIndicatorDelay(0);
     uploadDialog.setBusy(true);
-    
+
     try {
-      const parsedData = eventParameter["parsedData"];
-      
+      const parsedData = eventParameter['parsedData'];
+
       // Prepare shipping details to be checked by the backend
       const shippingDetails = [];
       for (const [index, row] of parsedData.entries()) {
         if (row.city) {
           shippingDetails.push({
             city: row.city,
-            address: row.address || "",
-            postal_code: row.postalCode || "",
-            country: row.country || "",
+            address: row.address || '',
+            postal_code: row.postalCode || '',
+            country: row.country || '',
             row_number: row.__rowNum__ + 1 // Add 1 to account for header row
           });
         }
       }
-      
+
       // Skip check if no shipping details with cities are present
       if (shippingDetails.length === 0) {
         uploadDialog.setBusy(false);
         resolve();
         return;
       }
-      
+
       // Prepare action parameter structure
-      const actionParameterObject = { "_shipping": shippingDetails };
-      
+      const actionParameterObject = { _shipping: shippingDetails };
+
       // Get context and create action
       const context = this.getBindingContext();
-      const action = this.getModel().bindContext(
-        "com.sap.gateway.srvd.orders.v0001.checkCityNames(...)", 
-        context
-      );
-      
+      const action = this.getModel().bindContext('com.sap.gateway.srvd.orders.v0001.checkCityNames(...)', context);
+
       // Add shipping details as parameters to the action
       action.setParameter('_shipping', shippingDetails);
-      
+
       // Execute the action and wait for the result
       await action.execute();
-      
+
       // Get results of the backend checks
       const actionResult = action.getBoundContext().getObject();
       let errorsArray = [];
-      
+
       for (const [index, row] of actionResult.value.entries()) {
         const error = {
           title: row.title,
           row: row.row_number,
           group: true,
           rawValue: row.value,
-          ui5type: row.messageType === 'W' ? 'Warning' : 
-                   row.messageType === 'E' ? 'Error' : 'Information'
+          ui5type: row.messageType === 'W' ? 'Warning' : row.messageType === 'E' ? 'Error' : 'Information'
         };
         errorsArray.push(error);
       }
-      
+
       if (errorsArray.length > 0) {
         // Sort by row number in Excel file
         errorsArray.sort((a, b) => a.row - b.row);
@@ -608,15 +606,17 @@ this.spreadsheetUpload.attachCheckBeforeRead(async (oEvent) => {
     } catch (error) {
       uploadDialog.setBusy(false);
       // Add generic error message
-      source.addArrayToMessages([{
-        title: "Error checking shipping details",
-        row: 0,
-        group: true,
-        rawValue: "Error in backend validation",
-        ui5type: "Error"
-      }]);
+      source.addArrayToMessages([
+        {
+          title: 'Error checking shipping details',
+          row: 0,
+          group: true,
+          rawValue: 'Error in backend validation',
+          ui5type: 'Error'
+        }
+      ]);
     }
-    
+
     uploadDialog.setBusy(false);
     // Important! This must not be deleted
     // This tells the component that the code can continue
@@ -626,4 +626,3 @@ this.spreadsheetUpload.attachCheckBeforeRead(async (oEvent) => {
 ```
 
 Both approaches (CAP and RAP) provide powerful ways to validate spreadsheet data on the server side before it's committed to the database, allowing for more complex business rules and validation than what would be possible in the frontend alone.
-

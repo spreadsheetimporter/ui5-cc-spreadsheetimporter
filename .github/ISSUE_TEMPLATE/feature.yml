@@ -1,7 +1,7 @@
 name: Feature Suggestion
 description: Suggest a new feature
-title: "[FEAT]: "
-labels: ["enhancement", "external"]
+title: '[FEAT]: '
+labels: ['enhancement', 'external']
 assignees:
   - marianfoo
 body:

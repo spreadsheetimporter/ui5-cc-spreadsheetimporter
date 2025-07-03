@@ -30,6 +30,7 @@ The CLA Assistant will automatically update the status of your PR once you've si
 ### Why We Need a CLA
 
 The CLA helps us:
+
 - Ensure we have the necessary rights to use and distribute your contributions
 - Protect both contributors and the project
 - Make it clear how contributions can be used
@@ -37,16 +38,19 @@ The CLA helps us:
 ## Development Setup
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter.git
    ```
 
 2. Install dependencies:
+
    ```bash
    pnpm install
    ```
 
 3. Start the development server:
+
    ```bash
    pnpm start:server
    ```
@@ -78,8 +82,9 @@ The CLA helps us:
 ## Questions?
 
 If you have any questions, feel free to:
+
 1. Open an issue
 2. Join our discussions
 3. Contact the maintainers
 
-Thank you for contributing! 
+Thank you for contributing!

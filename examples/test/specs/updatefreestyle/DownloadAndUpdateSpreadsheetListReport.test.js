@@ -139,10 +139,10 @@ describe("Download Spreadsheet List Report", () => {
 			const response = await fetch(url, {
 				method: "POST",
 				headers: {
-					'Accept': 'application/json;odata.metadata=minimal;IEEE754Compatible=true',
-					'Content-Type': 'application/json;charset=UTF-8;IEEE754Compatible=true',
-					'Accept-Language': 'en',
-					'Prefer': 'handling=strict'
+					Accept: "application/json;odata.metadata=minimal;IEEE754Compatible=true",
+					"Content-Type": "application/json;charset=UTF-8;IEEE754Compatible=true",
+					"Accept-Language": "en",
+					Prefer: "handling=strict"
 				},
 				body: JSON.stringify({
 					PreserveChanges: true
@@ -248,11 +248,11 @@ describe("Download Spreadsheet List Report", () => {
 		const modelData = await messageDialog.getModel("messages");
 		const errorData = await modelData.getData();
 		const error = errorData._baseObject[0];
-		expect(error.title).toEqual('Active and draft entity mismatch');
+		expect(error.title).toEqual("Active and draft entity mismatch");
 		expect(error.details.length).toEqual(2);
-		expect(error.details[0].description).toEqual('Uploaded Object ID=64e718c9-ff99-47f1-8ca3-950c850777d6, IsActiveEntity=true has Active status, but the current entity is Draft');
-		expect(error.details[1].description).toEqual('Uploaded Object ID=64e718c9-ff99-47f1-8ca3-950c850777d7, IsActiveEntity=false has Draft status, but the current entity is Active');
-	})
+		expect(error.details[0].description).toEqual("Uploaded Object ID=64e718c9-ff99-47f1-8ca3-950c850777d6, IsActiveEntity=true has Active status, but the current entity is Draft");
+		expect(error.details[1].description).toEqual("Uploaded Object ID=64e718c9-ff99-47f1-8ca3-950c850777d7, IsActiveEntity=false has Draft status, but the current entity is Active");
+	});
 
 	it("continue and upload data", async () => {
 		const continueAynwayButton = await browser.asControl({
@@ -275,8 +275,7 @@ describe("Download Spreadsheet List Report", () => {
 			}
 		});
 		await continueButton.press();
-
-	})
+	});
 
 	it("check if the file is uploaded", async () => {
 		await BaseClass.dummyWait(4000);
@@ -329,7 +328,7 @@ describe("Download Spreadsheet List Report", () => {
 		} catch (error) {
 			throw new Error(`Failed to update excel file: ${error.message}`);
 		}
-	})
+	});
 
 	it("upload file again", async () => {
 		await BaseUploadClass.uploadFile(

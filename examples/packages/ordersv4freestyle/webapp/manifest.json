@@ -129,30 +129,22 @@
         {
           "name": "RouteMainView",
           "pattern": ":?query:",
-          "target": [
-            "TargetMainView"
-          ]
+          "target": ["TargetMainView"]
         },
         {
           "name": "RouteOrdersTable",
           "pattern": "orders",
-          "target": [
-            "TargetOrdersTable"
-          ]
+          "target": ["TargetOrdersTable"]
         },
         {
           "name": "RouteWizard",
           "pattern": "wizard",
-          "target": [
-            "TargetWizard"
-          ]
+          "target": ["TargetWizard"]
         },
         {
           "name": "RouteCDSPlugin",
           "pattern": "cdsplugin",
-          "target": [
-            "TargetCDSPlugin"
-          ]
+          "target": ["TargetCDSPlugin"]
         }
       ],
       "targets": {

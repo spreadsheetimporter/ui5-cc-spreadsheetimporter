@@ -32,7 +32,7 @@ Make sure the plugin is added to your CAP project's package.json:
 {
   "dependencies": {
     "cds-spreadsheetimporter-plugin": "^1.0.3",
-    "@sap/cds": "^8.x",
+    "@sap/cds": "^8.x"
     // other dependencies
   }
 }
@@ -85,18 +85,18 @@ There are two ways to use the CDS plugin: via the **UI5 Spreadsheet Importer com
 ### Method 1: Using UI5 Spreadsheet Importer Component
 
 !!! warning
-    This feature is available since version 2.1.0. 
+This feature is available since version 2.1.0.
 
 The simplest approach is to use the UI5 Spreadsheet Importer with the `directUploadConfig` option:
 
 ```xml
 <core:ComponentContainer
-    id="spreadsheetToCAP"
-    width="100%"
-    usage="spreadsheetImporter"
-    propagateModel="true"
-    async="true"
-    settings="{
+  id="spreadsheetToCAP"
+  width="100%"
+  usage="spreadsheetImporter"
+  propagateModel="true"
+  async="true"
+  settings="{
         directUploadConfig:{
             enabled: true,
             localhostSupport: true,
@@ -117,17 +117,17 @@ You can also use a standard UI5 FileUploader to send the file directly to the CA
 
 ```xml
 <u:FileUploader
-    id="fileUploader"
-    name="myFileUpload"
-    uploadUrl="/odata/v4/importer/Spreadsheet(entity='OrdersService.Orders')/content"
-    tooltip="Upload your file to the local server"
-    httpRequestMethod="Put"
-    sendXHR="true"
-    uploadOnChange="true"
-    style="Emphasized"
-    fileType="xlsx"
-    placeholder="Choose a file for Upload...">
-</u:FileUploader>
+  id="fileUploader"
+  name="myFileUpload"
+  uploadUrl="/odata/v4/importer/Spreadsheet(entity='OrdersService.Orders')/content"
+  tooltip="Upload your file to the local server"
+  httpRequestMethod="Put"
+  sendXHR="true"
+  uploadOnChange="true"
+  style="Emphasized"
+  fileType="xlsx"
+  placeholder="Choose a file for Upload..."
+/>
 ```
 
 ## Configuration Options
@@ -136,16 +136,16 @@ You can also use a standard UI5 FileUploader to send the file directly to the CA
 
 When using the UI5 Spreadsheet Importer component, the following `directUploadConfig` options are available:
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `enabled` | Boolean | `false` | Enables direct upload to the CAP backend |
-| `useCdsPlugin` | Boolean | `false` | Indicates that the CAP backend uses the CDS plugin |
-| `localhostSupport` | Boolean | `false` | Enables support for localhost development |
-| `localhostPort` | Number | `4004` | Port for localhost development |
-| `prependPath` | String | `null` | Custom path to prepend to the upload URL |
-| `entity` | String | Auto-detected | The CDS entity name for processing the upload |
-| `collection` | String | Auto-detected | The collection path for the entity |
-| `service` | String | Auto-detected | The service name |
+| Option             | Type    | Default       | Description                                        |
+| ------------------ | ------- | ------------- | -------------------------------------------------- |
+| `enabled`          | Boolean | `false`       | Enables direct upload to the CAP backend           |
+| `useCdsPlugin`     | Boolean | `false`       | Indicates that the CAP backend uses the CDS plugin |
+| `localhostSupport` | Boolean | `false`       | Enables support for localhost development          |
+| `localhostPort`    | Number  | `4004`        | Port for localhost development                     |
+| `prependPath`      | String  | `null`        | Custom path to prepend to the upload URL           |
+| `entity`           | String  | Auto-detected | The CDS entity name for processing the upload      |
+| `collection`       | String  | Auto-detected | The collection path for the entity                 |
+| `service`          | String  | Auto-detected | The service name                                   |
 
 ### Backend Processing Options
 
@@ -155,9 +155,9 @@ When calling the endpoint directly, you can include additional parameters:
 /odata/v4/importer/Spreadsheet(entity='OrdersService.Orders',action='UPDATE')/content
 ```
 
-| Parameter | Description |
-|-----------|-------------|
-| `entity` | **Required**. CDS entity name to import data into |
+| Parameter | Description                                       |
+| --------- | ------------------------------------------------- |
+| `entity`  | **Required**. CDS entity name to import data into |
 
 ## Complete Example
 
@@ -165,12 +165,12 @@ Here's a complete example using UI5 Spreadsheet Importer with CDS plugin integra
 
 ```xml
 <core:ComponentContainer
-    id="spreadsheetToCAP"
-    width="100%"
-    usage="spreadsheetImporter"
-    propagateModel="true"
-    async="true"
-    settings="{
+  id="spreadsheetToCAP"
+  width="100%"
+  usage="spreadsheetImporter"
+  propagateModel="true"
+  async="true"
+  settings="{
         directUploadConfig:{
             enabled: true,
             useCdsPlugin: true,
@@ -196,6 +196,7 @@ The plugin's backend implementation:
 5. Performs batch insertion into the database
 
 The core processing logic:
+
 - Extracts sheet data using `XLSX.read()`
 - Processes data from all sheets or a specific sheet
 - Maps column headers to CDS entity properties

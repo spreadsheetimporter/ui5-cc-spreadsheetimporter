@@ -57,7 +57,7 @@ sap.ui.define(["sap/m/MessageToast"], function (MessageToast) {
 							}
 						}
 					});
-			
+
 			this.spreadsheetUpload.attachPreFileProcessing(function (event) {
 				// example
 				let file = event.getParameter("file");
@@ -73,7 +73,7 @@ sap.ui.define(["sap/m/MessageToast"], function (MessageToast) {
 					const file2 = new File([blob], "TEXT.txt", { type: "text/plain" });
 					return file2;
 				}
-			})
+			});
 
 			// event to check before uploaded to app
 			this.spreadsheetUpload.attachCheckBeforeRead(function (oEvent) {

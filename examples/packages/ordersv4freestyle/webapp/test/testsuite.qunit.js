@@ -1,7 +1,7 @@
 /* global window, parent, location */
 
 // eslint-disable-next-line fiori-custom/sap-no-global-define
-window.suite = function() {
+window.suite = function () {
 	"use strict";
 
 	// eslint-disable-next-line

@@ -13,8 +13,7 @@ class BaseUpload {
 				properties: {
 					contentWidth: "40vw"
 				},
-				searchOpenDialogs: true,
-				
+				searchOpenDialogs: true
 			},
 			forceSelect: true
 		});
@@ -31,7 +30,6 @@ class BaseUpload {
 					contentWidth: "40vw"
 				},
 				searchOpenDialogs: true
-				
 			},
 			forceSelect: true
 		});
@@ -71,7 +69,7 @@ class BaseUpload {
 						text: uploadButtonText
 					}
 				},
-                forceSelect: true
+				forceSelect: true
 			})
 			.press();
 	}

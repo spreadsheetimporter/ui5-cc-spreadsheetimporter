@@ -1,4 +1,9 @@
-<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:upload="sap.ui.unified" xmlns:spreadsheetdialog="cc.spreadsheetimporter.XXXnamespaceXXX.control">
+<core:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:upload="sap.ui.unified"
+  xmlns:spreadsheetdialog="cc.spreadsheetimporter.XXXnamespaceXXX.control"
+>
   <spreadsheetdialog:SpreadsheetDialog
     contentWidth="{= ${device>/system/phone} ? '100%' : '40vw' }"
     contentHeight="{= ${info>/densityClass} === 'sapUiSizeCompact' ? '130px' : '140px'}"
@@ -8,13 +13,20 @@
       <OverflowToolbar>
         <Title text="{i18n>spreadsheetimporter.spreadsheetupload}" />
         <ToolbarSpacer />
-        <Button press=".showPreview" text="{i18n>spreadsheetimporter.showPreview}" visible="{= !${info>/hidePreview}}" enabled="{= ${info>/dataRows} > 0}" />
-        <Button press=".onInitDownloadSpreadsheetProcess"
-               text="{i18n>spreadsheetimporter.downloadDataSpreadsheet}"
-               visible="{= ${info>/showDownloadButton}}">
-               <layoutData>
-                <OverflowToolbarLayoutData priority="AlwaysOverflow"/>
-              </layoutData>
+        <Button
+          press=".showPreview"
+          text="{i18n>spreadsheetimporter.showPreview}"
+          visible="{= !${info>/hidePreview}}"
+          enabled="{= ${info>/dataRows} > 0}"
+        />
+        <Button
+          press=".onInitDownloadSpreadsheetProcess"
+          text="{i18n>spreadsheetimporter.downloadDataSpreadsheet}"
+          visible="{= ${info>/showDownloadButton}}"
+        >
+          <layoutData>
+            <OverflowToolbarLayoutData priority="AlwaysOverflow" />
+          </layoutData>
         </Button>
         <Button press=".onTempDownload" text="{i18n>spreadsheetimporter.downloadTemplate}" visible="{= !${info>/hideGenerateTemplateButton}}" />
         <Button press=".onOpenOptionsDialog" icon="sap-icon://action-settings" visible="{= ${info>/showOptions}}" />

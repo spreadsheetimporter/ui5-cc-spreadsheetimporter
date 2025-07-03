@@ -1,26 +1,19 @@
 {
-    "compilerOptions": {
-        "target": "es2022",
-        "module": "es2022",
-        "skipLibCheck": true,
-        "allowJs": true,
-        "strict": true,
-        "strictPropertyInitialization": false,
-        "moduleResolution": "node",
-        "rootDir": "./webapp",
-        "outDir": "./dist",
-        "baseUrl": "./",
-        "paths": {
-            "com/spreadsheetimporter/anyupload/*": [
-                "./webapp/*"
-            ]
-        },
-        "typeRoots": [
-            "./node_modules/@types",
-            "./node_modules/@sapui5/types"
-        ]
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "es2022",
+    "skipLibCheck": true,
+    "allowJs": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "moduleResolution": "node",
+    "rootDir": "./webapp",
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "paths": {
+      "com/spreadsheetimporter/anyupload/*": ["./webapp/*"]
     },
-    "include": [
-        "./webapp/**/*"
-    ]
+    "typeRoots": ["./node_modules/@types", "./node_modules/@sapui5/types"]
+  },
+  "include": ["./webapp/**/*"]
 }

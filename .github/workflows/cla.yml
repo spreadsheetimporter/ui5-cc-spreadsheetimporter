@@ -1,10 +1,10 @@
-name: "CLA Assistant"
+name: 'CLA Assistant'
 
 on:
   issue_comment:
     types: [created]
   pull_request_target:
-    types: [opened,closed,synchronize]
+    types: [opened, closed, synchronize]
 
 # explicitly configure permissions
 permissions:
@@ -17,7 +17,7 @@ jobs:
   CLAAssistant:
     runs-on: ubuntu-latest
     steps:
-      - name: "CLA Assistant"
+      - name: 'CLA Assistant'
         if: (github.event.comment.body == 'recheck' || github.event.comment.body == 'I agree to the CLA') || github.event_name == 'pull_request_target'
         uses: contributor-assistant/github-action@v2.6.1
         env:
@@ -31,4 +31,4 @@ jobs:
           custom-pr-sign-comment: 'I agree to the CLA'
           custom-allsigned-prcomment: 'All contributors have signed the CLA. Thank you!'
           signed-commit-message: '$contributorName has signed the CLA in $owner/$repo#$pullRequestNo'
-          create-file-commit-message: 'chore: create CLA signatures file' 
+          create-file-commit-message: 'chore: create CLA signatures file'

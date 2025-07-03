@@ -89,10 +89,10 @@ pnpm --filter ordersv4fe96 start
 ### Run wdi5 Tests
 
 To run the wdi5 tests, the CAP server and the corresponding app must already be running.  
-You can run the test for the OData V4 UI5 Version 108 with this command:  
+You can run the test for the OData V4 UI5 Version 108 with this command:
 
 ```sh
-npm run test:v4fe:108  
+npm run test:v4fe:108
 ```
 
 More Info on the [wdi5 Tests](./wdi5.md) site.

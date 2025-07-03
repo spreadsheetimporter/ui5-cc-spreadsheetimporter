@@ -14,14 +14,17 @@ Alternatively, you can set the [`debug`](Configuration.md#debug) parameter to `t
 However, this can only be done if the component can be opened, so it's preferable to use the URL parameter if possible.
 
 ```js
-this.spreadsheetUpload = await this.getView().getController().getAppComponent().createComponent({
-    usage: "spreadsheetImporter",
+this.spreadsheetUpload = await this.getView()
+  .getController()
+  .getAppComponent()
+  .createComponent({
+    usage: 'spreadsheetImporter',
     async: true,
     componentData: {
       context: this,
       debug: true
     }
-});
+  });
 ```
 
 ### Copy Console Messages
@@ -59,8 +62,7 @@ See the configurations for this version below:
 ### manifest.json
 
 !!! warning ""
-    ⚠️ The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v2_2_0" changed from version 0.34.0 to lowercase. Please make sure to use the correct path.
-
+⚠️ The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v2_2_0" changed from version 0.34.0 to lowercase. Please make sure to use the correct path.
 
 ```json
 "componentUsages": {

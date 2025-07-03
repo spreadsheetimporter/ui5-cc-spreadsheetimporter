@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        scenario: ["ordersv4fe"]
+        scenario: ['ordersv4fe']
         ui5version: [108, 96, 84, 71]
         exclude:
           - scenario: ordersv4fe
@@ -45,7 +45,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "pnpm"
+          cache: 'pnpm'
 
       - name: get port
         run: |

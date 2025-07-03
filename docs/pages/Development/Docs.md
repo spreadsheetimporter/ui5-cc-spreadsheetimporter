@@ -12,7 +12,8 @@ The pages and images are stored in the [`docs`](https://github.com/spreadsheetim
 ### Local Setup
 
 To run the docs locally, you can use Docker.  
-To build the Docker image, run:  
+To build the Docker image, run:
+
 ```sh
 docker build . -t mkdocs
 ```
@@ -23,7 +24,7 @@ To run the container:
 docker run --rm -it -p 8000:8000 -v ${PWD}:/docs squidfunk/mkdocs-material
 ```
 
-or 
+or
 
 ```sh
 pnpm runDocs

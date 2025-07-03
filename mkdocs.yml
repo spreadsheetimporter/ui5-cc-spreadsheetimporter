@@ -1,10 +1,10 @@
 site_name: UI5 Custom Control Spreadsheet Upload
-site_url: "https://docs.spreadsheet-importer.com/" # required for working 404 page
-repo_name: "spreadsheetimporter/ui5-cc-spreadsheetimporter"
-repo_url: "https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter"
+site_url: 'https://docs.spreadsheet-importer.com/' # required for working 404 page
+repo_name: 'spreadsheetimporter/ui5-cc-spreadsheetimporter'
+repo_url: 'https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter'
 edit_uri: tree/main/docs/
-docs_dir: "docs" # default
-site_dir: "site" # default
+docs_dir: 'docs' # default
+site_dir: 'site' # default
 nav:
   - Home: index.md
   - Getting Started: pages/GettingStarted.md
@@ -43,11 +43,11 @@ nav:
       - Spreadsheet Download: pages/Development/SpreadsheetDownload.md
 
 theme:
-  name: "material"
+  name: 'material'
   custom_dir: docs/overrides
   palette:
     # Palette toggle for dark mode
-    - media: "(prefers-color-scheme: dark)"
+    - media: '(prefers-color-scheme: dark)'
       scheme: slate
       primary: custom
       accent: custom
@@ -55,7 +55,7 @@ theme:
         icon: material/brightness-4
         name: Switch to system preference
     # Palette toggle for light mode
-    - media: "(prefers-color-scheme: light)"
+    - media: '(prefers-color-scheme: light)'
       scheme: default
       primary: custom
       accent: custom
@@ -63,8 +63,8 @@ theme:
         icon: material/brightness-7
         name: Switch to dark mode
 
-  logo: "images/Logo_square.png"
-  favicon: "images/Logo_square.png"
+  logo: 'images/Logo_square.png'
+  favicon: 'images/Logo_square.png'
   font: false
   features:
     - navigation.expand
@@ -115,4 +115,4 @@ markdown_extensions:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
-dev_addr: "localhost:8000"
+dev_addr: 'localhost:8000'

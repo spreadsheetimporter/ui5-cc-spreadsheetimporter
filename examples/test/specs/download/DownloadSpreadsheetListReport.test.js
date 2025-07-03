@@ -121,8 +121,8 @@ describe("Download Spreadsheet List Report", () => {
 
 	after(async () => {
 		// Clean up - only delete test files
-		const testFiles = ['Orders12.xlsx', 'Orders123.xlsx'];
-		testFiles.forEach(file => {
+		const testFiles = ["Orders12.xlsx", "Orders123.xlsx"];
+		testFiles.forEach((file) => {
 			const filePath = path.join(downloadDir, file);
 			if (fs.existsSync(filePath)) {
 				fs.unlinkSync(filePath);

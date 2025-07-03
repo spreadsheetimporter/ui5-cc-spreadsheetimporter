@@ -3,11 +3,11 @@ name: Site Health Check
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 3,20 * * *'  
+    - cron: '0 3,20 * * *'
 
 permissions:
-    issues: write
-      
+  issues: write
+
 jobs:
   check_website:
     runs-on: ubuntu-latest

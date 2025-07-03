@@ -170,7 +170,7 @@ sap.ui.define([], function () {
 					});
 			this.spreadsheetUploadTableShipping.setHidePreview(true);
 			this.spreadsheetUploadTableShipping.openSpreadsheetUploadDialog(options);
-			
+
 			// Attach event to check before data is uploaded to UI5
 			this.spreadsheetUploadTableShipping.attachCheckBeforeRead(async function (event) {
 				return new Promise(async (resolve, reject) => {
@@ -181,10 +181,10 @@ sap.ui.define([], function () {
 						const uploadDialog = source.spreadsheetUpload.getSpreadsheetUploadDialog();
 						uploadDialog.setBusyIndicatorDelay(0);
 						uploadDialog.setBusy(true);
-						
+
 						// Get the parsed data from the spreadsheet
 						const parsedData = eventParameters["parsedData"];
-						
+
 						// Prepare shipping details to be checked by the backend
 						const shippingDetails = [];
 						for (const [index, row] of parsedData.entries()) {
@@ -197,30 +197,30 @@ sap.ui.define([], function () {
 								});
 							}
 						}
-						
+
 						// Skip check if no shipping details with cities are present
 						if (shippingDetails.length === 0) {
 							uploadDialog.setBusy(false);
 							resolve();
 							return;
 						}
-						
+
 						// Get the model to call the unbound action
-						const model = event.getSource().getContext().getModel()
-						
+						const model = event.getSource().getContext().getModel();
+
 						// Create action binding for the unbound action
-						const actionBinding = model.bindContext('/checkShippingDetails(...)');
-						
+						const actionBinding = model.bindContext("/checkShippingDetails(...)");
+
 						// Set the parameters for the action
-						actionBinding.setParameter('shippingDetails', shippingDetails);
-						
+						actionBinding.setParameter("shippingDetails", shippingDetails);
+
 						// Execute the action and wait for the result
 						try {
 							await actionBinding.execute();
-							
+
 							// Get the result from the action
 							const actionResult = actionBinding.getBoundContext().getObject();
-							
+
 							// Check if there are any errors/warnings to display
 							if (actionResult && actionResult.value && actionResult.value.length > 0) {
 								// Add errors to the spreadsheet uploader component to be displayed
@@ -228,15 +228,17 @@ sap.ui.define([], function () {
 							}
 						} catch (actionError) {
 							console.error("Error executing action:", actionError);
-							source.addArrayToMessages([{
-								title: "Error checking city names",
-								row: 0,
-								group: true,
-								rawValue: "Error in backend check",
-								ui5type: "Error"
-							}]);
+							source.addArrayToMessages([
+								{
+									title: "Error checking city names",
+									row: 0,
+									group: true,
+									rawValue: "Error in backend check",
+									ui5type: "Error"
+								}
+							]);
 						}
-						
+
 						uploadDialog.setBusy(false);
 					} catch (error) {
 						console.error("Error during city check:", error);
@@ -245,13 +247,13 @@ sap.ui.define([], function () {
 							uploadDialog.setBusy(false);
 						}
 					}
-					
+
 					// Important! This must not be deleted
 					// This tells the component that the code can continue running
 					resolve();
 				});
 			}, this);
-			
+
 			this.editFlow.getView().setBusy(false);
 		},
 		openSpreadsheetUploadDialogTableInfo: async function (oEvent) {
@@ -274,65 +276,74 @@ sap.ui.define([], function () {
 		},
 
 		openSpreadsheetUploadDialogTableUpdate: async function (oEvent) {
-			this.spreadsheetUploadUpdate = await this.editFlow.getView().getController().getAppComponent()
-			.createComponent({
-				usage: "spreadsheetImporter",
-				async: true,
-				componentData: {
-					context: this,
-					tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable",
-					action: "UPDATE",
-					updateConfig: {
-						fullUpdate: false
-					},
-					deepDownloadConfig: {
-						addKeysToExport: true,
-						showOptions: false,
-						filename: "OrderItems"
-					},
-					showDownloadButton: true,
-					tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable",
-					columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time", "boolean", "decimal", "byte","binary"],
-					mandatoryFields: ["product_ID", "quantity"]
-				}
-			});
+			this.spreadsheetUploadUpdate = await this.editFlow
+				.getView()
+				.getController()
+				.getAppComponent()
+				.createComponent({
+					usage: "spreadsheetImporter",
+					async: true,
+					componentData: {
+						context: this,
+						tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable",
+						action: "UPDATE",
+						updateConfig: {
+							fullUpdate: false
+						},
+						deepDownloadConfig: {
+							addKeysToExport: true,
+							showOptions: false,
+							filename: "OrderItems"
+						},
+						showDownloadButton: true,
+						tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable",
+						columns: ["product_ID", "quantity", "title", "price", "validFrom", "timestamp", "date", "time", "boolean", "decimal", "byte", "binary"],
+						mandatoryFields: ["product_ID", "quantity"]
+					}
+				});
 			this.spreadsheetUploadUpdate.openSpreadsheetUploadDialog();
 		},
 
 		openSpreadsheetUpdateDialog: async function (oEvent) {
-			this.spreadsheetUpload = await this.editFlow.getView().getController().getAppComponent()
-			.createComponent({
-				usage: "spreadsheetImporter",
-				async: true,
-				componentData: {
-					context: this,
-					tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable",
-					action: "UPDATE",
-					updateConfig: {
-						fullUpdate: false
-					},
-				}
-			});
+			this.spreadsheetUpload = await this.editFlow
+				.getView()
+				.getController()
+				.getAppComponent()
+				.createComponent({
+					usage: "spreadsheetImporter",
+					async: true,
+					componentData: {
+						context: this,
+						tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable",
+						action: "UPDATE",
+						updateConfig: {
+							fullUpdate: false
+						}
+					}
+				});
 			this.spreadsheetUpload.openSpreadsheetUploadDialog();
 		},
 
-		dowloadItems: async function(event) {
-			this.spreadsheetUpload = await this.editFlow.getView().getController().getAppComponent()
-			.createComponent({
-				usage: "spreadsheetImporter",
-				async: true,
-				componentData: {
-					context: this,
-					tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable",
-					createActiveEntity: true,
-					debug: false,
-					deepDownloadConfig: {
-						addKeysToExport: true,
-						showOptions: false,
-						filename: "OrderItems"
+		dowloadItems: async function (event) {
+			this.spreadsheetUpload = await this.editFlow
+				.getView()
+				.getController()
+				.getAppComponent()
+				.createComponent({
+					usage: "spreadsheetImporter",
+					async: true,
+					componentData: {
+						context: this,
+						tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable",
+						createActiveEntity: true,
+						debug: false,
+						deepDownloadConfig: {
+							addKeysToExport: true,
+							showOptions: false,
+							filename: "OrderItems"
+						}
 					}
-				}
-			});
+				});
 			this.spreadsheetUpload.triggerDownloadSpreadsheet();
 		}
 	};

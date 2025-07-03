@@ -1,5 +1,3 @@
-
-
 ## class spreadsheetimporter Component
 
 ### Overview
@@ -51,17 +49,14 @@ Optionally, you can pass the `options` object to customize the dialog.
 
 ```javascript
 const options = {
-    context: this,
-    tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Shipping::LineItem-innerTable"
-   }
-this.spreadsheetUploadTableShipping = await this.editFlow.getView()
-    .getController()
-    .getAppComponent()
-    .createComponent({
-    usage: "spreadsheetImporter",
-    async: true
-    });
-this.spreadsheetUploadTableShipping.setBatchSize(500)
+  context: this,
+  tableId: 'ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Shipping::LineItem-innerTable'
+};
+this.spreadsheetUploadTableShipping = await this.editFlow.getView().getController().getAppComponent().createComponent({
+  usage: 'spreadsheetImporter',
+  async: true
+});
+this.spreadsheetUploadTableShipping.setBatchSize(500);
 this.spreadsheetUploadTableShipping.openSpreadsheetUploadDialog(options);
 ```
 
@@ -99,10 +94,10 @@ Optionally, you can pass the `options` object to override component configuratio
 
 ```javascript
 // Open wizard with component's default settings
-this.spreadsheetWizard.openWizard().then(function(result) {
-    if (!result.canceled) {
-        MessageToast.show("Import completed successfully!");
-    }
+this.spreadsheetWizard.openWizard().then(function (result) {
+  if (!result.canceled) {
+    MessageToast.show('Import completed successfully!');
+  }
 });
 ```
 
@@ -110,23 +105,26 @@ this.spreadsheetWizard.openWizard().then(function(result) {
 
 ```javascript
 const options = {
-    strict: false,                      // Allow continuing with errors
-    mandatoryFields: ["ID", "Name"],    // Override mandatory fields
-    batchSize: 100,                     // Override batch size
-    showBackendErrorMessages: true,     // Show detailed backend errors
-    continueOnError: true               // Continue processing despite errors
+  strict: false, // Allow continuing with errors
+  mandatoryFields: ['ID', 'Name'], // Override mandatory fields
+  batchSize: 100, // Override batch size
+  showBackendErrorMessages: true, // Show detailed backend errors
+  continueOnError: true // Continue processing despite errors
 };
 
-this.spreadsheetWizard.openWizard(options).then(function(result) {
+this.spreadsheetWizard
+  .openWizard(options)
+  .then(function (result) {
     if (!result.canceled) {
-        console.log("Import completed:", result);
-        MessageToast.show(`Imported ${result.sheetData.length} records`);
+      console.log('Import completed:', result);
+      MessageToast.show(`Imported ${result.sheetData.length} records`);
     } else {
-        MessageToast.show("Import was canceled by user");
+      MessageToast.show('Import was canceled by user');
     }
-}).catch(function(error) {
-    MessageToast.show("Error: " + error.message);
-});
+  })
+  .catch(function (error) {
+    MessageToast.show('Error: ' + error.message);
+  });
 ```
 
 **Component Creation with Wizard:**
@@ -134,24 +132,24 @@ this.spreadsheetWizard.openWizard(options).then(function(result) {
 ```javascript
 // Create component with wizard enabled
 this.spreadsheetWizard = await this.getView()
-    .getController()
-    .getAppComponent()
-    .createComponent({
-        usage: "spreadsheetImporter",
-        async: true,
-        componentData: {
-            context: this,
-            tableId: "myTableId",
-            useImportWizard: true,    // Enable wizard mode
-            debug: true
-        }
-    });
+  .getController()
+  .getAppComponent()
+  .createComponent({
+    usage: 'spreadsheetImporter',
+    async: true,
+    componentData: {
+      context: this,
+      tableId: 'myTableId',
+      useImportWizard: true, // Enable wizard mode
+      debug: true
+    }
+  });
 
 // Open wizard with runtime options
 const wizardOptions = {
-    columns: ["OrderNo", "buyer", "email"],
-    fieldMatchType: "labelTypeBrackets",
-    decimalSeparator: ","
+  columns: ['OrderNo', 'buyer', 'email'],
+  fieldMatchType: 'labelTypeBrackets',
+  decimalSeparator: ','
 };
 
 this.spreadsheetWizard.openWizard(wizardOptions);
@@ -161,9 +159,9 @@ this.spreadsheetWizard.openWizard(wizardOptions);
 
 ```xml
 <core:ComponentContainer
-    id="wizardSpreadsheetImporter"
-    usage="spreadsheetImporter"
-    settings="{
+  id="wizardSpreadsheetImporter"
+  usage="spreadsheetImporter"
+  settings="{
         useImportWizard: true,
         debug: true,
         createActiveEntity: true
@@ -175,12 +173,12 @@ this.spreadsheetWizard.openWizard(wizardOptions);
 // In controller
 onOpenWizard: function() {
     var oComponent = this.byId("wizardSpreadsheetImporter").getComponentInstance();
-    
+
     const options = {
         strict: true,
         mandatoryFields: ["OrderNo", "buyer"]
     };
-    
+
     oComponent.openWizard(options).then(function(result) {
         // Handle result
     });
@@ -200,26 +198,26 @@ You can use this method to add an array of messages to the event. The messages w
 ##### Sample Code
 
 ```javascript
-this.spreadsheetUpload.attachCheckBeforeRead(function(event) {
-    // example
-    const sheetdata = event.getParameter("sheetData");
-    let errorArray = [];
-    for (const [index, row] of sheetData.entries()) {
-        // Check for invalid price
-        for (const key in row) {
-            if (key.endsWith("[price]") && row[key].rawValue > 100) {
-                const error = {
-                    title: "Price too high (max 100)",
-                    row: index + 2,
-                    group: true,
-                    rawValue: row[key].rawValue,
-                    ui5type: "Error"
-                };
-                errorArray.push(error);
-            }
-        }
+this.spreadsheetUpload.attachCheckBeforeRead(function (event) {
+  // example
+  const sheetdata = event.getParameter('sheetData');
+  let errorArray = [];
+  for (const [index, row] of sheetData.entries()) {
+    // Check for invalid price
+    for (const key in row) {
+      if (key.endsWith('[price]') && row[key].rawValue > 100) {
+        const error = {
+          title: 'Price too high (max 100)',
+          row: index + 2,
+          group: true,
+          rawValue: row[key].rawValue,
+          ui5type: 'Error'
+        };
+        errorArray.push(error);
+      }
     }
-    event.getSource().addArrayToMessages(errorArray);
+  }
+  event.getSource().addArrayToMessages(errorArray);
 }, this);
 ```
 
@@ -242,25 +240,25 @@ You can use this method to completely replace the current messages array with a 
 ##### Sample Code
 
 ```javascript
-this.spreadsheetUpload.attachCheckBeforeRead(function(event) {
-    // Create a new messages array
-    let messagesArray = [];
-    
-    // Add validation messages based on your custom logic
-    const sheetdata = event.getParameter("sheetData");
-    for (const [index, row] of sheetData.entries()) {
-        if (someValidationCondition) {
-            const message = {
-                title: "Validation failed",
-                row: index + 2,
-                group: true,
-                ui5type: "Error"
-            };
-            messagesArray.push(message);
-        }
+this.spreadsheetUpload.attachCheckBeforeRead(function (event) {
+  // Create a new messages array
+  let messagesArray = [];
+
+  // Add validation messages based on your custom logic
+  const sheetdata = event.getParameter('sheetData');
+  for (const [index, row] of sheetData.entries()) {
+    if (someValidationCondition) {
+      const message = {
+        title: 'Validation failed',
+        row: index + 2,
+        group: true,
+        ui5type: 'Error'
+      };
+      messagesArray.push(message);
     }
-    
-    // Replace all existing messages with the new array
-    event.getSource().setArrayMessages(messagesArray);
+  }
+
+  // Replace all existing messages with the new array
+  event.getSource().setArrayMessages(messagesArray);
 }, this);
 ```

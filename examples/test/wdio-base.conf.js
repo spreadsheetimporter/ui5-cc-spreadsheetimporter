@@ -1,8 +1,8 @@
 const { escape } = require("querystring");
-const path = require('path');
-const downloadDir = path.resolve(__dirname, 'downloads');
+const path = require("path");
+const downloadDir = path.resolve(__dirname, "downloads");
 const util = require("./../../dev/util");
-const { TimelineService } = require('wdio-timeline-reporter/timeline-service');
+const { TimelineService } = require("wdio-timeline-reporter/timeline-service");
 let scenario = "";
 let version = 0;
 
@@ -39,22 +39,22 @@ module.exports.config = {
 	capabilities: [
 		{
 			maxInstances: isWatchMode ? 1 : 5,
-			'wdio:enforceWebDriverClassic': true,
+			"wdio:enforceWebDriverClassic": true,
 			//
 			browserName: "chrome",
-			browserVersion: 'stable',
+			browserVersion: "stable",
 			"goog:chromeOptions": {
 				args:
 					process.argv.indexOf("--headless") > -1
 						? ["--headless=new", "--window-size=1920,1080", "--no-sandbox"]
 						: process.argv.indexOf("--debug") > -1
-						? ["--window-size=1920,1080", "--auto-open-devtools-for-tabs"]
-						: ["--window-size=1920,1080"],
-            prefs: {
-                'download.default_directory': downloadDir,
-                'download.prompt_for_download': false,
-                'download.directory_upgrade': true
-            }
+							? ["--window-size=1920,1080", "--auto-open-devtools-for-tabs"]
+							: ["--window-size=1920,1080"],
+				prefs: {
+					"download.default_directory": downloadDir,
+					"download.prompt_for_download": false,
+					"download.directory_upgrade": true
+				}
 			},
 			acceptInsecureCerts: true
 		}
@@ -69,29 +69,34 @@ module.exports.config = {
 	// Watch mode configuration
 	watch: isWatchMode,
 	watchInterval: isWatchMode ? 1000 : undefined,
-	filesToWatch: isWatchMode ? [
-		'./test/specs/**/*.js',
-		'./specs/**/*.js',
-		'./test/specs/**/*.test.js',
-		'../packages/ui5-cc-spreadsheetimporter/src/**/*.js',
-		'../packages/ui5-cc-spreadsheetimporter/src/**/*.ts'
-	] : undefined,
+	filesToWatch: isWatchMode
+		? ["./test/specs/**/*.js", "./specs/**/*.js", "./test/specs/**/*.test.js", "../packages/ui5-cc-spreadsheetimporter/src/**/*.js", "../packages/ui5-cc-spreadsheetimporter/src/**/*.ts"]
+		: undefined,
 
 	services: isDebugEnabled
-		? ["ui5", [TimelineService, {
-			screenshotStrategy: "none"
-		  }]]
+		? [
+				"ui5",
+				[
+					TimelineService,
+					{
+						screenshotStrategy: "none"
+					}
+				]
+			]
 		: ["ui5"],
 	framework: "mocha",
 	reporters: isDebugEnabled
 		? [
-			"spec",
-			["timeline", {
-				outputDir: "./reports/timeline",
-				embedImages: true,
-				screenshotStrategy: "none"
-			}]
-		]
+				"spec",
+				[
+					"timeline",
+					{
+						outputDir: "./reports/timeline",
+						embedImages: true,
+						screenshotStrategy: "none"
+					}
+				]
+			]
 		: ["spec"],
 	mochaOpts: {
 		ui: "bdd",
@@ -102,8 +107,8 @@ module.exports.config = {
 	// Hooks for better watch mode experience
 	beforeSession: function (config, capabilities, specs) {
 		if (isWatchMode) {
-			console.log('\n🔄 Watch mode enabled - tests will rerun on file changes');
-			console.log('📝 Press Ctrl+C to stop watching\n');
+			console.log("\n🔄 Watch mode enabled - tests will rerun on file changes");
+			console.log("📝 Press Ctrl+C to stop watching\n");
 		}
 	},
 
@@ -120,7 +125,7 @@ module.exports.config = {
 	afterSuite: function (suite) {
 		if (isWatchMode) {
 			console.log(`\n📊 Suite completed: ${suite.title}`);
-			console.log('👀 Watching for file changes...\n');
+			console.log("👀 Watching for file changes...\n");
 		}
 	}
 };

@@ -1,20 +1,18 @@
 {
-    "xsappname": "spreadsheetimporter_v0_29_0",
-    "tenant-mode": "dedicated",
-    "description": "Security profile of called application",
-    "scopes": [
-      {
-        "name": "uaa.user",
-        "description": "UAA"
-      }
-    ],
-    "role-templates": [
-      {
-        "name": "Token_Exchange",
-        "description": "UAA",
-        "scope-references": [
-          "uaa.user"
-        ]
-      }
-    ]
-  }
+  "xsappname": "spreadsheetimporter_v0_29_0",
+  "tenant-mode": "dedicated",
+  "description": "Security profile of called application",
+  "scopes": [
+    {
+      "name": "uaa.user",
+      "description": "UAA"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "Token_Exchange",
+      "description": "UAA",
+      "scope-references": ["uaa.user"]
+    }
+  ]
+}

@@ -1,4 +1,3 @@
-
 Only V4 is supported for now.
 
 ## OData V4
@@ -9,7 +8,6 @@ To make it as seamless as possible, the process will try to find every object wi
 The finding of the object result in a get request to the OData service for each row.  
 After that the process knows the state of the object and can update it.  
 So if on the object `HasDraftEntity` is true or `IsActiveEntity` is false, the process will create a new context with `IsActiveEntity=false` and use the draft entity automatically to update the object.
-
 
 ## Technical Details
 
@@ -23,8 +21,7 @@ Each context will then be used to update the object with `setProperty`.
 
 ### Different States in Export
 
-For the export the process determines the state of the object by checking the `IsActiveEntity` and `HasDraftEntity` properties.  
-
+For the export the process determines the state of the object by checking the `IsActiveEntity` and `HasDraftEntity` properties.
 
 #### List Report
 

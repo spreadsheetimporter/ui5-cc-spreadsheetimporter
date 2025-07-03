@@ -1,8 +1,8 @@
 # Spreadsheet Deep Download
 
 !!! warning
-    This new feature is available since version 1.5.0 and experimental and may change in the future and currently only available for OData V4.
-    If you deep download data, the OData Service need to support `expand`.
+This new feature is available since version 1.5.0 and experimental and may change in the future and currently only available for OData V4.
+If you deep download data, the OData Service need to support `expand`.
 
 This feature downloads data from the backend and converts it to a Spreadsheet file.
 
@@ -11,23 +11,23 @@ The main difference between this feature and the integrated Spreadsheet Download
 For example, if you have Orders and OrderItems, you can download both entities at once and the data will be structured in the Spreadsheet. It is also possible to recursively download data from multiple entities indefinitely.
 
 - Orders
-    - OrderItems
-        - Info
-    - ShippingInfos
+  - OrderItems
+    - Info
+  - ShippingInfos
 
 This means that you can download all Orders, including the OrderItems, ShippingInfos, and the Info of the OrderItems in one go.
 
 ## Configuration
 
-| Option | Description | Default | Type |
-| ------ | ----------- | ------- | ---- |
-| `addKeysToExport` | Adds keys to the export file | `false` | boolean |
-| `setDraftStatus` | Sets the draft status in `IsActiveEntity` | `false` | boolean |
-| `filename` | Defines the filename for the export  file | Entity Name | string |
-| `deepExport` | Turn on to export of sibling entities | `false` | boolean |
-| `deepLevel` | Defines the level of sibling entities to export | `0` | number |
-| `showOptions` | Shows options dialog for users | `false` | boolean |
-| `columns` | Defines the columns to export | `{}` | object or array |
+| Option            | Description                                     | Default     | Type            |
+| ----------------- | ----------------------------------------------- | ----------- | --------------- |
+| `addKeysToExport` | Adds keys to the export file                    | `false`     | boolean         |
+| `setDraftStatus`  | Sets the draft status in `IsActiveEntity`       | `false`     | boolean         |
+| `filename`        | Defines the filename for the export file        | Entity Name | string          |
+| `deepExport`      | Turn on to export of sibling entities           | `false`     | boolean         |
+| `deepLevel`       | Defines the level of sibling entities to export | `0`         | number          |
+| `showOptions`     | Shows options dialog for users                  | `false`     | boolean         |
+| `columns`         | Defines the columns to export                   | `{}`        | object or array |
 
 ### Sample Usage
 
@@ -93,7 +93,6 @@ If the option `addKeysToExport` is set to `true` the keys, including the `IsActi
 By default, the field `IsActiveEntity` is set to `false` if the field `HasDraftEntity` is set to `true`.  
 This makes it easier to identify which rows have a draft entity for the reupload to update the entities.  
 This option is only used if all the `IsActiveEntity` fields should be set to `true` in the export.
-
 
 ### filename
 
