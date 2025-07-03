@@ -1,0 +1,2 @@
+echo "Running lint-staged on all staged files in the repo..."
+npx lint-staged --relative
