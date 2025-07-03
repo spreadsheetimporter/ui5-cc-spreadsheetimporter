@@ -55,6 +55,7 @@
     "@ui5/ts-interface-generator": "0.10.0",
     "babel-preset-transform-ui5": "^7.7.1",
     "bluebird": "3.7.2",
+    "husky": "^9.1.7",
     "chokidar": "^4.0.3",
     "eslint": "9.29.0",
     "js-yaml": "4.1.0",

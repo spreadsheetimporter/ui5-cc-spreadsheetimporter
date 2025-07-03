@@ -14,7 +14,6 @@ import MessageToast from 'sap/m/MessageToast';
 import Preview from '../Preview';
 import Util from '../Util';
 import ResourceBundle from 'sap/base/i18n/ResourceBundle';
-import * as XLSX from 'xlsx';
 import OptionsDialog from './OptionsDialog';
 import MessageHandler from '../MessageHandler';
 import Log from 'sap/base/Log';
@@ -28,6 +27,7 @@ import SpreadsheetDownload from '../download/SpreadsheetDownload';
 import OData from '../odata/OData';
 import ImportService from '../ImportService';
 import { Action } from '../../enums';
+import TemplateService from '../services/TemplateService';
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -47,6 +47,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
   spreadsheetDownload: SpreadsheetDownload;
   private odataHandler: OData;
   private importService: ImportService;
+  private templateService: TemplateService;
   private currentFile: File | null = null;
 
   constructor(spreadsheetUploadController: SpreadsheetUpload, component: Component, componentI18n: ResourceModel, messageHandler: MessageHandler) {
@@ -68,6 +69,9 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
     this.previewHandler = new Preview(this.util);
     this.optionsHandler = new OptionsDialog(spreadsheetUploadController);
     this.spreadsheetDownloadDialog = new SpreadsheetDownloadDialog(this.spreadsheetUploadController, this);
+
+    // Initialize template service
+    this.templateService = new TemplateService(component, spreadsheetUploadController, componentI18n.getResourceBundle() as ResourceBundle);
   }
 
   async createSpreadsheetUploadDialog() {
@@ -291,219 +295,12 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
     }
   }
 
-  async onTempDownload() {
-    // Template download implementation unchanged
-    // check if custom template is provided, otherwise generate it
-    if (this.component.getSpreadsheetTemplateFile() !== '') {
-      try {
-        const templateFile = this.component.getSpreadsheetTemplateFile();
-        let arrayBuffer;
-        let fileName;
-
-        if (typeof templateFile === 'string') {
-          // Check if the string is a HTTP/HTTPS address
-          if (templateFile.startsWith('http://') || templateFile.startsWith('https://')) {
-            const response = await fetch(templateFile);
-            if (!response.ok) {
-              throw new Error('Network response was not ok ' + response.statusText);
-            }
-            fileName = templateFile.split('/').pop();
-            arrayBuffer = await response.arrayBuffer();
-          }
-          // Assume the string is a local file path
-          else {
-            const sPath = sap.ui.require.toUrl(templateFile);
-            const response = await fetch(sPath);
-            if (!response.ok) {
-              throw new Error('Network response was not ok ' + response.statusText);
-            }
-            fileName = templateFile.split('/').pop();
-            arrayBuffer = await response.arrayBuffer();
-          }
-        } else if (templateFile instanceof ArrayBuffer) {
-          // If the input is already an ArrayBuffer, use it directly
-          arrayBuffer = templateFile;
-        } else {
-          throw new Error('Unsupported type for templateFile');
-        }
-
-        // spreadsheet file name wll overwrite the template file name
-        if (this.component.getSpreadsheetFileName() !== 'Template.xlsx' || fileName === undefined) {
-          fileName = this.component.getSpreadsheetFileName();
-        }
-
-        Util.downloadSpreadsheetFile(arrayBuffer, fileName);
-
-        // You can now use arrayBuffer to do whatever you need
-      } catch (error) {
-        console.error('Error loading file', error);
-      }
-    } else {
-      // create spreadsheet column list
-      let fieldMatchType = this.component.getFieldMatchType();
-      var worksheet = {} as XLSX.WorkSheet;
-      let colWidths: { wch: number }[] = []; // array to store column widths
-      let sampleData = this.component.getSampleData() as any[];
-      let sampleDataDefined = true;
-      // if sampledata is empty add one row of empty data
-      if (!sampleData || sampleData.length === 0) {
-        sampleDataDefined = false;
-        sampleData = [{}];
-      }
-      const colWidthDefault = 15;
-      const colWidthDate = 20;
-      let col = 0;
-      let rows = 1;
-      if (this.component.getStandalone()) {
-        // loop over this.component.getColumns
-        for (let column of this.component.getColumns()) {
-          worksheet[XLSX.utils.encode_cell({ c: col, r: 0 })] = { v: column, t: 's' };
-          col++;
-        }
-        col = 0;
-        for (let column of this.component.getColumns()) {
-          for (const [index, data] of sampleData.entries()) {
-            let sampleDataValue;
-            rows = index + 1;
-            if (data[column]) {
-              sampleDataValue = data[column];
-              worksheet[XLSX.utils.encode_cell({ c: col, r: 1 })] = { v: sampleDataValue, t: 's' };
-            }
-          }
-
-          col++;
-        }
-      } else {
-        for (let [key, value] of this.spreadsheetUploadController.typeLabelList.entries()) {
-          let cell = { v: '', t: 's' } as XLSX.CellObject;
-          let label = '';
-          if (fieldMatchType === 'label') {
-            label = value.label;
-          }
-          if (fieldMatchType === 'labelTypeBrackets') {
-            label = `${value.label}[${key}]`;
-          }
-          worksheet[XLSX.utils.encode_cell({ c: col, r: 0 })] = { v: label, t: 's' };
-
-          for (const [index, data] of sampleData.entries()) {
-            let sampleDataValue;
-            rows = index + 1;
-            if (data[key]) {
-              sampleDataValue = data[key];
-            }
-            if (value.type === 'Edm.Boolean') {
-              // Set default value for sampleDataValue based on sampleDataDefined flag
-              let defaultValue = sampleDataDefined ? '' : 'true';
-              // Assign sampleDataValue only if sampleDataValue is not undefined
-              sampleDataValue = sampleDataValue ? sampleDataValue.toString() : defaultValue;
-              cell = {
-                v: sampleDataValue,
-                t: 'b'
-              };
-              colWidths.push({ wch: colWidthDefault });
-            } else if (value.type === 'Edm.String') {
-              let newStr;
-              if (value.maxLength) {
-                newStr = sampleDataValue ? sampleDataValue : 'test string'.substring(0, value.maxLength);
-              } else {
-                newStr = sampleDataValue ? sampleDataValue : 'test string';
-              }
-              // Set default value for sampleDataValue based on sampleDataDefined flag
-              let defaultValue: string = sampleDataDefined ? '' : newStr;
-              // Assign sampleDataValue only if sampleDataValue is not undefined
-              sampleDataValue = sampleDataValue ? sampleDataValue : defaultValue;
-              cell = { v: sampleDataValue, t: 's' };
-              colWidths.push({ wch: colWidthDefault });
-            } else if (value.type === 'Edm.DateTimeOffset' || value.type === 'Edm.DateTime') {
-              let format;
-              const currentLang = await Util.getLanguage();
-              if (currentLang.startsWith('en')) {
-                format = 'mm/dd/yyyy hh:mm AM/PM';
-              } else {
-                format = 'dd.mm.yyyy hh:mm';
-              }
-
-              // Set default value for sampleDataValue based on sampleDataDefined flag
-              let defaultValue = sampleDataDefined ? '' : new Date();
-              // Assign sampleDataValue only if sampleDataValue is not undefined
-              sampleDataValue = sampleDataValue ? sampleDataValue : defaultValue;
-              // if sampleDataValue is empty and cellFormat is "d", Excel Generation fails
-              let cellFormat: XLSX.ExcelDataType = sampleDataValue ? 'd' : 's';
-              cell = { v: sampleDataValue, t: cellFormat, z: format };
-              colWidths.push({ wch: colWidthDate }); // set column width to 20 for this column
-            } else if (value.type === 'Edm.Date') {
-              // Set default value for sampleDataValue based on sampleDataDefined flag
-              let defaultValue = sampleDataDefined ? '' : new Date();
-              // Assign sampleDataValue only if sampleDataValue is not undefined
-              sampleDataValue = sampleDataValue ? sampleDataValue.toString() : defaultValue;
-              // if sampleDataValue is empty and cellFormat is "d", Excel Generation fails
-              let cellFormat: XLSX.ExcelDataType = sampleDataValue ? 'd' : 's';
-              cell = {
-                v: sampleDataValue,
-                t: cellFormat
-              };
-              colWidths.push({ wch: colWidthDefault });
-            } else if (value.type === 'Edm.TimeOfDay' || value.type === 'Edm.Time') {
-              // Set default value for sampleDataValue based on sampleDataDefined flag
-              let defaultValue = sampleDataDefined ? '' : new Date();
-              // Assign sampleDataValue only if sampleDataValue is not undefined
-              sampleDataValue = sampleDataValue ? sampleDataValue : defaultValue;
-              // if sampleDataValue is empty and cellFormat is "d", Excel Generation fails
-              let cellFormat: XLSX.ExcelDataType = sampleDataValue ? 'd' : 's';
-              cell = {
-                v: sampleDataValue,
-                t: cellFormat,
-                z: 'hh:mm'
-              };
-              colWidths.push({ wch: colWidthDefault });
-            } else if (
-              value.type === 'Edm.UInt8' ||
-              value.type === 'Edm.Int16' ||
-              value.type === 'Edm.Int32' ||
-              value.type === 'Edm.Integer' ||
-              value.type === 'Edm.Int64' ||
-              value.type === 'Edm.Integer64'
-            ) {
-              // Set default value for sampleDataValue based on sampleDataDefined flag
-              let defaultValue = sampleDataDefined ? '' : 85;
-              // Assign sampleDataValue only if sampleDataValue is not undefined
-              sampleDataValue = sampleDataValue ? sampleDataValue : defaultValue;
-              cell = {
-                v: sampleDataValue,
-                t: 'n'
-              };
-              colWidths.push({ wch: colWidthDefault });
-            } else if (value.type === 'Edm.Double' || value.type === 'Edm.Decimal') {
-              const decimalSeparator = this.component.getDecimalSeparator();
-              // Set default value for sampleDataValue based on sampleDataDefined flag
-              let defaultValue = sampleDataDefined ? '' : `123${decimalSeparator}4`;
-              // Assign sampleDataValue only if sampleDataValue is not undefined
-              sampleDataValue = sampleDataValue ? sampleDataValue.toString() : defaultValue;
-              cell = {
-                v: sampleDataValue,
-                t: 'n'
-              };
-              colWidths.push({ wch: colWidthDefault });
-            }
-
-            if (!this.component.getHideSampleData()) {
-              worksheet[XLSX.utils.encode_cell({ c: col, r: rows })] = cell;
-            }
-          }
-          col++;
-        }
-      }
-      worksheet['!ref'] = XLSX.utils.encode_range({ s: { c: 0, r: 0 }, e: { c: col, r: sampleData.length } });
-      worksheet['!cols'] = colWidths; // assign the column widths to the worksheet
-
-      // creating the new spreadsheet work book
-      const wb = XLSX.utils.book_new();
-      // set the file value
-      XLSX.utils.book_append_sheet(wb, worksheet, 'Tabelle1');
-      // download the created spreadsheet file
-      XLSX.writeFile(wb, this.component.getSpreadsheetFileName());
-
-      MessageToast.show(this.util.geti18nText('spreadsheetimporter.downloadingTemplate'));
+  async onTempDownload(): Promise<void> {
+    try {
+      await this.templateService.downloadTemplate();
+    } catch (error) {
+      Log.error('Error downloading template', error as Error, 'SpreadsheetUploadDialog');
+      MessageToast.show(this.util.geti18nText('spreadsheetimporter.errorDownloadingTemplate'));
     }
   }
 

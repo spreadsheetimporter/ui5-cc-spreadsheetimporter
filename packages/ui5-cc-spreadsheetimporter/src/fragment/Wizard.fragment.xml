@@ -12,8 +12,9 @@
   >
     <content>
       <!-- Action Indicator at top of wizard -->
-      <MessageStrip
-        text="{
+      <HBox justifyContent="SpaceBetween" alignItems="Center">
+        <MessageStrip
+          text="{
                         parts: [
                             'wizard>/action',
                             'i18n>spreadsheetimporter.actionCreate',
@@ -23,11 +24,23 @@
                         ],
                         formatter: '.formatSimpleActionText'
                     }"
-        type="Information"
-        class="sapUiNoMarginBottom"
-        showIcon="true"
-        enableFormattedText="true"
-      />
+          type="Information"
+          class="sapUiNoMarginBottom"
+          showIcon="true"
+          enableFormattedText="true"
+        >
+          <layoutData>
+            <FlexItemData growFactor="0" shrinkFactor="0" baseSize="50%" />
+          </layoutData>
+        </MessageStrip>
+        <Button
+          press=".onTempDownload"
+          text="{i18n>spreadsheetimporter.downloadTemplate}"
+          visible="{= !${info>/hideGenerateTemplateButton}}"
+          class="sapUiMediumMarginEnd"
+        />
+      </HBox>
+
       <Wizard
         width="100%"
         height="100%"
