@@ -1,18 +1,15 @@
 {
-  "singleQuote": false,
-  "printWidth": 200,
-  "endOfLine": "lf",
-  "tabWidth": 4,
-  "useTabs": true,
+  "printWidth": 150,
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
+  "singleQuote": true,
   "trailingComma": "none",
+  "bracketSpacing": true,
+  "bracketSameLine": false,
+  "arrowParens": "avoid",
+  "endOfLine": "lf",
   "htmlWhitespaceSensitivity": "ignore",
-  "overrides": [
-    {
-      "files": ["*.yaml", "*.yml", "*.md", "*.json"],
-      "options": {
-        "useTabs": false,
-        "tabWidth": 2
-      }
-    }
-  ]
+  "xmlWhitespaceSensitivity": "ignore",
+  "plugins": ["@prettier/plugin-xml"]
 }

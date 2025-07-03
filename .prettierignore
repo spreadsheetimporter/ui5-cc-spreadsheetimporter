@@ -2,9 +2,6 @@
 package-lock.json
 
 # Ignore build output folders
-/docs/**
-/webapp/**
-/dev/**
 /dist/**
 
 dist

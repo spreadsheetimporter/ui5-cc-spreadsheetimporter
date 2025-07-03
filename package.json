@@ -66,7 +66,7 @@
     "typescript": "5.8.3"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,md,yaml,yml,css,html,d.ts}": [
+    "*.{js,jsx,ts,tsx,json,md,yaml,yml,css,html,xml,properties}": [
       "prettier --write"
     ]
   },
