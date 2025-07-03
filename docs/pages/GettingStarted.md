@@ -1,5 +1,7 @@
+<!-- prettier-ignore-start -->
 !!! danger "Commercial License Required"
-This component is licensed under the SpreadsheetImporter Commercial License since version 2.0.0. For details, see [LICENSE.md](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/LICENSE.md). The version 1.x is licensed under the Apache License 2.0 and remains free of charge but no major updates will be provided.
+    This component is licensed under the SpreadsheetImporter Commercial License since version 2.0.0. For details, see [LICENSE.md](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/LICENSE.md). The version 1.x is licensed under the Apache License 2.0 and remains free of charge but no major updates will be provided.
+<!-- prettier-ignore-end -->
 
 ## Deployment Strategy
 
@@ -12,11 +14,15 @@ For decentralized deployment in ABAP, refer to [ABAP Component Deployment](#comp
 
 ### Decentralized Deployment
 
+<!-- prettier-ignore-start -->
 !!! warning "Decentralized Deployment for ABAP"
-This method is **not possible for ABAP systems**. For ABAP, please use [Central Deployment](CentralDeployment.md) instead.
+    This method is **not possible for ABAP systems**. For ABAP, please use [Central Deployment](CentralDeployment.md) instead.
+<!-- prettier-ignore-end -->
 
+<!-- prettier-ignore-start -->
 !!! info "Decentralized Deployment for BTP"
-For BTP applications, decentralized deployment is the recommended approach.
+    For BTP applications, decentralized deployment is the recommended approach.
+<!-- prettier-ignore-end -->
 
 In decentralized deployment, the component is included directly in each app and deployed with it. For ABAP-specific instructions, refer to [ABAP Component Deployment](#component-deployment). For BTP-specific considerations, refer to [BTP Deployment](#btp-deployment).
 
@@ -48,8 +54,10 @@ npm install ui5-cc-spreadsheetimporter
 
 2\. **Add `resourceRoots` to the `sap.ui5` section of your `manifest.json`:**
 
+<!-- prettier-ignore-start -->
 !!! warning "Version Management"
-Whenever you update the `ui5-cc-spreadsheetimporter` module, ensure that the version specified in your `manifest.json` is up to date. For more information, see [Version Namespace](https://blogs.sap.com/2023/03/12/create-a-ui5-custom-library-with-versioning-using-a-multi-version-namespace/).
+    Whenever you update the `ui5-cc-spreadsheetimporter` module, ensure that the version specified in your `manifest.json` is up to date. For more information, see [Version Namespace](https://blogs.sap.com/2023/03/12/create-a-ui5-custom-library-with-versioning-using-a-multi-version-namespace/).
+<!-- prettier-ignore-end -->
 
 ```json
 "resourceRoots": {
@@ -86,8 +94,10 @@ For BTP applications (or apps using the index.html bootstrap), you can use jsDel
 ></script>
 ```
 
+<!-- prettier-ignore-start -->
 !!! info "Version Specification"
-Always specify the exact version in the CDN URL (e.g., `@1.7.3`) to ensure consistent behavior of your application.
+    Always specify the exact version in the CDN URL (e.g., `@1.7.3`) to ensure consistent behavior of your application.
+<!-- prettier-ignore-end -->
 
 For more information on using jsDelivr CDN, see the [jsDelivr documentation](https://www.jsdelivr.com/documentation#id-npm).
 
@@ -95,8 +105,10 @@ For more information on using jsDelivr CDN, see the [jsDelivr documentation](htt
 
 1\. **Add `componentUsages` to the `sap.ui5` section of your `manifest.json` (same for both options):**
 
+<!-- prettier-ignore-start -->
 !!! warning "Version Management"
-Whenever you update the `ui5-cc-spreadsheetimporter` module, ensure that the version specified in your `manifest.json` is up to date. For more information, see [Version Namespace](https://blogs.sap.com/2023/03/12/create-a-ui5-custom-library-with-versioning-using-a-multi-version-namespace/).
+    Whenever you update the `ui5-cc-spreadsheetimporter` module, ensure that the version specified in your `manifest.json` is up to date. For more information, see [Version Namespace](https://blogs.sap.com/2023/03/12/create-a-ui5-custom-library-with-versioning-using-a-multi-version-namespace/).
+<!-- prettier-ignore-end -->
 
 ```json
 "componentUsages": {
@@ -110,8 +122,10 @@ Whenever you update the `ui5-cc-spreadsheetimporter` module, ensure that the ver
 
 If you encounter the error `component does not exist` when deploying to an SAP system (S/4 On-Premise or SAP BTP ABAP environment), add the following to your `manifest.json`:
 
+<!-- prettier-ignore-start -->
 !!! warning "Resource Roots Path"
-Ensure the `resourceRoots` path is correct, especially considering the lowercase format change since version 0.34.0.
+    Ensure the `resourceRoots` path is correct, especially considering the lowercase format change since version 0.34.0.
+<!-- prettier-ignore-end -->
 
 ```json
 "sap.app": {
@@ -125,8 +139,10 @@ Ensure the `resourceRoots` path is correct, especially considering the lowercase
 
 2\. **Add `componentUsages` to the `sap.ui5` section of your `manifest.json`:**
 
+<!-- prettier-ignore-start -->
 !!! warning "Version Management"
-Whenever you update the `ui5-cc-spreadsheetimporter` module, ensure that the version specified in your `manifest.json` is up to date. For more information, see [Version Namespace](https://blogs.sap.com/2023/03/12/create-a-ui5-custom-library-with-versioning-using-a-multi-version-namespace/). Also, ensure the version is available in the system.
+    Whenever you update the `ui5-cc-spreadsheetimporter` module, ensure that the version specified in your `manifest.json` is up to date. For more information, see [Version Namespace](https://blogs.sap.com/2023/03/12/create-a-ui5-custom-library-with-versioning-using-a-multi-version-namespace/). Also, ensure the version is available in the system.
+<!-- prettier-ignore-end -->
 
 ```json
 "componentUsages": {
@@ -138,8 +154,10 @@ Whenever you update the `ui5-cc-spreadsheetimporter` module, ensure that the ver
 
 ## Starting with the Fiori Elements Application
 
+<!-- prettier-ignore-start -->
 !!! warning "OData Version Differences"
-There are different implementations for Fiori Elements depending on the OData version.
+    There are different implementations for Fiori Elements depending on the OData version.
+<!-- prettier-ignore-end -->
 
 If something may not work as expected, set the [`debug`](Configuration.md#debug) property to `true` in the component configuration. This will log additional information to the console that can help diagnose the issue.  
 Search for `Spreadsheet Importer` in the console output to find the log entries.
@@ -192,8 +210,10 @@ Here is an example of a custom action from the [sample app](https://github.com/s
 
 ### Custom Code
 
+<!-- prettier-ignore-start -->
 !!! tip "Using tableId Configuration"
-It's highly recommended to explicitly specify the `tableId` in your configuration. The component searches for tables in the view, and sometimes additional tables may appear (e.g., through value helps), which can lead to errors when more than one table is available. Using `tableId` ensures the component always targets the correct table. Use the [UI5 Inspector](https://chromewebstore.google.com/detail/ui5-inspector/bebecogbafbighhaildooiibipcnbngo?hl=de) to find the correct table ID ([`sap.m.Table`](https://ui5.sap.com/#/api/sap.m.Table) and [`sap.ui.table.Table`](https://ui5.sap.com/#/api/sap.ui.table.Table) is supported).
+    It's highly recommended to explicitly specify the `tableId` in your configuration. The component searches for tables in the view, and sometimes additional tables may appear (e.g., through value helps), which can lead to errors when more than one table is available. Using `tableId` ensures the component always targets the correct table. Use the [UI5 Inspector](https://chromewebstore.google.com/detail/ui5-inspector/bebecogbafbighhaildooiibipcnbngo?hl=de) to find the correct table ID ([`sap.m.Table`](https://ui5.sap.com/#/api/sap.m.Table) and [`sap.ui.table.Table`](https://ui5.sap.com/#/api/sap.ui.table.Table) is supported).
+<!-- prettier-ignore-end -->
 
 The following code sets the busy indicator, creates the component if it hasn't been created already, and opens the dialog. The `context` attribute is mandatory to allow the component to access the app's context, including binding paths and the model. You can pass options like `context` and `tableId` at runtime using the `openSpreadsheetUploadDialog` method. This is useful when opening the dialog for specific tables (see [TableSelector](TableSelector.md)).
 
@@ -327,8 +347,10 @@ When deploying the app to your ABAP system, you might encounter an error like `S
 
 To avoid this error, add the following to your `manifest.json` file:
 
+<!-- prettier-ignore-start -->
 !!! warning "Resource Roots Path"
-Ensure the `resourceRoots` path is correct, especially considering the lowercase format change since version 0.34.0.
+    Ensure the `resourceRoots` path is correct, especially considering the lowercase format change since version 0.34.0.
+<!-- prettier-ignore-end -->
 
 ```json
 "sap.app": {
@@ -445,8 +467,10 @@ builder:
 
 The metadata name is defined in the [`ui5.yaml`](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/9b61a778e5b0a5b66c15f5889334a6d684ae88de/packages/ui5-cc-spreadsheetimporter/ui5.yaml#L4) file of the component.
 
+<!-- prettier-ignore-start -->
 !!! warning "Metadata Name"
-Before version 0.34.0, the metadata name was `ui5-cc-spreadsheetimporter` without the version.
+    Before version 0.34.0, the metadata name was `ui5-cc-spreadsheetimporter` without the version.
+<!-- prettier-ignore-end -->
 
 #### Updating `"sap.cloud".service` in Spreadsheet Importer `manifest.json`
 

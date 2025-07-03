@@ -20,6 +20,7 @@ nav:
       - Deep Download: pages/spreadsheetdownload.md
       - CAP CDS Plugin: pages/CdsPlugin.md
       - Table Selector: pages/TableSelector.md
+      - Wizard: pages/Wizard.md
   - Integration:
       - Typescript: pages/Typescript.md
       - Central Deployment: pages/CentralDeployment.md
@@ -85,6 +86,11 @@ plugins:
       minify_html: true
 
 markdown_extensions:
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - admonition
   - attr_list
   - codehilite:

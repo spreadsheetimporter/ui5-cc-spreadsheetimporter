@@ -444,8 +444,10 @@ this.spreadsheetUploadTableShipping.attachCheckBeforeRead(async function (event)
 
 For SAP S/4HANA or BTP ABAP environments, you can use the RAP (RESTful ABAP Programming) model to implement similar validations using unbound actions.
 
+<!-- prettier-ignore-start -->
 !!! warning
-This is just sample code to show how it could be done. It is not tested and might not work as expected.
+    This is just sample code to show how it could be done. It is not tested and might not work as expected.
+<!-- prettier-ignore-end -->
 
 #### 1. Define the Action in Behavior Definition
 

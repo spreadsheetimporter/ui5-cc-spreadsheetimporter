@@ -216,8 +216,10 @@ The option only defines whether the attempt should be started. If a draft activa
 This is useful in a list report. If this option is set to `false`, all uploaded units have to be activated manually.  
 Will be overwritten by the `createActiveEntity` option.
 
+<!-- prettier-ignore-start -->
 !!! warning
-Draft Activation for OData V2 in **OpenUI5** is not supported.
+    Draft Activation for OData V2 in **OpenUI5** is not supported.
+<!-- prettier-ignore-end -->
 
 ### `createActiveEntity`
 
