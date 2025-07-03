@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   CLAAssistant:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: 'CLA Assistant'
         if: (github.event.comment.body == 'recheck' || github.event.comment.body == 'I agree to the CLA') || github.event_name == 'pull_request_target'

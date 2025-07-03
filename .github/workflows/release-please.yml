@@ -5,7 +5,7 @@ on:
 name: release-please
 jobs:
   release-please:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     outputs:
       prs: ${{ steps.release.outputs.prs }}
     permissions:
@@ -67,7 +67,7 @@ jobs:
   update-prs:
     needs: release-please
     if: needs.release-please.outputs.prs
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: write
       pull-requests: write
