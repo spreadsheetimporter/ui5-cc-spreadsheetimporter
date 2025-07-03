@@ -1,6 +1,7 @@
 import ManagedObject from 'sap/ui/base/ManagedObject';
 import Fragment from 'sap/ui/core/Fragment';
-import Dialog from 'sap/m/Dialog';
+import SpreadsheetDialog from '../../control/SpreadsheetDialog';
+import { SpreadsheetDialog$FileDropEvent } from '../../control/SpreadsheetDialog';
 import Wizard, { Wizard$StepActivateEvent } from 'sap/m/Wizard';
 import JSONModel from 'sap/ui/model/json/JSONModel';
 import ResourceModel from 'sap/ui/model/resource/ResourceModel';
@@ -28,7 +29,7 @@ export default class WizardDialog extends ManagedObject {
    * WizardDialog orchestrates the wizard steps for the import process.
    * It manages the dialog lifecycle, step navigation, and coordination between steps.
    */
-  private dialog: Dialog;
+  private dialog: SpreadsheetDialog;
   private component: Component;
   private spreadsheetUploadController: SpreadsheetUpload;
   private wizard: Wizard;
@@ -106,7 +107,7 @@ export default class WizardDialog extends ManagedObject {
       name: 'cc.spreadsheetimporter.XXXnamespaceXXX.fragment.Wizard',
       type: 'XML',
       controller: this
-    })) as Dialog;
+    })) as SpreadsheetDialog;
 
     // Set models
     this.dialog.setModel(this.componentI18n, 'i18n');
@@ -135,6 +136,10 @@ export default class WizardDialog extends ManagedObject {
     const wizardModel = this.wizardController.getWizardModel();
     wizardModel.setProperty('/action', this.component.getAction());
     this.dialog.setModel(wizardModel, 'wizard');
+
+    // Set up drag and drop
+    this.dialog.setComponent(this.component);
+    this.dialog.attachFileDrop(this.onFileDrop.bind(this));
 
     // Get wizard reference - adjusted index due to added VBox
     this.wizard = this.dialog.getContent()[1] as Wizard;
@@ -366,6 +371,47 @@ export default class WizardDialog extends ManagedObject {
   }
 
   /**
+   * Handler for file drop event from drag and drop
+   */
+  onFileDrop(event: SpreadsheetDialog$FileDropEvent): void {
+    const files = event.getParameter('files');
+    if (files && files.length > 0) {
+      const file = files[0] as File;
+      // Update the wizard model with the file name
+      this.wizardController.getWizardModel().setProperty('/fileUploadValue', file.name);
+      // Handle the file as if it was uploaded normally
+      this.handleFileFromDrop(file);
+    }
+  }
+
+  /**
+   * Handle file from drag and drop
+   */
+  private async handleFileFromDrop(file: File): Promise<void> {
+    try {
+      this.wizardController.getStep('uploadStep').setBusyIndicatorDelay(0);
+      this.wizardController.getStep('uploadStep').setBusy(true);
+      const uploadStep = (await this.wizardController.activateStep('uploadStep')) as UploadStep;
+      // Create a mock event object with the file
+      const mockEvent = {
+        getParameter: (paramName: string) => {
+          if (paramName === 'files') {
+            return [file];
+          }
+          return null;
+        }
+      };
+      uploadStep.onFileUpload(mockEvent);
+      if (this.wizardController.getStep('uploadStep')) {
+        this.wizard.setCurrentStep(this.wizardController.getStep('uploadStep'));
+      }
+    } catch (error) {
+      Log.error('Error handling dropped file', error as Error, 'WizardDialog');
+      this.wizardController.getStep('uploadStep').setBusy(false);
+    }
+  }
+
+  /**
    * Handler for file upload event from the fragment
    * Delegates to the UploadStep controller
    */
@@ -388,7 +434,7 @@ export default class WizardDialog extends ManagedObject {
   setODataHandler(odataHandler: OData): void {
     this.odataHandler = odataHandler;
   }
-  getDialog(): Dialog {
+  getDialog(): SpreadsheetDialog {
     return this.dialog;
   }
 
