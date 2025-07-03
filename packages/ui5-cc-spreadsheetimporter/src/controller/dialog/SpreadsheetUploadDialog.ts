@@ -4,7 +4,8 @@ import SpreadsheetUpload from '../SpreadsheetUpload';
 import SpreadsheetDialog, {
   SpreadsheetDialog$AvailableOptionsChangedEvent,
   SpreadsheetDialog$DecimalSeparatorChangedEvent,
-  SpreadsheetDialog$FileDropEvent
+  SpreadsheetDialog$FileDropEvent,
+  SpreadsheetDialog$DataPasteEvent
 } from '../../control/SpreadsheetDialog';
 import ResourceModel from 'sap/ui/model/resource/ResourceModel';
 import Component from '../../Component';
@@ -100,6 +101,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
       this.spreadsheetUploadDialog.attachDecimalSeparatorChanged(this.onDecimalSeparatorChanged.bind(this));
       this.spreadsheetUploadDialog.attachAvailableOptionsChanged(this.onAvailableOptionsChanged.bind(this));
       this.spreadsheetUploadDialog.attachFileDrop(this.onFileDrop.bind(this));
+      this.spreadsheetUploadDialog.attachDataPaste(this.onDataPaste.bind(this));
     }
     if (this.component.getStandalone() && this.component.getColumns().length === 0 && !this.component.getSpreadsheetTemplateFile()) {
       this.spreadsheetOptionsModel.setProperty('/hideGenerateTemplateButton', true);
@@ -111,6 +113,25 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
     const file = files[0] as File;
     (this.spreadsheetUploadDialog.getModel('info') as JSONModel).setProperty('/fileUploadValue', file.name);
     this.handleFile(file);
+  }
+
+  /**
+   * Handle paste data event from SpreadsheetDialog
+   * @param {SpreadsheetDialog$DataPasteEvent} event - The paste data event
+   */
+  onDataPaste(event: SpreadsheetDialog$DataPasteEvent) {
+    const workbook = event.getParameter('workbook') as any; // Cast to any to access XLSX.WorkBook properties
+    const type = event.getParameter('type');
+    const originalData = event.getParameter('originalData');
+
+    // Update file uploader display to show paste was used
+    const displayName = type === 'file' ? originalData || 'Pasted File' : 'Pasted Data';
+    (this.spreadsheetUploadDialog.getModel('info') as JSONModel).setProperty('/fileUploadValue', displayName);
+
+    // Process the workbook using existing pipeline
+    // For pasted data, use 'PastedData' sheet name; for pasted files, use first sheet name
+    const sheetName = type === 'file' && workbook.SheetNames?.length > 0 ? workbook.SheetNames[0] : 'PastedData';
+    this.handleWorkbook(workbook, sheetName);
   }
 
   /**
@@ -159,6 +180,44 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
     } catch (error) {
       this.setBusy(false);
       Log.error('Error handling file upload', error as Error, 'SpreadsheetUploadDialog');
+      this.resetContent();
+    }
+  }
+
+  /**
+   * Process a workbook directly (from paste functionality)
+   * @param {any} workbook - The XLSX workbook to process
+   * @param {string} sheetName - Sheet name to use (default: 'PastedData')
+   */
+  async handleWorkbook(workbook: any, sheetName: string = 'PastedData') {
+    try {
+      this.setBusy(true);
+
+      // Clear current file reference since this is from paste
+      this.currentFile = null;
+
+      // Run import pipeline using the workbook directly
+      const result = await this.importService.processValidateAndUpload(
+        workbook,
+        sheetName, // Pass sheet name, not index for workbooks
+        undefined,
+        { resetMessages: true },
+        {
+          onBusy: state => this.setBusy(state),
+          onMessagesPresent: () => this.messageHandler.displayMessages(),
+          onImportSuccess: rowCount => this.setDataRows(rowCount)
+        }
+      );
+
+      if (!result.canceled && result.payloadArray) {
+        // Show a success message
+        MessageToast.show(this.util.geti18nText('spreadsheetimporter.dataReadyForUpload'));
+      }
+
+      this.setBusy(false);
+    } catch (error) {
+      this.setBusy(false);
+      Log.error('Error handling workbook', error as Error, 'SpreadsheetUploadDialog');
       this.resetContent();
     }
   }

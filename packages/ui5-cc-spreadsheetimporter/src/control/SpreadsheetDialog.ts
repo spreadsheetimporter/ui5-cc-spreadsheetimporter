@@ -4,6 +4,9 @@ import { AvailableOptions } from '../enums';
 import SpreadsheetDialogRenderer from './SpreadsheetDialogRenderer';
 import ResourceModel from 'sap/ui/model/resource/ResourceModel';
 import ResourceBundle from 'sap/base/i18n/ResourceBundle';
+import TextToWorkbookService from '../controller/services/TextToWorkbookService';
+import MessageToast from 'sap/m/MessageToast';
+import Log from 'sap/base/Log';
 /**
  * Constructor for a new <code>cc.spreadsheetimporter.XXXnamespaceXXX.SpreadsheetDialog</code> control.
  *
@@ -16,11 +19,15 @@ import ResourceBundle from 'sap/base/i18n/ResourceBundle';
  */
 export default class SpreadsheetDialog extends Dialog {
   dropMessageShown: boolean;
+  private textToWorkbookService: TextToWorkbookService;
+  private readonly _onPaste = (event: Event) => this.handlePaste(event);
+
   constructor(id?: string | $SpreadsheetDialogSettings);
   constructor(id?: string, settings?: $SpreadsheetDialogSettings);
   constructor(id?: string, settings?: $SpreadsheetDialogSettings) {
     super(id, settings);
     this.dropMessageShown = false;
+    this.textToWorkbookService = new TextToWorkbookService();
   }
 
   static readonly metadata: MetadataOptions = {
@@ -33,6 +40,13 @@ export default class SpreadsheetDialog extends Dialog {
       fileDrop: {
         parameters: {
           files: { type: 'object[]' }
+        }
+      },
+      dataPaste: {
+        parameters: {
+          workbook: { type: 'object' },
+          type: { type: 'string' },
+          originalData: { type: 'string' }
         }
       },
       decimalSeparatorChanged: {
@@ -51,10 +65,15 @@ export default class SpreadsheetDialog extends Dialog {
   onAfterRendering(event: any) {
     super.onAfterRendering(event);
     const domRef = this.getDomRef();
+
+    // Drag and drop events
     domRef.addEventListener('dragover', this.handleDragOver.bind(this), false);
     domRef.addEventListener('dragenter', this.handleDragEnter.bind(this), false);
     domRef.addEventListener('dragleave', this.handleDragLeave.bind(this), false);
     domRef.addEventListener('drop', this.handleFileDrop.bind(this), false);
+
+    // Paste events - use stable handler reference on DOM element
+    domRef.addEventListener('paste', this._onPaste);
   }
 
   private handleDragOver(event: any) {
@@ -83,6 +102,95 @@ export default class SpreadsheetDialog extends Dialog {
   }
 
   private handleDragEnter(event: any) {}
+
+  /**
+   * Handle paste events - improved with better guards and busy state
+   * @param event - Browser paste event
+   */
+  private async handlePaste(event: Event): Promise<void> {
+    const clipboardEvent = event as ClipboardEvent;
+
+    // Early-exit guard order (check cheap conditions first)
+    if (!this.isOpen() || !clipboardEvent.isTrusted) {
+      return;
+    }
+
+    const clipboardData = clipboardEvent.clipboardData;
+    if (!clipboardData) {
+      return;
+    }
+
+    // Check if this dialog should handle the paste
+    const dialogDomRef = this.getDomRef();
+    const activeElement = document.activeElement;
+
+    // Only handle if the paste is relevant to our dialog
+    if (!dialogDomRef || !dialogDomRef.contains(activeElement as Node)) {
+      return;
+    }
+
+    // Prevent default paste behavior and stop immediate propagation
+    clipboardEvent.preventDefault();
+    clipboardEvent.stopImmediatePropagation();
+
+    try {
+      // Show busy indicator for large data processing
+      this.setBusy(true);
+
+      // Show processing message
+      const resourceBundle = (this.getModel('i18n') as ResourceModel)?.getResourceBundle() as ResourceBundle;
+      if (resourceBundle) {
+        MessageToast.show(resourceBundle.getText('spreadsheetimporter.pasteDetected'));
+      }
+
+      // Process clipboard data using the service
+      const result = await this.textToWorkbookService.processClipboardData(clipboardData);
+
+      if (result.workbook) {
+        // Get original data for debugging/logging purposes
+        let originalData = '';
+        if (result.type === 'text') {
+          originalData = clipboardData.getData('text/plain');
+        } else if (result.type === 'file') {
+          const files = clipboardData.files;
+          originalData = files.length > 0 ? files[0].name : '';
+        }
+
+        // Fire the dataPaste event
+        this.fireDataPaste({
+          workbook: result.workbook,
+          type: result.type,
+          originalData: originalData
+        } as SpreadsheetDialog$DataPasteEventParameters);
+
+        // Show success message
+        if (resourceBundle) {
+          const messageKey = result.type === 'file' ? 'spreadsheetimporter.pasteFileSuccess' : 'spreadsheetimporter.pasteTextSuccess';
+          MessageToast.show(resourceBundle.getText(messageKey));
+        }
+      } else {
+        // Show error message - no valid data found
+        if (resourceBundle) {
+          MessageToast.show(resourceBundle.getText('spreadsheetimporter.pasteNoData'));
+        }
+      }
+    } catch (error) {
+      Log.error('Error handling paste event', error as Error, 'SpreadsheetDialog');
+
+      // Check for specific error types
+      const resourceBundle = (this.getModel('i18n') as ResourceModel)?.getResourceBundle() as ResourceBundle;
+      if (resourceBundle) {
+        const errorMessage = (error as Error).message;
+        if (errorMessage === 'pasteTooLarge') {
+          MessageToast.show(resourceBundle.getText('spreadsheetimporter.pasteTooLarge'));
+        } else {
+          MessageToast.show(resourceBundle.getText('spreadsheetimporter.pasteError'));
+        }
+      }
+    } finally {
+      this.setBusy(false);
+    }
+  }
 
   private showDropMessage(show: boolean) {
     // Ensure the current state matches the desired visibility
@@ -128,6 +236,15 @@ export default class SpreadsheetDialog extends Dialog {
     return this;
   }
 
+  /**
+   * Fire the dataPaste event
+   * @param parameters - Event parameters
+   * @returns this
+   */
+  public fireDataPaste(parameters?: SpreadsheetDialog$DataPasteEventParameters): this {
+    return this.fireEvent('dataPaste', parameters) as this;
+  }
+
   exit() {
     // Remove event listeners to clean up
     const domRef = this.getDomRef();
@@ -135,6 +252,9 @@ export default class SpreadsheetDialog extends Dialog {
       domRef.removeEventListener('dragover', this.handleDragOver.bind(this), false);
       domRef.removeEventListener('dragleave', this.handleDragLeave.bind(this), false);
       domRef.removeEventListener('drop', this.handleFileDrop.bind(this), false);
+
+      // Remove paste event listener using stable reference
+      domRef.removeEventListener('paste', this._onPaste);
     }
 
     // Clean up the drop message element if needed

@@ -12,6 +12,7 @@ declare module "./SpreadsheetDialog" {
         availableOptions?: string[] | PropertyBindingInfo | `{${string}}`;
         component?: object | PropertyBindingInfo | `{${string}}`;
         fileDrop?: (event: SpreadsheetDialog$FileDropEvent) => void;
+        dataPaste?: (event: SpreadsheetDialog$DataPasteEvent) => void;
         decimalSeparatorChanged?: (event: SpreadsheetDialog$DecimalSeparatorChangedEvent) => void;
         availableOptionsChanged?: (event: SpreadsheetDialog$AvailableOptionsChangedEvent) => void;
     }
@@ -36,6 +37,12 @@ declare module "./SpreadsheetDialog" {
         detachFileDrop(fn: (event: SpreadsheetDialog$FileDropEvent) => void, listener?: object): this;
         fireFileDrop(parameters?: SpreadsheetDialog$FileDropEventParameters): this;
 
+        // event: dataPaste
+        attachDataPaste(fn: (event: SpreadsheetDialog$DataPasteEvent) => void, listener?: object): this;
+        attachDataPaste<CustomDataType extends object>(data: CustomDataType, fn: (event: SpreadsheetDialog$DataPasteEvent, data: CustomDataType) => void, listener?: object): this;
+        detachDataPaste(fn: (event: SpreadsheetDialog$DataPasteEvent) => void, listener?: object): this;
+        fireDataPaste(parameters?: SpreadsheetDialog$DataPasteEventParameters): this;
+
         // event: decimalSeparatorChanged
         attachDecimalSeparatorChanged(fn: (event: SpreadsheetDialog$DecimalSeparatorChangedEvent) => void, listener?: object): this;
         attachDecimalSeparatorChanged<CustomDataType extends object>(data: CustomDataType, fn: (event: SpreadsheetDialog$DecimalSeparatorChangedEvent, data: CustomDataType) => void, listener?: object): this;
@@ -57,6 +64,15 @@ declare module "./SpreadsheetDialog" {
     }
 
     /**
+     * Interface describing the parameters of SpreadsheetDialog's 'dataPaste' event.
+     */
+    export interface SpreadsheetDialog$DataPasteEventParameters {
+        workbook?: object;
+        type?: string;
+        originalData?: string;
+    }
+
+    /**
      * Interface describing the parameters of SpreadsheetDialog's 'decimalSeparatorChanged' event.
      */
     export interface SpreadsheetDialog$DecimalSeparatorChangedEventParameters {
@@ -74,6 +90,11 @@ declare module "./SpreadsheetDialog" {
      * Type describing the SpreadsheetDialog's 'fileDrop' event.
      */
     export type SpreadsheetDialog$FileDropEvent = Event<SpreadsheetDialog$FileDropEventParameters>;
+
+    /**
+     * Type describing the SpreadsheetDialog's 'dataPaste' event.
+     */
+    export type SpreadsheetDialog$DataPasteEvent = Event<SpreadsheetDialog$DataPasteEventParameters>;
 
     /**
      * Type describing the SpreadsheetDialog's 'decimalSeparatorChanged' event.

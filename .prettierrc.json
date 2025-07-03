@@ -11,5 +11,5 @@
   "endOfLine": "lf",
   "htmlWhitespaceSensitivity": "ignore",
   "xmlWhitespaceSensitivity": "ignore",
-  "plugins": ["@prettier/plugin-xml"]
+  "plugins": ["@prettier/plugin-xml", "prettier-plugin-properties"]
 }
