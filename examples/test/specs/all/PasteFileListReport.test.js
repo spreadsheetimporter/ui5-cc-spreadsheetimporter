@@ -199,6 +199,7 @@ describe("Paste File List Report", () => {
 	});
 
 	it("Open Spreadsheet Upload Dialog again for file paste", async () => {
+		await BaseClass.dummyWait(2000);
 		await BaseClass.pressById(FE.listReportSpreadsheetuploadButton);
 		// Wait for dialog to open
 		await BaseClass.dummyWait(1000);
