@@ -1,7 +1,11 @@
+<!-- prettier-ignore-start -->
+
 !!! warning
 This feature is available since version 1.7.0 and currently experimental and may not work as expected.  
  Also only available for OData V4.  
  Please provide feedback: https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues
+
+<!-- prettier-ignore-end -->
 
 ## Usage
 

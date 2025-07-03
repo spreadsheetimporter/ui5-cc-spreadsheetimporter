@@ -61,8 +61,10 @@ See the configurations for this version below:
 
 ### manifest.json
 
-!!! warning ""
-⚠️ The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v2_2_0" changed from version 0.34.0 to lowercase. Please make sure to use the correct path.
+<!-- prettier-ignore-start -->
+!!! warning "Resource Roots Path"
+    The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v2_2_0" changed from version 0.34.0 to lowercase. Please make sure to use the correct path.
+<!-- prettier-ignore-end -->
 
 ```json
 "componentUsages": {

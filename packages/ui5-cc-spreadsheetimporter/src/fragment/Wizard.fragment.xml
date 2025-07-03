@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout" xmlns:u="sap.ui.unified">
-  <Dialog
+<core:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:f="sap.ui.layout.form"
+  xmlns:l="sap.ui.layout"
+  xmlns:u="sap.ui.unified"
+  xmlns:spreadsheetdialog="cc.spreadsheetimporter.XXXnamespaceXXX.control"
+>
+  <spreadsheetdialog:SpreadsheetDialog
     title="{i18n>spreadsheetimporter.wizardTitle}"
     contentWidth="80%"
     contentHeight="80%"
@@ -9,8 +16,9 @@
     showHeader="true"
     afterClose="onWizardClose"
     verticalScrolling="false"
+    fileDrop="onFileDrop"
   >
-    <content>
+    <spreadsheetdialog:content>
       <!-- Action Indicator at top of wizard -->
       <HBox justifyContent="SpaceBetween" alignItems="Center">
         <MessageStrip
@@ -104,10 +112,10 @@
           </customData>
         </WizardStep>
       </Wizard>
-    </content>
-    <buttons>
+    </spreadsheetdialog:content>
+    <spreadsheetdialog:buttons>
       <Button text="{i18n>spreadsheetimporter.cancel}" press="onWizardCancel" />
       <Button text="{i18n>spreadsheetimporter.upload}" type="Emphasized" press="onWizardFinish" enabled="{wizard>/uploadButtonEnabled}" />
-    </buttons>
-  </Dialog>
+    </spreadsheetdialog:buttons>
+  </spreadsheetdialog:SpreadsheetDialog>
 </core:FragmentDefinition>

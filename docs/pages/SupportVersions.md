@@ -10,8 +10,10 @@ Another overview will show you which apps are already tested automatically with 
 All the example apps can be found in the [`examples`](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/tree/main/examples/packages) folder. The test scripts can be found in the [`test`](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/tree/main/examples/test) folder.  
 More info at [wdi5 tests](./Development/wdi5.md)
 
+<!-- prettier-ignore-start -->
 !!! success "Support"
-**To summarize: All stable UI5 versions are currently supported (from 1.71). Also, 2.0 is already supported but is still experimental, as version 2.0 may still change. Also every OData Service, including SEGW, RAP, and CAP, is supported.**
+    **To summarize: All stable UI5 versions are currently supported (from 1.71). Also, 2.0 is already supported but is still experimental, as version 2.0 may still change. Also every OData Service, including SEGW, RAP, and CAP, is supported.**
+<!-- prettier-ignore-end -->
 
 ## Apps used for the tests
 
@@ -43,8 +45,10 @@ Here is an overview of the apps that were created and used for the tests.
 | 1.84        | :white_check_mark: | :white_check_mark:    | :white_check_mark: | :white_check_mark:    | :white_check_mark: | :white_check_mark: |
 | 1.71        | :white_check_mark: | :white_check_mark:    | :white_check_mark: | :white_check_mark:    | :white_check_mark: | :white_check_mark: |
 
+<!-- prettier-ignore-start -->
 !!! warning
-**OpenUI5**: Draft Activation for V2 in OpenUI5 is not supported.
+    **OpenUI5**: Draft Activation for V2 in OpenUI5 is not supported.
+<!-- prettier-ignore-end -->
 
 ### CAP V4
 

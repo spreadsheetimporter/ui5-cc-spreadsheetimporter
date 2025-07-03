@@ -84,8 +84,10 @@ There are two ways to use the CDS plugin: via the **UI5 Spreadsheet Importer com
 
 ### Method 1: Using UI5 Spreadsheet Importer Component
 
-!!! warning
-This feature is available since version 2.1.0.
+<!-- prettier-ignore-start -->
+!!! warning "Feature Availability"
+    This feature is available since version 2.1.0.
+<!-- prettier-ignore-end -->
 
 The simplest approach is to use the UI5 Spreadsheet Importer with the `directUploadConfig` option:
 
