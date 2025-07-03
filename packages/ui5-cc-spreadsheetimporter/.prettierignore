@@ -1,0 +1,44 @@
+# Build outputs
+dist/
+build/
+resources/
+mta_archives/
+
+# Dependencies
+node_modules/
+
+# Generated files
+*.gen.d.ts
+Component.gen.d.ts
+control/SpreadsheetDialog.gen.d.ts
+
+# Temporary files
+*.tmp
+*.temp
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# IDE files
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Package manager lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Configuration files that should not be formatted
+.env*
+*.min.js
+*.min.css

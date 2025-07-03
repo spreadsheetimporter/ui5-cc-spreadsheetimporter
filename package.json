@@ -37,7 +37,8 @@
     "runDocs": "docker run --rm -it -p 8000:8000 -v ${PWD}:/docs squidfunk/mkdocs-material",
     "coypChangelogToDoc": "node ./dev/copy-changelog-to-doc.js",
     "updateAllDependencies": "pnpm up --latest -r",
-    "lint:ui5": "pnpm --filter ui5-cc-spreadsheetimporter lint:ui5"
+    "lint:ui5": "pnpm --filter ui5-cc-spreadsheetimporter lint:ui5",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@babel/eslint-parser": "7.27.5",
