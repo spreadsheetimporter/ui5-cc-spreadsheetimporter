@@ -2,16 +2,17 @@ OPA5 Tests are used here to check the more unit-like functionality of the app.
 
 ## Setup
 
-The [ui5-test-runner](https://github.com/ArnaudBuchholz/ui5-test-runner) by Arnaud Buchholz is installed and run from the `examples` folder. 
+The [ui5-test-runner](https://github.com/ArnaudBuchholz/ui5-test-runner) by Arnaud Buchholz is installed and run from the `examples` folder.
 Tests are currently only in OData V4 FE Example.
 
 ### Configuration
 
-There is no config file. With the ui5-test-runner, only the `opaTests.qunit.html` is called. 
+There is no config file. With the ui5-test-runner, only the `opaTests.qunit.html` is called.
 
 ## Run tests
 
 You can run the tests for OData V4 and UI5 Version 108 in the root folder with:
+
 ```sh
 npm run start:v4fe:108
 npm run test:opa:v4fe:108
@@ -19,8 +20,7 @@ npm run test:opa:v4fe:108
 
 which will run `pnpm --filter ui5-cc-spreadsheetimporter-sample ui5-test-runner --url http://localhost:8080/test/integration/opaTests.qunit.html`.  
 All information about the run is in the folder `./examples/report`.  
-So you can run all the other versions like 96 and 84 with the right port.  
-
+So you can run all the other versions like 96 and 84 with the right port.
 
 ## GitHub Actions
 

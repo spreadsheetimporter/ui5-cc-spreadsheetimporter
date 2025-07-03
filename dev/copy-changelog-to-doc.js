@@ -9,7 +9,7 @@ const filesToCopy = [
 ];
 
 filesToCopy.forEach(file => {
-  fs.copyFile(file.src, file.dest, (err) => {
+  fs.copyFile(file.src, file.dest, err => {
     if (err) {
       console.error(`Error while copying file: ${file.src} -> ${file.dest}. Error: ${err.message}`);
     } else {

@@ -1,4 +1,4 @@
-On the Page [Supported Versions](./../SupportVersions.md) you can see which versions are supported.  To make sure all those versions are supported, tests are run with the sample apps.  
+On the Page [Supported Versions](./../SupportVersions.md) you can see which versions are supported. To make sure all those versions are supported, tests are run with the sample apps.  
 I also make these sample apps available to you on the [Live Demo](https://livedemo.spreadsheet-importer.com/launchpad.html#Shell-home).
 
 ## Docker
@@ -21,7 +21,6 @@ docker pull greatoceandrive/ui5-spreadsheet-importer-examples
 ```sh
 docker run -p 4004:4004 greatoceandrive/ui5-spreadsheet-importer-examples
 ```
-
 
 #### Build the Docker Image yourself (optional)
 

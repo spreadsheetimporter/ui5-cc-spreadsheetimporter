@@ -1,16 +1,12 @@
-sap.ui.define([
-	"sap/ui/test/Opa5"
-], function (Opa5) {
+sap.ui.define(["sap/ui/test/Opa5"], function (Opa5) {
 	"use strict";
 	var sViewName = "MainView";
-	
+
 	Opa5.createPageObjects({
 		onTheViewPage: {
-
 			actions: {},
 
 			assertions: {
-
 				iShouldSeeThePageView: function () {
 					return this.waitFor({
 						id: "page",
@@ -24,5 +20,4 @@ sap.ui.define([
 			}
 		}
 	});
-
 });

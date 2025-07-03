@@ -13,7 +13,7 @@ The control's integration aims for simplicity, requiring minimal to no configura
 
 Our goal is to support as many Fiori Scenarios and UI5 Versions as possible. You can see the currently [supported versions here](https://docs.spreadsheet-importer.com/pages/SupportVersions/).
 
-![Spreadsheet Upload Dialog](/images/SpreadsheetUploadDialog.png "Spreadsheet Upload Dialog")
+![Spreadsheet Upload Dialog](/images/SpreadsheetUploadDialog.png 'Spreadsheet Upload Dialog')
 
 ## Getting Started
 
@@ -30,7 +30,7 @@ The demo app uses OData V4 and UI5 version 1.136 with a CAP backend. The data re
 
 # **Support**
 
-If you encounter implementation issues or bugs, you can open an issue [here](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/new/choose).  
+If you encounter implementation issues or bugs, you can open an issue [here](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/new/choose).
 
 # Development
 
@@ -63,4 +63,4 @@ For production or commercial usage, please see https://spreadsheet-importer.com/
 
 The postCreateCommand will automatically install all dependencies, which might take a few minutes.
 
-[![Open Stable in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=569313224&machine=basicLinux32gb&devcontainer_path=.devcontainer%2Fdevcontainer.json&location=WestEurope)  
+[![Open Stable in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=569313224&machine=basicLinux32gb&devcontainer_path=.devcontainer%2Fdevcontainer.json&location=WestEurope)

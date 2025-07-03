@@ -10,7 +10,6 @@ import ODataModelV2 from "sap/ui/model/odata/v2/ODataModel";
 import Button from "sap/m/Button";
 import MessageStrip, { MessageType } from "sap/m/MessageStrip";
 
-
 /**
  * @namespace com.spreadsheetimporter.anyupload.ext.main.Main.controller
  */
@@ -40,9 +39,9 @@ export default class Main extends Controller {
 
 	public async onServiceChange(event: Select$ChangeEventParameters) {
 		// @ts-ignore
-		let selectedService = ""
+		let selectedService = "";
 		try {
-			 selectedService = (event.getSource() as Select).getSelectedItem()?.getBindingContext("capServices")?.getObject() as ServiceObject;
+			selectedService = (event.getSource() as Select).getSelectedItem()?.getBindingContext("capServices")?.getObject() as ServiceObject;
 			if (selectedService?.url.includes("/v2/")) {
 				this.selectedService = new ODataModelV2(selectedService.url);
 			} else if (selectedService?.url.includes("/v4/")) {
@@ -93,7 +92,7 @@ export default class Main extends Controller {
 					const hasEntitySets = entitySets && entitySets.length > 0;
 					entitySetSelect.setVisible(hasEntitySets);
 					entitySetText.setVisible(hasEntitySets);
-					
+
 					if (!hasEntitySets) {
 						const messageStrip = new MessageStrip({
 							text: "No entity sets are available",
@@ -175,11 +174,11 @@ export default class Main extends Controller {
 	async onUpload(): void {
 		const entitySelectObject = this.byId("entitySetSelect")?.getSelectedItem()?.getBindingContext("capEntitySets")?.getObject();
 		const serviceSelectObject = this.byId("serviceSelect")?.getSelectedItem()?.getBindingContext("capServices")?.getObject();
-		
+
 		const componentData = {
 			context: this
-		}
-		if(serviceSelectObject.name === "Orders V2") {
+		};
+		if (serviceSelectObject.name === "Orders V2") {
 			componentData.createActiveEntity = true;
 		}
 		this.spreadsheetUpload = await this.getAppComponent().createComponent({

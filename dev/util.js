@@ -1,394 +1,389 @@
-const fs = require("fs");
-const path = require('path')
+const fs = require('fs');
+const path = require('path');
 
 // Handle yaml module dynamically to avoid errors when it's not needed
 let yaml;
 try {
-    yaml = require('js-yaml');
+  yaml = require('js-yaml');
 } catch (error) {
-    // Only initialize yaml when actually needed
-    yaml = null;
+  // Only initialize yaml when actually needed
+  yaml = null;
 }
 
 async function getReplaceInFile() {
-    return await import('replace-in-file');
+  return await import('replace-in-file');
 }
 
 function copyDirectorySync(src, dest, excludedFolder) {
-	const files = fs.readdirSync(src);
+  const files = fs.readdirSync(src);
 
-	for (const file of files) {
-		const srcPath = `${src}/${file}`;
-		const destPath = `${dest}/${file}`;
+  for (const file of files) {
+    const srcPath = `${src}/${file}`;
+    const destPath = `${dest}/${file}`;
 
-		if (file === excludedFolder) {
-			continue;
-		}
+    if (file === excludedFolder) {
+      continue;
+    }
 
-		if (fs.statSync(srcPath).isFile()) {
-			fs.copyFileSync(srcPath, destPath);
-		} else if (fs.statSync(srcPath).isDirectory()) {
-			fs.mkdirSync(destPath, { recursive: true });
-			copyDirectorySync(srcPath, destPath, excludedFolder);
-		}
-	}
+    if (fs.statSync(srcPath).isFile()) {
+      fs.copyFileSync(srcPath, destPath);
+    } else if (fs.statSync(srcPath).isDirectory()) {
+      fs.mkdirSync(destPath, { recursive: true });
+      copyDirectorySync(srcPath, destPath, excludedFolder);
+    }
+  }
 }
 
 async function replaceSomething(copyFrom, copyTo, files, from, to) {
-    fs.copyFileSync(copyFrom, copyTo);
-    const replace = await getReplaceInFile();
-    const options = {
-        files: files,
-        from: from,
-        to: to,
-    };
-    return replace.default.sync(options);
+  fs.copyFileSync(copyFrom, copyTo);
+  const replace = await getReplaceInFile();
+  const options = {
+    files: files,
+    from: from,
+    to: to
+  };
+  return replace.default.sync(options);
 }
 
 // replace version in examples folder
 function replaceVersionInExamples(versionSlash, version, ui5Apps) {
-	let manifests = [];
-	ui5Apps.forEach((app) => {
-		let rootPath = "examples/packages/" + app + "/";
-		replaceVersioninApp(app, version, versionSlash, rootPath);
-	});
+  let manifests = [];
+  ui5Apps.forEach(app => {
+    let rootPath = 'examples/packages/' + app + '/';
+    replaceVersioninApp(app, version, versionSlash, rootPath);
+  });
 }
 
 function replaceVersioninApp(app, version, versionSlash, rootPath) {
-	let path = rootPath + "webapp/manifest.json";
-	// Read the contents of the package.json file
-	let manifest = fs.readFileSync(path, "utf8");
-	// Parse the JSON content
-	let manifestData = JSON.parse(manifest);
-	// Replace with current version
-	const resourceRoots = manifestData["sap.ui5"].resourceRoots;
-	const updatedResourceRoots = {};
-	Object.keys(resourceRoots)
-		.filter(key => !key.startsWith("cc.spreadsheetimporter"))
-		.forEach(key => {
-			updatedResourceRoots[key] = resourceRoots[key];
-		});
-	updatedResourceRoots[`cc.spreadsheetimporter.${version}`] = `./thirdparty/customcontrol/spreadsheetimporter/${versionSlash}`;
-	// add to every app even if it is not used
-	manifestData["sap.ui5"].resourceRoots = updatedResourceRoots;
-	manifestData["sap.ui5"]["componentUsages"]["spreadsheetImporter"].name = `cc.spreadsheetimporter.${version}`;
-	if(manifestData["sap.ui5"]["dependencies"]["components"]){
-		manifestData["sap.ui5"]["dependencies"]["components"] = {};
-		manifestData["sap.ui5"]["dependencies"]["components"][`cc.spreadsheetimporter.${version}`] = {};
-	}
-	
-	// Stringify manifest data back to string
-	manifestData = JSON.stringify(manifestData, null, 2);
-	// Write back manifest file
-	fs.writeFileSync(path, manifestData, "utf8");
+  let path = rootPath + 'webapp/manifest.json';
+  // Read the contents of the package.json file
+  let manifest = fs.readFileSync(path, 'utf8');
+  // Parse the JSON content
+  let manifestData = JSON.parse(manifest);
+  // Replace with current version
+  const resourceRoots = manifestData['sap.ui5'].resourceRoots;
+  const updatedResourceRoots = {};
+  Object.keys(resourceRoots)
+    .filter(key => !key.startsWith('cc.spreadsheetimporter'))
+    .forEach(key => {
+      updatedResourceRoots[key] = resourceRoots[key];
+    });
+  updatedResourceRoots[`cc.spreadsheetimporter.${version}`] = `./thirdparty/customcontrol/spreadsheetimporter/${versionSlash}`;
+  // add to every app even if it is not used
+  manifestData['sap.ui5'].resourceRoots = updatedResourceRoots;
+  manifestData['sap.ui5']['componentUsages']['spreadsheetImporter'].name = `cc.spreadsheetimporter.${version}`;
+  if (manifestData['sap.ui5']['dependencies']['components']) {
+    manifestData['sap.ui5']['dependencies']['components'] = {};
+    manifestData['sap.ui5']['dependencies']['components'][`cc.spreadsheetimporter.${version}`] = {};
+  }
+
+  // Stringify manifest data back to string
+  manifestData = JSON.stringify(manifestData, null, 2);
+  // Write back manifest file
+  fs.writeFileSync(path, manifestData, 'utf8');
 }
 
 function deleteFolderRecursive(path) {
-	if (fs.existsSync(path)) {
-		fs.readdirSync(path).forEach((file) => {
-			const curPath = `${path}/${file}`;
-			if (fs.lstatSync(curPath).isDirectory()) {
-				// recurse
-				deleteFolderRecursive(curPath);
-			} else {
-				// delete file
-				fs.unlinkSync(curPath);
-			}
-		});
-		fs.rmdirSync(path);
-	}
+  if (fs.existsSync(path)) {
+    fs.readdirSync(path).forEach(file => {
+      const curPath = `${path}/${file}`;
+      if (fs.lstatSync(curPath).isDirectory()) {
+        // recurse
+        deleteFolderRecursive(curPath);
+      } else {
+        // delete file
+        fs.unlinkSync(curPath);
+      }
+    });
+    fs.rmdirSync(path);
+  }
 }
 
 function getPackageJson(path) {
-	// Read the contents of the package.json file
-	const packageJson = fs.readFileSync(path, "utf8");
+  // Read the contents of the package.json file
+  const packageJson = fs.readFileSync(path, 'utf8');
 
-	// Parse the JSON content
-	return JSON.parse(packageJson);
+  // Parse the JSON content
+  return JSON.parse(packageJson);
 }
 
 function getVersionDots(path) {
-	const packageData = getPackageJson(path);
-	// Get the version from the parsed data
-	return `v${packageData.version}`;
+  const packageData = getPackageJson(path);
+  // Get the version from the parsed data
+  return `v${packageData.version}`;
 }
 
 function getVersionSlash(path) {
-	const version = getVersionDots(path);
-	return version.replaceAll(".", "/");
+  const version = getVersionDots(path);
+  return version.replaceAll('.', '/');
 }
 function searchAndReplace(inputFile, search, replace) {
-	const file = fs.readFileSync(inputFile, "utf8");
-	let result = file.replace(search, replace);
+  const file = fs.readFileSync(inputFile, 'utf8');
+  let result = file.replace(search, replace);
 
-	fs.writeFileSync(inputFile, result, "utf8");
+  fs.writeFileSync(inputFile, result, 'utf8');
 }
 
 function getTestappObject(scenario, version) {
-	const testApps = fs.readFileSync(path.resolve(__dirname, 'testapps.json'), 'UTF-8');
-	// const testApps = fs.readFileSync("./dev/testapps.json", "utf8");
-	let json_data = JSON.parse(testApps);
-	version = parseInt(version)
+  const testApps = fs.readFileSync(path.resolve(__dirname, 'testapps.json'), 'UTF-8');
+  // const testApps = fs.readFileSync("./dev/testapps.json", "utf8");
+  let json_data = JSON.parse(testApps);
+  version = parseInt(version);
 
-	for (let index = 0; index < json_data.length; index++) {
-		const element = json_data[index];
-		if (element.rootAppName === scenario) {
-			const rootObject = element;
-			if (rootObject.versionMinor === version) {
-				return rootObject;
-			} else {
-				const rootVersions = rootObject.copyVersions
-				for (let index = 0; index < rootVersions.length; index++) {
-					const subObject = rootVersions[index];
-					if (subObject.versionMinor === version) {
-						subObject.rootAppObject = rootObject;
-						return subObject;
-					}
-				}
-			}
-			break;
-		}
-	}
+  for (let index = 0; index < json_data.length; index++) {
+    const element = json_data[index];
+    if (element.rootAppName === scenario) {
+      const rootObject = element;
+      if (rootObject.versionMinor === version) {
+        return rootObject;
+      } else {
+        const rootVersions = rootObject.copyVersions;
+        for (let index = 0; index < rootVersions.length; index++) {
+          const subObject = rootVersions[index];
+          if (subObject.versionMinor === version) {
+            subObject.rootAppObject = rootObject;
+            return subObject;
+          }
+        }
+      }
+      break;
+    }
+  }
 }
 
 function replaceYamlFileBuild(version, versionShort, versionSlash, filePath) {
-    // Load the specified yaml file
-    const fileContents = fs.readFileSync(filePath, 'utf8');
+  // Load the specified yaml file
+  const fileContents = fs.readFileSync(filePath, 'utf8');
 
-    // Parse the YAML into a JavaScript object
-    const ui5Build = yaml.load(fileContents);
+  // Parse the YAML into a JavaScript object
+  const ui5Build = yaml.load(fileContents);
 
-    // Replace the values
-    ui5Build.builder.customTasks.forEach(task => {
-        if (task.name === 'ui5-tooling-stringreplace-task') {
-            task.configuration.replace.forEach(replacement => {
-                if (replacement.placeholder === 'XXXnamespaceXXX') {
-                    replacement.value = version;
-                }
-                if (replacement.placeholder === 'XXXnamespaceShortXXX') {
-                    replacement.value = versionShort;
-                }
-                if (replacement.placeholder === 'XXXnamespaceSlashXXX') {
-                    replacement.value = versionSlash;
-                }
-            });
+  // Replace the values
+  ui5Build.builder.customTasks.forEach(task => {
+    if (task.name === 'ui5-tooling-stringreplace-task') {
+      task.configuration.replace.forEach(replacement => {
+        if (replacement.placeholder === 'XXXnamespaceXXX') {
+          replacement.value = version;
         }
-    });
+        if (replacement.placeholder === 'XXXnamespaceShortXXX') {
+          replacement.value = versionShort;
+        }
+        if (replacement.placeholder === 'XXXnamespaceSlashXXX') {
+          replacement.value = versionSlash;
+        }
+      });
+    }
+  });
 
-    // Serialize the modified object back to YAML
-    const updatedYaml = yaml.dump(ui5Build, { lineWidth: -1 });
+  // Serialize the modified object back to YAML
+  const updatedYaml = yaml.dump(ui5Build, { lineWidth: -1 });
 
-    // Save the updated file
-    fs.writeFileSync(filePath, updatedYaml, 'utf8');
+  // Save the updated file
+  fs.writeFileSync(filePath, updatedYaml, 'utf8');
 }
 
 function replaceYamlFileServe(version, versionShort, versionSlash, filePath) {
-    // Load the specified yaml file
-    const fileContents = fs.readFileSync(filePath, 'utf8');
+  // Load the specified yaml file
+  const fileContents = fs.readFileSync(filePath, 'utf8');
 
-    // Parse the YAML into a JavaScript object
-    const ui5Build = yaml.load(fileContents);
+  // Parse the YAML into a JavaScript object
+  const ui5Build = yaml.load(fileContents);
 
-    // Replace the values
-    ui5Build.server.customMiddleware.forEach(task => {
-        if (task.name === 'ui5-tooling-stringreplace-middleware') {
-            task.configuration.replace.forEach(replacement => {
-                if (replacement.placeholder === 'XXXnamespaceXXX') {
-                    replacement.value = version;
-                }
-                if (replacement.placeholder === 'XXXnamespaceShortXXX') {
-                    replacement.value = versionShort;
-                }
-                if (replacement.placeholder === 'XXXnamespaceSlashXXX') {
-                    replacement.value = versionSlash;
-                }
-            });
+  // Replace the values
+  ui5Build.server.customMiddleware.forEach(task => {
+    if (task.name === 'ui5-tooling-stringreplace-middleware') {
+      task.configuration.replace.forEach(replacement => {
+        if (replacement.placeholder === 'XXXnamespaceXXX') {
+          replacement.value = version;
         }
-    });
+        if (replacement.placeholder === 'XXXnamespaceShortXXX') {
+          replacement.value = versionShort;
+        }
+        if (replacement.placeholder === 'XXXnamespaceSlashXXX') {
+          replacement.value = versionSlash;
+        }
+      });
+    }
+  });
 
-    // Serialize the modified object back to YAML
-    const updatedYaml = yaml.dump(ui5Build, { lineWidth: -1 });
+  // Serialize the modified object back to YAML
+  const updatedYaml = yaml.dump(ui5Build, { lineWidth: -1 });
 
-    // Save the updated file
-    fs.writeFileSync(filePath, updatedYaml, 'utf8');
+  // Save the updated file
+  fs.writeFileSync(filePath, updatedYaml, 'utf8');
 }
 
 function replaceYamlFileCF(version, versionShort, versionSlash, filePath) {
-    // Load the specified yaml file
-    const fileContents = fs.readFileSync(filePath, 'utf8');
+  // Load the specified yaml file
+  const fileContents = fs.readFileSync(filePath, 'utf8');
 
-    // Parse the YAML into a JavaScript object
-    const ui5Build = yaml.load(fileContents);
+  // Parse the YAML into a JavaScript object
+  const ui5Build = yaml.load(fileContents);
 
-    // Replace the values
-    ui5Build.builder.customTasks.forEach(task => {
-        if (task.name === 'ui5-tooling-stringreplace-task') {
-            task.configuration.replace.forEach(replacement => {
-                if (replacement.placeholder === 'XXXnamespaceXXX') {
-                    replacement.value = version;
-                }
-                if (replacement.placeholder === 'XXXnamespaceShortXXX') {
-                    replacement.value = versionShort;
-                }
-                if (replacement.placeholder === 'XXXnamespaceSlashXXX') {
-                    replacement.value = versionSlash;
-                }
-            });
+  // Replace the values
+  ui5Build.builder.customTasks.forEach(task => {
+    if (task.name === 'ui5-tooling-stringreplace-task') {
+      task.configuration.replace.forEach(replacement => {
+        if (replacement.placeholder === 'XXXnamespaceXXX') {
+          replacement.value = version;
         }
-    });
+        if (replacement.placeholder === 'XXXnamespaceShortXXX') {
+          replacement.value = versionShort;
+        }
+        if (replacement.placeholder === 'XXXnamespaceSlashXXX') {
+          replacement.value = versionSlash;
+        }
+      });
+    }
+  });
 
-    // Serialize the modified object back to YAML
-    const updatedYaml = yaml.dump(ui5Build, { lineWidth: -1 });
+  // Serialize the modified object back to YAML
+  const updatedYaml = yaml.dump(ui5Build, { lineWidth: -1 });
 
-    // Save the updated file
-    fs.writeFileSync(filePath, updatedYaml, 'utf8');
+  // Save the updated file
+  fs.writeFileSync(filePath, updatedYaml, 'utf8');
 }
 
 function replaceYamlFileComponent(versionSlash, path) {
-	// Load the ui5-build.yaml file
-	const fileContents = fs.readFileSync(path, 'utf8');
+  // Load the ui5-build.yaml file
+  const fileContents = fs.readFileSync(path, 'utf8');
 
-	// Parse the YAML into a JavaScript object
-	const ui5Build = yaml.load(fileContents);
-	const key = "/thirdparty/customcontrol/spreadsheetimporter/" + versionSlash + "/"
-	// Replace the values
-	ui5Build.resources.configuration.paths = {
-		[key]: "./dist/"
-	};
+  // Parse the YAML into a JavaScript object
+  const ui5Build = yaml.load(fileContents);
+  const key = '/thirdparty/customcontrol/spreadsheetimporter/' + versionSlash + '/';
+  // Replace the values
+  ui5Build.resources.configuration.paths = {
+    [key]: './dist/'
+  };
 
+  // Serialize the modified object back to YAML
+  const updatedYaml = yaml.dump(ui5Build);
 
-	// Serialize the modified object back to YAML
-	const updatedYaml = yaml.dump(ui5Build);
-
-	// Save the updated ui5-build.yaml file
-	fs.writeFileSync(path, updatedYaml, 'utf8');
-
+  // Save the updated ui5-build.yaml file
+  fs.writeFileSync(path, updatedYaml, 'utf8');
 }
 
 function replaceYamlFileDeploy(version, versionShort) {
-	// Load the ui5-build.yaml file
-	const fileContents = fs.readFileSync('./packages/ui5-cc-spreadsheetimporter/ui5-deploy.yaml', 'utf8');
+  // Load the ui5-build.yaml file
+  const fileContents = fs.readFileSync('./packages/ui5-cc-spreadsheetimporter/ui5-deploy.yaml', 'utf8');
 
-	// Parse the YAML into a JavaScript object
-	const ui5Build = yaml.load(fileContents);
+  // Parse the YAML into a JavaScript object
+  const ui5Build = yaml.load(fileContents);
 
-	// Replace the values
-	// Update the paths
-	ui5Build.metadata.name = `cc.spreadsheetimporter.${version}`
-	ui5Build.builder.customTasks.forEach(task => {
-		if (task.name === 'deploy-to-abap') {
-			task.configuration.app.name = `Z_XUP_${versionShort}`
-		}
-	});
+  // Replace the values
+  // Update the paths
+  ui5Build.metadata.name = `cc.spreadsheetimporter.${version}`;
+  ui5Build.builder.customTasks.forEach(task => {
+    if (task.name === 'deploy-to-abap') {
+      task.configuration.app.name = `Z_XUP_${versionShort}`;
+    }
+  });
 
+  // Serialize the modified object back to YAML
+  const updatedYaml = yaml.dump(ui5Build, { lineWidth: -1 });
 
-	// Serialize the modified object back to YAML
-	const updatedYaml = yaml.dump(ui5Build, { lineWidth: -1 });
-
-	// Save the updated ui5-build.yaml file
-	fs.writeFileSync('./packages/ui5-cc-spreadsheetimporter/ui5-deploy.yaml', updatedYaml, 'utf8');
-
+  // Save the updated ui5-build.yaml file
+  fs.writeFileSync('./packages/ui5-cc-spreadsheetimporter/ui5-deploy.yaml', updatedYaml, 'utf8');
 }
 
 function replaceVersionManifest(version) {
-	// Read the JSON file
-	const jsonFile = fs.readFileSync('./packages/ui5-cc-spreadsheetimporter/src/manifest.json', 'utf8');
-	const jsonData = JSON.parse(jsonFile);
-	// Replace the version
+  // Read the JSON file
+  const jsonFile = fs.readFileSync('./packages/ui5-cc-spreadsheetimporter/src/manifest.json', 'utf8');
+  const jsonData = JSON.parse(jsonFile);
+  // Replace the version
 
-	jsonData['sap.app']['id'] = `cc.spreadsheetimporter.${version}`;
-	jsonData['sap.cloud']['service'] = `spreadsheetimporter_${version}`;
-	jsonData['sap.ui5']['componentName'] = `cc.spreadsheetimporter.${version}`;
-	jsonData['sap.ui5']['models']['i18n']['settings']['bundleName'] = `cc.spreadsheetimporter.${version}.i18n.i18n`;
+  jsonData['sap.app']['id'] = `cc.spreadsheetimporter.${version}`;
+  jsonData['sap.cloud']['service'] = `spreadsheetimporter_${version}`;
+  jsonData['sap.ui5']['componentName'] = `cc.spreadsheetimporter.${version}`;
+  jsonData['sap.ui5']['models']['i18n']['settings']['bundleName'] = `cc.spreadsheetimporter.${version}.i18n.i18n`;
 
-	// Write the updated JSON to file
-	fs.writeFileSync('./packages/ui5-cc-spreadsheetimporter/src/manifest.json', JSON.stringify(jsonData, null, 2));
+  // Write the updated JSON to file
+  fs.writeFileSync('./packages/ui5-cc-spreadsheetimporter/src/manifest.json', JSON.stringify(jsonData, null, 2));
 }
 
 function deleteNodeModules(folderPath) {
-    // Use a more robust recursive deletion approach
-    try {
-        if (fs.existsSync(folderPath)) {
-            const files = fs.readdirSync(folderPath);
-            
-            for (const file of files) {
-                const curPath = path.join(folderPath, file);
-                
-                if (fs.lstatSync(curPath).isDirectory()) {
-                    // Recursively delete subdirectories
-                    deleteNodeModules(curPath);
-                } else {
-                    // Delete files
-                    fs.unlinkSync(curPath);
-                }
-            }
-            
-            // Now that the directory is empty, we can remove it
-            try {
-                fs.rmdirSync(folderPath);
-            } catch (err) {
-                console.error(`Failed to remove directory ${folderPath}: ${err.message}`);
-            }
+  // Use a more robust recursive deletion approach
+  try {
+    if (fs.existsSync(folderPath)) {
+      const files = fs.readdirSync(folderPath);
+
+      for (const file of files) {
+        const curPath = path.join(folderPath, file);
+
+        if (fs.lstatSync(curPath).isDirectory()) {
+          // Recursively delete subdirectories
+          deleteNodeModules(curPath);
+        } else {
+          // Delete files
+          fs.unlinkSync(curPath);
         }
-    } catch (err) {
-        console.error(`Error while deleting ${folderPath}: ${err.message}`);
+      }
+
+      // Now that the directory is empty, we can remove it
+      try {
+        fs.rmdirSync(folderPath);
+      } catch (err) {
+        console.error(`Failed to remove directory ${folderPath}: ${err.message}`);
+      }
     }
+  } catch (err) {
+    console.error(`Error while deleting ${folderPath}: ${err.message}`);
+  }
 }
 
-function replaceMetadataName(versionDash){
-	// replace the metadata in yaml packages/ui5-cc-spreadsheetimporter/ui5.yaml
-	const fileContents = fs.readFileSync('./packages/ui5-cc-spreadsheetimporter/ui5.yaml', 'utf8');
-	const ui5Build = yaml.load(fileContents);
-	ui5Build.metadata.name = `ui5-cc-spreadsheetimporter-${versionDash}`
-	const updatedYaml = yaml.dump(ui5Build, { lineWidth: -1 });
-	fs.writeFileSync('./packages/ui5-cc-spreadsheetimporter/ui5.yaml', updatedYaml, 'utf8');
+function replaceMetadataName(versionDash) {
+  // replace the metadata in yaml packages/ui5-cc-spreadsheetimporter/ui5.yaml
+  const fileContents = fs.readFileSync('./packages/ui5-cc-spreadsheetimporter/ui5.yaml', 'utf8');
+  const ui5Build = yaml.load(fileContents);
+  ui5Build.metadata.name = `ui5-cc-spreadsheetimporter-${versionDash}`;
+  const updatedYaml = yaml.dump(ui5Build, { lineWidth: -1 });
+  fs.writeFileSync('./packages/ui5-cc-spreadsheetimporter/ui5.yaml', updatedYaml, 'utf8');
 }
 
-function updateManifestVersion(version){
-	// remove 'v' from version
-	version = version.replace('v', '');
-	// Read the JSON file
-	const jsonFile = fs.readFileSync('./packages/ui5-cc-spreadsheetimporter/src/manifest.json', 'utf8');
-	const jsonData = JSON.parse(jsonFile);
-	// Replace the version
-	jsonData['sap.app']['applicationVersion']['version'] = version;
-	// Write the updated JSON to file
-	fs.writeFileSync('./packages/ui5-cc-spreadsheetimporter/src/manifest.json', JSON.stringify(jsonData, null, 2));
-
+function updateManifestVersion(version) {
+  // remove 'v' from version
+  version = version.replace('v', '');
+  // Read the JSON file
+  const jsonFile = fs.readFileSync('./packages/ui5-cc-spreadsheetimporter/src/manifest.json', 'utf8');
+  const jsonData = JSON.parse(jsonFile);
+  // Replace the version
+  jsonData['sap.app']['applicationVersion']['version'] = version;
+  // Write the updated JSON to file
+  fs.writeFileSync('./packages/ui5-cc-spreadsheetimporter/src/manifest.json', JSON.stringify(jsonData, null, 2));
 }
 
-function replaceReleasePleaseManifest(version){
-	// remove 'v' from version
-	version = version.replace('v', '');
-	// Define the file path for the .release-please-manifest.json file
-	const filePath = './.release-please-manifest.json';
+function replaceReleasePleaseManifest(version) {
+  // remove 'v' from version
+  version = version.replace('v', '');
+  // Define the file path for the .release-please-manifest.json file
+  const filePath = './.release-please-manifest.json';
 
-	// Read the JSON file
-	const jsonFile = fs.readFileSync(filePath, 'utf8');
-	const jsonData = JSON.parse(jsonFile);
-	
-	// Replace the version for the package "packages/ui5-cc-spreadsheetimporter"
-	const packageName = "packages/ui5-cc-spreadsheetimporter";
-	jsonData[packageName] = version;
+  // Read the JSON file
+  const jsonFile = fs.readFileSync(filePath, 'utf8');
+  const jsonData = JSON.parse(jsonFile);
 
-	// Write the updated JSON back to the .release-please-manifest.json file
-	fs.writeFileSync(filePath, JSON.stringify(jsonData, null, 2), "utf8");
+  // Replace the version for the package "packages/ui5-cc-spreadsheetimporter"
+  const packageName = 'packages/ui5-cc-spreadsheetimporter';
+  jsonData[packageName] = version;
+
+  // Write the updated JSON back to the .release-please-manifest.json file
+  fs.writeFileSync(filePath, JSON.stringify(jsonData, null, 2), 'utf8');
 }
 
 if (process.argv.length > 2) {
   const command = process.argv[2];
-  
+
   if (command === 'deleteNodeModules' && process.argv.length > 3) {
     const folderPath = process.argv[3];
     console.log(`Deleting node_modules folders in ${folderPath}...`);
-    
+
     function findAndDeleteNodeModules(dir) {
       try {
         const entries = fs.readdirSync(dir, { withFileTypes: true });
-        
+
         for (const entry of entries) {
           const fullPath = path.join(dir, entry.name);
-          
+
           if (entry.isDirectory()) {
             if (entry.name === 'node_modules') {
               console.log(`Deleting: ${fullPath}`);
@@ -405,7 +400,7 @@ if (process.argv.length > 2) {
         console.error(`Error processing directory ${dir}: ${err.message}`);
       }
     }
-    
+
     findAndDeleteNodeModules(folderPath);
     console.log('Deletion completed!');
   }

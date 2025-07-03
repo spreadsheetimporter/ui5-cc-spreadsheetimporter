@@ -37,7 +37,7 @@ You can either set up a project-specific `.npmrc` file or edit the global `~/.np
 
 Replace YOUR_PERSONAL_ACCESS_TOKEN with the token you generated in step 2.
 
-Now you can install the package:  
+Now you can install the package:
 
 ```bash
 npm install @spreadsheetimporter/ui5-cc-spreadsheetimporter-pro

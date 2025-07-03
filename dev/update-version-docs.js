@@ -5,7 +5,7 @@ function updateVersionInContent(content, spreadsheetUploadVersion, spreadsheetUp
   const spreadsheetImporterRegex = /(cc\.spreadsheetimporter\.|customControl\/spreadsheetimporter\/)v\d+_\d+_\d+/g;
   const spreadsheetImporterButtonRegex = /(cc\.spreadsheetimporter.button\.|customControl\/spreadsheetimporter.button\/)v\d+_\d+_\d+/g;
   // Updated regex to optionally match the leading "./" and ensure case insensitivity
-  const thirdpartySpreadsheetImporterRegex = /(\.?\/?thirdparty\/customcontrol\/spreadsheetimporter\/)v\d+_\d+_\d+/ig;
+  const thirdpartySpreadsheetImporterRegex = /(\.?\/?thirdparty\/customcontrol\/spreadsheetimporter\/)v\d+_\d+_\d+/gi;
   const mountPathRegex = /(mountPath: \/thirdparty\/customcontrol\/spreadsheetimporter\/)v\d+_\d+_\d+/;
   const ccSpreadsheetImporterRegex = /(cc\/spreadsheetimporter\/)v\d+_\d+_\d+/g;
   const newSpreadsheetImporterRegex = /spreadsheetimporter_v\d+_\d+_\d+/g;
@@ -47,7 +47,7 @@ function updateVersionInFile(filePath, spreadsheetUploadVersion, spreadsheetUplo
     }
 
     const updatedContent = updateVersionInContent(data, spreadsheetUploadVersion, spreadsheetUploadButtonVersion);
-    fs.writeFile(filePath, updatedContent, 'utf8', (err) => {
+    fs.writeFile(filePath, updatedContent, 'utf8', err => {
       if (err) {
         console.error(err);
         return;
@@ -64,7 +64,7 @@ function updateVersionInDir(dirPath, spreadsheetUploadVersion, spreadsheetUpload
       return;
     }
 
-    entries.forEach((entry) => {
+    entries.forEach(entry => {
       if (entry.name === 'node_modules') {
         return; // Skip the node_modules directory
       }
@@ -79,14 +79,12 @@ function updateVersionInDir(dirPath, spreadsheetUploadVersion, spreadsheetUpload
   });
 }
 
-
 function updateVersions(spreadsheetUploadVersion) {
   const docsPath = './docs';
   const examplesPath = './examples';
   updateVersionInDir(docsPath, spreadsheetUploadVersion);
   updateVersionInDir(examplesPath, spreadsheetUploadVersion);
 }
-
 
 module.exports.updateVersions = updateVersions;
 module.exports.updateVersionInFile = updateVersionInFile;

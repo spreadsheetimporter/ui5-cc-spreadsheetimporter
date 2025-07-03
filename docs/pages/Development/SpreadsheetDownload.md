@@ -18,7 +18,7 @@ This method checks for errors before proceeding with the download. Errors can oc
 
 The `MetadataHandlerV4` class builds the metadata model, which is a tree of all entities and their properties. The `entityName` should be the root entity of the download, and `deepLevel` should be the maximum depth of the download.
 
-- **_findEntitiesByNavigationProperty**: This method traverses the metadata model and collects all entities related to the root entity by navigation properties. If the `$kind` and `$Partner` properties are present and the `$ReferentialConstraint` is not, the full entity is added to the parent entity as `$XYZEntity`, making it explicitly fetchable with `$XYZFetchableEntity`.
+- **\_findEntitiesByNavigationProperty**: This method traverses the metadata model and collects all entities related to the root entity by navigation properties. If the `$kind` and `$Partner` properties are present and the `$ReferentialConstraint` is not, the full entity is added to the parent entity as `$XYZEntity`, making it explicitly fetchable with `$XYZFetchableEntity`.
 
 ### JSON Sample
 
@@ -26,35 +26,32 @@ This is the root entity without some properties for brevity before the navigatio
 
 ```json
 {
-    "$kind": "EntityType",
-    "$Key": [
-        "ID",
-        "IsActiveEntity"
-    ],
-    "OrderNo": {
-        "$kind": "Property",
-        "$Type": "Edm.String",
-        "$MaxLength": 22
-    },
-    "Items": {
-        "$kind": "NavigationProperty",
-        "$isCollection": true,
-        "$Type": "OrdersService.OrderItems",
-        "$Partner": "order",
-        "$OnDelete": "Cascade"
-    },
-    "Shipping": {
-        "$kind": "NavigationProperty",
-        "$isCollection": true,
-        "$Type": "OrdersService.ShippingDetails",
-        "$Partner": "order",
-        "$OnDelete": "Cascade"
-    },
-    "buyer": {
-        "$kind": "Property",
-        "$Type": "Edm.String",
-        "$MaxLength": 255
-    }
+  "$kind": "EntityType",
+  "$Key": ["ID", "IsActiveEntity"],
+  "OrderNo": {
+    "$kind": "Property",
+    "$Type": "Edm.String",
+    "$MaxLength": 22
+  },
+  "Items": {
+    "$kind": "NavigationProperty",
+    "$isCollection": true,
+    "$Type": "OrdersService.OrderItems",
+    "$Partner": "order",
+    "$OnDelete": "Cascade"
+  },
+  "Shipping": {
+    "$kind": "NavigationProperty",
+    "$isCollection": true,
+    "$Type": "OrdersService.ShippingDetails",
+    "$Partner": "order",
+    "$OnDelete": "Cascade"
+  },
+  "buyer": {
+    "$kind": "Property",
+    "$Type": "Edm.String",
+    "$MaxLength": 255
+  }
 }
 ```
 
@@ -62,134 +59,122 @@ This is the root entity after navigation properties for `Items` (here `Infos` un
 
 ```json
 {
-    "$kind": "EntityType",
-    "$Key": [
-        "ID",
-        "IsActiveEntity"
-    ],
-    "ID": {
+  "$kind": "EntityType",
+  "$Key": ["ID", "IsActiveEntity"],
+  "ID": {
+    "$kind": "Property",
+    "$Type": "Edm.Guid",
+    "$Nullable": false
+  },
+  "OrderNo": {
+    "$kind": "Property",
+    "$Type": "Edm.String",
+    "$MaxLength": 22
+  },
+  "Items": {
+    "$kind": "NavigationProperty",
+    "$isCollection": true,
+    "$Type": "OrdersService.OrderItems",
+    "$Partner": "order",
+    "$OnDelete": "Cascade",
+    "$XYZEntity": {
+      "$kind": "EntityType",
+      "$Key": ["ID", "IsActiveEntity"],
+      "ID": {
         "$kind": "Property",
         "$Type": "Edm.Guid",
         "$Nullable": false
-    },
-    "OrderNo": {
+      },
+      "order": {
+        "$kind": "NavigationProperty",
+        "$Type": "OrdersService.Orders",
+        "$Partner": "Items",
+        "$ReferentialConstraint": {
+          "order_ID": "ID"
+        }
+      },
+      "order_ID": {
         "$kind": "Property",
-        "$Type": "Edm.String",
-        "$MaxLength": 22
-    },
-    "Items": {
+        "$Type": "Edm.Guid"
+      },
+      "product_ID": {
+        "$kind": "Property",
+        "$Type": "Edm.String"
+      },
+      "Infos": {
         "$kind": "NavigationProperty",
         "$isCollection": true,
-        "$Type": "OrdersService.OrderItems",
-        "$Partner": "order",
+        "$Type": "OrdersService.OrderItemsInfo",
+        "$Partner": "orderItem",
         "$OnDelete": "Cascade",
         "$XYZEntity": {
-            "$kind": "EntityType",
-            "$Key": [
-                "ID",
-                "IsActiveEntity"
-            ],
-            "ID": {
-                "$kind": "Property",
-                "$Type": "Edm.Guid",
-                "$Nullable": false
-            },
-            "order": {
-                "$kind": "NavigationProperty",
-                "$Type": "OrdersService.Orders",
-                "$Partner": "Items",
-                "$ReferentialConstraint": {
-                    "order_ID": "ID"
-                }
-            },
-            "order_ID": {
-                "$kind": "Property",
-                "$Type": "Edm.Guid"
-            },
-            "product_ID": {
-                "$kind": "Property",
-                "$Type": "Edm.String"
-            },
-            "Infos": {
-                "$kind": "NavigationProperty",
-                "$isCollection": true,
-                "$Type": "OrdersService.OrderItemsInfo",
-                "$Partner": "orderItem",
-                "$OnDelete": "Cascade",
-                "$XYZEntity": {
-                    "$kind": "EntityType",
-                    "$Key": [
-                        "ID",
-                        "IsActiveEntity"
-                    ],
-                    "ID": {
-                        "$kind": "Property",
-                        "$Type": "Edm.Guid",
-                        "$Nullable": false
-                    },
-                    "orderItem": {
-                        "$kind": "NavigationProperty",
-                        "$Type": "OrdersService.OrderItems",
-                        "$Partner": "Infos",
-                        "$ReferentialConstraint": {
-                            "orderItem_ID": "ID"
-                        }
-                    },
-                    "orderItem_ID": {
-                        "$kind": "Property",
-                        "$Type": "Edm.Guid"
-                    },
-                    "comment": {
-                        "$kind": "Property",
-                        "$Type": "Edm.String"
-                    }
-                },
-                "$XYZFetchableEntity": true
-            },
-            "quantity": {
-                "$kind": "Property",
-                "$Type": "Edm.Int32"
+          "$kind": "EntityType",
+          "$Key": ["ID", "IsActiveEntity"],
+          "ID": {
+            "$kind": "Property",
+            "$Type": "Edm.Guid",
+            "$Nullable": false
+          },
+          "orderItem": {
+            "$kind": "NavigationProperty",
+            "$Type": "OrdersService.OrderItems",
+            "$Partner": "Infos",
+            "$ReferentialConstraint": {
+              "orderItem_ID": "ID"
             }
+          },
+          "orderItem_ID": {
+            "$kind": "Property",
+            "$Type": "Edm.Guid"
+          },
+          "comment": {
+            "$kind": "Property",
+            "$Type": "Edm.String"
+          }
         },
         "$XYZFetchableEntity": true
-    },
-    "Shipping": {
-        "$kind": "NavigationProperty",
-        "$isCollection": true,
-        "$Type": "OrdersService.ShippingDetails",
-        "$Partner": "order",
-        "$OnDelete": "Cascade",
-        "$XYZEntity": {
-            "$kind": "EntityType",
-            "$Key": [
-                "ID",
-                "IsActiveEntity"
-            ],
-            "ID": {
-                "$kind": "Property",
-                "$Type": "Edm.Guid",
-                "$Nullable": false
-            },
-            "order": {
-                "$kind": "NavigationProperty",
-                "$Type": "OrdersService.Orders",
-                "$Partner": "Shipping",
-                "$ReferentialConstraint": {
-                    "order_ID": "ID"
-                }
-            },
-            "order_ID": {
-                "$kind": "Property",
-                "$Type": "Edm.Guid"
-            }
-        },
-        "$XYZFetchableEntity": true
-    },
-    "buyer": {
+      },
+      "quantity": {
         "$kind": "Property",
-        "$Type": "Edm.String",
-        "$MaxLength": 255
-    }
+        "$Type": "Edm.Int32"
+      }
+    },
+    "$XYZFetchableEntity": true
+  },
+  "Shipping": {
+    "$kind": "NavigationProperty",
+    "$isCollection": true,
+    "$Type": "OrdersService.ShippingDetails",
+    "$Partner": "order",
+    "$OnDelete": "Cascade",
+    "$XYZEntity": {
+      "$kind": "EntityType",
+      "$Key": ["ID", "IsActiveEntity"],
+      "ID": {
+        "$kind": "Property",
+        "$Type": "Edm.Guid",
+        "$Nullable": false
+      },
+      "order": {
+        "$kind": "NavigationProperty",
+        "$Type": "OrdersService.Orders",
+        "$Partner": "Shipping",
+        "$ReferentialConstraint": {
+          "order_ID": "ID"
+        }
+      },
+      "order_ID": {
+        "$kind": "Property",
+        "$Type": "Edm.Guid"
+      }
+    },
+    "$XYZFetchableEntity": true
+  },
+  "buyer": {
+    "$kind": "Property",
+    "$Type": "Edm.String",
+    "$MaxLength": 255
+  }
 }
 ```
 

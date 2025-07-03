@@ -7,7 +7,7 @@ You can also use the button in **Fiori Elements** applications within a section 
 
 ### Requirements
 
-- Node.js Version v16.18.0, v18.12.0, or higher  
+- Node.js Version v16.18.0, v18.12.0, or higher
 - npm Version v8.0.0 or higher
 - UI5 CLI v3.0.0 or higher
 
@@ -20,12 +20,11 @@ npm install ui5-cc-spreadsheetimporter
 ```
 
 2\. Add `resourceRoots` to your `manifest.json` under `sap.ui5`
-   
+
 ⚠️ You must always keep your `ui5-cc-spreadsheetimporter` and button version up to date here when updating the module.
 
 !!! warning ""
-    ⚠️ The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v2_2_0" changed from version 0.34.0 to lowercase. Please make sure to use the correct path.
-
+⚠️ The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v2_2_0" changed from version 0.34.0 to lowercase. Please make sure to use the correct path.
 
 ```json
 "resourceRoots": {
@@ -35,8 +34,8 @@ npm install ui5-cc-spreadsheetimporter
 
 3\. Add `components` to your `manifest.json` under `sap.ui5.dependencies`
 
-This is optional and preloads the component on startup of the application.  
-   
+This is optional and preloads the component on startup of the application.
+
 ⚠️ You must always keep your `ui5-cc-spreadsheetimporter` version up to date here when updating the module.
 
 ```json
@@ -55,7 +54,7 @@ This is optional and preloads the component on startup of the application.
 ```
 
 4\. Add `componentUsages` to your `manifest.json` under `sap.ui5`
-   
+
 ⚠️ You must always keep your `ui5-cc-spreadsheetimporter` version up to date here when updating the module.
 
 ```json
@@ -69,21 +68,21 @@ This is optional and preloads the component on startup of the application.
 5\. Add the namespace `core` to your XML View
 
 ```xml
-<mvc:View controllerName="ui.v2.ordersv2freestylenondraft.controller.UploadToTable"
+<mvc:View
+  controllerName="ui.v2.ordersv2freestylenondraft.controller.UploadToTable"
   xmlns="sap.m"
   xmlns:semantic="sap.f.semantic"
   xmlns:mvc="sap.ui.core.mvc"
-  xmlns:core="sap.ui.core">
-...
+  xmlns:core="sap.ui.core"
+>
+  ...
 </mvc:View>
 ```
 
 6\. Add the `core:ComponentContainer` control to your view.
 
 ```xml
-<core:ComponentContainer width="100%" 
-usage="spreadsheetImporter" propagateModel="true" 
-async="true"/>
+<core:ComponentContainer width="100%" usage="spreadsheetImporter" propagateModel="true" async="true" />
 ```
 
 ### Define Configuration Options
@@ -92,16 +91,20 @@ You can set configuration options for the spreadsheet importer in the `settings`
 For special configuration options for the `ComponantContainer`, see [Configuration](Configuration.md#componentcontainerdata).
 
 ```xml
-<core:ComponentContainer width="100%" 
-usage="spreadsheetImporter" propagateModel="true" async="true" 
-settings="{
+<core:ComponentContainer
+  width="100%"
+  usage="spreadsheetImporter"
+  propagateModel="true"
+  async="true"
+  settings="{
   standalone:true,
   columns: ['product_ID', 'username'],
   componentContainerData:{
     uploadButtonPress:'uploadButtonPress',
     buttonText:'Excel Upload'
     }
-  }" />
+  }"
+/>
 ```
 
 ### Example App

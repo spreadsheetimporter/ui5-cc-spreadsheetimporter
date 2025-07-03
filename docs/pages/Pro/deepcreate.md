@@ -2,11 +2,11 @@ With this feature, you are able to upload a spreadsheet to create multiple entit
 
 ## Configuration
 
-| Option | Description | Details |
-| ------ | --- | --- |
-| `operation` | Choose which method to use for uploading data | string |
-| `flatSheet` | Upload data in one sheet or multiple sheets | object |
-| `columns` | Choose which data to upload | object |
+| Option      | Description                                   | Details |
+| ----------- | --------------------------------------------- | ------- |
+| `operation` | Choose which method to use for uploading data | string  |
+| `flatSheet` | Upload data in one sheet or multiple sheets   | object  |
+| `columns`   | Choose which data to upload                   | object  |
 
 ### Sample Usage
 
@@ -15,7 +15,7 @@ componentData: {
     context: this,
     pro: {
         operation: "deepCreate",
-        deepCreateConfig:{ 
+        deepCreateConfig:{
             flatSheet:false,
             columns : {
                 "OrderNo":{
@@ -54,7 +54,7 @@ componentData: {
 
 Currently available options: `create`, `deepCreate`
 
-This option defines the method to use for uploading data. 
+This option defines the method to use for uploading data.
 
 ### flatSheet
 

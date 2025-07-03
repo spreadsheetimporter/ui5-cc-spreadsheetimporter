@@ -7,9 +7,7 @@
     "path": "./examples/packages/",
     "versionMinor": 136,
     "testMapping": {
-      "specs": [
-        "../test/specs/all/**.test.js"
-      ]
+      "specs": ["../test/specs/all/**.test.js"]
     },
     "copyVersions": [
       {
@@ -18,9 +16,7 @@
         "port": "8089",
         "appTitel": "Orders V2 FE 120",
         "testMapping": {
-          "specs": [
-            "../test/specs/all/**.test.js"
-          ]
+          "specs": ["../test/specs/all/**.test.js"]
         }
       },
       {
@@ -29,9 +25,7 @@
         "port": "8090",
         "appTitel": "Orders V2 FE 108",
         "testMapping": {
-          "specs": [
-            "../test/specs/all/**.test.js"
-          ]
+          "specs": ["../test/specs/all/**.test.js"]
         }
       },
       {
@@ -40,9 +34,7 @@
         "port": "8090",
         "appTitel": "Orders V2 FE 96",
         "testMapping": {
-          "specs": [
-            "../test/specs/all/**.test.js"
-          ]
+          "specs": ["../test/specs/all/**.test.js"]
         }
       },
       {
@@ -51,9 +43,7 @@
         "port": "8091",
         "appTitel": "Orders V2 FE 84",
         "testMapping": {
-          "specs": [
-            "../test/specs/all/**.test.js"
-          ]
+          "specs": ["../test/specs/all/**.test.js"]
         }
       },
       {
@@ -62,9 +52,7 @@
         "port": "8092",
         "appTitel": "Orders V2 FE 71",
         "testMapping": {
-          "specs": [
-            "../test/specs/all/**.test.js"
-          ]
+          "specs": ["../test/specs/all/**.test.js"]
         }
       }
     ]
@@ -76,9 +64,7 @@
     "appTitel": "Orders V2 FE ND 136",
     "path": "./examples/packages/",
     "testMapping": {
-      "specs": [
-        "../test/specs/all/**.test.js"
-      ]
+      "specs": ["../test/specs/all/**.test.js"]
     },
     "copyVersions": [
       {
@@ -87,9 +73,7 @@
         "port": "8109",
         "appTitel": "Orders V2 FE ND 120",
         "testMapping": {
-          "specs": [
-            "../test/specs/all/**.test.js"
-          ]
+          "specs": ["../test/specs/all/**.test.js"]
         }
       },
       {
@@ -98,9 +82,7 @@
         "port": "8093",
         "appTitel": "Orders V2 FE ND 108",
         "testMapping": {
-          "specs": [
-            "../test/specs/all/**.test.js"
-          ]
+          "specs": ["../test/specs/all/**.test.js"]
         }
       },
       {
@@ -109,9 +91,7 @@
         "port": "8093",
         "appTitel": "Orders V2 FE ND 96",
         "testMapping": {
-          "specs": [
-            "../test/specs/all/**.test.js"
-          ]
+          "specs": ["../test/specs/all/**.test.js"]
         }
       },
       {
@@ -120,9 +100,7 @@
         "port": "8094",
         "appTitel": "Orders V2 FE ND 84",
         "testMapping": {
-          "specs": [
-            "../test/specs/all/**.test.js"
-          ]
+          "specs": ["../test/specs/all/**.test.js"]
         }
       },
       {
@@ -131,9 +109,7 @@
         "port": "8095",
         "appTitel": "Orders V2 FE ND 71",
         "testMapping": {
-          "specs": [
-            "../test/specs/all/**.test.js"
-          ]
+          "specs": ["../test/specs/all/**.test.js"]
         }
       }
     ]
@@ -145,9 +121,7 @@
     "appTitel": "Orders V2 FS ND 136",
     "path": "./examples/packages/",
     "testMapping": {
-      "specs": [
-        "../test/specs/ordersv2freestylenondraft/**.test.js"
-      ]
+      "specs": ["../test/specs/ordersv2freestylenondraft/**.test.js"]
     },
     "copyVersions": [
       {
@@ -156,9 +130,7 @@
         "port": "8110",
         "appTitel": "Orders V2 FS ND 120",
         "testMapping": {
-          "specs": [
-            "../test/specs/ordersv2freestylenondraft/**.test.js"
-          ]
+          "specs": ["../test/specs/ordersv2freestylenondraft/**.test.js"]
         }
       },
       {
@@ -167,9 +139,7 @@
         "port": "8096",
         "appTitel": "Orders V2 FS ND 108",
         "testMapping": {
-          "specs": [
-            "../test/specs/ordersv2freestylenondraft/**.test.js"
-          ]
+          "specs": ["../test/specs/ordersv2freestylenondraft/**.test.js"]
         }
       },
       {
@@ -178,9 +148,7 @@
         "port": "8096",
         "appTitel": "Orders V2 FS ND 96",
         "testMapping": {
-          "specs": [
-            "../test/specs/ordersv2freestylenondraft/**.test.js"
-          ]
+          "specs": ["../test/specs/ordersv2freestylenondraft/**.test.js"]
         }
       },
       {
@@ -189,9 +157,7 @@
         "port": "8097",
         "appTitel": "Orders V2 FS ND 84",
         "testMapping": {
-          "specs": [
-            "../test/specs/ordersv2freestylenondraft/**.test.js"
-          ]
+          "specs": ["../test/specs/ordersv2freestylenondraft/**.test.js"]
         }
       },
       {
@@ -200,9 +166,7 @@
         "port": "8098",
         "appTitel": "Orders V2 FS ND 71",
         "testMapping": {
-          "specs": [
-            "../test/specs/ordersv2freestylenondraft/**.test.js"
-          ]
+          "specs": ["../test/specs/ordersv2freestylenondraft/**.test.js"]
         }
       }
     ]
@@ -214,9 +178,7 @@
     "appTitel": "Orders V2 FS ND OP 136",
     "path": "./examples/packages/",
     "testMapping": {
-      "specs": [
-        "../test/specs/ordersv2freestylenondraft/**.test.js"
-      ]
+      "specs": ["../test/specs/ordersv2freestylenondraft/**.test.js"]
     },
     "copyVersions": [
       {
@@ -225,9 +187,7 @@
         "port": "8111",
         "appTitel": "Orders V2 FS ND OP 120",
         "testMapping": {
-          "specs": [
-            "../test/specs/ordersv2freestylenondraft/**.test.js"
-          ]
+          "specs": ["../test/specs/ordersv2freestylenondraft/**.test.js"]
         }
       },
       {
@@ -236,9 +196,7 @@
         "port": "8106",
         "appTitel": "Orders V2 FS ND OP 108",
         "testMapping": {
-          "specs": [
-            "../test/specs/ordersv2freestylenondraft/**.test.js"
-          ]
+          "specs": ["../test/specs/ordersv2freestylenondraft/**.test.js"]
         }
       },
       {
@@ -247,9 +205,7 @@
         "port": "8106",
         "appTitel": "Orders V2 FS ND OP 96",
         "testMapping": {
-          "specs": [
-            "../test/specs/ordersv2freestylenondraft/**.test.js"
-          ]
+          "specs": ["../test/specs/ordersv2freestylenondraft/**.test.js"]
         }
       },
       {
@@ -258,9 +214,7 @@
         "port": "8107",
         "appTitel": "Orders V2 FS ND OP 84",
         "testMapping": {
-          "specs": [
-            "../test/specs/ordersv2freestylenondraft/**.test.js"
-          ]
+          "specs": ["../test/specs/ordersv2freestylenondraft/**.test.js"]
         }
       },
       {
@@ -269,9 +223,7 @@
         "port": "8108",
         "appTitel": "Orders V2 FS ND OP 71",
         "testMapping": {
-          "specs": [
-            "../test/specs/ordersv2freestylenondraft/**.test.js"
-          ]
+          "specs": ["../test/specs/ordersv2freestylenondraft/**.test.js"]
         }
       }
     ]
@@ -284,11 +236,7 @@
     "versionMinor": 136,
     "appTitel": "Orders V4 FE 136",
     "testMapping": {
-      "specs": [
-        "../test/specs/all/**.test.js",
-        "../test/specs/v4/**.test.js",
-        "../test/specs/update/**.test.js"
-      ]
+      "specs": ["../test/specs/all/**.test.js", "../test/specs/v4/**.test.js", "../test/specs/update/**.test.js"]
     },
     "copyVersions": [
       {
@@ -297,11 +245,7 @@
         "port": "8112",
         "appTitel": "Orders V4 FE 120",
         "testMapping": {
-          "specs": [
-            "../test/specs/all/**.test.js",
-            "../test/specs/v4/**.test.js",
-            "../test/specs/update/**.test.js"
-          ]
+          "specs": ["../test/specs/all/**.test.js", "../test/specs/v4/**.test.js", "../test/specs/update/**.test.js"]
         }
       },
       {
@@ -310,10 +254,7 @@
         "port": "8087",
         "appTitel": "Orders V4 FE 108",
         "testMapping": {
-          "specs": [
-            "../test/specs/all/**.test.js",
-            "../test/specs/v4/**.test.js"
-          ]
+          "specs": ["../test/specs/all/**.test.js", "../test/specs/v4/**.test.js"]
         }
       },
       {
@@ -322,10 +263,7 @@
         "port": "8087",
         "appTitel": "Orders V4 FE 96",
         "testMapping": {
-          "specs": [
-            "../test/specs/all/**.test.js",
-            "../test/specs/v4/**.test.js"
-          ]
+          "specs": ["../test/specs/all/**.test.js", "../test/specs/v4/**.test.js"]
         }
       },
       {
@@ -334,10 +272,7 @@
         "port": "8088",
         "appTitel": "Orders V4 FE 84",
         "testMapping": {
-          "specs": [
-            "../test/specs/all/**.test.js",
-            "../test/specs/v4/**.test.js"
-          ]
+          "specs": ["../test/specs/all/**.test.js", "../test/specs/v4/**.test.js"]
         }
       },
       {
@@ -346,10 +281,7 @@
         "port": "8099",
         "appTitel": "Orders V4 FE 71",
         "testMapping": {
-          "specs": [
-            "../test/specs/all/**.test.js",
-            "../test/specs/v4/**.test.js"
-          ]
+          "specs": ["../test/specs/all/**.test.js", "../test/specs/v4/**.test.js"]
         }
       }
     ]
@@ -362,10 +294,7 @@
     "versionMinor": 136,
     "appTitel": "Orders V4 FE TS 136",
     "testMapping": {
-      "specs": [
-        "../test/specs/all/**.test.js",
-        "../test/specs/v4/**.test.js"
-      ]
+      "specs": ["../test/specs/all/**.test.js", "../test/specs/v4/**.test.js"]
     },
     "copyVersions": [
       {
@@ -374,10 +303,7 @@
         "port": "8113",
         "appTitel": "Orders V4 FE TS 120",
         "testMapping": {
-          "specs": [
-            "../test/specs/all/**.test.js",
-            "../test/specs/v4/**.test.js"
-          ]
+          "specs": ["../test/specs/all/**.test.js", "../test/specs/v4/**.test.js"]
         }
       }
     ]
@@ -390,11 +316,7 @@
     "versionMinor": 136,
     "appTitel": "Orders V4 FS 136",
     "testMapping": {
-      "specs": [
-        "../test/specs/download/**.test.js",
-        "../test/specs/updatefreestyle/**.test.js",
-        "../test/specs/wizard/**.test.js"
-      ]
+      "specs": ["../test/specs/download/**.test.js", "../test/specs/updatefreestyle/**.test.js", "../test/specs/wizard/**.test.js"]
     },
     "copyVersions": [
       {
@@ -403,11 +325,7 @@
         "port": "8114",
         "appTitel": "Orders V4 FS 120",
         "testMapping": {
-          "specs": [
-            "../test/specs/download/**.test.js",
-            "../test/specs/updatefreestyle/**.test.js",
-            "../test/specs/wizard/**.test.js"
-          ]
+          "specs": ["../test/specs/download/**.test.js", "../test/specs/updatefreestyle/**.test.js", "../test/specs/wizard/**.test.js"]
         }
       }
     ]

@@ -1,23 +1,27 @@
 # Table Selector Implementation Documentation
 
 !!! warning
-    This feature is available since version 0.23.0 
+This feature is available since version 0.23.0
 
 The `TableSelector` is designed to help users select a table from a list of available tables in a SAP UI5 application. The tables are aggregated and presented in a dialog, from which a user can select a table.
 
 ## Usage
 
-`TableSelector` is triggered when the option `useTableSelector` is set to `true` in the component options and multiple tables are in the view. It will open when you execute `openSpreadsheetUploadDialog`.  
+`TableSelector` is triggered when the option `useTableSelector` is set to `true` in the component options and multiple tables are in the view. It will open when you execute `openSpreadsheetUploadDialog`.
 
 ```js
-this.spreadsheetUpload = await this.editFlow.getView().getController().getAppComponent().createComponent({
-  usage: "spreadsheetImporter",
-  async: true,
-  componentData: {
-    context: this,
-    useTableSelector: true
-  }
-});
+this.spreadsheetUpload = await this.editFlow
+  .getView()
+  .getController()
+  .getAppComponent()
+  .createComponent({
+    usage: 'spreadsheetImporter',
+    async: true,
+    componentData: {
+      context: this,
+      useTableSelector: true
+    }
+  });
 this.spreadsheetUpload.openSpreadsheetUploadDialog();
 ```
 
@@ -26,14 +30,18 @@ this.spreadsheetUpload.openSpreadsheetUploadDialog();
 If you want to set custom options for each table, you have to trigger the Table Selector before opening the dialog to get the table id with `triggerInitContext()`.
 
 ```js
-this.spreadsheetUpload = await this.editFlow.getView().getController().getAppComponent().createComponent({
-  usage: "spreadsheetImporter",
-  async: true,
-  componentData: {
-    context: this,
-    useTableSelector: true
-  }
-});
+this.spreadsheetUpload = await this.editFlow
+  .getView()
+  .getController()
+  .getAppComponent()
+  .createComponent({
+    usage: 'spreadsheetImporter',
+    async: true,
+    componentData: {
+      context: this,
+      useTableSelector: true
+    }
+  });
 // necessary to trigger Table Selector and get tableId
 await this.spreadsheetUpload.triggerInitContext();
 const selectedTable = this.spreadsheetUpload.getTableId();

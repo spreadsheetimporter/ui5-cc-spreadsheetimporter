@@ -115,7 +115,6 @@ describe("Upload File List Report", () => {
 			} else {
 				throw new Error("Object not found");
 			}
-
 		}
 	});
 });

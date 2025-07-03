@@ -5,7 +5,7 @@ The overview of which scenarios are covered by wdi5 tests can be found here: [wd
 ## Setup
 
 wdi5 is used in the test setup in the [`examples`](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/tree/main/examples) folder in the [`test`](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/tree/main/examples/test) folder.  
-As pnpm is used, with `pnpm i`, all the packages, including `wdio-ui5-service`, are installed.  
+As pnpm is used, with `pnpm i`, all the packages, including `wdio-ui5-service`, are installed.
 
 ### Configuration
 
@@ -16,13 +16,14 @@ The data for this is stored in the [`testapps.json`](https://github.com/spreadsh
 ## Run tests
 
 You can run the tests for OData V2 and V4 UI5 Version 108 in the root folder with:
+
 ```sh
 npm run test:v4fe:108
 npm run test:v2fe:108
 ```
 
 which will run `pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- ordersv4fe 108`.  
-So, you can run all the other apps like 
+So, you can run all the other apps like
 
 ```sh
 pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- ordersv4fe 84
@@ -31,7 +32,7 @@ pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- ordersv4fe 84
 ### Run single spec
 
 You can also run single test specs. You need to go to the `examples` folder for this.  
-For example, you can run the test spec `OpenSpreadsheetUploadDialog` with OData V2 FE UI5 Version 96 with:  
+For example, you can run the test spec `OpenSpreadsheetUploadDialog` with OData V2 FE UI5 Version 96 with:
 
 ```sh
 npm run test -- ordersv2fe  96 --spec OpenSpreadsheetUploadDialog
@@ -39,7 +40,7 @@ npm run test -- ordersv2fe  96 --spec OpenSpreadsheetUploadDialog
 
 ### Run headless
 
-The wdi5 tests in GitHub Actions must run headless, which is also possible to call locally with: 
+The wdi5 tests in GitHub Actions must run headless, which is also possible to call locally with:
 
 ```sh
 pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- --headless ordersv4fe 84

@@ -1,8 +1,6 @@
 /*global QUnit*/
 
-sap.ui.define([
-	"ordersv4freestyle/controller/MainView.controller"
-], function (Controller) {
+sap.ui.define(["ordersv4freestyle/controller/MainView.controller"], function (Controller) {
 	"use strict";
 
 	QUnit.module("MainView Controller");
@@ -12,5 +10,4 @@ sap.ui.define([
 		oAppController.onInit();
 		assert.ok(oAppController);
 	});
-
 });

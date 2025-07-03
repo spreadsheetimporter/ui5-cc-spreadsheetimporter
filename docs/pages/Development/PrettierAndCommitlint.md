@@ -96,9 +96,7 @@ Located in root `package.json`:
 ```json
 {
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,md,yaml,yml,css,html,xml,properties,d.ts}": [
-      "prettier --write"
-    ]
+    "*.{js,jsx,ts,tsx,json,md,yaml,yml,css,html,xml,properties,d.ts}": ["prettier --write"]
   }
 }
 ```
@@ -174,10 +172,7 @@ Commitlint is configured in `commitlint.config.js`:
 module.exports = {
   extends: ['@commitlint/config-conventional'],
   rules: {
-    'type-enum': [2, 'always', [
-      'feat', 'fix', 'docs', 'style', 'refactor', 
-      'perf', 'test', 'build', 'ci', 'chore', 'revert'
-    ]],
+    'type-enum': [2, 'always', ['feat', 'fix', 'docs', 'style', 'refactor', 'perf', 'test', 'build', 'ci', 'chore', 'revert']],
     'type-case': [2, 'always', 'lower-case'],
     'type-empty': [2, 'never'],
     'subject-empty': [2, 'never'],
@@ -215,6 +210,7 @@ When you commit changes:
 ### Troubleshooting
 
 #### Formatting Issues
+
 ```bash
 # Manually format all files
 npm run prettier
@@ -224,6 +220,7 @@ npm run prettier:check
 ```
 
 #### Commit Message Issues
+
 ```bash
 # Check your commit message format
 echo "feat: your message here" | npx commitlint
@@ -233,6 +230,7 @@ git commit --amend -m "feat: proper conventional commit message"
 ```
 
 #### Hook Issues
+
 ```bash
 # Reinstall hooks
 npm run prepare
@@ -274,4 +272,4 @@ Install the [Prettier extension](https://marketplace.visualstudio.com/items?item
 - [Conventional Commits](https://www.conventionalcommits.org/)
 - [Commitlint](https://commitlint.js.org/)
 - [Husky](https://typicode.github.io/husky/)
-- [Lint-staged](https://github.com/okonet/lint-staged) 
+- [Lint-staged](https://github.com/okonet/lint-staged)

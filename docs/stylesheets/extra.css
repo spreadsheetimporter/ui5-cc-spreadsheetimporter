@@ -1,29 +1,29 @@
 /* Custom brand colors for UI5 Spreadsheet Importer */
 
 /* SAP Blue and Excel Green for light mode */
-[data-md-color-scheme="default"] {
+[data-md-color-scheme='default'] {
   /* SAP Blue - Primary color */
-  --md-primary-fg-color:        #0070E0;  /* SAP Blue */
-  --md-primary-fg-color--light: #4A9FE8;  /* Lighter SAP Blue */
-  --md-primary-fg-color--dark:  #0056B3;  /* Darker SAP Blue */
+  --md-primary-fg-color: #0070e0; /* SAP Blue */
+  --md-primary-fg-color--light: #4a9fe8; /* Lighter SAP Blue */
+  --md-primary-fg-color--dark: #0056b3; /* Darker SAP Blue */
 
   /* Excel Green - Accent color */
-  --md-accent-fg-color:         #217346;  /* Excel Green */
-  --md-accent-fg-color--light:  #50A570;  /* Lighter Excel Green */
-  --md-accent-fg-color--dark:   #1A5A37;  /* Darker Excel Green */
+  --md-accent-fg-color: #217346; /* Excel Green */
+  --md-accent-fg-color--light: #50a570; /* Lighter Excel Green */
+  --md-accent-fg-color--dark: #1a5a37; /* Darker Excel Green */
 }
 
 /* SAP Blue and Excel Green for dark mode */
-[data-md-color-scheme="slate"] {
+[data-md-color-scheme='slate'] {
   /* SAP Blue - Primary color (adjusted for dark theme) */
-  --md-primary-fg-color:        #4A9FE8;  /* Lighter SAP Blue for dark */
-  --md-primary-fg-color--light: #7BB8ED;  /* Even lighter for dark */
-  --md-primary-fg-color--dark:  #0070E0;  /* Standard SAP Blue */
+  --md-primary-fg-color: #4a9fe8; /* Lighter SAP Blue for dark */
+  --md-primary-fg-color--light: #7bb8ed; /* Even lighter for dark */
+  --md-primary-fg-color--dark: #0070e0; /* Standard SAP Blue */
 
   /* Excel Green - Accent color (adjusted for dark theme) */
-  --md-accent-fg-color:         #50A570;  /* Lighter Excel Green for dark */
-  --md-accent-fg-color--light:  #7BB88A;  /* Even lighter for dark */
-  --md-accent-fg-color--dark:   #217346;  /* Standard Excel Green */
+  --md-accent-fg-color: #50a570; /* Lighter Excel Green for dark */
+  --md-accent-fg-color--light: #7bb88a; /* Even lighter for dark */
+  --md-accent-fg-color--dark: #217346; /* Standard Excel Green */
 }
 
 /* Logo switching for light and dark themes using visibility and positioning */
@@ -33,35 +33,35 @@
   position: relative;
 }
 
-.md-header__button.md-logo{
+.md-header__button.md-logo {
   position: relative;
   display: inline-block;
 }
 
 /* Light theme logo */
-[data-md-color-scheme="default"] .md-header__button.md-logo::after {
-  content: "";
+[data-md-color-scheme='default'] .md-header__button.md-logo::after {
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("../images/Logo_square.png");
+  background-image: url('../images/Logo_square.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 
 /* Dark theme logo */
-[data-md-color-scheme="slate"] .md-header__button.md-logo::after,
-[data-md-color-scheme="slate"] .md-nav__button.md-logo::after {
-  content: "";
+[data-md-color-scheme='slate'] .md-header__button.md-logo::after,
+[data-md-color-scheme='slate'] .md-nav__button.md-logo::after {
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("../images/Logo_square_dark.png");
+  background-image: url('../images/Logo_square_dark.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -76,19 +76,19 @@
 }
 
 /* Light theme: show light logo, hide dark logo */
-[data-md-color-scheme="default"] .logo-light {
+[data-md-color-scheme='default'] .logo-light {
   display: block;
 }
 
-[data-md-color-scheme="default"] .logo-dark {
+[data-md-color-scheme='default'] .logo-dark {
   display: none;
 }
 
 /* Dark theme: show dark logo, hide light logo */
-[data-md-color-scheme="slate"] .logo-light {
+[data-md-color-scheme='slate'] .logo-light {
   display: none;
 }
 
-[data-md-color-scheme="slate"] .logo-dark {
+[data-md-color-scheme='slate'] .logo-dark {
   display: block;
 }

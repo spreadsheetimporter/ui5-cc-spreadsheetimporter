@@ -7,6 +7,7 @@ Thank you for your interest in contributing to the Spreadsheet Importer project.
 By signing this CLA, you agree to the following terms:
 
 1. **Definitions**
+
    - "You" (or "Your") shall mean the copyright owner or legal entity authorized by the copyright owner that is making this Agreement with Marian Zeis.
    - "Contribution" shall mean any original work of authorship, including any modifications or additions to an existing work, that is intentionally submitted by You to Marian Zeis for inclusion in, or documentation of, any of the products owned or managed by Marian Zeis (the "Work").
    - "Submit" is the act of electronically or physically sending or creating the Contribution to the Work.
@@ -19,6 +20,7 @@ By signing this CLA, you agree to the following terms:
 
 4. **Representations**
    You represent that:
+
    - You are legally entitled to grant the above license.
    - Your Contribution is Your original creation.
    - Your Contribution does not contain third-party code or content that requires additional licenses or permissions.

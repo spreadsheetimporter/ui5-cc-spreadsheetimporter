@@ -1,20 +1,17 @@
-sap.ui.define([
-	"sap/base/util/ObjectPath",
-	"sap/ushell/services/Container"
-], function (ObjectPath) {
+sap.ui.define(["sap/base/util/ObjectPath", "sap/ushell/services/Container"], function (ObjectPath) {
 	"use strict";
 
 	// define ushell config
 	ObjectPath.set(["sap-ushell-config"], {
 		defaultRenderer: "fiori2",
 		bootstrapPlugins: {
-			"RuntimeAuthoringPlugin": {
+			RuntimeAuthoringPlugin: {
 				component: "sap.ushell.plugins.rta",
 				config: {
 					validateAppVersion: false
 				}
 			},
-			"PersonalizePlugin": {
+			PersonalizePlugin: {
 				component: "sap.ushell.plugins.rta-personalize",
 				config: {
 					validateAppVersion: false
@@ -32,37 +29,41 @@ sap.ui.define([
 			}
 		},
 		services: {
-			"LaunchPage": {
-				"adapter": {
-					"config": {
-						"groups": [{
-							"tiles": [{
-								"tileType": "sap.ushell.ui.tile.StaticTile",
-								"properties": {
-									"title": "OrdersV4 Freestyle 120",
-									"targetURL": "#ordersv4freestyle-display"
-								}
-							}]
-						}]
+			LaunchPage: {
+				adapter: {
+					config: {
+						groups: [
+							{
+								tiles: [
+									{
+										tileType: "sap.ushell.ui.tile.StaticTile",
+										properties: {
+											title: "OrdersV4 Freestyle 120",
+											targetURL: "#ordersv4freestyle-display"
+										}
+									}
+								]
+							}
+						]
 					}
 				}
 			},
-			"ClientSideTargetResolution": {
-				"adapter": {
-					"config": {
-						"inbounds": {
+			ClientSideTargetResolution: {
+				adapter: {
+					config: {
+						inbounds: {
 							"ordersv4freestyle-display": {
-								"semanticObject": "ordersv4freestyle",
-								"action": "display",
-								"description": "An SAP Fiori application.",
-								"title": "OrdersV4 Freestyle 120",
-								"signature": {
-									"parameters": {}
+								semanticObject: "ordersv4freestyle",
+								action: "display",
+								description: "An SAP Fiori application.",
+								title: "OrdersV4 Freestyle 120",
+								signature: {
+									parameters: {}
 								},
-								"resolutionResult": {
-									"applicationType": "SAPUI5",
-									"additionalInformation": "SAPUI5.Component=ordersv4freestyle",
-									"url": sap.ui.require.toUrl("ordersv4freestyle")
+								resolutionResult: {
+									applicationType: "SAPUI5",
+									additionalInformation: "SAPUI5.Component=ordersv4freestyle",
+									url: sap.ui.require.toUrl("ordersv4freestyle")
 								}
 							}
 						}
@@ -71,7 +72,7 @@ sap.ui.define([
 			},
 			NavTargetResolution: {
 				config: {
-					"enableClientSideTargetResolution": true
+					enableClientSideTargetResolution: true
 				}
 			}
 		}

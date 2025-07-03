@@ -21,22 +21,24 @@ The following steps are currently executed in a Ubuntu environment with matrix:
 3. Install `pnpm`.
 4. Install Node 16.
 5. Get the port of the current scenario App (i.e., for `ordersv4fe`, the port is 8080).
-    1. With the port, we can check if the app is running.
+   1. With the port, we can check if the app is running.
 6. Run `pnpm i`.
 7. Build `ui5-cc-spreadsheetimporter`.
 8. Start CAP Server (for all scenarios the same).
 9. Start the Scenario App
-    1. For example, the matrix variables in `start:silent&` are used like:  
-    
-    `pnpm --filter ${{ matrix.scenario }}${{ matrix.ui5version }} start:silent&`  
-    which can be:  
-    `pnpm --filter ordersv4fe108 start`  
+
+   1. For example, the matrix variables in `start:silent&` are used like:
+
+   `pnpm --filter ${{ matrix.scenario }}${{ matrix.ui5version }} start:silent&`  
+   which can be:  
+   `pnpm --filter ordersv4fe108 start`
+
 10. Start wdi5 Tests
-    
+
     a. First check if the server and app are running.
 
     b. Start wdi5 test `headless` for the current scenario.
-    
+
     c. So `pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- --headless ${{ matrix.scenario }} ${{ matrix.ui5version }}`  
     will be  
     `pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- ordersv4fe 108`
@@ -52,12 +54,12 @@ We try to ensure that all spec files apply to all scenarios, but certain ones ca
 ## Release Please Action
 
 For automatic versioning and changelog generation, we use [release-please-action](https://github.com/google-github-actions/release-please-action), which allows everything to be done with GitHub Actions.  
-This workflow is defined in [release-please.yml](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/.github/workflows/release-please.yml).  
+This workflow is defined in [release-please.yml](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/.github/workflows/release-please.yml).
 
 This workflow will create a Pull Request if a `fix:` or `feat:` commit is pushed to the `main` branch.  
 This Pull Request contains all changes, like the updated version and Changelog.  
 In addition, scripts run to change the version in other files.  
 In this [commit](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/4bf424914ca6c66c52cb17852f36ddbd520af07e), you can see which files are updated with these scripts.  
-For example, in `ui5.yaml` and the sample apps.  
+For example, in `ui5.yaml` and the sample apps.
 
 After this Pull Request is merged, the `ui5-cc-spreadsheetimporter` will be built and published to npm automatically.

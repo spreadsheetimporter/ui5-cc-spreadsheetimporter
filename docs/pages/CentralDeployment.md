@@ -2,7 +2,6 @@
 
 Deploying the UI5 Spreadsheet Importer centrally is the recommended approach. Central deployment simplifies usage for individual developers, as the component becomes readily available across the system.
 
-
 ## Deployment to ABAP System
 
 You can deploy the UI5 Spreadsheet Importer to an ABAP system using one of the following methods:
@@ -15,23 +14,23 @@ The **recommended method** is to use a UI5 carrier app. This app contains all re
 
 1\. **Clone the Sample Carrier App Repository**
 
-   A sample carrier app is available [here](https://github.com/spreadsheetimporter/packed-deployment-abap). Clone this repository to your local machine:
+A sample carrier app is available [here](https://github.com/spreadsheetimporter/packed-deployment-abap). Clone this repository to your local machine:
 
-   ```sh
-   git clone https://github.com/spreadsheetimporter/packed-deployment-abap
-   ```
+```sh
+git clone https://github.com/spreadsheetimporter/packed-deployment-abap
+```
 
 2\. **Follow the Instructions**
 
-   Navigate to the repository's `README.md` file and follow the detailed deployment instructions provided there.
+Navigate to the repository's `README.md` file and follow the detailed deployment instructions provided there.
 
 2 a)\. **Delete versions you don't need**
 
-   If you don't need all versions, you can delete them from the `package.json` and `manifest.json` file.
+If you don't need all versions, you can delete them from the `package.json` and `manifest.json` file.
 
 3\. **Use the Component in Your Fiori App**
 
-   After successful deployment, the Spreadsheet Importer component is available for use in your Fiori applications.
+After successful deployment, the Spreadsheet Importer component is available for use in your Fiori applications.
 
 #### S/4HANA Public Cloud Considerations
 
@@ -48,44 +47,44 @@ If you prefer manual deployment, follow these steps:
 
 1\. **Clone the Repository**
 
-   ```sh
-   git clone https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter
-   ```
+```sh
+git clone https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter
+```
 
 2\. **Install Dependencies**
 
-   Navigate to the cloned directory and install the necessary dependencies:
+Navigate to the cloned directory and install the necessary dependencies:
 
-   ```sh
-   pnpm install
-   ```
+```sh
+pnpm install
+```
 
-   *or*
+_or_
 
-   ```sh
-   npm install
-   ```
+```sh
+npm install
+```
 
 3\. **Configure `ui5-deploy.yaml`**
 
-   Update the default [`ui5-deploy.yaml`](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/packages/ui5-cc-spreadsheetimporter/ui5-deploy.yaml) file with your deployment settings.
+Update the default [`ui5-deploy.yaml`](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/packages/ui5-cc-spreadsheetimporter/ui5-deploy.yaml) file with your deployment settings.
 
-   - **Version Management**: When deploying a new version, use a unique app name to avoid overwriting existing versions. This is automatically handled by the variable `XXXnamespaceShortXXX` in the `ui5-deploy-publish.yaml` file.
-   - **Custom App Name**: If you choose to use your own app name, ensure you change it for newer versions to prevent overwriting.
+- **Version Management**: When deploying a new version, use a unique app name to avoid overwriting existing versions. This is automatically handled by the variable `XXXnamespaceShortXXX` in the `ui5-deploy-publish.yaml` file.
+- **Custom App Name**: If you choose to use your own app name, ensure you change it for newer versions to prevent overwriting.
 
 4\. **Set Up Environment Variables**
 
-   - **For Deployment from VS Code**: Rename `.envTEMPLATE` to `.env` and enter your ABAP system username and password.
-   - **For Deployment from SAP Business Application Studio (BAS)**: Remove the `credentials` section from the `ui5-deploy.yaml` file.
+- **For Deployment from VS Code**: Rename `.envTEMPLATE` to `.env` and enter your ABAP system username and password.
+- **For Deployment from SAP Business Application Studio (BAS)**: Remove the `credentials` section from the `ui5-deploy.yaml` file.
 
 5\. **Run Deployment**
 
-   Navigate to the package directory and execute the deployment script:
+Navigate to the package directory and execute the deployment script:
 
-   ```sh
-   cd packages/ui5-cc-spreadsheetimporter
-   npm run deploy
-   ```
+```sh
+cd packages/ui5-cc-spreadsheetimporter
+npm run deploy
+```
 
 ## Deployment to HTML5 Repository on BTP
 
@@ -93,31 +92,31 @@ To deploy the UI5 Spreadsheet Importer to the HTML5 Repository on SAP BTP, follo
 
 1\. **Clone the Repository**
 
-   ```sh
-   git clone https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter
-   ```
+```sh
+git clone https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter
+```
 
 2\. **Install Dependencies**
 
-   ```sh
-   pnpm install
-   ```
+```sh
+pnpm install
+```
 
 3\. **Optional: Modify `mta.yaml`**
 
-   The `mta.yaml` file is used for deployment to the HTML5 Repository on BTP. If you need to customize deployment settings, you can modify this file accordingly.
+The `mta.yaml` file is used for deployment to the HTML5 Repository on BTP. If you need to customize deployment settings, you can modify this file accordingly.
 
 4\. **Build the MTA Archive**
 
-   ```sh
-   pnpm build:mta
-   ```
+```sh
+pnpm build:mta
+```
 
 5\. **Deploy to Cloud Foundry**
 
-   ```sh
-   pnpm deploy:cf
-   ```
+```sh
+pnpm deploy:cf
+```
 
 ## Consuming the Component in a UI5 App
 
@@ -144,37 +143,37 @@ Simulate the centrally deployed component in your local environment by following
 
 1\. **Install `cds-plugin-ui5` (If Using CAP Projects)**
 
-   ```sh
-   npm install cds-plugin-ui5 --save-dev
-   ```
+```sh
+npm install cds-plugin-ui5 --save-dev
+```
 
 2\. **Install the Component as a Dev Dependency**
 
-   Install the specific version of the component that your app uses:
+Install the specific version of the component that your app uses:
 
-   ```sh
-   npm install ui5-cc-spreadsheetimporter --save-dev
-   ```
+```sh
+npm install ui5-cc-spreadsheetimporter --save-dev
+```
 
 3\. **Install `ui5-middleware-servestatic`**
 
-   ```sh
-   npm install ui5-middleware-servestatic --save-dev
-   ```
+```sh
+npm install ui5-middleware-servestatic --save-dev
+```
 
 4\. **Configure `ui5.yaml`**
 
-   Add the following configuration to your `ui5.yaml` file (adjust the version number as needed):
+Add the following configuration to your `ui5.yaml` file (adjust the version number as needed):
 
-   ```yaml
-   server:
-     customMiddleware:
-       - name: ui5-middleware-servestatic
-         afterMiddleware: compression
-         mountPath: /resources/cc/spreadsheetimporter/v2_2_0/
-         configuration:
-           rootPath: "node_modules/ui5-cc-spreadsheetimporter/dist"
-   ```
+```yaml
+server:
+  customMiddleware:
+    - name: ui5-middleware-servestatic
+      afterMiddleware: compression
+      mountPath: /resources/cc/spreadsheetimporter/v2_2_0/
+      configuration:
+        rootPath: 'node_modules/ui5-cc-spreadsheetimporter/dist'
+```
 
 ### Consuming the Centrally Deployed Component from ABAP System
 
@@ -182,48 +181,48 @@ To consume the centrally deployed component while developing locally in VS Code 
 
 1\. **Determine the Component URL**
 
-   Access the App Index to find the URL of the component:
+Access the App Index to find the URL of the component:
 
-   ```
-   <SAP_SYSTEM_URL>/sap/bc/ui2/app_index/ui5_app_info?id=cc.spreadsheetimporter.v2_2_0
-   ```
+```
+<SAP_SYSTEM_URL>/sap/bc/ui2/app_index/ui5_app_info?id=cc.spreadsheetimporter.v2_2_0
+```
 
 2\. **Configure Proxy Middleware**
 
-   Depending on your setup, use either `fiori-tools-proxy` or `ui5-middleware-simpleproxy` in your `ui5.yaml` file.
+Depending on your setup, use either `fiori-tools-proxy` or `ui5-middleware-simpleproxy` in your `ui5.yaml` file.
 
-   **Using `fiori-tools-proxy`:**
+**Using `fiori-tools-proxy`:**
 
-   ```yaml
-   server:
-     customMiddleware:
-       - name: fiori-tools-proxy
-         afterMiddleware: compression
-         configuration:
-           backend:
-             - path: /sap
-               url: <Cloud Connector or local URL>
-               destination: <System Destination Name if in BAS>
-             - path: /resources/cc/spreadsheetimporter/v2_2_0
-               destination: <System Destination Name if in BAS>
-               pathPrefix: /sap/bc/ui5_ui5/sap/<BSP_NAME>/thirdparty/customcontrol/spreadsheetimporter/v2_2_0/
-               url: <Cloud Connector or local URL>
-   ```
+```yaml
+server:
+  customMiddleware:
+    - name: fiori-tools-proxy
+      afterMiddleware: compression
+      configuration:
+        backend:
+          - path: /sap
+            url: <Cloud Connector or local URL>
+            destination: <System Destination Name if in BAS>
+          - path: /resources/cc/spreadsheetimporter/v2_2_0
+            destination: <System Destination Name if in BAS>
+            pathPrefix: /sap/bc/ui5_ui5/sap/<BSP_NAME>/thirdparty/customcontrol/spreadsheetimporter/v2_2_0/
+            url: <Cloud Connector or local URL>
+```
 
-   **Using `ui5-middleware-simpleproxy`:**
+**Using `ui5-middleware-simpleproxy`:**
 
-   ```yaml
-   server:
-     customMiddleware:
-       - name: ui5-middleware-simpleproxy
-         afterMiddleware: compression
-         mountPath: /resources/cc/spreadsheetimporter/v2_2_0/
-         configuration:
-           baseUri: "<SAP_SYSTEM_URL>/sap/bc/ui5_ui5/sap/<BSP_NAME>/thirdparty/customcontrol/spreadsheetimporter/v2_2_0/"
-           username: <SAP_USERNAME>
-           password: <SAP_PASSWORD>
-           query:
-             sap-client: '100'
-   ```
+```yaml
+server:
+  customMiddleware:
+    - name: ui5-middleware-simpleproxy
+      afterMiddleware: compression
+      mountPath: /resources/cc/spreadsheetimporter/v2_2_0/
+      configuration:
+        baseUri: '<SAP_SYSTEM_URL>/sap/bc/ui5_ui5/sap/<BSP_NAME>/thirdparty/customcontrol/spreadsheetimporter/v2_2_0/'
+        username: <SAP_USERNAME>
+        password: <SAP_PASSWORD>
+        query:
+          sap-client: '100'
+```
 
-   **Note**: Replace placeholders like `<SAP_SYSTEM_URL>`, `<BSP_NAME>`, `<SAP_USERNAME>`, and `<SAP_PASSWORD>` with your actual system details.
+**Note**: Replace placeholders like `<SAP_SYSTEM_URL>`, `<BSP_NAME>`, `<SAP_USERNAME>`, and `<SAP_PASSWORD>` with your actual system details.

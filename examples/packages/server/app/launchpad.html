@@ -1,73 +1,74 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>App Title</title>
+		<style>
+			html,
+			body,
+			body > div,
+			#container,
+			#container-uiarea {
+				height: 100%;
+			}
+		</style>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>App Title</title>
-    <style>
-        html,
-        body,
-        body>div,
-        #container,
-        #container-uiarea {
-            height: 100%;
-        }
-    </style>
+		<script>
+			window["sap-ushell-config"] = {
+				defaultRenderer: "fiori2",
+				renderers: {
+					fiori2: {
+						componentData: {
+							config: {
+								enableNotificationsUI: false,
+								enableNotifications: false,
+								enableSearch: false,
+								enablePersonalization: false,
+								enableSetTheme: true,
+								enableSetLanguage: true
+							}
+						}
+					}
+				},
+				bootstrapPlugins: {
+					RuntimeAuthoringPlugin: {
+						component: "sap.ushell.plugins.rta",
+						config: {
+							validateAppVersion: false
+						}
+					}
+				},
+				services: {
+					EndUserFeedback: {
+						config: {
+							enabled: false
+						}
+					}
+				},
+				applications: {}
+			};
+		</script>
 
-    <script>
-        window["sap-ushell-config"] = {
-            defaultRenderer: "fiori2",
-            renderers: {
-                fiori2: {
-                    componentData: {
-                        config: {
-                            enableNotificationsUI: false,
-                            enableNotifications: false,
-                            enableSearch: false,
-                            enablePersonalization: false,
-                            enableSetTheme: true,
-                            enableSetLanguage: true,
-                        },
-                    },
-                },
-            },
-            bootstrapPlugins: {
-                RuntimeAuthoringPlugin: {
-                    component: "sap.ushell.plugins.rta",
-                    config: {
-                        validateAppVersion: false,
-                    },
-                },
-            },
-            services: {
-                EndUserFeedback: {
-                    config: {
-                        enabled: false,
-                    },
-                },
-            },
-            applications: {}
-        };
-    </script>
-
-    <script id="sap-ushell-bootstrap" src="https://sapui5.hana.ondemand.com/1.136.2/test-resources/sap/ushell/bootstrap/sandbox.js"></script>
-<script defer id="sap-ui-bootstrap"
-        src="https://sapui5.hana.ondemand.com/1.136.2/resources/sap-ui-core.js"
-        data-sap-ui-compatVersion="edge"
-        data-sap-ui-theme="sap_horizon"
-        data-sap-ui-libs="sap.m, sap.ui.core, sap.ushell, sap.fe.templates"
-        data-sap-ui-async="true"
-        data-sap-ui-flexibilityServices='[{"connector": "LocalStorageConnector"}]'
-        data-sap-ui-oninit="module:sap/ushell/shells/sandbox/fioriSandboxInit"
-        data-sap-ui-resourceroots='{
+		<script id="sap-ushell-bootstrap" src="https://sapui5.hana.ondemand.com/1.136.2/test-resources/sap/ushell/bootstrap/sandbox.js"></script>
+		<script
+			defer
+			id="sap-ui-bootstrap"
+			src="https://sapui5.hana.ondemand.com/1.136.2/resources/sap-ui-core.js"
+			data-sap-ui-compatVersion="edge"
+			data-sap-ui-theme="sap_horizon"
+			data-sap-ui-libs="sap.m, sap.ui.core, sap.ushell, sap.fe.templates"
+			data-sap-ui-async="true"
+			data-sap-ui-flexibilityServices='[{"connector": "LocalStorageConnector"}]'
+			data-sap-ui-oninit="module:sap/ushell/shells/sandbox/fioriSandboxInit"
+			data-sap-ui-resourceroots='{
             "sap.ushell.shells.sandbox": "https://sapui5.hana.ondemand.com/1.136.2/test-resources/sap/ushell/shells/sandbox/",
             "cc.spreadsheetimporter.v0_31_2": "./thirdparty/customcontrol/spreadsheetimporter/v0_31_2"
-        }'></script>
-</head>
-<body class="sapUiBody sapUShellFullHeight">
-    <div id="canvas" class="sapUShellFullHeight"></div>
-</body>
-
+        }'
+		></script>
+	</head>
+	<body class="sapUiBody sapUShellFullHeight">
+		<div id="canvas" class="sapUShellFullHeight"></div>
+	</body>
 </html>

@@ -1,7 +1,7 @@
 name: Bug Report
 description: File a bug report
-title: "[Bug]: "
-labels: ["bug", "external"]
+title: '[Bug]: '
+labels: ['bug', 'external']
 assignees:
   - marianfoo
 body:
@@ -28,8 +28,8 @@ body:
       label: Draft
       description: Are you using draft?
       options:
-        - "Yes"
-        - "No"
+        - 'Yes'
+        - 'No'
         - not relevant
     validations:
       required: true

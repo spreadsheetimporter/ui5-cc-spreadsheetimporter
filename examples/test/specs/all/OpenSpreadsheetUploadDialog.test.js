@@ -37,27 +37,27 @@ describe("Upload File List Report", () => {
 
 	it("Close SpreadsheetUpload Dialog - simplified", async () => {
 		console.log("Starting simplified dialog close test");
-		
+
 		// Give dialog time to appear
 		await browser.pause(3000);
-		
+
 		// Try pressing Escape twice with pauses - most reliable cross-browser solution
 		try {
 			// First Escape press
 			console.log("Pressing Escape key (first attempt)");
-			await browser.keys(['Escape']);
+			await browser.keys(["Escape"]);
 			await browser.pause(1000);
-			
+
 			// Second Escape press just in case
 			console.log("Pressing Escape key (second attempt)");
-			await browser.keys(['Escape']);
+			await browser.keys(["Escape"]);
 			await browser.pause(1000);
-			
+
 			console.log("Escape key sequence complete");
 		} catch (error) {
 			console.error("Escape key sequence failed:", error.message);
 		}
-		
+
 		// Wait for dialog to close
 		await browser.pause(2000);
 		console.log("Dialog close test completed");
