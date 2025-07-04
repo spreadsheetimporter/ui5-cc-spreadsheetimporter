@@ -36,7 +36,7 @@ export default class FileService extends ManagedObject {
    * @param i18nBundle Resource bundle for dialog texts
    * @returns Promise resolving to sheet name
    */
-  async getSheetName(workbook: XLSX.WorkBook, sheetOption: string | number, i18nBundle?: any): Promise<string> {
+  static async getSheetName(workbook: XLSX.WorkBook, sheetOption: string | number, i18nBundle?: any): Promise<string> {
     let sheetName: string;
 
     if (typeof sheetOption === 'number') {

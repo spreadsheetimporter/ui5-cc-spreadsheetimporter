@@ -29,6 +29,7 @@ import OData from '../odata/OData';
 import ImportService from '../ImportService';
 import { Action } from '../../enums';
 import TemplateService from '../services/TemplateService';
+import FileService from '../services/FileService';
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -119,7 +120,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
    * Handle paste data event from SpreadsheetDialog
    * @param {SpreadsheetDialog$DataPasteEvent} event - The paste data event
    */
-  onDataPaste(event: SpreadsheetDialog$DataPasteEvent) {
+  async onDataPaste(event: SpreadsheetDialog$DataPasteEvent) {
     const workbook = event.getParameter('workbook') as any; // Cast to any to access XLSX.WorkBook properties
     const type = event.getParameter('type');
     const originalData = event.getParameter('originalData');
@@ -130,8 +131,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
 
     // Process the workbook using existing pipeline
     // For pasted data, use 'PastedData' sheet name; for pasted files, use first sheet name
-    const sheetName = type === 'file' && workbook.SheetNames?.length > 0 ? workbook.SheetNames[0] : 'PastedData';
-    this.handleWorkbook(workbook, sheetName);
+    this.handleWorkbook(workbook);
   }
 
   /**
@@ -189,13 +189,14 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
    * @param {any} workbook - The XLSX workbook to process
    * @param {string} sheetName - Sheet name to use (default: 'PastedData')
    */
-  async handleWorkbook(workbook: any, sheetName: string = 'PastedData') {
+  async handleWorkbook(workbook: any) {
     try {
       this.setBusy(true);
 
       // Clear current file reference since this is from paste
       this.currentFile = null;
 
+      const sheetName = await FileService.getSheetName(workbook, this.component.getReadSheet(), this.componentI18n);
       // Run import pipeline using the workbook directly
       const result = await this.importService.processValidateAndUpload(
         workbook,
