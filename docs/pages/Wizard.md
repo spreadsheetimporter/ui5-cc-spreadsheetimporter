@@ -20,7 +20,23 @@ More features are planned for the future.
 ### 1. Upload File Step
 
 - **Purpose**: Select and upload Spreadsheet file
-- **Features**: Drag & drop support, file validation
+- **Features**:
+  - Drag & drop support
+  - File validation
+  - **Paste functionality** ✨ _Available since v2.3.0_
+    - Paste copied spreadsheet data (Ctrl+V)
+    - Paste .xlsx files directly from clipboard
+    - Note: Paste only works on the Upload Step
+
+<!-- prettier-ignore-start -->
+!!! info "Paste Functionality"
+    You can paste data directly from your clipboard instead of uploading a file. This works with:
+    
+    - Copied spreadsheet data from Excel or Google Sheets
+    - .xlsx files copied from your file system
+    - Note: Paste functionality is only available on the Upload File Step
+    - Can be disabled using the `enablePaste` configuration option
+<!-- prettier-ignore-end -->
 
 ### 2. Header Selection Step (Conditional)
 

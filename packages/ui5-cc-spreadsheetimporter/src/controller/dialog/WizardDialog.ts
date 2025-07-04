@@ -146,7 +146,10 @@ export default class WizardDialog extends ManagedObject {
     // Set up drag and drop
     this.dialog.setComponent(this.component);
     this.dialog.attachFileDrop(this.onFileDrop.bind(this));
-    this.dialog.attachDataPaste(this.onDataPaste.bind(this));
+    // Only attach paste handler if paste functionality is enabled
+    if (this.component.getEnablePaste()) {
+      this.dialog.attachDataPaste(this.onDataPaste.bind(this));
+    }
 
     // Get wizard reference - adjusted index due to added VBox
     this.wizard = this.dialog.getContent()[1] as WizardControl;

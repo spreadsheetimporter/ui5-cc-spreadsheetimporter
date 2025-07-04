@@ -130,6 +130,10 @@ export interface ComponentData {
    * Whether to use the import wizard for header row selection
    */
   useImportWizard?: boolean;
+  /**
+   * Whether to enable paste functionality for data and files
+   */
+  enablePaste?: boolean;
 }
 
 export interface DeepDownloadConfig {

@@ -102,7 +102,10 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
       this.spreadsheetUploadDialog.attachDecimalSeparatorChanged(this.onDecimalSeparatorChanged.bind(this));
       this.spreadsheetUploadDialog.attachAvailableOptionsChanged(this.onAvailableOptionsChanged.bind(this));
       this.spreadsheetUploadDialog.attachFileDrop(this.onFileDrop.bind(this));
-      this.spreadsheetUploadDialog.attachDataPaste(this.onDataPaste.bind(this));
+      // Only attach paste handler if paste functionality is enabled
+      if (this.component.getEnablePaste()) {
+        this.spreadsheetUploadDialog.attachDataPaste(this.onDataPaste.bind(this));
+      }
     }
     if (this.component.getStandalone() && this.component.getColumns().length === 0 && !this.component.getSpreadsheetTemplateFile()) {
       this.spreadsheetOptionsModel.setProperty('/hideGenerateTemplateButton', true);

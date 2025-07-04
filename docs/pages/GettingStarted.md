@@ -30,6 +30,17 @@ In decentralized deployment, the component is included directly in each app and 
 
 In centralized deployment, the Spreadsheet Upload component is stored centrally, either in an on-premise ABAP system or in BTP. For detailed instructions, see the [Central Deployment](CentralDeployment.md) page.
 
+## Key Features ✨
+
+The Spreadsheet Importer offers several powerful features:
+
+- **Multiple Upload Methods**: Upload files, drag & drop, or paste data directly
+- **Paste Functionality** _(v2.3.0+)_: Copy data from Excel/Google Sheets and paste directly (Ctrl+V)
+- **File Paste Support** _(v2.3.0+)_: Paste .xlsx files directly from your clipboard
+- **Wizard Mode**: Step-by-step guided import process
+- **Universal Backend Support**: Works with any OData service
+- **Validation & Error Handling**: Comprehensive data validation
+
 ## Setup
 
 To integrate the `ui5-cc-spreadsheetimporter` component manually, follow the steps below.
