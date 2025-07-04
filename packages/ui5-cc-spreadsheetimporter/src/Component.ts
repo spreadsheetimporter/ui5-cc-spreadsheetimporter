@@ -85,7 +85,8 @@ export default class Component extends UIComponent {
       readSheetCoordinates: { type: 'string', defaultValue: 'A1' },
       updateConfig: { type: 'object', defaultValue: {} },
       directUploadConfig: { type: 'object', defaultValue: {} },
-      useImportWizard: { type: 'boolean', defaultValue: false }
+      useImportWizard: { type: 'boolean', defaultValue: false },
+      enablePaste: { type: 'boolean', defaultValue: true }
     },
     aggregations: {
       rootControl: {
@@ -198,6 +199,7 @@ export default class Component extends UIComponent {
     this.setBindingCustom(compData?.bindingCustom);
     this.setShowDownloadButton(compData?.showDownloadButton);
     this.setUseImportWizard(compData?.useImportWizard);
+    this.setEnablePaste(compData?.enablePaste);
     if (compData?.availableOptions && compData?.availableOptions.length > 0) {
       // if availableOptions is set show the Options Menu
       this.setShowOptions(true);

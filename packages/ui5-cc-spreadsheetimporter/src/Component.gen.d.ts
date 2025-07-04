@@ -50,6 +50,7 @@ declare module "./Component" {
         updateConfig?: object | PropertyBindingInfo | `{${string}}`;
         directUploadConfig?: object | PropertyBindingInfo | `{${string}}`;
         useImportWizard?: boolean | PropertyBindingInfo | `{${string}}`;
+        enablePaste?: boolean | PropertyBindingInfo | `{${string}}`;
         preFileProcessing?: (event: Component$PreFileProcessingEvent) => void;
         checkBeforeRead?: (event: Component$CheckBeforeReadEvent) => void;
         changeBeforeCreate?: (event: Component$ChangeBeforeCreateEvent) => void;
@@ -228,6 +229,10 @@ declare module "./Component" {
         // property: useImportWizard
         getUseImportWizard(): boolean;
         setUseImportWizard(useImportWizard: boolean): this;
+
+        // property: enablePaste
+        getEnablePaste(): boolean;
+        setEnablePaste(enablePaste: boolean): this;
 
         // event: preFileProcessing
         attachPreFileProcessing(fn: (event: Component$PreFileProcessingEvent) => void, listener?: object): this;

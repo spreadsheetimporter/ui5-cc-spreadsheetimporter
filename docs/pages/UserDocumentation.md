@@ -20,7 +20,20 @@ Now, fill the template with the necessary data and save the file.
 
 4\. Upload File to Application
 
+You have multiple ways to provide your spreadsheet data:
+
+**Option A: Upload File**
 Click on the "Browse" button to upload the file.
+
+**Option B: Drag & Drop**
+Simply drag your spreadsheet file directly onto the upload area.
+
+**Option C: Paste Data** ✨ _Available since v2.3.0_
+
+- Copy spreadsheet data from Excel/Google Sheets (Ctrl+C)
+- Paste directly into the upload dialog (Ctrl+V)
+- Or paste an entire .xlsx file that you've copied from your file system
+
 If the upload is successful, a message will appear saying "Upload Successful."
 
 ![Upload Spreadsheet File to App](./../images/upload_file_to_app.png){ loading=lazy }

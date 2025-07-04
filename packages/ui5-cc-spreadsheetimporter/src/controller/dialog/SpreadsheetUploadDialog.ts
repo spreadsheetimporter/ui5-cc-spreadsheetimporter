@@ -4,7 +4,8 @@ import SpreadsheetUpload from '../SpreadsheetUpload';
 import SpreadsheetDialog, {
   SpreadsheetDialog$AvailableOptionsChangedEvent,
   SpreadsheetDialog$DecimalSeparatorChangedEvent,
-  SpreadsheetDialog$FileDropEvent
+  SpreadsheetDialog$FileDropEvent,
+  SpreadsheetDialog$DataPasteEvent
 } from '../../control/SpreadsheetDialog';
 import ResourceModel from 'sap/ui/model/resource/ResourceModel';
 import Component from '../../Component';
@@ -28,6 +29,7 @@ import OData from '../odata/OData';
 import ImportService from '../ImportService';
 import { Action } from '../../enums';
 import TemplateService from '../services/TemplateService';
+import FileService from '../services/FileService';
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -100,6 +102,10 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
       this.spreadsheetUploadDialog.attachDecimalSeparatorChanged(this.onDecimalSeparatorChanged.bind(this));
       this.spreadsheetUploadDialog.attachAvailableOptionsChanged(this.onAvailableOptionsChanged.bind(this));
       this.spreadsheetUploadDialog.attachFileDrop(this.onFileDrop.bind(this));
+      // Only attach paste handler if paste functionality is enabled
+      if (this.component.getEnablePaste()) {
+        this.spreadsheetUploadDialog.attachDataPaste(this.onDataPaste.bind(this));
+      }
     }
     if (this.component.getStandalone() && this.component.getColumns().length === 0 && !this.component.getSpreadsheetTemplateFile()) {
       this.spreadsheetOptionsModel.setProperty('/hideGenerateTemplateButton', true);
@@ -111,6 +117,24 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
     const file = files[0] as File;
     (this.spreadsheetUploadDialog.getModel('info') as JSONModel).setProperty('/fileUploadValue', file.name);
     this.handleFile(file);
+  }
+
+  /**
+   * Handle paste data event from SpreadsheetDialog
+   * @param {SpreadsheetDialog$DataPasteEvent} event - The paste data event
+   */
+  async onDataPaste(event: SpreadsheetDialog$DataPasteEvent) {
+    const workbook = event.getParameter('workbook') as any; // Cast to any to access XLSX.WorkBook properties
+    const type = event.getParameter('type');
+    const originalData = event.getParameter('originalData');
+
+    // Update file uploader display to show paste was used
+    const displayName = type === 'file' ? originalData || 'Pasted File' : 'Pasted Data';
+    (this.spreadsheetUploadDialog.getModel('info') as JSONModel).setProperty('/fileUploadValue', displayName);
+
+    // Process the workbook using existing pipeline
+    // For pasted data, use 'PastedData' sheet name; for pasted files, use first sheet name
+    this.handleWorkbook(workbook);
   }
 
   /**
@@ -159,6 +183,45 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
     } catch (error) {
       this.setBusy(false);
       Log.error('Error handling file upload', error as Error, 'SpreadsheetUploadDialog');
+      this.resetContent();
+    }
+  }
+
+  /**
+   * Process a workbook directly (from paste functionality)
+   * @param {any} workbook - The XLSX workbook to process
+   * @param {string} sheetName - Sheet name to use (default: 'PastedData')
+   */
+  async handleWorkbook(workbook: any) {
+    try {
+      this.setBusy(true);
+
+      // Clear current file reference since this is from paste
+      this.currentFile = null;
+
+      const sheetName = await FileService.getSheetName(workbook, this.component.getReadSheet(), this.componentI18n);
+      // Run import pipeline using the workbook directly
+      const result = await this.importService.processValidateAndUpload(
+        workbook,
+        sheetName, // Pass sheet name, not index for workbooks
+        undefined,
+        { resetMessages: true },
+        {
+          onBusy: state => this.setBusy(state),
+          onMessagesPresent: () => this.messageHandler.displayMessages(),
+          onImportSuccess: rowCount => this.setDataRows(rowCount)
+        }
+      );
+
+      if (!result.canceled && result.payloadArray) {
+        // Show a success message
+        MessageToast.show(this.util.geti18nText('spreadsheetimporter.dataReadyForUpload'));
+      }
+
+      this.setBusy(false);
+    } catch (error) {
+      this.setBusy(false);
+      Log.error('Error handling workbook', error as Error, 'SpreadsheetUploadDialog');
       this.resetContent();
     }
   }

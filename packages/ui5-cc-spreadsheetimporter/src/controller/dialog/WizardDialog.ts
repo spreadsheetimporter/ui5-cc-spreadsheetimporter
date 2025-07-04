@@ -1,8 +1,13 @@
 import ManagedObject from 'sap/ui/base/ManagedObject';
 import Fragment from 'sap/ui/core/Fragment';
 import SpreadsheetDialog from '../../control/SpreadsheetDialog';
-import { SpreadsheetDialog$FileDropEvent } from '../../control/SpreadsheetDialog';
-import Wizard, { Wizard$StepActivateEvent } from 'sap/m/Wizard';
+import {
+  SpreadsheetDialog$AvailableOptionsChangedEvent,
+  SpreadsheetDialog$DecimalSeparatorChangedEvent,
+  SpreadsheetDialog$FileDropEvent,
+  SpreadsheetDialog$DataPasteEvent
+} from '../../control/SpreadsheetDialog';
+import WizardControl, { Wizard$StepActivateEvent } from 'sap/m/Wizard';
 import JSONModel from 'sap/ui/model/json/JSONModel';
 import ResourceModel from 'sap/ui/model/resource/ResourceModel';
 import ResourceBundle from 'sap/base/i18n/ResourceBundle';
@@ -20,6 +25,7 @@ import WizardStep from 'sap/m/WizardStep';
 import UploadStep from '../wizard/steps/UploadStep';
 import { Action } from '../../enums';
 import TemplateService from '../services/TemplateService';
+import FileService from '../services/FileService';
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -32,7 +38,7 @@ export default class WizardDialog extends ManagedObject {
   private dialog: SpreadsheetDialog;
   private component: Component;
   private spreadsheetUploadController: SpreadsheetUpload;
-  private wizard: Wizard;
+  private wizard: WizardControl;
   private wizardController: WizardController;
   private util: Util;
   private resolvePromise: (value: any) => void;
@@ -140,9 +146,13 @@ export default class WizardDialog extends ManagedObject {
     // Set up drag and drop
     this.dialog.setComponent(this.component);
     this.dialog.attachFileDrop(this.onFileDrop.bind(this));
+    // Only attach paste handler if paste functionality is enabled
+    if (this.component.getEnablePaste()) {
+      this.dialog.attachDataPaste(this.onDataPaste.bind(this));
+    }
 
     // Get wizard reference - adjusted index due to added VBox
-    this.wizard = this.dialog.getContent()[1] as Wizard;
+    this.wizard = this.dialog.getContent()[1] as WizardControl;
     this.wizardController.wizard = this.wizard;
   }
 
@@ -312,7 +322,7 @@ export default class WizardDialog extends ManagedObject {
       // Clean up the dialog
       if (this.dialog) {
         // Clean up wizard steps
-        const wizard = this.dialog.getContent()[0] as Wizard;
+        const wizard = this.dialog.getContent()[0] as WizardControl;
         if (wizard) {
           const steps = wizard.getSteps();
           for (const step of steps) {
@@ -352,7 +362,7 @@ export default class WizardDialog extends ManagedObject {
   /**
    * Gets the wizard control instance
    */
-  getWizard(): Wizard {
+  getWizard(): WizardControl {
     return this.wizard;
   }
 
@@ -524,5 +534,157 @@ export default class WizardDialog extends ManagedObject {
     }
 
     return `<strong>${title}</strong><br/>${description}`;
+  }
+
+  /**
+   * Handler for data paste event
+   * Only allows paste functionality when on the upload step
+   */
+  onDataPaste(event: SpreadsheetDialog$DataPasteEvent): void {
+    // Check if we're on the upload step
+    const currentStep = this.wizardController.getWizardModel().getProperty('/currentStep');
+    if (currentStep !== 'uploadStep') {
+      // Show a message that paste is only allowed on the upload step
+      MessageToast.show(this.util.geti18nText('spreadsheetimporter.pasteOnlyOnUploadStep'));
+      return;
+    }
+
+    const workbook = event.getParameter('workbook') as any;
+    const type = event.getParameter('type');
+    const originalData = event.getParameter('originalData');
+
+    // Update file uploader display to show paste was used
+    const displayName = type === 'file' ? originalData || 'Pasted File' : 'Pasted Data';
+    this.wizardController.getWizardModel().setProperty('/fileUploadValue', displayName);
+
+    // Handle the pasted workbook similar to how file upload is handled
+    this.handleWorkbookFromPaste(workbook, type, displayName);
+  }
+
+  /**
+   * Handle workbook from paste functionality
+   */
+  private async handleWorkbookFromPaste(workbook: any, type: string, displayName: string): Promise<void> {
+    try {
+      this.wizardController.getStep('uploadStep').setBusyIndicatorDelay(0);
+      this.wizardController.getStep('uploadStep').setBusy(true);
+
+      const uploadStep = (await this.wizardController.activateStep('uploadStep')) as UploadStep;
+
+      // Process the workbook using enhanced pipeline with the sheet name
+      const processedData = await this.wizardController.processFile(workbook, this.wizardController.getCurrentCoordinates(), true, false);
+
+      // Create a mock File object for the workbook
+      const mockFile = new File([], displayName, { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+      // Update Wizard with the workbook data
+      this.wizardController.setFileData(mockFile, processedData);
+
+      // Use the same logic as UploadStep.processFileAndNavigate()
+      this.wizardController.setUploadButtonEnabled(false);
+      this.wizardController.resetCurrentCoordinates();
+
+      // create steps controllers
+      this.createStepsControllers();
+
+      // Check for header validation issues
+      const headerValidationResult = processedData.validationMessages.find((message: any) => message.type.title === 'EmptyHeaders');
+
+      let navigateToStep: WizardStep;
+
+      if (processedData.validationMessages.length > 0 && headerValidationResult) {
+        // Wrong headers but other errors found - Navigate to MessagesStep
+        const uploadStepControl = this.wizardController.getStep('uploadStep');
+        const headerStepControl = this.wizardController.getStep('headerSelectionStep');
+        const messagesStepControl = this.wizardController.getStep('messagesStep');
+        if (uploadStepControl && messagesStepControl && uploadStepControl.getNextStep() !== messagesStepControl.getId()) {
+          uploadStepControl.setNextStep(messagesStepControl);
+        }
+        if (headerStepControl && messagesStepControl && headerStepControl.getNextStep() !== messagesStepControl.getId()) {
+          headerStepControl.setNextStep(messagesStepControl);
+        }
+        navigateToStep = headerStepControl;
+        // if build already rebuild headerSelectionStep
+        if (this.wizardController.stepsBuilt.has('headerSelectionStep')) {
+          const headerSelectionController = this.wizardController.getStepControl('headerSelectionStep');
+          headerSelectionController.build(this.wizardController.findStepContainer('headerSelectionStep'));
+        } else {
+          this.wizardController.activateStep('headerSelectionStep');
+        }
+      } else if (headerValidationResult) {
+        // Wrong header detected - Configure wizard flow
+        const uploadStepControl = this.wizardController.getStep('uploadStep');
+        const headerStepControl = this.wizardController.getStep('headerSelectionStep');
+        if (uploadStepControl && headerStepControl && uploadStepControl.getNextStep() !== headerStepControl.getId()) {
+          uploadStepControl.setNextStep(headerStepControl);
+        }
+        navigateToStep = headerStepControl;
+        // if build already rebuild headerSelectionStep
+        if (this.wizardController.stepsBuilt.has('headerSelectionStep')) {
+          const headerSelectionController = this.wizardController.getStepControl('headerSelectionStep');
+          headerSelectionController.build(this.wizardController.findStepContainer('headerSelectionStep'));
+        } else {
+          this.wizardController.activateStep('headerSelectionStep');
+        }
+      } else if (processedData.validationMessages.length > 0) {
+        // Valid headers but other errors found - Navigate to MessagesStep
+        const uploadStepControl = this.wizardController.getStep('uploadStep');
+        const messagesStepControl = this.wizardController.getStep('messagesStep');
+        if (uploadStepControl && messagesStepControl && uploadStepControl.getNextStep() !== messagesStepControl.getId()) {
+          uploadStepControl.setNextStep(messagesStepControl);
+        }
+
+        // Store validation messages in the message handler for use in MessagesStep
+        if (this.wizardController.getDialogController()?.messageHandler) {
+          this.wizardController.getDialogController().messageHandler.setMessages(processedData.validationMessages);
+        }
+
+        navigateToStep = messagesStepControl;
+        // Build or rebuild messagesStep
+        if (this.wizardController.stepsBuilt.has('messagesStep')) {
+          const messagesController = this.wizardController.getStepControl('messagesStep');
+          messagesController.build(this.wizardController.findStepContainer('messagesStep'));
+        } else {
+          this.wizardController.activateStep('messagesStep');
+        }
+      } else {
+        // Valid headers - Configure direct flow to preview
+        const uploadStepControl = this.wizardController.getStep('uploadStep');
+        const previewStepControl = this.wizardController.getStep('previewDataStep');
+        if (uploadStepControl && previewStepControl && uploadStepControl.getNextStep() !== previewStepControl.getId()) {
+          uploadStepControl.setNextStep(previewStepControl);
+        }
+        navigateToStep = previewStepControl;
+        if (this.wizardController.stepsBuilt.has('previewDataStep')) {
+          const previewStepController = this.wizardController.getStepControl('previewDataStep');
+          previewStepController.build(this.wizardController.findStepContainer('previewDataStep'), this.wizardController.processedData);
+        } else {
+          this.wizardController.activateStep('previewDataStep');
+        }
+      }
+
+      this.wizardController.setUploadButtonEnabled(true);
+      this.wizard.goToStep(navigateToStep, true);
+      this.wizard.nextStep();
+    } catch (error) {
+      Log.error('Error processing pasted workbook', error as Error, 'WizardDialog');
+      this.wizardController.getWizardModel().setProperty('/fileUploaded', false);
+
+      const errorMessage = this.util.geti18nText('spreadsheetimporter.errorProcessingFile') || 'Error processing file';
+      MessageToast.show(errorMessage);
+    } finally {
+      this.wizardController.getStep('uploadStep').setBusy(false);
+    }
+  }
+
+  /**
+   * Create steps controllers - moved from UploadStep
+   */
+  private createStepsControllers(): void {
+    // init steps controllers creation and calling build method
+    // both steps need the data from the upload step
+    this.wizardController.activateStep('headerSelectionStep');
+    // this.wizardController.activateStep("messagesStep");
+    this.wizardController.activateStep('previewDataStep');
   }
 }

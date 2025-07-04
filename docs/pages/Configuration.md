@@ -17,6 +17,7 @@ The table below summarizes the options available for the UI5 Spreadsheet Importe
 | [`readAllSheets`](#readallsheets)                     | Reads all sheets in standalone mode.                      | `false`           | 0.25.0          | `boolean`                 |
 | [`readSheet`](#readsheet)                             | Reads a specific sheet or shows a sheet selector.         | `0`               | 0.27.0          | `number` or `string`      |
 | [`readSheetCoordinates`](#readsheetcoordinates)       | Specifies the starting cell for reading spreadsheet data. | `"A1"`            | 1.2.0           | `string`                  |
+| [`enablePaste`](#enablepaste)                         | Enables paste functionality for data and files.           | `true`            | 2.3.0           | `boolean`                 |
 
 ### UI Customization Options
 
@@ -861,6 +862,36 @@ this.spreadsheetUpload = await this.editFlow
   });
 ```
 
+### `enablePaste`
+
+**default:** `true`  
+**Available since:** 2.3.0
+
+This option controls whether the paste functionality is enabled for both data and files. When enabled, users can:
+
+- Copy spreadsheet data from Excel/Google Sheets and paste it directly into the dialog (Ctrl+V)
+- Copy .xlsx files from their file system and paste them into the dialog
+- Use the paste functionality in both the classic upload dialog and the wizard mode
+
+When disabled, users can only upload files through the traditional file browser or drag & drop methods.
+
+**example:**
+
+```javascript
+this.spreadsheetUpload = await this.editFlow
+  .getView()
+  .getController()
+  .getAppComponent()
+  .createComponent({
+    usage: 'spreadsheetImporter',
+    async: true,
+    componentData: {
+      context: this,
+      enablePaste: false // Disable paste functionality
+    }
+  });
+```
+
 ## Example Code
 
 ### All options
@@ -893,7 +924,8 @@ this.spreadsheetUpload = await this.getView()
       showOptions: false,
       availableOptions: ['strict', 'fieldMatchType', 'decimalSeperator'],
       hideSampleData: false,
-      debug: false
+      debug: false,
+      enablePaste: true
     }
   });
 ```

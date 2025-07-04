@@ -69,7 +69,7 @@ export default class ImportService {
       const workbook = await this.fileService.readFile(file);
 
       // Step 2: Get sheet name
-      const sheetName = await this.fileService.getSheetName(workbook, sheetOption || this.component.getReadSheet(), this.i18nResource);
+      const sheetName = await FileService.getSheetName(workbook, sheetOption || this.component.getReadSheet(), this.i18nResource);
 
       // Step 3: Get raw data for preview
       const rawSheetData = this.dataExtractorService.getRawSheetData(workbook, sheetName);
@@ -173,13 +173,9 @@ export default class ImportService {
 
       // Check if we received a workbook or a file
       if ('SheetNames' in fileOrWorkbook) {
+        const sheetName = await FileService.getSheetName(fileOrWorkbook, this.component.getReadSheet(), this.i18nResource);
         // It's a workbook
         const workbook = fileOrWorkbook as XLSX.WorkBook;
-        const sheetName = sheetOptionOrSheetName as string;
-
-        if (!sheetName) {
-          throw new Error('Sheet name is required when passing a workbook');
-        }
 
         // Get raw data for preview
         const rawSheetData = this.dataExtractorService.getRawSheetData(workbook, sheetName);
@@ -442,7 +438,7 @@ export default class ImportService {
     rawSheetData: any[][];
   }> {
     const workbook = await this.fileService.readFile(file);
-    const sheetName = await this.fileService.getSheetName(workbook, sheetOption || this.component.getReadSheet(), this.i18nResource);
+    const sheetName = await FileService.getSheetName(workbook, sheetOption || this.component.getReadSheet(), this.i18nResource);
     const rawSheetData = this.dataExtractorService.getRawSheetData(workbook, sheetName);
 
     return { workbook, sheetName, rawSheetData };
