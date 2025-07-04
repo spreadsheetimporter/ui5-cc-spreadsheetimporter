@@ -493,9 +493,8 @@ export default class Wizard extends ManagedObject {
    */
   async processFile(file: Blob, coordinates?: string, validate = false, showMessages = false): Promise<any> {
     try {
-      const sheetName = await FileService.getSheetName(file as XLSX.WorkBook, this.component.getReadSheet(), this.resourceBundle);
       // Use ImportService's processAndValidate method
-      const result = await this.importService.processAndValidate(file, sheetName, coordinates, {
+      const result = await this.importService.processAndValidate(file, 'Tabelle1', coordinates, {
         resetMessages: true, // Clear previous messages
         validate: validate, // Only validate if requested (typically after header selection)
         showMessages: showMessages // Show messages if requested

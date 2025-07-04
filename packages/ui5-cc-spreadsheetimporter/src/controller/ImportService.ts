@@ -173,13 +173,9 @@ export default class ImportService {
 
       // Check if we received a workbook or a file
       if ('SheetNames' in fileOrWorkbook) {
+        const sheetName = await FileService.getSheetName(fileOrWorkbook, this.component.getReadSheet(), this.i18nResource);
         // It's a workbook
         const workbook = fileOrWorkbook as XLSX.WorkBook;
-        const sheetName = sheetOptionOrSheetName as string;
-
-        if (!sheetName) {
-          throw new Error('Sheet name is required when passing a workbook');
-        }
 
         // Get raw data for preview
         const rawSheetData = this.dataExtractorService.getRawSheetData(workbook, sheetName);
