@@ -13,6 +13,19 @@
 - handle process if object was not found in backend ([#735](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/735)) ([8aed7e9](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/8aed7e9b99c45aed593c1f00b4a5287f93bd890f))
 - return error if wrong table type is specified ([#739](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/739)) ([83c80dd](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/83c80ddefe75714414aa4064e93860510b87e5c2))
 
+## [2.3.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v2.2.0...ui5-cc-spreadsheetimporter-v2.3.0) (2025-07-04)
+
+
+### Features
+
+* introduce pasting data or files to upload dialog ([#778](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/778)) ([10413df](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/10413df13889684b702b508f8d307bbc20496de9))
+
+
+### Bug Fixes
+
+* add dragdrop to wizard ([#777](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/777)) ([d2e2244](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/d2e22443f776bbc5d3e28d9ed928f421783fc12a))
+* add template download button to wizard ([#775](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/775)) ([4f1277a](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/4f1277aafd948cf9541c57d075e4cc470e4b694d))
+
 ## [2.2.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v2.1.0...ui5-cc-spreadsheetimporter-v2.2.0) (2025-07-02)
 
 ### Features
