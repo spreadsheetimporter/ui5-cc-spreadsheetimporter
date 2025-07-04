@@ -1,40 +1,29 @@
-const { default: _ui5Service } = require("wdio-ui5-service");
-const ui5Service = new _ui5Service();
-const FEV2ND = require("../Objects/FEV2ND");
-const Base = require("./../Objects/Base");
-const FEV2 = require("./../Objects/FEV2");
-const FEV4 = require("./../Objects/FEV4");
-const { optionsLong, optionsShort } = require("./../Objects/types");
+const Base = require("../Objects/Base");
+const BaseUpload = require("../Objects/BaseUpload");
 
-let FE = undefined;
 let BaseClass = undefined;
-let scenario = undefined;
+let BaseUploadClass = undefined;
 
 /**
- * Helper function to put content on the clipboard
- * @param {Object} payload - { text?: string, base64?: string, mime?: string }
+ * Helper function to put file content on the clipboard
+ * @param {Object} payload - { base64: string, mime: string }
  */
-async function putOnClipboard({ base64, mime, text }) {
+async function putFileOnClipboard({ base64, mime }) {
 	await browser.executeAsync(
 		async (payload, done) => {
 			try {
-				if (payload.text) {
-					// Put plain text on clipboard
-					await navigator.clipboard.writeText(payload.text);
-				} else if (payload.base64 && payload.mime) {
-					// Convert base64 to blob and put file on clipboard
-					const response = await fetch(`data:${payload.mime};base64,${payload.base64}`);
-					const blob = await response.blob();
-					const file = new File([blob], "paste-test.xlsx", { type: payload.mime });
-					const item = new ClipboardItem({ [payload.mime]: blob });
-					await navigator.clipboard.write([item]);
-				}
+				// Convert base64 to blob and put file on clipboard
+				const response = await fetch(`data:${payload.mime};base64,${payload.base64}`);
+				const blob = await response.blob();
+				const file = new File([blob], "paste-test.xlsx", { type: payload.mime });
+				const item = new ClipboardItem({ [payload.mime]: blob });
+				await navigator.clipboard.write([item]);
 				done();
 			} catch (error) {
 				done(error);
 			}
 		},
-		{ base64, mime, text }
+		{ base64, mime }
 	);
 }
 
@@ -65,163 +54,71 @@ async function triggerPaste() {
 	await browser.keys([pasteKey, "v"]);
 }
 
-describe("Paste File List Report", () => {
+describe("Paste File Wizard", () => {
 	before(async () => {
 		BaseClass = new Base();
-		scenario = global.scenario;
-		if (scenario.startsWith("ordersv2")) {
-			FE = new FEV2();
-		}
-		if (scenario.startsWith("ordersv4")) {
-			FE = new FEV4();
-		}
-		if (scenario.startsWith("ordersv2fenondraft")) {
-			FE = new FEV2ND();
-		}
+		BaseUploadClass = new BaseUpload();
+
+		// Navigate to the wizard page
+		await browser.goTo({ sHash: "#/wizard" });
+		await BaseClass.dummyWait(1000);
 
 		// Grant clipboard permissions at the start
 		await grantClipboardPermissions();
 	});
 
-	it("should trigger search on ListReport page", async () => {
-		try {
-			await BaseClass.pressById(FE.listReportGoButton);
-		} catch (error) {
-			await BaseClass.pressById(FE.listReportDynamicPageTitle);
-			await BaseClass.dummyWait(500);
-			await BaseClass.pressById(FE.listReportGoButton);
-		}
-	});
-
-	it("Open Spreadsheet Upload Dialog", async () => {
-		await BaseClass.pressById(FE.listReportSpreadsheetuploadButton);
-		// Wait for dialog to open
-		await BaseClass.dummyWait(1000);
-	});
-
-	it("Paste text content (TSV format)", async () => {
-		// Define the text content to paste (tab-separated values)
-		const textContent = `Order Number[OrderNo]	User ID[buyer]
-33	test@test.de
-44	test@test.de`;
-
-		// Put text on clipboard
-		await putOnClipboard({ text: textContent });
-		await BaseClass.dummyWait(500);
-
-		// Try to find a non-interactive area in the dialog to focus on
-		// Look for dialog title or content area that won't trigger file upload
-		try {
-			// Try to find the dialog title area first
-			const dialogTitle = await browser.asControl({
-				selector: {
-					controlType: "sap.m.Title",
-					searchOpenDialogs: true
+	it("should open the wizard dialog", async () => {
+		// Click the wizard button from the component container
+		const wizardButton = await browser.asControl({
+			selector: {
+				controlType: "sap.m.Button",
+				searchOpenDialogs: false,
+				// The button should be within the component container
+				ancestor: {
+					id: "container-ordersv4freestyle---Wizard--wizardSpreadsheetImporter"
 				}
-			});
-			const $dialogTitle = await dialogTitle.getWebElement();
-			await $dialogTitle.click();
-			console.log("Focused on dialog title");
-		} catch (error) {
-			try {
-				// Fallback: try to find a text element in the dialog
-				const dialogText = await browser.asControl({
-					selector: {
-						controlType: "sap.m.Text",
-						searchOpenDialogs: true
-					}
-				});
-				const $dialogText = await dialogText.getWebElement();
-				await $dialogText.click();
-				console.log("Focused on dialog text element");
-			} catch (error2) {
-				// Last fallback: focus on document body and then trigger paste
-				await browser.execute(() => {
-					document.body.focus();
-				});
-				console.log("Focused on document body");
 			}
-		}
+		});
+		await wizardButton.press();
 
-		// Small wait before paste
-		await BaseClass.dummyWait(300);
-
-		// Trigger paste
-		await triggerPaste();
-		await BaseClass.dummyWait(1000);
-
-		console.log("Text paste completed");
-	});
-
-	it("Upload pasted text content", async () => {
-		try {
-			// Try to find and click the Upload button
-			const uploadButton = await browser.asControl({
-				selector: {
-					controlType: "sap.m.Button",
-					properties: {
-						text: "Upload"
-					}
+		// Wait for wizard dialog to open test
+		await browser.waitUntil(
+			async () => {
+				try {
+					const wizardDialog = await browser.asControl({
+						forceSelect: true,
+						selector: {
+							controlType: "sap.m.Dialog",
+							properties: {
+								contentWidth: "80%",
+								contentHeight: "80%"
+							},
+							searchOpenDialogs: true
+						}
+					});
+					return wizardDialog.isOpen();
+				} catch (error) {
+					return false;
 				}
-			});
-			await uploadButton.press();
-			await BaseClass.dummyWait(500);
-		} catch (error) {
-			console.log("Upload button not found or upload already processed automatically");
-		}
-	});
-
-	it("Verify text paste entry was created via OData", async () => {
-		// Wait for potential processing
-		await BaseClass.dummyWait(2000);
-
-		// Check the uploaded data via OData API
-		const apiEndpoint = "http://localhost:4004/odata/v4/Orders/Orders";
-
-		try {
-			const response = await fetch(apiEndpoint);
-
-			if (response.ok) {
-				const data = await response.json();
-
-				// Look for the uploaded orders (OrderNo = "33" or "44" from pasted text)
-				const uploadedOrder33 = data.value.find((order) => order.OrderNo === "33");
-				const uploadedOrder44 = data.value.find((order) => order.OrderNo === "44");
-
-				if (uploadedOrder33 || uploadedOrder44) {
-					const foundOrder = uploadedOrder33 || uploadedOrder44;
-					// Verify the order exists and is active
-					expect(foundOrder.OrderNo).toMatch(/^(33|44)$/);
-
-					if (!scenario.startsWith("ordersv2fenondraft")) {
-						expect(foundOrder.IsActiveEntity).toBeTruthy();
-					}
-
-					console.log("Successfully found uploaded order from text paste:", foundOrder.OrderNo);
-				} else {
-					// If not found immediately, check for recent entries
-					console.log("Specific orders (33, 44) not found, checking for recent uploads");
-
-					// Check if there are any new entries (basic validation)
-					expect(data.value.length).toBeGreaterThan(0);
-					console.log(`Found ${data.value.length} total orders in the system`);
-					console.log("Text paste upload may need additional implementation or different OrderNo values");
-				}
-			} else {
-				throw new Error(`API request failed with status: ${response.status}`);
+			},
+			{
+				timeout: 10000,
+				timeoutMsg: "Wizard dialog did not open within 10 seconds"
 			}
-		} catch (error) {
-			console.error("Error verifying text pasted data via OData:", error.message);
-			// Don't fail the test as paste feature might still be in development
-			console.log("Continuing without strict text paste verification");
-		}
-	});
+		);
 
-	it("Open Spreadsheet Upload Dialog again for file paste", async () => {
-		await BaseClass.dummyWait(2000);
-		await BaseClass.pressById(FE.listReportSpreadsheetuploadButton);
-		// Wait for dialog to open
-		await BaseClass.dummyWait(1000);
+		// Verify wizard dialog is open
+		const wizardDialog = await browser.asControl({
+			selector: {
+				controlType: "sap.m.Dialog",
+				properties: {
+					contentWidth: "80%",
+					contentHeight: "80%"
+				},
+				searchOpenDialogs: true
+			}
+		});
+		expect(wizardDialog.isOpen()).toBeTruthy();
 	});
 
 	it("Paste file content (.xlsx file)", async () => {
@@ -248,7 +145,7 @@ describe("Paste File List Report", () => {
 			const mimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
 			// Put file on clipboard
-			await putOnClipboard({
+			await putFileOnClipboard({
 				base64: base64Content,
 				mime: mimeType
 			});
@@ -300,6 +197,37 @@ describe("Paste File List Report", () => {
 		}
 	});
 
+	it("should navigate through wizard steps for file paste", async () => {
+		// Wait for wizard to process the pasted file and potentially advance to next step
+		await BaseClass.dummyWait(3000);
+
+		// Check if we need to manually advance through steps
+		// The wizard should automatically advance after paste if headers are valid
+		try {
+			// Try to find the "Upload" button (final step)
+			const uploadButton = await browser.asControl({
+				selector: {
+					controlType: "sap.m.Button",
+					properties: {
+						text: "Upload",
+						type: "Emphasized"
+					},
+					searchOpenDialogs: true
+				},
+				timeout: 5000
+			});
+
+			// If we find the upload button, we're in the final step
+			console.log("Already in final step with upload button available for file paste");
+		} catch (error) {
+			// If upload button not found, we might need to navigate through steps
+			console.log("Upload button not immediately available, checking wizard navigation for file paste");
+
+			// Wait a bit more for wizard processing
+			await BaseClass.dummyWait(2000);
+		}
+	});
+
 	it("Upload pasted file content", async () => {
 		try {
 			// Try to find and click the Upload button
@@ -308,12 +236,13 @@ describe("Paste File List Report", () => {
 				selector: {
 					controlType: "sap.m.Button",
 					properties: {
-						text: "Upload"
+						text: "Upload",
+						type: "Emphasized"
 					}
 				}
 			});
 			await uploadButton.press();
-			await BaseClass.dummyWait(500);
+			await BaseClass.dummyWait(2000);
 		} catch (error) {
 			console.log("Upload button not found or upload already processed automatically");
 		}
@@ -340,10 +269,7 @@ describe("Paste File List Report", () => {
 					const foundOrder = uploadedOrder233 || uploadedOrder423;
 					// Verify the order exists and is active
 					expect(foundOrder.OrderNo).toMatch(/^(233|423)$/);
-
-					if (!scenario.startsWith("ordersv2fenondraft")) {
-						expect(foundOrder.IsActiveEntity).toBeTruthy();
-					}
+					expect(foundOrder.IsActiveEntity).toBeTruthy();
 
 					console.log("Successfully found uploaded order from file paste:", foundOrder.OrderNo);
 				} else {
@@ -376,7 +302,7 @@ describe("Paste File List Report", () => {
 				const data = await response.json();
 
 				// Find orders with items that match our uploaded data
-				const ordersWithItems = data.value.filter((order) => order.Items && order.Items.length > 0 && ["33", "44", "233", "423"].includes(order.OrderNo));
+				const ordersWithItems = data.value.filter((order) => order.Items && order.Items.length > 0 && ["233", "423"].includes(order.OrderNo));
 
 				if (ordersWithItems.length > 0) {
 					// Verify that items exist
@@ -389,15 +315,15 @@ describe("Paste File List Report", () => {
 						expect(firstItem).toHaveProperty("quantity");
 						expect(firstItem).toHaveProperty("price");
 
-						console.log(`Found order ${order.OrderNo} with ${order.Items.length} items from paste operations`);
+						console.log(`Found order ${order.OrderNo} with ${order.Items.length} items from file paste`);
 					});
 				} else {
-					console.log("No orders with items found for pasted data - this might be expected");
+					console.log("No orders with items found for file pasted data - this might be expected");
 
 					// Check if any orders with items exist (general validation)
 					const anyOrderWithItems = data.value.find((order) => order.Items && order.Items.length > 0);
 					if (anyOrderWithItems) {
-						console.log("Found other orders with items, paste feature may create orders without items");
+						console.log("Found other orders with items, file paste feature may create orders without items");
 					}
 				}
 			} else {
@@ -407,6 +333,16 @@ describe("Paste File List Report", () => {
 			console.error("Error verifying order items via OData:", error.message);
 			// Don't fail the test for this - it's additional validation
 			console.log("Continuing without item validation");
+		}
+	});
+
+	after(async () => {
+		// Clean up - ensure any open dialogs are closed
+		try {
+			await browser.keys(["Escape"]);
+			await BaseClass.dummyWait(500);
+		} catch (error) {
+			// Ignore cleanup errors
 		}
 	});
 });

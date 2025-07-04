@@ -53,7 +53,9 @@ module.exports.config = {
 				prefs: {
 					"download.default_directory": downloadDir,
 					"download.prompt_for_download": false,
-					"download.directory_upgrade": true
+					"download.directory_upgrade": true,
+					// 0 = ask (default) | 1 = allow | 2 = block
+					"profile.default_content_setting_values.clipboard": 1
 				}
 			},
 			acceptInsecureCerts: true
@@ -105,6 +107,13 @@ module.exports.config = {
 	},
 
 	// Hooks for better watch mode experience
+	before: async () => {
+		// let the test read the clipboard without a prompt
+		await browser.setPermissions({ name: "clipboard-read" }, "granted");
+		// If your app also writes to the clipboard add:
+		await browser.setPermissions({ name: "clipboard-write" }, "granted");
+	},
+
 	beforeSession: function (config, capabilities, specs) {
 		if (isWatchMode) {
 			console.log("\n🔄 Watch mode enabled - tests will rerun on file changes");
