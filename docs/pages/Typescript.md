@@ -21,17 +21,17 @@ Add the component usage and the resource roots to the manifest.json as described
 
 <!-- prettier-ignore-start -->
 !!! warning "Resource Roots Path"
-    The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v2_2_0" changed from version 0.34.0 to lowercase. Please make sure to use the correct path.
+    The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v2_3_0" changed from version 0.34.0 to lowercase. Please make sure to use the correct path.
 <!-- prettier-ignore-end -->
 
 ```json
         "componentUsages": {
             "spreadsheetImporter": {
-                "name": "cc.spreadsheetimporter.v2_2_0"
+                "name": "cc.spreadsheetimporter.v2_3_0"
             }
         },
         "resourceRoots": {
-            "cc.spreadsheetimporter.v2_2_0": "./thirdparty/customcontrol/spreadsheetimporter/v2_2_0"
+            "cc.spreadsheetimporter.v2_3_0": "./thirdparty/customcontrol/spreadsheetimporter/v2_3_0"
         },
 ```
 
@@ -44,7 +44,7 @@ import Component, {
   Component$ChangeBeforeCreateEvent,
   Component$CheckBeforeReadEvent,
   Component$UploadButtonPressEvent
-} from 'cc/spreadsheetimporter/v2_2_0/Component';
+} from 'cc/spreadsheetimporter/v2_3_0/Component';
 import BaseController from 'sap/fe/core/BaseController';
 import ExtensionAPI from 'sap/fe/core/ExtensionAPI';
 
