@@ -170,7 +170,7 @@ server:
   customMiddleware:
     - name: ui5-middleware-servestatic
       afterMiddleware: compression
-      mountPath: /resources/cc/spreadsheetimporter/v2_2_0/
+      mountPath: /resources/cc/spreadsheetimporter/v2_3_0/
       configuration:
         rootPath: 'node_modules/ui5-cc-spreadsheetimporter/dist'
 ```
@@ -184,7 +184,7 @@ To consume the centrally deployed component while developing locally in VS Code 
 Access the App Index to find the URL of the component:
 
 ```
-<SAP_SYSTEM_URL>/sap/bc/ui2/app_index/ui5_app_info?id=cc.spreadsheetimporter.v2_2_0
+<SAP_SYSTEM_URL>/sap/bc/ui2/app_index/ui5_app_info?id=cc.spreadsheetimporter.v2_3_0
 ```
 
 2\. **Configure Proxy Middleware**
@@ -203,9 +203,9 @@ server:
           - path: /sap
             url: <Cloud Connector or local URL>
             destination: <System Destination Name if in BAS>
-          - path: /resources/cc/spreadsheetimporter/v2_2_0
+          - path: /resources/cc/spreadsheetimporter/v2_3_0
             destination: <System Destination Name if in BAS>
-            pathPrefix: /sap/bc/ui5_ui5/sap/<BSP_NAME>/thirdparty/customcontrol/spreadsheetimporter/v2_2_0/
+            pathPrefix: /sap/bc/ui5_ui5/sap/<BSP_NAME>/thirdparty/customcontrol/spreadsheetimporter/v2_3_0/
             url: <Cloud Connector or local URL>
 ```
 
@@ -216,9 +216,9 @@ server:
   customMiddleware:
     - name: ui5-middleware-simpleproxy
       afterMiddleware: compression
-      mountPath: /resources/cc/spreadsheetimporter/v2_2_0/
+      mountPath: /resources/cc/spreadsheetimporter/v2_3_0/
       configuration:
-        baseUri: '<SAP_SYSTEM_URL>/sap/bc/ui5_ui5/sap/<BSP_NAME>/thirdparty/customcontrol/spreadsheetimporter/v2_2_0/'
+        baseUri: '<SAP_SYSTEM_URL>/sap/bc/ui5_ui5/sap/<BSP_NAME>/thirdparty/customcontrol/spreadsheetimporter/v2_3_0/'
         username: <SAP_USERNAME>
         password: <SAP_PASSWORD>
         query:

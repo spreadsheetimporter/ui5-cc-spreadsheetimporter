@@ -25,13 +25,13 @@ npm install ui5-cc-spreadsheetimporter
 
 <!-- prettier-ignore-start -->
 !!! warning "Resource Roots Path"
-    The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v2_2_0" changed from version 0.34.0 to lowercase. Please make sure to use the correct path.
+    The `resourceRoots` path "./thirdparty/customcontrol/spreadsheetimporter/v2_3_0" changed from version 0.34.0 to lowercase. Please make sure to use the correct path.
 
 <!-- prettier-ignore-end -->
 
 ```json
 "resourceRoots": {
-    "cc.spreadsheetimporter.v2_2_0": "./thirdparty/customcontrol/spreadsheetimporter/v2_2_0"
+    "cc.spreadsheetimporter.v2_3_0": "./thirdparty/customcontrol/spreadsheetimporter/v2_3_0"
 }
 ```
 
@@ -51,7 +51,7 @@ This is optional and preloads the component on startup of the application.
     "sap.ui.table": {}
   },
   "components": {
-    "cc.spreadsheetimporter.v2_2_0": {}
+    "cc.spreadsheetimporter.v2_3_0": {}
   }
 }
 ```
@@ -63,7 +63,7 @@ This is optional and preloads the component on startup of the application.
 ```json
 "componentUsages": {
     "spreadsheetImporter": {
-        "name": "cc.spreadsheetimporter.v2_2_0"
+        "name": "cc.spreadsheetimporter.v2_3_0"
     }
 }
 ```
@@ -137,7 +137,7 @@ A sample configuration can be found in the manifest.json of the [OData V4 Fiori 
     "customSectionReuse": {
       "title": "Spreadsheet Upload",
       "embeddedComponent": {
-        "name": "cc.spreadsheetimporter.v2_2_0",
+        "name": "cc.spreadsheetimporter.v2_3_0",
         "settings": {
           "tableId": "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable"
         }
