@@ -1,6 +1,6 @@
 import ManagedObject from 'sap/ui/base/ManagedObject';
 import * as XLSX from 'xlsx';
-import { EntityDefinition, DeepDownloadConfig } from '../../types';
+import { EntityDefinition, DeepDownloadConfig, PropertyWithOrder } from '../../types';
 import SpreadsheetUpload from '../SpreadsheetUpload';
 import Component from '../../Component';
 import OData from '../odata/OData';
@@ -48,7 +48,7 @@ export default class SpreadsheetGenerator extends ManagedObject {
       );
       isDefaultPrevented = asyncEventBeforeDownloadFileExport.bPreventDefault;
     } catch (error) {
-      Log.error('Error while calling the beforeDownloadFileExport event', error as Error, 'SpreadsheetGenerator.ts', 'downloadSpreadsheet');
+      Log.error('Error while calling the beforeDownloadFileExport event', error as Error, 'SpreadsheetGenerator.ts');
     }
 
     if (isDefaultPrevented) {
@@ -66,14 +66,19 @@ export default class SpreadsheetGenerator extends ManagedObject {
   ): Promise<void> {
     if (entityDefinition.$XYZData) {
       const data = entityDefinition.$XYZData;
-      const labelList = await this.odataHandler.getLabelList([], this.spreadsheetUploadController.getOdataType(), this.component.getExcludeColumns());
+      const labelList = await this.odataHandler.getLabelList(
+        [],
+        this.spreadsheetUploadController.getOdataType(),
+        this.component.getExcludeColumns(),
+        this.spreadsheetUploadController.binding
+      );
       if (spreadsheetExportConfig.addKeysToExport) {
         this.odataHandler.addKeys(labelList, this.spreadsheetUploadController.getOdataType());
       }
       const sheet = this._getSheet(labelList, data, entityDefinition['$XYZColumns']);
-      const sheetName = this.spreadsheetUploadController.getOdataType().split('.').pop();
+      let sheetName = this.spreadsheetUploadController.getOdataType().split('.').pop();
       if (wb.SheetNames.includes(sheetName)) {
-        sheetName.concat('_1');
+        sheetName = sheetName.concat('_1');
       }
       XLSX.utils.book_append_sheet(wb, sheet, sheetName);
     }
@@ -178,6 +183,11 @@ export default class SpreadsheetGenerator extends ManagedObject {
   }
 
   private _getCellForType(type: string, value: any): XLSX.CellObject {
+    // Handle null/undefined values
+    if (value === null || value === undefined) {
+      return { v: null, t: 's' };
+    }
+
     switch (type) {
       case 'Edm.Boolean':
         return { v: value, t: 'b' };
@@ -186,14 +196,23 @@ export default class SpreadsheetGenerator extends ManagedObject {
       case 'Edm.Any':
         return { v: value, t: 's' };
       case 'Edm.DateTimeOffset':
-      case 'Edm.DateTime':
+      case 'Edm.DateTime': {
         const format = this.currentLang.startsWith('en') ? 'mm/dd/yyyy hh:mm AM/PM' : 'dd.mm.yyyy hh:mm';
-        return { v: value, t: 'd', z: format };
-      case 'Edm.Date':
-        return { v: value, t: 'd' };
+        // Handle OData V2 date objects
+        const dateValue = this._convertODataV2DateToJSDate(value);
+        return { v: dateValue, t: 'd', z: format };
+      }
+      case 'Edm.Date': {
+        // Handle OData V2 date objects
+        const dateOnlyValue = this._convertODataV2DateToJSDate(value);
+        return { v: dateOnlyValue, t: 'd' };
+      }
       case 'Edm.TimeOfDay':
-      case 'Edm.Time':
-        return { v: value, t: 'd', z: 'hh:mm' };
+      case 'Edm.Time': {
+        // Handle OData V2 time objects
+        const timeValue = this._convertODataV2TimeToJSDate(value);
+        return { v: timeValue, t: 'd', z: 'hh:mm' };
+      }
       case 'Edm.UInt8':
       case 'Edm.Int16':
       case 'Edm.Int32':
@@ -206,6 +225,67 @@ export default class SpreadsheetGenerator extends ManagedObject {
       default:
         return { v: value, t: 's' };
     }
+  }
+
+  /**
+   * Converts OData V2 time objects to JavaScript Date objects
+   * @param value - The OData V2 time value
+   * @returns A JavaScript Date object or the original value if not an OData V2 time
+   */
+  private _convertODataV2TimeToJSDate(value: any): Date | any {
+    // Check if this is an OData V2 time object
+    if (value && typeof value === 'object' && value.hasOwnProperty('ms') && value.hasOwnProperty('__edmType')) {
+      // Create a new Date object for today and set the time based on milliseconds
+      const date = new Date();
+      date.setHours(0, 0, 0, 0); // Reset to midnight
+      date.setTime(date.getTime() + value.ms); // Add milliseconds since midnight
+      return date;
+    }
+
+    // If it's already a Date object, return it
+    if (value instanceof Date) {
+      return value;
+    }
+
+    // If it's a string, try to parse it as a date
+    if (typeof value === 'string') {
+      const parsedDate = new Date(value);
+      if (!isNaN(parsedDate.getTime())) {
+        return parsedDate;
+      }
+    }
+
+    // Return the original value if we can't convert it
+    return value;
+  }
+
+  /**
+   * Converts OData V2 date objects to JavaScript Date objects
+   * @param value - The OData V2 date value
+   * @returns A JavaScript Date object or the original value if not an OData V2 date
+   */
+  private _convertODataV2DateToJSDate(value: any): Date | any {
+    // Check if this is an OData V2 date object (like "/Date(1234567890000)/")
+    if (typeof value === 'string' && value.match(/^\/Date\((\d+)\)\/$/)) {
+      const timestamp = parseInt(value.match(/^\/Date\((\d+)\)\/$/)[1]);
+      return new Date(timestamp);
+    }
+
+    // If it's already a Date object, return it
+    if (value instanceof Date) {
+      return value;
+    }
+
+    // If it's a string, try to parse it as a date
+    if (typeof value === 'string') {
+      const parsedDate = new Date(value);
+      if (!isNaN(parsedDate.getTime())) {
+        return parsedDate;
+      }
+    }
+
+    // Return the original value if we can't convert it
+    return value;
   }
 
   private async _extractProperties(proConfigColumns: any, entityMetadata: any, entityType: string): Promise<PropertyWithOrder[]> {

@@ -145,6 +145,16 @@
                       }
                     }
                   }
+                },
+                "Header": {
+                  "Actions": {
+                    "deepdownload": {
+                      "id": "deepdownloadButton",
+                      "text": "Deep Download",
+                      "press": "deepdownload",
+                      "requiresSelection": false
+                    }
+                  }
                 }
               },
               "OrderItems": {
@@ -173,6 +183,12 @@
                     "id": "spreadsheetUploadButtonButton",
                     "text": "Spreadsheet Upload",
                     "press": "openSpreadsheetUpload",
+                    "requiresSelection": false
+                  },
+                  "deepdownload": {
+                    "id": "deepdownloadButton",
+                    "text": "Deep Download",
+                    "press": "deepdownload",
                     "requiresSelection": false
                   }
                 }

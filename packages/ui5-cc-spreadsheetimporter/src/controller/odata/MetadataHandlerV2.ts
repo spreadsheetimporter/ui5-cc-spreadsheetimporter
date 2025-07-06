@@ -145,10 +145,131 @@ export default class MetadataHandlerV2 extends MetadataHandler {
   }
 
   getODataEntitiesRecursive(entityName: string, deepLevel: number): any {
-    throw new Error('Method not implemented.');
+    const metaModel = this.spreadsheetUploadController.view.getModel().getMetaModel();
+    const entityType = metaModel.getODataEntityType(entityName);
+
+    if (!entityType) {
+      throw new Error(`Entity '${entityName}' not found`);
+    }
+
+    const mainEntity: any = { ...entityType };
+
+    // Find navigation properties and build entity structure recursively
+    this._findEntitiesByNavigationProperty(metaModel, mainEntity, entityName, deepLevel);
+
+    // Build expand structure for V2
+    const expands: any = {};
+    this._getExpandsRecursive(mainEntity, expands, undefined, undefined, 0, deepLevel);
+
+    return { mainEntity, expands };
   }
 
   getKeys(binding: any, payload: any, IsActiveEntity?: boolean, excludeIsActiveEntity: boolean = false): Record<string, any> {
-    throw new Error('Method not implemented.');
+    const keys: Record<string, any> = {};
+    const entityType = binding._getEntityType();
+
+    // Get key properties from entity metadata
+    if (entityType && entityType.key && entityType.key.propertyRef) {
+      entityType.key.propertyRef.forEach((keyRef: any) => {
+        const keyName = keyRef.name;
+        if (payload.hasOwnProperty(keyName)) {
+          keys[keyName] = payload[keyName];
+        }
+      });
+    }
+
+    // Add IsActiveEntity if specified and not excluded
+    if (IsActiveEntity !== undefined && !excludeIsActiveEntity) {
+      keys.IsActiveEntity = IsActiveEntity;
+    }
+
+    return keys;
+  }
+
+  /**
+   * Finds entities by navigation properties for OData V2
+   */
+  private _findEntitiesByNavigationProperty(metaModel: any, rootEntity: any, rootEntityName: string, deepLevel: number = 99): void {
+    const queue: { entity: any; entityName: string; level: number }[] = [];
+    const traversedEntities: Set<string> = new Set();
+
+    queue.push({ entity: rootEntity, entityName: rootEntityName, level: 0 });
+    traversedEntities.add(rootEntityName);
+
+    while (queue.length > 0) {
+      const { entity, entityName, level } = queue.shift()!;
+
+      // Skip if we've reached the maximum depth level
+      if (level >= deepLevel) {
+        continue;
+      }
+
+      // Check for navigation properties in V2 metadata structure
+      if (entity.navigationProperty) {
+        entity.navigationProperty.forEach((navProp: any) => {
+          const targetEntityType = navProp.toRole;
+
+          // Get the target entity type from metadata
+          const targetEntity = metaModel.getODataEntityType(targetEntityType);
+
+          if (targetEntity && !traversedEntities.has(targetEntityType)) {
+            // Mark as fetchable navigation property
+            navProp.$XYZEntity = targetEntity;
+            navProp.$XYZFetchableEntity = true;
+            navProp.$Type = targetEntityType;
+            navProp.$Partner = navProp.fromRole;
+
+            queue.push({ entity: targetEntity, entityName: targetEntityType, level: level + 1 });
+            traversedEntities.add(targetEntityType);
+          }
+        });
+      }
+    }
+  }
+
+  /**
+   * Builds expand structure recursively for OData V2
+   */
+  private _getExpandsRecursive(
+    mainEntity: any,
+    expands: any,
+    parent?: string,
+    parentExpand?: any,
+    currentLevel: number = 0,
+    deepLevel: number = 99
+  ): void {
+    if (currentLevel >= deepLevel) return;
+
+    if (mainEntity.navigationProperty) {
+      mainEntity.navigationProperty.forEach((navProp: any) => {
+        if (navProp.$XYZFetchableEntity) {
+          const navPropName = navProp.name;
+
+          if (parent) {
+            if (!parentExpand.$expand) {
+              parentExpand.$expand = {};
+            }
+            parentExpand.$expand[navPropName] = {};
+            this._getExpandsRecursive(navProp.$XYZEntity, expands, navPropName, parentExpand.$expand[navPropName], currentLevel + 1, deepLevel);
+          } else {
+            if (!expands[navPropName]) {
+              expands[navPropName] = {};
+            }
+            this._getExpandsRecursive(navProp.$XYZEntity, expands, navPropName, expands[navPropName], currentLevel + 1, deepLevel);
+          }
+        }
+      });
+    }
+  }
+
+  static getResolvedPath(binding: any): string {
+    let path = binding.getPath();
+    if (binding.getResolvedPath) {
+      path = binding.getResolvedPath();
+    } else {
+      // workaround for getResolvedPath only available from 1.88
+      path = binding.getModel().resolve(binding.getPath(), binding.getContext());
+    }
+    return path;
   }
 }

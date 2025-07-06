@@ -18,7 +18,7 @@ sap.ui.define([], function () {
 							useTableSelector: true,
 							i18nModel: this.getModel("i18n")
 						}
-						
+
 					});
 			// necessary to trigger Table Selector and get tableId
 			await this.spreadsheetUpload.triggerInitContext();
@@ -344,6 +344,55 @@ sap.ui.define([], function () {
 						}
 					}
 				});
+			this.spreadsheetUpload.triggerDownloadSpreadsheet();
+		},
+		deepdownload: async function () {
+			this.spreadsheetUpload = await this.editFlow
+				.getView()
+				.getController()
+				.getAppComponent()
+				.createComponent({
+					usage: "spreadsheetImporter",
+					async: true,
+					componentData: {
+						context: this,
+						tableId: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem-innerTable",
+						createActiveEntity: true,
+						debug: false,
+						deepDownloadConfig: {
+							deepLevel: 2,
+							deepExport: true,
+							addKeysToExport: true,
+							showOptions: false,
+							filename: "Orders123",
+							columns: {
+								OrderNo: {
+									order: 1
+								},
+								buyer: {
+									order: 3
+								},
+								Items: {
+									quantity: {
+										order: 2
+									},
+									title: {
+										order: 4
+									}
+								},
+								Shipping: {
+									address: {
+										order: 5
+									}
+								}
+							}
+						}
+					}
+				});
+
+			// this.spreadsheetUpload.attachBeforeDownloadFileProcessing(this.onBeforeDownloadFileProcessing, this);
+			// this.spreadsheetUpload.attachBeforeDownloadFileExport(this.onBeforeDownloadFileExport, this);
+
 			this.spreadsheetUpload.triggerDownloadSpreadsheet();
 		}
 	};
