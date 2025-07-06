@@ -40,22 +40,21 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
-      - run: npm i -g --force corepack && corepack enable
       - name: use node 20
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
+          cache: 'npm'
 
       - name: get port
         run: |
           TESTAPPPORT=$(node ./dev/get-port.js ${{ matrix.scenario }} ${{ matrix.ui5version }})
           echo "TESTAPPPORT=$TESTAPPPORT" >> $GITHUB_ENV
 
-      - name: pnpm install
+      - name: npm install
         run: |
           npm pkg delete scripts.prepare
-          pnpm install --no-frozen-lockfile
+          npm install --legacy-peer-deps
 
       - name: copy test apps
         run: npm run copyTestApps
@@ -68,10 +67,10 @@ jobs:
         run: |
           npm i -g ui5-test-runner
 
-      - name: pnpm install
+      - name: npm install second time
         run: |
           npm pkg delete scripts.prepare
-          pnpm install --no-frozen-lockfile
+          npm install --legacy-peer-deps
 
       - name: Run Build
         run: npm run build
@@ -90,7 +89,7 @@ jobs:
 
       - name: start app ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
         run: |
-          pnpm --filter ${{ matrix.scenario }}${{ matrix.ui5version }} start:silent&
+          npm run start:silent --workspace=${{ matrix.scenario }}${{ matrix.ui5version }} &
 
       # run opa5 tests
       - name: test opa5 ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}

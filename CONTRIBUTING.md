@@ -46,18 +46,18 @@ The CLA helps us:
 2. Install dependencies:
 
    ```bash
-   pnpm install
+   npm install --legacy-peer-deps
    ```
 
 3. Start the development server:
 
    ```bash
-   pnpm start:server
+   npm run start:server
    ```
 
 4. Start a demo app:
    ```bash
-   pnpm --filter ordersv4fe136 start
+   npm run start --workspace=ordersv4fe136
    ```
 
 ## Code Style

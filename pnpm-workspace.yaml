@@ -1,5 +1,0 @@
-packages:
-  - 'examples'
-  - 'examples/packages/*'
-  - 'packages/*'
-  - 'examples/packages/server/app/*'

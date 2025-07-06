@@ -54,7 +54,7 @@ modules:
       build-result: dist
       builder: custom
       commands:
-        - pnpm i
+        - npm install --legacy-peer-deps
         - npm run build:cf
       supported-platforms: []
 resources:

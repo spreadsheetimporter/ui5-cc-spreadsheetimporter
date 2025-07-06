@@ -18,20 +18,20 @@ The following steps are currently executed in a Ubuntu environment with matrix:
 
 1. Update Chrome in Ubuntu to the latest version.
 2. Checkout the `ui5-cc-spreadsheetimporter` repo.
-3. Install `pnpm`.
+3. Use `npm` (already available).
 4. Install Node 16.
 5. Get the port of the current scenario App (i.e., for `ordersv4fe`, the port is 8080).
    1. With the port, we can check if the app is running.
-6. Run `pnpm i`.
+6. Run `npm install --legacy-peer-deps`.
 7. Build `ui5-cc-spreadsheetimporter`.
 8. Start CAP Server (for all scenarios the same).
 9. Start the Scenario App
 
    1. For example, the matrix variables in `start:silent&` are used like:
 
-   `pnpm --filter ${{ matrix.scenario }}${{ matrix.ui5version }} start:silent&`  
+   `npm run start:silent --workspace=${{ matrix.scenario }}${{ matrix.ui5version }} &`  
    which can be:  
-   `pnpm --filter ordersv4fe108 start`
+   `npm run start --workspace=ordersv4fe108`
 
 10. Start wdi5 Tests
 
@@ -39,15 +39,15 @@ The following steps are currently executed in a Ubuntu environment with matrix:
 
     b. Start wdi5 test `headless` for the current scenario.
 
-    c. So `pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- --headless ${{ matrix.scenario }} ${{ matrix.ui5version }}`  
+    c. So `npm run test --workspace=ui5-cc-spreadsheetimporter-sample -- -- --headless ${{ matrix.scenario }} ${{ matrix.ui5version }}`  
     will be  
-    `pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- ordersv4fe 108`
+    `npm run test --workspace=ui5-cc-spreadsheetimporter-sample -- -- ordersv4fe 108`
 
 ### Start wdi5 Tests
 
 Because we use only one [`wdio-base.conf.js`](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/examples/test/wdio-base.conf.js), we must and can only test this one scenario with the names of the scenario.  
 We can pass parameters there when we call the test with `"test": "wdio run ./test/wdio-base.conf.js"`.  
-So in GitHub, it will be called with `pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- ordersv4fe 108`.  
+So in GitHub, it will be called with `npm run test --workspace=ui5-cc-spreadsheetimporter-sample -- -- ordersv4fe 108`.  
 With these parameters, we can assign the appropriate port and spec files in the `wdio-base.conf.js` and read them from [`testapps.json`](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/dev/testapps.json).  
 We try to ensure that all spec files apply to all scenarios, but certain ones can only be tested with OData V4, for example.
 

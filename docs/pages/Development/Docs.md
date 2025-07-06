@@ -27,7 +27,7 @@ docker run --rm -it -p 8000:8000 -v ${PWD}:/docs squidfunk/mkdocs-material
 or
 
 ```sh
-pnpm runDocs
+npm run runDocs
 ```
 
 and then open http://localhost:8000.

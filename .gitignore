@@ -6,7 +6,6 @@ dist
 .vscode
 .DS_Store
 archive.zip
-package-lock.json
 packages/ui5-cc-spreadsheetimporter/webapp
 dev/thirdparty
 .ui5-tooling-modules
@@ -162,7 +161,6 @@ dist
 
 node_modules/
 yarn.lock
-package-lock.json
 .yo-rc.json
 .env
 /test/test-output

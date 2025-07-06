@@ -56,13 +56,7 @@ git clone https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter
 Navigate to the cloned directory and install the necessary dependencies:
 
 ```sh
-pnpm install
-```
-
-_or_
-
-```sh
-npm install
+npm install --legacy-peer-deps
 ```
 
 3\. **Configure `ui5-deploy.yaml`**
@@ -99,7 +93,7 @@ git clone https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter
 2\. **Install Dependencies**
 
 ```sh
-pnpm install
+npm install --legacy-peer-deps
 ```
 
 3\. **Optional: Modify `mta.yaml`**
@@ -109,13 +103,13 @@ The `mta.yaml` file is used for deployment to the HTML5 Repository on BTP. If yo
 4\. **Build the MTA Archive**
 
 ```sh
-pnpm build:mta
+npm run build:mta
 ```
 
 5\. **Deploy to Cloud Foundry**
 
 ```sh
-pnpm deploy:cf
+npm run deploy:cf
 ```
 
 ## Consuming the Component in a UI5 App

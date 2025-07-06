@@ -9,8 +9,7 @@ RUN apt-get update && \
     apt-get install -y gnome-keyring && \
     apt-get clean
 
-# Install pnpm
-RUN npm install -g pnpm
+# Use npm (already installed)
 
 
 RUN npm i -g @sap/cds-dk@8.8.2
@@ -22,10 +21,10 @@ COPY package.json tsconfig.json ./
 COPY . .
 
 # Install all dependencies
-RUN pnpm install
+RUN npm install --legacy-peer-deps
 
 # Build the project
-RUN pnpm build
+RUN npm run build
 
 # Specifically build the sub-project in the examples/packages/ordersv4fe folder
 RUN cd examples/packages/ordersv4fe && npm run build
@@ -37,4 +36,4 @@ RUN cd examples/packages/ordersv4freestyle && npm run build
 EXPOSE 4004
 
 # Command to run the app
-CMD ["pnpm", "start:server"]
+CMD ["npm", "run", "start:server"]

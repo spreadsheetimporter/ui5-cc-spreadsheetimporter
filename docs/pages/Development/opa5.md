@@ -18,7 +18,7 @@ npm run start:v4fe:108
 npm run test:opa:v4fe:108
 ```
 
-which will run `pnpm --filter ui5-cc-spreadsheetimporter-sample ui5-test-runner --url http://localhost:8080/test/integration/opaTests.qunit.html`.  
+which will run `npm run ui5-test-runner --workspace=ui5-cc-spreadsheetimporter-sample --url http://localhost:8080/test/integration/opaTests.qunit.html`.  
 All information about the run is in the folder `./examples/report`.  
 So you can run all the other versions like 96 and 84 with the right port.
 

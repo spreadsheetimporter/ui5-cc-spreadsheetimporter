@@ -41,9 +41,9 @@ https://docs.spreadsheet-importer.com/pages/Development/GettingStarted/
 ## Quickstart
 
 1. Clone the repository `git clone https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter`
-2. Run `pnpm install`
-3. Run server with `pnpm start:server`
-4. Start Demo App for example a Fiori Elements App with OData V4 and UI5 1.136 with `pnpm --filter ordersv4fe136 start`
+2. Run `npm install --legacy-peer-deps`
+3. Run server with `npm run start:server`
+4. Start Demo App for example a Fiori Elements App with OData V4 and UI5 1.136 with `npm run start --workspace=ordersv4fe136`
 
 # Changelogs
 

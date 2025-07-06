@@ -14,22 +14,22 @@
   },
   "scripts": {
     "start": "run-p watch:server start:uiv4fe start:uiv2fe start:uiv2freestyle start:uiv2fenondraft start:uiv4fpm",
-    "start:uiv4fe": "pnpm --filter ordersv4fe start",
-    "start:uiv2fenondraft": "pnpm --filter ordersv2fenondraft start",
-    "start:uiv2fe": "pnpm --filter ordersv2fe start",
-    "start:uiv2freestyle": "pnpm --filter ordersv2freestyle start",
-    "start:uiv24reestyle": "pnpm --filter ordersv4freestyle start",
-    "start:uiv4fpm": "pnpm --filter ordersv4fpm start",
-    "watch:server": "pnpm --filter @capire/orders watch",
+    "start:uiv4fe": "npm run start --workspace=ordersv4fe",
+    "start:uiv2fenondraft": "npm run start --workspace=ordersv2fenondraft",
+    "start:uiv2fe": "npm run start --workspace=ordersv2fe",
+    "start:uiv2freestyle": "npm run start --workspace=ordersv2freestyle",
+    "start:uiv24reestyle": "npm run start --workspace=ordersv4freestyle",
+    "start:uiv4fpm": "npm run start --workspace=ordersv4fpm",
+    "watch:server": "npm run watch --workspace=@capire/orders",
     "test": "wdio run ./test/wdio-base.conf.js",
     "test:single": "npm run test -- ordersv2fe  96 --spec ./test/specs/all/OpenSpreadsheetUploadDialog.test.js",
     "ui5-test-runner": "ui5-test-runner"
   },
   "devDependencies": {
-    "@wdio/cli": "^9.15.0",
-    "@wdio/local-runner": "^9.15.0",
-    "@wdio/mocha-framework": "^9.15.0",
-    "@wdio/spec-reporter": "^9.15.0",
+    "@wdio/cli": "^9.16.2",
+    "@wdio/local-runner": "^9.16.2",
+    "@wdio/mocha-framework": "^9.16.2",
+    "@wdio/spec-reporter": "^9.16.2",
     "npm-run-all": "^4.1.5",
     "ts-node": "^10.9.2",
     "tsx": "4.20.3",
@@ -37,7 +37,7 @@
     "wdio-chromedriver-service": "8.1.1",
     "wdio-timeline-reporter": "5.1.4",
     "wdio-ui5-service": "3.0.0-rc.0",
-    "webdriverio": "^9.15.0",
+    "webdriverio": "^9.16.2",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
   }
 }

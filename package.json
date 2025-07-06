@@ -13,31 +13,31 @@
   "license": "Apache-2.0",
   "scripts": {
     "start": "npm-run-all --parallel start:server start:v4fe",
-    "start:v2fe": "pnpm --filter ordersv2fe136 start",
-    "start:v4fe": "pnpm --filter ordersv4fe136 start",
-    "start:anyupload": "pnpm --filter anyupload start",
-    "start:v4freestyle": "pnpm --filter ordersv4freestyle136 start",
-    "test:v4fe": "pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- ordersv4fe 136",
-    "test:opa5:v4fe": "pnpm --filter ui5-cc-spreadsheetimporter-sample ui5-test-runner --url http://localhost:8080/test/integration/opaTests.qunit.html",
-    "test:v2fe": "pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- ordersv2fe 136",
-    "start:server": "pnpm --filter ui5-cc-spreadsheetimporter-sample watch:server",
+    "start:v2fe": "npm run start --workspace=ordersv2fe136",
+    "start:v4fe": "npm run start --workspace=ordersv4fe136",
+    "start:anyupload": "npm run start --workspace=anyupload",
+    "start:v4freestyle": "npm run start --workspace=ordersv4freestyle136",
+    "test:v4fe": "npm run test --workspace=ui5-cc-spreadsheetimporter-sample -- -- ordersv4fe 136",
+    "test:opa5:v4fe": "npm run ui5-test-runner --workspace=ui5-cc-spreadsheetimporter-sample --url http://localhost:8080/test/integration/opaTests.qunit.html",
+    "test:v2fe": "npm run test --workspace=ui5-cc-spreadsheetimporter-sample -- -- ordersv2fe 136",
+    "start:server": "npm run watch:server --workspace=ui5-cc-spreadsheetimporter-sample",
     "lint": "eslint .",
     "lint:staged": "lint-staged",
     "lint:commit": "commitlint -e",
     "prettier": "prettier --write .",
     "prettier:check": "prettier --check .",
-    "build": "pnpm --filter ui5-cc-spreadsheetimporter build",
+    "build": "npm run build --workspace=ui5-cc-spreadsheetimporter",
     "replaceString": "node ./dev/replace-string.js",
-    "build:mta": "pnpm --filter ui5-cc-spreadsheetimporter build:mta",
-    "deploy:cf": "pnpm --filter ui5-cc-spreadsheetimporter deploy:cf",
-    "copyTestApps": "node ./dev/copy-example-apps.js create && pnpm i --no-frozen-lockfile --verbose",
+    "build:mta": "npm run build:mta --workspace=ui5-cc-spreadsheetimporter",
+    "deploy:cf": "npm run deploy:cf --workspace=ui5-cc-spreadsheetimporter",
+    "copyTestApps": "node ./dev/copy-example-apps.js create && npm install --verbose",
     "deleteAllNodeModules": "node dev/util.js deleteNodeModules .",
     "deleteTestApps": "node ./dev/copy-example-apps.js  delete",
     "deploy": "npm run build && fiori deploy --config ui5-deploy.yaml -y",
     "runDocs": "docker run --rm -it -p 8000:8000 -v ${PWD}:/docs squidfunk/mkdocs-material",
     "coypChangelogToDoc": "node ./dev/copy-changelog-to-doc.js",
-    "updateAllDependencies": "pnpm up --latest -r",
-    "lint:ui5": "pnpm --filter ui5-cc-spreadsheetimporter lint:ui5",
+    "updateAllDependencies": "npm update --workspaces",
+    "lint:ui5": "npm run lint:ui5 --workspace=ui5-cc-spreadsheetimporter",
     "prepare": "husky"
   },
   "devDependencies": {
@@ -52,6 +52,7 @@
     "@typescript-eslint/eslint-plugin": "^8.34.1",
     "@typescript-eslint/parser": "^8.34.1",
     "@ui5/cli": "4.0.18",
+    "@ui5/project": "4.0.4",
     "@ui5/ts-interface-generator": "0.10.0",
     "babel-preset-transform-ui5": "^7.7.1",
     "bluebird": "3.7.2",
@@ -71,5 +72,10 @@
       "prettier --write"
     ]
   },
-  "packageManager": "pnpm@9.3.0+sha512.ee7b93e0c2bd11409c6424f92b866f31d3ea1bef5fbe47d3c7500cdc3c9668833d2e55681ad66df5b640c61fa9dc25d546efa54d76d7f8bf54b13614ac293631"
+  "workspaces": [
+    "examples",
+    "examples/packages/*",
+    "packages/*",
+    "examples/packages/server/app/*"
+  ]
 }
