@@ -36,7 +36,7 @@
     "ui5-test-runner": "5.7.4",
     "wdio-chromedriver-service": "8.1.1",
     "wdio-timeline-reporter": "5.1.4",
-    "wdio-ui5-service": "3.0.0-rc.0",
+    "wdio-ui5-service": "3.0.0-rc.2",
     "webdriverio": "9.15.0",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
   }
