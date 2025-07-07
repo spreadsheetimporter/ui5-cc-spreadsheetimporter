@@ -10,7 +10,7 @@
   ],
   "main": "webapp/index.html",
   "dependencies": {
-    "ui5-cc-spreadsheetimporter": "2.3.0"
+    "ui5-cc-spreadsheetimporter": "*"
   },
   "devDependencies": {
     "@sap-ux/eslint-plugin-fiori-tools": "^0.6.0",

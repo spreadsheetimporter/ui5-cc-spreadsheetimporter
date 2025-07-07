@@ -10,7 +10,7 @@
   ],
   "main": "webapp/index.html",
   "dependencies": {
-    "ui5-cc-spreadsheetimporter": "2.3.0"
+    "ui5-cc-spreadsheetimporter": "*"
   },
   "devDependencies": {
     "@sap-ux/ui5-middleware-fe-mockserver": "^2.2.97",
