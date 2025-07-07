@@ -9,12 +9,12 @@
   },
   "devDependencies": {
     "@cap-js/sqlite": "^2.0.1",
-    "anyupload": "workspace:*",
+    "anyupload": "0.0.1",
     "cds-launchpad-plugin": "2.2.0",
     "cds-plugin-ui5": "0.13.1",
-    "ordersv2fe136": "workspace:*",
-    "ordersv4fe136": "workspace:*",
-    "ordersv4freestyle136": "workspace:*"
+    "ordersv2fe136": "0.0.1",
+    "ordersv4fe136": "0.0.1",
+    "ordersv4freestyle136": "0.0.1"
   },
   "scripts": {
     "watch": "cds watch"

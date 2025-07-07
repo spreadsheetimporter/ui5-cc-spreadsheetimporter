@@ -14,8 +14,7 @@ This will take a few minutes.
 ### Install required NPM Packages
 
 ```sh
-# Install pnpm if needed
-npm i -g pnpm
+# npm is already available by default
 
 # Install @sap/cds-dk if needed
 npm i -g @sap/cds-dk
@@ -27,7 +26,7 @@ To quickly start the test environment, see here. See detailed information below.
 
 ```sh
 git clone https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter
-pnpm i
+npm install --legacy-peer-deps
 # will run `build` and start CAP Server and FE Apps V4 1.108
 npm start
 ```
@@ -41,7 +40,7 @@ This is the basic setting-up to continue with the next steps.
 git clone https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter
 
 # Install all packages including for test environment
-pnpm i
+npm install --legacy-peer-deps
 ```
 
 ## Start Developing
@@ -74,15 +73,15 @@ This will copy the apps according to this [json file](https://github.com/spreads
 npm run start:v4fe:108
 npm run start:v2fe:108
 
-# Alternative with pnpm
-pnpm --filter ordersv2fe108 start
-pnpm --filter ordersv4fe108 start
+# Alternative with npm workspaces
+npm run start --workspace=ordersv2fe108
+npm run start --workspace=ordersv4fe108
 
 # Run other apps after copying
-pnpm --filter ordersv2fe96 start
-pnpm --filter ordersv2fe84 start
-pnpm --filter ordersv2fe71 start
-pnpm --filter ordersv4fe96 start
+npm run start --workspace=ordersv2fe96
+npm run start --workspace=ordersv2fe84
+npm run start --workspace=ordersv2fe71
+npm run start --workspace=ordersv4fe96
 ...
 ```
 

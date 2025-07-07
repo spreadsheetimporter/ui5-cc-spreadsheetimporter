@@ -29,20 +29,19 @@ jobs:
           fetch-depth: 0
         if: ${{ steps.release.outputs.releases_created }}
 
-      - run: npm i -g --force corepack && corepack enable
       - name: use node 20
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
+          cache: 'npm'
         if: ${{ steps.release.outputs.releases_created }}
 
-      - name: Run pnpm install
+      - name: Run npm install
         if: ${{ steps.release.outputs.releases_created }}
-        run: pnpm install  --no-frozen-lockfile
+        run: npm install --legacy-peer-deps
 
       - name: Build ui5-cc-spreadsheetimporter
-        run: pnpm --filter ui5-cc-spreadsheetimporter build
+        run: npm run build --workspace=ui5-cc-spreadsheetimporter
         if: ${{ steps.release.outputs['packages/ui5-cc-spreadsheetimporter--release_created'] }}
 
       - name: Publish ui5-cc-spreadsheetimporter to NPM
@@ -80,12 +79,11 @@ jobs:
         run: |
           git config --global user.email "ops+robot@npmjs.com"
           git config --global user.name "npm team"
-      - run: npm i -g --force corepack && corepack enable
       - name: use node 20
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
+          cache: 'npm'
 
       - name: Update PR ${{ matrix.pr.number }}
         if: ${{ matrix.pr }}
@@ -93,7 +91,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_WORKFLOW_TOKEN }}
         run: |
           gh pr checkout ${{ matrix.pr.number }}
-          pnpm install
+          npm install --legacy-peer-deps
           npm run replaceString
           npm run coypChangelogToDoc
           git add .

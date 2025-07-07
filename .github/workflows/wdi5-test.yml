@@ -50,16 +50,15 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
-      - run: npm i -g --force corepack && corepack enable
       - name: use node 20
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
+          cache: 'npm'
 
-      # log pnpm version
-      - name: log pnpm version
-        run: pnpm --version
+      # log npm version
+      - name: log npm version
+        run: npm --version
 
       - name: get port
         run: |
@@ -75,16 +74,16 @@ jobs:
                     delete pkg.cds['cds-plugin-ui5']; \
                     fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));"
 
-      - name: pnpm install
+      - name: npm install
         run: |
           npm pkg delete scripts.prepare
-          pnpm install --no-frozen-lockfile
+          npm install --legacy-peer-deps
 
       - name: copy test apps
-        run: pnpm copyTestApps
+        run: npm run copyTestApps
 
       - name: Run Build
-        run: pnpm build
+        run: npm run build
 
       - name: install @sap/cds-dk@8.8.2
         run: |
@@ -93,12 +92,12 @@ jobs:
       # run app      # wait for cap server to install ui5 component, remove when switch to fiori tools
       - name: start cap server
         run: |
-          pnpm start:server&
+          npm run start:server &
 
       - name: start app ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
         if: matrix.scenario != 'ordersv4fecds'
         run: |
-          pnpm --filter ${{ matrix.scenario }}${{ matrix.ui5version }} start:silent&
+          npm run start:silent --workspace=${{ matrix.scenario }}${{ matrix.ui5version }} &
 
       # run wdi5 tests
       - name: test wdi5 ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
@@ -110,7 +109,7 @@ jobs:
           timeout 60 bash -c 'until nc -z localhost 4004; do sleep 0.1; done' || (echo "Port 4004 not available after 60 seconds" && exit 1)
           # wait for test app port with 60 second timeout
           timeout 60 bash -c 'until nc -z localhost ${{ env.TESTAPPPORT }}; do sleep 0.1; done' || (echo "Port ${{ env.TESTAPPPORT }} not available after 60 seconds" && exit 1)
-          pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- --headless ${{ matrix.scenario }} ${{ matrix.ui5version }}
+          npm run test --workspace=ui5-cc-spreadsheetimporter-sample -- -- --headless ${{ matrix.scenario }} ${{ matrix.ui5version }}
 
       # special case for ordersv4fecds
       - name: wait for ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
@@ -123,7 +122,7 @@ jobs:
       - name: test wdi5 ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
         if: matrix.scenario == 'ordersv4fecds'
         run: |
-          pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- --headless ${{ matrix.scenario }} ${{ matrix.ui5version }}
+          npm run test --workspace=ui5-cc-spreadsheetimporter-sample -- -- --headless ${{ matrix.scenario }} ${{ matrix.ui5version }}
 
       - name: Upload Timeline Report
         if: always()

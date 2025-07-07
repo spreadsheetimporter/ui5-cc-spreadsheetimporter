@@ -5,7 +5,7 @@ The overview of which scenarios are covered by wdi5 tests can be found here: [wd
 ## Setup
 
 wdi5 is used in the test setup in the [`examples`](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/tree/main/examples) folder in the [`test`](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/tree/main/examples/test) folder.  
-As pnpm is used, with `pnpm i`, all the packages, including `wdio-ui5-service`, are installed.
+As npm workspaces is used, with `npm install --legacy-peer-deps`, all the packages, including `wdio-ui5-service`, are installed.
 
 ### Configuration
 
@@ -22,11 +22,11 @@ npm run test:v4fe:108
 npm run test:v2fe:108
 ```
 
-which will run `pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- ordersv4fe 108`.  
+which will run `npm run test --workspace=ui5-cc-spreadsheetimporter-sample -- -- ordersv4fe 108`.  
 So, you can run all the other apps like
 
 ```sh
-pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- ordersv4fe 84
+npm run test --workspace=ui5-cc-spreadsheetimporter-sample -- -- ordersv4fe 84
 ```
 
 ### Run single spec
@@ -43,7 +43,7 @@ npm run test -- ordersv2fe  96 --spec OpenSpreadsheetUploadDialog
 The wdi5 tests in GitHub Actions must run headless, which is also possible to call locally with:
 
 ```sh
-pnpm --filter ui5-cc-spreadsheetimporter-sample test -- -- --headless ordersv4fe 84
+npm run test --workspace=ui5-cc-spreadsheetimporter-sample -- -- --headless ordersv4fe 84
 ```
 
 ## GitHub Actions
