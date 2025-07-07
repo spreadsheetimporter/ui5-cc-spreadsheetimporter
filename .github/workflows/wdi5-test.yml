@@ -97,7 +97,7 @@ jobs:
       - name: start app ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
         if: matrix.scenario != 'ordersv4fecds'
         run: |
-          npm run start:silent --workspace=${{ matrix.scenario }}${{ matrix.ui5version }} &
+          npm run start:silent --workspace=${{ matrix.scenario }}${{ matrix.ui5version }}
 
       # run wdi5 tests
       - name: test wdi5 ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
