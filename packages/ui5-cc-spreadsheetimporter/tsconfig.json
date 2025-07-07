@@ -11,7 +11,7 @@
     "declaration": true,
     "rootDir": "./",
     "baseUrl": "./",
-    "typeRoots": ["./node_modules/@types", "./node_modules/@sapui5/ts-types-esm"],
+    "typeRoots": ["../../node_modules/@types", "../../node_modules/@sapui5/ts-types-esm"],
     "paths": {
       "cc/spreadsheetimporter/XXXnamespaceXXX/*": ["packages/ui5-cc-spreadsheetimporter/src/*"]
     }

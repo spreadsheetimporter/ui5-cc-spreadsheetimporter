@@ -52,7 +52,6 @@
     "@typescript-eslint/eslint-plugin": "^8.34.1",
     "@typescript-eslint/parser": "^8.34.1",
     "@ui5/cli": "4.0.18",
-    "@ui5/project": "4.0.4",
     "@ui5/ts-interface-generator": "0.10.0",
     "babel-preset-transform-ui5": "^7.7.1",
     "bluebird": "3.7.2",
