@@ -241,6 +241,13 @@
                       "requiresSelection": false,
                       "enabled": "{ui>/isEditable}",
                       "text": "Spreadsheet Upload"
+                    },
+                    "deepdowlnoad": {
+                      "press": "ui.v4.ordersv4fe.ext.ObjectPageExtController.deepdownload",
+                      "visible": true,
+                      "enabled": true,
+                      "requiresSelection": false,
+                      "text": "Deep Download"
                     }
                   }
                 }

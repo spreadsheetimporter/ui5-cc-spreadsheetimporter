@@ -1,5 +1,5 @@
 import Log from 'sap/base/Log';
-import { Columns } from '../../types';
+import { Columns, ListObject } from '../../types';
 import SpreadsheetUpload from '../SpreadsheetUpload';
 import OData from './OData';
 import MetadataHandlerV2 from './MetadataHandlerV2';
@@ -175,12 +175,204 @@ export default class ODataV2 extends OData {
   }
 
   getBindingFromBinding(binding: ODataListBinding, expand?: any): ODataListBinding {
-    throw new Error('Method not implemented.');
+    const path = binding.getPath();
+    const model = binding.getModel() as ODataModel;
+
+    // Create binding parameters for V2
+    const bindingParameters: any = {};
+
+    // Add expand parameters if provided - V2 expects comma-separated string
+    if (expand && Object.keys(expand).length > 0) {
+      bindingParameters.expand = this._convertExpandToV2Format(expand);
+    }
+
+    // Create new binding with expand parameters
+    return model.bindList(path, null, [], [], bindingParameters) as ODataListBinding;
+  }
+
+  /**
+   * Converts V4-style nested expand object to V2-style comma-separated string
+   */
+  private _convertExpandToV2Format(expand: any): string {
+    const expandParts: string[] = [];
+
+    // Simple conversion - just take the top level navigation properties
+    Object.keys(expand).forEach(navProp => {
+      expandParts.push(navProp);
+
+      // For deep expands, create paths like "Orders/Items"
+      if (expand[navProp] && typeof expand[navProp] === 'object') {
+        Object.keys(expand[navProp]).forEach(subNavProp => {
+          if (subNavProp !== '$expand') {
+            expandParts.push(`${navProp}/${subNavProp}`);
+          }
+        });
+      }
+    });
+
+    const result = expandParts.join(',');
+    console.log('V2 expand string:', result);
+    return result;
   }
 
   fetchBatch(customBinding: ODataListBinding, batchSize: number): Promise<any> {
-    throw new Error('Method not implemented.');
+    const model = customBinding.getModel() as ODataModel;
+    const path = MetadataHandlerV2.getResolvedPath(this.spreadsheetUploadController.binding);
+
+    return new Promise((resolve, reject) => {
+      // Use a simple approach - get all data with a single read for now
+      // This will be enhanced later with proper pagination
+      const urlParameters: any = {
+        $inlinecount: 'allpages'
+      };
+
+      // Try to get expand parameter from the binding if available
+      // For V2, we'll implement a simple approach first
+      try {
+        // Check if binding has expand information
+        const bindingInfo = (customBinding as any).mParameters;
+        if (bindingInfo && bindingInfo.expand) {
+          urlParameters.$expand = bindingInfo.expand;
+        }
+      } catch (e) {
+        // Ignore if we can't get binding parameters
+        console.log('Could not get binding parameters, proceeding without expand');
+      }
+
+      // For now, fetch all data in one request to get it working
+      // Later we can add proper pagination
+      model.read(path, {
+        urlParameters: urlParameters,
+        success: (data: any) => {
+          const results = data.results || [data];
+
+          // Create contexts-like objects that Util.extractObjects expects
+          const contextLikeObjects = results.map((dataItem: any) => ({
+            getObject: () => dataItem,
+            getPath: () => `${path}(${this._extractKey(dataItem)})`,
+            data: dataItem
+          }));
+
+          console.log(`V2 fetchBatch completed: ${results.length} items fetched`);
+          resolve(contextLikeObjects);
+        },
+        error: (error: any) => {
+          console.error('Error in V2 fetchBatch:', error);
+          reject(error);
+        }
+      });
+    });
   }
 
-  addKeys(labelList: ListObject, entityName: string, parentEntity?: any, partner?: string) {}
+  /**
+   * Fetches all data using OData V2 model.read() method with proper pagination
+   */
+  private _fetchAllDataV2(
+    model: ODataModel,
+    path: string,
+    baseUrlParameters: any,
+    totalCount: number,
+    batchSize: number,
+    resolve: (value: any) => void,
+    reject: (reason?: any) => void
+  ): void {
+    let allResults: any[] = [];
+    let fetchedCount = 0;
+
+    const fetchNextBatch = () => {
+      if (fetchedCount >= totalCount) {
+        // Create contexts-like objects that Util.extractObjects expects
+        const contextLikeObjects = allResults.map(dataItem => ({
+          getObject: () => dataItem,
+          getPath: () => `${path}(${this._extractKey(dataItem)})`,
+          data: dataItem
+        }));
+
+        console.log(`V2 fetchBatch completed: ${allResults.length} items fetched`);
+        resolve(contextLikeObjects);
+        return;
+      }
+
+      const remainingCount = totalCount - fetchedCount;
+      const currentBatchSize = Math.min(batchSize, remainingCount);
+
+      const urlParameters = {
+        ...baseUrlParameters,
+        $skip: fetchedCount,
+        $top: currentBatchSize
+      };
+
+      model.read(path, {
+        urlParameters: urlParameters,
+        success: (data: any) => {
+          const results = data.results || [data];
+          allResults.push(...results);
+          fetchedCount += results.length;
+
+          console.log(`V2 batch fetched: ${results.length} items (${fetchedCount}/${totalCount})`);
+
+          // Continue with next batch
+          setTimeout(fetchNextBatch, 0);
+        },
+        error: (error: any) => {
+          console.error('Error in V2 batch fetch:', error);
+          reject(error);
+        }
+      });
+    };
+
+    // Start fetching
+    fetchNextBatch();
+  }
+
+  /**
+   * Extracts key from data item for context path creation
+   */
+  private _extractKey(dataItem: any): string {
+    // Simple key extraction - this could be enhanced based on metadata
+    if (dataItem.ID) return `'${dataItem.ID}'`;
+    if (dataItem.Id) return `'${dataItem.Id}'`;
+    if (dataItem.ObjectID) return `'${dataItem.ObjectID}'`;
+
+    // Fallback to first string property that looks like a key
+    for (const [key, value] of Object.entries(dataItem)) {
+      if (typeof value === 'string' && (key.toLowerCase().includes('id') || key.toLowerCase().includes('key'))) {
+        return `'${value}'`;
+      }
+    }
+
+    return `'${JSON.stringify(dataItem)}'`;
+  }
+
+  addKeys(labelList: ListObject, entityName: string, parentEntity?: any, partner?: string) {
+    // Get metadata to find key properties
+    const metaModel = this.spreadsheetUploadController.view.getModel().getMetaModel();
+    const entityType = metaModel.getODataEntityType(entityName);
+
+    if (entityType && entityType.key && entityType.key.propertyRef) {
+      entityType.key.propertyRef.forEach((keyRef: any) => {
+        const keyName = keyRef.name;
+
+        // Check if key is already in labelList
+        if (!labelList.has(keyName)) {
+          // Find the property definition
+          const property = entityType.property.find((prop: any) => prop.name === keyName);
+          if (property) {
+            labelList.set(keyName, {
+              label: property['sap:label'] || keyName,
+              type: property.type,
+              maxLength: property.maxLength,
+              $XYZKey: true // Mark as key property
+            });
+          }
+        } else {
+          // Mark existing property as key
+          const existingProperty = labelList.get(keyName);
+          if (existingProperty) {
+            existingProperty.$XYZKey = true;
+          }
+        }
+      });
+    }
+  }
 }
