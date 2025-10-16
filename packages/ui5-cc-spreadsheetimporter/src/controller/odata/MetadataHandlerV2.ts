@@ -1,6 +1,7 @@
 import Log from 'sap/base/Log';
 import { Columns, Property, ListObject, PropertyArray } from '../../types';
 import MetadataHandler from './MetadataHandler';
+import ODataMetaModel from 'sap/ui/model/odata/ODataMetaModel';
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
@@ -157,14 +158,14 @@ export default class MetadataHandlerV2 extends MetadataHandler {
   }
 
   getODataEntitiesRecursive(entityName: string, deepLevel: number): any {
-    const metaModel = this.spreadsheetUploadController.view.getModel().getMetaModel();
+    const metaModel = this.spreadsheetUploadController.view.getModel().getMetaModel() as ODataMetaModel;
     const entityType = metaModel.getODataEntityType(entityName);
 
     if (!entityType) {
       throw new Error(`Entity '${entityName}' not found`);
     }
 
-    const mainEntity: any = { ...entityType };
+    const mainEntity: any = Object.assign({}, entityType || {});
 
     // Find navigation properties and build entity structure recursively
     this._findEntitiesByNavigationProperty(metaModel, mainEntity, entityName, deepLevel);
@@ -219,20 +220,23 @@ export default class MetadataHandlerV2 extends MetadataHandler {
       // Check for navigation properties in V2 metadata structure
       if (entity.navigationProperty) {
         entity.navigationProperty.forEach((navProp: any) => {
-          const targetEntityType = navProp.toRole;
+          // Resolve association end to get the fully qualified target type
+          const assocEnd = metaModel.getODataAssociationEnd(rootEntity, navProp.name);
+          const targetFqn = assocEnd && assocEnd.type; // e.g. 'OrdersService.OrderItems'
+          if (!targetFqn) return;
 
-          // Get the target entity type from metadata
-          const targetEntity = metaModel.getODataEntityType(targetEntityType);
+          const targetEntity = metaModel.getODataEntityType(targetFqn);
+          if (targetEntity && !traversedEntities.has(targetFqn)) {
+            // Create a V4-like nav node on the entity for downstream processing
+            const navNode: any = entity[navProp.name] || {};
+            navNode.$XYZEntity = targetEntity;
+            navNode.$XYZFetchableEntity = true;
+            navNode.$Type = targetFqn;
+            navNode.$Partner = assocEnd && assocEnd.partner;
+            entity[navProp.name] = navNode;
 
-          if (targetEntity && !traversedEntities.has(targetEntityType)) {
-            // Mark as fetchable navigation property
-            navProp.$XYZEntity = targetEntity;
-            navProp.$XYZFetchableEntity = true;
-            navProp.$Type = targetEntityType;
-            navProp.$Partner = navProp.fromRole;
-
-            queue.push({ entity: targetEntity, entityName: targetEntityType, level: level + 1 });
-            traversedEntities.add(targetEntityType);
+            queue.push({ entity: targetEntity, entityName: targetFqn, level: level + 1 });
+            traversedEntities.add(targetFqn);
           }
         });
       }
@@ -280,7 +284,7 @@ export default class MetadataHandlerV2 extends MetadataHandler {
       path = binding.getResolvedPath();
     } else {
       // workaround for getResolvedPath only available from 1.88
-      path = binding.getModel().resolve(binding.getPath(), binding.getContext());
+      path = (binding.getModel() as any).resolve(binding.getPath(), binding.getContext());
     }
     return path;
   }

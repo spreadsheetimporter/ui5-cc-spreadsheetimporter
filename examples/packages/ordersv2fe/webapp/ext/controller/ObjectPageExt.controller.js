@@ -134,6 +134,26 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
 			// this.spreadsheetUpload.attachBeforeDownloadFileExport(this.onBeforeDownloadFileExport, this);
 
 			this.spreadsheetUpload.triggerDownloadSpreadsheet();
+		},
+
+		massUpdate: async function () {
+			this.getView().setBusyIndicatorDelay(0);
+			this.spreadsheetUpload = await this.getView()
+				.getController()
+				.getOwnerComponent()
+				.createComponent({
+					usage: "spreadsheetImporter",
+					async: true,
+					componentData: {
+						context: this,
+						action: "UPDATE",
+						updateConfig: {
+							fullUpdate: false,
+							columns: []
+						}
+					}
+				});
+			this.spreadsheetUpload.openSpreadsheetUploadDialog();
 		}
 	};
 });

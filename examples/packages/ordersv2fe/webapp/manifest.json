@@ -153,6 +153,12 @@
                       "text": "Deep Download",
                       "press": "deepdownload",
                       "requiresSelection": false
+                    },
+                    "massUpdate": {
+                      "id": "massUpdateButton",
+                      "text": "Mass Update",
+                      "press": "massUpdate",
+                      "requiresSelection": false
                     }
                   }
                 }

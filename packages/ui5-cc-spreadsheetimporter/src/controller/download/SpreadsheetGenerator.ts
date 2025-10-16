@@ -97,6 +97,7 @@ export default class SpreadsheetGenerator extends ManagedObject {
       if (!currentEntity.$XYZData) continue;
 
       const data = currentEntity.$XYZData;
+			//TODO: we stuck here now
       const labelList = await this.odataHandler.getLabelList([], currentEntity.$Type, this.component.getExcludeColumns());
       if (spreadsheetExportConfig.addKeysToExport) {
         this.odataHandler.addKeys(labelList, currentEntity.$Type, parentEntity, currentEntity.$Partner);

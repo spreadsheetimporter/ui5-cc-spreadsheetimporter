@@ -45,7 +45,46 @@ export default class ODataV2 extends OData {
   }
 
   updateAsync(model: any, binding: any, payload: any) {
-    throw new Error('Method not implemented.');
+    const oDataModel = binding.getModel() as ODataModel;
+
+    // 1) Resolve entity set and key path
+    const keysFromPayload = this.metadataHandler.getKeys(binding, payload);
+    const entitySetName = this._getEntitySetNameFromBinding(binding);
+    if (!entitySetName) throw new Error('Could not resolve entity set name for update operation');
+    const entityPath = '/' + oDataModel.createKey(entitySetName, keysFromPayload);
+
+    // 2) Respect update config
+    const updateConfig = this.spreadsheetUploadController.component.getUpdateConfig() as any;
+    const fullUpdate = Boolean(updateConfig && updateConfig.fullUpdate);
+    const configuredColumns = (updateConfig && Array.isArray(updateConfig.columns)) ? updateConfig.columns : [];
+
+    // 3) Build payload
+    const payloadToSend: Record<string, any> = {};
+    for (const [property, value] of Object.entries(payload)) {
+      if (property in keysFromPayload) continue; // never send keys in body
+      const isConfigured = configuredColumns.length === 0 || configuredColumns.includes(property);
+      if (!isConfigured && !fullUpdate) continue;
+
+      // Normalize Date to yyyy-mm-dd similar to V4 path
+      let normalized = value;
+      if (value && typeof value === 'object' && (value as any).toISOString) {
+        const d = value as any as Date;
+        normalized = `${d.getUTCFullYear()}-${('0' + (d.getUTCMonth() + 1)).slice(-2)}-${('0' + d.getUTCDate()).slice(-2)}`;
+      }
+      payloadToSend[property] = normalized;
+    }
+
+    // 4) Execute update (merge for partial update)
+    const updatePromise = new Promise((resolve, reject) => {
+      // @ts-ignore merge supported in V2 update params
+      oDataModel.update(entityPath, payloadToSend, {
+        merge: !fullUpdate,
+        success: () => resolve(true),
+        error: (err: any) => reject(err)
+      } as any);
+    });
+
+    this.createPromises.push(updatePromise);
   }
 
   async checkForErrors(model: any, binding: any, showBackendErrorMessages: Boolean): Promise<boolean> {
@@ -56,7 +95,8 @@ export default class ODataV2 extends OData {
       if (firstResponse && firstResponse.response && firstResponse.response.statusCode >= 400) {
         // show messages from the Messages Manager Model
         if (showBackendErrorMessages) {
-          this.odataMessageHandler.displayMessages();
+          // messages data is read directly from message manager by handler
+          this.odataMessageHandler.displayMessages([]);
         }
         return true;
       }
@@ -66,12 +106,12 @@ export default class ODataV2 extends OData {
 
   async createCustomBinding(binding: any) {
     if (this.spreadsheetUploadController.component.getOdataType()) {
-      const metaModel = this.spreadsheetUploadController.view.getModel().getMetaModel();
+      const metaModel = this.spreadsheetUploadController.view.getModel().getMetaModel() as any;
       await metaModel.loaded();
-      const odataEntityType = metaModel.getODataEntityType(this.spreadsheetUploadController.component.getOdataType());
-      const odataEntitySet = metaModel
+      const odataEntityType = (metaModel as any).getODataEntityType(this.spreadsheetUploadController.component.getOdataType());
+      const odataEntitySet = (metaModel as any)
         .getODataEntityContainer()
-        .entitySet.find(item => item.entityType === `${odataEntityType.namespace}.${odataEntityType.name}`);
+        .entitySet.find((item: { entityType: string }) => item.entityType === `${odataEntityType.namespace}.${odataEntityType.name}`);
       this.customBinding = new ODataListBinding(this.spreadsheetUploadController.view.getModel() as ODataModel, `/${odataEntitySet.name}`);
     } else {
       this.customBinding = binding;
@@ -127,14 +167,14 @@ export default class ODataV2 extends OData {
     if (!odataType) {
       return binding._getEntityType().entityType;
     } else {
-      const metaModel = this.spreadsheetUploadController.view.getModel().getMetaModel() as ODataMetaModel;
+      const metaModel = this.spreadsheetUploadController.view.getModel().getMetaModel() as any;
       await metaModel.loaded();
-      const odataEntityType = metaModel.getODataEntityType(odataType);
+      const odataEntityType = (metaModel as any).getODataEntityType(odataType);
       if (!odataEntityType) {
         // filter out $kind
-        const availableEntities = metaModel
+        const availableEntities = (metaModel as any)
           .getODataEntityContainer()
-          .entitySet.map(item => item.name)
+          .entitySet.map((item: { name: string }) => item.name)
           .join();
         Log.error(`Error while getting specified OData Type. ${availableEntities}`, undefined, 'SpreadsheetUpload: ODataV4');
         throw new Error(`Error while getting specified OData Type. Available Entities: ${availableEntities}`);
@@ -144,7 +184,9 @@ export default class ODataV2 extends OData {
   }
 
   getObjects(model: any, binding: any, batch: any): Promise<any> {
-    throw new Error('Method not implemented.');
+    // For V2, we perform direct updates using model.update with key predicates.
+    // No prefetch required; keep the method for compatibility with the processing flow.
+    return Promise.resolve([]);
   }
 
   async getLabelList(columns: Columns, odataType: string, excludeColumns: Columns, binding?: any) {
@@ -201,23 +243,26 @@ export default class ODataV2 extends OData {
    * Converts V4-style nested expand object to V2-style comma-separated string
    */
   private _convertExpandToV2Format(expand: any): string {
-    const expandParts: string[] = [];
+    const parts: string[] = [];
 
-    // Simple conversion - just take the top level navigation properties
-    Object.keys(expand).forEach(navProp => {
-      expandParts.push(navProp);
+    const walk = (node: any, prefix: string[] = []) => {
+      Object.keys(node).forEach(key => {
+        if (key === '$expand') {
+          walk(node[key], prefix);
+          return;
+        }
+        const path = [...prefix, key];
+        parts.push(path.join('/'));
+        const child = node[key];
+        if (child && typeof child === 'object') {
+          walk(child, path);
+        }
+      });
+    };
 
-      // For deep expands, create paths like "Orders/Items"
-      if (expand[navProp] && typeof expand[navProp] === 'object') {
-        Object.keys(expand[navProp]).forEach(subNavProp => {
-          if (subNavProp !== '$expand') {
-            expandParts.push(`${navProp}/${subNavProp}`);
-          }
-        });
-      }
-    });
-
-    const result = expandParts.join(',');
+    walk(expand, []);
+    const unique = Array.from(new Set(parts));
+    const result = unique.join(',');
     console.log('V2 expand string:', result);
     return result;
   }
@@ -227,33 +272,33 @@ export default class ODataV2 extends OData {
     const path = MetadataHandlerV2.getResolvedPath(this.spreadsheetUploadController.binding);
 
     return new Promise((resolve, reject) => {
-      // Use a simple approach - get all data with a single read for now
-      // This will be enhanced later with proper pagination
-      const urlParameters: any = {
-        $inlinecount: 'allpages'
-      };
+      // Prepare base parameters and attempt a first read to detect count
+      const baseUrlParameters: any = { $inlinecount: 'allpages' };
 
       // Try to get expand parameter from the binding if available
-      // For V2, we'll implement a simple approach first
       try {
-        // Check if binding has expand information
         const bindingInfo = (customBinding as any).mParameters;
         if (bindingInfo && bindingInfo.expand) {
-          urlParameters.$expand = bindingInfo.expand;
+          baseUrlParameters.$expand = bindingInfo.expand;
         }
       } catch (e) {
-        // Ignore if we can't get binding parameters
         console.log('Could not get binding parameters, proceeding without expand');
       }
 
-      // For now, fetch all data in one request to get it working
-      // Later we can add proper pagination
+      // Initial read to check for count and decide pagination
       model.read(path, {
-        urlParameters: urlParameters,
+        urlParameters: baseUrlParameters,
         success: (data: any) => {
           const results = data.results || [data];
+          const totalCount = Number((data && (data.__count || data['__count'])) || results.length);
 
-          // Create contexts-like objects that Util.extractObjects expects
+          if (Number.isFinite(totalCount) && totalCount > results.length) {
+            // Use paginated reads
+            this._fetchAllDataV2(model, path, baseUrlParameters, totalCount, batchSize, resolve, reject);
+            return;
+          }
+
+          // Single-shot result OK
           const contextLikeObjects = results.map((dataItem: any) => ({
             getObject: () => dataItem,
             getPath: () => `${path}(${this._extractKey(dataItem)})`,
@@ -351,10 +396,22 @@ export default class ODataV2 extends OData {
     return `'${JSON.stringify(dataItem)}'`;
   }
 
+  /**
+   * Resolves the entity set name for the current binding/type
+   */
+  private _getEntitySetNameFromBinding(binding: any): string | undefined {
+    const metaModel = this.spreadsheetUploadController.view.getModel().getMetaModel() as any;
+    const odataType = this.spreadsheetUploadController.getOdataType();
+    const odataEntityType = (metaModel as any).getODataEntityType(odataType);
+    const container = (metaModel as any).getODataEntityContainer();
+    const entitySet = container.entitySet.find((item: any) => item.entityType === `${odataEntityType.namespace}.${odataEntityType.name}`);
+    return entitySet?.name;
+  }
+
   addKeys(labelList: ListObject, entityName: string, parentEntity?: any, partner?: string) {
     // Get metadata to find key properties
-    const metaModel = this.spreadsheetUploadController.view.getModel().getMetaModel();
-    const entityType = metaModel.getODataEntityType(entityName);
+    const metaModel = this.spreadsheetUploadController.view.getModel().getMetaModel() as any;
+    const entityType = (metaModel as any).getODataEntityType(entityName);
 
     if (entityType && entityType.key && entityType.key.propertyRef) {
       entityType.key.propertyRef.forEach((keyRef: any) => {
