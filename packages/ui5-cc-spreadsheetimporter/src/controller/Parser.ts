@@ -73,54 +73,52 @@ export default class Parser extends ManagedObject {
         const nullMarker = component.getNullMarker();
         const emptyMarker = component.getEmptyStringMarker();
 
-        if (nullMarker || emptyMarker) {
-          const markerState = this.detectMarkerState(value?.rawValue, nullMarker, emptyMarker);
+        const markerState = this.detectMarkerState(value?.rawValue, nullMarker, emptyMarker);
 
-          // State 1: NULL marker - Explicitly set field to NULL
-          if (markerState.state === 'null') {
-            if (metadataColumn.nullable === false) {
-              // Reject: Field is non-nullable (e.g., keys, mandatory fields)
-              this.addMessageToMessages(
-                'spreadsheetimporter.nullValueNotAllowed',
-                util,
-                messageHandler,
-                index,
-                [metadataColumn.label],
-                value?.rawValue
-              );
-              continue; // Skip this field
-            }
-            // Accept: Set to JSON null and skip type parsing
-            payload[columnKey] = null;
-            continue;
+        // State 1: NULL marker - Explicitly set field to NULL
+        if (markerState.state === 'null') {
+          if (metadataColumn.nullable === false) {
+            // Reject: Field is non-nullable (e.g., keys, mandatory fields)
+            this.addMessageToMessages(
+              'spreadsheetimporter.nullValueNotAllowed',
+              util,
+              messageHandler,
+              index,
+              [metadataColumn.label],
+              value?.rawValue
+            );
+            continue; // Skip this field
           }
-
-          // State 2: EMPTY STRING marker - Explicitly set to empty string (strings only)
-          if (markerState.state === 'emptyString') {
-            if (metadataColumn.type !== 'Edm.String') {
-              // Reject: Only valid for string fields
-              this.addMessageToMessages(
-                'spreadsheetimporter.emptyStringMarkerInvalidType',
-                util,
-                messageHandler,
-                index,
-                [metadataColumn.label],
-                value?.rawValue
-              );
-              continue; // Skip this field
-            }
-            // Accept: Set to empty string and skip type parsing
-            payload[columnKey] = '';
-            continue;
-          }
-
-          // State 3: OMIT - Empty cell means "no change"
-          if (markerState.state === 'omit') {
-            continue; // Property omitted from payload → backend keeps existing value
-          }
-
-          // State 4: VALUE - Normal value, fall through to type-specific parsing below
+          // Accept: Set to JSON null and skip type parsing
+          payload[columnKey] = null;
+          continue;
         }
+
+        // State 2: EMPTY STRING marker - Explicitly set to empty string (strings only)
+        if (markerState.state === 'emptyString') {
+          if (metadataColumn.type !== 'Edm.String') {
+            // Reject: Only valid for string fields
+            this.addMessageToMessages(
+              'spreadsheetimporter.emptyStringMarkerInvalidType',
+              util,
+              messageHandler,
+              index,
+              [metadataColumn.label],
+              value?.rawValue
+            );
+            continue; // Skip this field
+          }
+          // Accept: Set to empty string and skip type parsing
+          payload[columnKey] = '';
+          continue;
+        }
+
+        // State 3: OMIT - Empty cell means "no change"
+        if (markerState.state === 'omit') {
+          continue; // Property omitted from payload → backend keeps existing value
+        }
+
+        // State 4: VALUE - Normal value, fall through to type-specific parsing below
 
         // === Type-Specific Parsing Phase ===
         // Process non-empty values according to their OData type
