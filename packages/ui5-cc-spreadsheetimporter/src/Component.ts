@@ -1,6 +1,7 @@
 import UIComponent from 'sap/ui/core/UIComponent';
 import JSONModel from 'sap/ui/model/json/JSONModel';
 import Device from 'sap/ui/Device';
+import { IAsyncContentCreation } from 'sap/ui/core/library';
 import SpreadsheetUpload from './controller/SpreadsheetUpload';
 import { ComponentData, DeepDownloadConfig, Messages, DirectUploadConfig } from './types';
 import Log from 'sap/base/Log';
@@ -15,7 +16,8 @@ import { DefaultConfigs } from './enums';
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
-export default class Component extends UIComponent {
+export default class Component extends UIComponent implements IAsyncContentCreation {
+  __implements__sap_ui_core_IAsyncContentCreation: boolean;
   spreadsheetUpload: SpreadsheetUpload;
   private _sContentDensityClass: any;
   public _densityClass: string;
@@ -36,7 +38,7 @@ export default class Component extends UIComponent {
   }
 
   public static metadata = {
-    // interfaces: ["sap.ui.core.IAsyncContentCreation"]
+    interfaces: ['sap.ui.core.IAsyncContentCreation'],
     manifest: 'json',
     properties: {
       spreadsheetFileName: { type: 'string', defaultValue: 'Template.xlsx' },
@@ -240,7 +242,7 @@ export default class Component extends UIComponent {
     super.init();
   }
 
-  createContent() {
+  createContent(): Button {
     if (this.getDebug() || Log.getLevel() >= Log.Level.DEBUG) {
       Log.setLevel(Log.Level.DEBUG);
 

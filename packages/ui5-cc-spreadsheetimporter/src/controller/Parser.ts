@@ -184,13 +184,21 @@ export default class Parser extends ManagedObject {
   static checkDouble(value: ValueData, metadataColumn: Property, util: Util, messageHandler: MessageHandler, index: number, component: Component) {
     const rawValue = value.rawValue;
     let valueDouble = rawValue;
-    if (typeof rawValue === 'string') {
+
+    // Apply floating-point precision correction for numeric values
+    if (typeof rawValue === 'number') {
+      // Use Scale (Decimal) or Precision (Double) from metadata, with smart fallback
+      valueDouble = Util.fixFloatingPointPrecision(rawValue, metadataColumn.scale, metadataColumn.precision);
+    } else if (typeof rawValue === 'string') {
       const normalizedString = Util.normalizeNumberString(rawValue, component);
       valueDouble = parseFloat(normalizedString);
-      // check if value is a number a does contain anything other than numbers and decimal seperator
-      if (/[^0-9.,]/.test(valueDouble) || parseFloat(normalizedString).toString() !== normalizedString) {
-        // Error: Value does contain anything other than numbers and decimal seperator
+      // check if value is a number and does not contain anything other than numbers and decimal separator
+      if (/[^0-9.,]/.test(normalizedString) || isNaN(valueDouble)) {
+        // Error: Value contains something other than numbers and decimal separator
         this.addMessageToMessages('spreadsheetimporter.parsingErrorNotNumber', util, messageHandler, index, [metadataColumn.label], rawValue);
+      } else {
+        // Apply precision correction after parsing string to number
+        valueDouble = Util.fixFloatingPointPrecision(valueDouble, metadataColumn.scale, metadataColumn.precision);
       }
     }
     return valueDouble;

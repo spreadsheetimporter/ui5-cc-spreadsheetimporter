@@ -77,7 +77,7 @@ annotate OrdersService.Orders with @(
 annotate OrdersService.OrderItems with @(
 	UI: {
 		LineItem: [
-			{Value: product_ID, Label:'ID'},
+			{Value: product_ID, Label:'Product ID'},
 			{Value: title, Label:'{i18n>ProductTitle}'},
 			{Value: price, Label:'{i18n>UnitPrice}'},
 			{Value: quantity, Label:'{i18n>Quantity}'},
@@ -85,8 +85,13 @@ annotate OrdersService.OrderItems with @(
             {Value: timestamp, Label:'{i18n>timestamp}'},
             {Value: date, Label:'{i18n>date}'},
             {Value: time, Label:'{i18n>time}'},
+            {Value: boolean, Label:'Boolean'},
+            {Value: decimal, Label:'Decimal'},
+            {Value: doubleScale, Label:'Double Scale'},
+            {Value: byte, Label:'Byte'},
 		],
 		Identification: [ //Is the main field group
+			{Value: product_ID, Label:'Product ID'},
 			{Value: quantity, Label:'{i18n>Quantity}'},
 			{Value: title, Label:'{i18n>Product}'},
 			{Value: price, Label:'{i18n>UnitPrice}'},
@@ -94,7 +99,11 @@ annotate OrdersService.OrderItems with @(
             {Value: timestamp, Label:'{i18n>timestamp}'},
             {Value: date, Label:'{i18n>date}'},
             {Value: time, Label:'{i18n>time}'},
-            {Value: boolean, Label:'{i18n>time}'},
+            {Value: boolean, Label:'Boolean'},
+            {Value: decimal, Label:'Decimal'},
+            {Value: doubleScale, Label:'Double Scale'},
+            {Value: byte, Label:'Byte'},
+            {Value: binary, Label:'Binary'},
 		],
 		Facets: [
 			{$Type: 'UI.ReferenceFacet', Label: '{i18n>OrderItems}', Target: '@UI.Identification'},
@@ -212,7 +221,7 @@ annotate OrdersService.OrdersND with @(
 annotate OrdersService.OrderItemsND with @(
 	UI: {
 		LineItem: [
-			{Value: product_ID, Label:'ID'},
+			{Value: product_ID, Label:'Product ID'},
 			{Value: title, Label:'{i18n>ProductTitle}'},
 			{Value: price, Label:'{i18n>UnitPrice}'},
 			{Value: quantity, Label:'{i18n>Quantity}'},
@@ -220,8 +229,13 @@ annotate OrdersService.OrderItemsND with @(
             {Value: timestamp, Label:'{i18n>timestamp}'},
             {Value: date, Label:'{i18n>date}'},
             {Value: time, Label:'{i18n>time}'},
+            {Value: boolean, Label:'Boolean'},
+            {Value: decimal, Label:'Decimal'},
+            {Value: doubleScale, Label:'Double Scale'},
+            {Value: byte, Label:'Byte'},
 		],
 		Identification: [ //Is the main field group
+			{Value: product_ID, Label:'Product ID'},
 			{Value: quantity, Label:'{i18n>Quantity}'},
 			{Value: title, Label:'{i18n>Product}'},
 			{Value: price, Label:'{i18n>UnitPrice}'},
@@ -229,6 +243,11 @@ annotate OrdersService.OrderItemsND with @(
             {Value: timestamp, Label:'{i18n>timestamp}'},
             {Value: date, Label:'{i18n>date}'},
             {Value: time, Label:'{i18n>time}'},
+            {Value: boolean, Label:'Boolean'},
+            {Value: decimal, Label:'Decimal'},
+            {Value: doubleScale, Label:'Double Scale'},
+            {Value: byte, Label:'Byte'},
+            {Value: binary, Label:'Binary'},
 		],
 		Facets: [
 			{$Type: 'UI.ReferenceFacet', Label: '{i18n>OrderItems}', Target: '@UI.Identification'},

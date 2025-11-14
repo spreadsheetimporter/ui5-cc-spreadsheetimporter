@@ -57,7 +57,7 @@ export default class Util extends ManagedObject {
         errorMessage = error.message;
         // convert urls to links and to remove lines of the url
         const regex = /(http[s]?:\/\/[^\s]+):(\d+):(\d+)/g;
-        let errorStack = error.stack
+        const errorStack = error.stack
           .replace(regex, '<a href="$1" target="_blank" class="sapMLnk">$1</a>:<span class="line-no">$2:$3</span>')
           .replace(/\n/g, '<br/>');
         detailsContent = errorStack;
@@ -122,6 +122,67 @@ export default class Util extends ManagedObject {
     return standardNumberString;
   }
 
+  /**
+   * Rounds a number to the requested decimal places.
+   * Uses {@link Number#toFixed} to avoid common IEEE-754 artefacts.
+   *
+   * @param value The number to round
+   * @param decimalPlaces Number of decimal places
+   * @returns The rounded number
+   */
+  static roundToDecimalPlaces(value: number, decimalPlaces: number): number {
+    if (!Number.isFinite(value)) {
+      return value;
+    }
+    const clampedPlaces = Math.min(Math.max(Math.trunc(decimalPlaces) || 0, 0), 100);
+    const fixed = value.toFixed(clampedPlaces);
+    return Number.parseFloat(fixed);
+  }
+
+  /**
+   * Removes IEEE-754 floating-point artefacts by normalising the number to a fixed
+   * amount of significant digits (defaults to 15 which matches JS double precision).
+   *
+   * @param value The number to sanitize
+   * @param significantDigits Amount of significant digits to preserve
+   * @returns A number with the same magnitude but without binary noise
+   */
+  static sanitizeFloatingPoint(value: number, significantDigits: number = 15): number {
+    if (!Number.isFinite(value)) {
+      return value;
+    }
+    const clampedDigits = Math.min(Math.max(Math.trunc(significantDigits) || 0, 1), 100);
+    return Number.parseFloat(value.toPrecision(clampedDigits));
+  }
+
+  /**
+   * Fixes floating-point precision using metadata or pattern detection.
+   * Priority: Scale attribute > Precision attribute > Pattern detection > Original value
+   *
+   * @param value The number with potential floating-point errors
+   * @param scale Optional Scale attribute from metadata (for Decimal types)
+   * @param precision Optional Precision attribute from metadata
+   * @returns The corrected number
+   */
+  static fixFloatingPointPrecision(value: number, scale?: number, precision?: number): number {
+    if (!Number.isFinite(value)) {
+      return value;
+    }
+
+    // Priority 1: Use Scale attribute (most reliable for Decimal types)
+    if (scale !== undefined && scale !== null) {
+      return this.roundToDecimalPlaces(value, scale);
+    }
+
+    // Priority 2: Use Precision attribute (less common but still valid, total digits)
+    if (precision !== undefined && precision !== null) {
+      return this.sanitizeFloatingPoint(value, precision);
+    }
+
+    // Priority 3: Fallback to generic sanitizing of IEEE-754 noise
+    return this.sanitizeFloatingPoint(value);
+  }
+
   static getRandomString(length: number): string {
     const characters: string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     let randomString: string = '';
@@ -149,8 +210,8 @@ export default class Util extends ManagedObject {
         // Handle first-level objects
         const keys = Object.keys(value);
         if (keys.every(k => typeof value[k] !== 'object' || value[k] === null)) {
-          let simpleObject: { [key: string]: any } = {};
-          for (let k in value) {
+          const simpleObject: { [key: string]: any } = {};
+          for (const k in value) {
             if (typeof value[k] !== 'object' || value[k] === null) {
               simpleObject[k] = value[k];
             }
@@ -223,9 +284,8 @@ export default class Util extends ManagedObject {
    * @returns A promise that resolves when all event handlers have completed.
    */
   static async fireEventAsync(eventName: string, eventParameters: object, component: Component): Promise<FireEventReturnType> {
-    let aEventListeners,
-      event,
-      promises = [];
+    let aEventListeners, event;
+    const promises = [];
 
     // @ts-ignore
     const eventPool = new ObjectPool(Event);
@@ -237,7 +297,7 @@ export default class Util extends ManagedObject {
       aEventListeners = aEventListeners.slice();
       event = eventPool.borrowObject(eventName, component, eventParameters); // borrow event lazily
 
-      for (let oInfo of aEventListeners) {
+      for (const oInfo of aEventListeners) {
         try {
           // Assuming each handler returns a promise
           promises.push(oInfo.fFunction.call(null, event));
