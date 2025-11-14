@@ -89,6 +89,10 @@ export const CustomMessageTypes: { [key: string]: CustomMessageType } = {
   EmptyHeaders: {
     title: 'EmptyHeaders',
     group: false
+  },
+  NullableViolation: {
+    title: 'NullableViolation',
+    group: true
   }
 };
 

@@ -457,13 +457,25 @@ export default class Util extends ManagedObject {
       'bindingCustom',
       'showDownloadButton',
       'deepDownloadConfig',
-      'updateConfig'
+      'updateConfig',
+      'nullMarker',
+      'emptyStringMarker',
+      'skipEmptyHeadersCheck',
+      'readSheetCoordinates',
+      'directUploadConfig',
+      'useImportWizard',
+      'enablePaste'
     ];
 
     // Find unknown properties in componentData
     const unknownProperties = Object.keys(componentData).filter(prop => !knownProperties.includes(prop));
     if (unknownProperties.length > 0) {
       warnings.push(`Unknown configuration options found: ${unknownProperties.join(', ')}. These will be ignored.`);
+    }
+
+    // Validate marker configuration
+    if (componentData.nullMarker && componentData.emptyStringMarker && componentData.nullMarker === componentData.emptyStringMarker) {
+      errors.push('nullMarker and emptyStringMarker cannot be the same value');
     }
 
     // Check for standalone mode configuration issues

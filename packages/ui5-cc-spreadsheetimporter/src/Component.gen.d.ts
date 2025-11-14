@@ -51,6 +51,8 @@ declare module "./Component" {
         directUploadConfig?: object | PropertyBindingInfo | `{${string}}`;
         useImportWizard?: boolean | PropertyBindingInfo | `{${string}}`;
         enablePaste?: boolean | PropertyBindingInfo | `{${string}}`;
+        nullMarker?: string | PropertyBindingInfo;
+        emptyStringMarker?: string | PropertyBindingInfo;
         preFileProcessing?: (event: Component$PreFileProcessingEvent) => void;
         checkBeforeRead?: (event: Component$CheckBeforeReadEvent) => void;
         changeBeforeCreate?: (event: Component$ChangeBeforeCreateEvent) => void;
@@ -233,6 +235,14 @@ declare module "./Component" {
         // property: enablePaste
         getEnablePaste(): boolean;
         setEnablePaste(enablePaste: boolean): this;
+
+        // property: nullMarker
+        getNullMarker(): string;
+        setNullMarker(nullMarker: string): this;
+
+        // property: emptyStringMarker
+        getEmptyStringMarker(): string;
+        setEmptyStringMarker(emptyStringMarker: string): this;
 
         // event: preFileProcessing
         attachPreFileProcessing(fn: (event: Component$PreFileProcessingEvent) => void, listener?: object): this;

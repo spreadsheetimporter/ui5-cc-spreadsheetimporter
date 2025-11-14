@@ -9,6 +9,41 @@ import { CustomMessageTypes, FieldMatchType, MessageType } from '../enums';
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
 export default class Parser extends ManagedObject {
+  /**
+   * Detects semantic state from cell value and configured markers
+   * Supports both CREATE and UPDATE operations
+   * @param rawValue The raw value from the Excel cell
+   * @param nullMarker The configured null marker (e.g., '__NULL__')
+   * @param emptyStringMarker The configured empty string marker (e.g., '__EMPTY__')
+   * @returns State and processed value
+   */
+  static detectMarkerState(
+    rawValue: any,
+    nullMarker: string,
+    emptyStringMarker: string
+  ): { state: 'omit' | 'null' | 'emptyString' | 'value'; value: any } {
+    // Empty cell → omit property (no backend change for UPDATE, uses default for CREATE)
+    if (rawValue === undefined || rawValue === null || rawValue === '') {
+      return { state: 'omit', value: undefined };
+    }
+
+    // Convert to string for marker comparison (trimmed)
+    const rawValueStr = String(rawValue).trim();
+
+    // Null marker (case-sensitive exact match)
+    if (nullMarker && rawValueStr === nullMarker) {
+      return { state: 'null', value: null };
+    }
+
+    // Empty string marker (case-sensitive exact match)
+    if (emptyStringMarker && rawValueStr === emptyStringMarker) {
+      return { state: 'emptyString', value: '' };
+    }
+
+    // Normal value - proceed with type-specific parsing
+    return { state: 'value', value: rawValue };
+  }
+
   static parseSpreadsheetData(
     sheetData: ArrayData,
     typeLabelList: ListObject,
@@ -23,9 +58,65 @@ export default class Parser extends ManagedObject {
       let payload: Payload = {};
       // check each specified column if availalble in spreadsheet data
       for (const [columnKey, metadataColumn] of typeLabelList.entries()) {
-        // depending on parse type
+        // Get cell value from row using configured field matching strategy
         const value = Util.getValueFromRow(row, metadataColumn.label, columnKey, component.getFieldMatchType() as FieldMatchType);
-        // depending on data type
+
+        // === Marker Detection Phase (Four-State Model) ===
+        // Process markers BEFORE type-specific parsing to support: omit | null | emptyString | value
+        const nullMarker = component.getNullMarker();
+        const emptyMarker = component.getEmptyStringMarker();
+
+        if (nullMarker || emptyMarker) {
+          const markerState = this.detectMarkerState(value?.rawValue, nullMarker, emptyMarker);
+
+          // State 1: NULL marker - Explicitly set field to NULL
+          if (markerState.state === 'null') {
+            if (metadataColumn.nullable === false) {
+              // Reject: Field is non-nullable (e.g., keys, mandatory fields)
+              this.addMessageToMessages(
+                'spreadsheetimporter.nullValueNotAllowed',
+                util,
+                messageHandler,
+                index,
+                [metadataColumn.label],
+                value?.rawValue
+              );
+              continue; // Skip this field
+            }
+            // Accept: Set to JSON null and skip type parsing
+            payload[columnKey] = null;
+            continue;
+          }
+
+          // State 2: EMPTY STRING marker - Explicitly set to empty string (strings only)
+          if (markerState.state === 'emptyString') {
+            if (metadataColumn.type !== 'Edm.String') {
+              // Reject: Only valid for string fields
+              this.addMessageToMessages(
+                'spreadsheetimporter.emptyStringMarkerInvalidType',
+                util,
+                messageHandler,
+                index,
+                [metadataColumn.label],
+                value?.rawValue
+              );
+              continue; // Skip this field
+            }
+            // Accept: Set to empty string and skip type parsing
+            payload[columnKey] = '';
+            continue;
+          }
+
+          // State 3: OMIT - Empty cell means "no change"
+          if (markerState.state === 'omit') {
+            continue; // Property omitted from payload → backend keeps existing value
+          }
+
+          // State 4: VALUE - Normal value, fall through to type-specific parsing below
+        }
+
+        // === Type-Specific Parsing Phase ===
+        // Process non-empty values according to their OData type
         if (value && value.rawValue !== undefined && value.rawValue !== null && value.rawValue !== '') {
           const rawValue = value.rawValue;
           if (metadataColumn.type === 'Edm.Boolean') {
@@ -159,8 +250,11 @@ export default class Parser extends ManagedObject {
               this.addMessageToMessages('spreadsheetimporter.errorWhileParsing', util, messageHandler, index, [metadataColumn.label], rawValue);
             }
           } else {
-            // assign "" only if rawValue is undefined or null
-            payload[columnKey] = `${rawValue ?? ''}`;
+            // For unmatched types, only add to payload if rawValue is not null/undefined
+            // This ensures empty cells result in omitted properties (no backend update)
+            if (rawValue !== null && rawValue !== undefined) {
+              payload[columnKey] = String(rawValue);
+            }
           }
         }
       }

@@ -54,6 +54,9 @@ export default class MetadataHandlerV4 extends MetadataHandler {
           propertyObject.maxLength = property.$MaxLength;
           propertyObject.precision = property.$Precision;
           propertyObject.scale = property.$Scale;
+          // Extract nullable from metadata, default to true if not specified
+          // Note: Key properties are always Nullable="false" in OData metadata by specification
+          propertyObject.nullable = property.$Nullable ?? true;
           listObject.set(propertyName, propertyObject);
         } else {
           Log.warning(`SpreadsheetUpload: Property ${propertyName} not found`, undefined, 'SpreadsheetUpload: MetadataHandler');
@@ -83,6 +86,9 @@ export default class MetadataHandlerV4 extends MetadataHandler {
           propertyObject.maxLength = propertyValue.$MaxLength;
           propertyObject.precision = propertyValue.$Precision;
           propertyObject.scale = propertyValue.$Scale;
+          // Extract nullable from metadata, default to true if not specified
+          // Note: Key properties are always Nullable="false" in OData metadata by specification
+          propertyObject.nullable = propertyValue.$Nullable ?? true;
           listObject.set(propertyName, propertyObject);
         }
         // if no annotation is found, still try to add the property
@@ -96,6 +102,9 @@ export default class MetadataHandlerV4 extends MetadataHandler {
           propertyObject.maxLength = propertyValue.$MaxLength;
           propertyObject.precision = propertyValue.$Precision;
           propertyObject.scale = propertyValue.$Scale;
+          // Extract nullable from metadata, default to true if not specified
+          // Note: Key properties are always Nullable="false" in OData metadata by specification
+          propertyObject.nullable = propertyValue.$Nullable ?? true;
           listObject.set(propertyName, propertyObject);
         }
       }
@@ -119,6 +128,9 @@ export default class MetadataHandlerV4 extends MetadataHandler {
           propertyObject.maxLength = propertyValue.$MaxLength;
           propertyObject.precision = propertyValue.$Precision;
           propertyObject.scale = propertyValue.$Scale;
+          // Extract nullable from metadata, default to true if not specified
+          // Note: Key properties are always Nullable="false" in OData metadata by specification
+          propertyObject.nullable = propertyValue.$Nullable ?? true;
           listObject.set(propertyName, propertyObject);
         }
         // if no annotation is found, still try to add the property
@@ -132,6 +144,9 @@ export default class MetadataHandlerV4 extends MetadataHandler {
           propertyObject.maxLength = propertyValue.$MaxLength;
           propertyObject.precision = propertyValue.$Precision;
           propertyObject.scale = propertyValue.$Scale;
+          // Extract nullable from metadata, default to true if not specified
+          // Note: Key properties are always Nullable="false" in OData metadata by specification
+          propertyObject.nullable = propertyValue.$Nullable ?? true;
           listObject.set(propertyName, propertyObject);
         }
       }

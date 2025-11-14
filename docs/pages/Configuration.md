@@ -37,6 +37,8 @@ The table below summarizes the options available for the UI5 Spreadsheet Importe
 | [`batchSize`](#batchsize)                             | Controls the size of batches sent to the backend.                | `1000`          | 0.11.0          | `number`   |
 | [`strict`](#strict)                                   | Controls availability of the "Continue" button in error dialogs. | `false`         | 0.16.0          | `boolean`  |
 | [`decimalSeparator`](#decimalseparator)               | Sets the decimal separator for numbers.                          | Browser default | 0.17.0          | `string`   |
+| [`nullMarker`](#nullmarker)                           | Marker string for NULL values in Excel cells.                    | `'__NULL__'`    | [Next]          | `string`   |
+| [`emptyStringMarker`](#emptystringmarker)             | Marker string for empty strings (text fields only).              | `'__EMPTY__'`   | [Next]          | `string`   |
 | [`mandatoryFields`](#mandatoryfields)                 | Specifies mandatory fields to check in the spreadsheet.          | Not defined     | 0.15.0          | `string[]` |
 | [`skipMandatoryFieldCheck`](#skipmandatoryfieldcheck) | Skips the check for mandatory fields.                            | `false`         | 0.17.0          | `boolean`  |
 | [`skipColumnsCheck`](#skipcolumnscheck)               | Skips the check for unknown columns not in metadata.             | `false`         | 0.29.0          | `boolean`  |
@@ -423,6 +425,52 @@ This option defines whether the "Continue" button should be displayed in the err
 
 This option defines the decimal separator for numbers as a string.  
 This option is only needed if there are numbers as strings in the Spreadsheet File or when importing a CSV. When the datatype in the Spreadsheet File is a number, the decimal separator is automatically recognized.
+
+---
+
+### `nullMarker`
+
+**default:** `'__NULL__'` (enabled by default)  
+**Available since:** [Next Release]
+
+Marker string for NULL values in spreadsheet cells. Type this exact text in Excel to explicitly set fields to NULL.
+
+**Disable**: Set to empty string:
+
+```javascript
+nullMarker: ''; // Disabled
+```
+
+**Behavior**:
+
+- Cell contains `__NULL__` → Sends JSON `null` (if nullable)
+- Empty cell → Omitted (no change)
+
+For comprehensive guide, see [Null & Empty Value Handling](NullHandling.md).
+
+---
+
+### `emptyStringMarker`
+
+**default:** `'__EMPTY__'` (enabled by default)  
+**Available since:** [Next Release]
+
+Marker for empty strings (text fields only).
+
+**Disable**: Set to empty string:
+
+```javascript
+emptyStringMarker: ''; // Disabled
+```
+
+**Behavior**:
+
+- Cell contains `__EMPTY__` → Sends JSON `""` (not null)
+- Only valid for Edm.String fields
+
+For comprehensive guide, see [Null & Empty Value Handling](NullHandling.md).
+
+---
 
 ### `hidePreview`
 
