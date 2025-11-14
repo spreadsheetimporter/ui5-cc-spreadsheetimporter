@@ -27,20 +27,27 @@ export default class Parser extends ManagedObject {
       return { state: 'omit', value: undefined };
     }
 
-    // Convert to string for marker comparison (trimmed)
-    const rawValueStr = String(rawValue).trim();
+    // Marker detection is ONLY applicable for string values
+    // Non-string types (numbers, booleans, dates) should bypass marker checks
+    // to prevent false positives (e.g., nullMarker='0' matching numeric 0)
+    if (typeof rawValue !== 'string') {
+      return { state: 'value', value: rawValue };
+    }
 
-    // Null marker (case-sensitive exact match)
+    // For string values, perform trimmed marker comparison (case-sensitive exact match)
+    const rawValueStr = rawValue.trim();
+
+    // Null marker check
     if (nullMarker && rawValueStr === nullMarker) {
       return { state: 'null', value: null };
     }
 
-    // Empty string marker (case-sensitive exact match)
+    // Empty string marker check
     if (emptyStringMarker && rawValueStr === emptyStringMarker) {
       return { state: 'emptyString', value: '' };
     }
 
-    // Normal value - proceed with type-specific parsing
+    // Normal string value - proceed with type-specific parsing
     return { state: 'value', value: rawValue };
   }
 
