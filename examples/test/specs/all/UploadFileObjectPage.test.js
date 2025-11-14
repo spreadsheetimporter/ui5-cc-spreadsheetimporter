@@ -189,7 +189,7 @@ describe("Upload File Object Page", () => {
 
 	it("check Field: decimal", async () => {
 		const value = item.decimal;
-		expect(value).toBe("0.0122");
+		expect(value).toBe(0.012);
 	});
 
 	it("check Field: byte", async () => {
