@@ -87,7 +87,6 @@ annotate OrdersService.OrderItems with @(
             {Value: time, Label:'{i18n>time}'},
             {Value: boolean, Label:'Boolean'},
             {Value: decimal, Label:'Decimal'},
-            {Value: doubleScale, Label:'Double Scale'},
             {Value: byte, Label:'Byte'},
 		],
 		Identification: [ //Is the main field group
@@ -101,7 +100,6 @@ annotate OrdersService.OrderItems with @(
             {Value: time, Label:'{i18n>time}'},
             {Value: boolean, Label:'Boolean'},
             {Value: decimal, Label:'Decimal'},
-            {Value: doubleScale, Label:'Double Scale'},
             {Value: byte, Label:'Byte'},
             {Value: binary, Label:'Binary'},
 		],
@@ -231,7 +229,6 @@ annotate OrdersService.OrderItemsND with @(
             {Value: time, Label:'{i18n>time}'},
             {Value: boolean, Label:'Boolean'},
             {Value: decimal, Label:'Decimal'},
-            {Value: doubleScale, Label:'Double Scale'},
             {Value: byte, Label:'Byte'},
 		],
 		Identification: [ //Is the main field group
@@ -245,7 +242,6 @@ annotate OrdersService.OrderItemsND with @(
             {Value: time, Label:'{i18n>time}'},
             {Value: boolean, Label:'Boolean'},
             {Value: decimal, Label:'Decimal'},
-            {Value: doubleScale, Label:'Double Scale'},
             {Value: byte, Label:'Byte'},
             {Value: binary, Label:'Binary'},
 		],
