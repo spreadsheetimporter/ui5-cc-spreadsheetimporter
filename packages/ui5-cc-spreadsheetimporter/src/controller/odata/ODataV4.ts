@@ -134,14 +134,21 @@ export default class ODataV4 extends OData {
           updateReason: fullUpdate ? 'fullUpdate' : 'valueChanged'
         }));
 
-        this.createPromises.push(
-          context.setProperty(
-            property,
-            typeof newValue === 'object'
-              ? `${newValue.getUTCFullYear()}-${('0' + (newValue.getUTCMonth() + 1)).slice(-2)}-${('0' + newValue.getUTCDate()).slice(-2)}`
-              : newValue
-          )
-        );
+        // Format value for OData (handle null, dates, and primitives)
+        let formattedValue: any;
+        if (newValue === null) {
+          // Null marker: pass through as null
+          formattedValue = null;
+        } else if (newValue instanceof Date) {
+          // Date object: format as ISO date string (YYYY-MM-DD)
+          formattedValue = `${newValue.getUTCFullYear()}-${('0' + (newValue.getUTCMonth() + 1)).slice(-2)}-${('0' + newValue.getUTCDate()).slice(-2)}`;
+        } else {
+          // Primitive values: pass through as-is
+          formattedValue = newValue;
+        }
+
+        const setPropertyPromise = context.setProperty(property, formattedValue);
+        this.createPromises.push(setPropertyPromise);
       }
     });
 
