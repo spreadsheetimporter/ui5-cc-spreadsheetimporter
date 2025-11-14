@@ -74,8 +74,8 @@ When updating data, you may need to explicitly clear a field or set it to an emp
 | ID  | Name         | Email     | Phone    | Notes     |
 | --- | ------------ | --------- | -------- | --------- |
 | 123 |              |           | 555-1234 |           |
-| 456 | John Updated | **NULL**  |          | **EMPTY** |
-| 789 |              | **EMPTY** |          | Follow up |
+| 456 | John Updated | __NULL__  |          | __EMPTY__ |
+| 789 |              | __EMPTY__ |          | Follow up |
 
 - Record 123: Only phone is updated, all other fields unchanged
 - Record 456: Name updated, email set to NULL, notes set to empty string "", phone unchanged

@@ -63,7 +63,7 @@ export default class Parser extends ManagedObject {
     // loop over data from spreadsheet file
     for (const [index, row] of sheetData.entries()) {
       let payload: Payload = {};
-      // check each specified column if availalble in spreadsheet data
+      // check each specified column if available in spreadsheet data
       for (const [columnKey, metadataColumn] of typeLabelList.entries()) {
         // Get cell value from row using configured field matching strategy
         const value = Util.getValueFromRow(row, metadataColumn.label, columnKey, component.getFieldMatchType() as FieldMatchType);

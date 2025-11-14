@@ -18,7 +18,7 @@ The Spreadsheet Importer supports four distinct semantic states for each field:
 | --------------- | -------------------- | --------------------------------------------------- | --------------------------------------- |
 | **Empty cell**  | Property omitted     | No change (UPDATE)<br>Uses backend default (CREATE) | Leave existing value alone              |
 | **`__NULL__`**  | `"field": null`      | Set to NULL                                         | Explicitly clear a value                |
-| **`__EMPTY__`** | `"field": ""`        | Set to empty string                                 | Explicitly set empty (text fields only) |
+| **`__EMPTY__`** | `"field": ""`        | Set to empty string                                 | Explicitly set to empty string (text fields only) |
 | **Any value**   | `"field": value`     | Set to that value                                   | Normal data entry                       |
 
 ### Why This Matters
@@ -156,9 +156,9 @@ When disabled, markers are treated as literal string values.
 {
   "product_ID": "P002",
   "quantity": 5,
-  "title": "", // explicitly empty string
-  "description": null, // explicitly NULL
-  "notes": null // explicitly NULL
+  "title": "", // explicitly __EMPTY__
+  "description": null, // explicitly __NULL__
+  "notes": null // explicitly __NULL__
 }
 ```
 

@@ -55,7 +55,7 @@ export default class ValidationService extends ManagedObject {
    * Runs all validation checks
    */
   private runValidationChecks(spreadsheetData: ArrayData, columnNames: string[], typeLabelList: ListObject, odataKeyList: string[]): void {
-    // TODO(performance): this extremly ineffient, every check loops over the data, this takesong time for large datasets
+    // TODO(performance): this extremely inefficient, every check loops over the data, this takes long time for large datasets
     // Format validation
     this.messageHandler.checkFormat(spreadsheetData);
 
