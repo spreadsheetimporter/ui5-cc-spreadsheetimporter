@@ -187,6 +187,11 @@ describe("Upload File Object Page", () => {
 		expect(value).toBe("16:00:00");
 	});
 
+	it("check Field: decimal", async () => {
+		const value = item.decimal;
+		expect(value).toBe(0.012);
+	});
+
 	it("check Field: byte", async () => {
 		const value = item.byte;
 		expect(value).toBe(4);

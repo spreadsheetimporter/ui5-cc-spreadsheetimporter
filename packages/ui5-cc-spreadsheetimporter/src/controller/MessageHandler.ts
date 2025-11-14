@@ -114,17 +114,22 @@ export default class MessageHandler extends ManagedObject {
   checkFormat(data: ArrayData) {
     for (const [index, row] of data.entries()) {
       Object.values(row).forEach(({ sheetDataType, format, rawValue, formattedValue }) => {
-        if (sheetDataType === 'n' && format !== 'General' && rawValue !== Number(formattedValue)) {
-          const warningMessage = {
-            title: 'Format',
-            type: CustomMessageTypes.Formatting,
-            row: index + 2,
-            counter: 1,
-            ui5type: MessageType.Warning,
-            rawValue: rawValue,
-            formattedValue: formattedValue
-          } as Messages;
-          this.addMessageToMessages(warningMessage);
+        if (sheetDataType === 'n' && format !== 'General') {
+          // Apply floating-point correction before comparison (using pattern detection only)
+          const correctedRawValue = typeof rawValue === 'number' ? Util.fixFloatingPointPrecision(rawValue) : rawValue;
+
+          if (correctedRawValue !== Number(formattedValue)) {
+            const warningMessage = {
+              title: 'Format',
+              type: CustomMessageTypes.Formatting,
+              row: index + 2,
+              counter: 1,
+              ui5type: MessageType.Warning,
+              rawValue: correctedRawValue,
+              formattedValue: formattedValue
+            } as Messages;
+            this.addMessageToMessages(warningMessage);
+          }
         }
       });
     }

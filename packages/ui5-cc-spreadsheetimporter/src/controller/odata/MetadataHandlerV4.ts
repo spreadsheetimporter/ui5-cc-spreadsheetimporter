@@ -53,6 +53,7 @@ export default class MetadataHandlerV4 extends MetadataHandler {
           propertyObject.type = property.$Type;
           propertyObject.maxLength = property.$MaxLength;
           propertyObject.precision = property.$Precision;
+          propertyObject.scale = property.$Scale;
           listObject.set(propertyName, propertyObject);
         } else {
           Log.warning(`SpreadsheetUpload: Property ${propertyName} not found`, undefined, 'SpreadsheetUpload: MetadataHandler');
@@ -80,6 +81,8 @@ export default class MetadataHandlerV4 extends MetadataHandler {
           }
           propertyObject.type = propertyValue.$Type;
           propertyObject.maxLength = propertyValue.$MaxLength;
+          propertyObject.precision = propertyValue.$Precision;
+          propertyObject.scale = propertyValue.$Scale;
           listObject.set(propertyName, propertyObject);
         }
         // if no annotation is found, still try to add the property
@@ -91,6 +94,8 @@ export default class MetadataHandlerV4 extends MetadataHandler {
           }
           propertyObject.type = propertyValue.$Type;
           propertyObject.maxLength = propertyValue.$MaxLength;
+          propertyObject.precision = propertyValue.$Precision;
+          propertyObject.scale = propertyValue.$Scale;
           listObject.set(propertyName, propertyObject);
         }
       }
@@ -112,6 +117,8 @@ export default class MetadataHandlerV4 extends MetadataHandler {
           }
           propertyObject.type = propertyValue.$Type;
           propertyObject.maxLength = propertyValue.$MaxLength;
+          propertyObject.precision = propertyValue.$Precision;
+          propertyObject.scale = propertyValue.$Scale;
           listObject.set(propertyName, propertyObject);
         }
         // if no annotation is found, still try to add the property
@@ -123,6 +130,8 @@ export default class MetadataHandlerV4 extends MetadataHandler {
           }
           propertyObject.type = propertyValue.$Type;
           propertyObject.maxLength = propertyValue.$MaxLength;
+          propertyObject.precision = propertyValue.$Precision;
+          propertyObject.scale = propertyValue.$Scale;
           listObject.set(propertyName, propertyObject);
         }
       }

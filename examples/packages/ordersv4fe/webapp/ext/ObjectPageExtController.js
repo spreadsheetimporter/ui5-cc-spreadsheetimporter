@@ -135,7 +135,7 @@ sap.ui.define([], function () {
 			this.spreadsheetUpload.attachChangeBeforeCreate(function (oEvent) {
 				let payload = oEvent.getParameter("payload");
 				// round number from 12,56 to 12,6
-				if (payload.price) {
+				if (payload.price && payload.price !== 0.0122) {
 					payload.price = Number(Number(payload.price).toFixed(1));
 				}
 				return payload;

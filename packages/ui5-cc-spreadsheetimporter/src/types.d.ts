@@ -12,6 +12,7 @@ export interface Property {
   type: string;
   label: string;
   precision?: number;
+  scale?: number;
   $XYZKey?: boolean;
 }
 export type ListObject = Map<string, Property>;

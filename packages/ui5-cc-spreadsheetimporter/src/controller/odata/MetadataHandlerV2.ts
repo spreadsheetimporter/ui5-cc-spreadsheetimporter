@@ -42,6 +42,8 @@ export default class MetadataHandlerV2 extends MetadataHandler {
           }
           propertyObject.type = property['type'];
           propertyObject.maxLength = property['maxLength'];
+          propertyObject.precision = property['precision'];
+          propertyObject.scale = property['scale'];
           listObject.set(propertyName, propertyObject);
         } else {
           Log.warning(`SpreadsheetUpload: Property ${propertyName} not found`);
@@ -65,6 +67,8 @@ export default class MetadataHandlerV2 extends MetadataHandler {
           propertyObject.label = this.getLabel(odataEntityType, properties, property, propertyName);
           propertyObject.type = property['type'];
           propertyObject.maxLength = property['maxLength'];
+          propertyObject.precision = property['precision'];
+          propertyObject.scale = property['scale'];
           listObject.set(propertyName, propertyObject);
         }
       }
@@ -82,6 +86,8 @@ export default class MetadataHandlerV2 extends MetadataHandler {
           propertyObject.label = this.getLabel(odataEntityType, properties, property, propertyName);
           propertyObject.type = property['type'];
           propertyObject.maxLength = property['maxLength'];
+          propertyObject.precision = property['precision'];
+          propertyObject.scale = property['scale'];
           listObject.set(propertyName, propertyObject);
         }
       }
