@@ -192,7 +192,7 @@ export default class Parser extends ManagedObject {
     } else if (typeof rawValue === 'string') {
       const normalizedString = Util.normalizeNumberString(rawValue, component);
       valueDouble = parseFloat(normalizedString);
-      // check if value is a number and does not contain anything other than numbers and decimal separator
+      // check if the string contains anything other than numbers and decimal separator or if parsing failed
       if (/[^0-9.,]/.test(normalizedString) || isNaN(valueDouble)) {
         // Error: Value contains something other than numbers and decimal separator
         this.addMessageToMessages('spreadsheetimporter.parsingErrorNotNumber', util, messageHandler, index, [metadataColumn.label], rawValue);
