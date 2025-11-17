@@ -473,7 +473,9 @@ export default class SpreadsheetUpload extends ManagedObject {
   resetContent() {
     this.payloadArray = [];
     this.payload = [];
-    this.odataHandler.resetContexts();
+    // Pass the model to resetContexts to ensure pending changes are cleared
+    const model = this.binding?.getModel?.();
+    this.odataHandler.resetContexts(model);
     this.spreadsheetUploadDialogHandler.resetContent();
   }
 
