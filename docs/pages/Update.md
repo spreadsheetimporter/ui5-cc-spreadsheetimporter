@@ -1,9 +1,9 @@
 <!-- prettier-ignore-start -->
 
 !!! warning
-This feature is available since version 1.7.0 and currently experimental and may not work as expected.  
- Also only available for OData V4.  
- Please provide feedback: https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues
+    This feature is available since version 1.7.0 and currently experimental and may not work as expected.  
+    Also only available for OData V4.  
+    Please provide feedback: https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues
 
 <!-- prettier-ignore-end -->
 
@@ -74,8 +74,8 @@ When updating data, you may need to explicitly clear a field or set it to an emp
 | ID  | Name         | Email     | Phone    | Notes     |
 | --- | ------------ | --------- | -------- | --------- |
 | 123 |              |           | 555-1234 |           |
-| 456 | John Updated | __NULL__  |          | __EMPTY__ |
-| 789 |              | __EMPTY__ |          | Follow up |
+| 456 | John Updated | **NULL**  |          | **EMPTY** |
+| 789 |              | **EMPTY** |          | Follow up |
 
 - Record 123: Only phone is updated, all other fields unchanged
 - Record 456: Name updated, email set to NULL, notes set to empty string "", phone unchanged
