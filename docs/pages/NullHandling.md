@@ -1,5 +1,7 @@
 # Null & Empty Value Handling
 
+> **Available from version 2.4.0**
+
 ## Quick Overview
 
 The Spreadsheet Importer distinguishes between NULL values, empty strings, and omitted properties using markers. This is critical for UPDATE operations where you need to clear values vs. leave them unchanged.
@@ -16,6 +18,8 @@ The Spreadsheet Importer distinguishes between NULL values, empty strings, and o
 **Key insight**: In OData, omitted property ≠ null ≠ empty string. Each has different semantics.
 
 ## Configuration
+
+> **Available from version 2.4.0**
 
 Markers are **enabled by default**. Customize or disable them if needed:
 
