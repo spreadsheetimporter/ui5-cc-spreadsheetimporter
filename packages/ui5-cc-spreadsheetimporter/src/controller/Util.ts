@@ -473,8 +473,12 @@ export default class Util extends ManagedObject {
       warnings.push(`Unknown configuration options found: ${unknownProperties.join(', ')}. These will be ignored.`);
     }
 
-    // Validate marker configuration
-    if (componentData.nullMarker && componentData.emptyStringMarker && componentData.nullMarker === componentData.emptyStringMarker) {
+    // Validate marker configuration (apply defaults to catch conflicts with default values)
+    const effectiveNullMarker = componentData.nullMarker !== undefined ? componentData.nullMarker : '__NULL__';
+    const effectiveEmptyStringMarker = componentData.emptyStringMarker !== undefined ? componentData.emptyStringMarker : '__EMPTY__';
+
+    // Only validate if both markers are enabled (non-empty strings)
+    if (effectiveNullMarker !== '' && effectiveEmptyStringMarker !== '' && effectiveNullMarker === effectiveEmptyStringMarker) {
       errors.push('nullMarker and emptyStringMarker cannot be the same value');
     }
 
