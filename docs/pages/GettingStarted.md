@@ -325,32 +325,32 @@ When deploying the component decentrally to an ABAP system, its namespace is reg
 
 This is why we recommend starting with central deployment.
 
-#### Using the Component Outside the App Index
+#### Using the Component Outside the App Index (Standalone Apps)
 
-If the component is used outside the Fiori Launchpad, or if it cannot be found even after deployment, you can direct the app to the correct path using `url` and `name` in the `createComponent` method:
+Running outside Fiori Launchpad? Register the component path in `index.html`.
 
-```javascript
-openSpreadsheetUploadDialog: async function (oEvent) {
-  this.getView().setBusyIndicatorDelay(0);
-  this.getView().setBusy(true);
-  this.spreadsheetUpload = await this.getView()
-    .getController()
-    .getAppComponent()
-    .createComponent({
-      usage: "spreadsheetImporter",
-      async: true,
-      componentData: {
-        context: this,
-      },
-      url: "/sap/bc/ui5_ui5/sap/Z_XUP_v0_33_2",
-      name: "cc.spreadsheetimporter.v2_3_0"
-    });
-  this.spreadsheetUpload.openSpreadsheetUploadDialog();
-  this.getView().setBusy(false);
-}
+**Register in `index.html`:**
+
+```html
+<script
+  id="sap-ui-bootstrap"
+  src="resources/sap-ui-core.js"
+  data-sap-ui-resourceroots='{
+        "your.app.namespace": "./",
+        "cc.spreadsheetimporter.v2_3_0": "/sap/bc/ui5_ui5/sap/Z_XUP/thirdparty/customcontrol/spreadsheetimporter/v2_3_0"
+    }'
+></script>
 ```
 
-This method can be used as an alternative to `resourceRoots` in the `manifest.json` when you do not have access to the `manifest.json` (e.g., in adaptation projects).
+**In `manifest.json`:**
+
+```json
+"componentUsages": {
+  "spreadsheetImporter": {
+    "name": "cc.spreadsheetimporter.v2_3_0"
+  }
+}
+```
 
 #### Error: Library/Component Used in Application Does Not Exist
 
