@@ -107,7 +107,7 @@ export default abstract class OData extends ManagedObject {
             if (!component.getContinueOnError()) {
               this.busyDialog.close();
               spreadsheetUploadController.errorsFound = true;
-              this.resetContexts();
+              this.resetContexts(model);
               fnReject('Error while calling the odata service');
               break;
             }
@@ -121,7 +121,7 @@ export default abstract class OData extends ManagedObject {
             await this.waitForDraft();
           }
 
-          this.resetContexts();
+          this.resetContexts(model);
           currentProgressPercent = currentProgressPercent + (batch.length / payloadArray.length) * 100;
           currentProgressValue = currentProgressValue + batch.length;
           (this.busyDialog.getModel('busyModel') as JSONModel).setProperty('/progressPercent', currentProgressPercent);
@@ -142,7 +142,9 @@ export default abstract class OData extends ManagedObject {
       fnResolve();
     } catch (error) {
       this.busyDialog.close();
-      this.resetContexts();
+      // Get binding model for resetContexts
+      const model = binding.getModel();
+      this.resetContexts(model);
       Log.error('Error while calling the odata service', error as Error, 'SpreadsheetUpload: callOdata');
       await this.showInternalErrorDialog(error);
       await this.checkForODataErrors(component.getShowBackendErrorMessages());
@@ -277,7 +279,7 @@ export default abstract class OData extends ManagedObject {
   abstract submitChanges(model: any): Promise<any>;
   abstract waitForCreation(): Promise<any>;
   abstract waitForDraft(): void;
-  abstract resetContexts(): void;
+  abstract resetContexts(model?: any): void;
   abstract getMetadataHandler(): MetadataHandlerV2 | MetadataHandlerV4;
   abstract getLabelList(columns: Columns, odataType: string, excludeColumns: Columns, binding?: any): Promise<ListObject>;
   abstract getKeyList(odataType: string, tableObject: any): Promise<string[]>;

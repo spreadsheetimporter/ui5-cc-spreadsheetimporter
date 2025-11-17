@@ -249,9 +249,16 @@ export default class ODataV4 extends OData {
     return this.getMetadataHandler().getKeyList(odataType);
   }
 
-  resetContexts() {
+  resetContexts(model?: any) {
     this.createContexts = [];
     this.createPromises = [];
+
+    // Reset pending changes in the model to prevent "key already exists" errors on re-upload
+    // This follows SAP best practice for error handling - see issue #786
+    if (model && typeof model.resetChanges === 'function') {
+      Log.debug('Resetting pending changes in OData V4 model', undefined, 'SpreadsheetUpload: ODataV4');
+      model.resetChanges();
+    }
   }
 
   getMetadataHandler(): MetadataHandlerV4 {
