@@ -55,11 +55,15 @@ export default class ValidationService extends ManagedObject {
    * Runs all validation checks
    */
   private runValidationChecks(spreadsheetData: ArrayData, columnNames: string[], typeLabelList: ListObject, odataKeyList: string[]): void {
+    // TODO(performance): this extremely inefficient, every check loops over the data, this takes long time for large datasets
     // Format validation
     this.messageHandler.checkFormat(spreadsheetData);
 
     // Mandatory fields validation
     this.messageHandler.checkMandatoryColumns(spreadsheetData, columnNames, odataKeyList, this.component.getMandatoryFields(), typeLabelList);
+
+    // Note: Nullable validation happens in Parser.ts during marker detection (lines 72-84)
+    // Parser already prevents null on non-nullable fields, so no separate validation needed here
 
     // Duplicate columns check
     this.messageHandler.checkDuplicateColumns(columnNames);

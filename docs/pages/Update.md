@@ -1,9 +1,9 @@
 <!-- prettier-ignore-start -->
 
 !!! warning
-This feature is available since version 1.7.0 and currently experimental and may not work as expected.  
- Also only available for OData V4.  
- Please provide feedback: https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues
+    This feature is available since version 1.7.0 and currently experimental and may not work as expected.  
+    Also only available for OData V4.  
+    Please provide feedback: https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues
 
 <!-- prettier-ignore-end -->
 
@@ -56,6 +56,44 @@ When the user presses the upload button, it will fetch all the data in the batch
 This data is used to determine if the object is in draft or active mode, if the object exists at all, and for partial updates whether a field is changed.
 
 For every change, an `ODataContextBinding` is created and the data is updated.
+
+### Setting Values to NULL or Empty String
+
+When updating data, you may need to explicitly clear a field or set it to an empty string. The Spreadsheet Importer supports this via two markers:
+
+1. Download existing data (make sure to include keys: `addKeysToExport: true`)
+2. Edit the spreadsheet:
+   - **Leave cell empty** → Field is not changed (existing value preserved)
+   - **Type `__NULL__`** → Field is set to NULL (if nullable)
+   - **Type `__EMPTY__`** → Field is set to empty string (text fields only)
+   - **Type a new value** → Field is updated to that value
+3. Upload the file
+
+**Example**: Updating customer information
+
+| ID  | Name         | Email     | Phone    | Notes     |
+| --- | ------------ | --------- | -------- | --------- |
+| 123 |              |           | 555-1234 |           |
+| 456 | John Updated | **NULL**  |          | **EMPTY** |
+| 789 |              | **EMPTY** |          | Follow up |
+
+- Record 123: Only phone is updated, all other fields unchanged
+- Record 456: Name updated, email set to NULL, notes set to empty string "", phone unchanged
+- Record 789: Email set to empty string "", notes updated, name and phone unchanged
+
+**Important**:
+
+- `__NULL__` sets field to NULL (database NULL)
+- `__EMPTY__` sets field to empty string "" (not NULL, only for text fields)
+- Empty cell = no change (existing value preserved)
+
+**Validation**:
+
+- The component checks OData metadata for nullable fields
+- If a field is non-nullable (Nullable="false"), you'll get an error when trying to set it to NULL
+- Using `__EMPTY__` on non-string fields (numbers, booleans, dates) will cause an error
+
+For detailed explanation with more examples, see [Null & Empty Value Handling](NullHandling.md).
 
 ## Things to consider / Drawbacks
 

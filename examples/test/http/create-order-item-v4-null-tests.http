@@ -1,0 +1,217 @@
+### HTTP Test Scripts for OrderItems V4 Endpoint - Null Value Testing
+### Base URL - adjust if needed
+@baseUrl = http://localhost:4004
+@servicePath = /odata/v4/orders
+
+### Step 0: Get first Order (execute this first!)
+### This automatically captures the Order ID for all subsequent requests
+# @name getFirstOrder
+GET {{baseUrl}}{{servicePath}}/Orders?$top=1&$orderby=createdAt desc HTTP/1.1
+Accept: application/json
+
+### Order ID is automatically set from Step 0 response
+@orderId = {{getFirstOrder.response.body.value[0].ID}}
+
+### Step 1: (Optional) Create a new Order if needed
+### Only use this if you want to create a specific test order
+### After creating, you can either:
+###   a) Re-run Step 0 to use the new order, or
+###   b) Copy the ID from response and set @orderId manually
+POST {{baseUrl}}{{servicePath}}/Orders HTTP/1.1
+Content-Type: application/json
+
+{
+  "OrderNo": "TEST-NULL-001",
+  "buyer": "test@test.de",
+  "IsActiveEntity": true
+}
+
+### Step 2: Create multiple OrderItems with various null value scenarios (combines previous Steps 2-7)
+# NOTE: OrderItems is draft-enabled and must be created via Orders deep insert
+# NOTE: quantity is mandatory (Common.FieldControl: #Mandatory) so it cannot be null
+# This single request creates 6 OrderItems testing:
+#   - PROD-001: All nullable fields set to null (tests explicit null assignment)
+#   - PROD-002: Fields omitted (tests "no update" behavior - omitted fields should not be touched)
+#   - PROD-003: Empty string "" vs null for string field (tests that "" is different from null)
+#   - PROD-004: Zero vs null for numeric fields (tests that 0 is different from null)
+#   - PROD-005: False vs null for boolean field (tests that false is different from null)
+#   - PROD-006: Baseline with all fields populated (for PATCH operations in Steps 8-12)
+PATCH {{baseUrl}}{{servicePath}}/Orders(ID='{{orderId}}',IsActiveEntity=true) HTTP/1.1
+Content-Type: application/json
+
+{
+  "Items": [
+    {
+      "product_ID": "PROD-001",
+      "quantity": 1,
+      "title": null,
+      "price": null,
+      "validFrom": null,
+      "timestamp": null,
+      "date": null,
+      "time": null,
+      "boolean": null,
+      "decimal": null,
+      "byte": null
+    },
+	{
+      "product_ID": "PROD-002",
+      "quantity": 10
+    },
+	{
+      "product_ID": "PROD-003",
+      "quantity": 5,
+      "title": "",
+      "price": 100.50
+    },
+	{
+      "product_ID": "PROD-004",
+      "quantity": 0,
+      "price": 0.0,
+      "decimal": 0.000,
+      "byte": 0,
+      "title": "Zero Values Test"
+    },
+	{
+      "product_ID": "PROD-005",
+      "quantity": 1,
+      "boolean": false,
+      "title": "Boolean False Test"
+    },
+	{
+      "product_ID": "PROD-006",
+      "quantity": 15,
+      "title": "Baseline Test Product",
+      "price": 99.99,
+      "validFrom": "2025-01-15T10:30:00Z",
+      "timestamp": "2025-01-15T10:30:00.123Z",
+      "date": "2025-01-15",
+      "time": "10:30:00",
+      "boolean": true,
+      "decimal": 123.456,
+      "byte": 255
+    }
+  ]
+}
+
+### Step 2a: Get the latest OrderItem ID (execute after Step 2, before Steps 3-7)
+### This fetches PROD-006 (baseline OrderItem) created in Step 2 for PATCH operations
+# @name getLatestOrderItem
+GET {{baseUrl}}{{servicePath}}/Orders(ID='{{orderId}}',IsActiveEntity=true)/Items?$top=1 HTTP/1.1
+Accept: application/json
+
+### OrderItem ID is automatically set from Step 2a response
+@orderItemId = {{getLatestOrderItem.response.body.value[0].ID}}
+
+### Step 3: PATCH OrderItem - Set string field to null
+# Execute Step 2a first to automatically capture the OrderItem ID (PROD-006 from Step 2)
+# OrderItems are draft-enabled, so we patch via Orders navigation
+PATCH {{baseUrl}}{{servicePath}}/Orders(ID='{{orderId}}',IsActiveEntity=true)/Items(ID='{{orderItemId}}',IsActiveEntity=false) HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": null
+}
+
+### Step 4: PATCH OrderItem - Set numeric field to null
+# NOTE: quantity cannot be null (mandatory field), so this will fail for quantity
+PATCH {{baseUrl}}{{servicePath}}/Orders(ID='{{orderId}}',IsActiveEntity=true)/Items(ID='{{orderItemId}}',IsActiveEntity=false) HTTP/1.1
+Content-Type: application/json
+
+{
+  "price": null,
+  "decimal": null
+}
+
+### Step 5: PATCH OrderItem - Omit fields (should not change them)
+# This should not modify any fields
+PATCH {{baseUrl}}{{servicePath}}/Orders(ID='{{orderId}}',IsActiveEntity=true)/Items(ID='{{orderItemId}}',IsActiveEntity=false) HTTP/1.1
+Content-Type: application/json
+
+{
+  "product_ID": "PROD-UPDATED"
+}
+
+### Step 6: PATCH OrderItem - Set boolean to null
+PATCH {{baseUrl}}{{servicePath}}/Orders(ID='{{orderId}}',IsActiveEntity=true)/Items(ID='{{orderItemId}}',IsActiveEntity=false) HTTP/1.1
+Content-Type: application/json
+
+{
+  "boolean": null
+}
+
+### Step 7: PATCH OrderItem - Set date/time fields to null
+PATCH {{baseUrl}}{{servicePath}}/Orders(ID='{{orderId}}',IsActiveEntity=true)/Items(ID='{{orderItemId}}',IsActiveEntity=false) HTTP/1.1
+Content-Type: application/json
+
+{
+  "validFrom": null,
+  "timestamp": null,
+  "date": null,
+  "time": null
+}
+
+### Step 8: Invalid test - Empty string for numeric field (should fail with 400/422)
+# This should fail because "" is not a valid number
+PATCH {{baseUrl}}{{servicePath}}/Orders(ID='{{orderId}}',IsActiveEntity=true) HTTP/1.1
+Content-Type: application/json
+
+{
+  "Items": [
+    {
+      "product_ID": "PROD-007",
+      "quantity": "",
+      "title": "Invalid Empty String for Number"
+    }
+  ]
+}
+
+### Step 9: Invalid test - String "NULL" for numeric field (should fail with 400/422)
+# This should fail because "NULL" string is not a valid number
+PATCH {{baseUrl}}{{servicePath}}/Orders(ID='{{orderId}}',IsActiveEntity=true) HTTP/1.1
+Content-Type: application/json
+
+{
+  "Items": [
+    {
+      "product_ID": "PROD-008",
+      "quantity": "NULL",
+      "title": "Invalid NULL String for Number"
+    }
+  ]
+}
+
+### Step 10: Invalid test - Empty string for boolean field (should fail with 400/422)
+PATCH {{baseUrl}}{{servicePath}}/Orders(ID='{{orderId}}',IsActiveEntity=true) HTTP/1.1
+Content-Type: application/json
+
+{
+  "Items": [
+    {
+      "product_ID": "PROD-009",
+      "quantity": 1,
+      "boolean": "",
+      "title": "Invalid Empty String for Boolean"
+    }
+  ]
+}
+
+### Step 11: Invalid test - Empty string for date field (should fail with 400/422)
+PATCH {{baseUrl}}{{servicePath}}/Orders(ID='{{orderId}}',IsActiveEntity=true) HTTP/1.1
+Content-Type: application/json
+
+{
+  "Items": [
+    {
+      "product_ID": "PROD-010",
+      "quantity": 1,
+      "date": "",
+      "title": "Invalid Empty String for Date"
+    }
+  ]
+}
+
+### Step 12: Query created OrderItems to verify null values
+GET {{baseUrl}}{{servicePath}}/OrderItems?$filter=order_ID eq '{{orderId}}'&$orderby=product_ID HTTP/1.1
+Accept: application/json
+

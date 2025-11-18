@@ -16,6 +16,15 @@ To ensure a smooth process without errors, it is recommended to always download 
 
 Now, fill the template with the necessary data and save the file.
 
+!!! tip "Working with NULL and Empty Values"
+The Spreadsheet Importer supports precise control over null and empty values:
+
+    - **Empty cell**: Field is not changed (UPDATE) or uses backend default (CREATE)
+    - **Type `__NULL__`**: Explicitly set field to NULL (cleared value)
+    - **Type `__EMPTY__`**: Set string field to empty string (not NULL)
+
+    For comprehensive guide with examples, see [Null & Empty Value Handling](NullHandling.md).
+
 ![Fill out Spreadsheet File](./../images/fill_out_spreadsheet_file.png){ loading=lazy }
 
 4\. Upload File to Application

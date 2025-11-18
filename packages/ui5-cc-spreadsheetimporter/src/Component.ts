@@ -88,7 +88,9 @@ export default class Component extends UIComponent implements IAsyncContentCreat
       updateConfig: { type: 'object', defaultValue: {} },
       directUploadConfig: { type: 'object', defaultValue: {} },
       useImportWizard: { type: 'boolean', defaultValue: false },
-      enablePaste: { type: 'boolean', defaultValue: true }
+      enablePaste: { type: 'boolean', defaultValue: true },
+      nullMarker: { type: 'string', defaultValue: '__NULL__' },
+      emptyStringMarker: { type: 'string', defaultValue: '__EMPTY__' }
     },
     aggregations: {
       rootControl: {
@@ -202,6 +204,8 @@ export default class Component extends UIComponent implements IAsyncContentCreat
     this.setShowDownloadButton(compData?.showDownloadButton);
     this.setUseImportWizard(compData?.useImportWizard);
     this.setEnablePaste(compData?.enablePaste);
+    this.setNullMarker(compData?.nullMarker);
+    this.setEmptyStringMarker(compData?.emptyStringMarker);
     if (compData?.availableOptions && compData?.availableOptions.length > 0) {
       // if availableOptions is set show the Options Menu
       this.setShowOptions(true);

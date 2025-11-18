@@ -11,6 +11,7 @@ nav:
   - Core Concepts:
       - How it works: pages/HowItWorks.md
       - Configuration: pages/Configuration.md
+      - Null & Empty Values: pages/NullHandling.md
       - Events: pages/Events.md
       - Error Handling: pages/Checks.md
 

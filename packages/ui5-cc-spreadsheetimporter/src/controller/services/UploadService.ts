@@ -181,8 +181,18 @@ export default class UploadService extends ManagedObject {
     return data.map(item => {
       const newObj: { [key: string]: any } = {};
       for (const key in item) {
-        if (item[key].hasOwnProperty('rawValue')) {
-          newObj[key] = item[key].rawValue;
+        const value = item[key];
+        // Handle null values from null marker (pass through as null)
+        if (value === null) {
+          newObj[key] = null;
+        }
+        // Handle objects with rawValue property
+        else if (value && typeof value === 'object' && Object.prototype.hasOwnProperty.call(value, 'rawValue')) {
+          newObj[key] = value.rawValue;
+        }
+        // Handle direct primitive values (pass through as-is)
+        else {
+          newObj[key] = value;
         }
       }
       return newObj;
@@ -196,8 +206,18 @@ export default class UploadService extends ManagedObject {
     return data.map(item => {
       const newObj: { [key: string]: any } = {};
       for (const key in item) {
-        if (item[key].hasOwnProperty('formattedValue')) {
-          newObj[key] = item[key].formattedValue;
+        const value = item[key];
+        // Handle null values from null marker (pass through as null)
+        if (value === null) {
+          newObj[key] = null;
+        }
+        // Handle objects with formattedValue property
+        else if (value && typeof value === 'object' && Object.prototype.hasOwnProperty.call(value, 'formattedValue')) {
+          newObj[key] = value.formattedValue;
+        }
+        // Handle direct primitive values (pass through as-is)
+        else {
+          newObj[key] = value;
         }
       }
       return newObj;

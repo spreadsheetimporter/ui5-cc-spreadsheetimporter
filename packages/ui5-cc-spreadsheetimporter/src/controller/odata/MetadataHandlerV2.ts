@@ -44,6 +44,8 @@ export default class MetadataHandlerV2 extends MetadataHandler {
           propertyObject.maxLength = property['maxLength'];
           propertyObject.precision = property['precision'];
           propertyObject.scale = property['scale'];
+          // Extract nullable from metadata, default to true if not specified
+          propertyObject.nullable = property['nullable'] !== 'false';
           listObject.set(propertyName, propertyObject);
         } else {
           Log.warning(`SpreadsheetUpload: Property ${propertyName} not found`);
@@ -69,6 +71,8 @@ export default class MetadataHandlerV2 extends MetadataHandler {
           propertyObject.maxLength = property['maxLength'];
           propertyObject.precision = property['precision'];
           propertyObject.scale = property['scale'];
+          // Extract nullable from metadata, default to true if not specified
+          propertyObject.nullable = property['nullable'] !== 'false';
           listObject.set(propertyName, propertyObject);
         }
       }
@@ -88,6 +92,8 @@ export default class MetadataHandlerV2 extends MetadataHandler {
           propertyObject.maxLength = property['maxLength'];
           propertyObject.precision = property['precision'];
           propertyObject.scale = property['scale'];
+          // Extract nullable from metadata, default to true if not specified
+          propertyObject.nullable = property['nullable'] !== 'false';
           listObject.set(propertyName, propertyObject);
         }
       }

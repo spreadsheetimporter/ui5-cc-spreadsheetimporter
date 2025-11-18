@@ -222,7 +222,7 @@ export default class ImportService {
    */
   async validateProcessedData(processedData: any, showMessages: boolean = false): Promise<{ isValid: boolean; messages: any[]; processedData: any }> {
     try {
-      // Validate data
+      // Validate data (nullable validation already done in Parser during parsing)
       const validation = await this.validateData(processedData.spreadsheetSheetsData, processedData.columnNames);
 
       // Handle validation messages

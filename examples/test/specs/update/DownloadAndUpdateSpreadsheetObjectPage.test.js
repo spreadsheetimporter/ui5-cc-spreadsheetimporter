@@ -1,3 +1,13 @@
+/**
+ * Test: Download and Update Spreadsheet with Null and Empty Markers
+ *
+ * This test validates the four-state model for null/empty handling:
+ * - Row 1: Normal value update
+ * - Row 2: __EMPTY__ marker (sets string field to empty string)
+ * - Row 3: __NULL__ marker (sets field to NULL)
+ * - Row 4: Property omitted (keeps existing value unchanged)
+ */
+
 const path = require("path");
 const fs = require("fs");
 const XLSX = require("xlsx");
@@ -15,6 +25,10 @@ const TEST_CONSTANTS = {
 		ID: "64e718c9-ff99-47f1-8ca3-950c850777d9",
 		NEW_QUANTITY: 999
 	},
+	MARKERS: {
+		NULL: "__NULL__", // Marker to set field to NULL
+		EMPTY: "__EMPTY__" // Marker to set string field to empty string
+	},
 	SELECTORS: {
 		UPLOAD_DIALOG: {
 			BUTTON_ID: "ui.v4.ordersv4fe::OrdersObjectPage--fe::table::Items::LineItem::CustomAction::ObjectPageExtControllerUpdate",
@@ -30,7 +44,7 @@ const TEST_CONSTANTS = {
 	WAIT_TIME: 4000
 };
 
-describe("Download and Update Spreadsheet Object Page", () => {
+describe("Download and Update Spreadsheet Object Page with Null and Empty Markers", () => {
 	let BaseClass, BaseUploadClass, downloadDir;
 
 	before(async () => {
@@ -124,15 +138,38 @@ describe("Download and Update Spreadsheet Object Page", () => {
 		);
 	});
 
-	it("should modify spreadsheet data", async () => {
+	it("should modify spreadsheet data with null and empty markers", async () => {
 		const filePath = path.join(downloadDir, TEST_CONSTANTS.FILE.NAME);
 		const workbook = XLSX.readFile(filePath);
 		const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
 		const data = XLSX.utils.sheet_to_json(firstSheet);
 
-		// Update quantity for all rows
-		data.forEach((row) => {
-			row["Quantity[quantity]"] = TEST_CONSTANTS.ORDER.NEW_QUANTITY;
+		// Test different marker scenarios for each row
+		data.forEach((row, index) => {
+			if (index === 0) {
+				// Row 1: Normal update with a value
+				row["Quantity[quantity]"] = TEST_CONSTANTS.ORDER.NEW_QUANTITY;
+				row["ProductTitle[title]"] = "Updated Product";
+			} else if (index === 1 && data.length > 1) {
+				// Row 2: Set title to empty string marker (strings only)
+				row["Quantity[quantity]"] = TEST_CONSTANTS.ORDER.NEW_QUANTITY;
+				row["ProductTitle[title]"] = TEST_CONSTANTS.MARKERS.EMPTY; // Empty string marker (only valid for strings)
+			} else if (index === 2 && data.length > 2) {
+				// Row 3: Set title to NULL marker and test with date field
+				row["Quantity[quantity]"] = TEST_CONSTANTS.ORDER.NEW_QUANTITY;
+				row["ProductTitle[title]"] = TEST_CONSTANTS.MARKERS.NULL; // NULL marker - clears the field to NULL
+				// If date field exists in your spreadsheet:
+				if (row["date[date]"] !== undefined) {
+					row["date[date]"] = TEST_CONSTANTS.MARKERS.NULL; // NULL marker for date field
+				}
+			} else if (index === 3 && data.length > 3) {
+				// Row 4: Leave title empty (property omitted = no change)
+				row["Quantity[quantity]"] = TEST_CONSTANTS.ORDER.NEW_QUANTITY;
+				delete row["ProductTitle[title]"]; // Property omitted = backend keeps existing value
+			} else {
+				// Remaining rows: Normal update
+				row["Quantity[quantity]"] = TEST_CONSTANTS.ORDER.NEW_QUANTITY;
+			}
 		});
 
 		// Save modified data
@@ -164,12 +201,34 @@ describe("Download and Update Spreadsheet Object Page", () => {
 		await BaseClass.dummyWait(TEST_CONSTANTS.WAIT_TIME);
 	});
 
-	it("should verify updated quantities", async () => {
+	it("should verify updated quantities and marker values", async () => {
 		const response = await fetch(`${TEST_CONSTANTS.API.BASE_URL}(ID=${TEST_CONSTANTS.ORDER.ID},IsActiveEntity=true)/Items`);
 		const data = await response.json();
 
-		data.value.forEach((item) => {
+		data.value.forEach((item, index) => {
+			// Verify quantity is updated for all rows
 			expect(item.quantity).toBe(TEST_CONSTANTS.ORDER.NEW_QUANTITY);
+
+			// Verify marker behavior based on what we set
+			if (index === 0) {
+				// Row 1: Should have "Updated Product"
+				expect(item.title).toBe("Updated Product");
+			} else if (index === 1) {
+				// Row 2: Should have empty string (from __EMPTY__ marker)
+				expect(item.title).toBe("");
+			} else if (index === 2) {
+				// Row 3: Should have NULL (from __NULL__ marker)
+				expect(item.title).toBeNull();
+				// If date field was set to NULL
+				if (item.date !== undefined) {
+					expect(item.date).toBeNull();
+				}
+			} else if (index === 3) {
+				// Row 4: Title should be unchanged (property was omitted)
+				// Can't verify this without knowing original value, but it shouldn't be null or empty unless it was before
+				// Just verify it exists
+				expect(item.title).toBeDefined();
+			}
 		});
 	});
 

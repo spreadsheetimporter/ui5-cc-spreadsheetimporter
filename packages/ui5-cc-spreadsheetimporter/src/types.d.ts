@@ -13,6 +13,7 @@ export interface Property {
   label: string;
   precision?: number;
   scale?: number;
+  nullable?: boolean;
   $XYZKey?: boolean;
 }
 export type ListObject = Map<string, Property>;
@@ -135,6 +136,18 @@ export interface ComponentData {
    * Whether to enable paste functionality for data and files
    */
   enablePaste?: boolean;
+  /**
+   * Marker string for NULL values in Excel cells
+   * Default: '__NULL__' (enabled)
+   * Set to '' to disable
+   */
+  nullMarker?: string;
+  /**
+   * Marker string for empty strings in Excel cells (text fields only)
+   * Default: '__EMPTY__' (enabled)
+   * Set to '' to disable
+   */
+  emptyStringMarker?: string;
 }
 
 export interface DeepDownloadConfig {
