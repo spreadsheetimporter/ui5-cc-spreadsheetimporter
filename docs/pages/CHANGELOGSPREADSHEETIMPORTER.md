@@ -1,3 +1,37 @@
+## [2.3.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v2.2.0...ui5-cc-spreadsheetimporter-v2.3.0) (2025-07-04)
+
+### Features
+
+- introduce pasting data or files to upload dialog ([#778](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/778)) ([10413df](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/10413df13889684b702b508f8d307bbc20496de9))
+
+### Bug Fixes
+
+- add dragdrop to wizard ([#777](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/777)) ([d2e2244](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/d2e22443f776bbc5d3e28d9ed928f421783fc12a))
+- add template download button to wizard ([#775](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/775)) ([4f1277a](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/4f1277aafd948cf9541c57d075e4cc470e4b694d))
+
+## [2.4.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v2.3.0...ui5-cc-spreadsheetimporter-v2.4.0) (2025-11-18)
+
+### Features
+
+- add markers for null and empty values ([#791](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/791)) ([1854fa8](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/1854fa854395465ee2f77676c727bbf42e9a9962))
+
+### Bug Fixes
+
+- handle floatingpoints errors coming from excel ([#789](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/789)) ([0ceb925](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/0ceb9252b8693886f0de75f5502fc5fdfe8d74f6))
+- reset OData model pending changes after backend errors ([#792](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/792)) ([672ea86](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/672ea86ca86e62f0df58c267f9d3323991920dab))
+
+## [2.2.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v2.1.0...ui5-cc-spreadsheetimporter-v2.2.0) (2025-07-02)
+
+### Features
+
+- add indicator if data is inserted or updated ([#772](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/772)) ([df9fc49](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/df9fc4951abe1c5a710e90a10d2a12989738e7d6))
+- new language korean and fixes missing i18n strings ([#756](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/756)) ([47ad3be](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/47ad3be2eb21ead74d703c49763ed034a9baa18c))
+- wizard to import spreadsheet files ([#759](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/759)) ([03f86ee](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/03f86eebfeeae63ce86a78e8dda30a85a720aada))
+
+### Bug Fixes
+
+- fail if object was not found in backend ([#771](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/771)) ([d73e57a](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/d73e57acd1ca5db2b24b449ec384bfdb5ba93957))
+
 ## [2.1.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v2.0.0...ui5-cc-spreadsheetimporter-v2.1.0) (2025-04-28)
 
 ### Features
@@ -12,29 +46,6 @@
 - event handler prefixed with dot in xml views ([#738](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/738)) ([9f04a83](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/9f04a83f5c4cd00e93c81321cef0ad7901e7eae4))
 - handle process if object was not found in backend ([#735](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/735)) ([8aed7e9](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/8aed7e9b99c45aed593c1f00b4a5287f93bd890f))
 - return error if wrong table type is specified ([#739](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/739)) ([83c80dd](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/83c80ddefe75714414aa4064e93860510b87e5c2))
-
-## [2.3.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v2.2.0...ui5-cc-spreadsheetimporter-v2.3.0) (2025-07-04)
-
-### Features
-
-- introduce pasting data or files to upload dialog ([#778](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/778)) ([10413df](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/10413df13889684b702b508f8d307bbc20496de9))
-
-### Bug Fixes
-
-- add dragdrop to wizard ([#777](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/777)) ([d2e2244](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/d2e22443f776bbc5d3e28d9ed928f421783fc12a))
-- add template download button to wizard ([#775](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/775)) ([4f1277a](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/4f1277aafd948cf9541c57d075e4cc470e4b694d))
-
-## [2.2.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v2.1.0...ui5-cc-spreadsheetimporter-v2.2.0) (2025-07-02)
-
-### Features
-
-- add indicator if data is inserted or updated ([#772](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/772)) ([df9fc49](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/df9fc4951abe1c5a710e90a10d2a12989738e7d6))
-- new language korean and fixes missing i18n strings ([#756](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/756)) ([47ad3be](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/47ad3be2eb21ead74d703c49763ed034a9baa18c))
-- wizard to import spreadsheet files ([#759](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/759)) ([03f86ee](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/03f86eebfeeae63ce86a78e8dda30a85a720aada))
-
-### Bug Fixes
-
-- fail if object was not found in backend ([#771](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/771)) ([d73e57a](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/d73e57acd1ca5db2b24b449ec384bfdb5ba93957))
 
 ## [2.0.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v1.7.3...ui5-cc-spreadsheetimporter-v2.0.0) (2025-03-28)
 
