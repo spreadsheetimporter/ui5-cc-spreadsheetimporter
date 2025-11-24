@@ -1,11 +1,9 @@
-/**
- * eslint-disable @sap/ui5-jsdocs/no-jsdoc
- * @namespace ordersv4freestyle
- */
 import UIComponent from "sap/ui/core/UIComponent";
-import Device from "sap/ui/Device";
 import models from "ordersv4freestyle/model/models";
 
+/**
+ * @namespace ordersv4freestyle
+ */
 export default class Component extends UIComponent {
 	public static metadata = {
 		manifest: "json"
