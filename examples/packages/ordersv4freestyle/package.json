@@ -19,7 +19,6 @@
     "@types/qunit": "^2.19.10",
     "@ui5/cli": "^4.0.18",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.48.0",
     "ui5-middleware-livereload": "^3.1.4",
     "ui5-middleware-ui5": "3.3.0",
     "ui5-tooling-modules": "3.27.6",
