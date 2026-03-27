@@ -7,7 +7,7 @@
     "path": "./examples/packages/",
     "versionMinor": 136,
     "testMapping": {
-      "specs": ["../test/specs/all/**.test.js"]
+      "specs": ["../test/specs/all/**.test.js", "../test/specs/updatev2/**.test.js"]
     },
     "copyVersions": [
       {
@@ -16,7 +16,7 @@
         "port": "8089",
         "appTitel": "Orders V2 FE 120",
         "testMapping": {
-          "specs": ["../test/specs/all/**.test.js"]
+          "specs": ["../test/specs/all/**.test.js", "../test/specs/updatev2/**.test.js"]
         }
       },
       {
@@ -25,7 +25,7 @@
         "port": "8090",
         "appTitel": "Orders V2 FE 108",
         "testMapping": {
-          "specs": ["../test/specs/all/**.test.js"]
+          "specs": ["../test/specs/all/**.test.js", "../test/specs/updatev2/**.test.js"]
         }
       },
       {
@@ -34,7 +34,7 @@
         "port": "8090",
         "appTitel": "Orders V2 FE 96",
         "testMapping": {
-          "specs": ["../test/specs/all/**.test.js"]
+          "specs": ["../test/specs/all/**.test.js", "../test/specs/updatev2/**.test.js"]
         }
       },
       {
@@ -43,7 +43,7 @@
         "port": "8091",
         "appTitel": "Orders V2 FE 84",
         "testMapping": {
-          "specs": ["../test/specs/all/**.test.js"]
+          "specs": ["../test/specs/all/**.test.js", "../test/specs/updatev2/**.test.js"]
         }
       },
       {
@@ -52,7 +52,7 @@
         "port": "8092",
         "appTitel": "Orders V2 FE 71",
         "testMapping": {
-          "specs": ["../test/specs/all/**.test.js"]
+          "specs": ["../test/specs/all/**.test.js", "../test/specs/updatev2/**.test.js"]
         }
       }
     ]

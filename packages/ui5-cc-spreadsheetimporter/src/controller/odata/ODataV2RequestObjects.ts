@@ -208,13 +208,9 @@ export class ODataV2RequestObjects {
       type: CustomMessageTypes.DraftEntityMismatch,
       counter: 1,
       ui5type: MessageType.Error,
-      formattedValue: [
-        Object.entries(keys)
-          .map(([key, value]) => `${key}=${value}`)
-          .join(', '),
-        uploadedState,
-        expectedState
-      ]
+      formattedValue: `${Object.entries(keys)
+        .map(([key, value]) => `${key}=${value}`)
+        .join(', ')} (uploaded: ${uploadedState}, expected: ${expectedState})`
     });
   }
 }

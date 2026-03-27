@@ -1,3 +1,16 @@
+/**
+ * Test: V2 FE Deep Download and Mass Update (Draft scenario)
+ *
+ * Flow:
+ * 1. Put entity into draft state via V4 API (cov2ap translates)
+ * 2. Navigate to V2 draft object page
+ * 3. Trigger deep download → verify XLSX file created
+ * 4. Modify spreadsheet (update quantity)
+ * 5. Upload via mass update dialog
+ * 6. Save/activate draft
+ * 7. Verify updated data via API
+ */
+
 const path = require("path");
 const fs = require("fs");
 const XLSX = require("xlsx");
@@ -20,20 +33,20 @@ const TEST_CONSTANTS = {
 	WAIT_TIME: 5000
 };
 
-describe("V2 FE: Download and Update Spreadsheet Object Page", () => {
-	let BaseClass, downloadDir;
+describe("V2 FE: Download and Update Spreadsheet Object Page", function () {
+	let BaseClass, downloadDir, filePath;
 
-	before(async () => {
+	before(async function () {
 		BaseClass = new Base();
 		downloadDir = path.resolve(__dirname, "../../downloads");
 		// Clean up any leftover files
-		const filePath = path.join(downloadDir, TEST_CONSTANTS.FILE.NAME);
-		if (fs.existsSync(filePath)) {
-			fs.unlinkSync(filePath);
+		const fp = path.join(downloadDir, TEST_CONSTANTS.FILE.NAME);
+		if (fs.existsSync(fp)) {
+			fs.unlinkSync(fp);
 		}
 	});
 
-	it("should set entity to draft state via V4 API", async () => {
+	it("should set entity to draft state via V4 API", async function () {
 		// First discard any existing draft
 		try {
 			const discardUrl = `${TEST_CONSTANTS.API.V4_BASE_URL}/Orders(ID=${TEST_CONSTANTS.ORDER.ID},IsActiveEntity=false)/OrdersService.draftActivate`;
@@ -67,13 +80,14 @@ describe("V2 FE: Download and Update Spreadsheet Object Page", () => {
 		await BaseClass.dummyWait(2000);
 	});
 
-	it("should navigate to V2 draft object page", async () => {
+	it("should navigate to V2 draft object page", async function () {
 		await wdi5.goTo(`#/Orders(ID=guid'${TEST_CONSTANTS.ORDER.ID}',IsActiveEntity=false)`);
 		await BaseClass.dummyWait(3000);
 	});
 
-	it("should trigger deep download", async () => {
+	it("should trigger deep download", async function () {
 		// The "Deep Download" button is in the OP header actions
+		// Full ID: ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders--deepdownloadButton
 		const deepDownloadButton = await browser.asControl({
 			selector: {
 				id: new RegExp("deepdownloadButton"),
@@ -98,8 +112,8 @@ describe("V2 FE: Download and Update Spreadsheet Object Page", () => {
 		);
 	});
 
-	it("should modify spreadsheet data", async () => {
-		const filePath = path.join(downloadDir, TEST_CONSTANTS.FILE.NAME);
+	it("should modify spreadsheet data", async function () {
+		filePath = path.join(downloadDir, TEST_CONSTANTS.FILE.NAME);
 		const workbook = XLSX.readFile(filePath);
 		const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
 		const data = XLSX.utils.sheet_to_json(firstSheet);
@@ -116,12 +130,11 @@ describe("V2 FE: Download and Update Spreadsheet Object Page", () => {
 		const worksheetNew = XLSX.utils.json_to_sheet(data);
 		XLSX.utils.book_append_sheet(workbookNew, worksheetNew, TEST_CONSTANTS.FILE.SHEET_NAME);
 		XLSX.writeFile(workbookNew, filePath);
-
-		this.filePath = filePath;
 	});
 
-	it("should open mass update dialog and upload modified file", async () => {
+	it("should open mass update dialog and upload modified file", async function () {
 		// The "Mass Update" button is in the OP header actions
+		// Full ID: ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders--massUpdateButton
 		const massUpdateButton = await browser.asControl({
 			selector: {
 				id: new RegExp("massUpdateButton"),
@@ -137,6 +150,9 @@ describe("V2 FE: Download and Update Spreadsheet Object Page", () => {
 					const dialog = await browser.asControl({
 						selector: {
 							controlType: "sap.m.Dialog",
+							properties: {
+								contentWidth: "40vw"
+							},
 							searchOpenDialogs: true
 						},
 						forceSelect: true
@@ -178,7 +194,7 @@ describe("V2 FE: Download and Update Spreadsheet Object Page", () => {
 
 		// Set file path
 		const input = await $("input[type=file]");
-		await input.setValue(this.filePath);
+		await input.setValue(filePath);
 		await BaseClass.dummyWait(1000);
 
 		// Press Upload button in the dialog
@@ -194,7 +210,7 @@ describe("V2 FE: Download and Update Spreadsheet Object Page", () => {
 		await BaseClass.dummyWait(TEST_CONSTANTS.WAIT_TIME);
 	});
 
-	it("should save object page", async () => {
+	it("should save object page", async function () {
 		// Remove block layer if still present from dialog
 		try {
 			await browser.execute(() => {
@@ -205,7 +221,8 @@ describe("V2 FE: Download and Update Spreadsheet Object Page", () => {
 			});
 		} catch (error) {}
 
-		// In V2 SUGE template, the save/activate button has a specific ID pattern
+		// In V2 SUGE template, the save/activate button
+		// Full ID: ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders--activate
 		const saveButton = await browser.asControl({
 			selector: {
 				id: new RegExp("activate$"),
@@ -216,7 +233,7 @@ describe("V2 FE: Download and Update Spreadsheet Object Page", () => {
 		await BaseClass.dummyWait(TEST_CONSTANTS.WAIT_TIME);
 	});
 
-	it("should verify updated quantities via API", async () => {
+	it("should verify updated quantities via API", async function () {
 		const response = await fetch(`${TEST_CONSTANTS.API.V4_BASE_URL}/Orders(ID=${TEST_CONSTANTS.ORDER.ID},IsActiveEntity=true)/Items`);
 		const data = await response.json();
 
@@ -225,11 +242,11 @@ describe("V2 FE: Download and Update Spreadsheet Object Page", () => {
 		});
 	});
 
-	after(async () => {
+	after(async function () {
 		// Cleanup downloaded files
-		const filePath = path.join(downloadDir, TEST_CONSTANTS.FILE.NAME);
-		if (fs.existsSync(filePath)) {
-			fs.unlinkSync(filePath);
+		const fp = path.join(downloadDir, TEST_CONSTANTS.FILE.NAME);
+		if (fs.existsSync(fp)) {
+			fs.unlinkSync(fp);
 		}
 	});
 });

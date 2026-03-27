@@ -190,15 +190,78 @@ npm run prettier
 
 ## Testing
 
-**Integration tests use wdi5** (WebdriverIO + UI5):
+**Important:** The build (`npm run build`) is NOT needed for running tests. It is only needed for publishing the NPM package. The dev server and wdi5 tests use TypeScript source directly via ui5-tooling-transpile at runtime.
+
+### Unit Tests (Jest)
+
+Fast tests for pure logic (entity matching, validation, draft handling). No server required.
 
 ```bash
-npm run test:v4fe:108    # OData V4 FE on UI5 1.108
-npm run test:v2fe:108    # OData V2 FE on UI5 1.108
-npm run test:opa5:v4fe   # OPA5 tests
+npm run test:unit              # Run all unit tests from root
 ```
 
-Test specs are in `examples/test/specs/` organized by scenario (all, wizard, update, v4, etc.).
+- **Config:** `packages/ui5-cc-spreadsheetimporter/jest.config.js`
+- **Tests:** `packages/ui5-cc-spreadsheetimporter/test/unit/`
+- **Mocks:** SAP UI5 modules mocked in `test/unit/__mocks__/sap/`
+- **Runtime:** ~1.5s, no servers needed
+
+### wdi5 E2E Tests (WebdriverIO + UI5)
+
+Browser-based integration tests against running CAP server + UI5 apps.
+
+```bash
+# From root — run against default UI5 version (136)
+npm run test:v4fe              # OData V4 Fiori Elements
+npm run test:v2fe              # OData V2 Fiori Elements
+
+# Specific UI5 version
+npm run test:v4fe:108          # V4 FE on UI5 1.108
+npm run test:v2fe:108          # V2 FE on UI5 1.108
+
+# Single spec (from examples/ directory)
+cd examples
+npm run test -- ordersv2fe 136 --spec ./test/specs/updatev2/DownloadAndUpdateSpreadsheetObjectPageV2
+
+# Headless (CI mode)
+npm run test --workspace=ui5-cc-spreadsheetimporter-sample -- -- --headless ordersv4fe 136
+
+# Watch mode (reruns on file changes)
+cd examples && npm run test -- ordersv4fe 136 --watch
+
+# Debug mode (opens Chrome DevTools)
+cd examples && npm run test -- ordersv4fe 136 --debug
+```
+
+**Prerequisites:** CAP server + UI5 app must be running:
+
+```bash
+npm run start:server &         # Start CAP server on port 4004
+npm run start:v2fe             # Start V2 FE app on port 8081
+npm run start:v4fe             # Start V4 FE app on port 8080
+```
+
+### OPA5 Tests
+
+```bash
+npm run test:opa5:v4fe         # OPA5 integration tests (V4 only)
+```
+
+### Test Infrastructure Details
+
+- **Config:** `examples/test/wdio-base.conf.js` — dynamic scenario/version routing
+- **Mapping:** `dev/testapps.json` — maps scenarios to ports, UI5 versions, and spec files
+- **Specs:** `examples/test/specs/` — organized by feature:
+  - `all/` — common tests (upload, paste, options)
+  - `update/` — V4 download + update tests
+  - `updatev2/` — V2 download + mass update tests
+  - `download/` — export/download tests
+  - `wizard/` — wizard flow tests
+  - `v4/` — V4-specific tests
+- **Page Objects:** `examples/test/specs/Objects/`
+  - `Base.js` — browser control utilities
+  - `BaseUpload.js` — file upload helper (dialog + file input)
+  - `FEV2.js` / `FEV4.js` — Fiori Elements selector constants
+- **Test Data:** `examples/test/testFiles/` — sample XLSX/CSV files
 
 **CI matrix:** 6 scenarios x 6 UI5 versions (1.71, 1.84, 1.96, 1.108, 1.120, 1.136).
 
