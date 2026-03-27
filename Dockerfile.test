@@ -1,0 +1,66 @@
+# Docker image for running wdi5 tests locally
+# Replicates the GitHub Actions CI environment (ubuntu + Node 20 + Chrome)
+#
+# Usage:
+#   docker build -f Dockerfile.test -t spreadsheet-test .
+#   docker run --rm spreadsheet-test ordersv2fe 136
+#   docker run --rm -v $(pwd)/examples/reports:/app/examples/reports spreadsheet-test ordersv2fe 136
+
+FROM node:20-slim
+
+# Install system dependencies
+# - chromium + chromium-driver: browser + matching chromedriver (works on arm64 + amd64)
+# - gnome-keyring: Chrome automation requirement
+# - fonts: proper text rendering
+# - netcat: port health checks
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        chromium \
+        chromium-driver \
+        gnome-keyring \
+        fonts-liberation \
+        fonts-noto-color-emoji \
+        libnss3 \
+        libatk-bridge2.0-0 \
+        libgtk-3-0 \
+        libgbm1 \
+        libasound2 \
+        libxshmfence1 \
+        netcat-openbsd \
+        procps \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Configure Chromium for container use
+ENV CHROME_BIN=/usr/bin/chromium
+ENV CHROMEDRIVER_PATH=/usr/bin/chromedriver
+
+WORKDIR /app
+
+# Install SAP CDS CLI globally (matching CI version)
+RUN npm i -g @sap/cds-dk@8.8.2
+
+# Copy everything (monorepo workspaces need full structure for npm install)
+COPY . .
+
+# Recreate .gitignore (excluded by .dockerignore but needed by copy-example-apps.js)
+RUN touch .gitignore
+
+# Remove cds-plugin-ui5 from server (matching CI step)
+RUN cd examples/packages/server && \
+    node -e "const fs = require('fs'); \
+             const pkg = require('./package.json'); \
+             if (pkg.devDependencies) delete pkg.devDependencies['cds-plugin-ui5']; \
+             if (pkg.cds) delete pkg.cds['cds-plugin-ui5']; \
+             fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));"
+
+# Remove prepare script and install dependencies
+RUN npm pkg delete scripts.prepare && \
+    npm install --legacy-peer-deps
+
+# Copy entrypoint script to PATH
+RUN cp dev/docker-test.sh /usr/local/bin/docker-test.sh && \
+    chmod +x /usr/local/bin/docker-test.sh
+
+ENTRYPOINT ["docker-test.sh"]
+CMD ["--help"]
