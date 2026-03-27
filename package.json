@@ -38,6 +38,8 @@
     "coypChangelogToDoc": "node ./dev/copy-changelog-to-doc.js",
     "updateAllDependencies": "npm update --workspaces",
     "lint:ui5": "npm run lint:ui5 --workspace=ui5-cc-spreadsheetimporter",
+    "test:docker:build": "docker build -f Dockerfile.test -t spreadsheet-test .",
+    "test:docker": "docker run --rm spreadsheet-test",
     "prepare": "husky"
   },
   "devDependencies": {

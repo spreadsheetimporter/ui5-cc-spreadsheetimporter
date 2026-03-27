@@ -9,6 +9,8 @@ let version = 0;
 // Check for watch mode flag
 const isWatchMode = process.argv.indexOf("--watch") > -1;
 const isDebugEnabled = true;
+// Docker mode: use system Chromium + chromedriver instead of auto-download
+const isDocker = !!process.env.CHROME_BIN;
 
 for (let index = 0; index < process.argv.length; index++) {
 	const arg = process.argv[index];
@@ -42,8 +44,10 @@ module.exports.config = {
 			"wdio:enforceWebDriverClassic": true,
 			//
 			browserName: "chrome",
-			browserVersion: "stable",
+			// In Docker: skip auto-download, use system Chromium + chromedriver
+			...(isDocker ? {} : { browserVersion: "stable" }),
 			"goog:chromeOptions": {
+				...(isDocker ? { binary: process.env.CHROME_BIN } : {}),
 				args:
 					process.argv.indexOf("--headless") > -1
 						? ["--headless=new", "--window-size=1920,1080", "--no-sandbox"]
