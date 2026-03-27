@@ -3,9 +3,9 @@ import { Columns, ListObject } from '../../types';
 import SpreadsheetUpload from '../SpreadsheetUpload';
 import OData from './OData';
 import MetadataHandlerV2 from './MetadataHandlerV2';
+import { ODataV2RequestObjects, V2MatchedEntity } from './ODataV2RequestObjects';
 import ODataListBinding from 'sap/ui/model/odata/v2/ODataListBinding';
 import ODataModel from 'sap/ui/model/odata/v2/ODataModel';
-import ODataMetaModel from 'sap/ui/model/odata/ODataMetaModel';
 import MessageHandler from '../MessageHandler';
 import Util from '../Util';
 
@@ -16,10 +16,12 @@ export default class ODataV2 extends OData {
   customBinding: ODataListBinding;
   submitChangesResponse: any;
   private metadataHandler: MetadataHandlerV2;
+  private requestObjects: ODataV2RequestObjects;
 
   constructor(spreadsheetUploadController: SpreadsheetUpload, messageHandler: MessageHandler, util: Util) {
     super(spreadsheetUploadController, messageHandler, util);
     this.metadataHandler = new MetadataHandlerV2(spreadsheetUploadController);
+    this.requestObjects = new ODataV2RequestObjects(this.metadataHandler, messageHandler, util);
   }
   create(model: any, binding: any, payload: any) {
     const submitChangesPromise = (binding: ODataListBinding, payload: any) => {
@@ -48,20 +50,39 @@ export default class ODataV2 extends OData {
     const oDataModel = binding.getModel() as ODataModel;
 
     // 1) Resolve entity set and key path
-    const keysFromPayload = this.metadataHandler.getKeys(binding, payload);
+    const keysFromPayload = this.metadataHandler.getKeys(binding, payload, undefined, true);
     const entitySetName = this._getEntitySetNameFromBinding(binding);
     if (!entitySetName) throw new Error('Could not resolve entity set name for update operation');
-    const entityPath = '/' + oDataModel.createKey(entitySetName, keysFromPayload);
 
-    // 2) Respect update config
+    // 2) Check draft status from prefetched data
+    const matchedEntities = this.requestObjects.getMatchedEntities();
+    const matchedEntry = matchedEntities.find((m: V2MatchedEntity) => Object.entries(m.keys).every(([key, value]) => payload[key] === value));
+
+    // Determine if we need to target the draft version
+    const keysForPath: Record<string, any> = { ...keysFromPayload };
+    if (matchedEntry && matchedEntry.object) {
+      const backendEntity = matchedEntry.object;
+      const isDraft = backendEntity.HasDraftEntity || !backendEntity.IsActiveEntity;
+      if (isDraft) {
+        keysForPath.IsActiveEntity = false;
+        payload.IsActiveEntity = false;
+      } else {
+        keysForPath.IsActiveEntity = true;
+      }
+    }
+
+    const entityPath = '/' + oDataModel.createKey(entitySetName, keysForPath);
+
+    // 3) Respect update config
     const updateConfig = this.spreadsheetUploadController.component.getUpdateConfig() as any;
     const fullUpdate = Boolean(updateConfig && updateConfig.fullUpdate);
-    const configuredColumns = (updateConfig && Array.isArray(updateConfig.columns)) ? updateConfig.columns : [];
+    const configuredColumns = updateConfig && Array.isArray(updateConfig.columns) ? updateConfig.columns : [];
 
-    // 3) Build payload
+    // 4) Build payload
     const payloadToSend: Record<string, any> = {};
     for (const [property, value] of Object.entries(payload)) {
-      if (property in keysFromPayload) continue; // never send keys in body
+      if (property in keysForPath) continue; // never send keys in body
+      if (property === 'IsActiveEntity' || property === 'HasActiveEntity' || property === 'HasDraftEntity') continue;
       const isConfigured = configuredColumns.length === 0 || configuredColumns.includes(property);
       if (!isConfigured && !fullUpdate) continue;
 
@@ -74,7 +95,7 @@ export default class ODataV2 extends OData {
       payloadToSend[property] = normalized;
     }
 
-    // 4) Execute update (merge for partial update)
+    // 5) Execute update (merge for partial update)
     const updatePromise = new Promise((resolve, reject) => {
       // @ts-ignore merge supported in V2 update params
       oDataModel.update(entityPath, payloadToSend, {
@@ -183,14 +204,24 @@ export default class ODataV2 extends OData {
     }
   }
 
-  getObjects(model: any, binding: any, batch: any): Promise<any> {
-    // For V2, we perform direct updates using model.update with key predicates.
-    // No prefetch required; keep the method for compatibility with the processing flow.
-    return Promise.resolve([]);
+  async getObjects(model: any, binding: any, batch: any): Promise<any> {
+    const entitySetName = this._getEntitySetNameFromBinding(binding);
+    if (!entitySetName) {
+      Log.warning('Could not resolve entity set name, skipping prefetch', undefined, 'SpreadsheetUpload: ODataV2');
+      return [];
+    }
+    return this.requestObjects.getObjects(model as ODataModel, binding, batch, entitySetName);
   }
 
   async getLabelList(columns: Columns, odataType: string, excludeColumns: Columns, binding?: any) {
-    const metaModel = binding.getModel().getMetaModel();
+    let metaModel: any;
+    if (binding) {
+      metaModel = binding.getModel().getMetaModel();
+      // Cache the MetaModel for later calls without binding (e.g. deep export recursive sheets)
+      this.metadataHandler.setMetaModel(metaModel);
+    } else {
+      metaModel = this.metadataHandler.getMetaModel();
+    }
     await metaModel.loaded();
     const odataEntityType = metaModel.getODataEntityType(odataType);
     return this.getMetadataHandler().getLabelList(columns, odataType, odataEntityType, excludeColumns);
@@ -263,7 +294,7 @@ export default class ODataV2 extends OData {
     walk(expand, []);
     const unique = Array.from(new Set(parts));
     const result = unique.join(',');
-    console.log('V2 expand string:', result);
+    Log.debug(`V2 expand string: ${result}`, undefined, 'SpreadsheetUpload: ODataV2');
     return result;
   }
 
@@ -282,7 +313,7 @@ export default class ODataV2 extends OData {
           baseUrlParameters.$expand = bindingInfo.expand;
         }
       } catch (e) {
-        console.log('Could not get binding parameters, proceeding without expand');
+        Log.debug('Could not get binding parameters, proceeding without expand', undefined, 'SpreadsheetUpload: ODataV2');
       }
 
       // Initial read to check for count and decide pagination
@@ -301,15 +332,15 @@ export default class ODataV2 extends OData {
           // Single-shot result OK
           const contextLikeObjects = results.map((dataItem: any) => ({
             getObject: () => dataItem,
-            getPath: () => `${path}(${this._extractKey(dataItem)})`,
+            getPath: () => path,
             data: dataItem
           }));
 
-          console.log(`V2 fetchBatch completed: ${results.length} items fetched`);
+          Log.debug(`V2 fetchBatch completed: ${results.length} items fetched`, undefined, 'SpreadsheetUpload: ODataV2');
           resolve(contextLikeObjects);
         },
         error: (error: any) => {
-          console.error('Error in V2 fetchBatch:', error);
+          Log.error('Error in V2 fetchBatch', error, 'SpreadsheetUpload: ODataV2');
           reject(error);
         }
       });
@@ -336,11 +367,11 @@ export default class ODataV2 extends OData {
         // Create contexts-like objects that Util.extractObjects expects
         const contextLikeObjects = allResults.map(dataItem => ({
           getObject: () => dataItem,
-          getPath: () => `${path}(${this._extractKey(dataItem)})`,
+          getPath: () => path,
           data: dataItem
         }));
 
-        console.log(`V2 fetchBatch completed: ${allResults.length} items fetched`);
+        Log.debug(`V2 fetchBatch completed: ${allResults.length} items fetched`, undefined, 'SpreadsheetUpload: ODataV2');
         resolve(contextLikeObjects);
         return;
       }
@@ -361,13 +392,13 @@ export default class ODataV2 extends OData {
           allResults.push(...results);
           fetchedCount += results.length;
 
-          console.log(`V2 batch fetched: ${results.length} items (${fetchedCount}/${totalCount})`);
+          Log.debug(`V2 batch fetched: ${results.length} items (${fetchedCount}/${totalCount})`, undefined, 'SpreadsheetUpload: ODataV2');
 
           // Continue with next batch
           setTimeout(fetchNextBatch, 0);
         },
         error: (error: any) => {
-          console.error('Error in V2 batch fetch:', error);
+          Log.error('Error in V2 batch fetch', error, 'SpreadsheetUpload: ODataV2');
           reject(error);
         }
       });
@@ -375,25 +406,6 @@ export default class ODataV2 extends OData {
 
     // Start fetching
     fetchNextBatch();
-  }
-
-  /**
-   * Extracts key from data item for context path creation
-   */
-  private _extractKey(dataItem: any): string {
-    // Simple key extraction - this could be enhanced based on metadata
-    if (dataItem.ID) return `'${dataItem.ID}'`;
-    if (dataItem.Id) return `'${dataItem.Id}'`;
-    if (dataItem.ObjectID) return `'${dataItem.ObjectID}'`;
-
-    // Fallback to first string property that looks like a key
-    for (const [key, value] of Object.entries(dataItem)) {
-      if (typeof value === 'string' && (key.toLowerCase().includes('id') || key.toLowerCase().includes('key'))) {
-        return `'${value}'`;
-      }
-    }
-
-    return `'${JSON.stringify(dataItem)}'`;
   }
 
   /**

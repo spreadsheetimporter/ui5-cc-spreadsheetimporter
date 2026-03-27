@@ -6,8 +6,27 @@ import ODataMetaModel from 'sap/ui/model/odata/ODataMetaModel';
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
 export default class MetadataHandlerV2 extends MetadataHandler {
+  private _metaModel: ODataMetaModel | null = null;
+
   constructor(spreadsheetUploadController: any) {
     super(spreadsheetUploadController);
+  }
+
+  /**
+   * Returns the cached ODataMetaModel, resolving it lazily from the view's model.
+   */
+  getMetaModel(): ODataMetaModel {
+    if (!this._metaModel) {
+      this._metaModel = this.spreadsheetUploadController.view.getModel().getMetaModel() as ODataMetaModel;
+    }
+    return this._metaModel;
+  }
+
+  /**
+   * Stores the MetaModel reference for later use (e.g. from a binding).
+   */
+  setMetaModel(metaModel: ODataMetaModel): void {
+    this._metaModel = metaModel;
   }
 
   public getLabelList(columns: Columns, odataType: string, odataEntityType: any, excludeColumns: Columns): ListObject {

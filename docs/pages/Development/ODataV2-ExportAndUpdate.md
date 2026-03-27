@@ -105,6 +105,14 @@ Objective: Make UPDATE work with V2 similar to V4’s `updateAsync`, honoring th
 - Improved V2 export to switch automatically to paginated reads for large datasets.
 - Fixed typings in `MetadataHandlerV2` (`ODataMetaModel`) and minor readability refactors in V2 handler.
 
+### What changed (March 2026)
+
+- **Draft prefetch for V2 UPDATE:** Created `ODataV2RequestObjects` mirroring V4's `ODataV4RequestObjects` pattern. Dual-fetches active and draft entities using `model.read()` with filters, matches spreadsheet rows to backend entities, validates draft state, and reports not-found/mismatch errors.
+- **Draft-aware `updateAsync`:** Checks prefetched entity for `HasDraftEntity` / `IsActiveEntity` status. When targeting a draft entity, includes `IsActiveEntity=false` in the key predicate. Existing `waitForDraft()` with `DraftController.activateDraftEntity()` handles post-update activation.
+- **Deep export `getLabelList` fix:** Stored MetaModel reference on `MetadataHandlerV2` (lazily cached) so `getLabelList` can resolve entity types without a binding parameter during recursive sibling sheet generation.
+- **Restored `precision`, `scale`, `nullable` in V2 metadata:** Re-added metadata property extraction that was accidentally dropped during branch development. Required for null/empty marker support and decimal validation.
+- **Replaced `console.log` with SAP `Log` API** and removed dead `_extractKey()` fallback method.
+
 ### Delete (V2 and V4)
 
 - V2: Use `ODataModel.remove(sPath, { success, error })` with `sPath` built from `createKey(entitySetName, keys)`. Batch using `submitChanges()` if `useBatch` is enabled. Keys can be derived from `MetadataHandlerV2.getKeys(binding, payload)`.
@@ -112,8 +120,5 @@ Objective: Make UPDATE work with V2 similar to V4’s `updateAsync`, honoring th
 
 ### Limitations and Next Steps
 
-- Expand conversion currently supports top‑level and one nested level; deeper graphs are supported by listing chained paths (e.g., `A,B,B/C,B/C/D`). This can be extended to arbitrary depth.
-- Key extraction fallback should be replaced with metadata‑driven predicates to avoid ambiguous paths.
+- Expand conversion supports arbitrary depth via chained paths (e.g., `A,B,B/C,B/C/D`).
 - Introduce automatic switching to paginated reads when result size exceeds a threshold.
-
-

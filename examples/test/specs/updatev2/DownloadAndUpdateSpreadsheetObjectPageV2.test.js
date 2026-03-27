@@ -5,123 +5,231 @@ const Base = require("./../Objects/Base");
 const { wdi5 } = require("wdio-ui5-service");
 
 const TEST_CONSTANTS = {
-  FILE: {
-    NAME: "OrderItems.xlsx",
-    TIMEOUT: 20000,
-    SHEET_NAME: "Sheet1"
-  },
-  ORDER: {
-    ID: "64e718c9-ff99-47f1-8ca3-950c850777d4",
-    NEW_QUANTITY: 777
-  },
-  SELECTORS: {
-    OBJECT_PAGE_ROUTE_HASH: "#/Orders(ID=64e718c9-ff99-47f1-8ca3-950c850777d4)",
-    OVERFLOW_BUTTON: "__toolbar2-overflowButton"
-  },
-  API: {
-    BASE_URL: "http://localhost:4004/odata/v2/orders/Orders"
-  }
+	FILE: {
+		NAME: "Orders123.xlsx",
+		TIMEOUT: 30000,
+		SHEET_NAME: "Sheet1"
+	},
+	ORDER: {
+		ID: "64e718c9-ff99-47f1-8ca3-950c850777d4",
+		NEW_QUANTITY: 777
+	},
+	API: {
+		V4_BASE_URL: "http://localhost:4004/odata/v4/orders"
+	},
+	WAIT_TIME: 5000
 };
 
 describe("V2 FE: Download and Update Spreadsheet Object Page", () => {
-  let BaseClass, downloadDir;
+	let BaseClass, downloadDir;
 
-  before(async () => {
-    BaseClass = new Base();
-    downloadDir = path.resolve(__dirname, "../../downloads");
-  });
+	before(async () => {
+		BaseClass = new Base();
+		downloadDir = path.resolve(__dirname, "../../downloads");
+		// Clean up any leftover files
+		const filePath = path.join(downloadDir, TEST_CONSTANTS.FILE.NAME);
+		if (fs.existsSync(filePath)) {
+			fs.unlinkSync(filePath);
+		}
+	});
 
-  it("should navigate to V2 object page", async () => {
-    // Non-draft OP nav (adjust if draft required)
-    await wdi5.goTo(`#/Orders(${TEST_CONSTANTS.ORDER.ID})`);
-    await BaseClass.dummyWait(1000);
-  });
+	it("should set entity to draft state via V4 API", async () => {
+		// First discard any existing draft
+		try {
+			const discardUrl = `${TEST_CONSTANTS.API.V4_BASE_URL}/Orders(ID=${TEST_CONSTANTS.ORDER.ID},IsActiveEntity=false)/OrdersService.draftActivate`;
+			await fetch(discardUrl, {
+				method: "POST",
+				headers: {
+					Accept: "application/json;odata.metadata=minimal",
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({})
+			});
+		} catch (e) {
+			/* ignore if no draft exists */
+		}
 
-  it("should open overflow menu and download spreadsheet", async () => {
-    // Press overflow button in OP toolbar
-    const overflowButton = await browser.asControl({
-      selector: {
-        id: TEST_CONSTANTS.SELECTORS.OVERFLOW_BUTTON,
-        searchOpenDialogs: true
-      }
-    });
-    await overflowButton.press();
+		const url = `${TEST_CONSTANTS.API.V4_BASE_URL}/Orders(ID=${TEST_CONSTANTS.ORDER.ID},IsActiveEntity=true)/OrdersService.draftEdit`;
+		const response = await fetch(url, {
+			method: "POST",
+			headers: {
+				Accept: "application/json;odata.metadata=minimal;IEEE754Compatible=true",
+				"Content-Type": "application/json;charset=UTF-8;IEEE754Compatible=true",
+				"Accept-Language": "en",
+				Prefer: "handling=strict"
+			},
+			body: JSON.stringify({
+				PreserveChanges: true
+			})
+		});
 
-    // Find and press the download button
-    const downloadButton = await browser.asControl({
-      selector: {
-        controlType: "sap.m.Button",
-        searchOpenDialogs: true,
-        properties: {
-          text: "Download Data as Spreadsheet"
-        }
-      }
-    });
-    await downloadButton.press();
+		expect(response.ok).toBeTruthy();
+		await BaseClass.dummyWait(2000);
+	});
 
-    if (!fs.existsSync(downloadDir)) {
-      fs.mkdirSync(downloadDir, { recursive: true });
-    }
+	it("should navigate to V2 draft object page", async () => {
+		await wdi5.goTo(`#/Orders(ID=guid'${TEST_CONSTANTS.ORDER.ID}',IsActiveEntity=false)`);
+		await BaseClass.dummyWait(3000);
+	});
 
-    await browser.waitUntil(
-      () => {
-        const files = fs.readdirSync(downloadDir);
-        return files.includes(TEST_CONSTANTS.FILE.NAME);
-      },
-      {
-        timeout: TEST_CONSTANTS.FILE.TIMEOUT,
-        timeoutMsg: `Expected ${TEST_CONSTANTS.FILE.NAME} to be downloaded within ${TEST_CONSTANTS.FILE.TIMEOUT}ms`
-      }
-    );
-  });
+	it("should trigger deep download", async () => {
+		// The "Deep Download" button is in the OP header actions
+		const deepDownloadButton = await browser.asControl({
+			selector: {
+				id: new RegExp("deepdownloadButton"),
+				controlType: "sap.m.Button"
+			}
+		});
+		await deepDownloadButton.press();
 
-  it("should modify spreadsheet data", async () => {
-    const filePath = path.join(downloadDir, TEST_CONSTANTS.FILE.NAME);
-    const workbook = XLSX.readFile(filePath);
-    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-    const data = XLSX.utils.sheet_to_json(firstSheet);
+		if (!fs.existsSync(downloadDir)) {
+			fs.mkdirSync(downloadDir, { recursive: true });
+		}
 
-    // Update quantity for all rows
-    data.forEach(row => {
-      // find header like "Quantity[quantity]" and set value
-      const key = Object.keys(row).find(k => k.toLowerCase().includes("quantity"));
-      if (key) {
-        row[key] = TEST_CONSTANTS.ORDER.NEW_QUANTITY;
-      }
-    });
+		await browser.waitUntil(
+			() => {
+				const files = fs.readdirSync(downloadDir);
+				return files.includes(TEST_CONSTANTS.FILE.NAME);
+			},
+			{
+				timeout: TEST_CONSTANTS.FILE.TIMEOUT,
+				timeoutMsg: `Expected ${TEST_CONSTANTS.FILE.NAME} to be downloaded within ${TEST_CONSTANTS.FILE.TIMEOUT}ms`
+			}
+		);
+	});
 
-    const workbookNew = XLSX.utils.book_new();
-    const worksheetNew = XLSX.utils.json_to_sheet(data);
-    XLSX.utils.book_append_sheet(workbookNew, worksheetNew, TEST_CONSTANTS.FILE.SHEET_NAME);
-    XLSX.writeFile(workbookNew, filePath);
+	it("should modify spreadsheet data", async () => {
+		const filePath = path.join(downloadDir, TEST_CONSTANTS.FILE.NAME);
+		const workbook = XLSX.readFile(filePath);
+		const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+		const data = XLSX.utils.sheet_to_json(firstSheet);
 
-    this.filePath = filePath;
-  });
+		// Update quantity for all rows
+		data.forEach((row) => {
+			const key = Object.keys(row).find((k) => k.toLowerCase().includes("quantity"));
+			if (key) {
+				row[key] = TEST_CONSTANTS.ORDER.NEW_QUANTITY;
+			}
+		});
 
-  it("should upload modified file and submit changes", async () => {
-    // Open spreadsheet upload dialog configured for UPDATE in FE V2 app (assumes action wired in app)
-    const uploadButton = await browser.asControl({
-      selector: {
-        controlType: "sap.m.Button",
-        // Text/id might differ; adjust if needed in the app config
-        properties: { text: "Spreadsheet Upload" },
-        searchOpenDialogs: true
-      }
-    });
-    await uploadButton.press();
+		const workbookNew = XLSX.utils.book_new();
+		const worksheetNew = XLSX.utils.json_to_sheet(data);
+		XLSX.utils.book_append_sheet(workbookNew, worksheetNew, TEST_CONSTANTS.FILE.SHEET_NAME);
+		XLSX.writeFile(workbookNew, filePath);
 
-    const fileUploader = await browser.$("//input[@type='file']");
-    await fileUploader.setValue(this.filePath);
+		this.filePath = filePath;
+	});
 
-    const dialogUpload = await browser.asControl({
-      selector: {
-        controlType: "sap.m.Button",
-        searchOpenDialogs: true,
-        properties: { text: "Upload" }
-      }
-    });
-    await dialogUpload.press();
-  });
+	it("should open mass update dialog and upload modified file", async () => {
+		// The "Mass Update" button is in the OP header actions
+		const massUpdateButton = await browser.asControl({
+			selector: {
+				id: new RegExp("massUpdateButton"),
+				controlType: "sap.m.Button"
+			}
+		});
+		await massUpdateButton.press();
+
+		// Wait for the spreadsheet upload dialog to appear
+		await browser.waitUntil(
+			async () => {
+				try {
+					const dialog = await browser.asControl({
+						selector: {
+							controlType: "sap.m.Dialog",
+							searchOpenDialogs: true
+						},
+						forceSelect: true
+					});
+					return !!dialog?._domId;
+				} catch (e) {
+					return false;
+				}
+			},
+			{ timeout: 10000, timeoutMsg: "Spreadsheet upload dialog did not appear" }
+		);
+
+		// Remove block layer if present (same pattern as BaseUpload)
+		try {
+			await browser.execute(() => {
+				const blockLayerPopup = document.getElementById("sap-ui-blocklayer-popup");
+				if (blockLayerPopup) {
+					blockLayerPopup.remove();
+				}
+			});
+		} catch (error) {}
+
+		// Make file input visible (UI5 FileUploader hides it)
+		await browser.waitUntil(
+			async () => {
+				try {
+					const found = await browser.execute(() => !!document.querySelector("input[type=file]"));
+					return found;
+				} catch (e) {
+					return false;
+				}
+			},
+			{ timeout: 5000, timeoutMsg: "File input not found in dialog" }
+		);
+
+		await browser.execute(() => {
+			document.querySelector("input[type=file]").style.display = "block";
+		});
+
+		// Set file path
+		const input = await $("input[type=file]");
+		await input.setValue(this.filePath);
+		await BaseClass.dummyWait(1000);
+
+		// Press Upload button in the dialog
+		const dialogUpload = await browser.asControl({
+			selector: {
+				controlType: "sap.m.Button",
+				properties: { text: "Upload" },
+				searchOpenDialogs: true
+			},
+			forceSelect: true
+		});
+		await dialogUpload.press();
+		await BaseClass.dummyWait(TEST_CONSTANTS.WAIT_TIME);
+	});
+
+	it("should save object page", async () => {
+		// Remove block layer if still present from dialog
+		try {
+			await browser.execute(() => {
+				const blockLayerPopup = document.getElementById("sap-ui-blocklayer-popup");
+				if (blockLayerPopup) {
+					blockLayerPopup.remove();
+				}
+			});
+		} catch (error) {}
+
+		// In V2 SUGE template, the save/activate button has a specific ID pattern
+		const saveButton = await browser.asControl({
+			selector: {
+				id: new RegExp("activate$"),
+				controlType: "sap.m.Button"
+			}
+		});
+		await saveButton.press();
+		await BaseClass.dummyWait(TEST_CONSTANTS.WAIT_TIME);
+	});
+
+	it("should verify updated quantities via API", async () => {
+		const response = await fetch(`${TEST_CONSTANTS.API.V4_BASE_URL}/Orders(ID=${TEST_CONSTANTS.ORDER.ID},IsActiveEntity=true)/Items`);
+		const data = await response.json();
+
+		data.value.forEach((item) => {
+			expect(item.quantity).toBe(TEST_CONSTANTS.ORDER.NEW_QUANTITY);
+		});
+	});
+
+	after(async () => {
+		// Cleanup downloaded files
+		const filePath = path.join(downloadDir, TEST_CONSTANTS.FILE.NAME);
+		if (fs.existsSync(filePath)) {
+			fs.unlinkSync(filePath);
+		}
+	});
 });
-
-
