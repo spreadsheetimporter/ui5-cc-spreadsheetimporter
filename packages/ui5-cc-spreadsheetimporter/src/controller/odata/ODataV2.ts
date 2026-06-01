@@ -95,6 +95,17 @@ export default class ODataV2 extends OData {
       payloadToSend[property] = normalized;
     }
 
+    Log.debug(`V2 update: ${entityPath}`, undefined, 'SpreadsheetUpload: ODataV2', () =>
+      this.spreadsheetUploadController.component.logger.returnObject({
+        entitySetName,
+        keysForPath,
+        entityPath,
+        fullUpdate,
+        configuredColumns,
+        payloadToSend
+      })
+    );
+
     // 5) Execute update (merge for partial update)
     const updatePromise = new Promise((resolve, reject) => {
       // @ts-ignore merge supported in V2 update params
@@ -197,7 +208,7 @@ export default class ODataV2 extends OData {
           .getODataEntityContainer()
           .entitySet.map((item: { name: string }) => item.name)
           .join();
-        Log.error(`Error while getting specified OData Type. ${availableEntities}`, undefined, 'SpreadsheetUpload: ODataV4');
+        Log.error(`Error while getting specified OData Type. ${availableEntities}`, undefined, 'SpreadsheetUpload: ODataV2');
         throw new Error(`Error while getting specified OData Type. Available Entities: ${availableEntities}`);
       }
       return odataType;
@@ -294,7 +305,9 @@ export default class ODataV2 extends OData {
     walk(expand, []);
     const unique = Array.from(new Set(parts));
     const result = unique.join(',');
-    Log.debug(`V2 expand string: ${result}`, undefined, 'SpreadsheetUpload: ODataV2');
+    Log.debug(`V2 expand string: ${result}`, undefined, 'SpreadsheetUpload: ODataV2', () =>
+      this.spreadsheetUploadController.component.logger.returnObject({ input: expand, output: result })
+    );
     return result;
   }
 
@@ -316,12 +329,19 @@ export default class ODataV2 extends OData {
         Log.debug('Could not get binding parameters, proceeding without expand', undefined, 'SpreadsheetUpload: ODataV2');
       }
 
+      Log.debug(`V2 fetchBatch read: ${path}`, undefined, 'SpreadsheetUpload: ODataV2', () =>
+        this.spreadsheetUploadController.component.logger.returnObject({ path, urlParameters: baseUrlParameters })
+      );
+
       // Initial read to check for count and decide pagination
       model.read(path, {
         urlParameters: baseUrlParameters,
         success: (data: any) => {
           const results = data.results || [data];
           const totalCount = Number((data && (data.__count || data['__count'])) || results.length);
+          Log.debug(`V2 fetchBatch response: ${results.length} item(s), totalCount ${totalCount}`, undefined, 'SpreadsheetUpload: ODataV2', () =>
+            this.spreadsheetUploadController.component.logger.returnObject({ totalCount, resultCount: results.length, rawData: data })
+          );
 
           if (Number.isFinite(totalCount) && totalCount > results.length) {
             // Use paginated reads
@@ -384,6 +404,10 @@ export default class ODataV2 extends OData {
         $skip: fetchedCount,
         $top: currentBatchSize
       };
+
+      Log.debug(`V2 paginated read: $skip=${fetchedCount} $top=${currentBatchSize}`, undefined, 'SpreadsheetUpload: ODataV2', () =>
+        this.spreadsheetUploadController.component.logger.returnObject({ path, urlParameters })
+      );
 
       model.read(path, {
         urlParameters: urlParameters,

@@ -35,7 +35,7 @@ export default class MetadataHandlerV2 extends MetadataHandler {
     // get the property list of the entity for which we need to download the template
     const properties: PropertyArray = odataEntityType.property;
     const entityTypeLabel: string = odataEntityType['sap:label'];
-    Log.debug('SpreadsheetUpload: Annotations', undefined, 'SpreadsheetUpload: MetadataHandler', () =>
+    Log.debug('SpreadsheetUpload: Annotations', undefined, 'SpreadsheetUpload: MetadataHandlerV2', () =>
       this.spreadsheetUploadController.component.logger.returnObject(odataEntityType)
     );
 
@@ -82,7 +82,7 @@ export default class MetadataHandlerV2 extends MetadataHandler {
         try {
           hiddenProperty = property['com.sap.vocabularies.UI.v1.Hidden'].Bool === 'true';
         } catch (error) {
-          Log.debug(`No hidden property on ${property.name}`, undefined, 'SpreadsheetUpload: MetadataHandler');
+          Log.debug(`No hidden property on ${property.name}`, undefined, 'SpreadsheetUpload: MetadataHandlerV2');
         }
         if (!hiddenProperty && !propertyName.startsWith('SAP__')) {
           let propertyObject: Property = {} as Property;
@@ -103,7 +103,7 @@ export default class MetadataHandlerV2 extends MetadataHandler {
         try {
           hiddenProperty = property['com.sap.vocabularies.UI.v1.Hidden'].Bool === 'true';
         } catch (error) {
-          Log.debug(`No hidden property on ${property.name}`, undefined, 'SpreadsheetUpload: MetadataHandler');
+          Log.debug(`No hidden property on ${property.name}`, undefined, 'SpreadsheetUpload: MetadataHandlerV2');
         }
         if (!hiddenProperty && !propertyName.startsWith('SAP__')) {
           let propertyObject: Property = {} as Property;
@@ -193,6 +193,10 @@ export default class MetadataHandlerV2 extends MetadataHandler {
     const expands: any = {};
     this._getExpandsRecursive(mainEntity, expands, undefined, undefined, 0, deepLevel);
 
+    Log.debug(`V2 entity graph resolved for '${entityName}' (deepLevel ${deepLevel})`, undefined, 'SpreadsheetUpload: MetadataHandlerV2', () =>
+      this.spreadsheetUploadController.component.logger.returnObject({ entityName, deepLevel, entityType, mainEntity, expands })
+    );
+
     return { mainEntity, expands };
   }
 
@@ -239,9 +243,20 @@ export default class MetadataHandlerV2 extends MetadataHandler {
       // Check for navigation properties in V2 metadata structure
       if (entity.navigationProperty) {
         entity.navigationProperty.forEach((navProp: any) => {
-          // Resolve association end to get the fully qualified target type
-          const assocEnd = metaModel.getODataAssociationEnd(rootEntity, navProp.name);
+          // Resolve association end against the CURRENT entity (not rootEntity) so nested
+          // navigation properties past the first hop resolve correctly during deep export.
+          const assocEnd = metaModel.getODataAssociationEnd(entity, navProp.name);
           const targetFqn = assocEnd && assocEnd.type; // e.g. 'OrdersService.OrderItems'
+          Log.debug(`V2 nav '${entityName}.${navProp.name}' → ${targetFqn || 'UNRESOLVED'}`, undefined, 'SpreadsheetUpload: MetadataHandlerV2', () =>
+            this.spreadsheetUploadController.component.logger.returnObject({
+              from: entityName,
+              navProp: navProp.name,
+              level,
+              assocEnd,
+              targetFqn,
+              partner: assocEnd && assocEnd.partner
+            })
+          );
           if (!targetFqn) return;
 
           const targetEntity = metaModel.getODataEntityType(targetFqn);

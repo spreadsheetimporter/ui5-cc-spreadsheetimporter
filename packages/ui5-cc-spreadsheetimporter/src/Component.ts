@@ -345,16 +345,16 @@ export default class Component extends UIComponent implements IAsyncContentCreat
     if (componentContainerOptions) {
       for (const [eventName, attachMethod] of Object.entries(eventMethodMap)) {
         const methodName = componentContainerOptions[eventName];
-        console.log(`eventName: ${eventName}, methodName: ${methodName}`);
+        Log.debug(`eventName: ${eventName}, methodName: ${methodName}`, undefined, 'SpreadsheetUpload: Component');
         if (methodName && typeof context[methodName] === 'function') {
           try {
-            console.log(`Attaching ${methodName} to ${eventName}`);
+            Log.debug(`Attaching ${methodName} to ${eventName}`, undefined, 'SpreadsheetUpload: Component');
             attachMethod.call(this, context[methodName].bind(context), context);
           } catch (error) {
             Log.error(`Error while attaching event ${eventName}`, error, 'SpreadsheetUpload: Component');
           }
         } else {
-          console.log(`Method ${methodName} not found on context or is not a function`);
+          Log.debug(`Method ${methodName} not found on context or is not a function`, undefined, 'SpreadsheetUpload: Component');
         }
       }
     }

@@ -36,15 +36,34 @@ export class ODataV2RequestObjects {
   async getObjects(model: ODataModel, binding: any, spreadsheetData: any[], entitySetName: string): Promise<any[]> {
     const path = '/' + entitySetName;
 
+    Log.debug('V2 RequestObjects: processing spreadsheet data', undefined, 'SpreadsheetUpload: ODataV2RequestObjects', () => ({
+      entitySetName,
+      path,
+      rowCount: spreadsheetData.length,
+      spreadsheetData
+    }));
+
     Log.debug('V2 RequestObjects: Fetching active entities', undefined, 'SpreadsheetUpload: ODataV2RequestObjects');
     const activeEntities = await this._readWithFilter(model, path, spreadsheetData, binding, true);
-    Log.debug(`V2 RequestObjects: Found ${activeEntities.length} active entities`, undefined, 'SpreadsheetUpload: ODataV2RequestObjects');
+    Log.debug(`V2 RequestObjects: Found ${activeEntities.length} active entities`, undefined, 'SpreadsheetUpload: ODataV2RequestObjects', () => ({
+      count: activeEntities.length,
+      objects: activeEntities
+    }));
 
     Log.debug('V2 RequestObjects: Fetching draft entities', undefined, 'SpreadsheetUpload: ODataV2RequestObjects');
     const draftEntities = await this._readWithFilter(model, path, spreadsheetData, binding, false);
-    Log.debug(`V2 RequestObjects: Found ${draftEntities.length} draft entities`, undefined, 'SpreadsheetUpload: ODataV2RequestObjects');
+    Log.debug(`V2 RequestObjects: Found ${draftEntities.length} draft entities`, undefined, 'SpreadsheetUpload: ODataV2RequestObjects', () => ({
+      count: draftEntities.length,
+      objects: draftEntities
+    }));
 
     let matchedEntities = this.findEntitiesFromSpreadsheet(spreadsheetData, activeEntities, draftEntities, binding, entitySetName);
+    Log.debug(
+      `V2 RequestObjects: matched ${matchedEntities.filter(m => m.object).length}/${matchedEntities.length} entities`,
+      undefined,
+      'SpreadsheetUpload: ODataV2RequestObjects',
+      () => ({ matchedEntities })
+    );
 
     // Validate and remove not-found entities
     const { errorFound, filteredSpreadsheetData } = this.validateObjectsAndRemoveNotFound(spreadsheetData, matchedEntities, binding);
@@ -110,11 +129,29 @@ export class ODataV2RequestObjects {
       and: false
     });
 
+    Log.debug(`V2 RequestObjects: read ${path} (isActive=${isActive})`, undefined, 'SpreadsheetUpload: ODataV2RequestObjects', () => ({
+      path,
+      isActive,
+      rowCount: spreadsheetData.length,
+      filter: combinedFilter
+    }));
+
     return new Promise((resolve, reject) => {
       model.read(path, {
         filters: [combinedFilter],
         success: (data: any) => {
-          resolve(data.results || []);
+          const results = data.results || [];
+          Log.debug(
+            `V2 RequestObjects: read returned ${results.length} row(s) (isActive=${isActive})`,
+            undefined,
+            'SpreadsheetUpload: ODataV2RequestObjects',
+            () => ({
+              isActive,
+              count: results.length,
+              results
+            })
+          );
+          resolve(results);
         },
         error: (error: any) => {
           Log.error('V2 RequestObjects: Error reading entities', error, 'SpreadsheetUpload: ODataV2RequestObjects');

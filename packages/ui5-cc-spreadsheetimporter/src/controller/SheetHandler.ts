@@ -1,5 +1,6 @@
 // @ts-nocheck
 import ManagedObject from 'sap/ui/base/ManagedObject';
+import Log from 'sap/base/Log';
 import * as XLSX from 'xlsx';
 import { Sheet2JSONOpts, WorkSheet } from 'xlsx';
 import { ArrayData } from '../types';
@@ -402,7 +403,7 @@ export default class SheetHandler extends ManagedObject {
       // Create a new range string with adjusted coordinates
       return XLSX.utils.encode_range(r);
     } catch (e) {
-      console.error('Invalid cell reference:', cellReference);
+      Log.error(`Invalid cell reference: ${cellReference}`, undefined, 'SpreadsheetUpload: SheetHandler');
       return range; // Return original range if there's an error
     }
   }

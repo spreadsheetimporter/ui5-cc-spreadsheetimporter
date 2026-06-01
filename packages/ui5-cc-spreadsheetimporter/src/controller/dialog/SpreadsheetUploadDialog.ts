@@ -426,7 +426,7 @@ export default class SpreadsheetUploadDialog extends ManagedObject {
           this.spreadsheetGenerator.downloadSpreadsheet(mainEntitySiblings, this.component.getDeepDownloadConfig() as DeepDownloadConfig);
         }
       } catch (error) {
-        console.error('Error in onDownloadDataSpreadsheet:', error);
+        Log.error('Error in onDownloadDataSpreadsheet', error as Error, 'SpreadsheetUpload: SpreadsheetUploadDialog');
       }
     } else {
       Util.showError(this.spreadsheetUploadController.errorMessage, 'SpreadsheetUpload.ts', 'initialSetup');
