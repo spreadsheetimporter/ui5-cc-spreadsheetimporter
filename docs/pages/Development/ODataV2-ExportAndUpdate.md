@@ -113,6 +113,13 @@ Objective: Make UPDATE work with V2 similar to V4’s `updateAsync`, honoring th
 - **Restored `precision`, `scale`, `nullable` in V2 metadata:** Re-added metadata property extraction that was accidentally dropped during branch development. Required for null/empty marker support and decimal validation.
 - **Replaced `console.log` with SAP `Log` API** and removed dead `_extractKey()` fallback method.
 
+### What changed (June 2026)
+
+- **Debug instrumentation across the V2 path:** Added lazy support-info dumps (`Log.debug(..., () => logger.returnObject(obj))`) at the V2 decision points — entity-graph resolution and association ends (`MetadataHandlerV2`), expand conversion, fetch parameters/response and pagination, and the update key/payload (`ODataV2`), plus active/draft reads and entity matching (`ODataV2RequestObjects`). Standardized component tags (`SpreadsheetUpload: ODataV2` / `ODataV2RequestObjects` / `MetadataHandlerV2`), fixed a copy-pasted `ODataV4` tag inside `ODataV2`, and converted the remaining stray `console.*` calls to the `Log` API.
+- **Fixed deep-export nested expand:** `MetadataHandlerV2._findEntitiesByNavigationProperty` resolved associations against `rootEntity` instead of the entity currently being traversed, so navigation properties beyond the first hop (e.g. `Orders/Items`, `Orders/Shipping`) silently failed to resolve and were dropped from the export. It now passes the current `entity`, so the graph traverses fully up to `deepLevel`.
+- **Fixed the mass-update example wiring:** `ordersv2fe`'s `massUpdate()` did not pass a `tableId`; on an Object Page with more than one table this aborts initialization (`Found more than one table on Object Page`) before the dialog opens, so `updateAsync` was never reached. Added the Items `tableId`.
+- **wdi5 failure diagnostics:** the test config now runs at UI5 `DEBUG` log level and, on a failed test, dumps the `SpreadsheetUpload` log buffer + browser console and saves a screenshot. The two fixes above were found this way. See _Debugging an OData V2 issue_ below.
+
 ### Delete (V2 and V4)
 
 - V2: Use `ODataModel.remove(sPath, { success, error })` with `sPath` built from `createKey(entitySetName, keys)`. Batch using `submitChanges()` if `useBatch` is enabled. Keys can be derived from `MetadataHandlerV2.getKeys(binding, payload)`.
@@ -122,3 +129,23 @@ Objective: Make UPDATE work with V2 similar to V4’s `updateAsync`, honoring th
 
 - Expand conversion supports arbitrary depth via chained paths (e.g., `A,B,B/C,B/C/D`).
 - Introduce automatic switching to paginated reads when result size exceeds a threshold.
+
+### Quirks and Gotchas (OData V2 specifics)
+
+These are the V2-specific traps that cost the most time. Most stem from V2 being a different — and, in the example apps, _generated_ — protocol than V4.
+
+- **The example V2 service is synthetic (cov2ap).** The CAP server exposes one V4/CDS service and serves V2 through the `@cap-js-community/odata-v2-adapter` (cov2ap). The V2 `$metadata`, entity-set names, key predicates and draft fields are _translated_, not hand-written — so inspect what the V2 layer actually emits at runtime rather than assuming it matches V4. In tests, draft state is even set via the V4 endpoint (`draftEdit`) and read back over V2.
+- **The V2 metamodel is XML-derived and loosely typed.** Vocabulary annotations are plain object fields (`property['sap:label']`, `property['com.sap.vocabularies.UI.v1.Hidden'].Bool`, `property['com.sap.vocabularies.Common.v1.FieldControl'].EnumMember`); entity types expose `key.propertyRef[]` and `navigationProperty[]`. Most access goes through `as any`. Dump the resolved entity type with debug logging before relying on a field's shape.
+- **`getODataAssociationEnd` is entity-relative.** Resolve a navigation property against the entity that _owns_ it — `metaModel.getODataAssociationEnd(entityType, navProp.name)` — not against the root entity. The wrong entity returns `null` and the branch is silently dropped (this caused the nested-expand bug fixed in June 2026).
+- **Expand is a string, not a tree.** V4 uses nested `$expand` objects; V2 wants a comma-separated path string (`Orders,Orders/Items,Orders/Shipping`). `ODataV2._convertExpandToV2Format` flattens the V4-style nested object into that string.
+- **Reads, not contexts.** V2 has no `requestContexts`/`$count` header context. `ODataV2.fetchBatch` uses `model.read(path, { urlParameters: { $expand, $inlinecount } })` and wraps raw results into context-like `{ getObject, getPath, data }` objects so the shared download pipeline (`Util.extractObjects` → `DataAssigner` → `SpreadsheetGenerator`) stays version-agnostic. Large result sets auto-switch to `$skip`/`$top` pagination.
+- **Draft is runtime data, not metadata.** `IsActiveEntity` / `HasDraftEntity` / `HasActiveEntity` appear only in read results (from cov2ap's draft enablement). On UPDATE, when the matched entity is a draft, the key predicate must include `IsActiveEntity=false`; `waitForDraft()` then activates via `DraftController.activateDraftEntity()`.
+- **Known open issue — date/time round-trip.** On UPDATE, `Edm.DateTime` / `Edm.Time` / `Edm.DateTimeOffset` values can be sent back wrong (epoch-like). Not yet root-caused (export write vs. spreadsheet re-serialization vs. parser on re-upload).
+
+### Debugging an OData V2 issue
+
+1. **Turn on debug logging.** Set `debug: true` in the importer `componentData`, or append `?sap-ui-logLevel=DEBUG` to the app URL. Either flips the component into `Log.setLevel(DEBUG)` + `Log.logSupportInfo(true)`, which activates the lazy object dumps (`() => logger.returnObject(...)`).
+2. **Read the dumps** in the browser console or via `sap.base.Log.getLogEntries()`. Filter by tag — `SpreadsheetUpload: ODataV2`, `ODataV2RequestObjects`, `MetadataHandlerV2`. You'll see the resolved entity graph, each association resolution, the generated expand string, the `read` URL parameters + raw response, the active/draft matches, and the final update key + payload.
+3. **In wdi5 runs**, a failed test auto-dumps the `SpreadsheetUpload` log buffer + browser console and saves a screenshot under `examples/reports/errorShots/` (set `WDI5_LOG_LEVEL=ERROR` to quieten).
+4. **Probe the V2 wire directly** with `examples/test/http/create-order-item-v2-null-tests.http` (REST Client) to see exactly what cov2ap accepts/returns for `$expand`, `$filter` and draft reads, decoupled from the UI5 layer.
+5. **Build/run note:** the component is transpiled from `src/` on the fly — keep `packages/ui5-cc-spreadsheetimporter/dist` empty (see the repo `CLAUDE.md`). When serving the example apps via `cds watch`, note that `cds-plugin-ui5` expects each app's `dist/` to exist, so either build the apps or disable that plugin (CI removes it).
