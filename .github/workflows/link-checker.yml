@@ -24,10 +24,15 @@ jobs:
         uses: actions/checkout@v4
       - name: Link Checker
         id: lychee
-        uses: lycheeverse/lychee-action@v1.6.1
+        uses: lycheeverse/lychee-action@v2.8.0
         with:
-          args: --verbose --no-progress --max-concurrency 2 --exclude-mail --exclude-loopback './**/*.md'
+          args: --verbose --no-progress --max-concurrency 2 --exclude-loopback './**/*.md'
           output: ./lychee/out.md
+          # preserve v1 behaviour: don't fail the step, let the issue-creation
+          # steps below act on the exit_code (--exclude-mail was removed in
+          # newer lychee; mailto links are now excluded by default)
+          fail: false
+          failIfEmpty: false
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - name: Find existing issue
