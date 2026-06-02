@@ -1,11 +1,13 @@
-const Base = require("./Base");
-const FE = require("./FE");
+const FEBase = require("./FEBase");
 
-class FEV2ND {
+/**
+ * Page object for the OData V2 non-draft Fiori Elements app (SUGE template). Shared helpers
+ * and constants live in FEBase; this class holds the non-draft template-specific selectors
+ * (save button is "save"; entity keys have no IsActiveEntity) and the dependent getters.
+ */
+class FEV2ND extends FEBase {
 	constructor() {
-		this.unicodeSpaceRegex = /[\u0020\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\u202F]/g;
-
-		this.BaseClass = new Base();
+		super();
 		this.rootId = "ui.v2.ordersv2fenondraft::sap.suite.ui.generic.template.";
 		this.listReportId = this.rootId + "ListReport.view.ListReport::OrdersND--";
 		this.objectPageId = this.rootId + "ObjectPage.view.Details::OrdersND--";
@@ -17,16 +19,6 @@ class FEV2ND {
 		this.objectPageSpreadsheetuploadButton = this.objectPageId + "spreadsheetUploadButton";
 		this.objectPageSaveButton = this.objectPageId + "save";
 		this.objectPageOrderItems = this.objectPageId + "Items::com.sap.vocabularies.UI.v1.LineItem::responsiveTable";
-		this.listReportUploadFilename = "test/testFiles/ListReportOrdersNoErros.xlsx";
-		// nav to sub object page
-		this.navToObjectPageAttribute = "OrderNo";
-		this.navToObjectPageValue = "2";
-		// nav to sub object page
-		this.navToSubObjectPageAttribute = "product_ID";
-		this.navToSubObjectPageValue = "254";
-		// check file upload list report
-		this.checkFileuploadListreportAttribute = "OrderNo";
-		this.checkFileuploadListreportValue = "4";
 
 		this.overflowButton = "__toolbar2-overflowButton";
 		this.entitySet = "OrdersND";
@@ -36,6 +28,7 @@ class FEV2ND {
 		this.entityObjectPageComma = "ID=64e718c9-ff99-47f1-8ca3-950c850777d6";
 		this.entityObjectPageDot = "ID=64e718c9-ff99-47f1-8ca3-950c850777d7";
 	}
+
 	async getFieldValue(fieldName) {
 		const field = await $(
 			`//*[@id="ui.v2.ordersv2fenondraft::sap.suite.ui.generic.template.ObjectPage.view.Details::OrderItemsND--com.sap.vocabularies.UI.v1.Identification::${fieldName}::Field-text"]`
@@ -65,32 +58,6 @@ class FEV2ND {
 		}
 	}
 
-	async getTableItems(tableId) {
-		const table = await this.BaseClass.getControlById(tableId);
-		const metadata = await table.exec(() => this.getMetadata());
-		const type = await metadata.getName();
-		let items = undefined;
-		if (type === "sap.m.Table") {
-			items = await table.exec(() => this.getItems());
-		} else {
-			items = await table.exec(() => this.getRows());
-		}
-		return items;
-	}
-
-	async getTableObject(tableId, objectAttribute, objectValue) {
-		const items = await this.getTableItems(tableId);
-		for (let index = 0; index < items.length; index++) {
-			const element = items[index];
-			const item = await this.BaseClass.getControlById(element.id);
-			const binding = await item.exec(() => this.getBindingContext());
-			const object = await binding.getObject();
-			if (object[objectAttribute] === objectValue) {
-				return object;
-			}
-		}
-	}
-
 	async getDateFields(attribute, options) {
 		const selector = {
 			selector: {
@@ -113,19 +80,6 @@ class FEV2ND {
 		valueText = valueText.replace(this.unicodeSpaceRegex, " ");
 		formattedDate = formattedDate.replace(this.unicodeSpaceRegex, " ");
 		return { valueText: valueText, formattedDate: formattedDate };
-	}
-
-	getTimeValue(ms) {
-		var date = new Date(ms);
-		var hours = Math.floor(ms / (1000 * 60 * 60)) % 24;
-		var minutes = Math.floor(ms / (1000 * 60)) % 60;
-		var seconds = Math.floor(ms / 1000) % 60;
-		var ampm = hours >= 12 ? "PM" : "AM";
-		hours = hours % 12;
-		hours = hours ? hours : 12; // the hour '0' should be '12'
-		minutes = minutes < 10 ? "0" + minutes : minutes;
-		seconds = seconds < 10 ? "0" + seconds : seconds;
-		return hours + ":" + minutes + ":" + seconds + " " + ampm;
 	}
 }
 module.exports = FEV2ND;
