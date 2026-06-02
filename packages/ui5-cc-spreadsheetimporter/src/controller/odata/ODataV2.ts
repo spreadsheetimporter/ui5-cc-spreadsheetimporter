@@ -8,6 +8,7 @@ import ODataListBinding from 'sap/ui/model/odata/v2/ODataListBinding';
 import ODataModel from 'sap/ui/model/odata/v2/ODataModel';
 import MessageHandler from '../MessageHandler';
 import Util from '../Util';
+import { hasV2BatchError } from '../utils/odataResponse';
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -120,20 +121,14 @@ export default class ODataV2 extends OData {
   }
 
   async checkForErrors(model: any, binding: any, showBackendErrorMessages: Boolean): Promise<boolean> {
-    // check if this.submitChangesResponse and this.submitChangesResponse.__batchResponses exist
-    if (this.submitChangesResponse && this.submitChangesResponse.__batchResponses) {
-      const firstResponse = this.submitChangesResponse.__batchResponses[0];
-      // check if firstResponse and firstResponse.response exist and that statusCode is >= 400
-      if (firstResponse && firstResponse.response && firstResponse.response.statusCode >= 400) {
-        // show messages from the Messages Manager Model
-        if (showBackendErrorMessages) {
-          // messages data is read directly from message manager by handler
-          this.odataMessageHandler.displayMessages([]);
-        }
-        return true;
-      }
+    // Inspect every batch part and changeset sub-response (not just __batchResponses[0]),
+    // so errors in batched updates/creates or in later batch parts are not missed.
+    const errorFound = hasV2BatchError(this.submitChangesResponse);
+    if (errorFound && showBackendErrorMessages) {
+      // messages data is read directly from the message manager by the handler
+      this.odataMessageHandler.displayMessages([]);
     }
-    return false;
+    return errorFound;
   }
 
   async createCustomBinding(binding: any) {
