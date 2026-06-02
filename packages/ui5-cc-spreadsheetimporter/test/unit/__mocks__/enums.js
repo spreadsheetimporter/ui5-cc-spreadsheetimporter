@@ -1,7 +1,8 @@
 module.exports = {
   CustomMessageTypes: {
     ObjectNotFound: 'ObjectNotFound',
-    DraftEntityMismatch: 'DraftEntityMismatch'
+    DraftEntityMismatch: 'DraftEntityMismatch',
+    ParsingError: 'ParsingError'
   },
   MessageType: {
     Error: 'Error',
