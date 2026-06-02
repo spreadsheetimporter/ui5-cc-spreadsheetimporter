@@ -16,10 +16,10 @@ jobs:
       fail-fast: false
       matrix:
         scenario: ['ordersv4fe']
-        ui5version: [108, 96, 84, 71]
-        exclude:
-          - scenario: ordersv4fe
-            ui5version: 71
+        # Aligned with the trimmed wdi5 matrix and the kept testapps copyVersions: ordersv4fe
+        # exists as 136 (base) + 120 only (71 is excluded for V4). Was [108, 96, 84, 71], whose
+        # app copies copyTestApps no longer generates after the version-matrix trim.
+        ui5version: [136, 120]
 
     steps:
       # - name: update chrome
