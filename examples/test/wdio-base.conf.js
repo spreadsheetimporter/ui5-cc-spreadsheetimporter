@@ -40,12 +40,14 @@ module.exports.config = {
 	exclude: [
 		// 'path/to/excluded/files'
 	],
-	// Reduce instances for watch mode to keep browser stable
-	maxInstances: isWatchMode ? 1 : 10,
+	// Reduce instances for watch mode to keep browser stable. Cap CI parallelism low:
+	// on a 2-core runner, too many parallel browsers starve FE rendering so busy overlays
+	// (sap-ui-blocklayer-popup) linger and intercept Save/Upload clicks -> flaky failures.
+	maxInstances: isWatchMode ? 1 : 4,
 	//
 	capabilities: [
 		{
-			maxInstances: isWatchMode ? 1 : 5,
+			maxInstances: isWatchMode ? 1 : 2,
 			"wdio:enforceWebDriverClassic": true,
 			// Capture browser console logs so afterTest can dump them on failure
 			"goog:loggingPrefs": { browser: "ALL" },
