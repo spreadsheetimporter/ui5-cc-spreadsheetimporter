@@ -9,6 +9,7 @@ import ODataModel from 'sap/ui/model/odata/v2/ODataModel';
 import MessageHandler from '../MessageHandler';
 import Util from '../Util';
 import { hasV2BatchError } from '../utils/odataResponse';
+import { normalizeV2Expands } from '../utils/v2Expand';
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -340,6 +341,9 @@ export default class ODataV2 extends OData {
         urlParameters: baseUrlParameters,
         success: (data: any) => {
           const results = data.results || [data];
+          // V2 wraps expanded to-many navs as { results: [...] }; flatten them so the shared
+          // DataAssigner (which expects V4-style arrays) picks up child/grandchild rows.
+          normalizeV2Expands(results);
           const totalCount = Number((data && (data.__count || data['__count'])) || results.length);
           Log.debug(`V2 fetchBatch response: ${results.length} item(s), totalCount ${totalCount}`, undefined, 'SpreadsheetUpload: ODataV2', () =>
             this.spreadsheetUploadController.component.logger.returnObject({ totalCount, resultCount: results.length, rawData: data })
@@ -415,6 +419,7 @@ export default class ODataV2 extends OData {
         urlParameters: urlParameters,
         success: (data: any) => {
           const results = data.results || [data];
+          normalizeV2Expands(results);
           allResults.push(...results);
           fetchedCount += results.length;
 
