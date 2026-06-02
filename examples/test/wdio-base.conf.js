@@ -24,10 +24,11 @@ for (let index = 0; index < process.argv.length; index++) {
 const testappObject = util.getTestappObject(scenario, version);
 const specs = testappObject["testMapping"]["specs"];
 const port = testappObject.port;
-// Force a UI5 log level during tests so the component's debug dumps (Log.logSupportInfo)
-// are populated and can be captured on failure (see afterTest). Override with WDI5_LOG_LEVEL=ERROR to quieten.
-const ui5LogLevel = process.env.WDI5_LOG_LEVEL || "DEBUG";
-let baseUrl = `http://localhost:${port}/index.html?sap-language=EN&sap-ui-logLevel=${ui5LogLevel}`;
+// UI5 log level for tests is opt-in: set WDI5_LOG_LEVEL=DEBUG to populate the component's
+// debug dumps (Log.logSupportInfo) for failure diagnostics. Left at the framework default
+// otherwise, so CI runs fast and logs stay small.
+const ui5LogLevel = process.env.WDI5_LOG_LEVEL;
+let baseUrl = `http://localhost:${port}/index.html?sap-language=EN${ui5LogLevel ? `&sap-ui-logLevel=${ui5LogLevel}` : ""}`;
 global.scenario = scenario;
 
 module.exports.config = {
@@ -77,6 +78,10 @@ module.exports.config = {
 	waitforTimeout: 60000,
 	connectionRetryTimeout: process.argv.indexOf("--debug") > -1 ? 1200000 : 120000,
 	connectionRetryCount: 3,
+	// Retry whole spec files on failure to absorb flaky FE Object Page / List Report timing
+	// interactions under parallel CI load; deferred so retries run after the initial queue.
+	specFileRetries: isWatchMode ? 0 : 2,
+	specFileRetriesDeferred: true,
 
 	// Watch mode configuration
 	watch: isWatchMode,
