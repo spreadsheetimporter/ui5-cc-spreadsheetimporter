@@ -33,6 +33,21 @@ export class ODataV2RequestObjects {
     return this.matchedEntities;
   }
 
+  /**
+   * A V2 entity set is draft-enabled when its entity type exposes the IsActiveEntity property.
+   * Non-draft sets must be read by their real keys only (no IsActiveEntity filter), otherwise
+   * the service rejects the unknown property.
+   */
+  private _isDraftEnabled(binding: any): boolean {
+    try {
+      const entityType = binding._getEntityType();
+      const properties = (entityType && entityType.property) || [];
+      return properties.some((property: any) => property.name === 'IsActiveEntity');
+    } catch (e) {
+      return false;
+    }
+  }
+
   async getObjects(model: ODataModel, binding: any, spreadsheetData: any[], entitySetName: string): Promise<any[]> {
     const path = '/' + entitySetName;
 
@@ -43,19 +58,28 @@ export class ODataV2RequestObjects {
       spreadsheetData
     }));
 
+    // Only split into active/draft reads for draft-enabled entity sets. A non-draft set has no
+    // IsActiveEntity property, so that filter would be rejected (→ empty reads → every row
+    // dropped as ObjectNotFound → no updates); read it once by the real keys instead.
+    const isDraftEnabled = this._isDraftEnabled(binding);
+    Log.debug(`V2 RequestObjects: draft-enabled=${isDraftEnabled}`, undefined, 'SpreadsheetUpload: ODataV2RequestObjects');
+
     Log.debug('V2 RequestObjects: Fetching active entities', undefined, 'SpreadsheetUpload: ODataV2RequestObjects');
-    const activeEntities = await this._readWithFilter(model, path, spreadsheetData, binding, true);
+    const activeEntities = await this._readWithFilter(model, path, spreadsheetData, binding, isDraftEnabled ? true : undefined);
     Log.debug(`V2 RequestObjects: Found ${activeEntities.length} active entities`, undefined, 'SpreadsheetUpload: ODataV2RequestObjects', () => ({
       count: activeEntities.length,
       objects: activeEntities
     }));
 
-    Log.debug('V2 RequestObjects: Fetching draft entities', undefined, 'SpreadsheetUpload: ODataV2RequestObjects');
-    const draftEntities = await this._readWithFilter(model, path, spreadsheetData, binding, false);
-    Log.debug(`V2 RequestObjects: Found ${draftEntities.length} draft entities`, undefined, 'SpreadsheetUpload: ODataV2RequestObjects', () => ({
-      count: draftEntities.length,
-      objects: draftEntities
-    }));
+    let draftEntities: any[] = [];
+    if (isDraftEnabled) {
+      Log.debug('V2 RequestObjects: Fetching draft entities', undefined, 'SpreadsheetUpload: ODataV2RequestObjects');
+      draftEntities = await this._readWithFilter(model, path, spreadsheetData, binding, false);
+      Log.debug(`V2 RequestObjects: Found ${draftEntities.length} draft entities`, undefined, 'SpreadsheetUpload: ODataV2RequestObjects', () => ({
+        count: draftEntities.length,
+        objects: draftEntities
+      }));
+    }
 
     let matchedEntities = this.findEntitiesFromSpreadsheet(spreadsheetData, activeEntities, draftEntities, binding, entitySetName);
     Log.debug(
@@ -111,12 +135,14 @@ export class ODataV2RequestObjects {
     return matchedEntities.map(m => m.object);
   }
 
-  private async _readWithFilter(model: ODataModel, path: string, spreadsheetData: any[], binding: any, isActive: boolean): Promise<any[]> {
+  private async _readWithFilter(model: ODataModel, path: string, spreadsheetData: any[], binding: any, isActive?: boolean): Promise<any[]> {
     const batchFilters = spreadsheetData.map(spreadsheetEntry => {
       const keys = this.metadataHandler.getKeys(binding, spreadsheetEntry, undefined, true);
       const keyFilters = Object.entries(keys).map(([property, value]) => new Filter(property, FilterOperator.EQ, value));
-      // Add IsActiveEntity filter
-      keyFilters.push(new Filter('IsActiveEntity', FilterOperator.EQ, isActive));
+      // Add the IsActiveEntity filter only for draft-enabled entity sets (isActive defined)
+      if (isActive !== undefined) {
+        keyFilters.push(new Filter('IsActiveEntity', FilterOperator.EQ, isActive));
+      }
 
       return new Filter({
         filters: keyFilters,

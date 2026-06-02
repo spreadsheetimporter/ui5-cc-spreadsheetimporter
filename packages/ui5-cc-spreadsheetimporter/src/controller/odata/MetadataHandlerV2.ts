@@ -208,6 +208,13 @@ export default class MetadataHandlerV2 extends MetadataHandler {
     if (entityType && entityType.key && entityType.key.propertyRef) {
       entityType.key.propertyRef.forEach((keyRef: any) => {
         const keyName = keyRef.name;
+        // When the caller asks to exclude IsActiveEntity, skip it here too (not just in the
+        // append block below). In draft-enabled V2 metadata IsActiveEntity is itself a key, so
+        // copying the payload's status would produce contradictory filters once the caller adds
+        // its own active/draft predicate (e.g. IsActiveEntity eq false AND IsActiveEntity eq true).
+        if (excludeIsActiveEntity && keyName === 'IsActiveEntity') {
+          return;
+        }
         if (payload.hasOwnProperty(keyName)) {
           keys[keyName] = payload[keyName];
         }
@@ -292,7 +299,12 @@ export default class MetadataHandlerV2 extends MetadataHandler {
 
     if (mainEntity.navigationProperty) {
       mainEntity.navigationProperty.forEach((navProp: any) => {
-        if (navProp.$XYZFetchableEntity) {
+        // _findEntitiesByNavigationProperty stores the resolved nav node (carrying the
+        // $XYZ* markers and the target entity type) on mainEntity[navProp.name], NOT on the
+        // navigationProperty array element. Read it from there, otherwise no expand entries
+        // are ever produced and the deep-export read goes out without $expand.
+        const navNode = mainEntity[navProp.name];
+        if (navNode && navNode.$XYZFetchableEntity) {
           const navPropName = navProp.name;
 
           if (parent) {
@@ -300,12 +312,12 @@ export default class MetadataHandlerV2 extends MetadataHandler {
               parentExpand.$expand = {};
             }
             parentExpand.$expand[navPropName] = {};
-            this._getExpandsRecursive(navProp.$XYZEntity, expands, navPropName, parentExpand.$expand[navPropName], currentLevel + 1, deepLevel);
+            this._getExpandsRecursive(navNode.$XYZEntity, expands, navPropName, parentExpand.$expand[navPropName], currentLevel + 1, deepLevel);
           } else {
             if (!expands[navPropName]) {
               expands[navPropName] = {};
             }
-            this._getExpandsRecursive(navProp.$XYZEntity, expands, navPropName, expands[navPropName], currentLevel + 1, deepLevel);
+            this._getExpandsRecursive(navNode.$XYZEntity, expands, navPropName, expands[navPropName], currentLevel + 1, deepLevel);
           }
         }
       });

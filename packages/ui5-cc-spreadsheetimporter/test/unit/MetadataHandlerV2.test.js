@@ -100,3 +100,72 @@ describe('MetadataHandlerV2.getLabelList', () => {
     });
   });
 });
+
+describe('MetadataHandlerV2.getKeys', () => {
+  function bindingWithKeys(keyNames) {
+    return { _getEntityType: () => ({ key: { propertyRef: keyNames.map(name => ({ name })) } }) };
+  }
+
+  it('excludes IsActiveEntity from the keys when excludeIsActiveEntity is true (even if it is a key)', () => {
+    const handler = new MetadataHandlerV2(makeController());
+    const binding = bindingWithKeys(['ID', 'IsActiveEntity']);
+    const keys = handler.getKeys(binding, { ID: 'g1', IsActiveEntity: false }, undefined, true);
+    // Without this, a caller adding its own active/draft predicate gets contradictory filters.
+    expect(keys).toEqual({ ID: 'g1' });
+    expect(keys).not.toHaveProperty('IsActiveEntity');
+  });
+
+  it('keeps the IsActiveEntity key when not excluded', () => {
+    const handler = new MetadataHandlerV2(makeController());
+    const binding = bindingWithKeys(['ID', 'IsActiveEntity']);
+    const keys = handler.getKeys(binding, { ID: 'g1', IsActiveEntity: false }, undefined, false);
+    expect(keys).toEqual({ ID: 'g1', IsActiveEntity: false });
+  });
+});
+
+describe('MetadataHandlerV2.getODataEntitiesRecursive', () => {
+  const ITEMS_FQN = 'OrdersService.OrderItems';
+  const PRODUCT_FQN = 'OrdersService.Products';
+
+  function makeMetaModelController() {
+    const productEntity = { name: 'Products', property: [{ name: 'price' }], navigationProperty: [] };
+    const itemsEntity = { name: 'OrderItems', property: [{ name: 'quantity' }], navigationProperty: [{ name: 'Product' }] };
+    const ordersEntity = { name: 'Orders', property: [{ name: 'ID' }], navigationProperty: [{ name: 'Items' }] };
+    const metaModel = {
+      getODataEntityType: fqn => {
+        if (fqn === ITEMS_FQN) return itemsEntity;
+        if (fqn === PRODUCT_FQN) return productEntity;
+        return ordersEntity;
+      },
+      getODataAssociationEnd: (entity, navName) => {
+        if (navName === 'Items') return { type: ITEMS_FQN, partner: 'Order' };
+        if (navName === 'Product') return { type: PRODUCT_FQN, partner: 'Items' };
+        return undefined;
+      }
+    };
+    return {
+      view: { getModel: () => ({ getMetaModel: () => metaModel }) },
+      component: { logger: { returnObject: o => o } }
+    };
+  }
+
+  it('generates expand entries from navigation properties (regression: expands was empty)', () => {
+    const handler = new MetadataHandlerV2(makeMetaModelController());
+    const { expands } = handler.getODataEntitiesRecursive('OrdersService.Orders', 99);
+    expect(Object.keys(expands)).toContain('Items');
+  });
+
+  it('builds nested expands across multiple levels', () => {
+    const handler = new MetadataHandlerV2(makeMetaModelController());
+    const { expands } = handler.getODataEntitiesRecursive('OrdersService.Orders', 99);
+    expect(expands.Items).toBeDefined();
+    expect(expands.Items.$expand).toBeDefined();
+    expect(Object.keys(expands.Items.$expand)).toContain('Product');
+  });
+
+  it('respects deepLevel 0 (no expands)', () => {
+    const handler = new MetadataHandlerV2(makeMetaModelController());
+    const { expands } = handler.getODataEntitiesRecursive('OrdersService.Orders', 0);
+    expect(Object.keys(expands)).toHaveLength(0);
+  });
+});

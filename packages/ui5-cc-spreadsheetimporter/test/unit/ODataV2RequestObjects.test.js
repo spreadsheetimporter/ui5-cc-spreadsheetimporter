@@ -7,13 +7,19 @@
 
 const { ODataV2RequestObjects } = require('../../src/controller/odata/ODataV2RequestObjects');
 
-// Helper to create a mock binding with entity type keys
-function createMockBinding(keyNames) {
+// Helper to create a mock binding with entity type keys. Draft-enabled entity sets expose an
+// IsActiveEntity property; pass draftEnabled=false to model a plain (non-draft) V2 entity set.
+function createMockBinding(keyNames, draftEnabled = true) {
+  const property = keyNames.map(name => ({ name }));
+  if (draftEnabled) {
+    property.push({ name: 'IsActiveEntity' });
+  }
   return {
     _getEntityType: () => ({
       key: {
         propertyRef: keyNames.map(name => ({ name }))
-      }
+      },
+      property
     })
   };
 }
@@ -217,6 +223,34 @@ describe('ODataV2RequestObjects', () => {
 
       // Should have been removed as not found
       expect(spreadsheetData).toHaveLength(0);
+    });
+  });
+
+  describe('non-draft entity sets', () => {
+    it('reads by real keys only (no IsActiveEntity filter) and matches in a single read', async () => {
+      const binding = createMockBinding(['product_ID'], false); // non-draft: no IsActiveEntity property
+      const spreadsheetData = [{ product_ID: 'P1', quantity: 10 }];
+      const entities = [{ product_ID: 'P1', quantity: 5 }]; // backend rows have no IsActiveEntity
+
+      let readCount = 0;
+      let sawIsActiveEntityFilter = false;
+      const model = {
+        read: jest.fn((path, options) => {
+          readCount++;
+          if (JSON.stringify(options.filters).includes('IsActiveEntity')) {
+            sawIsActiveEntityFilter = true;
+          }
+          options.success({ results: entities });
+        })
+      };
+
+      const result = await requestObjects.getObjects(model, binding, spreadsheetData, 'OrdersND');
+
+      expect(result).toHaveLength(1);
+      expect(result[0].product_ID).toBe('P1');
+      // The fix: a non-draft set must not be probed with IsActiveEntity, and reads only once.
+      expect(sawIsActiveEntityFilter).toBe(false);
+      expect(readCount).toBe(1);
     });
   });
 });
