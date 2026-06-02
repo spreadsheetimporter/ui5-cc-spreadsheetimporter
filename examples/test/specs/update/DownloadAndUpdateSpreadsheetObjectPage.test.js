@@ -191,18 +191,6 @@ describe("Download and Update Spreadsheet Object Page with Null and Empty Marker
 	});
 
 	it("should save object page", async () => {
-		// Let the upload/submit settle, then force-remove any lingering busy block layer
-		// (same approach as the upload specs) so the Save click isn't intercepted by
-		// sap-ui-blocklayer-popup under parallel CI load.
-		await BaseClass.dummyWait(TEST_CONSTANTS.WAIT_TIME);
-		try {
-			await browser.execute(() => {
-				const bl = document.getElementById("sap-ui-blocklayer-popup");
-				if (bl) {
-					bl.remove();
-				}
-			});
-		} catch (error) {}
 		const saveButton = await browser.asControl({
 			selector: {
 				id: "ui.v4.ordersv4fe::OrdersObjectPage--fe::FooterBar::StandardAction::Save"

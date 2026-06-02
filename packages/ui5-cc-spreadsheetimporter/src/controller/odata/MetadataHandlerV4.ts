@@ -66,7 +66,10 @@ export default class MetadataHandlerV4 extends MetadataHandler {
       const propertiesFiltered = [];
       for (const propertyName in properties) {
         const propertyValue = properties[propertyName];
-        if (propertyValue['$kind'] === 'Property') {
+        // Exclude collection properties (e.g. the draft-internal DraftMessages on newer FE
+        // versions): they cannot be represented as a single spreadsheet column and would
+        // otherwise be exported and then rejected as ColumnNotFound on re-upload.
+        if (propertyValue['$kind'] === 'Property' && !propertyValue['$isCollection']) {
           propertiesFiltered.push([propertyName, propertyValue]);
         }
       }
@@ -112,7 +115,10 @@ export default class MetadataHandlerV4 extends MetadataHandler {
       const propertiesFiltered = [];
       for (const propertyName in properties) {
         const propertyValue = properties[propertyName];
-        if (propertyValue['$kind'] === 'Property') {
+        // Exclude collection properties (e.g. the draft-internal DraftMessages on newer FE
+        // versions): they cannot be represented as a single spreadsheet column and would
+        // otherwise be exported and then rejected as ColumnNotFound on re-upload.
+        if (propertyValue['$kind'] === 'Property' && !propertyValue['$isCollection']) {
           propertiesFiltered.push([propertyName, propertyValue]);
         }
       }
