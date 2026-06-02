@@ -20,7 +20,7 @@ set -e
 #   ordersv4freestyle
 #
 # Available UI5 versions:
-#   136, 120, 108, 96, 84, 71
+#   136, 120, 71
 # ============================================================================
 
 MARKER_FILE="/app/.test-prepared"
@@ -40,7 +40,7 @@ show_help() {
     echo "  ordersv2freestylenondraftopenui5   V2 Freestyle OpenUI5 (non-draft)"
     echo "  ordersv4freestyle                  V4 Freestyle"
     echo ""
-    echo "UI5 Versions: 136, 120, 108, 96, 84, 71"
+    echo "UI5 Versions: 136, 120, 71"
     echo ""
     echo "Examples:"
     echo "  docker run --rm spreadsheet-test ordersv2fe 136"

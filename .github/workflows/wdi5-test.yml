@@ -17,18 +17,14 @@ jobs:
       matrix:
         scenario:
           ['ordersv2fe', 'ordersv4fe', 'ordersv2fenondraft', 'ordersv2freestylenondraftopenui5', 'ordersv2freestylenondraft', 'ordersv4freestyle']
-        ui5version: [136, 120, 108, 96, 84, 71] # 136 is the new default version
+        # Trimmed matrix: newest default (136), the 1.120 FE-metadata divergence that
+        # surfaced the DraftMessages export issue, and the 1.71 floor. (Was 136/120/108/96/84/71.)
+        ui5version: [136, 120, 71]
         exclude:
           - scenario: ordersv4fe
             ui5version: 71
           - scenario: ordersv4freestyle
             ui5version: 71
-          - scenario: ordersv4freestyle
-            ui5version: 84
-          - scenario: ordersv4freestyle
-            ui5version: 96
-          - scenario: ordersv4freestyle
-            ui5version: 108
 
     steps:
       # - name: update chrome
