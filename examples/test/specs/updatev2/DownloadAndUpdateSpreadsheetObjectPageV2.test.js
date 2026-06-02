@@ -118,11 +118,16 @@ describe("V2 FE: Download and Update Spreadsheet Object Page", function () {
 		const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
 		const data = XLSX.utils.sheet_to_json(firstSheet);
 
+		// Lock in the deep export: it must produce Items rows with a quantity column.
+		// A regression in the V2 entity-graph/expand resolution would yield an empty/incomplete sheet.
+		expect(data.length).toBeGreaterThan(0);
+		const quantityKey = Object.keys(data[0]).find((k) => k.toLowerCase().includes("quantity"));
+		expect(quantityKey).toBeTruthy();
+
 		// Update quantity for all rows
 		data.forEach((row) => {
-			const key = Object.keys(row).find((k) => k.toLowerCase().includes("quantity"));
-			if (key) {
-				row[key] = TEST_CONSTANTS.ORDER.NEW_QUANTITY;
+			if (quantityKey) {
+				row[quantityKey] = TEST_CONSTANTS.ORDER.NEW_QUANTITY;
 			}
 		});
 
@@ -239,6 +244,11 @@ describe("V2 FE: Download and Update Spreadsheet Object Page", function () {
 
 		data.value.forEach((item) => {
 			expect(item.quantity).toBe(TEST_CONSTANTS.ORDER.NEW_QUANTITY);
+			// Date/time guard lock-in: a regression would read exported Excel date serials as
+			// epoch-milliseconds and corrupt these fields to 1970 on the round-trip.
+			if (item.validFrom) {
+				expect(new Date(item.validFrom).getUTCFullYear()).toBeGreaterThanOrEqual(2000);
+			}
 		});
 	});
 
