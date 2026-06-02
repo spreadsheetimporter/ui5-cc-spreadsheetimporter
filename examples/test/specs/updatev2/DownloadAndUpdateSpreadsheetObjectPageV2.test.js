@@ -15,6 +15,7 @@ const path = require("path");
 const fs = require("fs");
 const XLSX = require("xlsx");
 const Base = require("./../Objects/Base");
+const BaseUpload = require("./../Objects/BaseUpload");
 const { wdi5 } = require("wdio-ui5-service");
 
 const TEST_CONSTANTS = {
@@ -34,10 +35,11 @@ const TEST_CONSTANTS = {
 };
 
 describe("V2 FE: Download and Update Spreadsheet Object Page", function () {
-	let BaseClass, downloadDir, filePath;
+	let BaseClass, BaseUploadClass, downloadDir, filePath;
 
 	before(async function () {
 		BaseClass = new Base();
+		BaseUploadClass = new BaseUpload();
 		downloadDir = path.resolve(__dirname, "../../downloads");
 		// Clean up any leftover files
 		const fp = path.join(downloadDir, TEST_CONSTANTS.FILE.NAME);
@@ -138,8 +140,8 @@ describe("V2 FE: Download and Update Spreadsheet Object Page", function () {
 	});
 
 	it("should open mass update dialog and upload modified file", async function () {
-		// The "Mass Update" button is in the OP header actions
-		// Full ID: ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders--massUpdateButton
+		// Open the "Mass Update" dialog (OP header action). Full ID:
+		// ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders--massUpdateButton
 		const massUpdateButton = await browser.asControl({
 			selector: {
 				id: new RegExp("massUpdateButton"),
@@ -148,86 +150,35 @@ describe("V2 FE: Download and Update Spreadsheet Object Page", function () {
 		});
 		await massUpdateButton.press();
 
-		// Wait for the spreadsheet upload dialog to appear
+		// Wait for the importer's upload dialog, then delegate the upload mechanics (block-layer
+		// removal, file-input reveal, setValue, Upload press) to the shared BaseUpload helper —
+		// the same flow the V4 update spec uses. uploadFile sees the dialog already open and
+		// skips re-pressing the button.
 		await browser.waitUntil(
 			async () => {
-				try {
-					const dialog = await browser.asControl({
-						selector: {
-							controlType: "sap.m.Dialog",
-							properties: {
-								contentWidth: "40vw"
-							},
-							searchOpenDialogs: true
-						},
-						forceSelect: true
-					});
-					return !!dialog?._domId;
-				} catch (e) {
-					return false;
-				}
+				const dialog = await browser.asControl({
+					selector: {
+						controlType: "sap.m.Dialog",
+						properties: { contentWidth: "40vw" },
+						searchOpenDialogs: true
+					},
+					forceSelect: true
+				});
+				return !!dialog?._domId;
 			},
 			{ timeout: 10000, timeoutMsg: "Spreadsheet upload dialog did not appear" }
 		);
 
-		// Remove block layer if present (same pattern as BaseUpload)
-		try {
-			await browser.execute(() => {
-				const blockLayerPopup = document.getElementById("sap-ui-blocklayer-popup");
-				if (blockLayerPopup) {
-					blockLayerPopup.remove();
-				}
-			});
-		} catch (error) {}
-
-		// Make file input visible (UI5 FileUploader hides it)
-		await browser.waitUntil(
-			async () => {
-				try {
-					const found = await browser.execute(() => !!document.querySelector("input[type=file]"));
-					return found;
-				} catch (e) {
-					return false;
-				}
-			},
-			{ timeout: 5000, timeoutMsg: "File input not found in dialog" }
-		);
-
-		await browser.execute(() => {
-			document.querySelector("input[type=file]").style.display = "block";
-		});
-
-		// Set file path
-		const input = await $("input[type=file]");
-		await input.setValue(filePath);
-		await BaseClass.dummyWait(1000);
-
-		// Press Upload button in the dialog
-		const dialogUpload = await browser.asControl({
-			selector: {
-				controlType: "sap.m.Button",
-				properties: { text: "Upload" },
-				searchOpenDialogs: true
-			},
-			forceSelect: true
-		});
-		await dialogUpload.press();
+		await BaseUploadClass.uploadFile(filePath, new RegExp("massUpdateButton"), undefined);
 		await BaseClass.dummyWait(TEST_CONSTANTS.WAIT_TIME);
 	});
 
 	it("should save object page", async function () {
-		// Remove block layer if still present from dialog
-		try {
-			await browser.execute(() => {
-				const blockLayerPopup = document.getElementById("sap-ui-blocklayer-popup");
-				if (blockLayerPopup) {
-					blockLayerPopup.remove();
-				}
-			});
-		} catch (error) {}
+		// Remove a lingering busy overlay so it can't intercept the activate click.
+		await BaseClass.removeBlockLayer();
 
-		// In V2 SUGE template, the save/activate button
-		// Full ID: ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders--activate
+		// V2 SUGE save/activate button. Full ID:
+		// ui.v2.ordersv2fe::sap.suite.ui.generic.template.ObjectPage.view.Details::Orders--activate
 		const saveButton = await browser.asControl({
 			selector: {
 				id: new RegExp("activate$"),
@@ -235,12 +186,23 @@ describe("V2 FE: Download and Update Spreadsheet Object Page", function () {
 			}
 		});
 		await saveButton.press();
-		await BaseClass.dummyWait(TEST_CONSTANTS.WAIT_TIME);
+		await BaseClass.dummyWait(1000);
 	});
 
 	it("should verify updated quantities via API", async function () {
-		const response = await fetch(`${TEST_CONSTANTS.API.V4_BASE_URL}/Orders(ID=${TEST_CONSTANTS.ORDER.ID},IsActiveEntity=true)/Items`);
-		const data = await response.json();
+		const itemsUrl = `${TEST_CONSTANTS.API.V4_BASE_URL}/Orders(ID=${TEST_CONSTANTS.ORDER.ID},IsActiveEntity=true)/Items`;
+
+		// Poll until draft activation has propagated to the active entity instead of a fixed
+		// sleep: more stable under CI load, and faster on a quick machine.
+		let data;
+		await browser.waitUntil(
+			async () => {
+				const response = await fetch(itemsUrl);
+				data = await response.json();
+				return data.value.length > 0 && data.value.every((item) => item.quantity === TEST_CONSTANTS.ORDER.NEW_QUANTITY);
+			},
+			{ timeout: 15000, interval: 1000, timeoutMsg: "Items quantity did not update to NEW_QUANTITY after activation" }
+		);
 
 		data.value.forEach((item) => {
 			expect(item.quantity).toBe(TEST_CONSTANTS.ORDER.NEW_QUANTITY);
@@ -253,6 +215,21 @@ describe("V2 FE: Download and Update Spreadsheet Object Page", function () {
 	});
 
 	after(async function () {
+		// Discard any leftover draft so re-runs start from a clean active entity (mirrors the
+		// setup reset). After a successful run the draft is already activated, so this no-ops.
+		try {
+			await fetch(`${TEST_CONSTANTS.API.V4_BASE_URL}/Orders(ID=${TEST_CONSTANTS.ORDER.ID},IsActiveEntity=false)/OrdersService.draftActivate`, {
+				method: "POST",
+				headers: {
+					Accept: "application/json;odata.metadata=minimal",
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({})
+			});
+		} catch (e) {
+			/* no draft to discard */
+		}
+
 		// Cleanup downloaded files
 		const fp = path.join(downloadDir, TEST_CONSTANTS.FILE.NAME);
 		if (fs.existsSync(fp)) {
