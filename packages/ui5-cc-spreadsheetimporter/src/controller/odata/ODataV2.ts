@@ -87,6 +87,13 @@ export default class ODataV2 extends OData {
       const isConfigured = configuredColumns.length === 0 || configuredColumns.includes(property);
       if (!isConfigured && !fullUpdate) continue;
 
+      // Value-change detection (parity with V4): skip values that already match the
+      // prefetched backend entity unless a full update is requested. Date-typed values
+      // (backend/spreadsheet formats differ) won't compare equal and are sent as before.
+      if (!fullUpdate && matchedEntry && matchedEntry.object && matchedEntry.object[property] === value) {
+        continue;
+      }
+
       // Normalize Date to yyyy-mm-dd similar to V4 path
       let normalized = value;
       if (value && typeof value === 'object' && (value as any).toISOString) {
