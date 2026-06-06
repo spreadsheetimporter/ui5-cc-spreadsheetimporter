@@ -1,6 +1,7 @@
 import ManagedObject from 'sap/ui/base/ManagedObject';
 import { ArrayData, ListObject } from '../../types';
 import MessageHandler from '../MessageHandler';
+import Util from '../Util';
 import Component from '../../Component';
 import { FieldMatchType } from '../../enums';
 import Log from 'sap/base/Log';
@@ -120,7 +121,7 @@ export default class ValidationService extends ManagedObject {
             }
           }
           if (fieldMatchType === 'labelTypeBrackets') {
-            if (columnName.includes(`[${key}]`)) {
+            if (Util.columnMatchesType(columnName, key)) {
               found = true;
               break;
             }
