@@ -1,0 +1,26 @@
+<mvc:View controllerName="ordersv4freestyle.controller.Create"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+    <Page id="createPage" title="Feature: Create (backend)" showNavButton="true" navButtonPress="onNavBack">
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <Text id="createHint" text="Uploads a spreadsheet and creates the rows in the backend (non-standalone)." class="sapUiSmallMarginBottom"/>
+                <Button id="createOpenButton" text="Spreadsheet Upload" type="Emphasized" press="onOpenCreate" class="sapUiSmallMarginBottom"/>
+                <Table id="createOrdersTable" items="{/Orders}" growing="true" growingThreshold="10" noDataText="No orders">
+                    <columns>
+                        <Column><Text text="Order Number"/></Column>
+                        <Column><Text text="Buyer"/></Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{OrderNo}"/>
+                                <Text text="{buyer}"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

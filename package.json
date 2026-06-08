@@ -20,6 +20,7 @@
     "test:v4fe": "npm run test --workspace=ui5-cc-spreadsheetimporter-sample -- -- ordersv4fe 136",
     "test:opa5:v4fe": "npm run ui5-test-runner --workspace=ui5-cc-spreadsheetimporter-sample --url http://localhost:8080/test/integration/opaTests.qunit.html",
     "test:v2fe": "npm run test --workspace=ui5-cc-spreadsheetimporter-sample -- -- ordersv2fe 136",
+    "test:smoke": "npm run test --workspace=ui5-cc-spreadsheetimporter-sample -- -- ordersv2fe 136 --spec ./test/specs/updatev2/DownloadAndUpdateSpreadsheetObjectPageV2.test.js",
     "start:server": "npm run watch:server --workspace=ui5-cc-spreadsheetimporter-sample",
     "lint": "eslint .",
     "lint:staged": "lint-staged",
@@ -40,6 +41,7 @@
     "lint:ui5": "npm run lint:ui5 --workspace=ui5-cc-spreadsheetimporter",
     "test:docker:build": "docker build -f Dockerfile.test -t spreadsheet-test .",
     "test:docker": "docker run --rm spreadsheet-test",
+    "test:unit": "npm run test:unit --workspace=ui5-cc-spreadsheetimporter",
     "prepare": "husky"
   },
   "devDependencies": {

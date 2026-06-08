@@ -1,0 +1,26 @@
+<mvc:View controllerName="ui.v2.ordersv2freestylenondraft.controller.Upload"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+    <Page id="uploadPage" title="Feature: Upload (standalone)" showNavButton="true" navButtonPress="onNavBack">
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <Text id="uploadHint" text="Parses the uploaded spreadsheet client-side (standalone) and lists the rows below. No backend write." class="sapUiSmallMarginBottom"/>
+                <Button id="uploadOpenButton" text="Spreadsheet Upload" type="Emphasized" press="onOpenUpload" class="sapUiSmallMarginBottom"/>
+                <Table id="uploadResultTable" items="{tableData>/}" noDataText="Upload a file to see parsed rows">
+                    <columns>
+                        <Column><Text text="OrderNo"/></Column>
+                        <Column><Text text="Buyer"/></Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{tableData>OrderNo}"/>
+                                <Text text="{tableData>buyer}"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

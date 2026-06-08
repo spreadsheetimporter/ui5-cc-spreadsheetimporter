@@ -1,12 +1,32 @@
 import Log from 'sap/base/Log';
 import { Columns, Property, ListObject, PropertyArray } from '../../types';
 import MetadataHandler from './MetadataHandler';
+import ODataMetaModel from 'sap/ui/model/odata/ODataMetaModel';
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
 export default class MetadataHandlerV2 extends MetadataHandler {
+  private _metaModel: ODataMetaModel | null = null;
+
   constructor(spreadsheetUploadController: any) {
     super(spreadsheetUploadController);
+  }
+
+  /**
+   * Returns the cached ODataMetaModel, resolving it lazily from the view's model.
+   */
+  getMetaModel(): ODataMetaModel {
+    if (!this._metaModel) {
+      this._metaModel = this.spreadsheetUploadController.view.getModel().getMetaModel() as ODataMetaModel;
+    }
+    return this._metaModel;
+  }
+
+  /**
+   * Stores the MetaModel reference for later use (e.g. from a binding).
+   */
+  setMetaModel(metaModel: ODataMetaModel): void {
+    this._metaModel = metaModel;
   }
 
   public getLabelList(columns: Columns, odataType: string, odataEntityType: any, excludeColumns: Columns): ListObject {
@@ -15,7 +35,7 @@ export default class MetadataHandlerV2 extends MetadataHandler {
     // get the property list of the entity for which we need to download the template
     const properties: PropertyArray = odataEntityType.property;
     const entityTypeLabel: string = odataEntityType['sap:label'];
-    Log.debug('SpreadsheetUpload: Annotations', undefined, 'SpreadsheetUpload: MetadataHandler', () =>
+    Log.debug('SpreadsheetUpload: Annotations', undefined, 'SpreadsheetUpload: MetadataHandlerV2', () =>
       this.spreadsheetUploadController.component.logger.returnObject(odataEntityType)
     );
 
@@ -62,7 +82,7 @@ export default class MetadataHandlerV2 extends MetadataHandler {
         try {
           hiddenProperty = property['com.sap.vocabularies.UI.v1.Hidden'].Bool === 'true';
         } catch (error) {
-          Log.debug(`No hidden property on ${property.name}`, undefined, 'SpreadsheetUpload: MetadataHandler');
+          Log.debug(`No hidden property on ${property.name}`, undefined, 'SpreadsheetUpload: MetadataHandlerV2');
         }
         if (!hiddenProperty && !propertyName.startsWith('SAP__')) {
           let propertyObject: Property = {} as Property;
@@ -83,7 +103,7 @@ export default class MetadataHandlerV2 extends MetadataHandler {
         try {
           hiddenProperty = property['com.sap.vocabularies.UI.v1.Hidden'].Bool === 'true';
         } catch (error) {
-          Log.debug(`No hidden property on ${property.name}`, undefined, 'SpreadsheetUpload: MetadataHandler');
+          Log.debug(`No hidden property on ${property.name}`, undefined, 'SpreadsheetUpload: MetadataHandlerV2');
         }
         if (!hiddenProperty && !propertyName.startsWith('SAP__')) {
           let propertyObject: Property = {} as Property;
@@ -157,10 +177,170 @@ export default class MetadataHandlerV2 extends MetadataHandler {
   }
 
   getODataEntitiesRecursive(entityName: string, deepLevel: number): any {
-    throw new Error('Method not implemented.');
+    const metaModel = this.spreadsheetUploadController.view.getModel().getMetaModel() as ODataMetaModel;
+    const entityType = metaModel.getODataEntityType(entityName);
+
+    if (!entityType) {
+      throw new Error(`Entity '${entityName}' not found`);
+    }
+
+    const mainEntity: any = Object.assign({}, entityType || {});
+
+    // Find navigation properties and build entity structure recursively
+    this._findEntitiesByNavigationProperty(metaModel, mainEntity, entityName, deepLevel);
+
+    // Build expand structure for V2
+    const expands: any = {};
+    this._getExpandsRecursive(mainEntity, expands, undefined, undefined, 0, deepLevel);
+
+    Log.debug(`V2 entity graph resolved for '${entityName}' (deepLevel ${deepLevel})`, undefined, 'SpreadsheetUpload: MetadataHandlerV2', () =>
+      this.spreadsheetUploadController.component.logger.returnObject({ entityName, deepLevel, entityType, mainEntity, expands })
+    );
+
+    return { mainEntity, expands };
   }
 
   getKeys(binding: any, payload: any, IsActiveEntity?: boolean, excludeIsActiveEntity: boolean = false): Record<string, any> {
-    throw new Error('Method not implemented.');
+    const keys: Record<string, any> = {};
+    const entityType = binding._getEntityType();
+
+    // Get key properties from entity metadata
+    if (entityType && entityType.key && entityType.key.propertyRef) {
+      entityType.key.propertyRef.forEach((keyRef: any) => {
+        const keyName = keyRef.name;
+        // When the caller asks to exclude IsActiveEntity, skip it here too (not just in the
+        // append block below). In draft-enabled V2 metadata IsActiveEntity is itself a key, so
+        // copying the payload's status would produce contradictory filters once the caller adds
+        // its own active/draft predicate (e.g. IsActiveEntity eq false AND IsActiveEntity eq true).
+        if (excludeIsActiveEntity && keyName === 'IsActiveEntity') {
+          return;
+        }
+        if (payload.hasOwnProperty(keyName)) {
+          keys[keyName] = payload[keyName];
+        }
+      });
+    }
+
+    // Add IsActiveEntity if specified and not excluded
+    if (IsActiveEntity !== undefined && !excludeIsActiveEntity) {
+      keys.IsActiveEntity = IsActiveEntity;
+    }
+
+    return keys;
+  }
+
+  /**
+   * Finds entities by navigation properties for OData V2
+   */
+  private _findEntitiesByNavigationProperty(metaModel: any, rootEntity: any, rootEntityName: string, deepLevel: number = 99): void {
+    // Track the chain of entity types from the root to the current node (the "path") per queue item,
+    // instead of one global visited-set, so the traversal can distinguish a back-reference (a cycle)
+    // from a sibling duplicate-target navigation. A nav is followed only when its target type is NOT
+    // already on that path: cycles are cut (the marked graph stays acyclic, so termination no longer
+    // relies on deepLevel — that becomes a pure depth cap), while a target reached via a different
+    // branch is still marked (duplicate-target navigations are no longer silently dropped).
+    const queue: { entity: any; entityName: string; level: number; path: string[] }[] = [];
+
+    queue.push({ entity: rootEntity, entityName: rootEntityName, level: 0, path: [rootEntityName] });
+
+    while (queue.length > 0) {
+      const { entity, entityName, level, path } = queue.shift()!;
+
+      // Skip if we've reached the maximum depth level
+      if (level >= deepLevel) {
+        continue;
+      }
+
+      // Check for navigation properties in V2 metadata structure
+      if (entity.navigationProperty) {
+        entity.navigationProperty.forEach((navProp: any) => {
+          // Resolve association end against the CURRENT entity (not rootEntity) so nested
+          // navigation properties past the first hop resolve correctly during deep export.
+          const assocEnd = metaModel.getODataAssociationEnd(entity, navProp.name);
+          const targetFqn = assocEnd && assocEnd.type; // e.g. 'OrdersService.OrderItems'
+          Log.debug(`V2 nav '${entityName}.${navProp.name}' → ${targetFqn || 'UNRESOLVED'}`, undefined, 'SpreadsheetUpload: MetadataHandlerV2', () =>
+            this.spreadsheetUploadController.component.logger.returnObject({
+              from: entityName,
+              navProp: navProp.name,
+              level,
+              assocEnd,
+              targetFqn,
+              partner: assocEnd && assocEnd.partner
+            })
+          );
+          if (!targetFqn) return;
+
+          // Cycle guard: the target type already appears on this branch's path → it is a back-reference,
+          // and following it would build a self-referential $expand and a circular metadata graph (which
+          // overflows the stack when serialized for debug logging). A sibling duplicate (same type via a
+          // different branch) is NOT on this path, so it is still marked.
+          if (path.includes(targetFqn)) return;
+
+          const targetEntity = metaModel.getODataEntityType(targetFqn);
+          if (!targetEntity) return;
+
+          // Create a V4-like nav node on the entity for downstream processing
+          const navNode: any = entity[navProp.name] || {};
+          navNode.$XYZEntity = targetEntity;
+          navNode.$XYZFetchableEntity = true;
+          navNode.$Type = targetFqn;
+          navNode.$Partner = assocEnd && assocEnd.partner;
+          entity[navProp.name] = navNode;
+
+          queue.push({ entity: targetEntity, entityName: targetFqn, level: level + 1, path: [...path, targetFqn] });
+        });
+      }
+    }
+  }
+
+  /**
+   * Builds expand structure recursively for OData V2
+   */
+  private _getExpandsRecursive(
+    mainEntity: any,
+    expands: any,
+    parent?: string,
+    parentExpand?: any,
+    currentLevel: number = 0,
+    deepLevel: number = 99
+  ): void {
+    if (currentLevel >= deepLevel) return;
+
+    if (mainEntity.navigationProperty) {
+      mainEntity.navigationProperty.forEach((navProp: any) => {
+        // _findEntitiesByNavigationProperty stores the resolved nav node (carrying the
+        // $XYZ* markers and the target entity type) on mainEntity[navProp.name], NOT on the
+        // navigationProperty array element. Read it from there, otherwise no expand entries
+        // are ever produced and the deep-export read goes out without $expand.
+        const navNode = mainEntity[navProp.name];
+        if (navNode && navNode.$XYZFetchableEntity) {
+          const navPropName = navProp.name;
+
+          if (parent) {
+            if (!parentExpand.$expand) {
+              parentExpand.$expand = {};
+            }
+            parentExpand.$expand[navPropName] = {};
+            this._getExpandsRecursive(navNode.$XYZEntity, expands, navPropName, parentExpand.$expand[navPropName], currentLevel + 1, deepLevel);
+          } else {
+            if (!expands[navPropName]) {
+              expands[navPropName] = {};
+            }
+            this._getExpandsRecursive(navNode.$XYZEntity, expands, navPropName, expands[navPropName], currentLevel + 1, deepLevel);
+          }
+        }
+      });
+    }
+  }
+
+  static getResolvedPath(binding: any): string {
+    let path = binding.getPath();
+    if (binding.getResolvedPath) {
+      path = binding.getResolvedPath();
+    } else {
+      // workaround for getResolvedPath only available from 1.88
+      path = (binding.getModel() as any).resolve(binding.getPath(), binding.getContext());
+    }
+    return path;
   }
 }

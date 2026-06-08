@@ -148,9 +148,12 @@ export class ODataV4RequestObjects {
 
           return matchedEntities;
         } catch (error) {
+          // The messages dialog was cancelled/closed by the user (displayMessages rejects). Propagate so
+          // callOdata aborts the whole upload instead of falling through and updating the filtered batch.
           Log.debug('Operation cancelled by user', undefined, 'SpreadsheetUpload: ODataV4RequestObjects', () => ({
             error: error.message
           }));
+          throw error;
         }
       }
     }

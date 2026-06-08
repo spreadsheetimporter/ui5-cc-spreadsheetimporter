@@ -339,13 +339,13 @@ export default class ODataV4 extends OData {
             // Using await inside an async function callback
             count = await customBinding.getHeaderContext().requestProperty('$count');
 
-            console.log(`Fetched ${fetchedResults}/${count} results`);
+            Log.debug(`Fetched ${fetchedResults}/${count} results`, undefined, 'SpreadsheetUpload: ODataV4');
 
             // Recursively call
             recursiveFetch();
           })
           .catch(error => {
-            console.error(`Error fetching results: ${error}`);
+            Log.error(`Error fetching results: ${error}`, undefined, 'SpreadsheetUpload: ODataV4');
             reject(error);
           });
       };

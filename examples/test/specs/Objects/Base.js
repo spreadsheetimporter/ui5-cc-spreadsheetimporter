@@ -27,5 +27,17 @@ class Base {
 			await $("filtekuzfutkfk424214").waitForExist({ timeout: timeout });
 		} catch (error) {}
 	}
+	// FE busy overlays (sap-ui-blocklayer-popup) can linger under load and intercept the next
+	// click (Save/Upload). Remove a lingering one before pressing; no-op if none is present.
+	async removeBlockLayer() {
+		try {
+			await browser.execute(() => {
+				const blockLayerPopup = document.getElementById("sap-ui-blocklayer-popup");
+				if (blockLayerPopup) {
+					blockLayerPopup.remove();
+				}
+			});
+		} catch (error) {}
+	}
 }
 module.exports = Base;

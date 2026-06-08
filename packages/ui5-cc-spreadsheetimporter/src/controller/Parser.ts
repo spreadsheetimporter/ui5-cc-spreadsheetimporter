@@ -4,6 +4,7 @@ import { ArrayData, ListObject, Payload, PayloadArray, Property, ValueData } fro
 import MessageHandler from './MessageHandler';
 import Util from './Util';
 import { CustomMessageTypes, FieldMatchType, MessageType } from '../enums';
+import { excelSerialToDate, isExcelSerialDate } from './utils/dateUtils';
 
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
@@ -133,7 +134,7 @@ export default class Parser extends ManagedObject {
           } else if (metadataColumn.type === 'Edm.Date') {
             let date = rawValue;
             if (value.sheetDataType !== 'd') {
-              const parsedDate = new Date(rawValue);
+              const parsedDate = isExcelSerialDate(rawValue) ? excelSerialToDate(rawValue) : new Date(rawValue);
               if (isNaN(parsedDate.getTime())) {
                 this.addMessageToMessages('spreadsheetimporter.invalidDate', util, messageHandler, index, [metadataColumn.label], rawValue);
                 continue;
@@ -150,7 +151,7 @@ export default class Parser extends ManagedObject {
           } else if (metadataColumn.type === 'Edm.DateTimeOffset' || metadataColumn.type === 'Edm.DateTime') {
             let date = rawValue;
             if (value.sheetDataType !== 'd') {
-              const parsedDate = new Date(rawValue);
+              const parsedDate = isExcelSerialDate(rawValue) ? excelSerialToDate(rawValue) : new Date(rawValue);
               if (isNaN(parsedDate.getTime())) {
                 this.addMessageToMessages('spreadsheetimporter.invalidDate', util, messageHandler, index, [metadataColumn.label], rawValue);
                 continue;
@@ -174,7 +175,7 @@ export default class Parser extends ManagedObject {
 
             // Only try to parse as Date if it's not marked as a date in sheet data
             if (value.sheetDataType !== 'd') {
-              date = new Date(rawValue);
+              date = isExcelSerialDate(rawValue) ? excelSerialToDate(rawValue) : new Date(rawValue);
             }
 
             if (date && !isNaN(date.getTime())) {

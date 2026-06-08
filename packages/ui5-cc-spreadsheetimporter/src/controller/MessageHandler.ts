@@ -442,6 +442,8 @@ export default class MessageHandler extends ManagedObject {
         messageText = this.spreadsheetUploadController.util.geti18nText('spreadsheetimporter.objectNotFoundWithKeys', [message.formattedValue]);
       } else if (message.type === CustomMessageTypes.DraftEntityMismatch) {
         messageText = this.spreadsheetUploadController.util.geti18nText('spreadsheetimporter.draftEntityMismatchRow', message.formattedValue);
+      } else if (message.type === CustomMessageTypes.DraftRootRequired) {
+        messageText = this.spreadsheetUploadController.util.geti18nText('spreadsheetimporter.draftRootRequiredRow', message.formattedValue);
       } else if (message.type === CustomMessageTypes.DuplicateKeys) {
         messageText = this.spreadsheetUploadController.util.geti18nText('spreadsheetimporter.duplicateKeysRow', [message.formattedValue]);
       } else {

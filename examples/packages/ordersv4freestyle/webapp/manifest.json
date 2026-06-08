@@ -145,6 +145,41 @@
           "name": "RouteCDSPlugin",
           "pattern": "cdsplugin",
           "target": ["TargetCDSPlugin"]
+        },
+        {
+          "name": "RouteUpload",
+          "pattern": "feature/upload",
+          "target": ["TargetUpload"]
+        },
+        {
+          "name": "RouteDownload",
+          "pattern": "feature/download",
+          "target": ["TargetDownload"]
+        },
+        {
+          "name": "RouteCreate",
+          "pattern": "feature/create",
+          "target": ["TargetCreate"]
+        },
+        {
+          "name": "RouteLauncher",
+          "pattern": "feature",
+          "target": ["TargetLauncher"]
+        },
+        {
+          "name": "RouteLocale",
+          "pattern": "feature/locale",
+          "target": ["TargetLocale"]
+        },
+        {
+          "name": "RouteErrors",
+          "pattern": "feature/errors",
+          "target": ["TargetErrors"]
+        },
+        {
+          "name": "RouteOptions",
+          "pattern": "feature/options",
+          "target": ["TargetOptions"]
         }
       ],
       "targets": {
@@ -175,6 +210,55 @@
           "clearControlAggregation": false,
           "viewId": "CDSPlugin",
           "viewName": "CDSPlugin"
+        },
+        "TargetUpload": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Upload",
+          "viewName": "Upload"
+        },
+        "TargetDownload": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Download",
+          "viewName": "Download"
+        },
+        "TargetCreate": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Create",
+          "viewName": "Create"
+        },
+        "TargetLauncher": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Launcher",
+          "viewName": "Launcher"
+        },
+        "TargetLocale": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Locale",
+          "viewName": "Locale"
+        },
+        "TargetErrors": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Errors",
+          "viewName": "Errors"
+        },
+        "TargetOptions": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Options",
+          "viewName": "Options"
         }
       }
     },

@@ -58,6 +58,22 @@ describe("Download Spreadsheet List Report", () => {
 			fs.mkdirSync(downloadDir, { recursive: true });
 		}
 
+		// Discard any leftover drafts so each (re)run — including a specFileRetry, which re-runs
+		// this hook — starts from a clean all-active state. A draft left by a failed earlier
+		// attempt would otherwise make a downloaded row IsActiveEntity=false (failing the
+		// "verify content" check) and make the later draftEdit return 409 Conflict.
+		const draftRowIds = [TEST_CONSTANTS.API.ROW_1_ID, TEST_CONSTANTS.API.ROW_2_ID, TEST_CONSTANTS.API.ROW_3_ID, TEST_CONSTANTS.API.ROW_4_ID];
+		for (const id of draftRowIds) {
+			try {
+				await fetch(`${TEST_CONSTANTS.API.BASE_URL}(ID=${id},IsActiveEntity=false)`, {
+					method: "DELETE",
+					headers: { Accept: "application/json" }
+				});
+			} catch (e) {
+				/* no draft to discard */
+			}
+		}
+
 		await wdi5.goTo("#/orders");
 	});
 
@@ -132,6 +148,16 @@ describe("Download Spreadsheet List Report", () => {
 	});
 
 	it("set entity to draft", async () => {
+		// Discard any pre-existing draft first so this step is idempotent across retries —
+		// a leftover draft makes draftEdit return 409 Conflict.
+		try {
+			await fetch(`${TEST_CONSTANTS.API.BASE_URL}(ID=${TEST_CONSTANTS.API.ROW_3_ID},IsActiveEntity=false)`, {
+				method: "DELETE",
+				headers: { Accept: "application/json" }
+			});
+		} catch (e) {
+			/* no existing draft */
+		}
 		try {
 			// Make a POST request to create a draft version
 			const url = `${TEST_CONSTANTS.API.BASE_URL}(ID=${TEST_CONSTANTS.API.ROW_3_ID},IsActiveEntity=true)/OrdersService.draftEdit`;

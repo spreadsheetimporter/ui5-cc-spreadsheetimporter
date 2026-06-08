@@ -1,11 +1,13 @@
-const Base = require("./Base");
-const FE = require("./FE");
+const FEBase = require("./FEBase");
 
-class FEV4 {
+/**
+ * Page object for the OData V4 Fiori Elements app. Shared helpers and constants live in
+ * FEBase; this class holds the V4-specific selectors (incl. the grid-table variant) and the
+ * field/date/routing getters that depend on them.
+ */
+class FEV4 extends FEBase {
 	constructor() {
-		this.unicodeSpaceRegex = /[\u0020\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\u202F]/g;
-
-		this.BaseClass = new Base();
+		super();
 		this.rootId = "ui.v4.ordersv4fe::";
 		this.listReportId = this.rootId + "OrdersList--fe::";
 		this.objectPageId = this.rootId + "OrdersObjectPage--fe::";
@@ -17,16 +19,6 @@ class FEV4 {
 		this.objectPageSpreadsheetuploadButton = this.objectPageId + "table::Items::LineItem::CustomAction::ObjectPageExtController";
 		this.objectPageSaveButton = this.objectPageId + "FooterBar::StandardAction::Save";
 		this.objectPageOrderItems = this.objectPageId + "table::Items::LineItem-innerTable";
-		this.listReportUploadFilename = "test/testFiles/ListReportOrdersNoErros.xlsx";
-		// nav to sub object page
-		this.navToObjectPageAttribute = "OrderNo";
-		this.navToObjectPageValue = "2";
-		// nav to sub object page
-		this.navToSubObjectPageAttribute = "product_ID";
-		this.navToSubObjectPageValue = "254";
-		// check file upload list report
-		this.checkFileuploadListreportAttribute = "OrderNo";
-		this.checkFileuploadListreportValue = "4";
 		// grid table
 		this.gridTablePageId = this.rootId + "OrdersListGridTable--fe::";
 		this.listReportGridTable = this.gridTablePageId + "table::Orders::LineItem-innerTable";
@@ -43,6 +35,7 @@ class FEV4 {
 		this.entityObjectPageComma = "ID=64e718c9-ff99-47f1-8ca3-950c850777d6,IsActiveEntity=true";
 		this.entityObjectPageDot = "ID=64e718c9-ff99-47f1-8ca3-950c850777d7,IsActiveEntity=true";
 	}
+
 	async getFieldValue(fieldName) {
 		const field = await this.BaseClass.getControlById(`ui.v4.ordersv4fe::Orders_ItemsObjectPage--fe::FormContainer::Identification::FormElement::DataField::${fieldName}::Field`);
 		let valueText = "";
@@ -95,32 +88,6 @@ class FEV4 {
 			if (object[objectAttribute] === objectValue) {
 				const path = binding.sPath;
 				return `#${path}`;
-			}
-		}
-	}
-
-	async getTableItems(tableId) {
-		const table = await this.BaseClass.getControlById(tableId);
-		const metadata = await table.exec(() => this.getMetadata());
-		const type = await metadata.getName();
-		let items = undefined;
-		if (type === "sap.m.Table") {
-			items = await table.exec(() => this.getItems());
-		} else {
-			items = await table.exec(() => this.getRows());
-		}
-		return items;
-	}
-
-	async getTableObject(tableId, objectAttribute, objectValue) {
-		const items = await this.getTableItems(tableId);
-		for (let index = 0; index < items.length; index++) {
-			const element = items[index];
-			const item = await this.BaseClass.getControlById(element.id);
-			const binding = await item.exec(() => this.getBindingContext());
-			const object = await binding.getObject();
-			if (object[objectAttribute] === objectValue) {
-				return object;
 			}
 		}
 	}
