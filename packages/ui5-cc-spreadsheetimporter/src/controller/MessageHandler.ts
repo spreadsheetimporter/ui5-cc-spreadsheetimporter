@@ -186,7 +186,7 @@ export default class MessageHandler extends ManagedObject {
           }
         }
         if (fieldMatchType === 'labelTypeBrackets') {
-          if (columnName.includes(`[${key}]`)) {
+          if (Util.columnMatchesType(columnName, key)) {
             found = true;
             break;
           }
@@ -216,7 +216,7 @@ export default class MessageHandler extends ManagedObject {
           continue;
         }
 
-        if (colName.includes(`[${columnName}]`)) {
+        if (Util.columnMatchesType(colName, columnName)) {
           found = true;
           availableKeyColumns.push(columnName);
           break;
@@ -247,7 +247,7 @@ export default class MessageHandler extends ManagedObject {
       const keys = keyNames
         .filter(key => key !== 'IsActiveEntity')
         .map(key => {
-          const matchingColumn = Object.keys(row).find(col => col.includes(`[${key}]`));
+          const matchingColumn = Object.keys(row).find(col => Util.columnMatchesType(col, key));
           const value = matchingColumn ? row[matchingColumn].rawValue : undefined;
           return `${key}=${value}`;
         });
@@ -282,7 +282,7 @@ export default class MessageHandler extends ManagedObject {
     data.forEach((row, index) => {
       // For each row, find which keys are missing or have empty values
       const missingKeys = mandatoryKeys.filter(key => {
-        const matchingColumn = Object.keys(row).find(col => col.includes(`[${key}]`));
+        const matchingColumn = Object.keys(row).find(col => Util.columnMatchesType(col, key));
         if (!matchingColumn) {
           return true;
         }
