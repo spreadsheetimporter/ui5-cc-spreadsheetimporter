@@ -267,11 +267,13 @@ export default class MetadataHandlerV2 extends MetadataHandler {
           if (!targetFqn) return;
 
           const targetEntity = metaModel.getODataEntityType(targetFqn);
-          if (targetEntity) {
-            // Always mark this navigation as fetchable so deep export includes it — even when an
-            // earlier navigation already targeted the same entity type (e.g. two associations on the
-            // same entity pointing to the same target). _getExpandsRecursive only expands marked nodes,
-            // so guarding the marking by traversedEntities would silently drop the later navigation.
+          // Guard BOTH the marking and the queueing by traversedEntities. _getExpandsRecursive expands
+          // every node carrying $XYZFetchableEntity, so marking a navigation whose target type was already
+          // traversed (e.g. a back-reference/partner like Items→Orders) builds a cyclic $expand and
+          // overflows the stack. (A genuine sibling duplicate-target nav being omitted is the lesser,
+          // rare trade-off — a cycle-aware fix tracking the current expand path is a separate follow-up.)
+          if (targetEntity && !traversedEntities.has(targetFqn)) {
+            // Create a V4-like nav node on the entity for downstream processing
             const navNode: any = entity[navProp.name] || {};
             navNode.$XYZEntity = targetEntity;
             navNode.$XYZFetchableEntity = true;
@@ -279,11 +281,8 @@ export default class MetadataHandlerV2 extends MetadataHandler {
             navNode.$Partner = assocEnd && assocEnd.partner;
             entity[navProp.name] = navNode;
 
-            // Only enqueue each target type once, so shared/cyclic target types don't recurse forever.
-            if (!traversedEntities.has(targetFqn)) {
-              queue.push({ entity: targetEntity, entityName: targetFqn, level: level + 1 });
-              traversedEntities.add(targetFqn);
-            }
+            queue.push({ entity: targetEntity, entityName: targetFqn, level: level + 1 });
+            traversedEntities.add(targetFqn);
           }
         });
       }
