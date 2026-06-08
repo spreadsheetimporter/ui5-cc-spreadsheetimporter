@@ -1,0 +1,22 @@
+<mvc:View controllerName="ordersv4freestyle.controller.Launcher"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+    <Page id="launcherPage" title="Spreadsheet Importer — Feature Test Console">
+        <content>
+            <MessageStrip
+                id="launcherInfo"
+                text="Each row opens a dedicated feature page (one feature per view). Used as both the manual-test console and the wdi5 deep-link target."
+                type="Information"
+                showIcon="true"
+                class="sapUiSmallMargin"/>
+            <List id="featureList" headerText="Feature test pages" items="{features>/}">
+                <StandardListItem
+                    title="{features>title}"
+                    description="#/{features>hash}"
+                    info="{features>flavor}"
+                    type="Navigation"
+                    press="onOpenFeature"/>
+            </List>
+        </content>
+    </Page>
+</mvc:View>

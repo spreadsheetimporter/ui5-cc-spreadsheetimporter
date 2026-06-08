@@ -80,10 +80,12 @@ describe("Download Spreadsheet List Report", () => {
 		const data = XLSX.utils.sheet_to_json(firstSheet);
 		expect(data.length).toBeGreaterThan(0);
 
-		if (data[0]) {
-			expect(data[0][TEST_CONSTANTS.EXPECTED_FIELDS.ID]).toBeDefined();
-			expect(data[0][TEST_CONSTANTS.EXPECTED_FIELDS.ORDER_NUMBER]).toBe(TEST_CONSTANTS.EXPECTED_ORDER_NUMBER);
-		}
+		// Pollution-immune: the shared CAP database may also hold orders created by sibling specs
+		// in the same scenario (feature/create, updatefreestyle), so assert that the expected order
+		// EXISTS in the export rather than relying on it being the first exported row.
+		const exportedRow = data.find((r) => String(r[TEST_CONSTANTS.EXPECTED_FIELDS.ORDER_NUMBER]) === TEST_CONSTANTS.EXPECTED_ORDER_NUMBER);
+		expect(exportedRow).toBeDefined();
+		expect(exportedRow[TEST_CONSTANTS.EXPECTED_FIELDS.ID]).toBeDefined();
 	});
 
 	it("Download spreadsheet and verify multiple sheets and OrderItems content", async () => {

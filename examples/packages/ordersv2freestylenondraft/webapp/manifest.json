@@ -115,6 +115,26 @@
           "pattern": "UploadToTable",
           "name": "upload",
           "target": "upload"
+        },
+        {
+          "pattern": "feature/upload",
+          "name": "RouteFeatureUpload",
+          "target": "featureUpload"
+        },
+        {
+          "pattern": "feature/download",
+          "name": "RouteFeatureDownload",
+          "target": "featureDownload"
+        },
+        {
+          "pattern": "feature/create",
+          "name": "RouteFeatureCreate",
+          "target": "featureCreate"
+        },
+        {
+          "pattern": "feature",
+          "name": "RouteFeatureLauncher",
+          "target": "featureLauncher"
         }
       ],
       "targets": {
@@ -141,6 +161,26 @@
         "upload": {
           "viewName": "UploadToTable",
           "viewId": "uploadToTable"
+        },
+        "featureUpload": {
+          "viewName": "Upload",
+          "viewId": "featureUpload",
+          "viewLevel": 1
+        },
+        "featureDownload": {
+          "viewName": "Download",
+          "viewId": "featureDownload",
+          "viewLevel": 1
+        },
+        "featureCreate": {
+          "viewName": "Create",
+          "viewId": "featureCreate",
+          "viewLevel": 1
+        },
+        "featureLauncher": {
+          "viewName": "Launcher",
+          "viewId": "featureLauncher",
+          "viewLevel": 1
         }
       }
     },

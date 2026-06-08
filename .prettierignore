@@ -56,4 +56,8 @@ pnpm-lock.yaml
 *.min.js
 *.min.css
 
+# Example apps have their own prettier config (examples/.prettierrc.js with tabs/double-quotes
+# and the XML/properties plugins); don't let the root component config reformat them.
+examples/packages/*/webapp/**
+
 

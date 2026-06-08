@@ -1,0 +1,26 @@
+<mvc:View controllerName="ordersv4freestyle.controller.Download"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+    <Page id="downloadPage" title="Feature: Deep Download (export)" showNavButton="true" navButtonPress="onNavBack">
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <Text id="downloadHint" text="Deep-exports Orders + Items + Shipping (deepLevel 2) to a multi-sheet spreadsheet via the backend." class="sapUiSmallMarginBottom"/>
+                <Button id="downloadOpenButton" text="Deep Download" type="Emphasized" press="onDownload" class="sapUiSmallMarginBottom"/>
+                <Table id="downloadOrdersTable" items="{/Orders}" growing="true" growingThreshold="5" noDataText="No orders">
+                    <columns>
+                        <Column><Text text="Order Number"/></Column>
+                        <Column><Text text="Buyer"/></Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{OrderNo}"/>
+                                <Text text="{buyer}"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>
