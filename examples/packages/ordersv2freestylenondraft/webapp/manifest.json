@@ -135,6 +135,21 @@
           "pattern": "feature",
           "name": "RouteFeatureLauncher",
           "target": "featureLauncher"
+        },
+        {
+          "pattern": "feature/locale",
+          "name": "RouteFeatureLocale",
+          "target": "featureLocale"
+        },
+        {
+          "pattern": "feature/errors",
+          "name": "RouteFeatureErrors",
+          "target": "featureErrors"
+        },
+        {
+          "pattern": "feature/options",
+          "name": "RouteFeatureOptions",
+          "target": "featureOptions"
         }
       ],
       "targets": {
@@ -180,6 +195,21 @@
         "featureLauncher": {
           "viewName": "Launcher",
           "viewId": "featureLauncher",
+          "viewLevel": 1
+        },
+        "featureLocale": {
+          "viewName": "Locale",
+          "viewId": "featureLocale",
+          "viewLevel": 1
+        },
+        "featureErrors": {
+          "viewName": "Errors",
+          "viewId": "featureErrors",
+          "viewLevel": 1
+        },
+        "featureOptions": {
+          "viewName": "Options",
+          "viewId": "featureOptions",
           "viewLevel": 1
         }
       }

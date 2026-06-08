@@ -6,7 +6,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/model/json/JSONModel"], fun
 	const FEATURES = [
 		{ title: "Upload (standalone parse)", hash: "feature/upload", flavor: "standalone" },
 		{ title: "Deep Download (export)", hash: "feature/download", flavor: "backend" },
-		{ title: "Create (backend)", hash: "feature/create", flavor: "backend" }
+		{ title: "Create (backend)", hash: "feature/create", flavor: "backend" },
+		{ title: "Locale (decimal separator)", hash: "feature/locale", flavor: "standalone" },
+		{ title: "Errors (validation)", hash: "feature/errors", flavor: "backend" },
+		{ title: "Options (available options)", hash: "feature/options", flavor: "backend" }
 	];
 
 	return Controller.extend("ordersv4freestyle.controller.Launcher", {

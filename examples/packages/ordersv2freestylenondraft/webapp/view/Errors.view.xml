@@ -1,0 +1,26 @@
+<mvc:View controllerName="ui.v2.ordersv2freestylenondraft.controller.Errors"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+    <Page id="errorsPage" title="Feature: Errors (validation)" showNavButton="true" navButtonPress="onNavBack">
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <Text id="errorsHint" text="Backend upload of a file with bad number formats — the component validates against OrderItems and raises the messages dialog." class="sapUiSmallMarginBottom"/>
+                <Button id="errorsOpenButton" text="Spreadsheet Upload" type="Emphasized" press="onOpenErrors" class="sapUiSmallMarginBottom"/>
+                <Table id="errorsItemsTable" items="{/OrderItems}" growing="true" growingThreshold="5" noDataText="OrderItems">
+                    <columns>
+                        <Column><Text text="product_ID"/></Column>
+                        <Column><Text text="price"/></Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{product_ID}"/>
+                                <Text text="{price}"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

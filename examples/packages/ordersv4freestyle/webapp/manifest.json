@@ -165,6 +165,21 @@
           "name": "RouteLauncher",
           "pattern": "feature",
           "target": ["TargetLauncher"]
+        },
+        {
+          "name": "RouteLocale",
+          "pattern": "feature/locale",
+          "target": ["TargetLocale"]
+        },
+        {
+          "name": "RouteErrors",
+          "pattern": "feature/errors",
+          "target": ["TargetErrors"]
+        },
+        {
+          "name": "RouteOptions",
+          "pattern": "feature/options",
+          "target": ["TargetOptions"]
         }
       ],
       "targets": {
@@ -223,6 +238,27 @@
           "clearControlAggregation": false,
           "viewId": "Launcher",
           "viewName": "Launcher"
+        },
+        "TargetLocale": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Locale",
+          "viewName": "Locale"
+        },
+        "TargetErrors": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Errors",
+          "viewName": "Errors"
+        },
+        "TargetOptions": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Options",
+          "viewName": "Options"
         }
       }
     },

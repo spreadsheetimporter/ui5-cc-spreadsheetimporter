@@ -1,0 +1,25 @@
+<mvc:View controllerName="ui.v2.ordersv2freestylenondraft.controller.Locale"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+    <Page id="localePage" title="Feature: Locale (decimal separator)" showNavButton="true" navButtonPress="onNavBack">
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <Text id="localeHint" text="Typed parse with decimalSeparator ',' — '1.000,99' is coerced against the OrderItems price (Double) to 1000.99, captured via uploadButtonPress before any write." class="sapUiSmallMarginBottom"/>
+                <Button id="localeOpenButton" text="Spreadsheet Upload" type="Emphasized" press="onOpenLocale" class="sapUiSmallMarginBottom"/>
+                <Text id="localePrice" text="{tableData>/0/price}"/>
+                <Table id="localeItemsTable" items="{/OrderItems}" growing="true" growingThreshold="3" noDataText="OrderItems (binding provides the price type)">
+                    <columns>
+                        <Column><Text text="product_ID"/></Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{product_ID}"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

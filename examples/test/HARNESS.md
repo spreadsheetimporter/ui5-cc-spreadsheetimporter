@@ -25,12 +25,15 @@ Both expose an identical set of feature routes. The views differ only in namespa
 
 ## Routes & views
 
-| Route                | View       | Flavor     | What it exercises                                                                                              |
-| -------------------- | ---------- | ---------- | -------------------------------------------------------------------------------------------------------------- |
-| `#/feature`          | `Launcher` | —          | Overview console: lists every feature page, navigates on press. Also the manual-test console.                  |
-| `#/feature/upload`   | `Upload`   | standalone | `standalone:true` parse — component returns parsed rows via `uploadButtonPress`, no backend write.             |
-| `#/feature/download` | `Download` | backend    | `deepDownloadConfig` deepLevel-2 export (Orders + Items + Shipping) → multi-sheet file.                        |
-| `#/feature/create`   | `Create`   | backend    | Non-standalone create — component resolves the bound `/Orders` table from `context` and writes to the backend. |
+| Route                | View       | Flavor      | What it exercises                                                                                                                                               |
+| -------------------- | ---------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `#/feature`          | `Launcher` | —           | Overview console: lists every feature page, navigates on press. Also the manual-test console.                                                                   |
+| `#/feature/upload`   | `Upload`   | standalone  | `standalone:true` parse — component returns parsed rows via `uploadButtonPress`, no backend write.                                                              |
+| `#/feature/download` | `Download` | backend     | `deepDownloadConfig` deepLevel-2 export (Orders + Items + Shipping) → multi-sheet file.                                                                         |
+| `#/feature/create`   | `Create`   | backend     | Non-standalone create — component resolves the bound `/Orders` table from `context` and writes to the backend.                                                  |
+| `#/feature/locale`   | `Locale`   | typed parse | `decimalSeparator: ","` coerces "1.000,99" → 1000.99 against the OrderItems `price` (Double), captured via `uploadButtonPress` + `preventDefault()` (no write). |
+| `#/feature/errors`   | `Errors`   | backend     | Upload an invalid file; the component validates against `/OrderItems` and raises its "Upload Error" messages dialog instead of writing.                         |
+| `#/feature/options`  | `Options`  | backend     | `availableOptions: ["strict"]` surfaces the dialog's options/settings menu.                                                                                     |
 
 Each view has **hand-authored stable IDs** (`uploadOpenButton`, `uploadResultTable`,
 `downloadOpenButton`, `createOpenButton`, `featureList`, …). Specs select by id-suffix regex

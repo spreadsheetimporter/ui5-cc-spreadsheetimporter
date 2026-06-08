@@ -1,0 +1,26 @@
+<mvc:View controllerName="ordersv4freestyle.controller.Options"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+    <Page id="optionsPage" title="Feature: Options (available options)" showNavButton="true" navButtonPress="onNavBack">
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <Text id="optionsHint" text="Opens the upload dialog with availableOptions ['strict'] — the options/settings menu is shown and offers exactly that option." class="sapUiSmallMarginBottom"/>
+                <Button id="optionsOpenButton" text="Spreadsheet Upload" type="Emphasized" press="onOpenOptions" class="sapUiSmallMarginBottom"/>
+                <Table id="optionsOrdersTable" items="{/Orders}" growing="true" growingThreshold="5" noDataText="Orders">
+                    <columns>
+                        <Column><Text text="Order Number"/></Column>
+                        <Column><Text text="Buyer"/></Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{OrderNo}"/>
+                                <Text text="{buyer}"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>
