@@ -169,3 +169,43 @@ describe('MetadataHandlerV2.getODataEntitiesRecursive', () => {
     expect(Object.keys(expands)).toHaveLength(0);
   });
 });
+
+describe('MetadataHandlerV2.getODataEntitiesRecursive — cycles & duplicate target types', () => {
+  const ORDERS_FQN = 'OrdersService.Orders';
+  const ITEMS_FQN = 'OrdersService.OrderItems';
+
+  // Orders --Items-------> OrderItems --Order(back-ref)--> Orders   (cycle)
+  // Orders --ReturnItems-> OrderItems                               (sibling: 2nd nav, same target type)
+  function makeCyclicController() {
+    const itemsEntity = { name: 'OrderItems', property: [{ name: 'quantity' }], navigationProperty: [{ name: 'Order' }] };
+    const ordersEntity = {
+      name: 'Orders',
+      property: [{ name: 'ID' }],
+      navigationProperty: [{ name: 'Items' }, { name: 'ReturnItems' }]
+    };
+    const metaModel = {
+      getODataEntityType: fqn => (fqn === ITEMS_FQN ? itemsEntity : ordersEntity),
+      getODataAssociationEnd: (entity, navName) => {
+        if (navName === 'Items' || navName === 'ReturnItems') return { type: ITEMS_FQN, partner: 'Order' };
+        if (navName === 'Order') return { type: ORDERS_FQN, partner: 'Items' };
+        return undefined;
+      }
+    };
+    return { view: { getModel: () => ({ getMetaModel: () => metaModel }) }, component: { logger: { returnObject: o => o } } };
+  }
+
+  it('terminates and does NOT expand a back-reference navigation, even at a high deepLevel', () => {
+    const handler = new MetadataHandlerV2(makeCyclicController());
+    // If the back-reference (OrderItems -> Order -> Orders) were followed, this would recurse to
+    // deepLevel and build a self-referential $expand; the guard must cut it.
+    const { expands } = handler.getODataEntitiesRecursive(ORDERS_FQN, 99);
+    expect(expands.Items).toBeDefined();
+    expect(expands.Items.$expand && expands.Items.$expand.Order).toBeUndefined();
+  });
+
+  it('includes a second navigation that targets the same entity type (duplicate target, no longer dropped)', () => {
+    const handler = new MetadataHandlerV2(makeCyclicController());
+    const { expands } = handler.getODataEntitiesRecursive(ORDERS_FQN, 99);
+    expect(Object.keys(expands).sort()).toEqual(['Items', 'ReturnItems']);
+  });
+});

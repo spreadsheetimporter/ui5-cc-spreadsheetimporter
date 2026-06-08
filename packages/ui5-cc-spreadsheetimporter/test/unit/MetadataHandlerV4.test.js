@@ -116,3 +116,48 @@ describe('MetadataHandlerV4.getLabelList', () => {
     });
   });
 });
+
+describe('MetadataHandlerV4.getODataEntitiesRecursive — cycles & duplicate target types', () => {
+  // Orders --Items-------> OrderItems --Order(back-ref)--> Orders   (cycle)
+  // Orders --ReturnItems-> OrderItems                               (sibling: 2nd nav, same target type)
+  function makeCyclicEntities() {
+    return {
+      Orders: {
+        $kind: 'EntityType',
+        ID: { $kind: 'Property' },
+        Items: { $kind: 'NavigationProperty', $Type: 'OrderItems', $Partner: 'Order' },
+        ReturnItems: { $kind: 'NavigationProperty', $Type: 'OrderItems', $Partner: 'Order' }
+      },
+      OrderItems: {
+        $kind: 'EntityType',
+        quantity: { $kind: 'Property' },
+        Order: { $kind: 'NavigationProperty', $Type: 'Orders', $Partner: 'Items' }
+      }
+    };
+  }
+  function makeMetaModelController(entities) {
+    return {
+      context: {},
+      view: {},
+      binding: { getModel: () => ({ getMetaModel: () => ({ getData: () => entities }) }) },
+      component: { logger: { returnObject: o => o } }
+    };
+  }
+
+  it('does not mark a back-reference navigation as fetchable (no cycle), even at a high deepLevel', () => {
+    const entities = makeCyclicEntities();
+    const handler = new MetadataHandlerV4(makeMetaModelController(entities));
+    // If the back-reference (OrderItems -> Order -> Orders) were marked, the marked graph would be
+    // cyclic and _getExpandsRecursive would self-recurse to deepLevel; the path guard must cut it.
+    handler.getODataEntitiesRecursive('Orders', 99);
+    expect(entities.OrderItems.Order.$XYZFetchableEntity).toBeUndefined();
+  });
+
+  it('marks both navigations that target the same entity type (duplicate target, not dropped)', () => {
+    const entities = makeCyclicEntities();
+    const handler = new MetadataHandlerV4(makeMetaModelController(entities));
+    const { mainEntity } = handler.getODataEntitiesRecursive('Orders', 99);
+    expect(mainEntity.Items.$XYZFetchableEntity).toBe(true);
+    expect(mainEntity.ReturnItems.$XYZFetchableEntity).toBe(true);
+  });
+});

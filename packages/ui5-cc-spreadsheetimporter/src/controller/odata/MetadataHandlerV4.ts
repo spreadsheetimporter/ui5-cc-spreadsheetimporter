@@ -249,17 +249,20 @@ export default class MetadataHandlerV4 extends MetadataHandler {
   }
 
   private _findEntitiesByNavigationProperty(entities: any, rootEntityName: any, deepLevel: number = 99): void {
-    const queue: { entity: any; entityName: string; parentEntityName: string; level: number }[] = [];
-    const traversedEntities: Set<string> = new Set();
+    // Track the entity-type chain from the root per queue item (the "path"), instead of a single global
+    // visited-set, so the traversal distinguishes a back-reference (a cycle) from a sibling duplicate-
+    // target navigation. A navigation is marked/followed only when its target type is NOT already on that
+    // path: cycles are cut (the marked graph stays acyclic — it can neither recurse forever nor overflow
+    // the debug serialization regardless of deepLevel), while a target reached on a different branch is
+    // still marked (duplicate-target navigations are not dropped).
+    const queue: { entity: any; entityName: string; parentEntityName: string; level: number; path: string[] }[] = [];
 
     const rootEntity = entities[rootEntityName];
 
-    // Add level tracking to queue items
-    queue.push({ entity: rootEntity, entityName: rootEntityName, parentEntityName: '', level: 0 });
-    traversedEntities.add(rootEntityName);
+    queue.push({ entity: rootEntity, entityName: rootEntityName, parentEntityName: '', level: 0, path: [rootEntityName] });
 
     while (queue.length > 0) {
-      const { entity, entityName, parentEntityName, level } = queue.shift()!;
+      const { entity, entityName, parentEntityName, level, path } = queue.shift()!;
 
       // Skip if we've reached the maximum depth level
       if (level >= deepLevel) {
@@ -273,19 +276,22 @@ export default class MetadataHandlerV4 extends MetadataHandler {
           navProperty.$kind === 'NavigationProperty' &&
           navProperty.$Partner &&
           // TODO: that does not work on 1:1 relationships
-          !navProperty.$ReferentialConstraint
-
-          // && !this.isReverseRelationship(entities, navProperty, entityName)
-          // && !traversedEntities.has(navProperty.$Type)
+          !navProperty.$ReferentialConstraint &&
+          // Cycle guard: the target type already appears on this branch's path (a back-reference) → skip
+          // it so the marked graph stays acyclic. A sibling duplicate (same type via a different branch)
+          // is NOT on this path and is still marked, so duplicate-target navigations are not dropped.
+          !path.includes(navProperty.$Type)
         ) {
           navProperty.$XYZEntity = entities[navProperty.$Type];
           navProperty.$XYZFetchableEntity = true;
 
-          // Only add to queue if we haven't traversed this entity type yet
-          if (!traversedEntities.has(navProperty.$Type)) {
-            queue.push({ entity: navProperty.$XYZEntity, entityName: navProperty.$Type, parentEntityName: entityName, level: level + 1 });
-            traversedEntities.add(navProperty.$Type);
-          }
+          queue.push({
+            entity: navProperty.$XYZEntity,
+            entityName: navProperty.$Type,
+            parentEntityName: entityName,
+            level: level + 1,
+            path: [...path, navProperty.$Type]
+          });
         }
       }
     }

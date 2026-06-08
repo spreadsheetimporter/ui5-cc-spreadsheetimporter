@@ -233,14 +233,18 @@ export default class MetadataHandlerV2 extends MetadataHandler {
    * Finds entities by navigation properties for OData V2
    */
   private _findEntitiesByNavigationProperty(metaModel: any, rootEntity: any, rootEntityName: string, deepLevel: number = 99): void {
-    const queue: { entity: any; entityName: string; level: number }[] = [];
-    const traversedEntities: Set<string> = new Set();
+    // Track the chain of entity types from the root to the current node (the "path") per queue item,
+    // instead of one global visited-set, so the traversal can distinguish a back-reference (a cycle)
+    // from a sibling duplicate-target navigation. A nav is followed only when its target type is NOT
+    // already on that path: cycles are cut (the marked graph stays acyclic, so termination no longer
+    // relies on deepLevel — that becomes a pure depth cap), while a target reached via a different
+    // branch is still marked (duplicate-target navigations are no longer silently dropped).
+    const queue: { entity: any; entityName: string; level: number; path: string[] }[] = [];
 
-    queue.push({ entity: rootEntity, entityName: rootEntityName, level: 0 });
-    traversedEntities.add(rootEntityName);
+    queue.push({ entity: rootEntity, entityName: rootEntityName, level: 0, path: [rootEntityName] });
 
     while (queue.length > 0) {
-      const { entity, entityName, level } = queue.shift()!;
+      const { entity, entityName, level, path } = queue.shift()!;
 
       // Skip if we've reached the maximum depth level
       if (level >= deepLevel) {
@@ -266,24 +270,24 @@ export default class MetadataHandlerV2 extends MetadataHandler {
           );
           if (!targetFqn) return;
 
-          const targetEntity = metaModel.getODataEntityType(targetFqn);
-          // Guard BOTH the marking and the queueing by traversedEntities. _getExpandsRecursive expands
-          // every node carrying $XYZFetchableEntity, so marking a navigation whose target type was already
-          // traversed (e.g. a back-reference/partner like Items→Orders) builds a cyclic $expand and
-          // overflows the stack. (A genuine sibling duplicate-target nav being omitted is the lesser,
-          // rare trade-off — a cycle-aware fix tracking the current expand path is a separate follow-up.)
-          if (targetEntity && !traversedEntities.has(targetFqn)) {
-            // Create a V4-like nav node on the entity for downstream processing
-            const navNode: any = entity[navProp.name] || {};
-            navNode.$XYZEntity = targetEntity;
-            navNode.$XYZFetchableEntity = true;
-            navNode.$Type = targetFqn;
-            navNode.$Partner = assocEnd && assocEnd.partner;
-            entity[navProp.name] = navNode;
+          // Cycle guard: the target type already appears on this branch's path → it is a back-reference,
+          // and following it would build a self-referential $expand and a circular metadata graph (which
+          // overflows the stack when serialized for debug logging). A sibling duplicate (same type via a
+          // different branch) is NOT on this path, so it is still marked.
+          if (path.includes(targetFqn)) return;
 
-            queue.push({ entity: targetEntity, entityName: targetFqn, level: level + 1 });
-            traversedEntities.add(targetFqn);
-          }
+          const targetEntity = metaModel.getODataEntityType(targetFqn);
+          if (!targetEntity) return;
+
+          // Create a V4-like nav node on the entity for downstream processing
+          const navNode: any = entity[navProp.name] || {};
+          navNode.$XYZEntity = targetEntity;
+          navNode.$XYZFetchableEntity = true;
+          navNode.$Type = targetFqn;
+          navNode.$Partner = assocEnd && assocEnd.partner;
+          entity[navProp.name] = navNode;
+
+          queue.push({ entity: targetEntity, entityName: targetFqn, level: level + 1, path: [...path, targetFqn] });
         });
       }
     }
