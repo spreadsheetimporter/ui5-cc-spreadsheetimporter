@@ -13,6 +13,10 @@ module.exports = {
     '^sap/ui/model/odata/ODataMetaModel$': '<rootDir>/test/unit/__mocks__/sap/ui/model/odata/ODataMetaModel',
     '^sap/base/Log$': '<rootDir>/test/unit/__mocks__/sap/base/Log',
     '^sap/ui/base/ManagedObject$': '<rootDir>/test/unit/__mocks__/sap/ui/base/ManagedObject',
+    '^sap/ui/base/ObjectPool$': '<rootDir>/test/unit/__mocks__/sap/ui/base/ObjectPool',
+    '^sap/ui/base/Event$': '<rootDir>/test/unit/__mocks__/sap/ui/base/Event',
+    '^sap/m/MessageBox$': '<rootDir>/test/unit/__mocks__/sap/m/MessageBox',
+    '^sap/ui/model/odata/v4/ts$': '<rootDir>/test/unit/__mocks__/sap/ui/model/odata/v4/ts',
     // Map internal module paths
     '^../../enums$': '<rootDir>/test/unit/__mocks__/enums',
     '^./MetadataHandlerV2$': '<rootDir>/test/unit/__mocks__/MetadataHandlerV2',

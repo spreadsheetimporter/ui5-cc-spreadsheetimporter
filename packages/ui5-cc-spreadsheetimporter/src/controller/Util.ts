@@ -299,10 +299,17 @@ export default class Util extends ManagedObject {
 
       for (const oInfo of aEventListeners) {
         try {
-          // Assuming each handler returns a promise
-          promises.push(oInfo.fFunction.call(null, event));
+          // Invoke the handler with the listener context the consumer registered via
+          // attach<Event>(fn, oListener) — mirroring sap.ui.base.EventProvider.fireEvent
+          // (fFunction.call(oListener || eventProvider, oEvent, oData)). Without this the
+          // handler runs with `this === null`, so any consumer handler that uses `this`
+          // (as the documented examples do) throws and is silently swallowed below.
+          // Assuming each handler returns a promise.
+          promises.push(oInfo.fFunction.call(oInfo.oListener || component, event, oInfo.oData));
         } catch (error) {
-          Log.error('Error in event handler:', error as Error);
+          // Keep isolating a failing handler so the remaining listeners + the await below
+          // still run, but make the failure visible (it is no longer silent for the consumer).
+          Log.error(`Error in '${eventName}' event handler`, error as Error, 'SpreadsheetUpload: Util.fireEventAsync');
         }
       }
     }
