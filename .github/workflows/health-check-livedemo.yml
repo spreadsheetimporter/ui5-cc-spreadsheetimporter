@@ -12,7 +12,7 @@ jobs:
   check_website:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
 
       - name: Check Website Status
         id: check_website_status # Added an ID to this step to reference its outputs later
@@ -25,7 +25,7 @@ jobs:
 
       - name: Create or Comment on Issue
         if: env.create_issue == 'true' # Changed to check an environment variable
-        uses: peter-evans/create-issue-from-file@v5
+        uses: peter-evans/create-issue-from-file@fca9117c27cdc29c6c4db3b86c48e4115a786710 # v6.0.0
         with:
           title: Website Down!
           content-filepath: .github/livedemodown-template.md
