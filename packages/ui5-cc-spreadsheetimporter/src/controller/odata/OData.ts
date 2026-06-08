@@ -16,6 +16,10 @@ import ODataListBindingV4 from 'sap/ui/model/odata/v4/ODataListBinding';
 import MessageHandler from '../MessageHandler';
 import MessageBox from 'sap/m/MessageBox';
 
+// Reject reason produced by MessageHandler.displayMessages() when the user cancels/closes the messages
+// dialog. Detected in callOdata so a user cancel aborts the upload cleanly (no writes, no error dialog).
+const USER_CANCELLED_MESSAGE = 'Operation cancelled by user';
+
 /**
  * @namespace cc.spreadsheetimporter.XXXnamespaceXXX
  */
@@ -127,6 +131,11 @@ export default abstract class OData extends ManagedObject {
           (this.busyDialog.getModel('busyModel') as JSONModel).setProperty('/progressPercent', currentProgressPercent);
           (this.busyDialog.getModel('busyModel') as JSONModel).setProperty('/progressText', `${currentProgressValue} / ${payloadArray.length}`);
         } catch (error) {
+          // A user cancel from the messages dialog must always abort the whole upload — even with
+          // continueOnError (which governs backend errors, not explicit user intent).
+          if ((error as Error)?.message === USER_CANCELLED_MESSAGE) {
+            throw error;
+          }
           if (component.getContinueOnError()) {
             Log.error('Error while calling the odata service', error as Error, 'SpreadsheetUpload: callOdata');
           } else {
@@ -145,6 +154,13 @@ export default abstract class OData extends ManagedObject {
       // Get binding model for resetContexts
       const model = binding.getModel();
       this.resetContexts(model);
+      // User cancelled from the messages dialog: abort quietly — nothing was written, so don't show the
+      // internal-error dialog. Just reject so the caller stops without reporting success.
+      if ((error as Error)?.message === USER_CANCELLED_MESSAGE) {
+        Log.debug('Upload cancelled by user', undefined, 'SpreadsheetUpload: callOdata');
+        fnReject(error);
+        return;
+      }
       Log.error('Error while calling the odata service', error as Error, 'SpreadsheetUpload: callOdata');
       await this.showInternalErrorDialog(error);
       await this.checkForODataErrors(component.getShowBackendErrorMessages());

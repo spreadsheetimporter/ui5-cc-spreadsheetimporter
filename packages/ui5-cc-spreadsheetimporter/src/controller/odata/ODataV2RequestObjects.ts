@@ -128,7 +128,10 @@ export class ODataV2RequestObjects {
 
         return this.matchedEntities.map(m => m.object);
       } catch (error) {
+        // The messages dialog was cancelled/closed by the user (displayMessages rejects). Propagate so
+        // callOdata aborts the whole upload instead of falling through and updating the filtered batch.
         Log.debug('V2 RequestObjects: Operation cancelled by user', undefined, 'SpreadsheetUpload: ODataV2RequestObjects');
+        throw error;
       }
     }
 
@@ -247,8 +250,12 @@ export class ODataV2RequestObjects {
       if (spreadsheetEntry.IsActiveEntity !== undefined) {
         const backendEntity = matched.object;
         if (backendEntity.IsActiveEntity && !backendEntity.HasDraftEntity && !spreadsheetEntry.IsActiveEntity) {
+          // Active entity with NO draft (file targets the draft): there is no draft to update, so the
+          // active-row MERGE that "Continue" would otherwise attempt is rejected by the backend
+          // (DRAFT_MODIFICATION_ONLY_VIA_ROOT). Drop the row so it is never sent.
           this.addDraftMismatchError(index, matched.keys, 'Draft', 'Active');
           errorFound = true;
+          return;
         } else if (backendEntity.IsActiveEntity && backendEntity.HasDraftEntity && spreadsheetEntry.IsActiveEntity) {
           this.addDraftMismatchError(index, matched.keys, 'Active', 'Draft');
           errorFound = true;
