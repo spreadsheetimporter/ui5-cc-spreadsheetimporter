@@ -1,0 +1,26 @@
+<mvc:View controllerName="ui.v2.ordersv2freestylenondraft.controller.FieldMatch"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+    <Page id="fieldMatchPage" title="Feature: Field Match (label)" showNavButton="true" navButtonPress="onNavBack">
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <Text id="fieldMatchHint" text="fieldMatchType 'label' — a labelTypeBrackets file ('UnitPrice[price]') no longer matches any field label, so every column is reported as not found in the messages dialog." class="sapUiSmallMarginBottom"/>
+                <Button id="fieldMatchOpenButton" text="Spreadsheet Upload" type="Emphasized" press="onOpenFieldMatch" class="sapUiSmallMarginBottom"/>
+                <Table id="fieldMatchItemsTable" items="{/OrderItems}" growing="true" growingThreshold="5" noDataText="OrderItems">
+                    <columns>
+                        <Column><Text text="product_ID"/></Column>
+                        <Column><Text text="price"/></Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{product_ID}"/>
+                                <Text text="{price}"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>
