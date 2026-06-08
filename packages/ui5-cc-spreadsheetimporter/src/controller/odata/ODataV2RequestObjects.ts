@@ -258,9 +258,12 @@ export class ODataV2RequestObjects {
         } else if (backendEntity.IsActiveEntity && !backendEntity.HasDraftEntity && spreadsheetEntry.IsActiveEntity) {
           // Draft-enabled entity, currently active with NO draft, and the upload targets the active
           // version. A direct MERGE would be rejected by the backend (DRAFT_MODIFICATION_ONLY_VIA_ROOT),
-          // so surface a clear "switch to edit mode first" message instead of the raw 422.
+          // so surface a clear "switch to edit mode first" message instead of the raw 422. There is no
+          // draft to update, so drop the row entirely — otherwise "Continue anyway" would still fall
+          // through to the rejected active-row MERGE.
           this.addDraftRootRequiredError(index, matched.keys);
           errorFound = true;
+          return;
         }
       }
 

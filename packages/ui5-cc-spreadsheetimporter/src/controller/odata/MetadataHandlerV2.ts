@@ -267,8 +267,11 @@ export default class MetadataHandlerV2 extends MetadataHandler {
           if (!targetFqn) return;
 
           const targetEntity = metaModel.getODataEntityType(targetFqn);
-          if (targetEntity && !traversedEntities.has(targetFqn)) {
-            // Create a V4-like nav node on the entity for downstream processing
+          if (targetEntity) {
+            // Always mark this navigation as fetchable so deep export includes it — even when an
+            // earlier navigation already targeted the same entity type (e.g. two associations on the
+            // same entity pointing to the same target). _getExpandsRecursive only expands marked nodes,
+            // so guarding the marking by traversedEntities would silently drop the later navigation.
             const navNode: any = entity[navProp.name] || {};
             navNode.$XYZEntity = targetEntity;
             navNode.$XYZFetchableEntity = true;
@@ -276,8 +279,11 @@ export default class MetadataHandlerV2 extends MetadataHandler {
             navNode.$Partner = assocEnd && assocEnd.partner;
             entity[navProp.name] = navNode;
 
-            queue.push({ entity: targetEntity, entityName: targetFqn, level: level + 1 });
-            traversedEntities.add(targetFqn);
+            // Only enqueue each target type once, so shared/cyclic target types don't recurse forever.
+            if (!traversedEntities.has(targetFqn)) {
+              queue.push({ entity: targetEntity, entityName: targetFqn, level: level + 1 });
+              traversedEntities.add(targetFqn);
+            }
           }
         });
       }
