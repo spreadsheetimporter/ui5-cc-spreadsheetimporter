@@ -137,6 +137,17 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
 		},
 
 		massUpdate: async function () {
+			// A mass update modifies existing items. For a draft-enabled entity the object page must be
+			// in edit mode (a draft must exist) — in display mode the backend rejects the change with
+			// DRAFT_MODIFICATION_ONLY_VIA_ROOT. Guard here so the action gives immediate feedback instead
+			// of opening the dialog only to fail.
+			const oData = this.getView().getBindingContext() && this.getView().getBindingContext().getObject();
+			if (oData && oData.IsActiveEntity === true) {
+				sap.ui.require(["sap/m/MessageToast"], function (MessageToast) {
+					MessageToast.show("Please switch to edit mode (Bearbeiten) before running a mass update.");
+				});
+				return;
+			}
 			this.getView().setBusyIndicatorDelay(0);
 			this.spreadsheetUpload = await this.getView()
 				.getController()

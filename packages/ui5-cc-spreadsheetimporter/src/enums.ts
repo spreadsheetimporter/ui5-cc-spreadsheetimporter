@@ -77,6 +77,11 @@ export const CustomMessageTypes: { [key: string]: CustomMessageType } = {
     group: true,
     update: true
   },
+  DraftRootRequired: {
+    title: 'DraftRootRequired',
+    group: true,
+    update: true
+  },
   DuplicateKeys: {
     title: 'DuplicateKeys',
     group: true

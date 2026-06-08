@@ -255,6 +255,12 @@ export class ODataV2RequestObjects {
         } else if (!backendEntity.IsActiveEntity && spreadsheetEntry.IsActiveEntity) {
           this.addDraftMismatchError(index, matched.keys, 'Active', 'Draft');
           errorFound = true;
+        } else if (backendEntity.IsActiveEntity && !backendEntity.HasDraftEntity && spreadsheetEntry.IsActiveEntity) {
+          // Draft-enabled entity, currently active with NO draft, and the upload targets the active
+          // version. A direct MERGE would be rejected by the backend (DRAFT_MODIFICATION_ONLY_VIA_ROOT),
+          // so surface a clear "switch to edit mode first" message instead of the raw 422.
+          this.addDraftRootRequiredError(index, matched.keys);
+          errorFound = true;
         }
       }
 
@@ -271,9 +277,31 @@ export class ODataV2RequestObjects {
       type: CustomMessageTypes.DraftEntityMismatch,
       counter: 1,
       ui5type: MessageType.Error,
-      formattedValue: `${Object.entries(keys)
-        .map(([key, value]) => `${key}=${value}`)
-        .join(', ')} (uploaded: ${uploadedState}, expected: ${expectedState})`
+      // formattedValue is passed straight to draftEntityMismatchRow ("…{0} has {1} status, but the
+      // current entity is {2}") as the placeholder array — keep it [keys, uploaded, expected] (same
+      // shape as the V4 handler) so {1}/{2} are filled instead of rendering "undefined".
+      formattedValue: [
+        Object.entries(keys)
+          .map(([key, value]) => `${key}=${value}`)
+          .join(', '),
+        uploadedState,
+        expectedState
+      ]
+    });
+  }
+
+  private addDraftRootRequiredError(index: number, keys: Record<string, any>): void {
+    this.messageHandler.addMessageToMessages({
+      title: this.util.geti18nText('spreadsheetimporter.draftRootRequired'),
+      row: index + 1,
+      type: CustomMessageTypes.DraftRootRequired,
+      counter: 1,
+      ui5type: MessageType.Error,
+      formattedValue: [
+        Object.entries(keys)
+          .map(([key, value]) => `${key}=${value}`)
+          .join(', ')
+      ]
     });
   }
 }
