@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+
+# Generated from ui5.yaml.tmpl (carries the backend host) + local secrets — never commit.
+ui5.yaml
+.env
+
+# The component is served live from the workspace (ui5-middleware-ui5); no vendored copy.
+webapp/thirdparty/

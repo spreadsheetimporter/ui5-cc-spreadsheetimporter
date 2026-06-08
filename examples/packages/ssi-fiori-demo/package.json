@@ -1,0 +1,21 @@
+{
+  "name": "ssi-fiori-demo",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Fiori Elements demo testing the ABAP RAP spreadsheet importer (service ZSSI_UI_ORD_O4) and the live cc-spreadsheetimporter component against a real backend",
+  "main": "webapp/index.html",
+  "scripts": {
+    "prestart": "node scripts/gen-ui5-yaml.mjs",
+    "start": "fiori run -p 8080 --open \"index.html?sap-ui-xx-viewCache=false&sap-language=EN\"",
+    "build": "ui5 build --clean-dest --dest dist"
+  },
+  "devDependencies": {
+    "@sap/ux-ui5-tooling": "1.25.0",
+    "@ui5/cli": "4.0.55",
+    "ui5-middleware-ui5": "3.3.0",
+    "ui5-tooling-modules": "3.37.1"
+  },
+  "dependencies": {
+    "ui5-cc-spreadsheetimporter": "*"
+  }
+}
