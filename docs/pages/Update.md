@@ -2,7 +2,7 @@
 
 !!! warning
     This feature is available since version 1.7.0 and currently experimental and may not work as expected.  
-    Also only available for OData V4.  
+    Available for both OData V4 and OData V2 (OData V2 support, including draft-enabled entities, was added later).  
     Please provide feedback: https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues
 
 <!-- prettier-ignore-end -->
@@ -56,6 +56,11 @@ When the user presses the upload button, it will fetch all the data in the batch
 This data is used to determine if the object is in draft or active mode, if the object exists at all, and for partial updates whether a field is changed.
 
 For every change, an `ODataContextBinding` is created and the data is updated.
+
+<!-- prettier-ignore-start -->
+!!! note "Draft-enabled entities on OData V2: edit mode required"
+    A draft-enabled entity can only be changed through its draft. If a row matches an **active** record that has **no draft in progress** (the object is in display mode), the importer cannot modify it directly — it reports an *"Edit mode required"* message for that row and skips it. Open the object in edit mode first (which creates the draft), then download, edit and upload the data from that edit-mode state. You can also bind a custom action's `enabled` to the edit state (e.g. `"enabled": "{ui>/isEditable}"`) to disable Mass Update outside edit mode — see [Getting Started](./GettingStarted.md).
+<!-- prettier-ignore-end -->
 
 ### Setting Values to NULL or Empty String
 

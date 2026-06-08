@@ -2,7 +2,7 @@
 
 <!-- prettier-ignore-start -->
 !!! warning
-    This new feature is available since version 1.5.0 and experimental and may change in the future and currently only available for OData V4.
+    This new feature is available since version 1.5.0 and experimental and may change in the future. It is available for both OData V4 and OData V2 (OData V2 support was added later).
     If you deep download data, the OData Service need to support `expand`.
 <!-- prettier-ignore-end -->
 

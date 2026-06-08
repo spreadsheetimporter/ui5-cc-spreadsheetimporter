@@ -33,6 +33,11 @@ Here is an overview of the apps that were created and used for the tests.
 
 ## wdi5 Tests
 
+<!-- prettier-ignore-start -->
+!!! info "Automated CI version set"
+    To keep CI fast and stable, the wdi5 suite runs against a representative version set — **1.136** (newest default), **1.120** (the Fiori Elements metadata divergence) and **1.71** (lowest supported) — across the Fiori Elements apps and the freestyle harness apps (`ordersv2freestylenondraft`, `ordersv4freestyle`). The intermediate versions in the tables below are bracketed by 1.120/1.71 and remain supported; the checkmarks reflect the versions that have passed wdi5.
+<!-- prettier-ignore-end -->
+
 ### CAP V2
 
 | UI5 Version | List Report Draft  | List Report Non Draft | Object Page Draft  | Object Page Non Draft | Freestyle          | OpenUI5 Freestyle  |
