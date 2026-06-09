@@ -9,7 +9,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/model/json/JSONModel"], fun
 		{ title: "Create (backend)", hash: "feature/create", flavor: "backend" },
 		{ title: "Locale (decimal separator)", hash: "feature/locale", flavor: "standalone" },
 		{ title: "Errors (validation)", hash: "feature/errors", flavor: "backend" },
-		{ title: "Options (available options)", hash: "feature/options", flavor: "backend" }
+		{ title: "Options (available options)", hash: "feature/options", flavor: "backend" },
+		{ title: "Field Match (label)", hash: "feature/fieldmatch", flavor: "backend" }
 	];
 
 	return Controller.extend("ordersv4freestyle.controller.Launcher", {

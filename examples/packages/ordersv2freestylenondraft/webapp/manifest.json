@@ -150,6 +150,11 @@
           "pattern": "feature/options",
           "name": "RouteFeatureOptions",
           "target": "featureOptions"
+        },
+        {
+          "pattern": "feature/fieldmatch",
+          "name": "RouteFeatureFieldMatch",
+          "target": "featureFieldMatch"
         }
       ],
       "targets": {
@@ -210,6 +215,11 @@
         "featureOptions": {
           "viewName": "Options",
           "viewId": "featureOptions",
+          "viewLevel": 1
+        },
+        "featureFieldMatch": {
+          "viewName": "FieldMatch",
+          "viewId": "featureFieldMatch",
           "viewLevel": 1
         }
       }

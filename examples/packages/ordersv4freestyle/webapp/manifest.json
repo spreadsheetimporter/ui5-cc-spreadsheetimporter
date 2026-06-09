@@ -180,6 +180,11 @@
           "name": "RouteOptions",
           "pattern": "feature/options",
           "target": ["TargetOptions"]
+        },
+        {
+          "name": "RouteFieldMatch",
+          "pattern": "feature/fieldmatch",
+          "target": ["TargetFieldMatch"]
         }
       ],
       "targets": {
@@ -259,6 +264,13 @@
           "clearControlAggregation": false,
           "viewId": "Options",
           "viewName": "Options"
+        },
+        "TargetFieldMatch": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "FieldMatch",
+          "viewName": "FieldMatch"
         }
       }
     },
