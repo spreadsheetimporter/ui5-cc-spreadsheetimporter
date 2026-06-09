@@ -128,7 +128,7 @@ npm run start:server             # CAP server :4004 (cds watch, OData v2+v4)
 npm run start:v2fe               # V2 FE app :8081   (start:v4fe → :8080)
 npm run test:v2fe                # wdi5 V2 FE, full scenario (server + app must be running)
 npm run test:smoke               # wdi5 V2 deep-export/update/draft, single spec — fast local check
-npm run lint                     # eslint
+npm run lint:ui5                 # ui5lint (component workspace)
 npm run prettier                 # format
 # DO NOT run `npm run build` for local dev/test — it populates dist/ (see top).
 ```

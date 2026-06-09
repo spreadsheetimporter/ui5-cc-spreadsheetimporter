@@ -115,14 +115,15 @@ export default class ODataV2 extends OData {
       })
     );
 
-    // 5) Execute update (merge for partial update)
+    // 5) Execute update. The HTTP method (MERGE vs PUT) is governed by the model's
+    // defaultUpdateMethod (MERGE unless the app configured otherwise) — update() has no
+    // per-call override in the V2 model. MERGE with the payload built above gives the
+    // intended partial/full-update semantics either way (parity with the V4 PATCH path).
     const updatePromise = new Promise((resolve, reject) => {
-      // @ts-ignore merge supported in V2 update params
       oDataModel.update(entityPath, payloadToSend, {
-        merge: !fullUpdate,
         success: () => resolve(true),
         error: (err: any) => reject(err)
-      } as any);
+      });
     });
 
     this.createPromises.push(updatePromise);
@@ -132,9 +133,11 @@ export default class ODataV2 extends OData {
     // Inspect every batch part and changeset sub-response (not just __batchResponses[0]),
     // so errors in batched updates/creates or in later batch parts are not missed.
     const errorFound = hasV2BatchError(this.submitChangesResponse);
-    if (errorFound && showBackendErrorMessages) {
-      // messages data is read directly from the message manager by the handler
-      this.odataMessageHandler.displayMessages([]);
+    if (errorFound) {
+      // The ODataMessagesDialog renders exactly the data it is handed, so read the backend
+      // messages from the message model first (checkForODataErrors does that and only opens
+      // the dialog when messages exist) — handing it an empty array shows an empty dialog.
+      await this.checkForODataErrors(showBackendErrorMessages);
     }
     return errorFound;
   }
@@ -387,9 +390,10 @@ export default class ODataV2 extends OData {
   ): void {
     let allResults: any[] = [];
     let fetchedCount = 0;
+    let stalled = false;
 
     const fetchNextBatch = () => {
-      if (fetchedCount >= totalCount) {
+      if (fetchedCount >= totalCount || stalled) {
         // Create contexts-like objects that Util.extractObjects expects
         const contextLikeObjects = allResults.map(dataItem => ({
           getObject: () => dataItem,
@@ -424,6 +428,18 @@ export default class ODataV2 extends OData {
           fetchedCount += results.length;
 
           Log.debug(`V2 batch fetched: ${results.length} items (${fetchedCount}/${totalCount})`, undefined, 'SpreadsheetUpload: ODataV2');
+
+          // A read that returns no rows cannot make progress anymore (the count drifted on the
+          // backend or the service ignores $skip/$top). Finish with what we have — otherwise the
+          // loop would re-request the same page forever.
+          if (results.length === 0) {
+            Log.warning(
+              `V2 batch fetch returned no rows at $skip=${fetchedCount} although totalCount is ${totalCount}; finishing early`,
+              undefined,
+              'SpreadsheetUpload: ODataV2'
+            );
+            stalled = true;
+          }
 
           // Continue with next batch
           setTimeout(fetchNextBatch, 0);

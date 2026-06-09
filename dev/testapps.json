@@ -175,7 +175,7 @@
   },
   {
     "rootAppName": "ordersv4freestyle",
-    "id": "uordersv4freestyle",
+    "id": "ordersv4freestyle",
     "path": "./examples/packages/",
     "port": "8190",
     "versionMinor": 136,

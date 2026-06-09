@@ -62,7 +62,7 @@ This is a **monorepo** using npm workspaces.
 | Build              | @ui5/cli 4, ui5-tooling-transpile, ui5-tooling-modules, ui5-tooling-stringreplace |
 | Backend (examples) | SAP CAP (CDS) with @sap/cds 9, SQLite                                             |
 | Testing            | wdi5 v3 (WebdriverIO + UI5), OPA5                                                 |
-| Linting            | ESLint 9 + @typescript-eslint, Prettier 3.5                                       |
+| Linting            | ui5lint, Prettier 3.5                                                             |
 | CI/CD              | GitHub Actions                                                                    |
 | Docs               | MkDocs with Material theme                                                        |
 | Release            | release-please (conventional commits)                                             |
@@ -178,7 +178,7 @@ npm run start:v4fe
 npm run start:v2fe
 
 # Lint
-npm run lint
+npm run lint:ui5
 
 # Format
 npm run prettier
@@ -271,7 +271,7 @@ npm run test:opa5:v4fe         # OPA5 integration tests (V4 only)
 | -------------------------------- | --------------------------------------------------------- |
 | `wdi5-test.yml`                  | Integration tests (matrix: scenarios x UI5 versions)      |
 | `opa5-test.yml`                  | Fiori Elements OPA5 tests                                 |
-| `ui5-lint.yml`                   | ESLint + ui5lint                                          |
+| `ui5-lint.yml`                   | ui5lint                                                   |
 | `release-please.yml`             | Automated releases via conventional commits → NPM publish |
 | `pushDocs.yml`                   | Build/deploy MkDocs to gh-pages                           |
 | `health-check-livedemo.yml`      | Live demo health monitoring                               |
