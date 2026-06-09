@@ -23,17 +23,41 @@ export default class ODataV2 extends OData {
   // importer's own changes, never the user's unrelated pending changes (issues #231 / #786).
   private createdEntryContexts: any[] = [];
   private updatedEntityPaths: string[] = [];
+  // Dedicated deferred request group for the importer's own writes, so submit/reset stay isolated
+  // from the user's edits (which collect in the model's default "changes" group). This is the V2
+  // analogue of the V4 path's $$updateGroupId. See issue #231.
+  // A CONSTANT id (not random per instance): handler instances are recreated on every
+  // setContext/dialog reuse, and deferred-group registrations on the shared model are never
+  // removed - random ids would accumulate on the model forever. Registration stays idempotent,
+  // and only one modal upload can run at a time, so instances sharing the group is safe.
+  private importGroupId = 'spreadsheetimporterChanges';
 
   constructor(spreadsheetUploadController: SpreadsheetUpload, messageHandler: MessageHandler, util: Util) {
     super(spreadsheetUploadController, messageHandler, util);
     this.metadataHandler = new MetadataHandlerV2(spreadsheetUploadController);
     this.requestObjects = new ODataV2RequestObjects(this.metadataHandler, messageHandler, util);
   }
+
+  /**
+   * Makes sure the importer's private request group is registered as deferred on the model.
+   * setDeferredGroups REPLACES the model's list, so a host app calling it after our initial
+   * registration silently drops our group - then createEntry/update would fire immediately
+   * (outside our batch and error handling). Re-ensure cheaply before every write/submit.
+   */
+  private ensureImportGroupRegistered(model: ODataModel) {
+    if (model && model.getDeferredGroups().indexOf(this.importGroupId) === -1) {
+      // Concat - never overwrite the default "changes" group, or the user's Fiori Elements
+      // edits (collected there) would be flushed immediately.
+      model.setDeferredGroups(model.getDeferredGroups().concat([this.importGroupId]));
+    }
+  }
   create(model: any, binding: any, payload: any) {
     const submitChangesPromise = (binding: ODataListBinding, payload: any) => {
       return new Promise((resolve, reject) => {
+        this.ensureImportGroupRegistered(this.customBinding.getModel() as ODataModel);
         // @ts-ignore
         let context = (this.customBinding.getModel() as ODataModel).createEntry(this.customBinding.sDeepPath, {
+          groupId: this.importGroupId,
           properties: payload,
           success: () => {
             resolve(context);
@@ -129,7 +153,9 @@ export default class ODataV2 extends OData {
     // per-call override in the V2 model. MERGE with the payload built above gives the
     // intended partial/full-update semantics either way (parity with the V4 PATCH path).
     const updatePromise = new Promise((resolve, reject) => {
+      this.ensureImportGroupRegistered(oDataModel);
       oDataModel.update(entityPath, payloadToSend, {
+        groupId: this.importGroupId,
         success: () => resolve(true),
         error: (err: any) => reject(err)
       });
@@ -172,12 +198,21 @@ export default class ODataV2 extends OData {
     } else {
       this.customBinding = binding;
     }
+    // Register our private deferred group up front. All of the importer's
+    // createEntry/update/submitChanges target this group, so a successful upload submits
+    // ONLY our rows and never commits the user's unrelated pending edits (issue #231).
+    this.ensureImportGroupRegistered(this.customBinding.getModel() as ODataModel);
   }
 
   async submitChanges(model: ODataModel) {
+    // drop the previous batch's response so a transport-level reject below cannot leave a stale
+    // (clean) response behind for checkForErrors to misread as success
+    this.submitChangesResponse = undefined;
+    this.ensureImportGroupRegistered(model);
     const submitChangesPromise = (model: ODataModel) => {
       return new Promise((resolve, reject) => {
         model.submitChanges({
+          groupId: this.importGroupId,
           success: (data: any) => {
             resolve(data);
           },
