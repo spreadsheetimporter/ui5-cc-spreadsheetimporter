@@ -45,6 +45,26 @@ npm install --legacy-peer-deps
 
 ## Start Developing
 
+### Start everything in one Launchpad (recommended)
+
+The fastest way to get going is a single command that starts the CAP server **and** serves all the main test apps behind a Fiori Launchpad — no separate terminals or per-app ports:
+
+```sh
+npm run start:launchpad
+```
+
+This boots `cds watch` and automatically opens the Launchpad at **<http://localhost:4004/launchpad.html>** (the CAP welcome page at <http://localhost:4004/> also gets a "Sandbox Launchpad" link). Every app is mounted into the same CAP process and starts together with the server.
+
+How it works:
+
+- [`cds-plugin-ui5`](https://www.npmjs.com/package/cds-plugin-ui5) mounts every UI5 app that is a (dev)dependency of the CAP server (`examples/packages/server`) at `/<sap.app.id>`.
+- [`cds-launchpad-plugin`](https://www.npmjs.com/package/cds-launchpad-plugin) serves the Launchpad and auto-generates a tile for each app from its `sap.app.crossNavigation.inbounds` (the manual link tiles live in `examples/packages/server/app/appconfig.json`).
+- The `start:launchpad` script sets `CDS_PLUGIN_UI5_MODULES={}`, which makes the apps serve **from source with live reload** (the regular `cds watch` / Docker live demo serves the pre-built `dist` instead — see [Sample Apps](./SampleApps.md)). As with the standalone flow, keep the `ui5-cc-spreadsheetimporter/dist` folder empty (only `.gitkeep`) so the importer is served live from source — see [Build Step](#build-step) below.
+
+The apps shown in the Launchpad are the ones that are both a devDependency of `examples/packages/server` and have a `crossNavigation.inbounds` entry in their `manifest.json` (currently `ordersv2fe`, `ordersv4fe`, `ordersv4freestyle` and `anyupload`).
+
+> The Launchpad flow is for interactive development. The wdi5 tests still launch each app standalone on its own port (see [Start UI5 Apps](#start-ui5-apps) and [wdi5 Tests](./wdi5.md)).
+
 ### Start CAP server
 
 The CAP Server is currently very basic and provides an Order Entity with OrderItems. All the apps will consume from this server.
