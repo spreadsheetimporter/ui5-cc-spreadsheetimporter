@@ -9,6 +9,21 @@
 - add dragdrop to wizard ([#777](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/777)) ([d2e2244](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/d2e22443f776bbc5d3e28d9ed928f421783fc12a))
 - add template download button to wizard ([#775](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/775)) ([4f1277a](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/4f1277aafd948cf9541c57d075e4cc470e4b694d))
 
+## [2.5.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v2.4.0...ui5-cc-spreadsheetimporter-v2.5.0) (2026-06-09)
+
+
+### Features
+
+* export with v2 ([#780](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/780)) ([4962c0f](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/4962c0fca6f86fccbddd483b6bd9d9c720a0621f))
+
+
+### Bug Fixes
+
+* isolate V2 importer writes in a dedicated request group ([#231](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/231)) ([#811](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/811)) ([c59cc03](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/c59cc038ebc11f522473da8095905d76a071cb45))
+* match labelTypeBrackets columns case-insensitively ([#802](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/802)) ([2e15c2f](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/2e15c2ff877f06e18bb9134227cd6dad5298562d))
+* reset only importer-created entities, preserve user's pending changes ([#808](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/808)) ([b73de07](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/b73de070aaca2e478ad405eea498ed250b90ed57))
+* review follow-ups for OData V2 export & update ([#812](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/812)) ([9a30aec](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/9a30aec3b7ba07bf957b3c2bf61d3fe18acd2cd2))
+
 ## [2.4.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v2.3.0...ui5-cc-spreadsheetimporter-v2.4.0) (2025-11-18)
 
 
