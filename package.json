@@ -13,6 +13,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "start": "npm-run-all --parallel start:server start:v4fe",
+    "start:launchpad": "npm run start:launchpad --workspace=ui5-cc-spreadsheetimporter-sample",
     "start:v2fe": "npm run start --workspace=ordersv2fe136",
     "start:v4fe": "npm run start --workspace=ordersv4fe136",
     "start:anyupload": "npm run start --workspace=anyupload",

@@ -12,12 +12,14 @@
     "anyupload": "0.0.1",
     "cds-launchpad-plugin": "2.2.0",
     "cds-plugin-ui5": "0.13.1",
+    "cross-env": "^7.0.3",
     "ordersv2fe136": "0.0.1",
     "ordersv4fe136": "0.0.1",
     "ordersv4freestyle136": "0.0.1"
   },
   "scripts": {
-    "watch": "cds watch"
+    "watch": "cds watch",
+    "watch:launchpad": "cross-env CDS_PLUGIN_UI5_MODULES={} cds watch --open launchpad.html"
   },
   "cds": {
     "fiori": {
