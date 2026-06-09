@@ -43,7 +43,7 @@ nav:
       - GitHub Actions: pages/Development/GitHubActions.md
       - Sample Apps: pages/Development/SampleApps.md
       - Spreadsheet Download: pages/Development/SpreadsheetDownload.md
-      - OData V2: Export and Update: pages/Development/ODataV2-ExportAndUpdate.md
+      - 'OData V2: Export and Update': pages/Development/ODataV2-ExportAndUpdate.md
       - Project Setup: pages/Development/ProjectSetup.md
 
 theme:
