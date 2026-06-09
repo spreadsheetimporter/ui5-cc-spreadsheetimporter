@@ -145,14 +145,7 @@ describe("Preserve user's pending changes on upload (#231)", () => {
 		await browser.asControl({
 			selector: { controlType: "sap.m.Dialog", properties: { contentWidth: "40vw" }, searchOpenDialogs: true }
 		});
-		try {
-			await browser.execute(function () {
-				const b = document.getElementById("sap-ui-blocklayer-popup");
-				if (b) b.remove();
-			});
-		} catch (e) {
-			/* nothing */
-		}
+		await BaseClass.removeBlockLayer();
 
 		const uploader = await browser.asControl({
 			forceSelect: true,
@@ -180,14 +173,7 @@ describe("Preserve user's pending changes on upload (#231)", () => {
 	});
 
 	it("close the error dialog (runs the importer cleanup / resetContexts)", async () => {
-		try {
-			await browser.execute(function () {
-				const b = document.getElementById("sap-ui-blocklayer-popup");
-				if (b) b.remove();
-			});
-		} catch (e) {
-			/* nothing */
-		}
+		await BaseClass.removeBlockLayer();
 		// fire the press handler directly (the MessageView list can intercept a DOM click in headless):
 		// Close -> onCloseMessageDialog -> spreadsheetUploadController.resetContent() -> resetContexts()
 		const closeBtn = await browser.asControl({
@@ -209,6 +195,162 @@ describe("Preserve user's pending changes on upload (#231)", () => {
 
 	after(async () => {
 		// discard the manual edit so we don't pollute other specs / the backend
+		try {
+			await browser.execute(function (tableId) {
+				function byId(id) {
+					const E = sap.ui.require("sap/ui/core/Element");
+					return E && E.getElementById ? E.getElementById(id) : sap.ui.getCore().byId(id);
+				}
+				const oTable = byId(tableId);
+				const oModel = oTable && oTable.getModel();
+				if (oModel && oModel.resetChanges) {
+					oModel.resetChanges();
+				}
+			}, FE.objectPageOrderItems);
+		} catch (error) {
+			/* best-effort cleanup */
+		}
+	});
+});
+
+// Companion to the test above, for the SUCCESS path: a successful upload must not COMMIT the
+// user's unrelated pending edit either. Without group isolation, the importer's submitChanges()
+// (no group) flushes the whole model and commits the user's edit; with a dedicated deferred group
+// it submits only the importer's rows, leaving the user's edit pending until they Save/Cancel.
+describe("Do not commit the user's pending changes on a successful upload (#231)", () => {
+	let editedValue2 = undefined;
+
+	before(function () {
+		const scenario = global.scenario;
+		if (!scenario || !scenario.startsWith("ordersv2fenondraft")) {
+			this.skip();
+			return;
+		}
+		FE = new FEV2ND();
+		BaseClass = new Base();
+	});
+
+	it("go to object page", async () => {
+		const hash = `#/${FE.entitySet}(${FE.entityObjectPage})`;
+		await browser.goTo({ sHash: hash });
+		// The error-path describe above shares this browser session and leaves its upload dialog open;
+		// reload to guarantee a clean UI state (no leftover dialogs) before this scenario.
+		await browser.refresh();
+		await ui5Service.injectUI5();
+		await BaseClass.dummyWait(1000);
+		await browser.waitUntil(
+			async () => {
+				const btn = await browser.asControl({ forceSelect: true, selector: { id: FE.objectPageEditButton } });
+				return !!btn && !!btn._domId;
+			},
+			{ timeout: 90000, interval: 1000, timeoutMsg: "Object page edit button did not render" }
+		);
+	});
+
+	it("go to edit mode", async () => {
+		await BaseClass.pressById(FE.objectPageEditButton);
+		await BaseClass.dummyWait(3000);
+		const object = await browser.asControl({ forceSelect: true, selector: { id: FE.objectPageEditButton } });
+		if (object._domId) {
+			await browser.refresh();
+			await ui5Service.injectUI5();
+			await browser.waitUntil(
+				async () => {
+					const btn = await browser.asControl({ forceSelect: true, selector: { id: FE.objectPageEditButton } });
+					return !!btn && !!btn._domId;
+				},
+				{ timeout: 90000, interval: 1000, timeoutMsg: "Object page edit button did not render after refresh" }
+			);
+		}
+		const object2 = await browser.asControl({ forceSelect: true, selector: { id: FE.objectPageEditButton } });
+		if (object2._domId) {
+			await BaseClass.pressById(FE.objectPageEditButton);
+			await BaseClass.dummyWait(3000);
+		}
+		await browser.waitUntil(
+			async () => {
+				const save = await browser.asControl({ forceSelect: true, selector: { id: FE.objectPageSaveButton } });
+				return !!save && !!save._domId;
+			},
+			{ timeout: 30000, interval: 1000, timeoutMsg: "Did not enter edit mode (save button not found)" }
+		);
+	});
+
+	it("make an unrelated manual edit on the order header", async () => {
+		const result = await browser.execute(function (tableId) {
+			function byId(id) {
+				const E = sap.ui.require("sap/ui/core/Element");
+				return E && E.getElementById ? E.getElementById(id) : sap.ui.getCore().byId(id);
+			}
+			const oTable = byId(tableId);
+			const oModel = oTable.getModel();
+			const oHeaderCtx = oTable.getBindingContext();
+			const oldValue = oModel.getProperty("OrderNo", oHeaderCtx) || "";
+			const newValue = oldValue + "-OK231";
+			oModel.setProperty("OrderNo", newValue, oHeaderCtx);
+			return { newValue: newValue, headerPath: oHeaderCtx.getPath() };
+		}, FE.objectPageOrderItems);
+		editedValue2 = result.newValue;
+		const before = await readHeaderPending(FE.objectPageOrderItems, "OrderNo");
+		expect(before.hasHeaderChange).toBe(true);
+		expect(before.changedValue).toBe(editedValue2);
+	});
+
+	it("upload a VALID file and let the importer submit it", async () => {
+		await BaseClass.dummyWait(500);
+		await BaseClass.pressById(FE.objectPageSpreadsheetuploadButton);
+		await browser.asControl({
+			selector: { controlType: "sap.m.Dialog", properties: { contentWidth: "40vw" }, searchOpenDialogs: true }
+		});
+		await BaseClass.removeBlockLayer();
+		const uploader = await browser.asControl({
+			forceSelect: true,
+			selector: { interaction: "root", controlType: "sap.ui.unified.FileUploader", searchOpenDialogs: true }
+		});
+		const remoteFilePath = await browser.uploadFile("test/testFiles/TwoRowsNoErrors.xlsx");
+		const $uploader = await uploader.getWebElement();
+		const $fileInput = await $uploader.$("input[type=file]");
+		await $fileInput.setValue(remoteFilePath);
+		await browser.asControl({ selector: { controlType: "sap.m.Button", properties: { text: "Upload" }, searchOpenDialogs: true } }).press();
+
+		// A successful upload closes the dialog (no "Upload Error"); this also runs resetContent/resetContexts.
+		await browser.waitUntil(
+			async () => {
+				const dlg = await browser.asControl({
+					forceSelect: true,
+					selector: { controlType: "sap.m.Dialog", properties: { contentWidth: "40vw" }, searchOpenDialogs: true }
+				});
+				return !dlg || !dlg._domId;
+			},
+			{ timeout: 60000, interval: 1000, timeoutMsg: "Upload dialog did not close (upload may have errored)" }
+		);
+		await BaseClass.dummyWait(2000);
+	});
+
+	it("the imported rows were actually created (sanity)", async () => {
+		const created = await browser.execute(function (tableId) {
+			function byId(id) {
+				const E = sap.ui.require("sap/ui/core/Element");
+				return E && E.getElementById ? E.getElementById(id) : sap.ui.getCore().byId(id);
+			}
+			const oModel = byId(tableId) && byId(tableId).getModel();
+			// the importer's created rows are submitted -> present in the model's data cache
+			const data = oModel && oModel.getProperty ? oModel.getProperty("/") : {};
+			return Object.keys(data || {}).filter((k) => k.indexOf("OrderItemsND") === 0).length;
+		}, FE.objectPageOrderItems);
+		expect(created).toBeGreaterThan(0);
+	});
+
+	it("the manual header edit must NOT have been committed by the upload (#231)", async () => {
+		const after = await readHeaderPending(FE.objectPageOrderItems, "OrderNo");
+		console.log("AFTER-SUCCESS PENDING: " + JSON.stringify(after));
+		// Current code: submitChanges() (no group) committed the edit -> hasHeaderChange === false (RED).
+		// Isolated code: submitChanges({groupId}) submits only the importer's rows -> edit still pending (GREEN).
+		expect(after.hasHeaderChange).toBe(true);
+		expect(after.changedValue).toBe(editedValue2);
+	});
+
+	after(async () => {
 		try {
 			await browser.execute(function (tableId) {
 				function byId(id) {
