@@ -138,6 +138,11 @@ export default abstract class OData extends ManagedObject {
           }
           if (component.getContinueOnError()) {
             Log.error('Error while calling the odata service', error as Error, 'SpreadsheetUpload: callOdata');
+            // A thrown error skipped this batch's normal resetContexts call above. Clean up the
+            // batch's tracked/queued changes now, or they bleed into the next iteration (the next
+            // submit would re-send the failed batch's queued requests -> duplicate rows, and stale
+            // rejected createPromises would poison the next waitForCreation).
+            this.resetContexts(model);
           } else {
             // throw error to stop processing
             throw error;

@@ -170,10 +170,20 @@ export default class ODataV4 extends OData {
   async checkForErrors(model: any, binding: any, showBackendErrorMessages: Boolean): Promise<boolean> {
     // if the binding has pending changes, a error occured
     if (this.customBinding.hasPendingChanges()) {
-      // delete all the created context
-      this.createContexts.forEach(async context => {
-        await context.delete(this.updateGroupId);
-      });
+      // Delete the still-TRANSIENT (failed) created contexts and WAIT for them, so the importer's
+      // update group is actually clean before resetContexts() runs. Persisted contexts (rows the
+      // backend DID create) must be left alone: deleting them would destroy real records, and their
+      // delete() in our API group would only settle after a submitBatch that never comes on this
+      // path - the await would hang forever. Transient deletes resolve client-side immediately.
+      try {
+        await Promise.all(
+          this.createContexts
+            .filter(context => typeof context.isTransient === 'function' && context.isTransient())
+            .map(context => context.delete(this.updateGroupId))
+        );
+      } catch (error) {
+        Log.error('Error deleting created contexts after failed upload', error as Error, 'SpreadsheetUpload: ODataV4');
+      }
       // The ODataMessagesDialog renders exactly the data it is handed, so read the backend
       // messages from the message model first (checkForODataErrors does that and only opens
       // the dialog when messages exist) — calling displayMessages() without data shows an
@@ -261,11 +271,18 @@ export default class ODataV4 extends OData {
     this.createContexts = [];
     this.createPromises = [];
 
-    // Reset pending changes in the model to prevent "key already exists" errors on re-upload
-    // This follows SAP best practice for error handling - see issue #786
+    // Reset ONLY the importer's own update group - never a no-arg resetChanges(), which targets the
+    // model's default ($auto) group and would discard the user's unrelated edits (issue #231).
+    // checkForErrors() already deletes our created contexts on the error path; this additionally
+    // cleans the outer-catch path (where checkForErrors never ran) and any leftover update changes,
+    // preventing "key already exists" on re-upload (#786).
     if (model && typeof model.resetChanges === 'function') {
-      Log.debug('Resetting pending changes in OData V4 model', undefined, 'SpreadsheetUpload: ODataV4');
-      model.resetChanges();
+      try {
+        Log.debug(`Resetting pending changes in OData V4 update group ${this.updateGroupId}`, undefined, 'SpreadsheetUpload: ODataV4');
+        model.resetChanges(this.updateGroupId);
+      } catch (error) {
+        Log.debug('resetChanges for importer update group skipped', error as Error, 'SpreadsheetUpload: ODataV4');
+      }
     }
   }
 

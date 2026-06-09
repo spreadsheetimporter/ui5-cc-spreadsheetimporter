@@ -19,6 +19,10 @@ export default class ODataV2 extends OData {
   submitChangesResponse: any;
   private metadataHandler: MetadataHandlerV2;
   private requestObjects: ODataV2RequestObjects;
+  // Entities this upload itself created/updated in the current batch. Used to clean up ONLY the
+  // importer's own changes, never the user's unrelated pending changes (issues #231 / #786).
+  private createdEntryContexts: any[] = [];
+  private updatedEntityPaths: string[] = [];
 
   constructor(spreadsheetUploadController: SpreadsheetUpload, messageHandler: MessageHandler, util: Util) {
     super(spreadsheetUploadController, messageHandler, util);
@@ -38,6 +42,11 @@ export default class ODataV2 extends OData {
             reject(error);
           }
         });
+        // Track our own created entry so cleanup targets ONLY these rows, never the
+        // user's unrelated pending changes (issues #231 / #786).
+        if (context) {
+          this.createdEntryContexts.push(context);
+        }
       });
     };
     return submitChangesPromise(this.customBinding, payload);
@@ -127,6 +136,8 @@ export default class ODataV2 extends OData {
     });
 
     this.createPromises.push(updatePromise);
+    // Track the entity we updated so cleanup targets ONLY our change (issues #231 / #786).
+    this.updatedEntityPaths.push(entityPath);
   }
 
   async checkForErrors(model: any, binding: any, showBackendErrorMessages: Boolean): Promise<boolean> {
@@ -138,6 +149,13 @@ export default class ODataV2 extends OData {
       // messages from the message model first (checkForODataErrors does that and only opens
       // the dialog when messages exist) — handing it an empty array shows an empty dialog.
       await this.checkForODataErrors(showBackendErrorMessages);
+    } else {
+      // Successful submit: our update requests were consumed by the batch, so there is nothing of
+      // OURS left at those paths. Clear the tracker now - otherwise the per-batch resetContexts on
+      // the success path would call resetChanges on those entities and could only ever hit the
+      // USER's pending changes there (e.g. an unsaved edit on an entity the spreadsheet also
+      // updated) - the exact #231 data loss this fix exists to prevent.
+      this.updatedEntityPaths = [];
     }
     return errorFound;
   }
@@ -252,14 +270,56 @@ export default class ODataV2 extends OData {
   }
 
   resetContexts(model?: any) {
+    // Snapshot what THIS importer created/updated this batch, then clear the trackers.
+    const createdContexts = (this.createdEntryContexts || []).filter(context => context && typeof context.getPath === 'function');
+    const updatedPaths = Array.from(new Set(this.updatedEntityPaths || []));
     this.createContexts = [];
     this.createPromises = [];
+    this.createdEntryContexts = [];
+    this.updatedEntityPaths = [];
 
-    // Reset pending changes in the model to prevent "key already exists" errors on re-upload
-    // This follows SAP best practice for error handling - see issue #786
-    if (model && typeof model.resetChanges === 'function') {
-      Log.debug('Resetting pending changes in OData V2 model', undefined, 'SpreadsheetUpload: ODataV2');
-      model.resetChanges();
+    // Reset ONLY the entities this importer touched - never the user's unrelated pending changes
+    // (e.g. a field edited in Fiori Elements edit mode). A blunt model.resetChanges() would wipe
+    // those too. See issues #231 (data loss) and #786 ("key already exists" on re-upload).
+    // One resetChanges call per model with the whole path array - resetChanges accepts an array,
+    // and every call ends in a forced checkUpdate(true) over ALL bindings, so per-row calls would
+    // cost a full-model refresh per row.
+    const createdPathsByModel = new Map<any, string[]>();
+    for (const context of createdContexts) {
+      const ctxModel = (typeof context.getModel === 'function' && context.getModel()) || model;
+      if (!ctxModel || typeof ctxModel.resetChanges !== 'function') {
+        continue;
+      }
+      const paths = createdPathsByModel.get(ctxModel) || [];
+      paths.push(context.getPath());
+      createdPathsByModel.set(ctxModel, paths);
+    }
+    createdPathsByModel.forEach((paths, ctxModel) => {
+      try {
+        // SAP's documented replacement for the (deprecated) deleteCreatedEntry - see its JSDoc:
+        //   oModel.resetChanges([oContext.getPath()], undefined, true)
+        // resetChanges(aPath, bAll, bDeleteCreatedEntities): scoped to our paths, so the user's other
+        // pending changes are untouched. bDeleteCreatedEntities (since 1.95) fully removes the
+        // still-transient created rows; on older lines resetChanges([rootPath]) already drops them
+        // from the pending changes and aborts the queued POSTs. After a successful submit the rows
+        // are already persisted, so this is a harmless no-op.
+        ctxModel.resetChanges(paths, undefined, true);
+      } catch (error) {
+        // a failed reset leaves transient created rows behind -> next upload may hit
+        // "key already exists" (#786); keep this visible at default log level
+        Log.warning(`Could not reset created entries (${paths.length})`, error as Error, 'SpreadsheetUpload: ODataV2');
+      }
+    });
+
+    if (updatedPaths.length > 0 && model && typeof model.resetChanges === 'function') {
+      try {
+        // Only reached when the batch FAILED or never submitted (the tracker is cleared on
+        // successful submits in checkForErrors): abort our queued (deferred) update requests.
+        // bAll=true so the deferred request itself is aborted, not only entity changes.
+        model.resetChanges(updatedPaths, true);
+      } catch (error) {
+        Log.warning('Could not reset updated entities', error as Error, 'SpreadsheetUpload: ODataV2');
+      }
     }
   }
 
