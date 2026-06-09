@@ -167,3 +167,6 @@ yarn.lock
 /mta_archives/
 *.mtar
 *.zip
+
+# Excel owner/lock temp files (created while a workbook is open)
+**/~$*.xlsx

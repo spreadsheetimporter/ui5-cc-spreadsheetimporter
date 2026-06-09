@@ -174,10 +174,11 @@ export default class ODataV4 extends OData {
       this.createContexts.forEach(async context => {
         await context.delete(this.updateGroupId);
       });
-      // show messages from the Messages Manager Model
-      if (showBackendErrorMessages) {
-        this.odataMessageHandler.displayMessages();
-      }
+      // The ODataMessagesDialog renders exactly the data it is handed, so read the backend
+      // messages from the message model first (checkForODataErrors does that and only opens
+      // the dialog when messages exist) — calling displayMessages() without data shows an
+      // empty dialog.
+      await this.checkForODataErrors(showBackendErrorMessages);
       return true;
     }
     return false;

@@ -253,7 +253,7 @@ export default abstract class OData extends ManagedObject {
     this.busyDialog.open();
   }
 
-  private async checkForODataErrors(showBackendErrorMessages: Boolean) {
+  protected async checkForODataErrors(showBackendErrorMessages: Boolean) {
     if (showBackendErrorMessages) {
       try {
         // sap.ui.core.Messaging is only available in UI5 version 1.118 and above, prefer this over sap.ui.getCore().getMessageManager()saging = Util.loadUI5RessourceAsync("sap/ui/core/Messaging");
