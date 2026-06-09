@@ -34,6 +34,7 @@ class FEV4 extends FEBase {
 		this.entityObjectPageCSV = "ID=64e718c9-ff99-47f1-8ca3-950c850777d8,IsActiveEntity=true";
 		this.entityObjectPageComma = "ID=64e718c9-ff99-47f1-8ca3-950c850777d6,IsActiveEntity=true";
 		this.entityObjectPageDot = "ID=64e718c9-ff99-47f1-8ca3-950c850777d7,IsActiveEntity=true";
+		this.entityObjectPageFormat = "ID=64e718c9-ff99-47f1-8ca3-950c850777da,IsActiveEntity=true";
 	}
 
 	async getFieldValue(fieldName) {
