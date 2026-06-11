@@ -75,9 +75,9 @@ The CLA helps us:
 
 ## Documentation
 
-- Update documentation for any changes
+- Update user-facing documentation for any changes in the separate docs repository: https://github.com/spreadsheetimporter/docs
+- Keep this repository's README files up to date when links, setup steps, or package behavior change
 - Add JSDoc comments for new functions
-- Keep the README up to date
 
 ## Questions?
 

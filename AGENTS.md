@@ -44,28 +44,26 @@ This is a **monorepo** using npm workspaces.
 │       ├── specs/                       # wdi5 integration tests
 │       ├── testFiles/                   # Sample Excel/CSV files
 │       └── http/                        # HTTP request examples
-├── docs/                                # MkDocs documentation source
 ├── dev/                                 # Build/utility scripts
 ├── .github/workflows/                   # CI/CD (see below)
-├── mkdocs.yml                           # Documentation site config
 ├── package.json                         # Root workspace config
 └── tsconfig.json                        # TypeScript config
 ```
 
 ## Tech Stack
 
-| Layer              | Technology                                                                        |
-| ------------------ | --------------------------------------------------------------------------------- |
-| Language           | TypeScript 5.8 (component), JavaScript (tooling/tests)                            |
-| UI Framework       | SAP UI5 1.84+ (min), 1.136 (default)                                              |
-| Excel Parsing      | SheetJS (XLSX) 0.20.3 via CDN                                                     |
-| Build              | @ui5/cli 4, ui5-tooling-transpile, ui5-tooling-modules, ui5-tooling-stringreplace |
-| Backend (examples) | SAP CAP (CDS) with @sap/cds 9, SQLite                                             |
-| Testing            | wdi5 v3 (WebdriverIO + UI5), OPA5                                                 |
-| Linting            | ui5lint, Prettier 3.5                                                             |
-| CI/CD              | GitHub Actions                                                                    |
-| Docs               | MkDocs with Material theme                                                        |
-| Release            | release-please (conventional commits)                                             |
+| Layer              | Technology                                                                                     |
+| ------------------ | ---------------------------------------------------------------------------------------------- |
+| Language           | TypeScript 5.8 (component), JavaScript (tooling/tests)                                         |
+| UI Framework       | SAP UI5 1.84+ (min), 1.136 (default)                                                           |
+| Excel Parsing      | SheetJS (XLSX) 0.20.3 via CDN                                                                  |
+| Build              | @ui5/cli 4, ui5-tooling-transpile, ui5-tooling-modules, ui5-tooling-stringreplace              |
+| Backend (examples) | SAP CAP (CDS) with @sap/cds 9, SQLite                                                          |
+| Testing            | wdi5 v3 (WebdriverIO + UI5), OPA5                                                              |
+| Linting            | ui5lint, Prettier 3.5                                                                          |
+| CI/CD              | GitHub Actions                                                                                 |
+| Docs               | MkDocs Material site in `spreadsheetimporter/docs`, published at docs.spreadsheet-importer.com |
+| Release            | release-please (conventional commits)                                                          |
 
 ## Architecture
 
@@ -273,10 +271,9 @@ npm run test:opa5:v4fe         # OPA5 integration tests (V4 only)
 | `opa5-test.yml`                  | Fiori Elements OPA5 tests                                 |
 | `ui5-lint.yml`                   | ui5lint                                                   |
 | `release-please.yml`             | Automated releases via conventional commits → NPM publish |
-| `pushDocs.yml`                   | Build/deploy MkDocs to gh-pages                           |
 | `health-check-livedemo.yml`      | Live demo health monitoring                               |
 | `dockerfile-examples-deploy.yml` | Docker deployment of examples                             |
-| `link-checker.yml`               | Documentation link validation                             |
+| `link-checker.yml`               | Markdown link validation                                  |
 | `cla.yml`                        | CLA checking                                              |
 
 ## Code Style & Conventions
@@ -319,4 +316,4 @@ The codebase uses a strategy pattern: `ODataV2.ts` and `ODataV4.ts` both extend 
 
 ## Docs
 
-Documentation is built with MkDocs (`mkdocs.yml`) and deployed to GitHub Pages. Source in `docs/` and `docs/pages/`. The `docs/ABAP.md` and `docs/ABAP_DOCS.md` files contain RAP backend implementation guides.
+The documentation source lives in the separate [`spreadsheetimporter/docs`](https://github.com/spreadsheetimporter/docs) repository and is published at https://docs.spreadsheet-importer.com. UI5 frontend docs moved there under `docs/ui5/`; backend/importer docs live in the same docs site. Make documentation-source changes in that repository, and keep only repository-local README or contributor guidance updates here.

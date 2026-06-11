@@ -1,7 +1,7 @@
 # UI5 custom control `ui5-cc-spreadsheetimporter`
 
 <div align="left">
-  <img src="../../docs/images/Logo_wide.png" alt="UI5 Spreadsheet Importer Logo" width="400">
+  <img src="https://docs.spreadsheet-importer.com/ui5/images/Logo_wide.png" alt="UI5 Spreadsheet Importer Logo" width="400">
 </div>
 
 A UI5 Module to integrate a Spreadsheet Upload for Fiori Element Apps.  
