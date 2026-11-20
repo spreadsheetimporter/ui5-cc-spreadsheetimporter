@@ -1,12 +1,12 @@
 # Docker image for running wdi5 tests locally
-# Replicates the GitHub Actions CI environment (ubuntu + Node 20 + Chrome)
+# Replicates the GitHub Actions CI environment (ubuntu + Node 22 + Chrome)
 #
 # Usage:
 #   docker build -f Dockerfile.test -t spreadsheet-test .
 #   docker run --rm spreadsheet-test ordersv2fe 136
 #   docker run --rm -v $(pwd)/examples/reports:/app/examples/reports spreadsheet-test ordersv2fe 136
 
-FROM node:20-slim
+FROM node:22-slim
 
 # Install system dependencies
 # - chromium + chromium-driver: browser + matching chromedriver (works on arm64 + amd64)
@@ -38,7 +38,7 @@ ENV CHROMEDRIVER_PATH=/usr/bin/chromedriver
 WORKDIR /app
 
 # Install SAP CDS CLI globally (matching CI version)
-RUN npm i -g @sap/cds-dk@8.8.2
+RUN npm i -g @sap/cds-dk@9.9.8
 
 # Copy everything (monorepo workspaces need full structure for npm install)
 COPY . .

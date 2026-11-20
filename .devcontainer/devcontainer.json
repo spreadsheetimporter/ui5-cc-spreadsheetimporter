@@ -1,6 +1,6 @@
 {
   "name": "UI5 SpreadsheetUpload Dev Container",
-  "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:18",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:22",
   "customizations": {
     "vscode": {
       "extensions": ["esbenp.prettier-vscode", "sapse.sap-ux-fiori-tools-extension-pack"]
