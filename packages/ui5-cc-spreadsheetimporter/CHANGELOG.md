@@ -1,3 +1,20 @@
+## [2.5.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v2.4.0...ui5-cc-spreadsheetimporter-v2.5.0) (2026-11-20)
+
+### License
+
+UI5 Spreadsheet Importer 2.5.0 is available under the Apache License 2.0, including for production use. The package includes the license and third-party notices. The UI5 namespace is `cc.spreadsheetimporter.v2_5_0`.
+
+### Features
+
+- export with v2 ([#780](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/780)) ([4962c0f](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/4962c0fca6f86fccbddd483b6bd9d9c720a0621f))
+
+### Bug Fixes
+
+- isolate V2 importer writes in a dedicated request group ([#231](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/231)) ([#811](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/811)) ([c59cc03](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/c59cc038ebc11f522473da8095905d76a071cb45))
+- match labelTypeBrackets columns case-insensitively ([#802](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/802)) ([2e15c2f](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/2e15c2ff877f06e18bb9134227cd6dad5298562d))
+- reset only importer-created entities, preserve user's pending changes ([#808](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/808)) ([b73de07](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/b73de070aaca2e478ad405eea498ed250b90ed57))
+- review follow-ups for OData V2 export & update ([#812](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/812)) ([9a30aec](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/9a30aec3b7ba07bf957b3c2bf61d3fe18acd2cd2))
+
 ## [2.3.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v2.2.0...ui5-cc-spreadsheetimporter-v2.3.0) (2025-07-04)
 
 ### Features
@@ -11,16 +28,14 @@
 
 ## [2.4.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v2.3.0...ui5-cc-spreadsheetimporter-v2.4.0) (2025-11-18)
 
-
 ### Features
 
-* add markers for null and empty values ([#791](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/791)) ([1854fa8](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/1854fa854395465ee2f77676c727bbf42e9a9962))
-
+- add markers for null and empty values ([#791](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/791)) ([1854fa8](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/1854fa854395465ee2f77676c727bbf42e9a9962))
 
 ### Bug Fixes
 
-* handle floatingpoints errors coming from excel ([#789](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/789)) ([0ceb925](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/0ceb9252b8693886f0de75f5502fc5fdfe8d74f6))
-* reset OData model pending changes after backend errors ([#792](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/792)) ([672ea86](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/672ea86ca86e62f0df58c267f9d3323991920dab))
+- handle floatingpoints errors coming from excel ([#789](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/789)) ([0ceb925](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/0ceb9252b8693886f0de75f5502fc5fdfe8d74f6))
+- reset OData model pending changes after backend errors ([#792](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/issues/792)) ([672ea86](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/commit/672ea86ca86e62f0df58c267f9d3323991920dab))
 
 ## [2.2.0](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/compare/ui5-cc-spreadsheetimporter-v2.1.0...ui5-cc-spreadsheetimporter-v2.2.0) (2025-07-02)
 

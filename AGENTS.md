@@ -4,10 +4,10 @@
 
 **ui5-cc-spreadsheetimporter** is a production-grade SAP UI5 custom control component for bulk spreadsheet data import into Fiori Elements and other UI5 applications. It parses Excel/CSV files client-side and submits the extracted data to the backend via OData V2 or V4 — the file itself is never uploaded.
 
-- **Current version:** 2.4.0
+- **Current version:** 2.5.0
 - **Package:** `ui5-cc-spreadsheetimporter` (NPM)
-- **License:** Commercial (v2.0.0+), Apache 2.0 for v1.x
-- **Namespace:** `cc.spreadsheetimporter.v2_4_0` (versioned namespace for Fiori Launchpad coexistence)
+- **License:** Apache 2.0 for v1.x and from v2.5.0. Published v2.0.0–v2.4.0 used commercial terms.
+- **Namespace:** `cc.spreadsheetimporter.v2_5_0` (versioned namespace for Fiori Launchpad coexistence)
 
 ## Repository Structure
 
@@ -133,11 +133,11 @@ File Upload → FileService (read XLSX) → SheetHandler (sheet→JSON)
 
 ### Versioned Namespace System
 
-The component uses a **versioned namespace** (`cc.spreadsheetimporter.v2_4_0`) to allow multiple versions to coexist in a Fiori Launchpad. During build, placeholders are replaced:
+The component uses a **versioned namespace** (`cc.spreadsheetimporter.v2_5_0`) to allow multiple versions to coexist in a Fiori Launchpad. During build, placeholders are replaced:
 
-- `XXXnamespaceXXX` → `v2_4_0`
-- `XXXnamespaceShortXXX` → `v240`
-- `XXXnamespaceSlashXXX` → `v2_4_0`
+- `XXXnamespaceXXX` → `v2_5_0`
+- `XXXnamespaceShortXXX` → `v250`
+- `XXXnamespaceSlashXXX` → `v2_5_0`
 
 This is handled by `ui5-tooling-stringreplace` in `ui5-build.yaml`.
 

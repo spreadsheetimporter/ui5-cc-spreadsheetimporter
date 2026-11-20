@@ -1,7 +1,9 @@
 <!-- prettier-ignore-start -->
-!!! danger "Commercial License Required"
-    This component is licensed under the SpreadsheetImporter Commercial License since version 2.0.0. For details, see [LICENSE.md](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/LICENSE.md). The version 1.x is licensed under the Apache License 2.0 and remains free of charge but no major updates will be provided.
+!!! info "UI5 component license"
+    UI5 Spreadsheet Importer 2.5.0 is available under the Apache License 2.0, including for production use. Versions 1.x also use Apache 2.0. Published versions 2.0.0 through 2.4.0 use their respective commercial licenses. See the [license history](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/LICENSE.md).
 <!-- prettier-ignore-end -->
+
+To upgrade an existing app to 2.5.0, install the version below, update its component usage and resource root to `cc.spreadsheetimporter.v2_5_0`, then rebuild and deploy the app. For central deployments, deploy the 2.5.0 component before switching the app.
 
 ## Deployment Strategy
 
@@ -60,7 +62,7 @@ There are two ways to include the component in your application:
 1\. **Install the component from npm:**
 
 ```sh
-npm install ui5-cc-spreadsheetimporter
+npm install --save-exact ui5-cc-spreadsheetimporter@2.5.0
 ```
 
 2\. **Add `resourceRoots` to the `sap.ui5` section of your `manifest.json`:**
@@ -72,7 +74,7 @@ npm install ui5-cc-spreadsheetimporter
 
 ```json
 "resourceRoots": {
-  "cc.spreadsheetimporter.v2_4_0": "./thirdparty/customcontrol/spreadsheetimporter/v2_4_0"
+  "cc.spreadsheetimporter.v2_5_0": "./thirdparty/customcontrol/spreadsheetimporter/v2_5_0"
 }
 ```
 
@@ -97,7 +99,7 @@ For BTP applications (or apps using the index.html bootstrap), you can use jsDel
   data-sap-ui-theme="sap_horizon"
   data-sap-ui-resourceroots='{
     "your.app.namespace": "./",
-    "cc.spreadsheetimporter.v2_4_0": "https://cdn.jsdelivr.net/npm/ui5-cc-spreadsheetimporter@1.7.3/dist"
+    "cc.spreadsheetimporter.v2_5_0": "https://cdn.jsdelivr.net/npm/ui5-cc-spreadsheetimporter@2.5.0/dist"
   }'
   data-sap-ui-oninit="module:sap/ui/core/ComponentSupport"
   data-sap-ui-async="true"
@@ -107,7 +109,7 @@ For BTP applications (or apps using the index.html bootstrap), you can use jsDel
 
 <!-- prettier-ignore-start -->
 !!! info "Version Specification"
-    Always specify the exact version in the CDN URL (e.g., `@1.7.3`) to ensure consistent behavior of your application.
+    Always specify the exact version in the CDN URL (e.g., `@2.5.0`) to ensure consistent behavior of your application.
 <!-- prettier-ignore-end -->
 
 For more information on using jsDelivr CDN, see the [jsDelivr documentation](https://www.jsdelivr.com/documentation#id-npm).
@@ -124,7 +126,7 @@ For more information on using jsDelivr CDN, see the [jsDelivr documentation](htt
 ```json
 "componentUsages": {
   "spreadsheetImporter": {
-    "name": "cc.spreadsheetimporter.v2_4_0"
+    "name": "cc.spreadsheetimporter.v2_5_0"
   }
 }
 ```
@@ -140,7 +142,7 @@ If you encounter the error `component does not exist` when deploying to an SAP s
 
 ```json
 "sap.app": {
-  "embeds": ["thirdparty/customcontrol/spreadsheetimporter/v2_4_0"]
+  "embeds": ["thirdparty/customcontrol/spreadsheetimporter/v2_5_0"]
 }
 ```
 
@@ -158,7 +160,7 @@ If you encounter the error `component does not exist` when deploying to an SAP s
 ```json
 "componentUsages": {
   "spreadsheetImporter": {
-    "name": "cc.spreadsheetimporter.v2_4_0"
+    "name": "cc.spreadsheetimporter.v2_5_0"
   }
 }
 ```
@@ -337,7 +339,7 @@ Running outside Fiori Launchpad? Register the component path in `index.html`.
   src="resources/sap-ui-core.js"
   data-sap-ui-resourceroots='{
         "your.app.namespace": "./",
-        "cc.spreadsheetimporter.v2_4_0": "/sap/bc/ui5_ui5/sap/Z_XUP/thirdparty/customcontrol/spreadsheetimporter/v2_4_0"
+        "cc.spreadsheetimporter.v2_5_0": "/sap/bc/ui5_ui5/sap/Z_XUP/thirdparty/customcontrol/spreadsheetimporter/v2_5_0"
     }'
 ></script>
 ```
@@ -347,14 +349,14 @@ Running outside Fiori Launchpad? Register the component path in `index.html`.
 ```json
 "componentUsages": {
   "spreadsheetImporter": {
-    "name": "cc.spreadsheetimporter.v2_4_0"
+    "name": "cc.spreadsheetimporter.v2_5_0"
   }
 }
 ```
 
 #### Error: Library/Component Used in Application Does Not Exist
 
-When deploying the app to your ABAP system, you might encounter an error like `SAPUI5 library/component cc.spreadsheetimporter.v2_4_0 used in application Z*** does not exist`. The application is deployed, but the service returns an error.
+When deploying the app to your ABAP system, you might encounter an error like `SAPUI5 library/component cc.spreadsheetimporter.v2_5_0 used in application Z*** does not exist`. The application is deployed, but the service returns an error.
 
 To avoid this error, add the following to your `manifest.json` file:
 
@@ -365,7 +367,7 @@ To avoid this error, add the following to your `manifest.json` file:
 
 ```json
 "sap.app": {
-  "embeds": ["thirdparty/customcontrol/spreadsheetimporter/v2_4_0"]
+  "embeds": ["thirdparty/customcontrol/spreadsheetimporter/v2_5_0"]
 }
 ```
 
@@ -473,7 +475,7 @@ builder:
       configuration:
         archiveName: uimodule
         includeDependencies:
-          - ui5-cc-spreadsheetimporter-v2-4-0
+          - ui5-cc-spreadsheetimporter-v2-5-0
 ```
 
 The metadata name is defined in the [`ui5.yaml`](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/9b61a778e5b0a5b66c15f5889334a6d684ae88de/packages/ui5-cc-spreadsheetimporter/ui5.yaml#L4) file of the component.
@@ -487,7 +489,7 @@ The metadata name is defined in the [`ui5.yaml`](https://github.com/spreadsheeti
 
 When using decentralized deployment, deployment may fail with the following error:
 
-`"Service name 'spreadsheetimporter_v2_4_0' and public setting 'true' in embedded manifest.json have to be equal to service name 'xxxxxxx' and public setting 'true' of root manifest.json"`
+`"Service name 'spreadsheetimporter_v2_5_0' and public setting 'true' in embedded manifest.json have to be equal to service name 'xxxxxxx' and public setting 'true' of root manifest.json"`
 
 SAP currently does not provide a fix for this.
 
@@ -512,7 +514,7 @@ builder:
       afterTask: replaceVersion
 ```
 
-This task will update the Spreadsheet Importer manifest with the app's service name at this path: `dist/thirdparty/customcontrol/spreadsheetimporter/v2_4_0/manifest.json`.
+This task will update the Spreadsheet Importer manifest with the app's service name at this path: `dist/thirdparty/customcontrol/spreadsheetimporter/v2_5_0/manifest.json`.
 
 ##### Workaround 2
 

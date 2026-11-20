@@ -49,11 +49,7 @@ See [CHANGELOG.md](CHANGELOG.md)
 
 ## License
 
-Versions 1.x are licensed under Apache License 2.0.
-
-From version 2.0.0 onward, this software is provided under the SpreadsheetImporter Commercial License. Non-production usage (testing/evaluation) is free; production use or embedding/reselling requires a paid license.
-
-For details, visit https://spreadsheet-importer.com/ or contact marian@marianzeis.de.
+UI5 Spreadsheet Importer 2.5.0 is available under the Apache License 2.0, including for production use. Versions 1.x also use Apache 2.0. Published versions 2.0.0 through 2.4.0 use their respective commercial licenses. See the [license history](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/LICENSE.md).
 
 Note about SheetJS:
 This project uses SheetJS Community Edition for processing spreadsheet data:

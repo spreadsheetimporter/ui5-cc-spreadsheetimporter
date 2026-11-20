@@ -53,11 +53,7 @@ See the [CHANGELOG.md](https://github.com/spreadsheetimporter/ui5-cc-spreadsheet
 
 # License
 
-Versions 1.x (including 1.7.x and below) are licensed under the Apache License 2.0 (see the [v1.x branch](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/tree/v1.x)).
-
-Versions 2.0.0 and above are licensed under the SpreadsheetImporter Commercial License. Non-production use is free; production or resale requires a paid license.
-
-For production or commercial usage, please see https://spreadsheet-importer.com/ or contact marian@marianzeis.de.
+UI5 Spreadsheet Importer 2.5.0 is available under the Apache License 2.0, including for production use. Versions 1.x also use Apache 2.0. Published versions 2.0.0 through 2.4.0 use their respective commercial licenses. See the [license history](https://github.com/spreadsheetimporter/ui5-cc-spreadsheetimporter/blob/main/LICENSE.md).
 
 # Open in GitHub Codespaces
 
