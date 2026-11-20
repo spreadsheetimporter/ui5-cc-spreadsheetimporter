@@ -2,6 +2,10 @@
 
 Thank you for your interest in contributing to the Spreadsheet Importer project! This document provides guidelines and instructions for contributing.
 
+## Development dependencies
+
+Use Node.js 22.12 or later in the 22.x line and npm 11.11.1 for the workspace. Run `npm install --global npm@11.11.1` and then `npm ci --legacy-peer-deps` from the repository root. Run `npm run copyTestApps` to generate and link the UI5 test variants.
+
 ## Code of Conduct
 
 By participating in this project, you agree to abide by our Code of Conduct.

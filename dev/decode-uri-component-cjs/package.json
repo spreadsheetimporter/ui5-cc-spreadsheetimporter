@@ -1,0 +1,13 @@
+{
+  "name": "spreadsheetimporter-dev-uri-decoder-cjs",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CommonJS callable adapter for the Fiori mock server's query-string 7 dependency",
+  "main": "index.cjs",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "dependencies": {
+    "patched-uri-decoder": "npm:decode-uri-component@0.5.1"
+  }
+}

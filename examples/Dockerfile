@@ -1,5 +1,5 @@
-# Use the official Node 20 Debian image as a base
-FROM node:20-slim
+# Use the official Node 22 Debian image as a base
+FROM node:22-slim
 
 # Set the working directory
 WORKDIR /app
@@ -12,7 +12,7 @@ RUN apt-get update && \
 # Use npm (already installed)
 
 
-RUN npm i -g @sap/cds-dk@8.8.2
+RUN npm install --global npm@11.11.1
 
 # Copy package.json and other configuration files
 COPY package.json tsconfig.json ./
@@ -21,7 +21,7 @@ COPY package.json tsconfig.json ./
 COPY . .
 
 # Install all dependencies
-RUN npm install --legacy-peer-deps
+RUN npm ci --legacy-peer-deps
 
 # Build the project
 RUN npm run build

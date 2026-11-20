@@ -4,6 +4,7 @@
   "description": "Modules Spreadsheet Upload for Fiori Element Apps.",
   "main": "Component.js",
   "private": true,
+  "packageManager": "npm@11.11.1",
   "author": "Marian Zeis",
   "homepage": "https://spreadsheet-importer.com/",
   "repository": {
@@ -30,7 +31,7 @@
     "replaceString": "node ./dev/replace-string.js",
     "build:mta": "npm run build:mta --workspace=ui5-cc-spreadsheetimporter",
     "deploy:cf": "npm run deploy:cf --workspace=ui5-cc-spreadsheetimporter",
-    "copyTestApps": "node ./dev/copy-example-apps.js create && npm install --verbose",
+    "copyTestApps": "node ./dev/copy-example-apps.js create && npm ci --legacy-peer-deps",
     "deleteAllNodeModules": "node dev/util.js deleteNodeModules .",
     "deleteTestApps": "node ./dev/copy-example-apps.js  delete",
     "deploy": "npm run build && fiori deploy --config ui5-deploy.yaml -y",
@@ -48,10 +49,10 @@
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@prettier/plugin-xml": "^3.4.2",
-    "@sap/ux-ui5-tooling": "1.25.0",
+    "@sap/ux-ui5-tooling": "1.34.0",
     "@sapui5/types": "1.146.0",
     "@types/node": "24.12.2",
-    "@ui5/cli": "4.0.55",
+    "@ui5/cli": "4.1.0",
     "@ui5/ts-interface-generator": "0.10.5",
     "babel-preset-transform-ui5": "^7.8.1",
     "bluebird": "3.7.2",
@@ -68,13 +69,46 @@
   "overrides": {
     "lodash": "^4.18.1",
     "yaml@2": "^2.8.3",
-    "body-parser@1": "^1.20.5",
-    "body-parser@2": "^2.2.2",
-    "qs": "^6.15.2",
-    "serialize-javascript": "^7.0.5",
+    "body-parser@1": "^1.20.9",
+    "body-parser@2": "^2.4.0",
+    "qs": "^6.16.1",
+    "serialize-javascript": "^7.1.3",
     "phin": "^3.7.1",
+    "cds-launchpad-plugin": {
+      "@sap/cds-dk": "9.9.8"
+    },
     "js-yaml@3": "^3.15.2",
-    "js-yaml@4": "4.3.2"
+    "js-yaml@4": "4.3.2",
+    "eslint-plugin-fiori-custom": {
+      "@babel/core": "^7.29.6"
+    },
+    "@sap-ux/fe-fpm-writer": {
+      "@xmldom/xmldom": "^0.8.15"
+    },
+    "@sap-ux/ui5-config": {
+      "axios": "^1.20.0"
+    },
+    "@sap-ux/project-access": {
+      "fast-xml-parser": "^5.12.0"
+    },
+    "handlebars@4": "^4.7.10",
+    "get-uri@6": {
+      "basic-ftp": "^6.2.4"
+    },
+    "minimatch@>=7 <11": "^11.0.1",
+    "pacote@19": {
+      "sigstore": "^4.1.1"
+    },
+    "@wdio/utils@9": {
+      "@puppeteer/browsers": "3.2.7"
+    },
+    "query-string@7": {
+      "decode-uri-component": "file:dev/decode-uri-component-cjs"
+    },
+    "ui5-tooling-transpile": {
+      "minimatch": "^11.0.1"
+    },
+    "glob@>=10 <14": "^14.0.6"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json,md,yaml,yml,css,html,xml,properties}": [

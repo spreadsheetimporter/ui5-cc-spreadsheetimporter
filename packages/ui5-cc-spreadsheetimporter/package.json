@@ -62,14 +62,14 @@
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@prettier/plugin-xml": "^3.4.1",
-    "@sap/ux-ui5-tooling": "1.25.0",
+    "@sap/ux-ui5-tooling": "1.34.0",
     "@sapui5/ts-types-esm": "1.136.11",
     "@types/jest": "^30.0.0",
     "@types/node": "24.0.3",
-    "@ui5/cli": "4.0.55",
-    "@ui5/linter": "^1.13.1",
-    "@ui5/project": "4.0.16",
-    "@ui5/server": "4.0.15",
+    "@ui5/cli": "4.1.0",
+    "@ui5/linter": "^1.23.10",
+    "@ui5/project": "4.1.0",
+    "@ui5/server": "4.0.17",
     "@ui5/ts-interface-generator": "0.10.0",
     "babel-preset-transform-ui5": "^7.7.1",
     "bluebird": "3.7.2",
@@ -87,8 +87,8 @@
     "ts-jest": "^29.4.6",
     "typescript": "5.8.3",
     "ui5-task-zipper": "3.4.1",
-    "ui5-tooling-modules": "3.37.1",
-    "ui5-tooling-stringreplace": "3.4.0",
-    "ui5-tooling-transpile": "3.8.0"
+    "ui5-tooling-modules": "3.43.2",
+    "ui5-tooling-stringreplace": "3.6.2",
+    "ui5-tooling-transpile": "3.14.1"
   }
 }

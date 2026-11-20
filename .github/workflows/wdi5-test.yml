@@ -46,34 +46,24 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
-      - name: use node 20
+      - name: use node 22
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
 
-      # log npm version
-      - name: log npm version
-        run: npm --version
+      - name: Use the workspace npm version
+        run: npm install --global npm@11.11.1
 
       - name: get port
         run: |
           TESTAPPPORT=$(node ./dev/get-port.js ${{ matrix.scenario }} ${{ matrix.ui5version }})
           echo "TESTAPPPORT=$TESTAPPPORT" >> $GITHUB_ENV
 
-      - name: Remove cds-plugin-ui5
-        run: |
-          cd examples/packages/server
-          node -e "const fs = require('fs'); \
-                    const pkg = require('./package.json'); \
-                    delete pkg.devDependencies['cds-plugin-ui5']; \
-                    delete pkg.cds['cds-plugin-ui5']; \
-                    fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));"
-
-      - name: npm install
-        run: |
-          npm pkg delete scripts.prepare
-          npm install --legacy-peer-deps
+      - name: Install locked dependencies
+        run: npm ci --legacy-peer-deps
+        env:
+          HUSKY: '0'
 
       - name: copy test apps
         run: npm run copyTestApps
@@ -81,14 +71,10 @@ jobs:
       - name: Run Build
         run: npm run build
 
-      - name: install @sap/cds-dk@8.8.2
-        run: |
-          npm i -g @sap/cds-dk@8.8.2
-
       # run app      # wait for cap server to install ui5 component, remove when switch to fiori tools
       - name: start cap server
         run: |
-          npm run start:server &
+          CDS_PLUGIN_UI5_ACTIVE=false npm run start:server &
 
       - name: start app ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
         if: matrix.scenario != 'ordersv4fecds'
