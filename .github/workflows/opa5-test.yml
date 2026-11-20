@@ -46,46 +46,28 @@ jobs:
           node-version: 22
           cache: 'npm'
 
+      - name: Use the workspace npm version
+        run: npm install --global npm@11.11.1
+
       - name: get port
         run: |
           TESTAPPPORT=$(node ./dev/get-port.js ${{ matrix.scenario }} ${{ matrix.ui5version }})
           echo "TESTAPPPORT=$TESTAPPPORT" >> $GITHUB_ENV
 
-      - name: npm install
-        run: |
-          npm pkg delete scripts.prepare
-          npm install --legacy-peer-deps
+      - name: Install locked dependencies
+        run: npm ci --legacy-peer-deps
+        env:
+          HUSKY: '0'
 
       - name: copy test apps
         run: npm run copyTestApps
 
-      - name: install @sap/cds-dk@9.9.8
-        run: |
-          npm i -g @sap/cds-dk@9.9.8
-
-      - name: install ui5-test-runner
-        run: |
-          npm i -g ui5-test-runner
-
-      - name: npm install second time
-        run: |
-          npm pkg delete scripts.prepare
-          npm install --legacy-peer-deps
-
       - name: Run Build
         run: npm run build
 
-      - name: Remove cds-plugin-ui5
-        run: |
-          cd examples/packages/server
-          node -e "const pkg = require('./package.json'); \
-                    delete pkg.cds['cds-plugin-ui5']; \
-                    require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2));"
-
-      # run app
       - name: start cap server
         run: |
-          npm run start:server&
+          CDS_PLUGIN_UI5_ACTIVE=false npm run start:server &
 
       - name: start app ${{ matrix.scenario }} ui5 ${{ matrix.ui5version }}
         run: |
@@ -98,7 +80,7 @@ jobs:
         run: |
           while ! nc -z localhost 4004; do sleep 0.1; done
           while ! nc -z localhost ${{ env.TESTAPPPORT }}; do sleep 0.1; done
-          ui5-test-runner --url http://localhost:${{ env.TESTAPPPORT }}/test/integration/opaTests.qunit.html --screenshot false
+          npm run ui5-test-runner --workspace=ui5-cc-spreadsheetimporter-sample -- --url http://localhost:${{ env.TESTAPPPORT }}/test/integration/opaTests.qunit.html --screenshot false
 
       - name: upload artifact of report folder
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

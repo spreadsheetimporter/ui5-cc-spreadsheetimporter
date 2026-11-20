@@ -98,6 +98,9 @@ jobs:
           node-version: 22
           cache: 'npm'
 
+      - name: Use the workspace npm version
+        run: npm install --global npm@11.11.1
+
       - name: Update PR ${{ matrix.pr.number }}
         if: ${{ matrix.pr }}
         env:

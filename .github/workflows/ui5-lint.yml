@@ -24,10 +24,13 @@ jobs:
           node-version: 22
           cache: 'npm'
 
-      - name: npm install
-        run: |
-          npm pkg delete scripts.prepare
-          npm install --legacy-peer-deps
+      - name: Use the workspace npm version
+        run: npm install --global npm@11.11.1
+
+      - name: Install locked dependencies
+        run: npm ci --legacy-peer-deps
+        env:
+          HUSKY: '0'
 
       - name: lint ui5
         run: npm run lint:ui5

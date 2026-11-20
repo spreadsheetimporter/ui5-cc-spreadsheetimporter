@@ -4,6 +4,7 @@
   "description": "Modules Spreadsheet Upload for Fiori Element Apps.",
   "main": "Component.js",
   "private": true,
+  "packageManager": "npm@11.11.1",
   "author": "Marian Zeis",
   "homepage": "https://spreadsheet-importer.com/",
   "repository": {
@@ -30,7 +31,7 @@
     "replaceString": "node ./dev/replace-string.js",
     "build:mta": "npm run build:mta --workspace=ui5-cc-spreadsheetimporter",
     "deploy:cf": "npm run deploy:cf --workspace=ui5-cc-spreadsheetimporter",
-    "copyTestApps": "node ./dev/copy-example-apps.js create && npm install --verbose",
+    "copyTestApps": "node ./dev/copy-example-apps.js create && npm ci --legacy-peer-deps",
     "deleteAllNodeModules": "node dev/util.js deleteNodeModules .",
     "deleteTestApps": "node ./dev/copy-example-apps.js  delete",
     "deploy": "npm run build && fiori deploy --config ui5-deploy.yaml -y",
@@ -106,7 +107,8 @@
     },
     "ui5-tooling-transpile": {
       "minimatch": "^11.0.1"
-    }
+    },
+    "glob@>=10 <14": "^14.0.6"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json,md,yaml,yml,css,html,xml,properties}": [

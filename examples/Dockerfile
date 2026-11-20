@@ -12,7 +12,7 @@ RUN apt-get update && \
 # Use npm (already installed)
 
 
-RUN npm i -g @sap/cds-dk@9.9.8
+RUN npm install --global npm@11.11.1
 
 # Copy package.json and other configuration files
 COPY package.json tsconfig.json ./
@@ -21,7 +21,7 @@ COPY package.json tsconfig.json ./
 COPY . .
 
 # Install all dependencies
-RUN npm install --legacy-peer-deps
+RUN npm ci --legacy-peer-deps
 
 # Build the project
 RUN npm run build
