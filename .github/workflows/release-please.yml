@@ -2,9 +2,16 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Existing GitHub release version to retry on npm (e.g. 2.5.0)
+        required: true
+        type: string
 name: release-please
 jobs:
   release-please:
+    if: github.event_name == 'push'
     runs-on: ubuntu-22.04
     outputs:
       prs: ${{ steps.release.outputs.prs }}
@@ -20,19 +27,36 @@ jobs:
           monorepo-tags: true
           release-type: node
           separate-pull-requests: false
-      - name: log output
-        run: |
-          echo '${{toJSON(steps.release.outputs)}}'
 
   publish-npm:
     needs: release-please
-    if: needs.release-please.outputs.importer_released == 'true'
+    if: >-
+      !cancelled() && (
+        needs.release-please.outputs.importer_released == 'true' ||
+        (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
+      )
     runs-on: ubuntu-22.04
     permissions:
       contents: read
       id-token: write
     steps:
+      - name: Verify the requested release exists
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          gh release view "ui5-cc-spreadsheetimporter-v$VERSION" --repo "$GITHUB_REPOSITORY" --json isDraft,isPrerelease |
+            jq -e '(.isDraft or .isPrerelease) | not'
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && format('refs/tags/ui5-cc-spreadsheetimporter-v{0}', inputs.version) || github.sha }}
+      - name: Check the package version matches the release
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          VERSION: ${{ inputs.version }}
+        run: test "$(node -p "require('./packages/ui5-cc-spreadsheetimporter/package.json').version")" = "$VERSION"
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
           node-version: 22
