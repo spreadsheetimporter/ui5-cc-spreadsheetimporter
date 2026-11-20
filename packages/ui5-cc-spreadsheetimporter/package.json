@@ -20,9 +20,10 @@
   "files": [
     "dist",
     "ui5.yaml",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "THIRD-PARTY-NOTICES.txt"
   ],
-  "license": "See LICENSE.md",
+  "license": "Apache-2.0",
   "scripts": {
     "start": "npm-run-all build --parallel start:server start:v4fe:108",
     "start:v2fe:108": "npm run start --workspace=ordersv2fe108",
@@ -38,6 +39,7 @@
     "hooks:commit-msg": "commitlint --edit",
     "prepare": "husky",
     "build": "ui5 build --config=ui5-build.yaml --all --clean-dest --dest dist",
+    "postbuild": "node -e \"for (const name of ['LICENSE', 'THIRD-PARTY-NOTICES.txt']) require('node:fs').copyFileSync(name, 'dist/' + name)\"",
     "build:cf": "ui5 build --config=ui5-deploy-cf.yaml --all --clean-dest --dest dist",
     "build:mta": "rimraf resources mta_archives && mbt build --mtar archive",
     "build:dev": "ui5 build --config=ui5-build-dev.yaml --all --dest dist  --exclude-task=replaceCopyright replaceVersion generateFlexChangesBundle generateComponentPreload generateVersionInfo minify escapeNonAsciiCharacters",

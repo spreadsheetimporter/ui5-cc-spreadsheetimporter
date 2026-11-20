@@ -11,7 +11,7 @@ The component is **TypeScript in `src/`, transpiled on the fly** when you run th
 **Why it matters.** The component is published with `dist/` as its entry point, so several resolution paths prefer `dist/` over `src/`:
 
 - `packages/ui5-cc-spreadsheetimporter/package.json` → `"main": "dist/Component.js"`, `"types": "dist/index.d.ts"`, `"files": ["dist", …]`
-- `packages/ui5-cc-spreadsheetimporter/ui5.yaml` (the default/publish config) maps the mount `/thirdparty/customcontrol/spreadsheetimporter/v2_4_0/` → `./dist/`
+- `packages/ui5-cc-spreadsheetimporter/ui5.yaml` (the default/publish config) maps the mount `/thirdparty/customcontrol/spreadsheetimporter/v2_5_0/` → `./dist/`
 
 If `dist/` contains leftover output from a past `npm run build`, the runtime can serve that **stale compiled JS** instead of your live `src/` changes — your edits silently don't take effect and tests run old code. This is a top source of "why isn't my change working?" confusion.
 
@@ -28,11 +28,11 @@ git clean -xdf packages/ui5-cc-spreadsheetimporter/dist   # or: rm -rf packages/
 
 ## How the on-the-fly component build works
 
-The example apps reference the component by UI5 namespace `cc.spreadsheetimporter.v2_4_0` (manifest `componentUsages` + `resourceRoots` → `./thirdparty/customcontrol/spreadsheetimporter/v2_4_0`). That path is served live, never from a build, via this chain:
+The example apps reference the component by UI5 namespace `cc.spreadsheetimporter.v2_5_0` (manifest `componentUsages` + `resourceRoots` → `./thirdparty/customcontrol/spreadsheetimporter/v2_5_0`). That path is served live, never from a build, via this chain:
 
 1. Example app `ui5.yaml` registers the `ui5-middleware-ui5` middleware pointing at the component package with **`configFile: "ui5-serve.yaml"`** (e.g. [examples/packages/ordersv2fe/ui5.yaml:27-32](examples/packages/ordersv2fe/ui5.yaml)).
-2. The component's [`ui5-serve.yaml`](packages/ui5-cc-spreadsheetimporter/ui5-serve.yaml) sets `resources.paths.webapp: src` and mounts at `/thirdparty/customcontrol/spreadsheetimporter/v2_4_0`, then runs three middlewares on every request:
-   - `ui5-tooling-stringreplace-middleware` — replaces `XXXnamespaceXXX` → `v2_4_0` (and short/slash variants)
+2. The component's [`ui5-serve.yaml`](packages/ui5-cc-spreadsheetimporter/ui5-serve.yaml) sets `resources.paths.webapp: src` and mounts at `/thirdparty/customcontrol/spreadsheetimporter/v2_5_0`, then runs three middlewares on every request:
+   - `ui5-tooling-stringreplace-middleware` — replaces `XXXnamespaceXXX` → `v2_5_0` (and short/slash variants)
    - `ui5-tooling-transpile-middleware` — transpiles `.ts`/`.tsx` → JS on the fly
    - `ui5-tooling-modules-middleware` — resolves bare npm imports (e.g. xlsx)
 3. The CAP server additionally carries `cds-spreadsheetimporter-plugin` ([examples/packages/server/srv/orders-service.cds:2](examples/packages/server/srv/orders-service.cds)); when `cds watch` starts it installs/serves the component too (hence "built on the fly when running the cap server").
@@ -114,7 +114,7 @@ Use the SAP `Log` API, never `console.*` (which can't be gated/filtered).
 
 - **Code style:** component (`packages/`) uses Prettier `.prettierrc.json` (2 spaces, single quotes, width 150). The **`examples/` folder has its own** `examples/.prettierrc.js` (**tabs**, double quotes, width 200) — match the folder you're editing. Husky runs lint-staged on commit.
 - **`tsc --noEmit` reports ~50 pre-existing errors** — the project builds via babel-based `ui5-tooling-transpile`, not `tsc`, so it never type-checks. Don't treat those as regressions; check whether your change _adds_ errors (e.g. `git stash` + compare).
-- **Versioned namespace:** source uses `XXXnamespaceXXX` placeholders, replaced with `v2_4_0` at serve/build time. Keep them as placeholders in `src/`.
+- **Versioned namespace:** source uses `XXXnamespaceXXX` placeholders, replaced with `v2_5_0` at serve/build time. Keep them as placeholders in `src/`.
 - **OData V2 is synthetic:** the V2 service is the V4/CDS service translated by cov2ap. V2 metadata, key predicates, and draft fields (`IsActiveEntity`/`HasDraftEntity`) are generated — inspect them at runtime (debug logging or the `examples/test/http/*.http` probes), not from source.
 
 ---
