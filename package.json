@@ -57,7 +57,7 @@
     "bluebird": "3.7.2",
     "chokidar": "^4.0.3",
     "husky": "^9.1.7",
-    "js-yaml": "4.1.1",
+    "js-yaml": "4.3.2",
     "lint-staged": "^16.4.0",
     "npm-run-all": "^4.1.5",
     "prettier": "3.8.2",
@@ -72,7 +72,9 @@
     "body-parser@2": "^2.2.2",
     "qs": "^6.15.2",
     "serialize-javascript": "^7.0.5",
-    "phin": "^3.7.1"
+    "phin": "^3.7.1",
+    "js-yaml@3": "^3.15.2",
+    "js-yaml@4": "4.3.2"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json,md,yaml,yml,css,html,xml,properties}": [
