@@ -21,6 +21,7 @@
     "start:uiv24reestyle": "npm run start --workspace=ordersv4freestyle",
     "start:uiv4fpm": "npm run start --workspace=ordersv4fpm",
     "watch:server": "npm run watch --workspace=@capire/orders",
+    "start:launchpad": "npm run watch:launchpad --workspace=@capire/orders",
     "test": "wdio run ./test/wdio-base.conf.js",
     "test:single": "npm run test -- ordersv2fe  96 --spec ./test/specs/all/OpenSpreadsheetUploadDialog.test.js",
     "ui5-test-runner": "ui5-test-runner"
