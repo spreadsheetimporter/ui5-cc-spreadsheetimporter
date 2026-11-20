@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Local UI annotations for the SSI demo service (ZSSI_UI_ORD_O4).
+  The RAP service ships no @UI annotations, so the List Report / Object Page
+  display is defined here. The native server-side importer actions
+  (importExcel, importUpload) are surfaced as table toolbar buttons via
+  DataFieldForAction; getCreateTemplate / the Template stream are reached from
+  the "Download template (server)" custom button (see ext/ListReportExt.js).
+-->
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+    <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+    <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+    <edmx:Include Namespace="Org.OData.Core.V1" Alias="Core"/>
+  </edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="local.ssi" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+
+      <Annotations Target="com.sap.gateway.srvd.zssi_ui_ord.v0001.OrdersType">
+        <Annotation Term="UI.HeaderInfo">
+          <Record Type="UI.HeaderInfoType">
+            <PropertyValue Property="TypeName" String="Order"/>
+            <PropertyValue Property="TypeNamePlural" String="Orders"/>
+            <PropertyValue Property="Title">
+              <Record Type="UI.DataField"><PropertyValue Property="Value" Path="OrderId"/></Record>
+            </PropertyValue>
+            <PropertyValue Property="Description">
+              <Record Type="UI.DataField"><PropertyValue Property="Value" Path="Customer"/></Record>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.LineItem">
+          <Collection>
+            <Record Type="UI.DataField"><PropertyValue Property="Value" Path="OrderId"/></Record>
+            <Record Type="UI.DataField"><PropertyValue Property="Value" Path="Customer"/></Record>
+            <Record Type="UI.DataField"><PropertyValue Property="Value" Path="TotalAmount"/></Record>
+            <Record Type="UI.DataFieldForAction">
+              <PropertyValue Property="Label" String="Server import (base64)"/>
+              <PropertyValue Property="Action" String="com.sap.gateway.srvd.zssi_ui_ord.v0001.importExcel"/>
+            </Record>
+            <Record Type="UI.DataFieldForAction">
+              <PropertyValue Property="Label" String="Server upload file"/>
+              <PropertyValue Property="Action" String="com.sap.gateway.srvd.zssi_ui_ord.v0001.importUpload"/>
+            </Record>
+          </Collection>
+        </Annotation>
+      </Annotations>
+
+      <Annotations Target="com.sap.gateway.srvd.zssi_ui_ord.v0001.OrdersType/OrderId">
+        <Annotation Term="Common.Label" String="Order ID"/>
+      </Annotations>
+      <Annotations Target="com.sap.gateway.srvd.zssi_ui_ord.v0001.OrdersType/Customer">
+        <Annotation Term="Common.Label" String="Customer"/>
+      </Annotations>
+      <Annotations Target="com.sap.gateway.srvd.zssi_ui_ord.v0001.OrdersType/TotalAmount">
+        <Annotation Term="Common.Label" String="Total amount"/>
+      </Annotations>
+
+      <Annotations Target="com.sap.gateway.srvd.zssi_ui_ord.v0001.ItemsType">
+        <Annotation Term="UI.HeaderInfo">
+          <Record Type="UI.HeaderInfoType">
+            <PropertyValue Property="TypeName" String="Item"/>
+            <PropertyValue Property="TypeNamePlural" String="Items"/>
+            <PropertyValue Property="Title">
+              <Record Type="UI.DataField"><PropertyValue Property="Value" Path="ItemNo"/></Record>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.LineItem">
+          <Collection>
+            <Record Type="UI.DataField"><PropertyValue Property="Value" Path="ItemNo"/></Record>
+            <Record Type="UI.DataField"><PropertyValue Property="Value" Path="Product"/></Record>
+            <Record Type="UI.DataField"><PropertyValue Property="Value" Path="Qty"/></Record>
+            <Record Type="UI.DataField"><PropertyValue Property="Value" Path="Price"/></Record>
+            <Record Type="UI.DataField"><PropertyValue Property="Value" Path="Amount"/></Record>
+          </Collection>
+        </Annotation>
+      </Annotations>
+
+      <!-- B: make importUpload's _File param render a real file uploader.
+           On S/4HANA 2023 the gateway does NOT surface @Semantics.largeObject as
+           Core.* for an action-parameter ComplexType, so we add them LOCALLY here
+           (Fiori Elements merges local + backend annotations). On 2025/Cloud these
+           surface natively and this block is unnecessary. -->
+      <Annotations Target="com.sap.gateway.srvd.zssi_ui_ord.v0001.ZSSI_A_FILE/FileContent">
+        <Annotation Term="Common.Label" String="Excel / CSV file"/>
+        <Annotation Term="Core.MediaType" Path="MimeType"/>
+        <Annotation Term="Core.ContentDisposition">
+          <Record>
+            <PropertyValue Property="Filename" Path="FileName"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Core.AcceptableMediaTypes">
+          <Collection>
+            <String>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</String>
+            <String>application/vnd.ms-excel</String>
+            <String>text/csv</String>
+          </Collection>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="com.sap.gateway.srvd.zssi_ui_ord.v0001.ZSSI_A_FILE/MimeType">
+        <Annotation Term="Core.IsMediaType" Bool="true"/>
+      </Annotations>
+
+      <!-- A (labels for IsCsv / IsDraft) is now provided by the BACKEND via @EndUserText.label
+           on ZSSI_A_IMPORT / ZSSI_A_IMPORT_FILE. Verified in $metadata on S/4HANA 2023:
+           Common.Label = "File is CSV (else xlsx)" / "Create as draft" surface for the action
+           parameters, so the previous local label annotations here are removed as redundant.
+           (Only the field-label "Heading" still reads "Truth Value", which dialogs don't use.) -->
+
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

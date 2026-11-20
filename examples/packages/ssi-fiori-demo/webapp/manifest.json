@@ -1,0 +1,123 @@
+{
+  "_version": "1.48.0",
+  "sap.app": {
+    "id": "ssi.demo.orders",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "applicationVersion": { "version": "0.0.1" },
+    "dataSources": {
+      "mainService": {
+        "uri": "/sap/opu/odata4/sap/zssi_ui_ord_o4/srvd/sap/zssi_ui_ord/0001/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0",
+          "localUri": "localService/metadata.xml",
+          "annotations": ["localAnnotations"]
+        }
+      },
+      "localAnnotations": {
+        "type": "ODataAnnotation",
+        "uri": "annotations/annotation.xml",
+        "settings": { "localUri": "annotations/annotation.xml" }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": { "desktop": true, "tablet": true, "phone": true }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.120.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.fe.templates": {}
+      }
+    },
+    "contentDensities": { "compact": true, "cozy": true },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": { "bundleName": "ssi.demo.orders.i18n.i18n" }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    },
+    "componentUsages": {
+      "spreadsheetImporter": {
+        "name": "cc.spreadsheetimporter.v2_4_0"
+      }
+    },
+    "resourceRoots": {
+      "cc.spreadsheetimporter.v2_4_0": "./thirdparty/customcontrol/spreadsheetimporter/v2_4_0"
+    },
+    "routing": {
+      "routes": [
+        { "pattern": ":?query:", "name": "OrdersList", "target": "OrdersList" },
+        { "pattern": "Orders({key}):?query:", "name": "OrdersObjectPage", "target": "OrdersObjectPage" },
+        { "pattern": "Orders({key})/_Items({key2}):?query:", "name": "ItemsObjectPage", "target": "ItemsObjectPage" }
+      ],
+      "targets": {
+        "OrdersList": {
+          "type": "Component",
+          "id": "OrdersList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "entitySet": "Orders",
+              "variantManagement": "Page",
+              "initialLoad": "Enabled",
+              "navigation": { "Orders": { "detail": { "route": "OrdersObjectPage" } } },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "actions": {
+                    "spreadsheetUpload": {
+                      "id": "spreadsheetUploadBtn",
+                      "text": "Spreadsheet Upload (component)",
+                      "press": "ssi.demo.orders.ext.ListReportExt.openSpreadsheetUploadDialog",
+                      "requiresSelection": false
+                    },
+                    "downloadTemplate": {
+                      "id": "downloadTemplateBtn",
+                      "text": "Download template (server)",
+                      "press": "ssi.demo.orders.ext.ListReportExt.downloadTemplate",
+                      "requiresSelection": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "OrdersObjectPage": {
+          "type": "Component",
+          "id": "OrdersObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "entitySet": "Orders",
+              "navigation": { "_Items": { "detail": { "route": "ItemsObjectPage" } } }
+            }
+          }
+        },
+        "ItemsObjectPage": {
+          "type": "Component",
+          "id": "ItemsObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": { "settings": { "entitySet": "Items" } }
+        }
+      }
+    }
+  }
+}
